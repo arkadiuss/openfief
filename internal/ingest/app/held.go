@@ -54,6 +54,10 @@ type HoldingsScope struct {
 	// Payouts reads the accounts' payout settings (D-135, D-162), which
 	// the ingest context keeps.
 	Payouts PayoutSettingReader
+	// Postings reads the accounts' current transactions, for the
+	// instruments they post to under a provisional ISIN (D-214,
+	// ProvisionalInstruments); nil names none.
+	Postings AccountTransactions
 	// Today returns the day whose holdings count.
 	Today func() kernel.Date
 }

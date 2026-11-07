@@ -162,7 +162,7 @@ func seedBondLot(t *testing.T, dsn string) {
 		}
 		lot := ingest.BondLot{Terms: coiTerms(t), Quantity: kernel.NewQuantity(kernel.NewDecimal(10, 0)), Purchased: day("2024-10-10")}
 		e := ingest.BondLotEntries{Account: demo.BondsAccount, GoLive: day("2025-01-02"), Lots: []ingest.BondLot{lot}}
-		m, terms, err := treasurybonds.Mapper{}.Map(&e, day("2026-10-29"))
+		m, terms, err := treasurybonds.Mapper{}.Map(&e, nil, day("2026-10-29"))
 		if err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}

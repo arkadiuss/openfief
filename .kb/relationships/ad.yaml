@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-894ab84a738d
+  - type: implements
+    from: SYM-ledger-app-rekey-one
+    to: REQ-ledger-rekey-new-versions
+    created_at: 2026-11-07T23:12:36.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66bb39f2097
+  - type: covered_by
+    from: SYM-ledger-app-rekey-one
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:36.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-265dd23a0a76

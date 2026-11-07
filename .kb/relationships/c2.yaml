@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c198b63d455a
+  - type: implements
+    from: SYM-pl-provisional-prefix
+    to: REQ-treasurybonds-provisional-isin
+    created_at: 2026-11-07T23:11:18.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed16b2f83a2e
+  - type: covered_by
+    from: SYM-pl-provisional-prefix
+    to: TEST-pl-isin
+    created_at: 2026-11-07T23:11:18.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6df01fd23798

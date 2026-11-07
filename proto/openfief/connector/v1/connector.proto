@@ -376,6 +376,24 @@ message Delivery {
   // assertion of the instrument the owner confirmed for its ticker, and
   // holds it until the owner does.
   repeated TickerAssertion ticker_assertions = 16;
+  // The registry's ISIN of instruments the sync request named as
+  // provisional (D-214), such as a treasury bond series the Ministry of
+  // Finance's data now lists. The core re-keys everything it stores under
+  // the provisional instrument to the one with this ISIN and the same
+  // symbol. Only a connector that may deliver bond terms (D-179) may
+  // deliver them.
+  repeated RegistryIsin registry_isins = 17;
+}
+
+// RegistryIsin is the registry's ISIN of an instrument the core holds under
+// a provisional ISIN (D-214).
+message RegistryIsin {
+  // The instrument as the sync request named it: its provisional ISIN and
+  // its symbol, the series code.
+  Instrument instrument = 1;
+  // The registry's ISIN, with a valid check digit, such as the Ministry of
+  // Finance's data lists for the series.
+  string isin = 2;
 }
 
 // InstrumentName is an instrument's display name at the institution, for
@@ -513,6 +531,13 @@ message SyncRequest {
   // (D-9, D-97), so a connector with no storage of its own can compute
   // what a series pays.
   repeated BondTerms bond_terms = 7;
+  // Every treasury bond instrument the accounts bound to the instance post
+  // to, held or not, whose ISIN is provisional (D-214): a series booked
+  // before the Ministry of Finance's data listed its ISIN, or one booked
+  // under the ISIN earlier versions derived from its series code, "PL", the
+  // code, "00" and a check digit. Each once, in ISIN order. A connector
+  // that knows the registry's ISIN of one delivers it in registry_isins.
+  repeated Instrument provisional_instruments = 8;
 }
 
 // AccountHoldings is what one account holds on the day of a sync request

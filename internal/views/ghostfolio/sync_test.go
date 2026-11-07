@@ -226,3 +226,55 @@ func TestSyncRefuses(t *testing.T) {
 		})
 	}
 }
+
+// rekeyRecord moves every posting and valuation of f's synthetic bond to
+// the ISIN isin, as the core's re-key of a provisional ISIN does (D-214).
+func (f *fakeRecord) rekeyRecord(isin string) {
+	for _, txs := range f.transactions {
+		for _, tx := range txs {
+			for _, p := range tx.GetPostings() {
+				if in := p.GetBook().GetInstrument(); in.GetSymbol() == "EDO0136" {
+					in.Isin = isin
+				}
+			}
+		}
+	}
+	for _, vals := range f.valuations {
+		for _, v := range vals {
+			v.Instrument.Isin = isin
+		}
+	}
+}
+
+// TestSyncAfterRekey syncs a bond held under its provisional ISIN, then
+// again once the core re-keyed it to the registry's (D-214): the bond's
+// MANUAL asset is derived from the instance and its series code, never
+// its ISIN (D-64), and its activities' comments name the transaction keys,
+// which the re-key keeps, so the second sync imports and deletes nothing
+// and leaves no duplicate.
+func TestSyncAfterRekey(t *testing.T) {
+	t.Parallel()
+	record := syntheticRecord()
+	record.rekeyRecord("PLEDO0136009")
+	g := &fakeGhostfolio{ghostfolioModel: newModel()}
+	s := ghostfolio.NewSyncer(record, g, instance, nil)
+	if _, err := s.Sync(t.Context()); err != nil {
+		t.Fatalf("first Sync: %v", err)
+	}
+	before := slices.Clone(g.activities)
+	record.rekeyRecord(isinPL)
+	g.calls = nil
+	got, err := s.Sync(t.Context())
+	if err != nil {
+		t.Fatalf("Sync after the re-key: %v", err)
+	}
+	if diff := cmp.Diff(ghostfolio.Report{}, got); diff != "" {
+		t.Errorf("report after the re-key (-want +got):\n%s", diff)
+	}
+	if calls := strings.Join(g.calls, " "); strings.Contains(calls, "delete") || !strings.Contains(calls, "import 0") {
+		t.Errorf("calls after the re-key: %s; want no import and no delete", calls)
+	}
+	if diff := cmp.Diff(before, g.activities); diff != "" {
+		t.Errorf("activities after the re-key (-before +after):\n%s", diff)
+	}
+}

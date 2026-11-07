@@ -1,6 +1,6 @@
 ---
 title: An import of the issuer's own export must derive each bond's ISIN from its series code the same way, so one series is never held twice.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

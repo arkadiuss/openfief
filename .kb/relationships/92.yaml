@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00925f962e7c
+  - type: executable_for
+    from: SYM-ingest-test-helper-isin-of
+    to: TEST-ingest-registryisin
+    created_at: 2026-11-07T23:09:35.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2565db2269b1

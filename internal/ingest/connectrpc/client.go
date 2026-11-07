@@ -56,8 +56,9 @@ func H2CClient() *http.Client {
 }
 
 // Sync asks instance for its data since the call's watermark as the call's
-// batch, with what a market-data connector is to price (D-93) and what the
-// instance's bound accounts hold (D-117).
+// batch, with what a market-data connector is to price (D-93), what the
+// instance's bound accounts hold (D-117) and the instruments they post to
+// under a provisional ISIN (D-214).
 func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
@@ -71,6 +72,7 @@ func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (a
 		BatchId: string(sc.ID), Mode: m, Watermark: sc.Watermark,
 		Instruments: instrumentsTo(sc.Scope.Instruments), Indices: sc.Scope.Indices,
 		Accounts: heldTo(sc.Held), BondTerms: bondTermsTo(sc.BondTerms),
+		ProvisionalInstruments: instrumentsTo(sc.Provisional),
 	})
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.Sync(ctx, req)

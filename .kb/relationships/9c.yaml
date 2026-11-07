@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-305029660f15
+  - type: implements
+    from: SYM-valuation-postgres-rekeys
+    to: REQ-valuation-rekey-inputs
+    created_at: 2026-11-07T23:14:15.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29d75b94a50a
+  - type: covered_by
+    from: SYM-valuation-postgres-rekeys
+    to: TEST-valuation-postgres-rekey
+    created_at: 2026-11-07T23:14:15.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-910915b57172

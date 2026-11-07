@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b31d169e53f
+  - type: implements
+    from: SYM-connectorv1-registry-isin-get-isin
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:15:24.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6489a31bf8c6
+  - type: covered_by
+    from: SYM-connectorv1-registry-isin-get-isin
+    to: TEST-ingest-connectrpc-registry
+    created_at: 2026-11-07T23:15:24.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f173a7ef59

@@ -103,7 +103,8 @@ func purchasedForm(series, purchase string) *http.Request {
 
 // TestAccountBondLotForm checks that only the owner sees the "Add bond
 // lot" form, and only on a bond account's page, with the series' terms
-// optional and the published data's source named (D-97).
+// optional and the published data's source named (D-97), with the
+// series' ISIN coming from it and an assumed fee asked about (D-214).
 func TestAccountBondLotForm(t *testing.T) {
 	t.Parallel()
 	h := bondHarness(t)
@@ -112,7 +113,8 @@ func TestAccountBondLotForm(t *testing.T) {
 	wantBody(t, rec, `<h2 id="bond-lot-title">Add bond lot</h2>`, `action="/accounts/`+accountID+`/bond-lots?tab=lots"`,
 		`name="series"`, `name="purchase_date"`, `name="purchase"`, `<option value="exchange"`, `name="first_rate"`, `name="fee"`, "Open lots",
 		`action="/accounts/`+accountID+`/bond-lots/delete?tab=lots"`, `aria-label="Delete the SYN lot bought on 2026-01-02"`,
-		"source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief", "reviewed table of the issue letters")
+		"source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief", "reviewed table of the issue letters",
+		"as does the series' ISIN", "the latest fee is assumed and the Inbox asks you to confirm it")
 	wantNoBody(t, rec, `name="first_rate" value="" required`, `name="margin" value="" required`, `name="fee" value="" required`)
 	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=lots", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)

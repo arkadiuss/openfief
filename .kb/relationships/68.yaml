@@ -713,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be476f2153b6
+  - type: verified_by
+    from: SCEN-treasurybonds-reads-registry-isin
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T22:44:24.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d87d3495d03
+  - type: verified_by
+    from: SCEN-treasurybonds-reads-registry-isin
+    to: TEST-pl-isin
+    created_at: 2026-11-07T22:44:24.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0f889583cf

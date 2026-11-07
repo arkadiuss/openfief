@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1942ba605c2e
+  - type: executable_for
+    from: SYM-ledger-test-helper-by-hand
+    to: TEST-ledger-rekey
+    created_at: 2026-11-07T23:13:43.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10d73a6f15a8

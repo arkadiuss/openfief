@@ -95,6 +95,27 @@ func (n *Names) Rename(ctx context.Context, origin, sessionToken string, isin le
 	return clean, nil
 }
 
+// RekeyInstrument gives to the display names from shows (D-197, D-214),
+// when the registry's ISIN replaces a provisional one: the first name a
+// connector delivered of from, while to has none delivered, and the
+// owner's latest rename of from, while the owner never renamed to
+// (ledger.RekeyedNames). Names stay with their ISIN, append-only, so from
+// keeps its own. Running it again appends nothing.
+func (n *Names) RekeyInstrument(ctx context.Context, from, to ledger.Instrument) error {
+	records, err := n.Store.InstrumentNames(ctx)
+	if err != nil {
+		return fmt.Errorf("loading instrument names: %w", err)
+	}
+	names := ledger.RekeyedNames(records, from.ISIN, to.ISIN)
+	if len(names) == 0 {
+		return nil
+	}
+	if err := n.Store.AppendInstrumentNames(ctx, names); err != nil {
+		return fmt.Errorf("naming %s as %s: %w", to.ISIN, from.ISIN, err)
+	}
+	return nil
+}
+
 // postingAccounts returns the accounts whose current transactions post to
 // isin, in ID order.
 func (n *Names) postingAccounts(ctx context.Context, isin ledger.ISIN) ([]ledger.AccountID, error) {

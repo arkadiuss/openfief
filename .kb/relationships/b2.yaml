@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4510d27d4cd8
+  - type: implements
+    from: SYM-mfbonds-published-rows
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:10:18.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ae6a457ed8
+  - type: covered_by
+    from: SYM-mfbonds-published-rows
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T23:10:18.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8a21d27e355

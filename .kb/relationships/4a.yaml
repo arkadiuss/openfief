@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2dc196b45b8
+  - type: implements
+    from: SYM-ledger-app-ledger-rekey-in-tx
+    to: REQ-ledger-rekey-new-versions
+    created_at: 2026-11-07T23:12:16.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d4dcfbf3228
+  - type: covered_by
+    from: SYM-ledger-app-ledger-rekey-in-tx
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:16.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3162963ed743

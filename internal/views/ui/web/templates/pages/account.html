@@ -265,12 +265,12 @@
       <div class="field">
         <label for="lot-margin">Margin</label>
         <div class="unit"><input id="lot-margin" name="margin" value="{{.Margin}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-rates-help"><span>%</span></div>
-        <p class="help" id="lot-rates-help">Optional, both or neither. Left empty, they come from the Ministry of Finance's published retail bond data (source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief).</p>
+        <p class="help" id="lot-rates-help">Optional, both or neither. Left empty, they come from the Ministry of Finance's published retail bond data (source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief), as does the series' ISIN. A series the data doesn't list yet waits for them; after a week it shows in the Inbox.</p>
       </div>
       <div class="field">
         <label for="lot-fee">Early-redemption fee per bond</label>
         <div class="unit"><input id="lot-fee" name="fee" value="{{.Fee}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-fee-help"><span>PLN</span></div>
-        <p class="help" id="lot-fee-help">Optional. Left empty, it comes from OpenFief's reviewed table of the issue letters.</p>
+        <p class="help" id="lot-fee-help">Optional. Left empty, it comes from OpenFief's reviewed table of the issue letters; for a series sold after the table was last reviewed, the latest fee is assumed and the Inbox asks you to confirm it.</p>
       </div>
     </div>
     <div class="actions"><button type="submit">Add bond lot</button></div>

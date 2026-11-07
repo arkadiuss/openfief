@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da115aa46bed
+  - type: implements
+    from: SYM-ingest-provisional-instruments
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:08:59.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bd5e1613ea5
+  - type: covered_by
+    from: SYM-ingest-provisional-instruments
+    to: TEST-ingest-registryisin
+    created_at: 2026-11-07T23:08:59.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-527839d4d03d

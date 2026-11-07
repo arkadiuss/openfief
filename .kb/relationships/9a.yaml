@@ -895,3 +895,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ae00e19edef
+  - type: implements
+    from: SYM-treasurybonds-sync-published
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:10:56.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d20fc250e7a
+  - type: covered_by
+    from: SYM-treasurybonds-sync-published
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T23:10:56.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f3333a51564
+  - type: implements
+    from: SYM-pl-provisional-series
+    to: REQ-treasurybonds-provisional-isin
+    created_at: 2026-11-07T23:11:23.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1167570392e4
+  - type: covered_by
+    from: SYM-pl-provisional-series
+    to: TEST-pl-isin
+    created_at: 2026-11-07T23:11:23.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fcc941a1f20

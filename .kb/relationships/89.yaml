@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcee62d2c4d7
+  - type: implements
+    from: SYM-ledger-app-rekey-account
+    to: REQ-ledger-rekey-new-versions
+    created_at: 2026-11-07T23:12:31.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3386344f7cda
+  - type: covered_by
+    from: SYM-ledger-app-rekey-account
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:31.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aa3d34522e5

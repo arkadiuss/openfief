@@ -979,3 +979,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb803095e3d4
+  - type: implements
+    from: SYM-ingest-app-connectors-rekey
+    to: REQ-ingest-rekey-provisional-instrument
+    created_at: 2026-11-07T23:07:14.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac6dc7ecc084
+  - type: covered_by
+    from: SYM-ingest-app-connectors-rekey
+    to: TEST-ingest-app-rekey
+    created_at: 2026-11-07T23:07:15.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-989eb9c69cdf
+  - type: implements
+    from: SYM-pl-published-isin-of
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:11:44.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0d40557e949
+  - type: covered_by
+    from: SYM-pl-published-isin-of
+    to: TEST-pl-isin
+    created_at: 2026-11-07T23:11:44.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d8f9ce4091

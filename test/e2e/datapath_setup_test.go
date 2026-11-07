@@ -334,7 +334,14 @@ func dataPathInstances(ca []byte, tokens fixtureTokens) []dataPathInstance {
 		},
 		{
 			name: dpBonds, image: bondsImage, clusterService: true,
-			config:  map[string]any{"gusBaseUrl": base + "/gus", "nbpBaseUrl": base + "/nbp-static"},
+			// The fixture serves no Ministry of Finance data yet: gov.pl and
+			// dane.gov.pl point at it, so reading the data fails at once and
+			// the lot waits for its registry ISIN under its provisional one
+			// (D-214) instead of waiting on the real hosts.
+			config: map[string]any{
+				"gusBaseUrl": base + "/gus", "nbpBaseUrl": base + "/nbp-static",
+				"govPlBaseUrl": base + "/gov", "daneGovPlBaseUrl": base + "/dane",
+			},
 			secrets: map[string]map[string]string{caBundleRole: bundle},
 		},
 		{name: dpXTB, image: xtbImage},

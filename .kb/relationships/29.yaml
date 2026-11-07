@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d81d040ffd2
+  - type: executable_for
+    from: SYM-core-test-helper-check-rekeyed-ledger
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:24.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77d584867b82
+  - type: executable_for
+    from: SYM-attention-app-test-helper-instrument-of
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:07:03.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f777f38eb828

@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45f460ce73c2
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-check-rekeyed-again
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:57.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9ddbfcc4b03

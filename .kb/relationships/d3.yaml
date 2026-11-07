@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a6922f2ff43
+  - type: executable_for
+    from: SYM-attention-app-test-incomplete-bond-series
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:06:53.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96bbb83afb25
+  - type: implements
+    from: SYM-mfbonds-header-columns
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:16:57.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd8409e5c332

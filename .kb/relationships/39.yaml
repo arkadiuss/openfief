@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47abc8f43166
+  - type: implements
+    from: SYM-mfbonds-row-of
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:10:29.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc10c271a182
+  - type: covered_by
+    from: SYM-mfbonds-row-of
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T23:10:29.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48b08190edf0

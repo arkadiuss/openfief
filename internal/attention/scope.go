@@ -66,7 +66,8 @@ func GroupOf(k Kind) Group {
 		return GroupDataComingIn
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
-	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified, KindBondFeeAssumed:
+	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified, KindBondFeeAssumed,
+		KindBondSeriesIncomplete:
 	}
 	return GroupDecisions
 }
@@ -88,8 +89,8 @@ type Scope struct {
 //   - balance-assertion-flagged "<account>/<date>/<ISIN>/<symbol>" or
 //     ".../cash:<currency>": the account and the instrument;
 //   - cash-checkpoint-mismatch "<account>/<date>/<currency>": the account;
-//   - price-check-flagged "<ISIN>/<symbol>", instrument-unclassified
-//     and bond-fee-assumed "<ISIN>": the instrument;
+//   - price-check-flagged "<ISIN>/<symbol>", instrument-unclassified,
+//     bond-fee-assumed and bond-series-incomplete "<ISIN>": the instrument;
 //   - market-data-gap "<account>/<kind>/<key>": the account, and the
 //     instrument of a prices series;
 //   - broker-account-unmapped and ticker-unconfirmed "<instance>/...",
@@ -105,7 +106,7 @@ func ScopeOf(it *Item) Scope {
 	switch it.Kind {
 	case KindAssertionFlagged, KindCashCheckpointMismatch, kindMarketDataGap:
 		return accountScope(it.Kind, parts)
-	case KindPriceCheckFlagged, KindInstrumentUnclassified, KindBondFeeAssumed:
+	case KindPriceCheckFlagged, KindInstrumentUnclassified, KindBondFeeAssumed, KindBondSeriesIncomplete:
 		return Scope{Instrument: parts[0]}
 	case KindBrokerAccountUnmapped, KindTickerUnconfirmed, KindSyncFailing, kindUndeclared, kindUndeclaredCrossChecks:
 		return Scope{Instance: parts[0]}

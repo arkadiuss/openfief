@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f847c661a8fd
+  - type: executable_for
+    from: SYM-core-test-sync-rekeys-provisional-bonds
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:14.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e430a573bd7

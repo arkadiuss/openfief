@@ -643,3 +643,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df5d14bca335
+  - type: executable_for
+    from: SYM-treasurybonds-test-map-registry-isin
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-07T23:09:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e275b59bd7f

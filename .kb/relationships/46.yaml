@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bfdfcbaee35
+  - type: executable_for
+    from: SYM-ghostfolio-test-helper-fake-record-rekey-record
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-11-07T23:14:37.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ea2f768e60d

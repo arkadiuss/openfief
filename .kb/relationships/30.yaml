@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f039d61c782a
+  - type: executable_for
+    from: SYM-core-test-helper-rekey-connector-sync
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:55.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66d1fa5912b

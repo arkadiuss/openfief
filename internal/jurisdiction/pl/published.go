@@ -73,12 +73,33 @@ type PublishedRates struct {
 	Margin          kernel.Decimal
 }
 
+// PublishedISIN is one series' ISIN as the ministry publishes it (D-214):
+// the registry's, such as PL0000103594, which identifies the series. The
+// data may list a new series' ISIN before its rates.
+type PublishedISIN struct {
+	Series Series
+	ISIN   string
+}
+
 // Published is the ministry's published retail bond data (D-97): every
-// series' rates it lists, and where they came from. It carries no
-// early-redemption fee; the reviewed fee table supplies that.
+// series' rates and ISIN it lists (D-214), and where they came from. It
+// carries no early-redemption fee; the reviewed fee table supplies that.
 type Published struct {
 	Rates       []PublishedRates
+	ISINs       []PublishedISIN
 	Attribution Attribution
+}
+
+// ISINOf returns the registry's ISIN of series s as p lists it (D-214). A
+// series p lists no ISIN of, such as one too new to be in the file yet,
+// fails with ErrNotPublished.
+func (p *Published) ISINOf(s Series) (string, error) {
+	for _, i := range p.ISINs {
+		if i.Series == s {
+			return i.ISIN, nil
+		}
+	}
+	return "", fmt.Errorf("%w: no ISIN of %s", ErrNotPublished, s)
 }
 
 // RatesOf returns the published first-period rate and margin of series s. A

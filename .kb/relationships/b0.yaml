@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-077ff273a764
+  - type: implements
+    from: SYM-attention-app-earlier
+    to: REQ-attention-bond-series-incomplete
+    created_at: 2026-11-07T23:06:24.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e12efe299e28
+  - type: covered_by
+    from: SYM-attention-app-earlier
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:06:24.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74ca5d27813b
+  - type: executable_for
+    from: SYM-treasurybonds-test-registry-isi-ns
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T23:11:07.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3cc455d1ff7

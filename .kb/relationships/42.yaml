@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3baa6294b644
+  - type: executable_for
+    from: SYM-treasurybonds-test-complete-terms-without-data
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T23:11:01.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ead90501a77

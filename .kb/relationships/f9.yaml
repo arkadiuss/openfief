@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-168b1cf53102
+  - type: executable_for
+    from: SYM-core-test-helper-rekey-connector-check-named-once
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:06:01.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aff562ecb5b

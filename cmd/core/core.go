@@ -207,7 +207,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
-		attention: attn.items, names: names,
+		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(pool), names, l),
 	}
 	plugin := withModelService(withAuthService(apis.plugin, auth, callers, log), models, callers, log)
 	owners := ingestOwners(auth, cfg.Auth.Origins, authz)

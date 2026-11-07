@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8342ec21f65
+  - type: implements
+    from: SYM-core-rekeyers
+    to: REQ-ingest-rekey-provisional-instrument
+    created_at: 2026-11-07T23:05:09.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d142bbbf5f24
+  - type: covered_by
+    from: SYM-core-rekeyers
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:09.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49fe0241dacc

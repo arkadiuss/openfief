@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb7e9cab9483
+  - type: executable_for
+    from: SYM-plugins-treasury-bonds-test-import-bond-lots-wait-for-isin
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T23:14:49.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60caefbce2af

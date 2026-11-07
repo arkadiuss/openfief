@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f36d710b4e3
+  - type: implements
+    from: SYM-ingest-registry-isin
+    to: REQ-ingest-rekey-provisional-instrument
+    created_at: 2026-11-07T23:09:04.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce5b9b86fa3
+  - type: covered_by
+    from: SYM-ingest-registry-isin
+    to: TEST-ingest-registryisin
+    created_at: 2026-11-07T23:09:04.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-375c6053fa3b

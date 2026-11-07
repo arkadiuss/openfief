@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d80fb0d4d4d
+  - type: executable_for
+    from: SYM-pl-test-published-isin-of
+    to: TEST-pl-isin
+    created_at: 2026-11-07T23:11:39.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fa19c2d2441
