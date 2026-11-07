@@ -48,7 +48,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 		}
 	}
 	for _, s := range spec.Manifest.Secrets {
-		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: s.Role, MountPath: s.MountPath})
+		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: s.Role, MountPath: s.MountPath, Optional: s.Optional})
 	}
 	if err := p.Validate(); err != nil {
 		errs = append(errs, err)

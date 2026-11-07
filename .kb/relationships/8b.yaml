@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-942546eb66ce
+  - type: implements
+    from: SYM-sdk-go-endpoint-valid-port
+    to: REQ-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:56:58.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2dc267ec203
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-valid-port
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:56:58.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b945bcd76254
+  - type: executable_for
+    from: SYM-nbp-fx-test-endpoint-test-config-base-url
+    to: TEST-plugins-nbp-fx-endpoint
+    created_at: 2026-11-06T22:48:54.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a2f7b71eef9

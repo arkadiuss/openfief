@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3be771d7e15
+  - type: implements
+    from: SYM-sdk-go-endpoint-port-or443
+    to: REQ-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:57:04.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5c7915e936
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-port-or443
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:57:04.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52ba77967add

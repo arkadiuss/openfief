@@ -11,6 +11,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/valuation/eodhd"
+	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
 // TestManifest checks that manifest.json, which the image carries as its
@@ -32,8 +33,11 @@ func TestManifest(t *testing.T) {
 	want := plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "eodhd.com", Port: 443}},
-		Secrets:      []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}},
-		MarketData:   true,
+		// The host of its baseUrl config field (D-75).
+		EgressFromConfig: []string{"baseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of EODHD, at the baseUrl path, its certificate issued for the baseUrl host"},
+		Secrets:          []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}, {Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
+		MarketData:       true,
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{institution},
 		IndexLevels:  true,
@@ -84,7 +88,7 @@ func TestConfigParse(t *testing.T) {
 
 func TestNewConnector(t *testing.T) {
 	t.Parallel()
-	c := newConnector(http.DefaultClient, config{})
+	c := newConnector(http.DefaultClient, eodhd.DefaultBaseURL, config{})
 	if _, ok := c.source(fakeKey).(*eodhd.Client); !ok || c.secrets != keyMount || c.today == nil {
 		t.Errorf("newConnector = %+v, want EODHD's client, the mounted Secret and the clock", c)
 	}

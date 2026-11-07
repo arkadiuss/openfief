@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14fd945826ec
+  - type: implements
+    from: SYM-e2e-fixture-weekdays
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:46:24.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e92eb6ed8415
+  - type: covered_by
+    from: SYM-e2e-fixture-weekdays
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:46:24.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-793dea7b3bfb

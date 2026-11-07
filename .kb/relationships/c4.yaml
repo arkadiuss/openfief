@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a53e0c313e56
+  - type: implements
+    from: SYM-e2e-fixture-nbp-table
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:46:07.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3558bda4a862
+  - type: covered_by
+    from: SYM-e2e-fixture-nbp-table
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:46:07.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e23ce8c825

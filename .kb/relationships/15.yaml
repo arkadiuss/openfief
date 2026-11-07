@@ -923,3 +923,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-831b8ec94310
+  - type: verified_by
+    from: SCEN-sdk-endpoint-base-url-https
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:55:01.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38e0979f5866
+  - type: implements
+    from: SYM-e2e-fixture-run
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:44:25.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7331cf6b3092
+  - type: covered_by
+    from: SYM-e2e-fixture-run
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:44:25.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d3c158d5568
+  - type: verified_by
+    from: SCEN-sdk-endpoint-cluster-service
+    to: TEST-sdk-go-endpoint-cluster
+    created_at: 2026-11-06T23:25:45.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a20678522d5

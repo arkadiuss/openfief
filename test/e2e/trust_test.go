@@ -91,6 +91,7 @@ func TestOperatorRequiresGrant(t *testing.T) {
 		Signature: string(metav1.ConditionTrue) + "/" + operator.ReasonTrustedSigner,
 		Pending: &v1alpha1.Permissions{
 			Capabilities: []string{"connector"}, Egress: []string{fxEgress + ":443"}, Institutions: &[]string{"nbp"},
+			Secrets: []string{plugins.SecretName(noGrantPlugin, fxCABundleRole)},
 		},
 	}
 	if diff := cmp.Diff(want, stateOf(t, k, p)); diff != "" {

@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6da372e92a4
+  - type: implements
+    from: SYM-e2e-fixture-eodhd-authorized
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:45:56.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdd56ef84fc4
+  - type: covered_by
+    from: SYM-e2e-fixture-eodhd-authorized
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:45:56.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b55aa76d58e

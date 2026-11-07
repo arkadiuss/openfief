@@ -23,6 +23,7 @@ type manifestDoc struct {
 	Secrets      []struct {
 		Role      string `json:"role"`
 		MountPath string `json:"mountPath"`
+		Optional  bool   `json:"optional,omitempty"`
 	} `json:"secrets,omitempty"`
 	DataTiers        []DataTier      `json:"dataTiers,omitempty"`
 	ConfigSchema     json.RawMessage `json:"configSchema,omitempty"`

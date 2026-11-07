@@ -762,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb2da2717243
+  - type: implements
+    from: SYM-e2e-fixture-serve
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:44:19.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e77414c8fe8
+  - type: covered_by
+    from: SYM-e2e-fixture-serve
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:44:19.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1aeaf8c8da9
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-service-server
+    to: TEST-sdk-go-endpoint-cluster
+    created_at: 2026-11-06T23:26:13.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab184daaebb1

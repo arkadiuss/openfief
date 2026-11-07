@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3971cec5705e
+  - type: executable_for
+    from: SYM-treasury-bonds-test-endpoint-read-manifest
+    to: TEST-plugins-treasury-bonds-endpoint
+    created_at: 2026-11-06T22:49:54.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a329baaaa421

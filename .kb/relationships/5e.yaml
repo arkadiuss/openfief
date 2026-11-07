@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de888b192010
+  - type: executable_for
+    from: SYM-e2e-fixture-test-fetch
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:47:24.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0ed5d128b61

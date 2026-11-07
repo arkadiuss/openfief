@@ -210,6 +210,11 @@ type SecretMount struct {
 	// +kubebuilder:validation:MinLength=2
 	// +kubebuilder:validation:MaxLength=1024
 	MountPath string `json:"mountPath"`
+	// Optional lets the plugin run while the Secret doesn't exist, such as
+	// the extra CA bundle a connector trusts only when the owner creates
+	// one.
+	// +optional
+	Optional bool `json:"optional,omitempty"`
 }
 
 // Permissions is a set of plugin permissions: what a PluginGrant approves,

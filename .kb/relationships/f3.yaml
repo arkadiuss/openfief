@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2926c09c2c25
+  - type: implements
+    from: SYM-sdk-go-endpoint-endpoint-tls-config
+    to: REQ-sdk-endpoint-extra-ca-bundle
+    created_at: 2026-11-06T21:56:14.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73b82d5cec98
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-endpoint-tls-config
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:56:14.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-399136b831a5
