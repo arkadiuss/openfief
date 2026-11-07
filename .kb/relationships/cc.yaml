@@ -671,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4668661f8b08
+  - type: implements
+    from: SYM-valuationv1-set-early-redemption-fee-response
+    to: REQ-valuation-owner-sets-bond-fee
+    created_at: 2026-11-07T14:17:19.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2d5e00142c4
+  - type: covered_by
+    from: SYM-valuationv1-set-early-redemption-fee-response
+    to: TEST-core-settings
+    created_at: 2026-11-07T14:17:19.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fac53a7cce5
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-reset
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:19:16.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-612b4e50a26a
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-reset
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:19:16.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28e00594dd04

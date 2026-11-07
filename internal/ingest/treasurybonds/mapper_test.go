@@ -337,6 +337,26 @@ func TestMapKeepsKeysAcrossReEntry(t *testing.T) {
 	}
 }
 
+// TestMapPendingLot books a lot still waiting for its series' terms, as
+// one of a series the ministry's data doesn't list yet, and delivers no
+// terms for it, while another lot's terms go out (D-97).
+func TestMapPendingLot(t *testing.T) {
+	t.Parallel()
+	pending := lot(t, "COI1130", "10", "2026-11-03", "0.05")
+	pending.PublishedRates, pending.ReviewedFee = true, true
+	entered := lot(t, "EDO1136", "5", "2026-11-03", "0.06")
+	m, terms, err := treasurybonds.Mapper{}.Map(&ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{pending, entered}}, mustDate(t, "2026-11-07"))
+	if err != nil {
+		t.Fatalf("Map: %v", err)
+	}
+	if len(m.Transactions) != 4 {
+		t.Errorf("Map booked %d transactions, want a deposit and a buy for each lot", len(m.Transactions))
+	}
+	if len(terms) != 1 || terms[0].Terms.Series != entered.Series() {
+		t.Errorf("Map terms = %+v, want only EDO1136's", terms)
+	}
+}
+
 func TestMapRefuses(t *testing.T) {
 	t.Parallel()
 	today := mustDate(t, "2026-10-29")

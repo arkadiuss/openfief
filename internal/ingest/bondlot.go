@@ -98,6 +98,12 @@ type BondLotEntries struct {
 // Key returns the lot's key: its series and purchase date.
 func (l *BondLot) Key() BondLotKey { return BondLotKey{Series: l.Series(), Purchased: l.Purchased} }
 
+// Pending reports whether a term the owner left to the connector is still
+// missing from l, as when the ministry's data doesn't list its series yet
+// (D-97): the lot is booked without its series' terms, and a later sync
+// fills them in.
+func (l *BondLot) Pending() bool { return l.PublishedRates || l.ReviewedFee }
+
 // Series returns the lot's bond series.
 func (l *BondLot) Series() pl.Series { return l.Terms.Series }
 

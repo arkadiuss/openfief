@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ae0c81e5087
+  - type: implements
+    from: SYM-pl-in-grosze
+    to: REQ-pl-assumed-fee-confirmed-by-owner
+    created_at: 2026-11-07T13:28:06.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4c4133015d9
+  - type: covered_by
+    from: SYM-pl-in-grosze
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:28:06.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1ebf79eb075

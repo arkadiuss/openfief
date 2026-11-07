@@ -24,6 +24,10 @@ import (
 // ErrCorrupt reports a stored row that does not decode.
 var ErrCorrupt = errors.New("corrupt valuation data")
 
+// ErrNoBondTerms reports a change to the terms of a bond whose terms are
+// not stored.
+var ErrNoBondTerms = errors.New("no stored terms of the bond")
+
 // Store is the valuation context's store in PostgreSQL, in the valuation
 // schema that Migrate creates: inputs, stored valuations and pending
 // revaluations. Every write of an input enqueues its revaluations in the same
@@ -199,41 +203,92 @@ func scanReading(row pgx.CollectableRow) (valuation.IndexReading, error) {
 	return valuation.IndexReading{Kind: k, Year: int(year), Month: time.Month(month), Value: v, Source: source}, nil
 }
 
-// BondTerms returns the series terms of the bond with isin, with their
-// attribution when they were read from published data (D-97), and false
-// when none are stored.
-func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error) {
-	var (
-		series, first, margin, fee string
-		att                        attributionRow
-	)
-	err := s.pool.QueryRow(ctx, `
-		SELECT series, first_period_rate::text, margin::text, early_redemption_fee::text,
+// bondTermsColumns are the columns termsRow reads, in its order.
+const bondTermsColumns = `isin, series, first_period_rate::text, margin::text, early_redemption_fee::text, fee_source,
 		    source_publisher, source_dataset, source_license, source_url, source_made::text, source_fetched,
-		    source_processing
-		FROM valuation.bond_terms WHERE isin = $1`, isin.String()).Scan(&series, &first, &margin, &fee,
-		&att.publisher, &att.dataset, &att.license, &att.url, &att.made, &att.fetched, &att.processing)
+		    source_processing`
+
+// termsRow is one valuation.bond_terms row as bondTermsColumns read it.
+type termsRow struct {
+	isin, series, first, margin, fee, feeSource string
+	att                                         attributionRow
+}
+
+// scan reads the row from r.
+func (t *termsRow) scan(r pgx.Row) error {
+	if err := r.Scan(&t.isin, &t.series, &t.first, &t.margin, &t.fee, &t.feeSource,
+		&t.att.publisher, &t.att.dataset, &t.att.license, &t.att.url, &t.att.made, &t.att.fetched, &t.att.processing); err != nil {
+		return fmt.Errorf("scanning bond terms: %w", err)
+	}
+	return nil
+}
+
+// terms returns the row's terms; a row that doesn't parse is ErrCorrupt.
+func (t *termsRow) terms() (pl.Terms, error) {
+	sr, err1 := pl.ParseSeries(t.series)
+	f, err2 := kernel.ParseDecimal(t.first)
+	m, err3 := kernel.ParseDecimal(t.margin)
+	b, err4 := parseMoney(t.fee, pl.Nominal().Currency().String())
+	src, err5 := pl.ParseFeeSource(t.feeSource)
+	var (
+		a    *pl.Attribution
+		err6 error
+	)
+	if t.att.publisher != nil {
+		a, err6 = t.att.attribution()
+	}
+	if err := errors.Join(err1, err2, err3, err4, err5, err6); err != nil {
+		return pl.Terms{}, fmt.Errorf("%w: bond terms of %s: %w", ErrCorrupt, t.isin, err)
+	}
+	return pl.Terms{Series: sr, FirstPeriodRate: f, Margin: m, EarlyRedemptionFee: b, Attribution: a, FeeSource: src}, nil
+}
+
+// BondTerms returns the series terms of the bond with isin, with their
+// attribution when they were read from published data and where their fee
+// came from (D-97), and false when none are stored.
+func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error) {
+	var row termsRow
+	err := row.scan(s.pool.QueryRow(ctx, `SELECT `+bondTermsColumns+` FROM valuation.bond_terms WHERE isin = $1`, isin.String()))
 	if errors.Is(err, pgx.ErrNoRows) {
 		return pl.Terms{}, false, nil
 	}
 	if err != nil {
 		return pl.Terms{}, false, fmt.Errorf("loading bond terms of %s: %w", isin, err)
 	}
-	sr, err1 := pl.ParseSeries(series)
-	f, err2 := kernel.ParseDecimal(first)
-	m, err3 := kernel.ParseDecimal(margin)
-	b, err4 := parseMoney(fee, pl.Nominal().Currency().String())
-	var (
-		a    *pl.Attribution
-		err5 error
-	)
-	if att.publisher != nil {
-		a, err5 = att.attribution()
+	t, err := row.terms()
+	if err != nil {
+		return pl.Terms{}, false, err
 	}
-	if err := errors.Join(err1, err2, err3, err4, err5); err != nil {
-		return pl.Terms{}, false, fmt.Errorf("%w: bond terms of %s: %w", ErrCorrupt, isin, err)
+	return t, true, nil
+}
+
+// AllBondTerms returns every stored series' terms by ISIN.
+func (s *Store) AllBondTerms(ctx context.Context) (map[ledger.ISIN]pl.Terms, error) {
+	rows, err := s.pool.Query(ctx, `SELECT `+bondTermsColumns+` FROM valuation.bond_terms ORDER BY isin`)
+	if err != nil {
+		return nil, fmt.Errorf("loading bond terms: %w", err)
 	}
-	return pl.Terms{Series: sr, FirstPeriodRate: f, Margin: m, EarlyRedemptionFee: b, Attribution: a}, true, nil
+	defer rows.Close()
+	out := map[ledger.ISIN]pl.Terms{}
+	for rows.Next() {
+		var row termsRow
+		if err := row.scan(rows); err != nil {
+			return nil, fmt.Errorf("loading bond terms: %w", err)
+		}
+		t, err := row.terms()
+		if err != nil {
+			return nil, err
+		}
+		isin, err := ledger.ParseISIN(row.isin)
+		if err != nil {
+			return nil, fmt.Errorf("%w: bond terms of %q: %w", ErrCorrupt, row.isin, err)
+		}
+		out[isin] = t
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("loading bond terms: %w", err)
+	}
+	return out, nil
 }
 
 // attribution returns the attribution the row holds, whose publisher is

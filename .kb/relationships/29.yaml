@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59eac8caf592
+  - type: executable_for
+    from: SYM-valuation-app-test-fake-bond-fees-bond-terms
+    to: TEST-valuation-app-bondfee
+    created_at: 2026-11-07T13:31:15.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d805f618a628

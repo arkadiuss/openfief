@@ -923,3 +923,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-491b0804f78b
+  - type: constrains
+    from: REQ-pl-assumed-fee-confirmed-by-owner
+    to: FACT-SUBJECT-FCD7D220C4CF3153
+    created_at: 2026-11-07T13:26:50.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ca9a1ac03e
+  - type: requires_property
+    from: REQ-pl-assumed-fee-confirmed-by-owner
+    to: FACT-PROP-A19A65B185A77424
+    created_at: 2026-11-07T13:26:50.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6506ca40ee0
+  - type: specified_by
+    from: REQ-pl-assumed-fee-confirmed-by-owner
+    to: SCEN-pl-assumed-fee-confirmed-by-owner
+    created_at: 2026-11-07T13:26:50.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aaede2fe769
+  - type: implements
+    from: SYM-pl-parse-fee-source
+    to: REQ-pl-fee-carried-forward-assumed
+    created_at: 2026-11-07T13:27:38.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-282928360688
+  - type: implements
+    from: SYM-pl-parse-fee-source
+    to: REQ-valuation-bond-fee-source-stored
+    created_at: 2026-11-07T13:27:38.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-020a83ff66b3
+  - type: covered_by
+    from: SYM-pl-parse-fee-source
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:27:38.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f12c8958895c
+  - type: implements
+    from: SYM-views-connectapi-pb-series-terms
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T13:32:40.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03bd0d20b530
+  - type: covered_by
+    from: SYM-views-connectapi-pb-series-terms
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T13:32:40.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ac8d073ae0
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:04.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94461b6d1587
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:04.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb69cf8a8c19
+  - type: implements
+    from: SYM-viewsv1-bond-terms-attribution-get-made
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:19:59.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e610f6ad0340
+  - type: covered_by
+    from: SYM-viewsv1-bond-terms-attribution-get-made
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:19:59.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5310312b6f23

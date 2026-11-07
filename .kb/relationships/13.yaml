@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a478b67f0c7
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-get-rates-source
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:50.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7449557a5344
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-get-rates-source
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:50.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae430a92de37

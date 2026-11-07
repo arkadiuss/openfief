@@ -31,6 +31,7 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindTransferSuggested, attention.GroupDecisions},
 		{attention.KindSettingMissing, attention.GroupDecisions},
 		{attention.KindInstrumentUnclassified, attention.GroupDecisions},
+		{attention.KindBondFeeAssumed, attention.GroupDecisions},
 		{"some-later-check", attention.GroupDecisions},
 	}
 	for _, tt := range tests {
@@ -80,6 +81,10 @@ func TestScopeOf(t *testing.T) {
 		{
 			name: "an instrument to classify", kind: attention.KindInstrumentUnclassified, subject: "XX0000000001",
 			want: attention.Scope{Instrument: "XX0000000001"},
+		},
+		{
+			name: "an assumed bond fee", kind: attention.KindBondFeeAssumed, subject: "PLEDO1137006",
+			want: attention.Scope{Instrument: "PLEDO1137006"},
 		},
 		{
 			name: "a price series gap", kind: valuationapp.GapKind, subject: "acc-2/prices/XX0000000001/SYNT",

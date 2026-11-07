@@ -425,15 +425,16 @@ func TestModeTo(t *testing.T) {
 }
 
 // TestBondTermsAttribution translates the attribution of terms read from
-// published data both ways (D-97): written with the terms a sync carries,
-// read from a delivery, and refused when a part the licence asks for is
-// missing or a time doesn't parse.
+// published data, and where their fee came from, both ways (D-97): written
+// with the terms a sync carries, read from a delivery, and refused when a
+// part the licence asks for is missing or a time doesn't parse.
 func TestBondTermsAttribution(t *testing.T) {
 	t.Parallel()
 	msg := func() *connectorv1.BondTerms {
 		return &connectorv1.BondTerms{
 			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
 			FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: &connectorv1.Money{Amount: "3", Currency: "PLN"},
+			FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED,
 			Attribution: &connectorv1.BondTermsAttribution{
 				Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
 				Url: "https://www.example.org/attachment/x", Made: "2026-10-26", Fetched: "2026-11-07T06:00:00Z", Processing: "read",
@@ -466,5 +467,41 @@ func TestBondTermsAttribution(t *testing.T) {
 		if _, err := bondTermsFrom("t", m); !errors.Is(err, ErrInvalidMessage) {
 			t.Errorf("%s: bondTermsFrom = %v, want ErrInvalidMessage", name, err)
 		}
+	}
+}
+
+// TestBondTermsFeeSource translates where a series' fee came from both
+// ways (D-97): unspecified reads as entered, and an unknown value is
+// refused.
+func TestBondTermsFeeSource(t *testing.T) {
+	t.Parallel()
+	msg := func(s connectorv1.BondFeeSource) *connectorv1.BondTerms {
+		return &connectorv1.BondTerms{
+			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
+			FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: &connectorv1.Money{Amount: "3", Currency: "PLN"},
+			FeeSource: s,
+		}
+	}
+	for in, want := range map[connectorv1.BondFeeSource]pl.FeeSource{
+		connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED:     pl.FeeAssumed,
+		connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE:       pl.FeeFromTable,
+		connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED:     pl.FeeEntered,
+		connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED: pl.FeeEntered,
+	} {
+		got, err := bondTermsFrom("t", msg(in))
+		if err != nil || got.Terms.FeeSource != want {
+			t.Errorf("bondTermsFrom(%v) fee source = %s, %v; want %s", in, got.Terms.FeeSource, err, want)
+		}
+	}
+	if _, err := bondTermsFrom("t", msg(connectorv1.BondFeeSource(9))); !errors.Is(err, ErrInvalidMessage) {
+		t.Errorf("an unknown fee source: bondTermsFrom = %v, want ErrInvalidMessage", err)
+	}
+	for _, s := range []pl.FeeSource{pl.FeeEntered, pl.FeeFromTable, pl.FeeAssumed} {
+		if back, err := feeSourceFrom(feeSourceTo(s)); err != nil || back != s {
+			t.Errorf("feeSourceFrom(feeSourceTo(%s)) = %s, %v", s, back, err)
+		}
+	}
+	if got := feeSourceTo(pl.FeeSource(9)); got != connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED {
+		t.Errorf("feeSourceTo of an invalid source = %v", got)
 	}
 }

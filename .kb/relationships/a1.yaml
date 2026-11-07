@@ -741,3 +741,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8196bc19aa6
+  - type: verified_by
+    from: SCEN-views-bond-series-terms
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T13:26:33.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e767927b801f
+  - type: implements
+    from: SYM-pl-fee-source-string
+    to: REQ-pl-fee-carried-forward-assumed
+    created_at: 2026-11-07T13:27:32.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46b28ed31e9c
+  - type: covered_by
+    from: SYM-pl-fee-source-string
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:27:32.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2606cef2d380

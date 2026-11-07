@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34b9e6aa50cf
+  - type: constrains
+    from: REQ-attention-bond-fee-assumed
+    to: FACT-SUBJECT-B8835D65C4A064E6
+    created_at: 2026-11-07T13:26:54.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78cd0f40221b
+  - type: requires_property
+    from: REQ-attention-bond-fee-assumed
+    to: FACT-PROP-845F1F559F8FAA1A
+    created_at: 2026-11-07T13:26:54.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d2671300b6
+  - type: specified_by
+    from: REQ-attention-bond-fee-assumed
+    to: SCEN-attention-bond-fee-assumed
+    created_at: 2026-11-07T13:26:54.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15d1c3979fc4

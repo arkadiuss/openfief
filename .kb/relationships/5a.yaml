@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac602eb7d425
+  - type: implements
+    from: SYM-pl-fees-to-confirm
+    to: REQ-pl-assumed-fee-confirmed-by-owner
+    created_at: 2026-11-07T13:28:00.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b32ccbd9e866
+  - type: covered_by
+    from: SYM-pl-fees-to-confirm
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:28:00.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f208a98ebd99
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-descriptor
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:11.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adada08a1b8a
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-descriptor
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:11.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc5b4861b86

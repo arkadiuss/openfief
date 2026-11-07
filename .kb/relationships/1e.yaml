@@ -916,3 +916,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8696544a0839
+  - type: constrains
+    from: REQ-valuation-owner-sets-bond-fee
+    to: FACT-SUBJECT-613E0FF63F1B013E
+    created_at: 2026-11-07T13:27:00.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c5725c20009
+  - type: requires_property
+    from: REQ-valuation-owner-sets-bond-fee
+    to: FACT-PROP-483D9C11B56FD72F
+    created_at: 2026-11-07T13:27:00.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00a37863098c
+  - type: specified_by
+    from: REQ-valuation-owner-sets-bond-fee
+    to: SCEN-valuation-owner-sets-bond-fee
+    created_at: 2026-11-07T13:27:00.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf6bd2a2c5f6
+  - type: executable_for
+    from: SYM-attention-app-test-assumed-bond-fees
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:32:13.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9753f1d766dd
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-get-attribution
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:17.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b14f88930619
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-get-attribution
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:17.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2e2e1cc0c0f

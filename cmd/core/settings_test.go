@@ -63,6 +63,7 @@ func TestSettingsService(t *testing.T) {
 		t.Fatalf("SetMarginalRate: %v", err)
 	}
 	checkExemptionClass(t, c, oc.session)
+	checkBondFeeRefusals(t, c, oc.session)
 	got := get()
 	after := []any{got.GetNumberFormat().GetKey(), got.GetNumberFormatDefault(), got.GetMarginalRate(), len(got.GetExemptionClasses()), fmt.Sprint(got.GetInstrumentClasses())}
 	if !slices.Equal(after, []any{"comma-dot", false, "0.32", 3, fmt.Sprint([]*valuationv1.InstrumentClass{{Isin: "PLTEST000010", ExemptionClass: "investment"}})}) {
@@ -86,6 +87,27 @@ func checkExemptionClass(t *testing.T, c valuationv1connect.SettingsServiceClien
 	}))
 	if connect.CodeOf(err) != connect.CodeInvalidArgument {
 		t.Errorf("a class the pack lacks: %v, want invalid argument", err)
+	}
+}
+
+// checkBondFeeRefusals checks that the core serves SetEarlyRedemptionFee
+// (D-97) and refuses a bond whose terms it doesn't store and a malformed
+// ISIN.
+func checkBondFeeRefusals(t *testing.T, c valuationv1connect.SettingsServiceClient, session string) {
+	t.Helper()
+	for _, r := range []struct {
+		isin, fee string
+		want      connect.Code
+	}{
+		{isin: "PLEDO1137006", want: connect.CodeNotFound},
+		{isin: "EDO1137", want: connect.CodeInvalidArgument},
+	} {
+		_, err := c.SetEarlyRedemptionFee(t.Context(), connect.NewRequest(&valuationv1.SetEarlyRedemptionFeeRequest{
+			Origin: localUI, SessionToken: session, Isin: r.isin, Fee: r.fee,
+		}))
+		if connect.CodeOf(err) != r.want {
+			t.Errorf("SetEarlyRedemptionFee(%q, %q) = %v, want %s", r.isin, r.fee, err, r.want)
+		}
 	}
 }
 

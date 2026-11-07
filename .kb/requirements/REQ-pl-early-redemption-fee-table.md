@@ -1,6 +1,6 @@
 ---
 title: A series' early-redemption fee must come from the reviewed table of the issue letters by bond type and sale month, and the table must give no fee for a month it was not reviewed for.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-97
 tags:
   - strict-modeling

@@ -1,5 +1,5 @@
 ---
-title: A series' fee comes from the reviewed table by its sale month
+title: A series' fee comes from the reviewed table by sale month
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-pl-early-redemption-fee-table
 type: scenario
 ---
-Given the reviewed fee table, when the fee of a series is asked for, then the fee of the latest row of its bond type on or before its sale month is returned, and a series sold before the type's first row or after the reviewed month gets none.
+Given the reviewed fee table, when the fee of a series is asked for, then the fee of the latest row of its bond type on or before its sale month is returned; a series sold after the reviewed month gets that type's latest fee, marked assumed, and a series sold before the type's first row gets none.

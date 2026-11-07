@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"slices"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -36,6 +37,20 @@ func WithInstrumentPrices(p InstrumentPrices) Option {
 	return func(v *Views) { v.prices = p }
 }
 
+// BondTerms reads a treasury bond series' stored terms (D-97);
+// *valuation/postgres.Store implements it.
+type BondTerms interface {
+	// BondTerms returns the series terms of the bond with isin, and false
+	// when none are stored.
+	BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error)
+}
+
+// WithBondTerms reads treasury bonds' stored series terms from b; without
+// it an instrument has none.
+func WithBondTerms(b BondTerms) Option {
+	return func(v *Views) { v.bondTerms = b }
+}
+
 // Listing is one listing of an instrument with the source it is valued at
 // and that source's latest price; Latest is nil when none.
 type Listing struct {
@@ -51,6 +66,10 @@ type Instrument struct {
 	Listings   []Listing
 	AssetClass views.AssetClass
 	Classes    []views.InstrumentClass
+	// Terms are a treasury bond series' stored terms, with where each came
+	// from (D-97); nil for any other instrument, and for a series whose
+	// terms are not stored yet.
+	Terms *pl.Terms
 }
 
 // viewableTransactions returns the current transactions of every account
@@ -74,9 +93,9 @@ func (v *Views) viewableTransactions(ctx context.Context, isin string) ([]ledger
 // Instrument returns the instrument with ISIN isin (D-195): its listings,
 // those the caller's viewable accounts post to and those priced, each with
 // its price source and latest price, its asset class, and its exemption
-// class in each wrapper whose yearly tax tells assets apart (D-127, D-132).
-// An ISIN no viewable account posts to and with no stored price is
-// ErrUnknownInstrument.
+// class in each wrapper whose yearly tax tells assets apart (D-127, D-132),
+// and a treasury bond series' stored terms (D-97). An ISIN no viewable
+// account posts to and with no stored price is ErrUnknownInstrument.
 func (v *Views) Instrument(ctx context.Context, isin string) (Instrument, error) {
 	listings, latest, err := v.instrumentListings(ctx, isin)
 	if err != nil {
@@ -97,7 +116,28 @@ func (v *Views) Instrument(ctx context.Context, isin string) (Instrument, error)
 	if out.Classes, err = v.instrumentClasses(ctx, listings[0], &priced); err != nil {
 		return Instrument{}, err
 	}
+	terms, ok, err := v.seriesTerms(ctx, listings[0])
+	if err != nil {
+		return Instrument{}, err
+	}
+	if ok {
+		out.Terms = &terms
+	}
 	return out, nil
+}
+
+// seriesTerms returns the stored series terms of in when it is a treasury
+// bond, and false for any other instrument, for one whose terms are not
+// stored, or without the port.
+func (v *Views) seriesTerms(ctx context.Context, in ledger.Instrument) (pl.Terms, bool, error) {
+	if v.bondTerms == nil || views.AssetClassOf(in) != views.AssetTreasuryBond {
+		return pl.Terms{}, false, nil
+	}
+	t, ok, err := v.bondTerms.BondTerms(ctx, in.ISIN)
+	if err != nil {
+		return pl.Terms{}, false, fmt.Errorf("loading the series terms of %s: %w", in.ISIN, err)
+	}
+	return t, ok, nil
 }
 
 // instrumentListings returns the listings of isin that the caller's

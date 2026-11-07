@@ -958,3 +958,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83f070d1ce32
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-series
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T13:29:30.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18954d0ef701
+  - type: implements
+    from: SYM-valuation-app-fee-change
+    to: REQ-valuation-owner-sets-bond-fee
+    created_at: 2026-11-07T13:31:05.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-658f649dcf80
+  - type: covered_by
+    from: SYM-valuation-app-fee-change
+    to: TEST-valuation-app-bondfee
+    created_at: 2026-11-07T13:31:05.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a85053631f78
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-get-first-period-rate
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:37.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb6ed308cb2
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-get-first-period-rate
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:37.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c23c6ea609

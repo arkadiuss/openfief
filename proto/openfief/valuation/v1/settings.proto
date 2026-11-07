@@ -25,6 +25,10 @@
 // - A number format key that is not one of number_formats, a marginal rate
 //   that is not a decimal above 0 and below 1, or a charts' start that is
 //   not a YYYY-MM-DD date, fails with INVALID_ARGUMENT and nothing changes.
+// - SetEarlyRedemptionFee for an ISIN whose series terms are not stored
+//   fails with NOT_FOUND; without a fee, for a series whose fee is not
+//   assumed, with FAILED_PRECONDITION; a fee that is not a decimal of zero
+//   or more, with INVALID_ARGUMENT. Nothing changes then.
 // - A charts' start of an account the owner may not change (D-163) fails
 //   with PERMISSION_DENIED, whether it is stored or not; one of an account
 //   that is not stored, with NOT_FOUND.
@@ -53,6 +57,16 @@ service SettingsService {
   // it can't read. The choice stays with the instrument; setting it again
   // replaces it. It revalues nothing: the yearly tax is computed when read.
   rpc SetExemptionClass(SetExemptionClassRequest) returns (SetExemptionClassResponse);
+
+  // SetEarlyRedemptionFee confirms or overrides a treasury bond series'
+  // early-redemption fee (D-97). Without a fee it confirms the fee assumed
+  // from the reviewed table's latest issue letter for a series sold after
+  // the month the table was reviewed through: the same fee becomes the
+  // owner's, and nothing is revalued. With a fee it replaces the series'
+  // fee, whatever it came from, and every account that held the series is
+  // revalued. Either way the attention item asking to confirm the fee
+  // clears.
+  rpc SetEarlyRedemptionFee(SetEarlyRedemptionFeeRequest) returns (SetEarlyRedemptionFeeResponse);
 
   // SetChartStart stores the day the time charts start on (D-138) as the
   // owner's setting (D-167): the portfolio's, or one account's. An empty
@@ -149,3 +163,15 @@ message SetChartStartRequest {
 }
 
 message SetChartStartResponse {}
+
+message SetEarlyRedemptionFeeRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The treasury bond series' ISIN, as stored with its terms.
+  string isin = 3;
+  // The fee per bond in PLN, a decimal string of zero or more, such as
+  // "3.00"; empty confirms the assumed fee.
+  string fee = 4;
+}
+
+message SetEarlyRedemptionFeeResponse {}

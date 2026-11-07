@@ -755,13 +755,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fa54fd13679
-  - type: implements
-    from: SYM-pl-sale-month
-    to: REQ-pl-early-redemption-fee-table
-    created_at: 2026-11-07T08:08:38.477Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-68f367abe62c
   - type: covered_by
     from: SYM-pl-sale-month
     to: TEST-pl-fees
@@ -769,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40c9c057991b
+  - type: implements
+    from: SYM-pl-sale-month
+    to: REQ-pl-fee-carried-forward-assumed
+    created_at: 2026-11-07T13:36:22.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52d3430e4c50

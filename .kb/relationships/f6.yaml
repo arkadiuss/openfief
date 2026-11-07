@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa7d48c0be47
+  - type: implements
+    from: SYM-treasurybonds-complete
+    to: REQ-treasurybonds-rates-from-ministry-data
+    created_at: 2026-11-07T12:38:04.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a81d27614926

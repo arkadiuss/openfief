@@ -12,6 +12,7 @@ require (
 	github.com/google/go-containerregistry v0.22.1
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.11.0
+	github.com/richardlehane/mscfb v1.0.9
 	github.com/riverqueue/river v0.49.0
 	github.com/riverqueue/river/riverdriver/riverpgxv5 v0.49.0
 	github.com/riverqueue/river/rivertype v0.49.0
@@ -44,6 +45,7 @@ require (
 	github.com/google/go-tpm v0.9.8 // indirect
 	github.com/klauspost/compress v1.20.2 // indirect
 	github.com/philhofer/fwd v1.2.0 // indirect
+	github.com/richardlehane/msoleps v1.0.3 // indirect
 	github.com/riverqueue/rivercontrib/otelriver v0.12.0
 	github.com/tinylib/msgp v1.6.4 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect

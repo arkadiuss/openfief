@@ -811,3 +811,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4fb1c8f4c98
+  - type: constrains
+    from: REQ-pl-fee-carried-forward-assumed
+    to: FACT-SUBJECT-FCD7D220C4CF3153
+    created_at: 2026-11-07T13:26:46.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35e4073ed8ae
+  - type: requires_property
+    from: REQ-pl-fee-carried-forward-assumed
+    to: FACT-PROP-1710DF10B102786F
+    created_at: 2026-11-07T13:26:46.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ca1cc1140da
+  - type: specified_by
+    from: REQ-pl-fee-carried-forward-assumed
+    to: SCEN-pl-fee-carried-forward-assumed
+    created_at: 2026-11-07T13:26:46.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a49f3fe5125
+  - type: specified_by
+    from: REQ-pl-fee-carried-forward-assumed
+    to: SCEN-pl-early-redemption-fee-table
+    created_at: 2026-11-07T13:26:46.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-229f75e8565e
+  - type: supersedes
+    from: REQ-pl-fee-carried-forward-assumed
+    to: REQ-pl-early-redemption-fee-table
+    created_at: 2026-11-07T13:26:46.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491745a8fdac
+  - type: executable_for
+    from: SYM-treasury-bonds-test-import-bond-lots-pending-terms
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T13:34:29.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d92baec6e667

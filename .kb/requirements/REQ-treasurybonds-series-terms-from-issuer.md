@@ -1,6 +1,6 @@
 ---
 title: Once obligacjeskarbowe.pl's terms of use are confirmed to allow it, the treasury bond connector must read each series' terms, the first-period rate, margin and early-redemption fee, from that site.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

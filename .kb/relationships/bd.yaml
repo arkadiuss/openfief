@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a308d18bd8b9
+  - type: verified_by
+    from: SCEN-attention-bond-fee-assumed
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:26:28.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28ae188c0741
+  - type: verified_by
+    from: SCEN-attention-bond-fee-assumed
+    to: TEST-attention-scope
+    created_at: 2026-11-07T13:26:28.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eedc876df447
