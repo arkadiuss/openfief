@@ -58,16 +58,16 @@ timed 30 "" && rc=0 || rc=$?
 check "a fast query prints its duration and no warning" \
   "$([ "$rc" -eq 0 ] && has "kibi coverage took 30 s" && lacks warning && clean_stdout && echo yes || echo no)"
 
-timed 59 true && rc=0 || rc=$?
-check "59 s under Actions is not a warning yet" "$([ "$rc" -eq 0 ] && lacks warning && echo yes || echo no)"
+timed 89 true && rc=0 || rc=$?
+check "89 s under Actions is not a warning yet" "$([ "$rc" -eq 0 ] && lacks warning && echo yes || echo no)"
 
-timed 60 true && rc=0 || rc=$?
-check "60 s under Actions is a workflow warning, on stderr only" \
-  "$([ "$rc" -eq 0 ] && has "::warning title=kibi query time::kibi coverage took 60 s" && clean_stdout && echo yes || echo no)"
+timed 90 true && rc=0 || rc=$?
+check "90 s under Actions is a workflow warning, on stderr only" \
+  "$([ "$rc" -eq 0 ] && has "::warning title=kibi query time::kibi coverage took 90 s" && clean_stdout && echo yes || echo no)"
 
-timed 75 "" && rc=0 || rc=$?
+timed 95 "" && rc=0 || rc=$?
 check "a slow query outside Actions warns in plain text" \
-  "$([ "$rc" -eq 0 ] && has "warning: kibi coverage took 75 s" && lacks "::warning" && echo yes || echo no)"
+  "$([ "$rc" -eq 0 ] && has "warning: kibi coverage took 95 s" && lacks "::warning" && echo yes || echo no)"
 
 timed 10 "" && rc=0 || rc=$?
 check "kibi's stderr and arguments pass through" "$(has "kibi on stderr: coverage --format json" && echo yes || echo no)"

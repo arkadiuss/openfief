@@ -121,7 +121,7 @@ flowchart TD
 
 `task docs:build` builds the site into `site/public`:
 
-1. `tools/docgen` writes the reference pages from the Go packages, the custom-resource definitions, the Taskfile and kibi's coverage report. kibi also renders its requirements report. The coverage report is one kibi query, which kibi stops at 120 seconds; [kibi-timed.sh](../../scripts/kibi-timed.sh) prints how long it took and warns from 60 seconds ([kibi.md](kibi.md#setup-notes)).
+1. `tools/docgen` writes the reference pages from the Go packages, the custom-resource definitions, the Taskfile and kibi's coverage report. kibi also renders its requirements report. The coverage report is one kibi query, which kibi stops at 120 seconds; [kibi-timed.sh](../../scripts/kibi-timed.sh) prints how long it took and warns from 90 seconds ([kibi.md](kibi.md#setup-notes)).
 2. Hugo's first pass collects every Mermaid block on every page, DESIGN.md and proposals included.
 3. `scripts/docs-diagrams.mjs` renders each block to a light and a dark SVG in headless Chromium, in the design system's palette, with `design/icons` registered as the Mermaid icon pack `fief`. Each diagram is cached by a hash of its source.
 4. Hugo's second pass builds the site with the SVGs inlined. The site runs no JavaScript and loads nothing from other hosts.
