@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-598720d954a8
+  - type: executable_for
+    from: SYM-tooling-kibi-timed-test-timed
+    to: TEST-tooling-kibi-timed
+    created_at: 2026-11-07T19:28:12.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-008f70a8c2e9

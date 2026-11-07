@@ -163842,16 +163842,6 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-bond-terms-attribution-contract
-  - id: SYM-kibi-coverage-test-run
-    title: run
-    sourceFile: scripts/tests/kibi-coverage.test.sh
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T15:49:51.136Z
-    relationships:
-      - type: executable_for
-        target: TEST-tooling-kibi-coverage
   - id: SYM-pl-fee-source
     title: FeeSource
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -165523,3 +165513,73 @@ symbols:
         target: TEST-views-connectapi-bondterms
       - type: implements
         target: REQ-views-bond-series-terms
+  - id: SYM-tooling-kibi-timed-test-timed
+    title: timed
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:10.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:16.051Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-has
+    title: has
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:21.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-lacks
+    title: lacks
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:26.822Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-clean-stdout
+    title: clean_stdout
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:32.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-dedupe-test-run
+    title: run
+    sourceFile: scripts/tests/kibi-dedupe.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:38.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-dedupe
+  - id: SYM-tooling-kibi-dedupe-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-dedupe.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:43.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-dedupe

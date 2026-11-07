@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ac1a447fd36
+  - type: constrains
+    from: REQ-tooling-kibi-slow-query-warning
+    to: FACT-SUBJECT-AA869FD5FC3816C8
+    created_at: 2026-11-07T19:28:01.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74b7ad22709
+  - type: requires_property
+    from: REQ-tooling-kibi-slow-query-warning
+    to: FACT-PROP-5EA14B0CBA412425
+    created_at: 2026-11-07T19:28:01.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63e50ae90ab3
+  - type: specified_by
+    from: REQ-tooling-kibi-slow-query-warning
+    to: SCEN-tooling-kibi-slow-query-warned
+    created_at: 2026-11-07T19:28:01.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05cdbeeb25ae

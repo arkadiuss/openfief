@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eedc876df447
+  - type: constrains
+    from: REQ-tooling-kibi-duplicates-reported
+    to: FACT-SUBJECT-AA869FD5FC3816C8
+    created_at: 2026-11-07T19:28:04.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8f874a71b45
+  - type: requires_property
+    from: REQ-tooling-kibi-duplicates-reported
+    to: FACT-PROP-6DB41F9D1C53C474
+    created_at: 2026-11-07T19:28:04.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26b112c6516
+  - type: specified_by
+    from: REQ-tooling-kibi-duplicates-reported
+    to: SCEN-tooling-kibi-duplicates-reported
+    created_at: 2026-11-07T19:28:04.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54455a12050b

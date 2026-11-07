@@ -898,12 +898,12 @@ tasks:
 
   docs:gen:
     desc: Generate the docs site's reference and status pages into site/.gen (docs/dev/docs.md)
-    deps: [tool:gojq]
     cmds:
       - mkdir -p site/.gen/content site/.gen/diagrams site/.gen/static
       - go list -json ./... >site/.gen/packages.json
       - '{{.TASK_EXE}} --list-all --json >site/.gen/tasks.json'
-      - PATH='{{.BIN}}':"$PATH" bash scripts/kibi-coverage.sh '{{.KIBI}}' site/.gen/coverage.json
+      # One query for the whole report; kibi-timed.sh prints how long it took and warns past half of kibi's 120 s limit.
+      - bash scripts/kibi-timed.sh '{{.KIBI}}' coverage --by req --include-passing --limit 100000 --format json >site/.gen/coverage.json
       - go run ./tools/docgen reference -packages site/.gen/packages.json -tasks site/.gen/tasks.json -coverage site/.gen/coverage.json -out site/.gen/content
       - '{{.KIBI}} report --output site/.gen/static/requirements >/dev/null'
 

@@ -1,0 +1,67 @@
+diff --git a/node_modules/kibi-core/src/kb.pl b/node_modules/kibi-core/src/kb.pl
+index 8dd3d81..18b6cec 100644
+--- a/node_modules/kibi-core/src/kb.pl
++++ b/node_modules/kibi-core/src/kb.pl
+@@ -2,6 +2,7 @@
+ % Core Knowledge Base module with RDF persistence and audit logging
+ :- module(kb, [
+     kb_attach/1,
++    kb_dedupe_report/2,
+     kb_detach/0,
+     kb_save/0,
+     kb_sync_checkpoint/0,
+@@ -120,6 +121,8 @@ kb_uri('urn-kibi:').
+ :- dynamic kb_generation/1.
+ :- dynamic kb_legacy_sentinel_stamp/1.
+ :- dynamic kb_audit_sequence/1.
++% Local patch (OpenFief): duplicates the last attach removed, for the client.
++:- dynamic kb_dedupe_report/2.
+ :- dynamic kb_dirty/0.
+ % Rebuildable read indexes. RDF remains authoritative; a dirty marker causes
+ % the next unbound discovery query to rebuild these daemon-lifetime indexes.
+@@ -209,8 +212,45 @@ kb_attach_journaled(Directory) :-
+     assert(kb_legacy_sentinel_stamp(SentinelStamp)),
+ 
+     load_kb_pl_files(Directory),
++    kb_dedupe_graph_triples(GraphURI),
+     kb_rebuild_indexes.
+ 
++%% kb_dedupe_graph_triples(+Graph)
++% Local patch (OpenFief, patches/kibi-core+0.26.1.patch): kibi 2.36's sync
++% can publish a store holding exact duplicate triples (whole entities and
++% relationships stored twice), and every kb_entity/3 and kb_relationship/3
++% lookup then answers twice; requirement proofs multiply those answers until
++% a coverage query passes the engine's 120 s limit. Keep one copy of each
++% triple. The type-triple count is the cheap check; the full pass runs only
++% when it finds duplicates. The removal is journaled like any other write, so
++% the store on disk is repaired too. The pass is loud: it prints the counts on
++% stderr and records them in kb_dedupe_report/2, which the patched CLI prints
++% (patches/kibi-cli+2.36.0.patch), so the publish defect stays visible.
++kb_dedupe_graph_triples(Graph) :-
++    retractall(kb_dedupe_report(_, _)),
++    aggregate_all(count, rdf(_, kb:type, _, Graph), TypeCount),
++    findall(S-O, rdf(S, kb:type, O, Graph), TypePairs),
++    sort(TypePairs, DistinctTypePairs),
++    length(DistinctTypePairs, DistinctTypeCount),
++    (   TypeCount =:= DistinctTypeCount
++    ->  true
++    ;   findall(t(S, P, O), rdf(S, P, O, Graph), Triples),
++        msort(Triples, Sorted),
++        clumped(Sorted, Counted),
++        findall(t(S, P, O)-N, ( member(t(S, P, O)-N, Counted), N > 1 ), Duplicated),
++        aggregate_all(sum(N - 1), member(_-N, Duplicated), RemovedTriples),
++        rdf_global_id(kb:type, TypePredicate),
++        aggregate_all(count, member(t(_, TypePredicate, _)-_, Duplicated), TwiceEntities),
++        rdf_transaction(
++            forall(member(t(S, P, O)-_, Duplicated),
++                   ( rdf_retractall(S, P, O, Graph), rdf_assert(S, P, O, Graph) ))),
++        kb_mark_dirty,
++        assertz(kb_dedupe_report(RemovedTriples, TwiceEntities)),
++        format(user_error,
++               "kibi (local patch): removed ~d duplicate triples (~d entities stored twice) from the published store - kibi's publish defect, see docs/dev/kibi.md~n",
++               [RemovedTriples, TwiceEntities])
++    ).
++
+ % SWI-Prolog's rdf_db fails to write journals ("invalid term_t ... out of
+ % range") for graphs whose URI is roughly 230 characters or longer.  Store
+ % paths inside deep workspaces reach that length, so those stores use a short
