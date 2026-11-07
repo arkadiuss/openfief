@@ -860,3 +860,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-975b6392dfb5
+  - type: implements
+    from: SYM-views-cli-check
+    to: REQ-views-cli-check-balances
+    created_at: 2026-11-06T23:54:04.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2af27a1a8856
+  - type: covered_by
+    from: SYM-views-cli-check
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:54:04.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a231ae457651
+  - type: implements
+    from: SYM-views-core-parse-command
+    to: REQ-core-serve-flags
+    created_at: 2026-11-06T23:55:19.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc1175cce4b
+  - type: covered_by
+    from: SYM-views-core-parse-command
+    to: TEST-core-unit
+    created_at: 2026-11-06T23:55:19.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad72f9b74126
+  - type: executable_for
+    from: SYM-views-cli-test-helper-ran
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:32.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cda28bba25f9

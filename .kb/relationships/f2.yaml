@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-448c5319e602
+  - type: executable_for
+    from: SYM-views-balances-test-test-run-table
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:43.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7440827a8d91

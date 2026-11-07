@@ -42,6 +42,7 @@ const (
 	cmdBind        = "connector bind"
 	cmdSync        = "connector sync"
 	cmdEnrollLink  = "enroll-link"
+	cmdCheck       = "check balances"
 )
 
 // Defaults of the serve flags.
@@ -66,7 +67,7 @@ const (
 
 var (
 	// errUsage reports a command line the core does not understand.
-	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link] [flags]")
+	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errSyncWorkers reports --sync-workers below one.
@@ -96,6 +97,9 @@ type command struct {
 	Connector connectorArgs
 	// Enroll is what enroll-link needs.
 	Enroll enrollArgs
+	// AllChecks is check balances' --all: every balance assertion, not
+	// only the latest of each position and cash balance.
+	AllChecks bool
 }
 
 // enrollArgs are enroll-link's flags: the origin the passkey is for, and
@@ -155,8 +159,20 @@ type syncConfig struct {
 // getenv. With no command, or only flags, it is serve.
 func parseArgs(args []string, getenv func(string) string) (command, error) {
 	cl := splitCommand(args)
-	name, rest := cl.name, cl.args
-	cmd := command{Name: name, DSN: getenv(dsnEnv)}
+	cmd, err := parseCommand(cl.name, cl.args, getenv)
+	if err != nil {
+		return command{}, err
+	}
+	if cmd.DSN = getenv(dsnEnv); cmd.DSN == "" {
+		return command{}, errNoDSN
+	}
+	return cmd, nil
+}
+
+// parseCommand parses the arguments rest of the command name, reading the
+// environment through getenv.
+func parseCommand(name string, rest []string, getenv func(string) string) (command, error) {
+	cmd := command{Name: name}
 	var err error
 	switch name {
 	case cmdServe:
@@ -171,14 +187,13 @@ func parseArgs(args []string, getenv func(string) string) (command, error) {
 		cmd.Connector, err = parseConnector(name, rest)
 	case cmdEnrollLink:
 		cmd.Enroll, err = parseEnrollLink(rest, getenv)
+	case cmdCheck:
+		cmd.AllChecks, err = parseCheck(rest)
 	default:
 		err = fmt.Errorf("%w: unknown command %q", errUsage, name)
 	}
 	if err != nil {
 		return command{}, err
-	}
-	if cmd.DSN == "" {
-		return command{}, errNoDSN
 	}
 	return cmd, nil
 }
@@ -194,7 +209,7 @@ func splitCommand(args []string) commandLine {
 	switch {
 	case len(args) == 0 || strings.HasPrefix(args[0], "-"):
 		return commandLine{name: cmdServe, args: args}
-	case (args[0] == "token" || args[0] == "connector") && len(args) > 1:
+	case (args[0] == "token" || args[0] == "connector" || args[0] == "check") && len(args) > 1:
 		return commandLine{name: args[0] + " " + args[1], args: args[2:]}
 	}
 	return commandLine{name: args[0], args: args[1:]}
@@ -399,4 +414,17 @@ func parseNone(name string, args []string) error {
 		return fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
 	}
 	return nil
+}
+
+// parseCheck parses check balances' flags: --all.
+func parseCheck(args []string) (bool, error) {
+	fs := newFlags(cmdCheck)
+	all := fs.Bool("all", false, "every balance assertion, not only the latest of each position and cash balance")
+	if err := fs.Parse(args); err != nil {
+		return false, fmt.Errorf("%s: %w", cmdCheck, err)
+	}
+	if fs.NArg() > 0 {
+		return false, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
+	}
+	return *all, nil
 }

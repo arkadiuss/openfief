@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87aaba4b7d2a
+  - type: implements
+    from: SYM-views-unsupported-rows
+    to: REQ-views-balance-check-unsupported
+    created_at: 2026-11-06T23:52:55.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51955b3d996b
+  - type: covered_by
+    from: SYM-views-unsupported-rows
+    to: TEST-views-balances
+    created_at: 2026-11-06T23:52:55.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b477a71b4b2b

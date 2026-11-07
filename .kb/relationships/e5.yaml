@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f394f4cd47c4
+  - type: constrains
+    from: REQ-views-balance-check-owner-only
+    to: FACT-SUBJECT-8A99EEDFEBFAE3C9
+    created_at: 2026-11-06T23:37:22.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98a5a73f675d
+  - type: requires_property
+    from: REQ-views-balance-check-owner-only
+    to: FACT-PROP-0C0FA0B1BD429EC4
+    created_at: 2026-11-06T23:37:22.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad1e640aebd2
+  - type: specified_by
+    from: REQ-views-balance-check-owner-only
+    to: SCEN-views-balance-check-owner-only
+    created_at: 2026-11-06T23:37:22.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3ce7ada78a2

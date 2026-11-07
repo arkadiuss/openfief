@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7526822b99d6
+  - type: constrains
+    from: REQ-views-balance-check-tolerance
+    to: FACT-SUBJECT-8A99EEDFEBFAE3C9
+    created_at: 2026-11-06T23:37:20.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a44f18781c5c
+  - type: requires_property
+    from: REQ-views-balance-check-tolerance
+    to: FACT-PROP-D6363303FCD8755B
+    created_at: 2026-11-06T23:37:20.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c8528ce7886
+  - type: specified_by
+    from: REQ-views-balance-check-tolerance
+    to: SCEN-views-balance-check-tolerance
+    created_at: 2026-11-06T23:37:20.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665c1dda8a92

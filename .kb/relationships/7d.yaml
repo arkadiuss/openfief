@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67a5dbe7d4cd
+  - type: executable_for
+    from: SYM-views-cli-test-helper-run-on
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:37.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01db9e6c5882

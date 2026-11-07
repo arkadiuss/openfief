@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bed225b39f1f
+  - type: implements
+    from: SYM-views-app-views-balance-report
+    to: REQ-views-balance-check-owner-only
+    created_at: 2026-11-06T23:53:16.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b0ea9e9e109
+  - type: implements
+    from: SYM-views-app-views-balance-report
+    to: REQ-views-balance-check-tolerance
+    created_at: 2026-11-06T23:53:16.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16ca8e3f030
+  - type: covered_by
+    from: SYM-views-app-views-balance-report
+    to: TEST-views-app-balances
+    created_at: 2026-11-06T23:53:16.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33369ced162b

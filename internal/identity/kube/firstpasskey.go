@@ -78,30 +78,27 @@ func podReady(p *corev1.Pod) bool {
 // output. The link is the only place the code is shown; it never goes into
 // an error.
 func (a *CoreAccess) EnrollLink(ctx context.Context, host string, ttl time.Duration) (string, error) {
-	pod, err := a.CorePod(ctx)
+	out, err := a.exec(ctx, []string{"enroll-link", "--host", host, "--ttl", ttl.String()})
 	if err != nil {
 		return "", err
 	}
-	req := a.Client.CoreV1().RESTClient().Post().Resource("pods").Namespace(a.Namespace).Name(pod).SubResource("exec").
-		VersionedParams(&corev1.PodExecOptions{
-			Container: CoreContainer,
-			Command:   []string{CoreBinary, "enroll-link", "--host", host, "--ttl", ttl.String()},
-			Stdout:    true,
-			Stderr:    true,
-		}, scheme.ParameterCodec)
-	exec, err := remotecommand.NewSPDYExecutor(a.Config, http.MethodPost, req.URL())
-	if err != nil {
-		return "", fmt.Errorf("exec in %s: %w", pod, err)
-	}
-	var stdout, stderr bytes.Buffer
-	if err := exec.StreamWithContext(ctx, remotecommand.StreamOptions{Stdout: &stdout, Stderr: &stderr}); err != nil {
-		return "", fmt.Errorf("core enroll-link in %s: %w: %s", pod, err, strings.TrimSpace(stderr.String()))
-	}
-	link, _, _ := strings.Cut(stdout.String(), "\n")
+	link, _, _ := strings.Cut(string(out.stdout), "\n")
 	if !strings.Contains(link, "/enroll#code=") {
-		return "", fmt.Errorf("core enroll-link in %s printed no link: %w", pod, errNoLink)
+		return "", fmt.Errorf("core enroll-link in %s printed no link: %w", out.pod, errNoLink)
 	}
 	return link, nil
+}
+
+// Exec runs the core's binary with args in the core's pod, as the owner's
+// own commands do (D-80), and returns what it wrote to standard output.
+// Its standard error goes into the error of a command that fails, and
+// nowhere else.
+func (a *CoreAccess) Exec(ctx context.Context, args []string) ([]byte, error) {
+	out, err := a.exec(ctx, args)
+	if err != nil {
+		return nil, err
+	}
+	return out.stdout, nil
 }
 
 // errNoLink reports output of core enroll-link without a link.
@@ -153,4 +150,40 @@ func (a *CoreAccess) readyPod(ctx context.Context) (*corev1.Pod, error) {
 		return nil, fmt.Errorf("%w in namespace %s", ErrNoCorePod, a.Namespace)
 	}
 	return slices.MinFunc(ready, func(p, q *corev1.Pod) int { return strings.Compare(p.Name, q.Name) }), nil
+}
+
+// execOutput is what a command run in the core's pod wrote to standard
+// output, and the pod it ran in.
+type execOutput struct {
+	pod    string
+	stdout []byte
+}
+
+// exec runs CoreBinary with args in a ready core pod through Kubernetes
+// exec.
+func (a *CoreAccess) exec(ctx context.Context, args []string) (execOutput, error) {
+	pod, err := a.CorePod(ctx)
+	if err != nil {
+		return execOutput{}, err
+	}
+	req := a.Client.CoreV1().RESTClient().Post().Resource("pods").Namespace(a.Namespace).Name(pod).SubResource("exec").
+		VersionedParams(&corev1.PodExecOptions{
+			Container: CoreContainer,
+			Command:   append([]string{CoreBinary}, args...),
+			Stdout:    true,
+			Stderr:    true,
+		}, scheme.ParameterCodec)
+	exec, err := remotecommand.NewSPDYExecutor(a.Config, http.MethodPost, req.URL())
+	if err != nil {
+		return execOutput{}, fmt.Errorf("exec in %s: %w", pod, err)
+	}
+	var stdout, stderr bytes.Buffer
+	if err := exec.StreamWithContext(ctx, remotecommand.StreamOptions{Stdout: &stdout, Stderr: &stderr}); err != nil {
+		name := "command"
+		if len(args) > 0 {
+			name = args[0]
+		}
+		return execOutput{}, fmt.Errorf("core %s in %s: %w: %s", name, pod, err, strings.TrimSpace(stderr.String()))
+	}
+	return execOutput{pod: pod, stdout: stdout.Bytes()}, nil
 }

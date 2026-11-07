@@ -12,6 +12,7 @@
 //	                        [--trusted-signers FILE] [--yes]
 //	openfief plugin uninstall <instance> [--yes]
 //	openfief plugin list
+//	openfief check balances [--all] [--json]
 //	openfief version
 //
 // install reads the catalog entry or the image, verifies the image's
@@ -27,8 +28,11 @@
 // origin, which the core refuses unless it is in its OPENFIEF_AUTH_ORIGINS
 // (D-126), and with no port-forward; without it, it forwards localhost:8080 to the core, the only
 // entry point for browsers (D-81), prints the link for it and keeps
-// forwarding until Ctrl-C. Every cluster command takes --kubeconfig and
-// --context. version prints the release the binary was built for, stamped by
+// forwarding until Ctrl-C. check balances runs the core's check balances
+// in its pod the same way and prints the owner's balance check (D-200,
+// criterion 1) as a table, or as JSON with --json, exiting with status 1
+// when any balance assertion fails. Every cluster command takes
+// --kubeconfig and --context. version prints the release the binary was built for, stamped by
 // the release (scripts/release-cli.sh), or dev, and the commit Go recorded.
 package main
 
@@ -36,6 +40,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -58,6 +63,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/plugins/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
+	viewscli "github.com/arkadiuss/openfief/internal/views/cli"
 )
 
 // exitUsage is the exit status for bad arguments.
@@ -69,7 +75,7 @@ func main() {
 	stop()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "openfief:", err)
-		if errors.Is(err, cli.ErrUsage) || errors.Is(err, identitycli.ErrUsage) {
+		if errors.Is(err, cli.ErrUsage) || errors.Is(err, identitycli.ErrUsage) || errors.Is(err, viewscli.ErrUsage) {
 			os.Exit(exitUsage)
 		}
 		os.Exit(1)
@@ -82,17 +88,10 @@ func run(ctx context.Context, args []string) error {
 		return runVersion(args[1:], os.Stdout)
 	}
 	if len(args) > 0 && args[0] == "enroll" {
-		connectTo := func(kubeconfig, kubeContext string) (identitycli.Core, error) {
-			core, err := connectCore(kubeconfig, kubeContext)
-			if err != nil {
-				return nil, err
-			}
-			return core, nil
-		}
-		if err := identitycli.Run(ctx, args[1:], &identitycli.Env{Out: os.Stdout, Connect: connectTo}); err != nil {
-			return fmt.Errorf("enroll: %w", err)
-		}
-		return nil
+		return runEnroll(ctx, args[1:], os.Stdout)
+	}
+	if len(args) > 0 && args[0] == "check" {
+		return runCheck(ctx, args[1:], os.Stdout)
 	}
 	env, err := newEnv()
 	if err != nil {
@@ -100,6 +99,39 @@ func run(ctx context.Context, args []string) error {
 	}
 	if err := cli.Run(ctx, args, env); err != nil {
 		return fmt.Errorf("%w", err)
+	}
+	return nil
+}
+
+// runEnroll runs `openfief enroll` with args, the arguments after
+// "enroll", reaching the core's pod with the owner's kubeconfig
+// (connectCore).
+func runEnroll(ctx context.Context, args []string, out io.Writer) error {
+	connectTo := func(kubeconfig, kubeContext string) (identitycli.Core, error) {
+		core, err := connectCore(kubeconfig, kubeContext)
+		if err != nil {
+			return nil, err
+		}
+		return core, nil
+	}
+	if err := identitycli.Run(ctx, args, &identitycli.Env{Out: out, Connect: connectTo}); err != nil {
+		return fmt.Errorf("enroll: %w", err)
+	}
+	return nil
+}
+
+// runCheck runs `openfief check` with args, the arguments after "check",
+// reaching the core's pod with the owner's kubeconfig (connectCore).
+func runCheck(ctx context.Context, args []string, out io.Writer) error {
+	connectTo := func(kubeconfig, kubeContext string) (viewscli.Core, error) {
+		core, err := connectCore(kubeconfig, kubeContext)
+		if err != nil {
+			return nil, err
+		}
+		return core, nil
+	}
+	if err := viewscli.Run(ctx, args, &viewscli.Env{Out: out, Connect: connectTo}); err != nil {
+		return fmt.Errorf("check: %w", err)
 	}
 	return nil
 }

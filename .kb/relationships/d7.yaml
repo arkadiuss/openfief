@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ec8f1d26513
+  - type: executable_for
+    from: SYM-views-core-test-helper-check-counts-only
+    to: TEST-core-check-balances
+    created_at: 2026-11-06T23:57:20.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1bf405bf97d

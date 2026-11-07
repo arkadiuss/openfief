@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d58ca88af6da
+  - type: executable_for
+    from: SYM-views-cli-test-helper-fake-core
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:10.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efb19e1fe2cb
+  - type: executable_for
+    from: SYM-views-identity-kube-test-exec-needs-ready-core-pod
+    to: TEST-identity-kube-core-access
+    created_at: 2026-11-06T23:57:05.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c2201b40f35

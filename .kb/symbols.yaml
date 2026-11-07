@@ -158097,3 +158097,706 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-isolation
+  - id: SYM-views-cash-tolerance
+    title: CashTolerance
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:22.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-balance-check
+    title: BalanceCheck
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:27.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-check-balance
+    title: CheckBalance
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:32.748Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-latest-balance-checks
+    title: LatestBalanceChecks
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:37.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-latest-balance-checks-key
+    title: key
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:43.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-sort-balance-checks
+    title: SortBalanceChecks
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:48.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-unsupported-rows
+    title: UnsupportedRows
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:53.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-unsupported
+  - id: SYM-views-latest-unsupported
+    title: LatestUnsupported
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:52:59.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-unsupported
+  - id: SYM-views-balance-report
+    title: BalanceReport
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:03.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+      - type: implements
+        target: REQ-views-balance-check-unsupported
+  - id: SYM-views-balance-report-failed
+    title: BalanceReport.Failed
+    sourceFile: internal/views/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:09.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-balances
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-app-views-balance-report
+    title: Views.BalanceReport
+    sourceFile: internal/views/app/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:14.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-balances
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+      - type: implements
+        target: REQ-views-balance-check-tolerance
+  - id: SYM-views-app-views-latest-unsupported
+    title: Views.latestUnsupported
+    sourceFile: internal/views/app/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:19.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-balances
+      - type: implements
+        target: REQ-views-balance-check-unsupported
+  - id: SYM-views-cli-core-args
+    title: CoreArgs
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:25.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+  - id: SYM-views-cli-core
+    title: Core
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:30.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+  - id: SYM-views-cli-env
+    title: Env
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:36.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-options
+    title: options
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:41.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-parse
+    title: parse
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:46.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-run
+    title: Run
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:52.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-report
+    title: Report
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:53:57.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-check
+    title: Check
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:03.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-unsupported-rows
+    title: UnsupportedRows
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:08.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-new-report
+    title: NewReport
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:14.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-write-json
+    title: WriteJSON
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:19.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-write-report
+    title: writeReport
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:24.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-read-json
+    title: ReadJSON
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:30.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-write-table
+    title: WriteTable
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:35.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-row
+    title: row
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:40.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-cli-shown
+    title: shown
+    sourceFile: internal/views/cli/balances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:46.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-cli-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-identity-kube-core-access-exec
+    title: CoreAccess.Exec
+    sourceFile: internal/identity/kube/firstpasskey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:51.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+  - id: SYM-views-identity-kube-core-access-exec-private
+    title: CoreAccess.exec
+    sourceFile: internal/identity/kube/firstpasskey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:54:56.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-first-passkey-command
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+  - id: SYM-views-identity-kube-exec-output
+    title: execOutput
+    sourceFile: internal/identity/kube/firstpasskey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:02.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-core-access
+      - type: implements
+        target: REQ-identity-first-passkey-command
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+  - id: SYM-views-core-check-balances
+    title: checkBalances
+    sourceFile: cmd/core/checkbalances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:07.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-balances
+      - type: implements
+        target: REQ-views-balance-check-owner-only
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-core-parse-check
+    title: parseCheck
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:12.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-balances
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-core-parse-command
+    title: parseCommand
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:18.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-core-serve-flags
+  - id: SYM-views-openfief-run-check
+    title: runCheck
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:23.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-cmd-openfief
+      - type: implements
+        target: REQ-views-cli-check-balances
+  - id: SYM-views-openfief-run-enroll
+    title: runEnroll
+    sourceFile: cmd/openfief/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:28.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-first-passkey
+      - type: implements
+        target: REQ-identity-first-passkey-command
+  - id: SYM-views-test-helper-decimal
+    title: decimal
+    sourceFile: internal/views/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:33.688Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-balances
+  - id: SYM-views-balances-test-test-check-balance
+    title: TestCheckBalance
+    sourceFile: internal/views/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:38.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-balances
+  - id: SYM-views-balances-test-test-latest-balance-checks
+    title: TestLatestBalanceChecks
+    sourceFile: internal/views/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:43.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-balances
+  - id: SYM-views-balances-test-test-latest-unsupported
+    title: TestLatestUnsupported
+    sourceFile: internal/views/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:48.510Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-balances
+  - id: SYM-views-app-test-helper-balance-views
+    title: balanceViews
+    sourceFile: internal/views/app/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:53.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-balances
+  - id: SYM-views-balances-test-test-balance-report-owner-only
+    title: TestBalanceReportOwnerOnly
+    sourceFile: internal/views/app/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:55:58.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-balances
+  - id: SYM-views-balances-test-test-balance-report
+    title: TestBalanceReport
+    sourceFile: internal/views/app/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:03.670Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-balances
+  - id: SYM-views-cli-test-helper-fake-core
+    title: fakeCore
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:09.072Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-cli-test-helper-fake-core-exec
+    title: fakeCore.Exec
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:14.537Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-cli-test-helper-synthetic-report
+    title: syntheticReport
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:19.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-cli-test-helper-core-json
+    title: coreJSON
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:25.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-cli-test-helper-ran
+    title: ran
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:30.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-cli-test-helper-run-on
+    title: runOn
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:36.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-balances-test-test-run-table
+    title: TestRunTable
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:41.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-balances-test-test-run-json
+    title: TestRunJSON
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:46.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-balances-test-test-run-refuses
+    title: TestRunRefuses
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:52.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-balances-test-test-write-table-escapes
+    title: TestWriteTableEscapes
+    sourceFile: internal/views/cli/balances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:56:57.967Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-cli-balances
+  - id: SYM-views-identity-kube-test-exec-needs-ready-core-pod
+    title: TestExecNeedsReadyCorePod
+    sourceFile: internal/identity/kube/firstpasskey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:57:03.148Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-core-access
+  - id: SYM-views-core-test-helper-seed-balances
+    title: seedBalances
+    sourceFile: cmd/core/checkbalances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:57:08.513Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-balances
+  - id: SYM-views-core-test-check-balances
+    title: TestCheckBalances
+    sourceFile: cmd/core/checkbalances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:57:13.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-balances
+  - id: SYM-views-core-test-helper-check-counts-only
+    title: checkCountsOnly
+    sourceFile: cmd/core/checkbalances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:57:18.999Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-balances
+  - id: SYM-views-openfief-test-check-refuses-bad-arguments
+    title: TestCheckRefusesBadArguments
+    sourceFile: cmd/openfief/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:57:24.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-cmd-openfief

@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6748de23c449
+  - type: executable_for
+    from: SYM-views-balances-test-test-balance-report
+    to: TEST-views-app-balances
+    created_at: 2026-11-06T23:56:05.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-996c6cb02a48
+  - type: executable_for
+    from: SYM-views-cli-test-helper-fake-core-exec
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:16.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dd93df41693

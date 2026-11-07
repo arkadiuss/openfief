@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10f4c2b71fa6
+  - type: implements
+    from: SYM-views-sort-balance-checks
+    to: REQ-views-balance-check-tolerance
+    created_at: 2026-11-06T23:52:50.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbcb6e0ab978
+  - type: covered_by
+    from: SYM-views-sort-balance-checks
+    to: TEST-views-balances
+    created_at: 2026-11-06T23:52:50.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd5efee6f686

@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a648c1009824
+  - type: implements
+    from: SYM-views-cli-write-report
+    to: REQ-views-cli-check-balances
+    created_at: 2026-11-06T23:54:26.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4315ffa658f3
+  - type: covered_by
+    from: SYM-views-cli-write-report
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:54:26.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3819c7b4a5df

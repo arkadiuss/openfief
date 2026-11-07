@@ -14,12 +14,16 @@
 //	OPENFIEF_DSN=postgres://... core connector bind --instance NAME --account ID
 //	OPENFIEF_DSN=postgres://... core connector sync --instance NAME [--mode opening|transactions]
 //	OPENFIEF_DSN=postgres://... core enroll-link [--host localhost:8080] [--ttl 15m]
+//	OPENFIEF_DSN=postgres://... core check balances [--all]
 //
 // `token issue` prints the new token's secret once, on stdout, and nowhere
 // else; it is the break-glass way to a script token, which the owner
 // otherwise creates from a logged-in session. `enroll-link` prints a
 // one-time link for creating a passkey on a host (D-60), localhost by
-// default: the way in for the first passkey.
+// default: the way in for the first passkey. `check balances` writes the
+// owner's balance check (D-200, criterion 1) as JSON on stdout, for
+// `openfief check balances`, which runs it through Kubernetes exec with
+// the owner's kubeconfig; it logs only that the check ran, with counts.
 //
 // Next to the read API, serve offers view plugins the AuthService
 // (proto/openfief/identity/v1): passkey login and registration, sessions,
@@ -102,6 +106,10 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 				return err
 			}
 			return enrollLink(ctx, d.pool, &cmd.Enroll, out, time.Now())
+		})
+	case cmdCheck:
+		return withPool(ctx, cmd.DSN, func(d *deps) error {
+			return checkBalances(ctx, d.pool, cmd.AllChecks, out, log)
 		})
 	case cmdBind, cmdSync:
 		cl := clusterOrNil(log)

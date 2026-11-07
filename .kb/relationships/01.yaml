@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5782e87b6f86
+  - type: executable_for
+    from: SYM-views-openfief-test-check-refuses-bad-arguments
+    to: TEST-cmd-openfief
+    created_at: 2026-11-06T23:57:26.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67c45d14d839

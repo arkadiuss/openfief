@@ -797,3 +797,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-105cc2d21d3a
+  - type: constrains
+    from: REQ-views-cli-check-balances
+    to: FACT-SUBJECT-8A99EEDFEBFAE3C9
+    created_at: 2026-11-06T23:37:27.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-211f3a324c90
+  - type: requires_property
+    from: REQ-views-cli-check-balances
+    to: FACT-PROP-4AEE3F6370174D26
+    created_at: 2026-11-06T23:37:27.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c845ed4e78f
+  - type: specified_by
+    from: REQ-views-cli-check-balances
+    to: SCEN-views-cli-check-balances
+    created_at: 2026-11-06T23:37:27.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adb9139aa91d

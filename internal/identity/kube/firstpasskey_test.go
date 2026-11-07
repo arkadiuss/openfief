@@ -70,3 +70,17 @@ func TestCorePod(t *testing.T) {
 		})
 	}
 }
+
+// TestExecNeedsReadyCorePod checks that the owner's commands that run in
+// the core's pod, `openfief check balances` and `openfief enroll`, fail
+// with ErrNoCorePod, running nothing, while no core pod is ready.
+func TestExecNeedsReadyCorePod(t *testing.T) {
+	t.Parallel()
+	a := &kube.CoreAccess{Client: fake.NewClientset(corePod("core-a", corev1.PodRunning, false, false)), Namespace: "openfief"}
+	if out, err := a.Exec(t.Context(), []string{"check", "balances"}); out != nil || !errors.Is(err, kube.ErrNoCorePod) {
+		t.Errorf("Exec = %q, %v; want nothing and ErrNoCorePod", out, err)
+	}
+	if link, err := a.EnrollLink(t.Context(), "localhost:8080", time.Minute); link != "" || !errors.Is(err, kube.ErrNoCorePod) {
+		t.Errorf("EnrollLink = %q, %v; want no link and ErrNoCorePod", link, err)
+	}
+}

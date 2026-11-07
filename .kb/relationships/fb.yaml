@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81dd8547e6ad
+  - type: constrains
+    from: REQ-views-balance-check-unsupported
+    to: FACT-SUBJECT-8A99EEDFEBFAE3C9
+    created_at: 2026-11-06T23:37:25.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ce1ec87a099
+  - type: requires_property
+    from: REQ-views-balance-check-unsupported
+    to: FACT-PROP-2FB7F6160220DD7F
+    created_at: 2026-11-06T23:37:25.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34dd31a59c10
+  - type: specified_by
+    from: REQ-views-balance-check-unsupported
+    to: SCEN-views-balance-check-unsupported
+    created_at: 2026-11-06T23:37:25.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f231da1209f1

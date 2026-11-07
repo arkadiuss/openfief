@@ -36,7 +36,7 @@ flowchart LR
 ## Before you start
 
 - **A Kubernetes cluster** whose network plugin enforces NetworkPolicy, since every OpenFief component runs behind one: k3s and kind do out of the box. A default storage class, or one you name in the database's manifest. The end-to-end tests install each release's bundle, CloudNativePG and the database included, on k3s and on kind.
-- **kubectl**, with a kubeconfig that is a cluster admin for step 4's operator and step 5's CRDs, and that has `get` and `list` on pods and `create` on `pods/exec` and `pods/portforward` in `openfief` for `openfief enroll`.
+- **kubectl**, with a kubeconfig that is a cluster admin for step 4's operator and step 5's CRDs, and that has `get` and `list` on pods and `create` on `pods/exec` and `pods/portforward` in `openfief` for `openfief enroll` and `openfief check balances`.
 - **cosign** 3 or later, the version the release signs with, to verify the signatures ([sigstore/cosign](https://github.com/sigstore/cosign)).
 - **The GitHub CLI** (`gh`), or `curl`, to download the assets.
 - **Encryption at rest.** OpenFief keeps credentials in Kubernetes Secrets and leaves their encryption to the cluster (D-29): turn on etcd encryption at rest (k3s: `--secrets-encryption`), and keep the database's disks and backups encrypted.
@@ -152,6 +152,18 @@ openfief enroll
 ```
 
 It forwards `localhost:8080` to the core, prints a one-time link such as `http://localhost:8080/enroll#code=ofenroll_...`, valid for 15 minutes, and keeps forwarding until Ctrl-C (D-60, D-80). Open the link on the same machine and create the passkey; that signs you in, and the first-run wizard takes you on to your first account. A passkey works only on the hostname it was made on, so with a route of your own, make the first one there instead: `openfief enroll --origin https://fief.example.org`, for an origin the core allows ([Expose OpenFief](expose.md)).
+
+## Check your accounts
+
+Once your connectors have imported your accounts, check that OpenFief agrees with your institutions:
+
+```bash
+openfief check balances
+```
+
+It lists every balance your institutions reported, each position and each cash balance of each account: what the institution reported, what OpenFief derived from your transactions, the difference, and `pass` or `FAIL`. Cash passes within 0.01 of its currency; a position passes only when the units are equal. By default you see the latest report of each position and cash balance; `--all` lists every one, and `--json` prints the same as JSON for a script. Open XTB CFD positions aren't booked (D-24), so they appear under *flagged, unsupported*, counted per connector instance, and aren't checked.
+
+The command exits with status 1 when any balance fails, so a script can act on it. It runs the check in the core's pod with your kubeconfig, as `openfief enroll` does, so only you get the report, and the values appear only in your terminal: the core logs only that the check ran, with counts. A failed balance usually means a transaction OpenFief couldn't book yet, a row an import left out, which the attention items list, or cash to enter as a checkpoint ([Read API](../concepts/read-api.md#the-owners-balance-check)).
 
 ## What next
 

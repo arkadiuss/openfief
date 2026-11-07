@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-610355734f8a
+  - type: verified_by
+    from: SCEN-views-cli-check-balances
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:37:12.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c0c2c18e27
+  - type: verified_by
+    from: SCEN-views-cli-check-balances
+    to: TEST-core-check-balances
+    created_at: 2026-11-06T23:37:12.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6512a551a0d
+  - type: verified_by
+    from: SCEN-views-cli-check-balances
+    to: TEST-cmd-openfief
+    created_at: 2026-11-06T23:37:12.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd54a945b12c

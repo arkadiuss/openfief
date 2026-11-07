@@ -23,6 +23,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/plugins/cosign/cosigntest"
 	"github.com/arkadiuss/openfief/internal/plugins/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
+	viewscli "github.com/arkadiuss/openfief/internal/views/cli"
 )
 
 // sampleLabel is a synthetic connector's manifest label.
@@ -197,6 +198,19 @@ func TestInstallListUninstall(t *testing.T) {
 		err := store.Client.Get(context.Background(), client.ObjectKey{Namespace: plugins.Namespace, Name: "sample"}, obj)
 		if !apierrors.IsNotFound(err) {
 			t.Errorf("%T after uninstall: %v", obj, err)
+		}
+	}
+}
+
+// TestCheckRefusesBadArguments checks that `openfief check` is a command of
+// its own: arguments it doesn't take are a usage error, exit status 2,
+// before any kubeconfig is read, and nothing is printed.
+func TestCheckRefusesBadArguments(t *testing.T) {
+	t.Parallel()
+	for _, args := range [][]string{{}, {"lots"}, {"balances", "--yes"}} {
+		var out bytes.Buffer
+		if err := runCheck(t.Context(), args, &out); !errors.Is(err, viewscli.ErrUsage) || out.Len() != 0 {
+			t.Errorf("check %q: %v, printed %q; want a usage error and nothing printed", args, err, out.String())
 		}
 	}
 }

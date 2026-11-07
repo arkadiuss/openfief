@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27f935df8df6
+  - type: implements
+    from: SYM-views-identity-kube-exec-output
+    to: REQ-identity-first-passkey-command
+    created_at: 2026-11-06T23:55:04.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97a6d6b741fb
+  - type: implements
+    from: SYM-views-identity-kube-exec-output
+    to: REQ-views-balance-check-owner-only
+    created_at: 2026-11-06T23:55:04.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b378fac6ecbb
+  - type: covered_by
+    from: SYM-views-identity-kube-exec-output
+    to: TEST-identity-kube-core-access
+    created_at: 2026-11-06T23:55:04.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf6a0db8ec62

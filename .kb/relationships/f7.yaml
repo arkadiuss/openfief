@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e347dd1172a4
+  - type: executable_for
+    from: SYM-views-balances-test-test-write-table-escapes
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:59.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5415e928c653

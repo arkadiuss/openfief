@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f05e8eee0481
+  - type: executable_for
+    from: SYM-views-cli-test-helper-core-json
+    to: TEST-views-cli-balances
+    created_at: 2026-11-06T23:56:27.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c75e73d3ff51

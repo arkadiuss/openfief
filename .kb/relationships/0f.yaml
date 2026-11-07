@@ -937,3 +937,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84d467a1bdb8
+  - type: implements
+    from: SYM-views-cash-tolerance
+    to: REQ-views-balance-check-tolerance
+    created_at: 2026-11-06T23:52:24.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543898894171
+  - type: covered_by
+    from: SYM-views-cash-tolerance
+    to: TEST-views-balances
+    created_at: 2026-11-06T23:52:24.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3b6bb4486ec
