@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80644f08c9df
+  - type: implements
+    from: SYM-treasurybonds-published-source
+    to: REQ-treasurybonds-terms-from-published-data
+    created_at: 2026-11-07T08:25:54.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24be60ba7713
+  - type: covered_by
+    from: SYM-treasurybonds-published-source
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:25:54.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af2e10211b34

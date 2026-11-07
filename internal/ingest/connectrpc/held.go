@@ -1,7 +1,10 @@
 package connectrpc
 
 import (
+	"time"
+
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
@@ -65,7 +68,8 @@ func payoutTo(p ingest.Payout) connectorv1.BondPayout {
 }
 
 // bondTermsTo writes treasury bond series terms: rates as fractions, the
-// fee as an exact amount.
+// fee as an exact amount, and the attribution of terms read from published
+// data (D-97).
 func bondTermsTo(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 	if len(terms) == 0 {
 		return nil
@@ -78,9 +82,22 @@ func bondTermsTo(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 			FirstPeriodRate:    t.Terms.FirstPeriodRate.String(),
 			Margin:             t.Terms.Margin.String(),
 			EarlyRedemptionFee: moneyTo(t.Terms.EarlyRedemptionFee),
+			Attribution:        attributionTo(t.Terms.Attribution),
 		})
 	}
 	return out
+}
+
+// attributionTo writes the attribution of terms read from published data,
+// the time it was taken in RFC 3339 in UTC; nil for none.
+func attributionTo(a *pl.Attribution) *connectorv1.BondTermsAttribution {
+	if a == nil {
+		return nil
+	}
+	return &connectorv1.BondTermsAttribution{
+		Publisher: a.Publisher, Dataset: a.Dataset, License: a.License, Url: a.URL,
+		Made: a.Made.String(), Fetched: a.Fetched.UTC().Format(time.RFC3339), Processing: a.Processing,
+	}
 }
 
 // instrumentTo writes one instrument.

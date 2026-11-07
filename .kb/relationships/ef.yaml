@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee7e348d2d71
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-published
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:26:18.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51fbf7b41773

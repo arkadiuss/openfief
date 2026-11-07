@@ -110,8 +110,9 @@ func (BondPurchase) EnumDescriptor() ([]byte, []int) {
 }
 
 // BondLot is one lot as the owner enters it: what D-9 names (series,
-// quantity, purchase date), plus the series' terms from its issue letter,
-// which valuing it needs, and how the bonds were bought: for cash at the
+// quantity, purchase date), plus any of the series' terms the owner enters,
+// which override what the connector reads (D-97), and how the bonds were
+// bought: for cash at the
 // nominal, 100 PLN each, or by exchange at 99.90 PLN each (D-100).
 type BondLot struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -122,13 +123,16 @@ type BondLot struct {
 	// The day the bonds were bought, "YYYY-MM-DD".
 	PurchaseDate string `protobuf:"bytes,3,opt,name=purchase_date,json=purchaseDate,proto3" json:"purchase_date,omitempty"`
 	// The series' first-period rate in percent, as a decimal string, such as
-	// "6.80".
+	// "6.80". Empty, with margin_percent empty too, to leave both to the
+	// connector, which reads them from the issuer's published data (D-97);
+	// entered, they override it.
 	FirstPeriodRatePercent string `protobuf:"bytes,4,opt,name=first_period_rate_percent,json=firstPeriodRatePercent,proto3" json:"first_period_rate_percent,omitempty"`
 	// The series' margin in percent, such as "2.00"; "0" for a fixed-rate
-	// series.
+	// series. Empty exactly when first_period_rate_percent is.
 	MarginPercent string `protobuf:"bytes,5,opt,name=margin_percent,json=marginPercent,proto3" json:"margin_percent,omitempty"`
 	// The series' early-redemption fee per bond in PLN, as a decimal string,
-	// such as "2.00".
+	// such as "2.00". Empty to leave it to the connector, which takes it from
+	// its reviewed table of the issue letters (D-97).
 	EarlyRedemptionFeePln string `protobuf:"bytes,6,opt,name=early_redemption_fee_pln,json=earlyRedemptionFeePln,proto3" json:"early_redemption_fee_pln,omitempty"`
 	// How the bonds were bought; unspecified is a cash purchase.
 	Purchase      BondPurchase `protobuf:"varint,7,opt,name=purchase,proto3,enum=openfief.ingest.v1.BondPurchase" json:"purchase,omitempty"`

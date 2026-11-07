@@ -3,6 +3,7 @@ package delivery_test
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -39,7 +40,11 @@ func edoTerms(t *testing.T) pl.Terms {
 
 func TestBondLots(t *testing.T) {
 	t.Parallel()
-	got, err := delivery.BondLots([]*connectorv1.BondLot{lotMessage()})
+	// D-97: rates or a fee left empty are the connector's to fill in.
+	noRates, noFee := lotMessage(), lotMessage()
+	noRates.FirstPeriodRate, noRates.Margin = "", ""
+	noFee.EarlyRedemptionFee = nil
+	got, err := delivery.BondLots([]*connectorv1.BondLot{lotMessage(), noRates, noFee})
 	if err != nil {
 		t.Fatalf("BondLots: %v", err)
 	}
@@ -47,7 +52,15 @@ func TestBondLots(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParseDate: %v", err)
 	}
-	want := []ingest.BondLot{{Terms: edoTerms(t), Quantity: kernel.NewQuantity(dec(t, "40")), Purchased: purchased}}
+	q := kernel.NewQuantity(dec(t, "40"))
+	withoutRates, withoutFee := edoTerms(t), edoTerms(t)
+	withoutRates.FirstPeriodRate, withoutRates.Margin = kernel.Decimal{}, kernel.Decimal{}
+	withoutFee.EarlyRedemptionFee = kernel.Money{}
+	want := []ingest.BondLot{
+		{Terms: edoTerms(t), Quantity: q, Purchased: purchased},
+		{Terms: withoutRates, PublishedRates: true, Quantity: q, Purchased: purchased},
+		{Terms: withoutFee, ReviewedFee: true, Quantity: q, Purchased: purchased},
+	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("BondLots (-want +got):\n%s", diff)
 	}
@@ -64,8 +77,9 @@ func TestBondLotsRefuses(t *testing.T) {
 		{name: "quantity not a number", edit: func(l *connectorv1.BondLot) { l.Quantity = "forty" }},
 		{name: "date not YYYY-MM-DD", edit: func(l *connectorv1.BondLot) { l.PurchaseDate = "04.05.2026" }},
 		{name: "rate not a number", edit: func(l *connectorv1.BondLot) { l.FirstPeriodRate = "6.8%" }},
-		{name: "no margin", edit: func(l *connectorv1.BondLot) { l.Margin = "" }},
-		{name: "no fee", edit: func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil }},
+		{name: "a rate without the margin", edit: func(l *connectorv1.BondLot) { l.Margin = "" }},
+		{name: "a margin without the rate", edit: func(l *connectorv1.BondLot) { l.FirstPeriodRate = "" }},
+		{name: "margin not a number", edit: func(l *connectorv1.BondLot) { l.Margin = "2%" }},
 		{name: "fee without a currency", edit: func(l *connectorv1.BondLot) { l.EarlyRedemptionFee.Currency = "" }},
 		{name: "fee not a number", edit: func(l *connectorv1.BondLot) { l.EarlyRedemptionFee.Amount = "two" }},
 	}
@@ -87,11 +101,33 @@ func TestBondTerms(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParseISIN: %v", err)
 	}
-	got := delivery.BondTerms([]ingest.BondTerms{{Instrument: ledger.Instrument{ISIN: isin, Symbol: "EDO0536"}, Terms: edoTerms(t)}})
-	want := []*connectorv1.BondTerms{{
-		Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
-		FirstPeriodRate: "0.068", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2", Currency: "PLN"},
-	}}
+	made, err := kernel.ParseDate("2026-10-26")
+	if err != nil {
+		t.Fatalf("ParseDate: %v", err)
+	}
+	published := edoTerms(t)
+	published.Attribution = &pl.Attribution{
+		Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+		URL: "https://www.example.org/attachment/x", Made: made, Processing: "read",
+		Fetched: time.Date(2026, time.October, 29, 7, 0, 0, 0, time.FixedZone("CET", 3600)),
+	}
+	in := ledger.Instrument{ISIN: isin, Symbol: "EDO0536"}
+	got := delivery.BondTerms([]ingest.BondTerms{{Instrument: in, Terms: edoTerms(t)}, {Instrument: in, Terms: published}})
+	want := []*connectorv1.BondTerms{
+		{
+			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
+			FirstPeriodRate: "0.068", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2", Currency: "PLN"},
+		},
+		{
+			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
+			FirstPeriodRate: "0.068", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2", Currency: "PLN"},
+			// D-97: the attribution travels with terms read from published data.
+			Attribution: &connectorv1.BondTermsAttribution{
+				Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+				Url: "https://www.example.org/attachment/x", Made: "2026-10-26", Fetched: "2026-10-29T06:00:00Z", Processing: "read",
+			},
+		},
+	}
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("BondTerms (-want +got):\n%s", diff)
 	}

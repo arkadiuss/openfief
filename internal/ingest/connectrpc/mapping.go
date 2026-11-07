@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
@@ -414,8 +415,9 @@ func crossCheckPriceFrom(field string, p *connectorv1.Price) (valuation.CrossChe
 }
 
 // bondTermsFrom translates one treasury bond series' terms: the
-// instrument's symbol must be a series code, the rates plain decimals and
-// the fee a PLN amount of zero or more.
+// instrument's symbol must be a series code, the rates plain decimals, the
+// fee a PLN amount of zero or more, and an attribution, when there is one,
+// complete (D-97).
 func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, error) {
 	in, err := instrumentFrom(field+".instrument", b.GetInstrument())
 	if err != nil {
@@ -428,28 +430,66 @@ func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, er
 	if err != nil {
 		return ingest.BondTerms{}, invalid(field+".instrument.symbol", err)
 	}
-	first, err := decimalFrom(field+".first_period_rate", b.GetFirstPeriodRate())
+	terms, err := ratesAndFeeFrom(field, b)
 	if err != nil {
 		return ingest.BondTerms{}, err
+	}
+	var att *pl.Attribution
+	if a := b.GetAttribution(); a != nil {
+		if att, err = attributionFrom(field+".attribution", a); err != nil {
+			return ingest.BondTerms{}, err
+		}
+	}
+	terms.Series, terms.Attribution = series, att
+	return ingest.BondTerms{Instrument: in, Terms: terms}, nil
+}
+
+// ratesAndFeeFrom translates the rates, plain decimals, and the fee, a PLN
+// amount of zero or more, of one series' terms.
+func ratesAndFeeFrom(field string, b *connectorv1.BondTerms) (pl.Terms, error) {
+	first, err := decimalFrom(field+".first_period_rate", b.GetFirstPeriodRate())
+	if err != nil {
+		return pl.Terms{}, err
 	}
 	margin, err := decimalFrom(field+".margin", b.GetMargin())
 	if err != nil {
-		return ingest.BondTerms{}, err
+		return pl.Terms{}, err
 	}
 	fee, err := moneyFrom(field+".early_redemption_fee", b.GetEarlyRedemptionFee())
 	if err != nil {
-		return ingest.BondTerms{}, err
+		return pl.Terms{}, err
 	}
 	if !fee.Currency().Equal(pl.Nominal().Currency()) || fee.Sign() < 0 {
-		return ingest.BondTerms{}, invalid(field+".early_redemption_fee is not a PLN amount of zero or more", nil)
+		return pl.Terms{}, invalid(field+".early_redemption_fee is not a PLN amount of zero or more", nil)
 	}
-	return ingest.BondTerms{Instrument: in, Terms: pl.Terms{
-		Series: series, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee,
-	}}, nil
+	return pl.Terms{FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee}, nil
+}
+
+// attributionFrom translates the attribution of terms read from published
+// data: every part pl.Attribution.Validate asks for, the day made as
+// "YYYY-MM-DD" and the time taken in RFC 3339.
+func attributionFrom(field string, a *connectorv1.BondTermsAttribution) (*pl.Attribution, error) {
+	made, err := kernel.ParseDate(a.GetMade())
+	if err != nil {
+		return nil, invalid(field+".made", err)
+	}
+	fetched, err := time.Parse(time.RFC3339, a.GetFetched())
+	if err != nil {
+		return nil, invalid(field+".fetched", err)
+	}
+	out := &pl.Attribution{
+		Publisher: a.GetPublisher(), Dataset: a.GetDataset(), License: a.GetLicense(), URL: a.GetUrl(),
+		Made: made, Fetched: fetched.UTC(), Processing: a.GetProcessing(),
+	}
+	if err := out.Validate(); err != nil {
+		return nil, invalid(field, err)
+	}
+	return out, nil
 }
 
 // bondLotsTo writes treasury bond lots as contract messages, rates as
-// fractions and every amount as an exact decimal string.
+// fractions and every amount as an exact decimal string; rates the owner
+// left to the connector are empty and such a fee is unset (D-97).
 func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
 	purchases := map[ingest.BondPurchase]connectorv1.BondPurchase{
 		ingest.PurchaseCash: connectorv1.BondPurchase_BOND_PURCHASE_CASH, ingest.PurchaseExchange: connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE,
@@ -457,13 +497,17 @@ func bondLotsTo(lots []ingest.BondLot) []*connectorv1.BondLot {
 	out := make([]*connectorv1.BondLot, 0, len(lots))
 	for i := range lots {
 		l := &lots[i]
-		fee := l.Terms.EarlyRedemptionFee
-		out = append(out, &connectorv1.BondLot{
+		lot := &connectorv1.BondLot{
 			Series: l.Series().String(), Quantity: l.Quantity.String(), PurchaseDate: l.Purchased.String(),
-			FirstPeriodRate: l.Terms.FirstPeriodRate.String(), Margin: l.Terms.Margin.String(),
-			EarlyRedemptionFee: &connectorv1.Money{Amount: fee.Amount().String(), Currency: fee.Currency().String()},
-			Purchase:           purchases[l.Purchase],
-		})
+			Purchase: purchases[l.Purchase],
+		}
+		if !l.PublishedRates {
+			lot.FirstPeriodRate, lot.Margin = l.Terms.FirstPeriodRate.String(), l.Terms.Margin.String()
+		}
+		if fee := l.Terms.EarlyRedemptionFee; !l.ReviewedFee {
+			lot.EarlyRedemptionFee = &connectorv1.Money{Amount: fee.Amount().String(), Currency: fee.Currency().String()}
+		}
+		out = append(out, lot)
 	}
 	return out
 }

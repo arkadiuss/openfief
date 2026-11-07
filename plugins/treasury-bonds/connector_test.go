@@ -81,6 +81,109 @@ func mustDate(s string) kernel.Date {
 	return d
 }
 
+// fakePublished serves synthetic published data: EDO0536 at 6.11% and a
+// 2.22% margin, and TOS0529 at 4.33%, or err.
+type fakePublished struct{ err error }
+
+func (f fakePublished) Published(context.Context) (*pl.Published, error) {
+	if f.err != nil {
+		return nil, f.err
+	}
+	edo, err1 := pl.ParseSeries("EDO0536")
+	tos, err2 := pl.ParseSeries("TOS0529")
+	if err := errors.Join(err1, err2); err != nil {
+		return nil, err
+	}
+	return &pl.Published{
+		Rates: []pl.PublishedRates{
+			{Series: edo, FirstPeriodRate: kernel.NewDecimal(611, -4), Margin: kernel.NewDecimal(222, -4)},
+			{Series: tos, FirstPeriodRate: kernel.NewDecimal(433, -4)},
+		},
+		Attribution: pl.Attribution{
+			Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+			URL: "https://www.example.org/attachment/x", Made: mustDate("2026-10-26"),
+			Fetched: time.Date(2026, time.October, 29, 6, 0, 0, 0, time.UTC), Processing: "read",
+		},
+	}, nil
+}
+
+// TestImportBondLotsPublishedTerms enters lots without some or all of their
+// series' terms: the connector delivers the published first-period rate and
+// margin with their attribution, and the reviewed table's fee (D-97); terms
+// the owner entered win over the published ones and carry no attribution.
+func TestImportBondLotsPublishedTerms(t *testing.T) {
+	t.Parallel()
+	client := served(t, fakeCPI{}, fakeRates{})
+	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
+	attribution := func(processing string) *connectorv1.BondTermsAttribution {
+		return &connectorv1.BondTermsAttribution{
+			Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+			Url: "https://www.example.org/attachment/x", Made: "2026-10-26", Fetched: "2026-10-29T06:00:00Z", Processing: processing,
+		}
+	}
+	tests := []struct {
+		name   string
+		change func(l *connectorv1.BondLot)
+		want   *connectorv1.BondTerms
+	}{
+		{
+			name:   "no terms: published rates, the table's fee",
+			change: func(l *connectorv1.BondLot) { l.FirstPeriodRate, l.Margin, l.EarlyRedemptionFee = "", "", nil },
+			want: &connectorv1.BondTerms{
+				Instrument: edo, FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: pln("3"),
+				Attribution: attribution("read; the early-redemption fee is not in the data: OpenFief took it from its reviewed table of the issue letters"),
+			},
+		},
+		{
+			name:   "the fee entered: published rates",
+			change: func(l *connectorv1.BondLot) { l.FirstPeriodRate, l.Margin = "", "" },
+			want: &connectorv1.BondTerms{
+				Instrument: edo, FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: pln("2"),
+				Attribution: attribution("read; the early-redemption fee is not in the data: the owner entered it"),
+			},
+		},
+		{
+			name:   "the rates entered override: the table's fee, no attribution",
+			change: func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil },
+			want:   &connectorv1.BondTerms{Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("3")},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			lot := edoLot()
+			tt.change(lot)
+			resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{
+				BatchId: "b-1", AccountId: "acc-bonds", Lots: []*connectorv1.BondLot{lot},
+			}))
+			if err != nil {
+				t.Fatalf("ImportBondLots: %v", err)
+			}
+			if diff := cmp.Diff([]*connectorv1.BondTerms{tt.want}, resp.Msg.GetDelivery().GetBondTerms(), protocmp.Transform()); diff != "" {
+				t.Errorf("bond terms (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// TestImportBondLotsPublishedDataUnavailable refuses a lot left to the
+// published data as Unavailable when the data can't be read, so the owner
+// can try again.
+func TestImportBondLotsPublishedDataUnavailable(t *testing.T) {
+	t.Parallel()
+	today := mustDate("2026-10-29")
+	c := &connector{published: fakePublished{err: errOutage}, today: func() kernel.Date { return today }}
+	lot := edoLot()
+	lot.FirstPeriodRate, lot.Margin = "", ""
+	_, err := c.ImportBondLots(t.Context(), connect.NewRequest(&connectorv1.ImportBondLotsRequest{
+		BatchId: "b-1", AccountId: "acc-bonds", Lots: []*connectorv1.BondLot{lot},
+	}))
+	if connect.CodeOf(err) != connect.CodeUnavailable {
+		t.Errorf("ImportBondLots = %v, want Unavailable", err)
+	}
+}
+
 // served serves a connector whose today is
 // 2026-10-29 and whose index readings start in September 2026, with the SDK
 // as the plugin does, and returns a client that calls it as the core.
@@ -88,9 +191,10 @@ func served(t *testing.T, cpi treasurybonds.CPISource, rates treasurybonds.Refer
 	t.Helper()
 	today := mustDate("2026-10-29")
 	c := &connector{
-		coupons: &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
-		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: mustDate("2026-09-01")},
-		today:   func() kernel.Date { return today },
+		coupons:   &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
+		indices:   &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: mustDate("2026-09-01")},
+		published: fakePublished{},
+		today:     func() kernel.Date { return today },
 	}
 	server := openfief.NewConnectorServer("", c, fakeVerifier{})
 	srv := httptest.NewUnstartedServer(server.Handler)
@@ -176,7 +280,10 @@ func TestImportBondLotsRefuses(t *testing.T) {
 		{name: "a purchase date of another series", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.PurchaseDate = "2026-06-04" })},
 		{name: "bought after today", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Series, l.PurchaseDate = "EDO1136", "2026-11-04" })},
 		{name: "a fraction of a bond", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Quantity = "2.5" })},
-		{name: "no fee", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil })},
+		{name: "a margin without the rate", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.FirstPeriodRate = "" })},
+		{name: "a series not published", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) {
+			l.Series, l.PurchaseDate, l.FirstPeriodRate, l.Margin = "COI0530", "2026-05-04", "", ""
+		})},
 		{name: "a rate that isn't a number", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.FirstPeriodRate = "6%" })},
 		{name: "one series and day twice", goLive: "2026-06-01", lots: []*connectorv1.BondLot{edoLot(), edoLot()}},
 	}
@@ -389,7 +496,7 @@ func TestSyncDeliversIndexReadings(t *testing.T) {
 	}
 }
 
-// errOutage is a synthetic outage of GUS or NBP.
+// errOutage is a synthetic outage of GUS, NBP or the ministry's data.
 var errOutage = errors.New("synthetic outage")
 
 func TestSyncRefuses(t *testing.T) {

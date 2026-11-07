@@ -7,8 +7,15 @@
 // after the first interest period: year-on-year CPI from GUS's public SDP
 // API (api-sdp.stat.gov.pl) and the NBP reference rate from NBP's published
 // archive (static.nbp.pl), both reached anonymously through the egress
-// proxy (D-32), or at the base URLs the owner configured. The mapping and the index sync are
-// internal/ingest/treasurybonds, the adapters internal/valuation/gus and
+// proxy (D-32), or at the base URLs the owner configured. A lot entered
+// without its series' first-period rate and margin takes them from the
+// Ministry of Finance's published retail bond spreadsheet, whose link it
+// finds on the ministry's gov.pl page (www.gov.pl) or, when that fails, in
+// the same dataset's resource list on dane.gov.pl (api.dane.gov.pl), and a
+// lot without its early-redemption fee takes it from the reviewed fee
+// table (D-97); it never reads obligacjeskarbowe.pl (D-8). The mapping and
+// the index sync are internal/ingest/treasurybonds, which also reads the
+// ministry's data (MinistryClient), the adapters internal/valuation/gus and
 // internal/valuation/nbp; this binary only wires them to the SDK.
 //
 // The core hands each lot with the account the owner entered it on, so one
@@ -17,15 +24,17 @@
 // books each coupon that fell due as interest (D-101, D-117). Config
 // (OPENFIEF_CONFIG, checked against the manifest's schema) holds start,
 // optional: the first month the first sync delivers index readings for;
-// without it, January 13 years before today's year. gusBaseUrl and
-// nbpBaseUrl, optional too, are GUS's SDP API and NBP's archive, or mirrors
-// of them: https URLs whose hosts the install shows and the grant approves
-// (D-75). The clients trust the system's roots plus the PEM certificates of
-// the instance's optional Secret <instance>--ca-bundle (file ca.crt), mounted
-// at /etc/openfief/ca-bundle:
+// without it, January 13 years before today's year. gusBaseUrl,
+// nbpBaseUrl, govPlBaseUrl and daneGovPlBaseUrl, optional too, are GUS's
+// SDP API, NBP's archive, gov.pl and dane.gov.pl's API, or mirrors of them:
+// https URLs whose hosts the install shows and the grant approves (D-75).
+// The clients trust the system's roots plus the PEM certificates of the
+// instance's optional Secret <instance>--ca-bundle (file ca.crt), mounted at
+// /etc/openfief/ca-bundle:
 //
 //	{"start": "2014-01-01", "gusBaseUrl": "https://api-sdp.stat.gov.pl",
-//	 "nbpBaseUrl": "https://static.nbp.pl"}
+//	 "nbpBaseUrl": "https://static.nbp.pl", "govPlBaseUrl": "https://www.gov.pl",
+//	 "daneGovPlBaseUrl": "https://api.dane.gov.pl"}
 package main
 
 import (
@@ -44,6 +53,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/valuation/gus"
+
 	"github.com/arkadiuss/openfief/internal/valuation/nbp"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
@@ -51,7 +61,7 @@ import (
 // warsaw is the time zone the bonds are sold in, which dates "today".
 const warsaw = "Europe/Warsaw"
 
-// requestTimeout bounds one request to GUS or NBP.
+// requestTimeout bounds one request to GUS, NBP, gov.pl or dane.gov.pl.
 const requestTimeout = time.Minute
 
 // errStartTooEarly reports a configured start before the holiday calendar
@@ -60,9 +70,11 @@ var errStartTooEarly = errors.New("start is before the Polish holiday calendar")
 
 // config is the plugin's configuration.
 type config struct {
-	Start      string `json:"start"`
-	GUSBaseURL string `json:"gusBaseUrl"`
-	NBPBaseURL string `json:"nbpBaseUrl"`
+	Start        string `json:"start"`
+	GUSBaseURL   string `json:"gusBaseUrl"`
+	NBPBaseURL   string `json:"nbpBaseUrl"`
+	GovPLBaseURL string `json:"govPlBaseUrl"`
+	DaneBaseURL  string `json:"daneGovPlBaseUrl"`
 }
 
 func main() {
@@ -105,7 +117,18 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return fmt.Errorf("config nbpBaseUrl: %w", err)
 	}
-	c := newConnector(gus.New(gusHC, gusURL), nbp.NewArchive(nbpHC, nbpURL), start, today)
+	govHC, govURL, err := endpointClient(cfg.GovPLBaseURL, treasurybonds.DefaultGovPLBaseURL)
+	if err != nil {
+		return fmt.Errorf("config govPlBaseUrl: %w", err)
+	}
+	daneHC, daneURL, err := endpointClient(cfg.DaneBaseURL, treasurybonds.DefaultDaneBaseURL)
+	if err != nil {
+		return fmt.Errorf("config daneGovPlBaseUrl: %w", err)
+	}
+	published := treasurybonds.NewMinistryClient(treasurybonds.MinistryConfig{
+		GovPL: govHC, GovPLBaseURL: govURL, Dane: daneHC, DaneBaseURL: daneURL, Now: time.Now,
+	})
+	c := newConnector(gus.New(gusHC, gusURL), nbp.NewArchive(nbpHC, nbpURL), published, start, today)
 	log.Info("treasury-bonds serving", "first_sync_from", start.String())
 	if err := openfief.ServeConnector(ctx, c); err != nil {
 		return fmt.Errorf("treasury-bonds: %w", err)
@@ -129,19 +152,20 @@ func endpointClient(configured, def string) (*http.Client, string, error) {
 }
 
 // newConnector is the connector, reading CPI from cpi and the reference
-// rate from rates from start on.
-func newConnector(cpi *gus.Client, rates *nbp.Archive, start kernel.Date, today func() kernel.Date) *connector {
+// rate from rates from start on, and series rates from published.
+func newConnector(cpi *gus.Client, rates *nbp.Archive, published *treasurybonds.MinistryClient, start kernel.Date, today func() kernel.Date) *connector {
 	return &connector{
-		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: start},
-		coupons: &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
-		today:   today,
+		indices:   &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: start},
+		coupons:   &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
+		published: published,
+		today:     today,
 	}
 }
 
 // startDate is the configured start, or treasurybonds.DefaultIndexStart.
 // It must be in a year after pl.FirstCalendarYear, so that every month's
 // reference-rate day is in the holiday calendar.
-func (c config) startDate(today kernel.Date) (kernel.Date, error) {
+func (c *config) startDate(today kernel.Date) (kernel.Date, error) {
 	if c.Start == "" {
 		return treasurybonds.DefaultIndexStart(today), nil
 	}

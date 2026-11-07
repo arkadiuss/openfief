@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40a63030f0e3
+  - type: implements
+    from: SYM-mfbonds-long-string
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:10:57.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051ef500c652
+  - type: covered_by
+    from: SYM-mfbonds-long-string
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:10:57.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259390887197
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-wide
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:24:06.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ef00667bb1f

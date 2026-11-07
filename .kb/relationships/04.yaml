@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e72114f8992
+  - type: verified_by
+    from: SCEN-pl-published-series-rates
+    to: TEST-pl-published
+    created_at: 2026-11-07T08:06:00.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd767b65df46

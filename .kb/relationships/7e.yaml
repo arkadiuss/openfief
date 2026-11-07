@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81828d079eb3
+  - type: implements
+    from: SYM-mfbonds-shared-strings
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:20:05.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5477ef5a442
+  - type: covered_by
+    from: SYM-mfbonds-shared-strings
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:20:05.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a03e4f65f6d9
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-want-lots
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:26:57.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7171c51356

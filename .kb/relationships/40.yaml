@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-793dea7b3bfb
+  - type: implements
+    from: SYM-mfbonds-compound-file-chain
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:14:51.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-565e4d233d86
+  - type: covered_by
+    from: SYM-mfbonds-compound-file-chain
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:14:51.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2e501bfcdd1

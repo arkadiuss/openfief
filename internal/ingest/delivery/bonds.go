@@ -3,6 +3,7 @@ package delivery
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
@@ -13,11 +14,11 @@ import (
 
 // ErrMalformedLot reports a bond lot message whose fields don't parse: a
 // series code, quantity, date, rate or fee that isn't what the contract
-// writes, or a missing fee.
+// writes, or a first-period rate without its margin or the other way round.
 var ErrMalformedLot = errors.New("malformed bond lot")
 
-// errNoFee reports a lot without its early-redemption fee.
-var errNoFee = errors.New("early_redemption_fee is missing")
+// errHalfRates reports a lot with only one of first_period_rate and margin.
+var errHalfRates = errors.New("first_period_rate and margin must both be given or both be empty")
 
 // errNoKey reports a booked transaction without its source or external ID.
 var errNoKey = errors.New("source and external_id are required")
@@ -51,26 +52,45 @@ func bondLot(l *connectorv1.BondLot) (ingest.BondLot, error) {
 	if err != nil {
 		return ingest.BondLot{}, fmt.Errorf("purchase_date: %w", err)
 	}
-	first, err := kernel.ParseDecimal(l.GetFirstPeriodRate())
-	if err != nil {
-		return ingest.BondLot{}, fmt.Errorf("first_period_rate: %w", err)
-	}
-	margin, err := kernel.ParseDecimal(l.GetMargin())
-	if err != nil {
-		return ingest.BondLot{}, fmt.Errorf("margin: %w", err)
-	}
-	fee, err := feeFrom(l.GetEarlyRedemptionFee())
-	if err != nil {
-		return ingest.BondLot{}, err
-	}
 	purchase, err := purchaseFrom(l.GetPurchase())
 	if err != nil {
 		return ingest.BondLot{}, err
 	}
-	return ingest.BondLot{
-		Terms:    pl.Terms{Series: series, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee},
-		Quantity: q, Purchased: purchased, Purchase: purchase,
-	}, nil
+	lot := ingest.BondLot{Terms: pl.Terms{Series: series}, Quantity: q, Purchased: purchased, Purchase: purchase}
+	if err := lotTerms(l, &lot); err != nil {
+		return ingest.BondLot{}, err
+	}
+	return lot, nil
+}
+
+// lotTerms reads the terms the owner entered with l into lot: empty rates
+// leave them to the connector (PublishedRates), and so does an unset fee
+// (ReviewedFee, D-97).
+func lotTerms(l *connectorv1.BondLot, lot *ingest.BondLot) error {
+	switch first, margin := l.GetFirstPeriodRate(), l.GetMargin(); {
+	case first == "" && margin == "":
+		lot.PublishedRates = true
+	case first == "" || margin == "":
+		return errHalfRates
+	default:
+		var err error
+		if lot.Terms.FirstPeriodRate, err = kernel.ParseDecimal(first); err != nil {
+			return fmt.Errorf("first_period_rate: %w", err)
+		}
+		if lot.Terms.Margin, err = kernel.ParseDecimal(margin); err != nil {
+			return fmt.Errorf("margin: %w", err)
+		}
+	}
+	if l.GetEarlyRedemptionFee() == nil {
+		lot.ReviewedFee = true
+		return nil
+	}
+	fee, err := feeFrom(l.GetEarlyRedemptionFee())
+	if err != nil {
+		return err
+	}
+	lot.Terms.EarlyRedemptionFee = fee
+	return nil
 }
 
 // errBadPurchase reports a purchase the contract doesn't define.
@@ -146,11 +166,8 @@ func bookedFrom(account ledger.AccountID, booked []*connectorv1.BookedTransactio
 	return out, nil
 }
 
-// feeFrom reads an early-redemption fee; a missing one is an error.
+// feeFrom reads an early-redemption fee.
 func feeFrom(m *connectorv1.Money) (kernel.Money, error) {
-	if m == nil {
-		return kernel.Money{}, errNoFee
-	}
 	c, err := kernel.ParseCurrency(m.GetCurrency())
 	if err != nil {
 		return kernel.Money{}, fmt.Errorf("early_redemption_fee.currency: %w", err)
@@ -163,7 +180,8 @@ func feeFrom(m *connectorv1.Money) (kernel.Money, error) {
 }
 
 // BondTerms writes treasury bond series terms, in order: rates as
-// fractions, the fee as an exact PLN amount.
+// fractions, the fee as an exact PLN amount, and the attribution of terms
+// read from published data (D-97).
 func BondTerms(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 	out := make([]*connectorv1.BondTerms, 0, len(terms))
 	for i := range terms {
@@ -173,7 +191,20 @@ func BondTerms(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 			FirstPeriodRate:    t.Terms.FirstPeriodRate.String(),
 			Margin:             t.Terms.Margin.String(),
 			EarlyRedemptionFee: money(t.Terms.EarlyRedemptionFee),
+			Attribution:        Attribution(t.Terms.Attribution),
 		})
 	}
 	return out
+}
+
+// Attribution writes the attribution of terms read from published data,
+// the time it was taken in RFC 3339 in UTC; nil for none.
+func Attribution(a *pl.Attribution) *connectorv1.BondTermsAttribution {
+	if a == nil {
+		return nil
+	}
+	return &connectorv1.BondTermsAttribution{
+		Publisher: a.Publisher, Dataset: a.Dataset, License: a.License, Url: a.URL,
+		Made: a.Made.String(), Fetched: a.Fetched.UTC().Format(time.RFC3339), Processing: a.Processing,
+	}
 }

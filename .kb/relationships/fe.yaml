@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09b35bfbc383
+  - type: implements
+    from: SYM-connectorv1-bond-terms-get-attribution
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:55:18.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-769095ab927b
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-get-attribution
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:55:19.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c7ecad6924

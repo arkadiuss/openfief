@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32108b8c5b5c
+  - type: implements
+    from: SYM-mfbonds-links
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:18:41.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53eaa74919d
+  - type: covered_by
+    from: SYM-mfbonds-links
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:18:41.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-841410781659
+  - type: implements
+    from: SYM-connectorv1-bond-terms-attribution-reset
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:55:27.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-109599bffb77
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-attribution-reset
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:55:27.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f792634c94ac

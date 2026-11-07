@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/riverqueue/river"
@@ -204,17 +205,26 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 }
 
 // SaveBondTerms upserts the series terms of the bond with isin, with the
-// connector instance source that delivered them (D-179), and enqueues
-// revals in one transaction.
+// connector instance source that delivered them (D-179) and their
+// attribution, if any (D-97), and enqueues revals in one transaction. The
+// latest terms replace the row whole, so terms the owner entered after
+// published ones drop the attribution.
 func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error {
+	att := attributionColumns(terms.Attribution)
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		_, err := tx.Exec(ctx, `
-			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee, source)
-			VALUES ($1, $2, $3, $4, $5, $6)
+			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee, source,
+			    source_publisher, source_dataset, source_license, source_url, source_made, source_fetched, source_processing)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::date, $12, $13)
 			ON CONFLICT (isin) DO UPDATE SET series = EXCLUDED.series, first_period_rate = EXCLUDED.first_period_rate,
-			    margin = EXCLUDED.margin, early_redemption_fee = EXCLUDED.early_redemption_fee, source = EXCLUDED.source`,
+			    margin = EXCLUDED.margin, early_redemption_fee = EXCLUDED.early_redemption_fee, source = EXCLUDED.source,
+			    source_publisher = EXCLUDED.source_publisher, source_dataset = EXCLUDED.source_dataset,
+			    source_license = EXCLUDED.source_license, source_url = EXCLUDED.source_url,
+			    source_made = EXCLUDED.source_made, source_fetched = EXCLUDED.source_fetched,
+			    source_processing = EXCLUDED.source_processing`,
 			isin.String(), terms.Series.String(), terms.FirstPeriodRate.String(), terms.Margin.String(),
-			terms.EarlyRedemptionFee.Amount().String(), source)
+			terms.EarlyRedemptionFee.Amount().String(), source,
+			att.publisher, att.dataset, att.license, att.url, att.made, att.fetched, att.processing)
 		if err != nil {
 			return fmt.Errorf("upserting: %w", err)
 		}
@@ -224,4 +234,23 @@ func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.T
 		return fmt.Errorf("saving bond terms of %s: %w", isin, err)
 	}
 	return nil
+}
+
+// attributionRow is an attribution as the bond_terms columns hold it: every
+// part NULL for none.
+type attributionRow struct {
+	publisher, dataset, license, url, made, processing *string
+	fetched                                            *time.Time
+}
+
+// attributionColumns returns a's columns; all NULL for nil.
+func attributionColumns(a *pl.Attribution) attributionRow {
+	if a == nil {
+		return attributionRow{}
+	}
+	made, fetched := a.Made.String(), a.Fetched.UTC()
+	return attributionRow{
+		publisher: &a.Publisher, dataset: &a.Dataset, license: &a.License, url: &a.URL, made: &made,
+		fetched: &fetched, processing: &a.Processing,
+	}
 }

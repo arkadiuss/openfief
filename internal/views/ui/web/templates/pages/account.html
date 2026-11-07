@@ -234,7 +234,7 @@
 {{with .BondLot}}
 <section class="card" aria-labelledby="bond-lot-title">
   <h2 id="bond-lot-title">Add bond lot</h2>
-  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each, with the series' terms from its issue letter. It is booked on its purchase date, as a deposit of its cost and a buy, and lots can be entered in any order. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
+  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each. Leave the series' terms empty and the connector fills them in; the terms you enter win over its, and the latest entry for a series wins. It is booked on its purchase date, as a deposit of its cost and a buy, and lots can be entered in any order. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
   <form method="post" action="/accounts/{{$.Account.Id}}/bond-lots?tab=lots">
     <div class="fields">
       <div class="field">
@@ -260,15 +260,17 @@
       </div>
       <div class="field">
         <label for="lot-first">First-year rate</label>
-        <div class="unit"><input id="lot-first" name="first_rate" value="{{.FirstRate}}" required inputmode="decimal" size="6" autocomplete="off"><span>%</span></div>
+        <div class="unit"><input id="lot-first" name="first_rate" value="{{.FirstRate}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-rates-help"><span>%</span></div>
       </div>
       <div class="field">
         <label for="lot-margin">Margin</label>
-        <div class="unit"><input id="lot-margin" name="margin" value="{{.Margin}}" required inputmode="decimal" size="6" autocomplete="off"><span>%</span></div>
+        <div class="unit"><input id="lot-margin" name="margin" value="{{.Margin}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-rates-help"><span>%</span></div>
+        <p class="help" id="lot-rates-help">Optional, both or neither. Left empty, they come from the Ministry of Finance's published retail bond data (source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief).</p>
       </div>
       <div class="field">
         <label for="lot-fee">Early-redemption fee per bond</label>
-        <div class="unit"><input id="lot-fee" name="fee" value="{{.Fee}}" required inputmode="decimal" size="6" autocomplete="off"><span>PLN</span></div>
+        <div class="unit"><input id="lot-fee" name="fee" value="{{.Fee}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-fee-help"><span>PLN</span></div>
+        <p class="help" id="lot-fee-help">Optional. Left empty, it comes from OpenFief's reviewed table of the issue letters.</p>
       </div>
     </div>
     <div class="actions"><button type="submit">Add bond lot</button></div>

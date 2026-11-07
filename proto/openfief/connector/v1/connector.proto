@@ -278,6 +278,35 @@ message BondTerms {
   string margin = 3;
   // The early-redemption fee per bond, in PLN.
   Money early_redemption_fee = 4;
+  // Where terms read from published data came from, as its licence asks
+  // (D-97): unset for terms the owner entered. The core stores it with the
+  // terms and hands it back in a sync request.
+  BondTermsAttribution attribution = 5;
+}
+
+// BondTermsAttribution names the source of series terms a connector read
+// from published data, such as the Ministry of Finance's retail bond
+// spreadsheet, which its licence (CC BY 4.0) lets anyone re-use when it is
+// named as the source, with when the data was made and taken and how it was
+// processed (D-97).
+message BondTermsAttribution {
+  // The source, such as "Ministerstwo Finansów".
+  string publisher = 1;
+  // The publication's title, such as "Dane dotyczące obligacji
+  // detalicznych".
+  string dataset = 2;
+  // The publication's licence, such as "CC BY 4.0".
+  string license = 3;
+  // The address of the file the terms were read from.
+  string url = 4;
+  // The day the publisher made the data, "YYYY-MM-DD".
+  string made = 5;
+  // When the connector took the data, an RFC 3339 time in UTC, such as
+  // "2026-11-07T06:00:00Z".
+  string fetched = 6;
+  // What the connector did to the data, such as which columns it read and
+  // how it rounded them, and where any term not in the data came from.
+  string processing = 7;
 }
 
 // Delivery is what a connector returns for one import batch: its mapping of
@@ -587,8 +616,8 @@ enum BondPurchase {
 
 // BondLot is one lot of Polish retail treasury bonds as the owner entered
 // it: what D-9 names (series, quantity, purchase date), plus the series'
-// terms from its issue letter, which valuing the lot needs, and how the
-// bonds were bought (D-100).
+// terms the owner entered, which override any the connector reads (D-97),
+// and how the bonds were bought (D-100).
 message BondLot {
   // The series code, such as "EDO0536".
   string series = 1;
@@ -596,11 +625,16 @@ message BondLot {
   string quantity = 2;
   // The day the bonds were bought, "YYYY-MM-DD".
   string purchase_date = 3;
-  // The series' first-period rate, as a fraction: 6.8% is "0.068".
+  // The series' first-period rate, as a fraction: 6.8% is "0.068". Empty,
+  // with margin empty too, when the owner left both to the connector, which
+  // reads them from the issuer's published data (D-97).
   string first_period_rate = 4;
-  // The series' margin, as a fraction; "0" for a fixed-rate series.
+  // The series' margin, as a fraction; "0" for a fixed-rate series. Empty
+  // exactly when first_period_rate is.
   string margin = 5;
-  // The series' early-redemption fee per bond, in PLN.
+  // The series' early-redemption fee per bond, in PLN. Unset when the
+  // owner left it to the connector, which takes it from its reviewed table
+  // of the issue letters (D-97).
   Money early_redemption_fee = 6;
   // How the bonds were bought; unspecified is a cash purchase.
   BondPurchase purchase = 7;

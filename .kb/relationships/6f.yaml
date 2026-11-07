@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f9f42470f76
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-xcell
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:13.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e010dd246665

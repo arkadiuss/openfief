@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-442557351c4d
+  - type: executable_for
+    from: SYM-pl-test-attribution-validate
+    to: TEST-pl-published
+    created_at: 2026-11-07T08:09:50.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fb891f675ee

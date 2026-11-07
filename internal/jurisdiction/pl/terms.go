@@ -58,6 +58,10 @@ type Terms struct {
 	// bond redeemed before maturity, in PLN. ValueLot applies its cap and its
 	// waiver; OTS has none, since an early-redeemed OTS earns no interest.
 	EarlyRedemptionFee kernel.Money
+	// Attribution says where terms taken from the ministry's published data
+	// came from (D-97); it is nil for terms the owner entered. It doesn't
+	// change what the terms value.
+	Attribution *Attribution
 }
 
 // Indices are the published readings that set the rates of interest periods

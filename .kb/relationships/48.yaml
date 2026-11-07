@@ -979,3 +979,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65b874ac96b9
+  - type: implements
+    from: SYM-mfbonds-records-next
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:12:21.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a62574161065
+  - type: covered_by
+    from: SYM-mfbonds-records-next
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:12:21.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74a99327ab58
+  - type: implements
+    from: SYM-mfbonds-client-from-gov-pl
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:16:22.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218b14371bb4
+  - type: covered_by
+    from: SYM-mfbonds-client-from-gov-pl
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:16:22.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-341e2101539f

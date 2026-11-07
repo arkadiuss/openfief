@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57e42538648f
+  - type: implements
+    from: SYM-pl-published-rates
+    to: REQ-pl-published-series-rates
+    created_at: 2026-11-07T08:07:23.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3155efc09f
+  - type: covered_by
+    from: SYM-pl-published-rates
+    to: TEST-pl-published
+    created_at: 2026-11-07T08:07:23.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abe259333af5

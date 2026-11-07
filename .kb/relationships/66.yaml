@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-093a3674c1e5
+  - type: verified_by
+    from: SCEN-valuation-bond-terms-attribution-stored
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-07T08:06:05.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4564cf860bd

@@ -229,6 +229,40 @@ func TestAddBondLot(t *testing.T) {
 	}
 }
 
+// TestAddBondLotWithoutTerms leaves the rates, the fee or both to the
+// connector (D-97): the lot is handed over saying so.
+func TestAddBondLotWithoutTerms(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name                   string
+		edit                   func(l *ingestv1.BondLot)
+		wantPublished, wantFee bool
+	}{
+		{name: "no terms", edit: func(l *ingestv1.BondLot) {
+			l.FirstPeriodRatePercent, l.MarginPercent, l.EarlyRedemptionFeePln = "", "", ""
+		}, wantPublished: true, wantFee: true},
+		{name: "no rates", edit: func(l *ingestv1.BondLot) { l.FirstPeriodRatePercent, l.MarginPercent = "", "" }, wantPublished: true},
+		{name: "no fee", edit: func(l *ingestv1.BondLot) { l.EarlyRedemptionFeePln = "" }, wantFee: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			c := &caller{}
+			l := lot()
+			tt.edit(l)
+			_, err := newClient(t, c, importer{}, viewCaller).AddBondLot(t.Context(), connect.NewRequest(&ingestv1.AddBondLotRequest{
+				Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Lot: l,
+			}))
+			if err != nil {
+				t.Fatalf("AddBondLot: %v", err)
+			}
+			if len(c.lots) != 1 || c.lots[0].PublishedRates != tt.wantPublished || c.lots[0].ReviewedFee != tt.wantFee {
+				t.Errorf("handed %+v, want published rates %t and the table's fee %t", c.lots, tt.wantPublished, tt.wantFee)
+			}
+		})
+	}
+}
+
 func TestAddBondLotRefusals(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -249,7 +283,8 @@ func TestAddBondLotRefusals(t *testing.T) {
 		{name: "a quantity that isn't a number", edit: func(l *ingestv1.BondLot) { l.Quantity = "forty" }, want: connect.CodeInvalidArgument, wantText: "quantity"},
 		{name: "a date that isn't one", edit: func(l *ingestv1.BondLot) { l.PurchaseDate = "4.5.2026" }, want: connect.CodeInvalidArgument, wantText: "purchase date"},
 		{name: "a rate that isn't a number", edit: func(l *ingestv1.BondLot) { l.FirstPeriodRatePercent = "6,8" }, want: connect.CodeInvalidArgument, wantText: "first-period rate"},
-		{name: "a margin that isn't a number", edit: func(l *ingestv1.BondLot) { l.MarginPercent = "" }, want: connect.CodeInvalidArgument, wantText: "margin"},
+		{name: "a margin that isn't a number", edit: func(l *ingestv1.BondLot) { l.MarginPercent = "2%" }, want: connect.CodeInvalidArgument, wantText: "margin"},
+		{name: "a rate without the margin", edit: func(l *ingestv1.BondLot) { l.MarginPercent = "" }, want: connect.CodeInvalidArgument, wantText: "or neither"},
 		{name: "a fee that isn't a number", edit: func(l *ingestv1.BondLot) { l.EarlyRedemptionFeePln = "2 zł" }, want: connect.CodeInvalidArgument, wantText: "fee"},
 		{name: "a purchase date of another series", edit: func(l *ingestv1.BondLot) { l.PurchaseDate = "2026-06-04" }, want: connect.CodeInvalidArgument, wantText: "EDO0536"},
 		{name: "an account without a bond connector", account: "acc-ibkr", want: connect.CodeFailedPrecondition, wantText: "acc-ibkr"},

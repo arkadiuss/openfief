@@ -853,3 +853,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-951369c94f75
+  - type: constrains
+    from: REQ-valuation-bond-terms-attribution-stored
+    to: FACT-SUBJECT-B480A4255C7FAFC4
+    created_at: 2026-11-07T08:06:45.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-823d36e6eec7
+  - type: requires_property
+    from: REQ-valuation-bond-terms-attribution-stored
+    to: FACT-PROP-EF5F01651609BC56
+    created_at: 2026-11-07T08:06:45.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f89e2c2ffde8
+  - type: specified_by
+    from: REQ-valuation-bond-terms-attribution-stored
+    to: SCEN-valuation-bond-terms-attribution-stored
+    created_at: 2026-11-07T08:06:45.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c8a63272fb1
+  - type: implements
+    from: SYM-mfbonds-dane-resources
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:17:52.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a69c5227645
+  - type: covered_by
+    from: SYM-mfbonds-dane-resources
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:17:52.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a87ebe19e19

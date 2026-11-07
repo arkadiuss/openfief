@@ -755,3 +755,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08b3ac69bc98
+  - type: constrains
+    from: REQ-plugins-treasury-bonds-ministry-egress
+    to: FACT-SUBJECT-8B14E386D265CA2E
+    created_at: 2026-11-07T08:07:13.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bed8e97716d
+  - type: requires_property
+    from: REQ-plugins-treasury-bonds-ministry-egress
+    to: FACT-PROP-05FAA4886810A12D
+    created_at: 2026-11-07T08:07:13.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36e4e6185779
+  - type: specified_by
+    from: REQ-plugins-treasury-bonds-ministry-egress
+    to: SCEN-plugins-treasury-bonds-ministry-egress
+    created_at: 2026-11-07T08:07:13.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f958cf6de28b
+  - type: executable_for
+    from: SYM-pl-test-early-redemption-fee
+    to: TEST-pl-fees
+    created_at: 2026-11-07T08:09:11.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96126b959eac
+  - type: implements
+    from: SYM-mfbonds-segments-rich-string
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:20:55.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae06c2a9bc3d
+  - type: covered_by
+    from: SYM-mfbonds-segments-rich-string
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:20:55.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7549930f468c
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-latin1
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:24:14.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdea3eb73766

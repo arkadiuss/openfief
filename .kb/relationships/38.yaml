@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15ac29eab035
+  - type: implements
+    from: SYM-connectorv1-bond-terms-attribution-get-dataset
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:56:21.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0fa7d67557d
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-attribution-get-dataset
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:56:21.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b19074a21ded

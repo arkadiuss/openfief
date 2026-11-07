@@ -755,3 +755,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd2380f5a7ce
+  - type: constrains
+    from: REQ-treasurybonds-terms-from-published-data
+    to: FACT-SUBJECT-E337F59B66613971
+    created_at: 2026-11-07T08:06:53.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-625b3a606d1d
+  - type: requires_property
+    from: REQ-treasurybonds-terms-from-published-data
+    to: FACT-PROP-C251F3D399873968
+    created_at: 2026-11-07T08:06:53.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-850ba1d3511d
+  - type: specified_by
+    from: REQ-treasurybonds-terms-from-published-data
+    to: SCEN-treasurybonds-terms-from-published-data
+    created_at: 2026-11-07T08:06:53.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa54fd13679
+  - type: implements
+    from: SYM-pl-sale-month
+    to: REQ-pl-early-redemption-fee-table
+    created_at: 2026-11-07T08:08:38.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f367abe62c
+  - type: covered_by
+    from: SYM-pl-sale-month
+    to: TEST-pl-fees
+    created_at: 2026-11-07T08:08:38.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40c9c057991b

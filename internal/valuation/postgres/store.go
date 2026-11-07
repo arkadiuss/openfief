@@ -199,13 +199,20 @@ func scanReading(row pgx.CollectableRow) (valuation.IndexReading, error) {
 	return valuation.IndexReading{Kind: k, Year: int(year), Month: time.Month(month), Value: v, Source: source}, nil
 }
 
-// BondTerms returns the series terms of the bond with isin, and false when
-// none are stored.
+// BondTerms returns the series terms of the bond with isin, with their
+// attribution when they were read from published data (D-97), and false
+// when none are stored.
 func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error) {
-	var series, first, margin, fee string
+	var (
+		series, first, margin, fee string
+		att                        attributionRow
+	)
 	err := s.pool.QueryRow(ctx, `
-		SELECT series, first_period_rate::text, margin::text, early_redemption_fee::text
-		FROM valuation.bond_terms WHERE isin = $1`, isin.String()).Scan(&series, &first, &margin, &fee)
+		SELECT series, first_period_rate::text, margin::text, early_redemption_fee::text,
+		    source_publisher, source_dataset, source_license, source_url, source_made::text, source_fetched,
+		    source_processing
+		FROM valuation.bond_terms WHERE isin = $1`, isin.String()).Scan(&series, &first, &margin, &fee,
+		&att.publisher, &att.dataset, &att.license, &att.url, &att.made, &att.fetched, &att.processing)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return pl.Terms{}, false, nil
 	}
@@ -216,10 +223,37 @@ func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool
 	f, err2 := kernel.ParseDecimal(first)
 	m, err3 := kernel.ParseDecimal(margin)
 	b, err4 := parseMoney(fee, pl.Nominal().Currency().String())
-	if err := errors.Join(err1, err2, err3, err4); err != nil {
+	var (
+		a    *pl.Attribution
+		err5 error
+	)
+	if att.publisher != nil {
+		a, err5 = att.attribution()
+	}
+	if err := errors.Join(err1, err2, err3, err4, err5); err != nil {
 		return pl.Terms{}, false, fmt.Errorf("%w: bond terms of %s: %w", ErrCorrupt, isin, err)
 	}
-	return pl.Terms{Series: sr, FirstPeriodRate: f, Margin: m, EarlyRedemptionFee: b}, true, nil
+	return pl.Terms{Series: sr, FirstPeriodRate: f, Margin: m, EarlyRedemptionFee: b, Attribution: a}, true, nil
+}
+
+// attribution returns the attribution the row holds, whose publisher is
+// set.
+func (r *attributionRow) attribution() (*pl.Attribution, error) {
+	if r.publisher == nil || r.dataset == nil || r.license == nil || r.url == nil || r.made == nil || r.fetched == nil || r.processing == nil {
+		return nil, fmt.Errorf("%w: a part of the attribution is missing", pl.ErrInvalidAttribution)
+	}
+	made, err := kernel.ParseDate(*r.made)
+	if err != nil {
+		return nil, fmt.Errorf("attribution date: %w", err)
+	}
+	a := &pl.Attribution{
+		Publisher: *r.publisher, Dataset: *r.dataset, License: *r.license, URL: *r.url, Made: made,
+		Fetched: r.fetched.UTC(), Processing: *r.processing,
+	}
+	if err := a.Validate(); err != nil {
+		return nil, fmt.Errorf("attribution: %w", err)
+	}
+	return a, nil
 }
 
 // ValuedThrough returns account's valued-through date, and false when the

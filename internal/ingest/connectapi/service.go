@@ -134,8 +134,10 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 }
 
 // lotFrom reads a lot message: rates in percent become fractions, the fee
-// is in PLN. A field that doesn't parse is an error wrapping
-// ingest.ErrInvalidBondLot; the rules are checked by the use case.
+// is in PLN. Empty rates, both of them, or an empty fee leave them to the
+// connector (D-97). A field that doesn't parse, or only one rate, is an
+// error wrapping ingest.ErrInvalidBondLot; the rules are checked by the use
+// case.
 func lotFrom(pb *ingestv1.BondLot) (ingest.BondLot, error) {
 	series, err := pl.ParseSeries(pb.GetSeries())
 	if err != nil {
@@ -149,28 +151,46 @@ func lotFrom(pb *ingestv1.BondLot) (ingest.BondLot, error) {
 	if err != nil {
 		return ingest.BondLot{}, fmt.Errorf("%w: purchase date: %w", ingest.ErrInvalidBondLot, err)
 	}
-	first, err := kernel.ParseDecimal(pb.GetFirstPeriodRatePercent())
-	if err != nil {
-		return ingest.BondLot{}, fmt.Errorf("%w: first-period rate: %w", ingest.ErrInvalidBondLot, err)
-	}
-	margin, err := kernel.ParseDecimal(pb.GetMarginPercent())
-	if err != nil {
-		return ingest.BondLot{}, fmt.Errorf("%w: margin: %w", ingest.ErrInvalidBondLot, err)
-	}
-	fee, err := kernel.ParseMoney(pb.GetEarlyRedemptionFeePln(), pl.Nominal().Currency())
-	if err != nil {
-		return ingest.BondLot{}, fmt.Errorf("%w: early-redemption fee: %w", ingest.ErrInvalidBondLot, err)
-	}
 	purchase, err := purchaseFrom(pb.GetPurchase())
 	if err != nil {
 		return ingest.BondLot{}, err
 	}
-	return ingest.BondLot{
-		Terms: pl.Terms{
-			Series: series, FirstPeriodRate: first.Mul(percent()), Margin: margin.Mul(percent()), EarlyRedemptionFee: fee,
-		},
-		Quantity: q, Purchased: purchased, Purchase: purchase,
-	}, nil
+	lot := ingest.BondLot{Terms: pl.Terms{Series: series}, Quantity: q, Purchased: purchased, Purchase: purchase}
+	if err := enteredTerms(pb, &lot); err != nil {
+		return ingest.BondLot{}, err
+	}
+	return lot, nil
+}
+
+// enteredTerms reads the terms the owner entered with pb into lot, rates in
+// percent as fractions; empty ones are left to the connector.
+func enteredTerms(pb *ingestv1.BondLot, lot *ingest.BondLot) error {
+	switch first, margin := pb.GetFirstPeriodRatePercent(), pb.GetMarginPercent(); {
+	case first == "" && margin == "":
+		lot.PublishedRates = true
+	case first == "" || margin == "":
+		return fmt.Errorf("%w: enter both the first-period rate and the margin, or neither", ingest.ErrInvalidBondLot)
+	default:
+		f, err := kernel.ParseDecimal(first)
+		if err != nil {
+			return fmt.Errorf("%w: first-period rate: %w", ingest.ErrInvalidBondLot, err)
+		}
+		m, err := kernel.ParseDecimal(margin)
+		if err != nil {
+			return fmt.Errorf("%w: margin: %w", ingest.ErrInvalidBondLot, err)
+		}
+		lot.Terms.FirstPeriodRate, lot.Terms.Margin = f.Mul(percent()), m.Mul(percent())
+	}
+	if pb.GetEarlyRedemptionFeePln() == "" {
+		lot.ReviewedFee = true
+		return nil
+	}
+	fee, err := kernel.ParseMoney(pb.GetEarlyRedemptionFeePln(), pl.Nominal().Currency())
+	if err != nil {
+		return fmt.Errorf("%w: early-redemption fee: %w", ingest.ErrInvalidBondLot, err)
+	}
+	lot.Terms.EarlyRedemptionFee = fee
+	return nil
 }
 
 // purchaseFrom reads how a lot was bought; unspecified is a cash purchase.
