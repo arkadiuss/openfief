@@ -21,7 +21,7 @@ import (
 // Usage is the command line's synopsis.
 const Usage = `usage:
   openfief plugin install <catalog-name|image@sha256:...> [--name NAME] [--config FILE]
-                          [--cluster-service NAMESPACE/SERVICE:PORT]
+                          [--cluster-service NAMESPACE/SERVICE:PORT] [--extra-ca]
                           [--trusted-signers FILE] [--yes] [--print]
   openfief plugin upgrade <instance> <catalog-version|image@sha256:...> [--config FILE]
                           [--trusted-signers FILE] [--yes]
@@ -77,6 +77,7 @@ type options struct {
 	kubeconfig, context string
 	name, config        string
 	clusterService      string
+	extraCA             bool
 	trustedSigners      string
 	yes, print          bool
 	// in reads the owner's answers, line by line.
@@ -138,6 +139,8 @@ func parseFlags(cmd string, args []string) (options, []string, error) {
 		fs.StringVar(&o.config, "config", "", "JSON file with the instance's config")
 		fs.StringVar(&o.clusterService, "cluster-service", "",
 			"the in-cluster service a plugin that asks for one reaches, as namespace/service:port; asked when not given")
+		fs.BoolVar(&o.extraCA, "extra-ca", false,
+			"expect an extra CA bundle in the Secret <instance>--ca-bundle, for an endpoint a private CA signs; the manifest must ask for role ca-bundle")
 		fs.StringVar(&o.trustedSigners, "trusted-signers", "", "the owner's signers file; default: the cluster's openfief-trusted-signers ConfigMap")
 		fs.BoolVar(&o.yes, "yes", false, "install without asking")
 		fs.BoolVar(&o.print, "print", false, "print the Plugin and PluginGrant as YAML for GitOps instead of applying them")
@@ -217,7 +220,7 @@ func prepare(ctx context.Context, env *Env, o *options, cluster Cluster, arg str
 	if err != nil {
 		return app.Proposal{}, err
 	}
-	p, err := in.Prepare(ctx, app.InstallRequest{Arg: arg, Name: o.name, Config: config, ClusterService: picked})
+	p, err := in.Prepare(ctx, app.InstallRequest{Arg: arg, Name: o.name, Config: config, ClusterService: picked, ExtraCA: o.extraCA})
 	if err != nil {
 		return app.Proposal{}, fmt.Errorf("install: %w", err)
 	}

@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73265ce4d7c9
+  - type: implements
+    from: SYM-plugins-ca-bundle-access-name
+    to: REQ-operator-ca-bundle-rolls-pod
+    created_at: 2026-11-07T11:35:38.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86301dcb16a3
+  - type: covered_by
+    from: SYM-plugins-ca-bundle-access-name
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:35:38.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bad5f330960e

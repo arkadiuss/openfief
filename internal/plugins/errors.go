@@ -37,6 +37,9 @@ var (
 	// ErrSecretNameSeparator: an instance name or a Secret role holds
 	// SecretNameSeparator, so a Secret's name could read two ways (D-89).
 	ErrSecretNameSeparator = errors.New(`name holds "--", which only separates an instance from a Secret role`)
+	// ErrExtraCANotRequested: a Plugin expects an extra CA bundle while its
+	// manifest doesn't ask for the CA bundle Secret role.
+	ErrExtraCANotRequested = errors.New("an extra CA bundle is expected but the manifest doesn't ask for its Secret role")
 )
 
 // Errors that are not about a single field.

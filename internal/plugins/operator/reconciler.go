@@ -65,6 +65,11 @@ type PluginReconciler struct {
 	// read access the owner's install granted for that one Service; nil
 	// reads through Client.
 	ServiceReader client.Reader
+	// SecretReader reads, uncached and by name, the CA bundle Secret of an
+	// instance that expects one: the operator's own Role reads no Secret,
+	// and the owner's install lets it get that one alone
+	// (plugins.CABundleAccessName). nil reads through Client.
+	SecretReader client.Reader
 	// Recorder records a refused image signature as a Warning event on the
 	// Plugin; nil records none.
 	Recorder events.EventRecorder
@@ -106,7 +111,8 @@ func (r *PluginReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 }
 
 // verifyRetry is how soon an image whose signature could not be checked,
-// such as while its registry is unreachable, is checked again.
+// such as while its registry is unreachable, is checked again, and how
+// often an expected CA bundle Secret is read again.
 const verifyRetry = time.Minute
 
 // result asks for another reconcile when a signature could not be checked.
@@ -114,8 +120,11 @@ func (o *observation) result() ctrl.Result {
 	unknown := o.signature.Status == metav1.ConditionUnknown ||
 		(o.previousSignature != nil && o.previousSignature.Status == metav1.ConditionUnknown)
 	// An in-cluster service in another namespace isn't watched (D-74), so a
-	// cluster that couldn't be read is read again too.
-	if unknown || o.clusterErr != nil {
+	// cluster that couldn't be read is read again too; nor is a CA bundle
+	// Secret, which the operator may only get, so one expected is read
+	// again, and a new, changed or deleted bundle rolls the pod within a
+	// minute.
+	if unknown || o.clusterErr != nil || o.caBundleSecret != "" {
 		return ctrl.Result{RequeueAfter: verifyRetry}
 	}
 	return ctrl.Result{}
@@ -339,10 +348,47 @@ func (r *PluginReconciler) apply(ctx context.Context, p *v1alpha1.Plugin, o *obs
 			return false, err
 		}
 	}
+	if err := r.caBundle(ctx, o, objs.Deployment); err != nil {
+		return false, err
+	}
 	if err := r.applyOwned(ctx, p, objs.Deployment); err != nil {
 		return false, err
 	}
 	return deploymentAvailable(objs.Deployment), nil
+}
+
+// caBundle reads the CA bundle Secret the running version mounts, if any:
+// it records whether the Secret exists, which the CABundleMissing condition
+// reports and nothing waits for, and stamps the checksum of its data on d's
+// pod template, so a new, changed or deleted bundle rolls the pod. The data
+// is hashed and dropped: never logged, recorded or put in the status
+// (GR-12). Without the owner's Role for that Secret the read is forbidden,
+// which is reported too, and the pod runs unstamped.
+func (r *PluginReconciler) caBundle(ctx context.Context, o *observation, d *appsv1.Deployment) error {
+	name, ok := o.rollout.Run.CABundleSecret()
+	if !ok {
+		return nil
+	}
+	o.caBundleSecret = name
+	reader := r.SecretReader
+	if reader == nil {
+		reader = r.Client
+	}
+	var s corev1.Secret
+	err := reader.Get(ctx, types.NamespacedName{Namespace: plugins.Namespace, Name: name}, &s)
+	switch {
+	case apierrors.IsForbidden(err):
+		o.caBundle = plugins.CABundleStateOf(true, false, false)
+		return nil
+	case apierrors.IsNotFound(err):
+		o.caBundle = plugins.CABundleStateOf(true, true, false)
+		return nil
+	case err != nil:
+		return fmt.Errorf("read CA bundle secret %s: %w", name, err)
+	}
+	o.caBundle = plugins.CABundleStateOf(true, true, true)
+	StampCABundle(d, plugins.SecretDataChecksum(s.Data))
+	return nil
 }
 
 // addClusterService reads the plugin's granted in-cluster service and adds

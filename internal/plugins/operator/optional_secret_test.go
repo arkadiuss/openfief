@@ -11,14 +11,15 @@ import (
 )
 
 // TestBuildObjectsOptionalSecret checks that a Secret the manifest marks
-// optional, such as a connector's extra CA bundle, is mounted as an optional
-// volume, so the pod starts while the owner hasn't created it, and that a
-// required one stays required.
+// optional, such as a connector's extra CA bundle the owner expects, is
+// mounted as an optional volume, so the pod starts while the owner hasn't
+// created it, and that a required one stays required.
 func TestBuildObjectsOptionalSecret(t *testing.T) {
 	t.Parallel()
 	p := &plugins.Plugin{
-		Name:  "sample",
-		Image: sampleImage,
+		Name:    "sample",
+		Image:   sampleImage,
+		ExtraCA: true,
 		Manifest: plugins.Manifest{
 			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 			Secrets: []plugins.SecretMount{

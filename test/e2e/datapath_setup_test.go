@@ -29,12 +29,15 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	apimeta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
 	identitycli "github.com/arkadiuss/openfief/internal/identity/cli"
 	identitykube "github.com/arkadiuss/openfief/internal/identity/kube"
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/operator"
+	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
 )
 
 // The institution fixture server (test/e2e/fixture), which task e2e:images
@@ -341,7 +344,7 @@ func dataPathInstances(ca []byte, tokens fixtureTokens) []dataPathInstance {
 // installDataPath creates each data path instance's Secrets, labelled with
 // it as the owner labels them (D-182), installs it with the openfief CLI
 // built from this checkout, `openfief plugin install <image> --name
-// <instance> --config <file> --cluster-service <fixture> --yes`, and waits
+// <instance> --config <file> --extra-ca --cluster-service <fixture> --yes`, and waits
 // until each runs. Each is uninstalled with the CLI when t ends, which
 // deletes its Secrets and the Role in the fixture's namespace.
 func installDataPath(t *testing.T, k *kube, reg suiteRegistry, instances []dataPathInstance) {
@@ -359,7 +362,20 @@ func installDataPath(t *testing.T, k *kube, reg suiteRegistry, instances []dataP
 		installWithCLI(t, in, img.cluster)
 	}
 	for i := range instances {
-		waitPluginReady(t, k, instances[i].name)
+		p := waitPluginReady(t, k, instances[i].name)
+		if _, ok := instances[i].secrets[caBundleRole]; ok {
+			checkCABundlePresent(t, p)
+		}
+	}
+}
+
+// checkCABundlePresent checks that the operator, which the CLI's
+// --extra-ca let get the instance's CA bundle Secret, found it.
+func checkCABundlePresent(t *testing.T, p *v1alpha1.Plugin) {
+	t.Helper()
+	c := apimeta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionCABundleMissing)
+	if c == nil || c.Status != metav1.ConditionFalse || c.Reason != operator.ReasonCABundleSecretPresent {
+		t.Errorf("plugin %s: condition %s: %+v; want False, reason %s", p.Name, v1alpha1.ConditionCABundleMissing, c, operator.ReasonCABundleSecretPresent)
 	}
 }
 
@@ -406,12 +422,17 @@ func installWithCLI(t *testing.T, in *dataPathInstance, image plugins.ImageRef) 
 }
 
 // installArgs are the arguments of `openfief plugin install` for in from
-// image, with its config from the file config, if any, and the fixture's
-// Service as its in-cluster service when it calls one.
+// image, with its config from the file config, if any, --extra-ca when it
+// has a CA bundle Secret, and the fixture's Service as its in-cluster
+// service when it calls one.
 func installArgs(in *dataPathInstance, image plugins.ImageRef, config string) []string {
 	args := []string{"plugin", "install", image.String(), "--name", in.name, "--yes"}
 	if config != "" {
 		args = append(args, "--config", config)
+	}
+	if _, ok := in.secrets[caBundleRole]; ok {
+		// It trusts the run's CA from its <instance>--ca-bundle.
+		args = append(args, "--extra-ca")
 	}
 	if in.clusterService {
 		args = append(args, "--cluster-service", fmt.Sprintf("%s/%s:%d", fixtureNamespace, fixtureService, fixturePort))

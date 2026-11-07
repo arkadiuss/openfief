@@ -762,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9fcdaa54ed8
+  - type: constrains
+    from: REQ-plugins-config-host-change-keeps-approved
+    to: FACT-SUBJECT-733BA0CBF0089137
+    created_at: 2026-11-07T10:23:19.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ba8858ae295
+  - type: requires_property
+    from: REQ-plugins-config-host-change-keeps-approved
+    to: FACT-PROP-68F32583430C3CC6
+    created_at: 2026-11-07T10:23:19.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa9cc0e4f9d2
+  - type: specified_by
+    from: REQ-plugins-config-host-change-keeps-approved
+    to: SCEN-plugins-config-host-change-keeps-approved
+    created_at: 2026-11-07T10:23:19.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e920fece572

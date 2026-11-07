@@ -77,8 +77,10 @@ func listEntries(es []CatalogEntry) string {
 // current to a signed image applies (D-90): the same instance with the new
 // image and its signed manifest label (D-42), the given config or, when
 // config is nil, the current one, and the current in-cluster service while
-// the new manifest still asks for one (D-74). The Grant approves exactly
-// what the new version requests, which is what the owner confirmed.
+// the new manifest still asks for one (D-74), and whether it expects an
+// extra CA bundle while the new manifest still asks for its Secret role.
+// The Grant approves exactly what the new version requests, which is what
+// the owner confirmed.
 func PlanUpgrade(current *Plugin, img *SignedImage, config []byte) (Plugin, Grant, error) {
 	if config == nil {
 		config = current.Config
@@ -91,6 +93,7 @@ func PlanUpgrade(current *Plugin, img *SignedImage, config []byte) (Plugin, Gran
 	if err != nil {
 		return Plugin{}, Grant{}, fmt.Errorf("upgrade: %w", err)
 	}
+	p.ExtraCA = current.ExtraCA && img.Manifest.asksForCABundle()
 	return p, g, nil
 }
 

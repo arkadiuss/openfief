@@ -116,6 +116,12 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 			ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
 		}}, nil
 	}
+	if image.String() == caImage {
+		return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
+			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+			Secrets:      []plugins.SecretMount{{Role: plugins.CABundleRole, MountPath: "/etc/openfief/ca-bundle", Optional: true}},
+		}}, nil
+	}
 	if image.String() == galleryImage {
 		return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
 			Capabilities: []plugins.Capability{plugins.CapabilityView},

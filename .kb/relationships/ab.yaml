@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0937d34217d6
+  - type: executable_for
+    from: SYM-plugins-test-helper-ca-mounts
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:26.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-278f50081e4c
+  - type: executable_for
+    from: SYM-plugins-test-config-host-change-keeps-approved-allow-list
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:53.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-813f897dd2c2

@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e49b9e86865
+  - type: executable_for
+    from: SYM-e2e-test-helper-check-ca-bundle-present
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T11:39:11.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e9d39cb8555

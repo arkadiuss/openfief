@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-948dba144dd6
+  - type: verified_by
+    from: SCEN-plugins-config-host-change-keeps-approved
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T10:23:01.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f49c41e6982

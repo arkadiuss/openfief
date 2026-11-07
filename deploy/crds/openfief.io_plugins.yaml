@@ -91,6 +91,14 @@ spec:
                   Secrets (D-29).
                 type: object
                 x-kubernetes-preserve-unknown-fields: true
+              extraCa:
+                description: |-
+                  ExtraCA says the owner expects an extra CA bundle for this instance,
+                  such as for an endpoint whose certificate a private CA signs. Only
+                  then does the operator mount the Secret <instance>--ca-bundle, which
+                  the manifest must ask for as role ca-bundle, roll the pod when it
+                  changes, and report its absence in the CABundleMissing condition.
+                type: boolean
               image:
                 description: |-
                   Image is the plugin's container image, pinned by digest:
@@ -358,6 +366,14 @@ spec:
                       Secrets (D-29).
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
+                  extraCa:
+                    description: |-
+                      ExtraCA says the owner expects an extra CA bundle for this instance,
+                      such as for an endpoint whose certificate a private CA signs. Only
+                      then does the operator mount the Secret <instance>--ca-bundle, which
+                      the manifest must ask for as role ca-bundle, roll the pod when it
+                      changes, and report its absence in the CABundleMissing condition.
+                    type: boolean
                   image:
                     description: |-
                       Image is the plugin's container image, pinned by digest:

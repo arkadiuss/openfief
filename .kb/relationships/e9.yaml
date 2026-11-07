@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f8dc22c82b9
+  - type: executable_for
+    from: SYM-operator-test-helper-ca-bundle-state
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T11:38:56.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ab19923bcab

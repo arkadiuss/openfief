@@ -148,7 +148,10 @@ func manage(ctx context.Context, o *options) error {
 		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings, Verifier: verifier,
 		// An in-cluster service lives outside the namespaced cache (D-74).
 		ServiceReader: mgr.GetAPIReader(),
-		Recorder:      mgr.GetEventRecorder("openfief-operator"),
+		// An expected CA bundle Secret is read uncached, by name: the
+		// operator may get that one Secret, never list Secrets.
+		SecretReader: mgr.GetAPIReader(),
+		Recorder:     mgr.GetEventRecorder("openfief-operator"),
 	}
 	dc, err := discovery.NewDiscoveryClientForConfig(mgr.GetConfig())
 	if err != nil {

@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24a84cca2bbc
+  - type: executable_for
+    from: SYM-plugins-test-plan-upgrade-keeps-extra-ca
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:47.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f7c6dd1ea50

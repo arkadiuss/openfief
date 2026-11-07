@@ -18,6 +18,11 @@ const (
 	ConditionSignatureVerified = "SignatureVerified"
 	// ConditionValid, on a PluginGrant, is True when the grant is well-formed.
 	ConditionValid = "Valid"
+	// ConditionCABundleMissing is True when the Plugin expects an extra CA
+	// bundle (spec.extraCa) and the Secret <instance>--ca-bundle doesn't
+	// exist; False when it exists. It is absent when no bundle is
+	// expected, and never keeps the plugin from running.
+	ConditionCABundleMissing = "CABundleMissing"
 )
 
 // Plugin is what a plugin's vendor requests: a digest-pinned image, a
@@ -64,6 +69,14 @@ type PluginSpec struct {
 	// directly at its ClusterIP, not through the egress proxy.
 	// +optional
 	ClusterService *ClusterServiceRef `json:"clusterService,omitempty"`
+
+	// ExtraCA says the owner expects an extra CA bundle for this instance,
+	// such as for an endpoint whose certificate a private CA signs. Only
+	// then does the operator mount the Secret <instance>--ca-bundle, which
+	// the manifest must ask for as role ca-bundle, roll the pod when it
+	// changes, and report its absence in the CABundleMissing condition.
+	// +optional
+	ExtraCA bool `json:"extraCa,omitempty"`
 }
 
 // ClusterServiceRef names a Service port in another namespace than

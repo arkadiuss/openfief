@@ -328,6 +328,10 @@ func TestReconcile(t *testing.T) {
 		t.Parallel()
 		testSharedSecret(t, tc, signed)
 	})
+	t.Run("an expected CA bundle is reported and rolls the pod", func(t *testing.T) {
+		t.Parallel()
+		testCABundle(t, tc, signed)
+	})
 	t.Run("revoking the grant removes the plugin", func(t *testing.T) {
 		t.Parallel()
 		testRevoke(t, tc, signed)

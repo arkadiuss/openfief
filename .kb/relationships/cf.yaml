@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a84119b94be
+  - type: executable_for
+    from: SYM-plugins-kube-test-instances-keep-extra-ca
+    to: TEST-plugins-kube-ca-bundle-access
+    created_at: 2026-11-07T11:38:17.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d7fab92115

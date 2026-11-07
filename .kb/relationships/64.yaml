@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a55a506c164
+  - type: implements
+    from: SYM-plugins-kube-instances-delete-ca-bundle-access
+    to: REQ-operator-ca-bundle-rolls-pod
+    created_at: 2026-11-07T11:36:30.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af211c779402
+  - type: covered_by
+    from: SYM-plugins-kube-instances-delete-ca-bundle-access
+    to: TEST-plugins-kube-ca-bundle-access
+    created_at: 2026-11-07T11:36:30.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5340e98b94ac

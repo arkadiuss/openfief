@@ -57,6 +57,11 @@ const (
 	// AnnotationConfigHash on the pod template is the SHA-256 of the config,
 	// so a config change rolls the pod.
 	AnnotationConfigHash = "openfief.io/config-sha256"
+	// AnnotationCABundleHash on the pod template is the checksum of the
+	// instance's CA bundle Secret's data (plugins.SecretDataChecksum), set
+	// while the pod mounts that Secret and it exists, so creating, changing
+	// or deleting it rolls the pod.
+	AnnotationCABundleHash = "openfief.io/ca-bundle-sha256"
 )
 
 const (
@@ -198,6 +203,20 @@ func BuildObjects(w *plugins.Workload, c *Cluster) (Objects, error) {
 		NetworkPolicy: np,
 		Deployment:    deployment(w, c),
 	}, nil
+}
+
+// StampCABundle sets the checksum of the CA bundle Secret's data, a hash
+// and never the data, on d's pod template; an empty checksum, for a Secret
+// that doesn't exist, sets nothing. A different checksum is a different
+// pod template, so the Deployment rolls the pod.
+func StampCABundle(d *appsv1.Deployment, checksum string) {
+	if checksum == "" {
+		return
+	}
+	if d.Spec.Template.Annotations == nil {
+		d.Spec.Template.Annotations = map[string]string{}
+	}
+	d.Spec.Template.Annotations[AnnotationCABundleHash] = checksum
 }
 
 // DenyAllNetworkPolicy is the NetworkPolicy of a plugin that must not run:

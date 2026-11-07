@@ -37,7 +37,8 @@ type EffectivePermissions struct {
 
 // Effective returns the intersection of what p requests and what g approves.
 // Secrets match by the name the instance mounts for each role (D-89) and
-// keep the mount path the manifest asks for. It
+// keep the mount path the manifest asks for; the CA bundle's only when the
+// instance expects one (Plugin.ExtraCA). It
 // fails when p or g is invalid, when g is for another plugin, and with
 // ErrNoCapabilityGranted when no requested capability is approved.
 func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
@@ -55,6 +56,10 @@ func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
 		config:       bytes.Clone(p.Config),
 	}
 	for _, s := range p.Manifest.Secrets {
+		// The CA bundle is mounted only when the owner expects one.
+		if s.Role == CABundleRole && !p.ExtraCA {
+			continue
+		}
 		if slices.Contains(g.Permissions.Secrets, SecretName(p.Name, s.Role)) {
 			e.secrets = append(e.secrets, s)
 		}
