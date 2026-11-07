@@ -100,11 +100,18 @@ A plugin of your own should import only the SDK module, [sdk/go](../../sdk/go/),
 ```json
 {
   "capabilities": ["connector"],
+  "institutions": ["nbp"],
   "egress": ["api.nbp.pl"],
+  "egressFromConfig": ["baseUrl"],
+  "clusterService": {"description": "an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host"},
+  "secrets": [{"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
   "configSchema": {
     "type": "object",
     "properties": {
-      "start": {"type": "string", "minLength": 10, "maxLength": 10, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"}
+      "start": {"type": "string", "minLength": 10, "maxLength": 10, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"},
+      "baseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
+        "default": "https://api.nbp.pl",
+        "description": "The NBP Web API, or a mirror of it: an https URL; the install shows its host and the grant approves it"}
     },
     "additionalProperties": false
   }
@@ -112,14 +119,18 @@ A plugin of your own should import only the SDK module, [sdk/go](../../sdk/go/),
 ```
 
 - `capabilities`: it acts as a connector, nothing else.
-- `egress`: it may reach `api.nbp.pl` on port 443, the default. NBP's API is public, so it needs no Secret.
-- `configSchema`: an instance takes one optional key, `start`, the first day of the first sync. The CLI and the operator both check the owner's config against it.
+- `institutions`: every delivery names `nbp` as its institution (D-182).
+- `egress`: it may reach `api.nbp.pl` on port 443, the default. NBP's API is public, so it needs no credential.
+- `egressFromConfig` and `baseUrl`: the owner may point it at another endpoint, such as a mirror, with the config's `baseUrl`. The schema takes only `https://host[:port][/path]`, so plain `http` is refused before anything is shown; the install reads the host from the config and asks the grant for it beside `api.nbp.pl` (D-75). Without `baseUrl` it calls NBP.
+- `clusterService`: the owner may instead pick a service in the cluster at install (D-74), which the plugin then calls directly, outside the proxy. Picking none is fine, and is what the install does with `--yes` or `--print` without `--cluster-service`.
+- `secrets`: an optional extra CA bundle, `<instance>--ca-bundle`, for an endpoint whose certificate a private CA signs. It is `optional`, so the plugin runs without it.
+- `configSchema`: an instance takes two optional keys, `start`, the first day of the first sync, and `baseUrl`. The CLI and the operator both check the owner's config against it.
 
 Ask for as little as you can. Every entry is something the owner has to approve, and the [Manifest reference](#manifest-reference) below lists every field.
 
 ### The entry point
 
-[main.go](../../plugins/nbp-fx/main.go) reads its config, builds an HTTP client that goes through the egress proxy, and serves:
+[main.go](../../plugins/nbp-fx/main.go) reads its config, builds an HTTP client for its endpoint that goes through the egress proxy, and serves:
 
 ```go
 // run serves the connector until ctx is done.
@@ -132,13 +143,17 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	hc, err := openfief.NewEgressClient()
+	ep, err := openfief.LoadEndpoint(cfg.BaseURL, nbp.DefaultBaseURL)
+	if err != nil {
+		return fmt.Errorf("config baseUrl: %w", err)
+	}
+	hc, err := ep.NewEgressClient()
 	if err != nil {
 		return fmt.Errorf("egress: %w", err)
 	}
 	hc.Timeout = requestTimeout
-	log.Info("nbp-fx serving", "first_sync_from", start.String())
-	if err := openfief.ServeConnector(ctx, newConnector(hc, start)); err != nil {
+	log.Info("nbp-fx serving", "first_sync_from", start.String(), "extra_ca", len(ep.CABundle) > 0)
+	if err := openfief.ServeConnector(ctx, newConnector(hc, ep.BaseURL, start)); err != nil {
 		return fmt.Errorf("nbp-fx: %w", err)
 	}
 	return nil
@@ -192,15 +207,38 @@ A connector that delivers transactions writes only into accounts the owner bound
 
 ### Reaching the institution
 
-`newConnector` hands the egress client to the NBP adapter, which calls `https://api.nbp.pl`:
+`openfief.LoadEndpoint` returns the `Endpoint` the plugin calls: the config's `baseUrl`, or NBP's real one without it, and the PEM certificates of the optional `<instance>--ca-bundle` Secret, if the owner created it ([endpoint.go](../../sdk/go/openfief/endpoint.go)). `Endpoint.NewClient` is the client for it: through the egress proxy, or, when the owner picked an in-cluster service, directly to that service's address. Either way it trusts the system's roots plus those certificates, never only the bundle, and refuses any request, a redirect included, outside the base URL. `newConnector` hands that client and the base URL to the NBP adapter:
 
 ```go
-func newConnector(hc *http.Client, start kernel.Date) *connector {
-	return &connector{rates: nbp.New(hc, nbp.DefaultBaseURL), today: today, start: start}
+func newConnector(hc *http.Client, baseURL string, start kernel.Date) *connector {
+	return &connector{rates: nbp.New(hc, baseURL), today: today, start: start}
 }
 ```
 
 For every request, the client's `EgressTransport` reads the egress token file again and puts the token in the proxy URL as its password, which Go sends on the [HTTP CONNECT](../glossary.md) that opens a tunnel through the proxy. TLS runs end to end inside the tunnel ([egress.go](../../sdk/go/openfief/egress.go)). The proxy resolves the name and lets the tunnel through only to a host on this instance's [egress allow-list](../glossary.md), which holds exactly the hosts both manifest and grant name. The client refuses plain `http` (`ErrNotHTTPS`). Without a granted egress host, `HTTPS_PROXY` isn't set and `NewEgressClient` fails with `ErrNoEgressProxy`, so a plugin that reaches nothing outside shouldn't call it. [Egress](../concepts/egress.md) explains the checks on the proxy's side.
+
+### A self-hosted endpoint
+
+The first-party network connectors, nbp-fx, eodhd, ibkr-flex and treasury-bonds, each take a base URL in their config (`baseUrl`; treasury-bonds `gusBaseUrl` and `nbpBaseUrl`) and trust an optional extra CA bundle, so an owner can point one at a mirror, a self-hosted service or a corporate TLS proxy without a switch that only tests use. Say the owner runs a mirror of NBP's API at `https://rates.example.org/nbp`, whose certificate their own CA signs. They put that CA's certificate in the instance's Secret, under the key `ca.crt`, and the base URL in the config:
+
+```sh
+kubectl -n openfief create secret generic nbp-dev--ca-bundle --from-file=ca.crt=./my-ca.pem
+kubectl -n openfief label secret nbp-dev--ca-bundle openfief.io/instance=nbp-dev
+echo '{"baseUrl": "https://rates.example.org/nbp"}' > config.json
+openfief plugin install registry.example.org/you/nbp-fx@sha256:… --name nbp-dev --config config.json
+```
+
+The install shows `rates.example.org:443` among the egress hosts, as the host of config field `baseUrl`, beside `api.nbp.pl:443`, which the manifest still requests, and the grant approves both. The proxy then lets the plugin reach the mirror, and the plugin trusts the mirror's certificate through the bundle while NBP's public certificate still verifies against the system's roots. The base URL must be `https`; its host must be a name, not an IP address, and resolve to a public address, since the egress proxy refuses private and internal ones (D-32). The plugin reads the bundle when it starts: after creating or changing the Secret, delete the plugin's pod so a new one reads it.
+
+A mirror in the same cluster has a private address, so the proxy would refuse it. Pick it as the instance's in-cluster service instead (D-74); its certificate, signed by the CA in the bundle, names its in-cluster DNS name, which goes in the base URL:
+
+```sh
+echo '{"baseUrl": "https://rates-mirror.tools.svc/nbp"}' > config.json
+openfief plugin install registry.example.org/you/nbp-fx@sha256:… --name nbp-dev --config config.json \
+  --cluster-service tools/rates-mirror:443
+```
+
+The grant approves that service, and the operator gives the plugin an egress rule to its pods and its address in `OPENFIEF_CLUSTER_SERVICE_ADDRESS`. Plugins have no DNS, so the plugin connects to that address and uses the base URL's host only to verify the certificate and fill the `Host` header. Its traffic skips the egress proxy, but stays HTTPS: the SDK's endpoint client never falls back to plain HTTP. An in-cluster Ollama for a model provider (D-205) is reached the same way.
 
 ## Manifest reference
 
@@ -210,7 +248,7 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 |---|---|---|
 | `capabilities` | Required, at least one: `connector` or `view`, no repeats. | `["connector"]` |
 | `egress` | Egress hosts, `host` or `host:port`; the port defaults to 443. Canonical lower-case hostnames of at least two labels: no IP address, no wildcard, no single-label name. | `["api.nbp.pl"]` |
-| `secrets` | Secrets by role, each a `role` (a DNS label without `--`) and a `mountPath`, mounted read-only. Each instance mounts the Secret `<instance>--<role>` in the `openfief` namespace (D-89). The path is absolute and clean, isn't `/`, doesn't overlap another, and stays out of `/var/run/secrets`. The owner creates the Secrets (D-29). | `[{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}]` |
+| `secrets` | Secrets by role, each a `role` (a DNS label without `--`) and a `mountPath`, mounted read-only. Each instance mounts the Secret `<instance>--<role>` in the `openfief` namespace (D-89). The path is absolute and clean, isn't `/`, doesn't overlap another, and stays out of `/var/run/secrets`. The owner creates the Secrets (D-29). With `"optional": true` the plugin runs while the Secret doesn't exist and sees an empty directory, as for the extra CA bundle, role `ca-bundle` at `/etc/openfief/ca-bundle`, that the SDK's `LoadEndpoint` reads. | `[{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}]` |
 | `egressFromConfig` | Top-level config fields whose value, an `https` URL, gives a host the plugin reaches through the egress proxy instead of a fixed one (D-75). The install shows the host and the grant approves exactly it; an IP address, a wildcard or plain `http` is refused, and an absent or empty field asks for nothing. | `["url"]` |
 | `clusterService` | Asks for one service in the same cluster that the owner picks at install, with a `description` the CLI shows when it asks (D-74). The plugin reaches it directly, outside the proxy, at the address in `OPENFIEF_CLUSTER_SERVICE_ADDRESS` (`ClusterIP:port`), possibly over plain HTTP. | `{"description": "a Ghostfolio running in this cluster"}` |
 | `dataTiers` | Names of classes of data, 1 to 32 letters, digits, `-` or `_`. D-206 defines them; nothing enforces them yet. | No first-party plugin declares one |
@@ -337,9 +375,15 @@ Trust:        unverified: signed by trusted signer laptop (Owner, public key sha
 It requests, and the PluginGrant will approve, exactly:
   Capabilities: connector
   Egress hosts: api.nbp.pl:443
-  Secrets:      none
+                no host from config field baseUrl: the config doesn't set it
+  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
+                and label it openfief.io/instance=nbp-dev, or uninstall leaves it in place (D-182)
+                nbp-dev--ca-bundle (role ca-bundle) at /etc/openfief/ca-bundle, optional: the plugin runs without it
   Data tiers:   none
-  Config:       start: string
+  In-cluster:   none picked (it asks for an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host)
+  Institutions: nbp
+  Config:       baseUrl: string
+                start: string
                 no other keys
 
 Config given: {"start": "2025-01-01"}

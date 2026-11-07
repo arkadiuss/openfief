@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bacabc69b3e
+  - type: implements
+    from: SYM-e2e-fixture-eodhd-bar
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:45:44.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50067665aed6
+  - type: covered_by
+    from: SYM-e2e-fixture-eodhd-bar
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:45:44.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01c665c6baeb

@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac1860cd445f
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-endpoint-client
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:58:10.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f9cf048338

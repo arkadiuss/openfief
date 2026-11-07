@@ -818,3 +818,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4a958d2bba9
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-test-ca
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:58:16.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ae728795dac
+  - type: constrains
+    from: REQ-connectors-configurable-endpoint
+    to: FACT-SUBJECT-2989AF1C42D41A08
+    created_at: 2026-11-06T22:47:55.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ce2f8ef5556
+  - type: requires_property
+    from: REQ-connectors-configurable-endpoint
+    to: FACT-PROP-37367C2776291B79
+    created_at: 2026-11-06T22:47:55.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2044f35f82af
+  - type: specified_by
+    from: REQ-connectors-configurable-endpoint
+    to: SCEN-connectors-configurable-endpoint
+    created_at: 2026-11-06T22:47:55.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae4233fd240

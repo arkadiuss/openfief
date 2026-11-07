@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d43195031a8
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-endpoint-check-config
+    to: TEST-plugins-eodhd-endpoint
+    created_at: 2026-11-06T22:49:14.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-955a65d0a9a3

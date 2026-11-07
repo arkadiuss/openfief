@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37f4c9abc044
+  - type: implements
+    from: SYM-sdk-go-endpoint-endpoint-transport
+    to: REQ-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:56:30.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9f20728084
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-endpoint-transport
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:56:30.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c05b44ba7175

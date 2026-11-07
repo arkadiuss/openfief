@@ -394,10 +394,12 @@ func volumes(w *plugins.Workload) []corev1.Volume {
 		vs = append(vs, tokenVolume(egressVolume, *w.EgressToken))
 	}
 	for i, s := range w.Secrets {
-		vs = append(vs, corev1.Volume{
-			Name:         secretVolume(i),
-			VolumeSource: corev1.VolumeSource{Secret: &corev1.SecretVolumeSource{SecretName: s.SecretName}},
-		})
+		source := &corev1.SecretVolumeSource{SecretName: s.SecretName}
+		if s.Optional {
+			optional := true
+			source.Optional = &optional
+		}
+		vs = append(vs, corev1.Volume{Name: secretVolume(i), VolumeSource: corev1.VolumeSource{Secret: source}})
 	}
 	return vs
 }

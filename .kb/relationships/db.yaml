@@ -692,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d592755e5af
+  - type: constrains
+    from: REQ-sdk-endpoint-base-url-https
+    to: FACT-SUBJECT-61C572C580F4D0DE
+    created_at: 2026-11-06T21:55:08.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-194c60b1d583
+  - type: requires_property
+    from: REQ-sdk-endpoint-base-url-https
+    to: FACT-PROP-772938A4B0A7C7D0
+    created_at: 2026-11-06T21:55:08.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2ef4bbf31f8
+  - type: specified_by
+    from: REQ-sdk-endpoint-base-url-https
+    to: SCEN-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:55:08.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-551d89a91a5c

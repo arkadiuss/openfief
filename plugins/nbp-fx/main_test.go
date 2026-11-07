@@ -1,31 +1,29 @@
 package main
 
 import (
-	"os"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
-// plugin needs: the connector capability and api.nbp.pl, nothing else.
+// plugin needs: the connector capability, api.nbp.pl, the host of its
+// baseUrl config field (D-75) and the optional extra CA bundle, nothing
+// else.
 func TestManifest(t *testing.T) {
 	t.Parallel()
-	data, err := os.ReadFile("manifest.json")
-	if err != nil {
-		t.Fatalf("read manifest: %v", err)
-	}
-	got, err := plugins.ParseManifestLabel(string(data))
-	if err != nil {
-		t.Fatalf("ParseManifestLabel: %v", err)
-	}
+	got := readManifest(t)
 	want := plugins.Manifest{
-		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
-		Egress:       []plugins.EgressHost{{Host: "api.nbp.pl", Port: 443}},
+		Capabilities:     []plugins.Capability{plugins.CapabilityConnector},
+		Egress:           []plugins.EgressHost{{Host: "api.nbp.pl", Port: 443}},
+		EgressFromConfig: []string{"baseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host"},
+		Secrets:          []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{institution},
 	}

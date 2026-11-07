@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da49df924a3a
+  - type: implements
+    from: SYM-sdk-go-endpoint-valid-base-url
+    to: REQ-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:55:46.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543cbbbab8bc
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-valid-base-url
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:55:46.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01375ffd6ef7
+  - type: implements
+    from: SYM-e2e-fixture-date-range
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:44:31.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d42f2fabc25
+  - type: covered_by
+    from: SYM-e2e-fixture-date-range
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:44:31.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79afa6b55ed

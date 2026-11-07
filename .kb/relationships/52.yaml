@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6298be8d0d2
+  - type: implements
+    from: SYM-nbp-fx-config
+    to: REQ-connectors-configurable-endpoint
+    created_at: 2026-11-06T22:48:31.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e61aca06fcb2
+  - type: covered_by
+    from: SYM-nbp-fx-config
+    to: TEST-plugins-nbp-fx-endpoint
+    created_at: 2026-11-06T22:48:31.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513965109e5c

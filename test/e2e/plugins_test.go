@@ -49,6 +49,9 @@ const (
 	// requests: the operator enforces only what both hold (D-16), so it is
 	// never on the allow-list.
 	fxGrantOnly = "example.org"
+	// fxCABundleRole is the role of the connector's optional extra CA bundle
+	// Secret, which the suite never creates: the pod starts without it.
+	fxCABundleRole = "ca-bundle"
 	// fxAllowList is the instance's entry in the allow-list ConfigMap.
 	fxAllowList = "api.nbp.pl:443\n"
 	// fxTokenSeconds is the projected tokens' lifetime the operator asks for.
@@ -121,7 +124,8 @@ func installFX(t *testing.T, k *kube, name string, image plugins.ImageRef) {
 }
 
 // fxGrant is the PluginGrant of an NBP FX connector instance name: it
-// approves everything the connector's manifest requests, and a host it
+// approves everything the connector's manifest requests, its optional CA
+// bundle Secret included, which the suite never creates, and a host it
 // doesn't.
 func fxGrant(name string) *unstructured.Unstructured {
 	return &unstructured.Unstructured{Object: map[string]any{
@@ -132,6 +136,7 @@ func fxGrant(name string) *unstructured.Unstructured {
 			"egress":       []any{fxEgress, fxGrantOnly},
 			// The institutions it books for, as the manifest declares (D-185).
 			"institutions": []any{"nbp"},
+			"secrets":      []any{plugins.SecretName(name, fxCABundleRole)},
 		},
 	}}
 }
@@ -343,6 +348,8 @@ func (w *workload) addVolumes(volumes []corev1.Volume) {
 			if token.ExpirationSeconds != nil {
 				w.TokenLifetimes = append(w.TokenLifetimes, *token.ExpirationSeconds)
 			}
+		case v.Secret != nil:
+			w.OtherVolumes = append(w.OtherVolumes, fmt.Sprintf("%s: Secret %s, optional %s", v.Name, v.Secret.SecretName, boolField(v.Secret.Optional)))
 		default:
 			w.OtherVolumes = append(w.OtherVolumes, v.Name)
 		}
@@ -352,8 +359,9 @@ func (w *workload) addVolumes(volumes []corev1.Volume) {
 
 // checkWorkload checks the running pod of the instance: its own
 // ServiceAccount with no API token, the restricted security context, the
-// signed image, and two projected tokens, one for the core and one for the
-// egress proxy (D-27, D-63).
+// signed image, two projected tokens, one for the core and one for the
+// egress proxy (D-27, D-63), and the optional CA bundle Secret, which doesn't
+// exist, so the pod runs without it.
 func checkWorkload(t *testing.T, k *kube, image plugins.ImageRef) {
 	t.Helper()
 	pod, err := k.runningPluginPod(t.Context(), fxPlugin)
@@ -367,6 +375,7 @@ func checkWorkload(t *testing.T, k *kube, image plugins.ImageRef) {
 		DropCapabilities: []corev1.Capability{"ALL"},
 		TokenAudiences:   []string{plugins.CoreAudience, plugins.EgressAudience},
 		TokenLifetimes:   []int64{fxTokenSeconds, fxTokenSeconds},
+		OtherVolumes:     []string{"secret-0: Secret " + plugins.SecretName(fxPlugin, fxCABundleRole) + ", optional true"},
 	}
 	if diff := cmp.Diff(want, workloadOf(pod)); diff != "" {
 		t.Errorf("pod %s (-want +got):\n%s", pod.Name, diff)

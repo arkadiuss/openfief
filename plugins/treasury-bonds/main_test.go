@@ -11,13 +11,15 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
 // plugin needs: the connector capability and egress to GUS's API and NBP's
-// archive, no secret, since both are public, and the bond series terms it
-// delivers (D-179).
+// archive, or the hosts of its base URL config fields (D-75), no credential,
+// since both are public, only the optional extra CA bundle, and the bond
+// series terms it delivers (D-179).
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -29,8 +31,11 @@ func TestManifest(t *testing.T) {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
 	want := plugins.Manifest{
-		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
-		Egress:       []plugins.EgressHost{{Host: "api-sdp.stat.gov.pl", Port: 443}, {Host: "static.nbp.pl", Port: 443}},
+		Capabilities:     []plugins.Capability{plugins.CapabilityConnector},
+		Egress:           []plugins.EgressHost{{Host: "api-sdp.stat.gov.pl", Port: 443}, {Host: "static.nbp.pl", Port: 443}},
+		EgressFromConfig: []string{"gusBaseUrl", "nbpBaseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of GUS and NBP, at the gusBaseUrl and nbpBaseUrl paths, its certificate issued for their hosts"},
+		Secrets:          []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{"treasury-bonds"},
 		BondTerms:    true,
