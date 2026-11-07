@@ -5,10 +5,10 @@
 #     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them), and so is the suite's institution
 #     fixture server (test/e2e/fixture), openfief.test/fixture:e2e, which serves synthetic IBKR Flex, EODHD and NBP
 #     answers over HTTPS with a certificate from a CA the suite makes for each run;
-#   - the plugin images the operator deploys, nbp-fx, the built-in UI, xtb and the suite's synthetic connector
-#     (test/e2e/connector, two images with different manifests), go to the suite's registry, because the
-#     operator deploys a plugin only after it has read the image's signature from its registry (D-56, D-57). The suite
-#     signs them there with a key it makes at run time (test/e2e/registry_test.go);
+#   - the plugin images the operator deploys, nbp-fx, the built-in UI, xtb, ibkr-flex, eodhd, treasury-bonds and the
+#     suite's synthetic connector (test/e2e/connector, two images with different manifests), go to the suite's
+#     registry, because the operator deploys a plugin only after it has read the image's signature from its registry
+#     (D-56, D-57). The suite signs them there with a key it makes at run time (test/e2e/registry_test.go);
 #   - core, operator and egress-proxy go to that registry too, for the suite's install from the release bundle, which
 #     names every image by digest (scripts/release-bundle.sh, test/e2e/bundle_test.go).
 # The registry is a container, openfief-e2e-registry, on the cluster's Docker network, published on 127.0.0.1:5000 for
@@ -46,7 +46,8 @@ pushed=()
 # The images the bootstrap install runs (deploy/operator, deploy/egress-proxy, deploy/core), which the bundle pins.
 bundle=(core operator egress-proxy)
 for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile \
-  test/e2e/fixture/Dockerfile plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile; do
+  test/e2e/fixture/Dockerfile plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile \
+  plugins/ibkr-flex/Dockerfile plugins/eodhd/Dockerfile plugins/treasury-bonds/Dockerfile; do
   name="$(basename "$(dirname "$dockerfile")")"
   image="openfief.test/$name:e2e"
   echo "e2e-images: building $image from $dockerfile"

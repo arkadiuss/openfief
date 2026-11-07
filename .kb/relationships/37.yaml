@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91259d6dbea5
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-data-path-instance
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:34:53.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54628a26451

@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc51498875d2
+  - type: implements
+    from: SYM-core-config-parse-check-ledger
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:25:19.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61389415d6bd
+  - type: covered_by
+    from: SYM-core-config-parse-check-ledger
+    to: TEST-core-check-ledger
+    created_at: 2026-11-07T04:25:19.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc5e28c3e532

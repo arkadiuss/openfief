@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-513965109e5c
+  - type: verified_by
+    from: SCEN-ledger-whole-log-check
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:21:40.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b596ff2575b2
+  - type: verified_by
+    from: SCEN-ledger-whole-log-check
+    to: TEST-ledger-app-check-log
+    created_at: 2026-11-07T04:21:40.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f2f92d9610e
+  - type: verified_by
+    from: SCEN-ledger-whole-log-check
+    to: TEST-core-check-ledger
+    created_at: 2026-11-07T04:21:40.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e2e077468bc

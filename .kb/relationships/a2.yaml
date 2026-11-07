@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b63b70ba320
+  - type: specified_by
+    from: REQ-m0-exit-02-double-entry
+    to: SCEN-e2e-double-entry-whole-log
+    created_at: 2026-11-07T05:53:45.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a34739fb073

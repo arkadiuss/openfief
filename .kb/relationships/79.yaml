@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-852b93274936
+  - type: specified_by
+    from: REQ-AUTO-3C2A493C661181C7
+    to: SCEN-e2e-opening-lots-pln-cost
+    created_at: 2026-11-07T04:21:58.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0811c50d18e3
+  - type: executable_for
+    from: SYM-ledger-logcheck-test-test-check-log
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:27:01.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccaf0154b6d7

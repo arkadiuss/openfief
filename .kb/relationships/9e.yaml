@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfa96f567d0c
+  - type: implements
+    from: SYM-ledger-logcheck-account-log-count
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:22:37.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e0a02dce75a
+  - type: implements
+    from: SYM-ledger-logcheck-account-log-count
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-11-07T04:22:37.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65038676f15d
+  - type: covered_by
+    from: SYM-ledger-logcheck-account-log-count
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:22:37.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e383e4e84b43

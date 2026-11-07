@@ -14,7 +14,9 @@
 // name, which the suite signs with a CA it makes for each run and hands the
 // connectors as their extra CA bundle (<instance>--ca-bundle). Every answer
 // is synthetic: fake account IDs, synthetic ISINs and made-up prices and
-// rates; nothing here is real financial data.
+// rates; nothing here is real financial data. The Flex query ID picks the
+// statement: the end-to-end data path's own (datapath.go), or for any other
+// the statement the ibkrflex adapter's tests read.
 //
 // -flex-token and -eodhd-token, when set, are the only credentials it
 // accepts, so a test can tell that a connector read its Secret; both are

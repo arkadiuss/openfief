@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d51b66414e1e
+  - type: implements
+    from: SYM-core-checkledger-ledger-report
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:24:15.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28a11c519461
+  - type: covered_by
+    from: SYM-core-checkledger-ledger-report
+    to: TEST-core-check-ledger
+    created_at: 2026-11-07T04:24:15.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c677903452f

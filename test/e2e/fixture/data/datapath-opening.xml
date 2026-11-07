@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Query statement for the end-to-end data path (test/e2e/datapath_test.go): fake account, fake IDs and synthetic ISINs with valid check digits. No real data. It seeds the account on its toDate from lot-level open positions and cash. -->
+<FlexQueryResponse queryName="openfief-e2e-datapath" type="AF">
+<FlexStatements count="1">
+<FlexStatement accountId="U0000002" fromDate="2026-03-02" toDate="2026-03-06" period="LastBusinessWeek" whenGenerated="2026-03-07;083000">
+<OpenPositions>
+<OpenPosition accountId="U0000002" currency="GBP" assetCategory="STK" subCategory="COMMON" symbol="TSTG" isin="GBTEST000047" multiplier="1" reportDate="2026-03-06" markPrice="105.5" position="10" costBasisMoney="1000" levelOfDetail="LOT" openDateTime="2026-02-10;100000" originatingTransactionID="9100101" side="Long" />
+<OpenPosition accountId="U0000002" currency="GBP" assetCategory="STK" subCategory="COMMON" symbol="TSTG" isin="GBTEST000047" multiplier="1" reportDate="2026-03-06" markPrice="105.5" position="5" costBasisMoney="520" levelOfDetail="LOT" openDateTime="2026-02-16;093000" originatingTransactionID="9100102" side="Long" />
+<OpenPosition accountId="U0000002" currency="CHF" assetCategory="STK" subCategory="COMMON" symbol="TSTH" isin="CHTEST000052" multiplier="1" reportDate="2026-03-06" markPrice="104" position="8" costBasisMoney="800" levelOfDetail="LOT" openDateTime="2026-01-20;140000" originatingTransactionID="9100103" side="Long" />
+</OpenPositions>
+<CashReport>
+<CashReportCurrency accountId="U0000002" currency="GBP" levelOfDetail="Currency" fromDate="2026-03-02" toDate="2026-03-06" endingCash="250" />
+<CashReportCurrency accountId="U0000002" currency="CHF" levelOfDetail="Currency" fromDate="2026-03-02" toDate="2026-03-06" endingCash="100" />
+</CashReport>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

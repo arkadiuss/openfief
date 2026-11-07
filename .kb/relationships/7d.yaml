@@ -951,3 +951,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01db9e6c5882
+  - type: implements
+    from: SYM-ledger-logcheck-unbalanced-version
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:22:45.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8380211a50b1
+  - type: implements
+    from: SYM-ledger-logcheck-unbalanced-version
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-11-07T04:22:45.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97fec0eb93b
+  - type: covered_by
+    from: SYM-ledger-logcheck-unbalanced-version
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:22:45.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aed47c71d38d
+  - type: implements
+    from: SYM-ledger-logcheck-logged-before
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:23:46.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3441fef76b57
+  - type: implements
+    from: SYM-ledger-logcheck-logged-before
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-11-07T04:23:46.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-617eef63efd8
+  - type: covered_by
+    from: SYM-ledger-logcheck-logged-before
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:23:46.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da115aa46bed

@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d95818ef5218
+  - type: executable_for
+    from: SYM-e2e-datapath-test-xtb-opening
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:29:25.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82079133aad4

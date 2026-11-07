@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-996e863a1a0e
+  - type: specified_by
+    from: REQ-m0-exit-03-idempotent-versioned-imports
+    to: SCEN-e2e-reimport-idempotent
+    created_at: 2026-11-07T05:53:47.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-890f778a5fd4
+  - type: specified_by
+    from: REQ-m0-exit-03-idempotent-versioned-imports
+    to: SCEN-e2e-correction-new-version
+    created_at: 2026-11-07T05:53:47.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79504127b3f4

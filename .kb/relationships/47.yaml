@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfa60a3e7361
+  - type: implements
+    from: SYM-core-checkledger-ledger-amount
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:24:43.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-817c929e94cb
+  - type: covered_by
+    from: SYM-core-checkledger-ledger-amount
+    to: TEST-core-check-ledger
+    created_at: 2026-11-07T04:24:43.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd8689c276e
+  - type: executable_for
+    from: SYM-e2e-datapath-test-data-path-check-corrected-deposit
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:29:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42d469fddb3e
+  - type: executable_for
+    from: SYM-e2e-datapath-test-account-values
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:30:40.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59b4f38033e8

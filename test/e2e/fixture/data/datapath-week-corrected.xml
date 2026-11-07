@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic Flex Query statement for the end-to-end data path (test/e2e/datapath_test.go): fake account, fake IDs and synthetic ISINs with valid check digits. No real data. The same week as datapath-week.xml with IBKR's correction of one row: the deposit of transaction 8100201 is 1100, not 1000, and the GBP cash 100 more. -->
+<FlexQueryResponse queryName="openfief-e2e-datapath" type="AF">
+<FlexStatements count="1">
+<FlexStatement accountId="U0000002" fromDate="2026-03-09" toDate="2026-03-13" period="LastBusinessWeek" whenGenerated="2026-03-14;083000">
+<OpenPositions>
+<OpenPosition accountId="U0000002" currency="GBP" assetCategory="STK" subCategory="COMMON" symbol="TSTG" isin="GBTEST000047" multiplier="1" reportDate="2026-03-13" markPrice="105" position="17" costBasisMoney="1729" levelOfDetail="SUMMARY" side="Long" />
+<OpenPosition accountId="U0000002" currency="CHF" assetCategory="STK" subCategory="COMMON" symbol="TSTH" isin="CHTEST000052" multiplier="1" reportDate="2026-03-13" markPrice="102" position="8" costBasisMoney="800" levelOfDetail="SUMMARY" side="Long" />
+</OpenPositions>
+<CashReport>
+<CashReportCurrency accountId="U0000002" currency="GBP" levelOfDetail="Currency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="1138" />
+<CashReportCurrency accountId="U0000002" currency="CHF" levelOfDetail="Currency" fromDate="2026-03-09" toDate="2026-03-13" endingCash="107.8" />
+</CashReport>
+<Trades>
+<Trade accountId="U0000002" currency="GBP" assetCategory="STK" subCategory="COMMON" symbol="TSTG" isin="GBTEST000047" multiplier="1" tradeID="9100201" tradeDate="2026-03-10" dateTime="2026-03-10;101500" transactionType="ExchTrade" buySell="BUY" quantity="2" tradePrice="104" tradeMoney="208" proceeds="-208" ibCommission="-1" ibCommissionCurrency="GBP" taxes="0" levelOfDetail="EXECUTION" />
+</Trades>
+<CashTransactions>
+<CashTransaction accountId="U0000002" currency="GBP" type="Deposits/Withdrawals" assetCategory="" symbol="" isin="" description="CASH RECEIPTS / ELECTRONIC FUND TRANSFERS" amount="1100" dateTime="2026-03-09;120000" transactionID="8100201" actionID="" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000002" currency="CHF" type="Dividends" assetCategory="STK" symbol="TSTH" isin="CHTEST000052" description="TSTH CASH DIVIDEND CHF 1.50 PER SHARE" amount="12" dateTime="2026-03-11;202000" transactionID="8100202" actionID="7100201" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000002" currency="CHF" type="Withholding Tax" assetCategory="STK" symbol="TSTH" isin="CHTEST000052" description="TSTH CASH DIVIDEND - CH TAX" amount="-4.2" dateTime="2026-03-11;202000" transactionID="8100203" actionID="7100201" levelOfDetail="DETAIL" />
+<CashTransaction accountId="U0000002" currency="GBP" type="Other Fees" assetCategory="" symbol="" isin="" description="MARKET DATA FEE" amount="-3" dateTime="2026-03-12" transactionID="8100204" levelOfDetail="DETAIL" />
+</CashTransactions>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

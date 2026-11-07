@@ -1,0 +1,24 @@
+---
+title: On k3d and kind, the IBKR Flex, XTB and bond data path against the institution fixture balances, imports idempotently with versions, seeds opening lots with PLN cost and values at NBP rates and EODHD prices
+status: active
+sourceFile: test/e2e/datapath_test.go
+verification_scope: end_to_end
+origin:
+  kind: agent
+  recorded_at: '2026-11-07T04:21:28.912Z'
+id: TEST-e2e-data-path
+type: test
+proof_contract:
+  version: kibi.proof-contract.v1
+  integration: e2e
+  required_proofs:
+    - symbol_id: SYM-e2e-datapath-test-test-data-path
+      target: default
+  success_policy: all_required_first_attempt
+proof_bindings:
+  - symbol_id: SYM-e2e-datapath-test-test-data-path
+    target: default
+    source_file: test/e2e/datapath_test.go
+    native_id: test/e2e/datapath_test.go::TestDataPath
+---
+TestDataPath deploys the institution fixture as an HTTPS Service in its own namespace with a certificate from a CA made for the run, installs nbp-fx, eodhd, ibkr-flex, treasury-bonds and xtb with the openfief CLI built from the checkout, each signed with the run key, the network ones with their base URL on the fixture, the fixture Service as their in-cluster service and the run CA in their ca-bundle Secret. The owner signs in with a passkey in Chromium through localhost (owner.mjs) and, through the UI forms, creates an IBKR account mapped to the reported broker account, an XTB account and a bond account. The IBKR account is seeded from the opening statement, then synced through the week and its correction by changing the query ID in its Secret; the XTB account is seeded from an uploaded export, its ticker confirmed, and a later export uploaded twice; a fixed-rate bond lot is entered twice. It checks with core check ledger and the read API: a balanced whole log, unchanged logs after re-sync and re-upload, the corrected deposit as a second version with the first superseded, the opening lots with open dates and costs, net and gross PLN values and cash hand-computed from the fixture NBP rates and EODHD closes, and the price checks: IBKR mark 1.96% off flagged, 0.48% off matched. A false pass would need the hand-computed values to coincide with other rates, which the rates rising each weekday rule out.
