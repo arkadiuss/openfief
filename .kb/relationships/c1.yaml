@@ -860,3 +860,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffb190cd002a
+  - type: constrains
+    from: REQ-pl-published-series-rates
+    to: FACT-SUBJECT-BF737AC4F533C999
+    created_at: 2026-11-07T08:06:24.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757e91e80958
+  - type: requires_property
+    from: REQ-pl-published-series-rates
+    to: FACT-PROP-1B149A5F9A5AEF6C
+    created_at: 2026-11-07T08:06:25.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c67ba7837f4
+  - type: specified_by
+    from: REQ-pl-published-series-rates
+    to: SCEN-pl-published-series-rates
+    created_at: 2026-11-07T08:06:25.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07930e0b68ec
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-bond-terms-attribution
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:28:12.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fc2d96e5939

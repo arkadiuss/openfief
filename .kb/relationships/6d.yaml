@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca9ec9d7fc3c
+  - type: executable_for
+    from: SYM-mfbonds-test-parse-workbook
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:22:43.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d339b60d65

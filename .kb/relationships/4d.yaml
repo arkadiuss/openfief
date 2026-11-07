@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0e565972b2d
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-workbook-stream
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:24:52.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5391f177858c

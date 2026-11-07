@@ -643,3 +643,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-045f670156a0
+  - type: executable_for
+    from: SYM-pl-test-early-redemption-fees-table
+    to: TEST-pl-fees
+    created_at: 2026-11-07T08:09:18.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a95a565a5311

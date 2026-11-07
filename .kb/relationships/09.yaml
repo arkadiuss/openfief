@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b297c9201e71
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-ministry-egress
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T08:06:12.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6a80a19657
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-ministry-egress
+    to: TEST-plugins-treasury-bonds-endpoint
+    created_at: 2026-11-07T08:06:12.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7be33680d400

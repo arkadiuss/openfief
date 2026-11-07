@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8089028ddfca
+  - type: implements
+    from: SYM-mfbonds-mul-rk
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:12:12.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ca2e1282bf0
+  - type: covered_by
+    from: SYM-mfbonds-mul-rk
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:12:12.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b31d169e53f

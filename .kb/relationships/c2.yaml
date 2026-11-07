@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-759e838f11b9
+  - type: constrains
+    from: REQ-ingest-bond-lot-terms-optional
+    to: FACT-SUBJECT-DC4F7EC29743B12A
+    created_at: 2026-11-07T08:06:58.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89dddd888b4
+  - type: requires_property
+    from: REQ-ingest-bond-lot-terms-optional
+    to: FACT-PROP-7751A66E5BDFFBD0
+    created_at: 2026-11-07T08:06:58.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8fe1148671f
+  - type: specified_by
+    from: REQ-ingest-bond-lot-terms-optional
+    to: SCEN-ingest-bond-lot-terms-optional
+    created_at: 2026-11-07T08:06:58.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c198b63d455a

@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e9b707a1a2e
+  - type: implements
+    from: SYM-pl-fee-row
+    to: REQ-pl-early-redemption-fee-table
+    created_at: 2026-11-07T08:08:04.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db2a12baec6a
+  - type: covered_by
+    from: SYM-pl-fee-row
+    to: TEST-pl-fees
+    created_at: 2026-11-07T08:08:04.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6fe088b65be

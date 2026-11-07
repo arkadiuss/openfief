@@ -23,7 +23,8 @@ const (
 
 // bondLotForm is the "Add bond lot" form of a bond account's page: D-9's
 // series, quantity and purchase date, how the bonds were bought (D-100),
-// and the series' terms from its issue letter, as the owner typed them.
+// and any of the series' terms the owner typed; the connector fills in
+// those left empty (D-97).
 type bondLotForm struct {
 	Series       string
 	Quantity     string

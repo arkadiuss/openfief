@@ -930,3 +930,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e20772b1e43
+  - type: implements
+    from: SYM-mfbonds-short-string
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:10:49.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b88f074c66
+  - type: covered_by
+    from: SYM-mfbonds-short-string
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:10:49.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f1425afd622
+  - type: implements
+    from: SYM-mfbonds-segments-advance
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:20:13.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eba870737e45
+  - type: covered_by
+    from: SYM-mfbonds-segments-advance
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:20:13.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f070d1ce32

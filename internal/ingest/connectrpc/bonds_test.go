@@ -74,6 +74,24 @@ func lotOf(t *testing.T, quantity int64) ingest.BondLot {
 	}
 }
 
+// TestClientImportBondLotsWithoutTerms hands the connector a lot whose
+// owner left its rates and fee to it (D-97): empty rates, no fee.
+func TestClientImportBondLotsWithoutTerms(t *testing.T) {
+	t.Parallel()
+	conn := &bondConnector{}
+	l := lotOf(t, 40)
+	l.PublishedRates, l.ReviewedFee = true, true
+	if _, err := newClient(t, conn).ImportBondLots(t.Context(), "bonds-main", "b-1", &ingest.BondLotEntries{Account: "acc-bonds", Lots: []ingest.BondLot{l}}); err != nil {
+		t.Fatalf("ImportBondLots: %v", err)
+	}
+	want := []*connectorv1.BondLot{{
+		Series: "EDO0536", Quantity: "40", PurchaseDate: "2026-05-04", Purchase: connectorv1.BondPurchase_BOND_PURCHASE_CASH,
+	}}
+	if diff := cmp.Diff(want, conn.lots, protocmp.Transform()); diff != "" {
+		t.Errorf("lots sent (-want +got):\n%s", diff)
+	}
+}
+
 func TestClientImportBondLots(t *testing.T) {
 	t.Parallel()
 	conn := &bondConnector{}

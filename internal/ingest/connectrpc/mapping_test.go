@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"google.golang.org/protobuf/testing/protocmp"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
@@ -418,6 +420,51 @@ func TestModeTo(t *testing.T) {
 		got, err := modeTo(tt.in)
 		if got != tt.want || !errors.Is(err, tt.wantErr) {
 			t.Errorf("modeTo(%v) = %v, %v; want %v, %v", tt.in, got, err, tt.want, tt.wantErr)
+		}
+	}
+}
+
+// TestBondTermsAttribution translates the attribution of terms read from
+// published data both ways (D-97): written with the terms a sync carries,
+// read from a delivery, and refused when a part the licence asks for is
+// missing or a time doesn't parse.
+func TestBondTermsAttribution(t *testing.T) {
+	t.Parallel()
+	msg := func() *connectorv1.BondTerms {
+		return &connectorv1.BondTerms{
+			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
+			FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: &connectorv1.Money{Amount: "3", Currency: "PLN"},
+			Attribution: &connectorv1.BondTermsAttribution{
+				Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+				Url: "https://www.example.org/attachment/x", Made: "2026-10-26", Fetched: "2026-11-07T06:00:00Z", Processing: "read",
+			},
+		}
+	}
+	got, err := bondTermsFrom("t", msg())
+	if err != nil {
+		t.Fatalf("bondTermsFrom: %v", err)
+	}
+	want := &pl.Attribution{
+		Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+		URL: "https://www.example.org/attachment/x", Made: mustDate(t, "2026-10-26"),
+		Fetched: time.Date(2026, time.November, 7, 6, 0, 0, 0, time.UTC), Processing: "read",
+	}
+	if diff := cmp.Diff(want, got.Terms.Attribution); diff != "" {
+		t.Errorf("bondTermsFrom attribution (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff(bondTermsTo([]ingest.BondTerms{got}), []*connectorv1.BondTerms{msg()}, protocmp.Transform()); diff != "" {
+		t.Errorf("bondTermsTo (-want +got):\n%s", diff)
+	}
+	for name, edit := range map[string]func(a *connectorv1.BondTermsAttribution){
+		"no publisher":  func(a *connectorv1.BondTermsAttribution) { a.Publisher = "" },
+		"no processing": func(a *connectorv1.BondTermsAttribution) { a.Processing = "" },
+		"a date made":   func(a *connectorv1.BondTermsAttribution) { a.Made = "26.10.2026" },
+		"a time taken":  func(a *connectorv1.BondTermsAttribution) { a.Fetched = "2026-11-07" },
+	} {
+		m := msg()
+		edit(m.GetAttribution())
+		if _, err := bondTermsFrom("t", m); !errors.Is(err, ErrInvalidMessage) {
+			t.Errorf("%s: bondTermsFrom = %v, want ErrInvalidMessage", name, err)
 		}
 	}
 }

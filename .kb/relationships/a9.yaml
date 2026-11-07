@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44b1c9f4c82b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-bond-terms-attribution
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-07T08:29:02.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50a515404d72

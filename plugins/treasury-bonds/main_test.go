@@ -16,10 +16,10 @@ import (
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
-// plugin needs: the connector capability and egress to GUS's API and NBP's
-// archive, or the hosts of its base URL config fields (D-75), no credential,
-// since both are public, only the optional extra CA bundle, and the bond
-// series terms it delivers (D-179).
+// plugin needs: the connector capability and egress to GUS's API, NBP's
+// archive, gov.pl and dane.gov.pl's API (D-97), or the hosts of its base URL
+// config fields (D-75), no credential, since all four are public, only the
+// optional extra CA bundle, and the bond series terms it delivers (D-179).
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -31,11 +31,17 @@ func TestManifest(t *testing.T) {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
 	want := plugins.Manifest{
-		Capabilities:     []plugins.Capability{plugins.CapabilityConnector},
-		Egress:           []plugins.EgressHost{{Host: "api-sdp.stat.gov.pl", Port: 443}, {Host: "static.nbp.pl", Port: 443}},
-		EgressFromConfig: []string{"gusBaseUrl", "nbpBaseUrl"},
-		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of GUS and NBP, at the gusBaseUrl and nbpBaseUrl paths, its certificate issued for their hosts"},
-		Secrets:          []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
+		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+		Egress: []plugins.EgressHost{
+			{Host: "api-sdp.stat.gov.pl", Port: 443},
+			{Host: "static.nbp.pl", Port: 443},
+			{Host: "www.gov.pl", Port: 443},
+			{Host: "api.dane.gov.pl", Port: 443},
+		},
+		EgressFromConfig: []string{"gusBaseUrl", "nbpBaseUrl", "govPlBaseUrl", "daneGovPlBaseUrl"},
+		ClusterService: &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of GUS, NBP, gov.pl and dane.gov.pl, " +
+			"at the gusBaseUrl, nbpBaseUrl, govPlBaseUrl and daneGovPlBaseUrl paths, its certificate issued for their hosts"},
+		Secrets: []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{"treasury-bonds"},
 		BondTerms:    true,
@@ -51,6 +57,10 @@ func TestManifest(t *testing.T) {
 	// D-118: one instance serves every bond account, so its config names none.
 	if strings.Contains(string(got.ConfigSchema), `"account"`) {
 		t.Errorf("the config schema names an account: %s", got.ConfigSchema)
+	}
+	// D-97: it never reads obligacjeskarbowe.pl (D-8).
+	if strings.Contains(string(data), "obligacjeskarbowe") {
+		t.Error("the manifest names obligacjeskarbowe.pl")
 	}
 }
 
@@ -84,7 +94,8 @@ func TestStartDate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := config{Start: tt.start}.startDate(today)
+			cfg := config{Start: tt.start}
+			got, err := cfg.startDate(today)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("startDate = %v, want an error: %t", err, tt.wantErr)
 			}

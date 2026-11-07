@@ -161756,3 +161756,2241 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-demo-stack
+  - id: SYM-pl-published-rates
+    title: PublishedRates
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:07:20.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-published
+      - type: implements
+        target: REQ-pl-published-series-rates
+  - id: SYM-pl-attribution-validate
+    title: Attribution.Validate
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:07:29.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-published
+      - type: implements
+        target: REQ-pl-published-series-rates
+  - id: SYM-pl-published-rates-of
+    title: Published.RatesOf
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:07:37.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-published
+      - type: implements
+        target: REQ-pl-published-series-rates
+  - id: SYM-pl-attribution
+    title: Attribution
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:07:45.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-published
+      - type: implements
+        target: REQ-pl-published-series-rates
+  - id: SYM-pl-published
+    title: Published
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:07:53.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-published
+      - type: implements
+        target: REQ-pl-published-series-rates
+  - id: SYM-pl-fee-row
+    title: FeeRow
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:02.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-fees-reviewed-through
+    title: FeesReviewedThrough
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:10.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-early-redemption-fees
+    title: EarlyRedemptionFees
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:18.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-first-of-month
+    title: firstOfMonth
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:27.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-sale-month
+    title: SaleMonth
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:35.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-early-redemption-fee
+    title: EarlyRedemptionFee
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:44.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-fee-row-of
+    title: feeRow
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:08:52.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-early-redemption-fee-table
+  - id: SYM-pl-test-sale-month
+    title: TestSaleMonth
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:00.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-early-redemption-fee
+    title: TestEarlyRedemptionFee
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:08.263Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-early-redemption-fees-table
+    title: TestEarlyRedemptionFeesTable
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:16.075Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-helper-fee-row-problems
+    title: feeRowProblems
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:23.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-helper-attribution
+    title: attribution
+    sourceFile: internal/jurisdiction/pl/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:32.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-published
+  - id: SYM-pl-test-published-rates-of
+    title: TestPublishedRatesOf
+    sourceFile: internal/jurisdiction/pl/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:40.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-published
+  - id: SYM-pl-test-attribution-validate
+    title: TestAttributionValidate
+    sourceFile: internal/jurisdiction/pl/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:48.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-published
+  - id: SYM-mfbonds-cell
+    title: cell
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:09:56.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-workbook
+    title: workbook
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:04.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-read-workbook
+    title: readWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:13.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-bound-sheet
+    title: boundSheet
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:21.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-record
+    title: record
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:30.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-bound-sheet-of
+    title: boundSheetOf
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:38.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-short-string
+    title: shortString
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:46.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-long-string
+    title: longString
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:10:55.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-chars
+    title: chars
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:03.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-placed
+    title: placed
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:11.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-cells-of
+    title: cellsOf
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:19.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-one-cell
+    title: oneCell
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:28.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-number
+    title: number
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:36.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-decimal-of
+    title: decimalOf
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:45.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-rk
+    title: rk
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:11:53.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-formula
+    title: formula
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:01.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-mul-rk
+    title: mulRK
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:10.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-records-next
+    title: records.next
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:18.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-records-bof
+    title: records.bof
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:26.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-records-globals
+    title: records.globals
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:35.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-global-records-add
+    title: globalRecords.add
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:43.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-records-worksheet
+    title: records.worksheet
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:12:52.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-sheet-put
+    title: sheet.put
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:00.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-sheet
+    title: sheet
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:08.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-records
+    title: records
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:15.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-global-records
+    title: globalRecords
+    sourceFile: internal/ingest/treasurybonds/ministry_biff.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:23.673Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-is-workbook
+    title: isWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:32.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dir-entry
+    title: dirEntry
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:41.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-read-stream
+    title: readStream
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:49.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-parse-compound-file
+    title: parseCompoundFile
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:13:58.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-read-header
+    title: compoundFile.readHeader
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:06.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-fat-sectors
+    title: compoundFile.fatSectors
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:15.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-read-mini
+    title: compoundFile.readMini
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:23.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-sectors
+    title: compoundFile.sectors
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:32.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-sector
+    title: compoundFile.sector
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:40.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-chain
+    title: compoundFile.chain
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:48.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file-mini-chain
+    title: compoundFile.miniChain
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:14:57.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-trim
+    title: trim
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:05.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dir-entries
+    title: dirEntries
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:13.880Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-uint32s
+    title: uint32s
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:22.284Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-le16
+    title: le16
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:30.645Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-le32
+    title: le32
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:39.064Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-compound-file
+    title: compoundFile
+    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:46.543Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-config
+    title: MinistryConfig
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:15:54.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-new
+    title: NewMinistryClient
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:03.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-client-published
+    title: MinistryClient.Published
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:11.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-client-from-gov-pl
+    title: MinistryClient.fromGovPL
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:19.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-client-from-dane
+    title: MinistryClient.fromDane
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:27.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-published
+    title: published
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:35.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-get
+    title: get
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:44.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-read
+    title: read
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:52.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-client
+    title: MinistryClient
+    sourceFile: internal/ingest/treasurybonds/ministry_client.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:16:59.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-discover-gov-pl
+    title: discoverGovPL
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:08.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-links-next
+    title: links.next
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:16.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-attr
+    title: attr
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:24.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-attachment
+    title: attachment
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:33.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-same-endpoint
+    title: sameEndpoint
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:41.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dane-resources
+    title: daneResources
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:49.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-text
+    title: text
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:17:58.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dane-file
+    title: daneFile
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:06.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-discover-dane
+    title: discoverDane
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:14.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dane-resource
+    title: daneResource
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:23.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-dane-date
+    title: daneDate
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:31.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-links
+    title: links
+    sourceFile: internal/ingest/treasurybonds/ministry_discover.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:39.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-bond-types
+    title: bondTypes
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:47.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-parse-workbook
+    title: ParseWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:18:56.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-columns
+    title: columns
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:04.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-header-columns
+    title: headerColumns
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:12.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-is
+    title: is
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:21.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-sheet-rates
+    title: sheetRates
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:29.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-row-rates
+    title: rowRates
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:37.709Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-series-of
+    title: seriesOf
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:46.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-fraction
+    title: fraction
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:19:54.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-shared-strings
+    title: sharedStrings
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:02.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-advance
+    title: segments.advance
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:11.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-byte1
+    title: segments.byte1
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:19.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-u16
+    title: segments.u16
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:27.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-u32
+    title: segments.u32
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:35.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-skip
+    title: segments.skip
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:44.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-rich-string
+    title: segments.richString
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:20:52.550Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments-chars
+    title: segments.chars
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:00.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-segments
+    title: segments
+    sourceFile: internal/ingest/treasurybonds/ministry_sst.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:08.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-valuation-mfbonds-published-rates
+  - id: SYM-mfbonds-test-helper-gov-site
+    title: govSite
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:15.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-gov-site-handler
+    title: govSite.handler
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:23.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-dane-handler
+    title: daneHandler
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:30.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-day
+    title: day
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:39.168Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-client-published
+    title: TestClientPublished
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:47.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-want-attribution
+    title: wantAttribution
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:21:54.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-want-published
+    title: wantPublished
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:02.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-client-published-caches
+    title: TestClientPublishedCaches
+    sourceFile: internal/ingest/treasurybonds/ministry_client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:10.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-rates
+    title: rates
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:18.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-header
+    title: header
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:25.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-synthetic-workbook
+    title: syntheticWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:32.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-parse-workbook
+    title: TestParseWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:40.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-parse-workbook-refuses
+    title: TestParseWorkbookRefuses
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:48.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-fuzz-parse-workbook
+    title: FuzzParseWorkbook
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:22:55.614Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-cell-kind
+    title: cellKind
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:03.081Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-xcell
+    title: xcell
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:10.794Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-xsheet
+    title: xsheet
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:18.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-text
+    title: text
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:25.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-num
+    title: num
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:33.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-record
+    title: record
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:40.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-u16s
+    title: u16s
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:48.713Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-u32
+    title: u32
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:23:56.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-wide
+    title: wide
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:04.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-latin1
+    title: latin1
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:11.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-ieee
+    title: ieee
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:19.059Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-rk-of
+    title: rkOf
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:26.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-sst
+    title: sst
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:34.211Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-cell-records
+    title: cellRecords
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:41.741Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-workbook-stream
+    title: workbookStream
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:49.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-compound-file
+    title: compoundFile
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:24:56.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-dir-entry
+    title: dirEntry
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:04.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-xls
+    title: xls
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:12.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-units
+    title: units
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:19.981Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-to16
+    title: to16
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:27.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-to32
+    title: to32
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:35.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-mfbonds-test-helper-to-byte
+    title: toByte
+    sourceFile: internal/ingest/treasurybonds/ministry_xls_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:43.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-treasurybonds-published-source
+    title: PublishedSource
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:25:52.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-terms-from-published-data
+  - id: SYM-treasurybonds-complete-terms
+    title: CompleteTerms
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:00.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-terms-from-published-data
+  - id: SYM-treasurybonds-complete
+    title: Complete
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:08.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-terms-from-published-data
+  - id: SYM-treasurybonds-test-helper-published
+    title: published
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:16.146Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-published-published
+    title: published.Published
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:23.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-synthetic-attribution
+    title: syntheticAttribution
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:31.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-complete-terms
+    title: TestCompleteTerms
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:39.773Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-want-errors
+    title: wantErrors
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:47.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-want-lots
+    title: wantLots
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:26:54.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-complete-terms-reads-once
+    title: TestCompleteTermsReadsOnce
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:03.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-ingest-bond-lot-entered
+    title: BondLot.entered
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:11.651Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-ingest-bond-lot-terms-optional
+  - id: SYM-ingest-connectapi-entered-terms
+    title: enteredTerms
+    sourceFile: internal/ingest/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:19.947Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi
+      - type: implements
+        target: REQ-ingest-bond-lot-terms-optional
+  - id: SYM-ingest-connectapi-test-add-bond-lot-without-terms
+    title: TestAddBondLotWithoutTerms
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:28.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectrpc-test-client-import-bond-lots-without-terms
+    title: TestClientImportBondLotsWithoutTerms
+    sourceFile: internal/ingest/connectrpc/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:37.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-bonds
+  - id: SYM-ingest-connectrpc-attribution-to
+    title: attributionTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:44.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-ingest-connectrpc-rates-and-fee-from
+    title: ratesAndFeeFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:27:53.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-ingest-connectrpc-attribution-from
+    title: attributionFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:01.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-ingest-connectrpc-test-bond-terms-attribution
+    title: TestBondTermsAttribution
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:10.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-delivery-lot-terms
+    title: lotTerms
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:18.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-lot-terms-optional
+  - id: SYM-ingest-delivery-attribution
+    title: Attribution
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:26.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-valuation-postgres-attribution-columns
+    title: attributionColumns
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:35.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-terms-attribution-stored
+  - id: SYM-valuation-postgres-attribution-row-attribution
+    title: attributionRow.attribution
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:43.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-terms-attribution-stored
+  - id: SYM-valuation-postgres-attribution-row
+    title: attributionRow
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:51.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-terms-attribution-stored
+  - id: SYM-valuation-postgres-test-bond-terms-attribution
+    title: TestBondTermsAttribution
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:28:59.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-plugins-treasury-bonds-test-helper-fake-published
+    title: fakePublished
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:06.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-plugins-treasury-bonds-test-helper-fake-published-published
+    title: fakePublished.Published
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:14.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-plugins-treasury-bonds-test-import-bond-lots-published-terms
+    title: TestImportBondLotsPublishedTerms
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:22.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-plugins-treasury-bonds-test-import-bond-lots-published-data-unavailable
+    title: TestImportBondLotsPublishedDataUnavailable
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:31.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-plugins-treasury-bonds-test-helper-index-clients
+    title: indexClients
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:39.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-plugins-treasury-bonds-test-helper-ministry-client
+    title: ministryClient
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:46.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-plugins-treasury-bonds-test-helper-or
+    title: or
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:29:53.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-connectorv1-bond-terms-attribution
+    title: BondTermsAttribution
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:07.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-get-attribution
+    title: BondTerms.GetAttribution
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:16.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-reset
+    title: BondTermsAttribution.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:25.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-string
+    title: BondTermsAttribution.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:33.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-proto-message
+    title: BondTermsAttribution.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:42.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-proto-reflect
+    title: BondTermsAttribution.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:55:51.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-descriptor
+    title: BondTermsAttribution.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:00.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-publisher
+    title: BondTermsAttribution.GetPublisher
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:09.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-dataset
+    title: BondTermsAttribution.GetDataset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:18.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-license
+    title: BondTermsAttribution.GetLicense
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:27.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-url
+    title: BondTermsAttribution.GetUrl
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:36.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-made
+    title: BondTermsAttribution.GetMade
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:44.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-fetched
+    title: BondTermsAttribution.GetFetched
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:56:53.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-connectorv1-bond-terms-attribution-get-processing
+    title: BondTermsAttribution.GetProcessing
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T08:57:02.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-bond-terms-attribution-contract

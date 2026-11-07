@@ -1154,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15550d44b408
+  - type: executable_for
+    from: SYM-pl-test-helper-attribution
+    to: TEST-pl-published
+    created_at: 2026-11-07T08:09:34.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae0c81e5087

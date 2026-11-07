@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b4586f2600d
+  - type: implements
+    from: SYM-pl-attribution
+    to: REQ-pl-published-series-rates
+    created_at: 2026-11-07T08:07:48.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eaa05077376
+  - type: covered_by
+    from: SYM-pl-attribution
+    to: TEST-pl-published
+    created_at: 2026-11-07T08:07:48.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50a57bf830d9
+  - type: implements
+    from: SYM-mfbonds-le16
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:15:33.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36cfd3a1e2e4
+  - type: covered_by
+    from: SYM-mfbonds-le16
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:15:33.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74463bd0bf7a

@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07ff5076c646
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-synthetic-workbook
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:22:35.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa4250d2083
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-to32
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:25:38.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a770e427bc16
+  - type: executable_for
+    from: SYM-treasurybonds-test-complete-terms
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:26:42.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-245c86bb4525

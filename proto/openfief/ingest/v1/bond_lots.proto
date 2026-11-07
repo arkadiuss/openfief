@@ -63,8 +63,9 @@ enum BondPurchase {
 }
 
 // BondLot is one lot as the owner enters it: what D-9 names (series,
-// quantity, purchase date), plus the series' terms from its issue letter,
-// which valuing it needs, and how the bonds were bought: for cash at the
+// quantity, purchase date), plus any of the series' terms the owner enters,
+// which override what the connector reads (D-97), and how the bonds were
+// bought: for cash at the
 // nominal, 100 PLN each, or by exchange at 99.90 PLN each (D-100).
 message BondLot {
   // The series code, such as "EDO0536".
@@ -74,13 +75,16 @@ message BondLot {
   // The day the bonds were bought, "YYYY-MM-DD".
   string purchase_date = 3;
   // The series' first-period rate in percent, as a decimal string, such as
-  // "6.80".
+  // "6.80". Empty, with margin_percent empty too, to leave both to the
+  // connector, which reads them from the issuer's published data (D-97);
+  // entered, they override it.
   string first_period_rate_percent = 4;
   // The series' margin in percent, such as "2.00"; "0" for a fixed-rate
-  // series.
+  // series. Empty exactly when first_period_rate_percent is.
   string margin_percent = 5;
   // The series' early-redemption fee per bond in PLN, as a decimal string,
-  // such as "2.00".
+  // such as "2.00". Empty to leave it to the connector, which takes it from
+  // its reviewed table of the issue letters (D-97).
   string early_redemption_fee_pln = 6;
   // How the bonds were bought; unspecified is a cash purchase.
   BondPurchase purchase = 7;

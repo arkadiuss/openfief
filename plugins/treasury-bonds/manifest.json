@@ -3,9 +3,9 @@
   "institutions": ["treasury-bonds"],
   "bondTerms": true,
   "indexReadings": true,
-  "egress": ["api-sdp.stat.gov.pl", "static.nbp.pl"],
-  "egressFromConfig": ["gusBaseUrl", "nbpBaseUrl"],
-  "clusterService": {"description": "an in-cluster HTTPS service to call instead of GUS and NBP, at the gusBaseUrl and nbpBaseUrl paths, its certificate issued for their hosts"},
+  "egress": ["api-sdp.stat.gov.pl", "static.nbp.pl", "www.gov.pl", "api.dane.gov.pl"],
+  "egressFromConfig": ["gusBaseUrl", "nbpBaseUrl", "govPlBaseUrl", "daneGovPlBaseUrl"],
+  "clusterService": {"description": "an in-cluster HTTPS service to call instead of GUS, NBP, gov.pl and dane.gov.pl, at the gusBaseUrl, nbpBaseUrl, govPlBaseUrl and daneGovPlBaseUrl paths, its certificate issued for their hosts"},
   "secrets": [{"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
   "configSchema": {
     "type": "object",
@@ -16,7 +16,13 @@
         "description": "The GUS SDP API, or a mirror of it: an https URL; the install shows its host and the grant approves it"},
       "nbpBaseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
         "default": "https://static.nbp.pl",
-        "description": "The NBP archive, or a mirror of it: an https URL; the install shows its host and the grant approves it"}
+        "description": "The NBP archive, or a mirror of it: an https URL; the install shows its host and the grant approves it"},
+      "govPlBaseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
+        "default": "https://www.gov.pl",
+        "description": "gov.pl, whose Ministry of Finance page links the retail bond spreadsheet, or a mirror of it: an https URL; the install shows its host and the grant approves it"},
+      "daneGovPlBaseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
+        "default": "https://api.dane.gov.pl",
+        "description": "The dane.gov.pl API, which lists the same spreadsheet, or a mirror of it: an https URL; the install shows its host and the grant approves it"}
     },
     "additionalProperties": false
   }

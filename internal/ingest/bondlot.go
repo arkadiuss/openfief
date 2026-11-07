@@ -45,16 +45,25 @@ func (p BondPurchase) String() string {
 
 // BondLot is a lot of Polish retail treasury bonds the owner entered by hand
 // (D-9): its series, how many bonds and when and how they were bought, plus
-// the series terms from the issue letter, which valuing the lot needs. The
-// bonds were bought for cash at the nominal (pl.Nominal) or by exchange at
-// the exchange price (pl.ExchangePrice, D-100), so the lot cost Quantity
-// times that price.
+// the series terms, which valuing the lot needs. The owner may leave the
+// first-period rate and margin, the early-redemption fee, or all three to
+// the treasury bond connector, which reads the rates from the ministry's
+// published data and the fee from its reviewed table (D-97); terms the
+// owner enters override those. The bonds were bought for cash at the
+// nominal (pl.Nominal) or by exchange at the exchange price
+// (pl.ExchangePrice, D-100), so the lot cost Quantity times that price.
 type BondLot struct {
-	// Terms are the series and its terms.
-	Terms     pl.Terms
-	Quantity  kernel.Quantity
-	Purchased kernel.Date
-	Purchase  BondPurchase
+	// Terms are the series and the terms the owner entered.
+	Terms pl.Terms
+	// PublishedRates says the owner left the first-period rate and the
+	// margin to the connector: Terms holds neither.
+	PublishedRates bool
+	// ReviewedFee says the owner left the early-redemption fee to the
+	// connector: Terms holds none.
+	ReviewedFee bool
+	Quantity    kernel.Quantity
+	Purchased   kernel.Date
+	Purchase    BondPurchase
 }
 
 // BondLotKey names one entered lot by its series and purchase date, which
@@ -114,16 +123,18 @@ func (l *BondLot) Cost() kernel.Money {
 
 // Validate reports whether l can be booked as of today: it was bought on a
 // date no later than today, for cash or by exchange, its margin is not
-// negative, and pl.ValueLot values it on its purchase date at its price.
-// Otherwise it returns an error wrapping ErrInvalidBondLot that names the
-// rule broken; the error carries the series and dates, never an amount.
+// negative, and pl.ValueLot values it on its purchase date at its price,
+// with zero for any term the owner left to the connector (the connector
+// fills them in before it books the lot). Otherwise it returns an
+// error wrapping ErrInvalidBondLot that names the rule broken; the error
+// carries the series and dates, never an amount.
 func (l *BondLot) Validate(today kernel.Date) error {
 	switch {
 	case l.Purchased.IsZero():
 		return fmt.Errorf("%w: %s has no purchase date", ErrInvalidBondLot, l.Series())
 	case l.Purchased.After(today):
 		return fmt.Errorf("%w: %s bought on %s, after today %s", ErrInvalidBondLot, l.Series(), l.Purchased, today)
-	case l.Terms.Margin.Sign() < 0:
+	case l.entered().Margin.Sign() < 0:
 		return fmt.Errorf("%w: %s has a negative margin", ErrInvalidBondLot, l.Series())
 	}
 	price, ok := l.Price()
@@ -131,10 +142,24 @@ func (l *BondLot) Validate(today kernel.Date) error {
 		return fmt.Errorf("%w: %s bought by %s", ErrInvalidBondLot, l.Series(), l.Purchase)
 	}
 	p := pl.Purchase{Date: l.Purchased, Price: price}
-	if _, err := pl.ValueLot(&l.Terms, nil, l.Quantity, p, pl.Taxable, l.Purchased); err != nil {
+	terms := l.entered()
+	if _, err := pl.ValueLot(&terms, nil, l.Quantity, p, pl.Taxable, l.Purchased); err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidBondLot, err)
 	}
 	return nil
+}
+
+// entered returns the lot's terms with zero rates or a zero fee in place of
+// those the owner left to the connector.
+func (l *BondLot) entered() pl.Terms {
+	t := l.Terms
+	if l.PublishedRates {
+		t.FirstPeriodRate, t.Margin = kernel.Decimal{}, kernel.Decimal{}
+	}
+	if l.ReviewedFee {
+		t.EarlyRedemptionFee = kernel.NewMoney(kernel.Decimal{}, pl.Nominal().Currency())
+	}
+	return t
 }
 
 // BondTerms are a treasury bond series' terms as a connector delivers them:
