@@ -271,6 +271,28 @@ func TestAccountPerformanceEdges(t *testing.T) {
 			t.Errorf("AccountPerformance(unknown) error = %v, want %v", err, app.ErrUnknownAccount)
 		}
 	})
+	t.Run("an end before the default start is the first day, unvalued", func(t *testing.T) {
+		t.Parallel()
+		// acc-1's revaluation restarted before its first day, 2026-03-01,
+		// as a booking dated before it makes it: its valued-through date is
+		// the day before, which a client asks through.
+		f := newPerformanceFixture(t)
+		got, err := f.views(t).AccountPerformance(reader(t), "acc-1", kernel.Date{}, date(t, "2026-02-28"))
+		if err != nil {
+			t.Fatalf("AccountPerformance(through the day before) error = %v", err)
+		}
+		if !got.From.Equal(date(t, "2026-03-01")) || !got.To.Equal(date(t, "2026-03-01")) {
+			t.Errorf("AccountPerformance(through the day before) = %s to %s, want 2026-03-01 to 2026-03-01", got.From, got.To)
+		}
+	})
+	t.Run("a start asked for after its end is refused", func(t *testing.T) {
+		t.Parallel()
+		f := newPerformanceFixture(t)
+		_, err := f.views(t).AccountPerformance(reader(t), "acc-1", date(t, "2026-03-02"), date(t, "2026-03-01"))
+		if !errors.Is(err, views.ErrInvalidRange) {
+			t.Errorf("AccountPerformance(reversed) error = %v, want %v", err, views.ErrInvalidRange)
+		}
+	})
 	t.Run("an account with no transactions has no days", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)

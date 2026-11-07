@@ -97,13 +97,22 @@ func (v *Views) performance(ctx context.Context, accounts []ledger.Account, rec 
 	if len(rec.txs) == 0 {
 		return Performance{From: from, To: to, Chosen: s.chosen}, nil
 	}
-	if from.IsZero() {
+	asked := !from.IsZero()
+	if !asked {
 		from = s.chosen
 	}
 	from = views.ChosenStart(from, rec.first, s.def)
-	if to.IsZero() {
+	switch {
+	case to.IsZero():
 		// When nothing is valued that late, the series is the first day, unvalued.
 		to = later(rec.latest, from)
+	case !asked && to.Before(from):
+		// The same for an end before the start the client didn't ask for:
+		// the valued-through date of an account whose revaluation restarts
+		// before its first day, as a booking dated before it makes it, is
+		// the day before. A start the client asked for after its end is
+		// still refused.
+		to = from
 	}
 	if rangeErr := views.ValidateRange(from, to); rangeErr != nil {
 		return Performance{}, fmt.Errorf("performance: %w", rangeErr)
