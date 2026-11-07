@@ -81,13 +81,15 @@ func statementOf(reference string) ([]byte, bool) {
 }
 
 // dataPathListings are the data path's synthetic instruments as EODHD's
-// search lists them: the two the IBKR statements hold, and the one the
-// synthetic XTB export names by ticker TSTJ.NO, on Oslo's exchange, where
-// the eodhd connector looks a Norwegian ticker up.
+// search lists them: the two the IBKR statements hold, both on the London
+// Stock Exchange, TSTH in CHF, since the statements name no exchange and
+// the eodhd connector prices only on the exchanges D-51 names, and the one
+// the synthetic XTB export names by ticker TSTJ.NO, on Oslo's exchange,
+// where the eodhd connector looks a Norwegian ticker up.
 func dataPathListings() []map[string]string {
 	return []map[string]string{
 		searchResult("TSTG", "LSE", "GBP", "GBTEST000047", "Synthetic Test G"),
-		searchResult("TSTH", "SW", "CHF", "CHTEST000052", "Synthetic Test H"),
+		searchResult("TSTH", "LSE", "CHF", "CHTEST000052", "Synthetic Test H"),
 		searchResult("TSTJ", "OL", "NOK", "NOTEST000068", "Synthetic Test J"),
 	}
 }
@@ -100,7 +102,7 @@ func searchResult(code, exchange, currency, isin, name string) map[string]string
 // dataPathCloses are the data path's synthetic closes, the same every
 // trading day.
 func dataPathCloses() map[string]string {
-	return map[string]string{"TSTG.LSE": "105.00", "TSTH.SW": "102.00", "TSTJ.OL": "55.00"}
+	return map[string]string{"TSTG.LSE": "105.00", "TSTH.LSE": "102.00", "TSTJ.OL": "55.00"}
 }
 
 // dataPathRate is one data path currency's synthetic NBP mid rate: base

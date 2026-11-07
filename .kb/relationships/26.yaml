@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0745fc664605
+  - type: executable_for
+    from: SYM-e2e-last-state
+    to: TEST-e2e-demo-stack
+    created_at: 2026-11-07T09:00:22.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c3e1e571e0

@@ -183,7 +183,7 @@ func TestFixtureServesDataPathListings(t *testing.T) {
 	}
 	listed, err := c.Listings(t.Context(), isin)
 	byCode, codeErr := c.Search(t.Context(), "TSTJ", eodhd.CountryExchange("NO"))
-	closes, closesErr := c.Closes(t.Context(), "TSTH.SW", day(t, "2026-03-06"), day(t, "2026-03-06"))
+	closes, closesErr := c.Closes(t.Context(), "TSTH.LSE", day(t, "2026-03-06"), day(t, "2026-03-06"))
 	got := make([]string, 0, len(listed)+len(byCode)+len(closes))
 	for _, l := range listed {
 		got = append(got, "by ISIN: "+l.Code+"."+l.Exchange)

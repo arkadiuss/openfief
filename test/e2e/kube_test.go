@@ -261,11 +261,12 @@ func waitFor(ctx context.Context, timeout time.Duration, c check) error {
 	defer cancel()
 	tick := time.NewTicker(pollEvery)
 	defer tick.Stop()
+	var state string
 	for {
-		state, done, err := c(ctx)
+		got, done, err := c(ctx)
+		state = lastState(ctx, state, got, err)
 		switch {
 		case errors.Is(err, errRetry):
-			state = err.Error()
 		case err != nil:
 			return err
 		case done:
@@ -277,6 +278,21 @@ func waitFor(ctx context.Context, timeout time.Duration, c check) error {
 		case <-tick.C:
 		}
 	}
+}
+
+// lastState is the state an attempt that answered got and err leaves,
+// prev the one before: err's words when it wraps errRetry, unless the
+// deadline cut the attempt short, when prev says what was still missing.
+func lastState(ctx context.Context, prev, got string, err error) string {
+	switch {
+	case errors.Is(err, errRetry) && ctx.Err() != nil && prev != "":
+		return prev
+	case errors.Is(err, errRetry):
+		return err.Error()
+	case err == nil:
+		return got
+	}
+	return prev
 }
 
 // stuckReasons are container waiting reasons that never clear by waiting:

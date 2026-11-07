@@ -161746,3 +161746,13 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
+  - id: SYM-e2e-last-state
+    title: lastState
+    sourceFile: test/e2e/kube_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T09:00:19.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
