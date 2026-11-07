@@ -8,6 +8,8 @@ WORKDIR /src
 COPY go.mod go.sum go.work go.work.sum ./
 RUN GOWORK=off go mod download
 COPY sdk/go/ sdk/go/
+# The fixture's handlers use internal/kernel's decimal types, as the plugins' builds copy internal/.
+COPY internal/ internal/
 COPY test/e2e/fixture/ test/e2e/fixture/
 RUN CGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o /out/fixture ./test/e2e/fixture
 
