@@ -41,8 +41,9 @@ A connector that pulls IBKR Flex statements needs to reach IBKR's Flex service a
 | Plugins package | [allowlist.go](../../internal/plugins/allowlist.go), [identity.go](../../internal/plugins/identity.go) | `EgressAllowList.Allows`, `PluginForServiceAccount`, `EgressAudience` |
 | Address check | [egress/address.go](../../internal/plugins/egress/address.go) | `ForbiddenPrefixes`, `CheckAddress` |
 | Smokescreen adapter | [smokescreen/proxy.go](../../internal/plugins/smokescreen/proxy.go) | `New` and `Proxy.Serve`: `BuildProxy`'s handler in OpenFief's own server, role function, `EgressACL`, deny ranges, checking resolver |
-| Kubernetes adapter | [kube/tokenreview.go](../../internal/plugins/kube/tokenreview.go), [kube/allowlists.go](../../internal/plugins/kube/allowlists.go) | `TokenReviewer` for one audience, `WatchAllowLists` |
-| Binary | [cmd/egress-proxy/main.go](../../cmd/egress-proxy/main.go) | Wiring, signals, logging |
+| Log audit | [smokescreen/audit.go](../../internal/plugins/smokescreen/audit.go) | `DecisionLines`, `AuditLog`: the proxy's decision lines checked against each instance's approved hosts |
+| Kubernetes adapter | [kube/tokenreview.go](../../internal/plugins/kube/tokenreview.go), [kube/allowlists.go](../../internal/plugins/kube/allowlists.go), [kube/egressaudit.go](../../internal/plugins/kube/egressaudit.go) | `TokenReviewer` for one audience, `WatchAllowLists`; `EgressProxyLog` and `GrantedEgress` for the audit |
+| Binary | [cmd/egress-proxy/main.go](../../cmd/egress-proxy/main.go), [audit.go](../../cmd/egress-proxy/audit.go) | Wiring, signals, logging; the `audit` subcommand |
 | Install | [deploy/egress-proxy/](../../deploy/egress-proxy/) | Kustomize base: ServiceAccount, RBAC, Deployment, Service |
 | Plugin side | [sdk/go/openfief/egress.go](../../sdk/go/openfief/egress.go) | `NewEgressClient`, `EgressTransport` |
 
@@ -153,6 +154,20 @@ The [Dockerfile](../../cmd/egress-proxy/Dockerfile) builds a static binary for a
 
 The proxy's own NetworkPolicy, [networkpolicy.yaml](../../deploy/egress-proxy/networkpolicy.yaml), admits only its callers (D-184): plugin pods, labelled `app.kubernetes.io/name: openfief-plugin`, on port 4750. Its egress is DNS, the API server on 6443 (TokenReview and the allow-list ConfigMap, at any address for the reason D-92 gives the core), and the internet with every private, shared, link-local and loopback range left out: `10/8`, `172.16/12`, `192.168/16`, `100.64/10`, `169.254/16`, `127/8`, and `fc00::/7`, `fe80::/10`, `::1`. Most clusters put pods, Services and nodes in those ranges, so even a proxy turned against its own checks can't open a connection to another pod, a Service or a node. A cluster that uses public or global IPv6 ranges for any of them adds them to each `except` list with an overlay, and passes them with `-deny-cidr`.
 
+### Auditing the log
+
+Smokescreen logs one JSON decision line per request it decides, with the message `CANONICAL-PROXY-DECISION`: who asked (`role`, the plugin instance), where to (`proxy_type` and `requested_host`, a host and port), the decision (`allow`, `decision_reason`) and its timing. It never logs a path, a query, a header, a body or the token, since a CONNECT tunnel carries those inside TLS and the token goes to TokenReview only. D-200's criterion 16 asks that outbound traffic go only to configured destinations, verified from these lines.
+
+`smokescreen.AuditLog` checks a log against the hosts each instance may reach: every decision line may hold only the fields above, `requested_host` must be a bare host and port, `role` and `allow` must be there, and every allowed request must be to a host the asking instance's hosts include. It returns the counts, the allowed destinations by instance and host, and one problem per broken rule, naming the line's id, the instance and the field, never a value that could hold a request's contents.
+
+`egress-proxy audit` runs it against a cluster, and serves nothing: it reads every egress proxy pod's log (`kube.EgressProxyLog`) and every `PluginGrant` in `openfief` (`kube.GrantedEgress`), with in-cluster credentials in a pod and the kubeconfig (`-kubeconfig`, `-context`) elsewhere, prints the counts and destinations, and exits non-zero on a problem. It only reads. Three places run the check:
+
+- The demo, after each deploy: a Job with the proxy's own image and a Role that may only list pods and grants and read pod logs ([deploy/demo/audit](../../deploy/demo/audit/kustomization.yaml)). There the proxy reaches the real NBP API, so this is the check on real traffic.
+- The release smoke test, on kind after the install guide's steps, with the binary built from the checkout ([pipeline.md](../dev/pipeline.md#releases)).
+- The end-to-end suite's isolation test, against each instance's allow-list rather than its grant, which is stricter, since the allow-list is the grant cut down to what the plugin requests.
+
+The demo and the smoke test read grants, not allow-lists: a grant is what the owner approved, and an allowed request to a host off the grant means the proxy itself went wrong. Both read the logs as they are when they run, so a proxy pod that restarted has lost what it logged before.
+
 ### The plugin's side
 
 When a plugin has granted egress hosts, `plugins.Compile` gives it `HTTPS_PROXY=http://<proxy ClusterIP>:4750`, `NO_PROXY=<core ClusterIP>`, a NetworkPolicy egress rule to the proxy's pod port, and the second projected token at `/var/run/secrets/openfief-egress/token`, whose path the operator puts in `OPENFIEF_EGRESS_TOKEN_FILE`. A plugin without egress hosts, such as the planned XTB parser, gets none of these, so it can reach only the core. No plugin gets a DNS rule.
@@ -197,13 +212,16 @@ Run `task test` from the repository root. The egress packages need no cluster or
 | Lists follow the ConfigMap; missing, undecodable or deleted means none | `TestWatchAllowListsFollowsConfigMap`, `TestWatchAllowListsWithoutConfigMap`, `TestWatchAllowListsNotSynced` | REQ-plugins-egress-allow-lists-fail-closed |
 | Serve stops on its context, closes leftover tunnels, stops accepting | `TestProxyServeStops`, `TestProxyHealthcheck` | REQ-plugins-egress-proxy-embedded-buildproxy |
 | No proxy with `HTTPS_PROXY` set in its own environment | `TestNewRefusesProxyEnvironment` | |
+| Decision lines hold only who, where and the decision; every allowed request is to an approved host; problems quote no value | [audit_test.go](../../internal/plugins/smokescreen/audit_test.go): `TestAuditLog`, `TestDecisionLines`; [egressaudit_test.go](../../internal/plugins/kube/egressaudit_test.go): `TestEgressProxyLog`, `TestGrantedEgress`; [cmd/egress-proxy/audit_test.go](../../cmd/egress-proxy/audit_test.go): `TestReport` | REQ-plugins-egress-audit-log |
+| The demo audits each deploy's proxy log in a Job at the proxy's verified digest; the release smoke test audits after its install | [demo-render-audit.test.sh](../../scripts/tests/demo-render-audit.test.sh), [release-smoke.test.sh](../../scripts/tests/release-smoke.test.sh) | REQ-plugins-egress-audit-runs |
 | The SDK sends the current token on every CONNECT | [sdk egress_test.go](../../sdk/go/openfief/egress_test.go): `TestEgressSendsCurrentTokenOnEveryConnect`, `TestEgressRefusals` | REQ-plugins-sdk-token-per-request, REQ-sdk-go-egress-proxy-url |
 
 `TestProxyDialsOnlyCheckedAddresses` is a good one to read first: it sends four CONNECTs (private, mixed, unlisted, allowed) and asserts that exactly one address was dialed, the public one.
 
-Not covered by tests: `cmd/egress-proxy`, and anything that needs a real cluster, such as NetworkPolicy actually blocking a plugin's direct connection or DNS query, or the kubelet rotating a real token. The end-to-end suite ([test/e2e](../../test/e2e/main_test.go)) installs the proxy with the demo's manifests on kind or k3d. `TestOperatorDeploysSignedPlugin` checks that the operator publishes exactly the granted host as an operator-deployed plugin's allow-list entry, and removes it when the `Plugin` is deleted, but no test sends a CONNECT through the proxy.
+Not covered by unit tests: `cmd/egress-proxy`'s wiring, and anything that needs a real cluster, such as the kubelet rotating a real token. The end-to-end suite ([test/e2e](../../test/e2e/main_test.go)) installs the proxy with the demo's manifests on kind or k3d. `TestOperatorDeploysSignedPlugin` checks that the operator publishes exactly the granted host as an operator-deployed plugin's allow-list entry, and removes it when the `Plugin` is deleted. `TestPluginIsolation` sends CONNECTs through the proxy that it must refuse, checks that direct connections and DNS lookups fail, and audits the run's log with `AuditLog`.
 
 ## Not built yet
 
 - **A TypeScript SDK (D-11).** Only Go plugins get the token handling for free; R-14 notes Node's built-in client reads `HTTPS_PROXY` only with `NODE_USE_ENV_PROXY=1`.
-- **End-to-end checks of the proxy itself.** `test/e2e` checks a plugin's allow-list entry, but no CONNECT goes through the proxy (D-12), since the suite calls no external host. D-200's exit criteria 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.
+- **An allowed request in the end-to-end suite.** The suite opens no allowed tunnel: the proxy refuses every private address (D-184), so an in-cluster fixture can't stand in for an allowed host, and the suite calls no real one. Allowed traffic to a real destination is audited only on the demo, which reaches NBP, and the release smoke test runs no connector, so its audit sees refusals at most.
+- **Nobody is told when the demo's audit fails.** The demo's Job fails the Flux layer `demo-egress-audit`, which the owner sees on the machine; the deploy workflow holds no credential for the cluster, so CI never sees the result.

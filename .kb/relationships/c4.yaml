@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76e23ce8c825
+  - type: constrains
+    from: REQ-plugins-egress-audit-log
+    to: FACT-SUBJECT-D2335248569B4676
+    created_at: 2026-11-07T03:31:02.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c4548fc241
+  - type: requires_property
+    from: REQ-plugins-egress-audit-log
+    to: FACT-PROP-DF1C484887B0376D
+    created_at: 2026-11-07T03:31:02.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a15672021d0
+  - type: specified_by
+    from: REQ-plugins-egress-audit-log
+    to: SCEN-plugins-egress-audit-log
+    created_at: 2026-11-07T03:31:02.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-442a5ee6a988

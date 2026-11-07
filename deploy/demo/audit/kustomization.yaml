@@ -1,0 +1,19 @@
+# The demo's egress audit (D-200 criterion 16, docs/dev/pipeline.md#the-demo): after each deploy, a Job runs
+# `egress-proxy audit` with the egress proxy's own image and reads, never writes, the proxy's logs and every PluginGrant
+# in the openfief namespace. It fails when the proxy allowed a request to a host outside the asking instance's grant,
+# or logged more of a request than who asked, where to and the decision (GR-12). It prints counts, instances and hosts
+# only.
+# `task deploy:demo` renders this directory into the signed artifact's ./audit (scripts/demo/render-audit.sh): it pins
+# the image to the egress proxy's verified digest in ../openfief and stamps the deploy's tag on the Job, so every
+# deploy re-creates it (Flux's force, deploy/demo/stack.yaml: a Job's template is immutable). The Flux layer
+# demo-egress-audit waits for the Job, so a failed audit shows as that layer failing.
+# PLACEHOLDER: sha256 of 64 zeros; the render sets the digest, which is never committed here.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openfief
+resources:
+  - rbac.yaml
+  - job.yaml
+images:
+  - name: ghcr.io/arkadiuss/openfief/egress-proxy
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

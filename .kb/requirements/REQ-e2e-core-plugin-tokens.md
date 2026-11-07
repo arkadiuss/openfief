@@ -1,6 +1,6 @@
 ---
 title: On both kind and k3d, a call to a connector from any pod other than the core must fail, a call from the core without the core's valid token for that instance must be refused, and the core's plugin port must refuse a plugin's call without a valid view plugin token.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-200
 tags:
   - strict-modeling

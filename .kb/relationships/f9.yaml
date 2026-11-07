@@ -833,9 +833,9 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0aeff032c159
   - type: executable_for
-    from: SYM-e2e-isolation-proxy-log-keys
-    to: TEST-e2e-isolation
-    created_at: 2026-11-06T20:34:38.748Z
+    from: SYM-egress-proxy-cmd-test-report
+    to: TEST-egress-proxy-audit
+    created_at: 2026-11-07T03:35:40.432Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-f4fa0ff35959
+    id: rel-34b9e6aa50cf

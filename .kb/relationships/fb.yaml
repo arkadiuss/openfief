@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f231da1209f1
+  - type: implements
+    from: SYM-plugins-smokescreen-decision-line
+    to: REQ-plugins-egress-audit-log
+    created_at: 2026-11-07T03:33:08.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e8305c1b825
+  - type: covered_by
+    from: SYM-plugins-smokescreen-decision-line
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:33:08.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-704242bbf418

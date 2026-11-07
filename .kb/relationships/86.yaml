@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fe98bedcbac
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-decision
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:34:09.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb524f4420ee

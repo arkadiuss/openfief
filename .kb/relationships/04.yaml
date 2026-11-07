@@ -846,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7567557f810e
+  - type: implements
+    from: SYM-plugins-smokescreen-decision-lines
+    to: REQ-plugins-egress-audit-log
+    created_at: 2026-11-07T03:33:22.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9281eb6e6986
+  - type: covered_by
+    from: SYM-plugins-smokescreen-decision-lines
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:33:22.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e72114f8992

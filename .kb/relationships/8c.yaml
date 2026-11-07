@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79e0274893d7
+  - type: executable_for
+    from: SYM-plugins-kube-test-egress-proxy-log
+    to: TEST-plugins-kube-egress-audit
+    created_at: 2026-11-07T03:34:55.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-578725a184ba

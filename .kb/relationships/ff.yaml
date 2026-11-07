@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3819c7b4a5df
+  - type: constrains
+    from: REQ-m0-exit-07-read-api
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:31:55.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67dd5cf16912
+  - type: requires_property
+    from: REQ-m0-exit-07-read-api
+    to: FACT-PROP-AA30663801725347
+    created_at: 2026-11-07T03:31:55.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62619132bdfe
+  - type: specified_by
+    from: REQ-m0-exit-07-read-api
+    to: SCEN-e2e-read-api-needs-token
+    created_at: 2026-11-07T03:31:55.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2d9a1539d8f

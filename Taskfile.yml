@@ -645,7 +645,7 @@ tasks:
       - '{{.GO_GUARD}} go run ./cmd/sigstore-trusted-root -o internal/plugins/cosign/trusted_root.json'
 
   deploy:demo:
-    desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, and deploy/demo/routes as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'
+    desc: 'Publish deploy/demo/openfief, pinned to the signed digests of TAG, deploy/demo/routes and the egress audit (deploy/demo/audit) as the signed artifact Flux on the demo follows (CI only; needs cosign and a GHCR login), e.g. task deploy:demo TAG=sha-1a2b3c4 REPO=owner/openfief'
     deps: [tool:gojq, tool:kustomize, tool:flux]
     requires:
       vars: [TAG, REPO]
@@ -659,9 +659,12 @@ tasks:
         PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
         # ./app is OpenFief, ./routes the demo's routes to it (deploy/demo/stack.yaml): one signed artifact, so a route
         # change ships with the core it points at. The routes keep their ${DEMO_HOST}; Flux substitutes it.
-        rm -rf dist/demo-manifests && mkdir -p dist/demo-manifests/app dist/demo-manifests/routes
+        rm -rf dist/demo-manifests && mkdir -p dist/demo-manifests/app dist/demo-manifests/routes dist/demo-manifests/audit
         '{{.BIN}}/kustomize' build deploy/demo/openfief >dist/demo-manifests/app/openfief.yaml
         '{{.BIN}}/kustomize' build deploy/demo/routes >dist/demo-manifests/routes/routes.yaml
+        # ./audit is the egress audit Job (D-200 criterion 16), at the egress proxy's verified digest and stamped with TAG,
+        # so each deploy re-runs it after the app layer.
+        PATH='{{.BIN}}':"$PATH" bash scripts/demo/render-audit.sh "$TAG" dist/demo-manifests/audit/audit.yaml
         artifact="oci://ghcr.io/$(printf '%s' "$REPO" | tr '[:upper:]' '[:lower:]')/demo-manifests"
         pushed="$('{{.BIN}}/flux' push artifact "$artifact:$TAG" --path=dist/demo-manifests \
           --source="https://github.com/$REPO" --revision="$TAG@sha1:$(git rev-parse HEAD)" --output json)"
@@ -828,19 +831,22 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/release-verify.sh images '{{.FILE}}' '{{.REPO}}' {{if .TAG}}'{{.TAG}}'{{end}}
 
   release:smoke:
-    desc: 'Install a PUBLISHED release on the local kind or k3d cluster exactly as docs/guides/install.md says, from its GitHub release''s assets: download, cosign-verify the CLI, checksums, SBOM and images (and a wrong identity refused), CloudNativePG, CRDs, database, install, `openfief plugin install ui`, `openfief enroll` and the first passkey in Chromium; CLI_VERSION=0 skips the `openfief version` check (needs gh with GH_TOKEN, cosign, kubectl, Chrome), e.g. task release:smoke VERSION=2026.11.0-alpha.1 REPO=arkadiuss/openfief CLI_VERSION=0'
+    desc: 'Install a PUBLISHED release on the local kind or k3d cluster exactly as docs/guides/install.md says, from its GitHub release''s assets: download, cosign-verify the CLI, checksums, SBOM and images (and a wrong identity refused), CloudNativePG, CRDs, database, install, `openfief plugin install ui`, `openfief enroll` and the first passkey in Chromium, then audits the egress proxy''s log with `egress-proxy audit` built from this checkout; CLI_VERSION=0 skips the `openfief version` check (needs gh with GH_TOKEN, cosign, kubectl, Chrome), e.g. task release:smoke VERSION=2026.11.0-alpha.1 REPO=arkadiuss/openfief CLI_VERSION=0'
     # kibi:install brings playwright-core, with which test/e2e/passkey.mjs drives Chromium.
     deps: [kibi:install]
     requires:
       vars: [VERSION, REPO]
     vars:
       SMOKE_DIR: '{{.ROOT_DIR}}/.bin/release-smoke'
+      # The egress audit (step 8) is the harness's, like passkey.mjs: built from this checkout, not the release.
+      SMOKE_AUDIT: '{{.ROOT_DIR}}/.bin/release-smoke-audit/egress-proxy'
     cmds:
       - bash scripts/assert-local-cluster.sh
       - rm -rf '{{.SMOKE_DIR}}'
+      - CGO_ENABLED=0 go build -trimpath -o '{{.SMOKE_AUDIT}}' ./cmd/egress-proxy
       - >-
         CNPG_VERSION='{{.CNPG_VERSION}}' CNPG_SHA256='{{.CNPG_MANIFEST_SHA256}}' PASSKEY=test/e2e/passkey.mjs
-        CLI_VERSION='{{.CLI_VERSION | default "1"}}'
+        EGRESS_AUDIT='{{.SMOKE_AUDIT}}' CLI_VERSION='{{.CLI_VERSION | default "1"}}'
         bash scripts/release-smoke.sh '{{.VERSION}}' '{{.REPO}}' '{{.SMOKE_DIR}}'
 
   release:bundle:

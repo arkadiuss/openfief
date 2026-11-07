@@ -152,10 +152,11 @@ func peer(ns, key, value string) map[string]any {
 // Gateway's data plane and naming the hostname, as curl --resolve does,
 // the core answers /readyz, refuses the read API without a token, and
 // passes the built-in UI's login page through, all over HTTPS verified
-// against that CA (SCEN-e2e-httproute-https-through-gateway). The
-// component's patch of the core's auth origins is left out: it restarts
-// the core under the other bundle tests, and serves passkeys on the
-// hostname, which this test doesn't sign in with.
+// against that CA (SCEN-e2e-httproute-https-through-gateway). Last, once
+// every other bundle test has finished, since it restarts the core they
+// use, it applies the component's patch of the core's auth origins and
+// creates and uses a passkey on the route's hostname through the Gateway
+// (checkRoutePasskey, SCEN-e2e-passkey-on-route-hostname).
 func TestBundleExposure(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -169,10 +170,11 @@ func TestBundleExposure(t *testing.T) {
 	installGateway(t, k, &impl, certs.secret)
 	applyRouteComponent(t, k, &impl)
 	waitPluginReady(t, k, uiPlugin)
-	client := gatewayClient(t, k, &impl, certs.ca)
-	waitHTTPS(t, client, "/readyz", http.StatusOK, "")
-	waitHTTPS(t, client, "/v1/accounts", http.StatusUnauthorized, "")
-	waitHTTPS(t, client, "/login", http.StatusOK, loginButton)
+	gw := gatewayClient(t, k, &impl, certs.ca)
+	waitHTTPS(t, gw.client, "/readyz", http.StatusOK, "")
+	waitHTTPS(t, gw.client, "/v1/accounts", http.StatusUnauthorized, "")
+	waitHTTPS(t, gw.client, "/login", http.StatusOK, loginButton)
+	checkRoutePasskey(t, k, gw, &certs)
 }
 
 // bundleObject is what the exposure test reads of an object in the bundle.
@@ -416,12 +418,14 @@ func (k *kube) deploymentOf(t *testing.T, name string) string {
 	return ""
 }
 
-// gatewayTLSFiles are the run's CA, which the test trusts, and the
-// Gateway's certificate for gatewayHost with its key, as its TLS Secret
-// holds them.
+// gatewayTLSFiles are the run's CA, which the test trusts, the Gateway's
+// certificate for gatewayHost, followed by the CA's, with its key, as its
+// TLS Secret holds them, and the keys of both in the form Chromium trusts
+// them for the run (spkiHash).
 type gatewayTLSFiles struct {
 	ca     *x509.CertPool
 	secret map[string][]byte
+	keys   []string
 }
 
 // gatewayCerts makes a CA for this run and a certificate it signs for
@@ -464,10 +468,16 @@ func gatewayCerts(t *testing.T) gatewayTLSFiles {
 	if err != nil {
 		t.Fatal(err)
 	}
+	leafCert, err := x509.ParseCertificate(der)
+	if err != nil {
+		t.Fatal(err)
+	}
 	pool := x509.NewCertPool()
 	pool.AddCert(caCert)
-	return gatewayTLSFiles{ca: pool, secret: map[string][]byte{
-		corev1.TLSCertKey:       pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: der}),
+	chain := slices.Concat(pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: der}),
+		pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: caDER}))
+	return gatewayTLSFiles{ca: pool, keys: []string{spkiHash(caCert), spkiHash(leafCert)}, secret: map[string][]byte{
+		corev1.TLSCertKey:       chain,
 		corev1.TLSPrivateKeyKey: pem.EncodeToMemory(&pem.Block{Type: "EC PRIVATE KEY", Bytes: keyDER}),
 	}}
 }
@@ -582,11 +592,18 @@ func onlyItem(t *testing.T, obj *unstructured.Unstructured, fields ...string) ma
 	return item
 }
 
-// gatewayClient returns an HTTPS client that sends every request for
-// gatewayHost to impl's data plane, through a port-forward to one of its
-// pods, and trusts only ca: what curl --resolve does, without DNS or the
-// runner's hosts file.
-func gatewayClient(t *testing.T, k *kube, impl *gatewayImpl, ca *x509.CertPool) *http.Client {
+// gatewayAccess is the way to the Gateway's data plane: the local address
+// of a port-forward to one of its pods, and an HTTPS client that sends
+// every request for gatewayHost there.
+type gatewayAccess struct {
+	client *http.Client
+	addr   string
+}
+
+// gatewayClient returns the way to impl's data plane, through a
+// port-forward to one of its pods, with a client that trusts only ca: what
+// curl --resolve does, without DNS or the runner's hosts file.
+func gatewayClient(t *testing.T, k *kube, impl *gatewayImpl, ca *x509.CertPool) *gatewayAccess {
 	t.Helper()
 	var target podPort
 	err := waitFor(t.Context(), gatewayTimeout, func(ctx context.Context) (string, bool, error) {
@@ -602,7 +619,7 @@ func gatewayClient(t *testing.T, k *kube, impl *gatewayImpl, ca *x509.CertPool) 
 	}
 	addr := k.forwardPod(t, impl.dataNS, target)
 	dialer := &net.Dialer{}
-	return &http.Client{
+	return &gatewayAccess{addr: addr, client: &http.Client{
 		Timeout: requestTimeout,
 		Transport: &http.Transport{
 			DialContext: func(ctx context.Context, network, _ string) (net.Conn, error) {
@@ -612,7 +629,7 @@ func gatewayClient(t *testing.T, k *kube, impl *gatewayImpl, ca *x509.CertPool) 
 		},
 		// The test checks each answer itself, the UI's redirects included.
 		CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
-	}
+	}}
 }
 
 // podPort is a pod and one of its container ports.

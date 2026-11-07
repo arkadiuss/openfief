@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8c961c9e1f7
+  - type: implements
+    from: SYM-egress-proxy-cmd-fn-report
+    to: REQ-plugins-egress-audit-log
+    created_at: 2026-11-07T03:35:34.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b6ee63bc8e
+  - type: covered_by
+    from: SYM-egress-proxy-cmd-fn-report
+    to: TEST-egress-proxy-audit
+    created_at: 2026-11-07T03:35:34.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33fe18dee200

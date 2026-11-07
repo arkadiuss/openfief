@@ -2,6 +2,11 @@
 // Chromium at http://localhost through kubectl port-forward to the core (D-80, D-81), with Chromium's virtual
 // authenticator, and no flag that weakens the product's origin check. passkey_test.go runs it.
 // Usage: OPENFIEF_E2E_ENROLL_LINK=<one-time enrollment link> node passkey.mjs
+// For a link on the owner's own hostname through their route (routepasskey_test.go), OPENFIEF_E2E_HOST_RULES maps the
+// hostname to where the test forwards the Gateway (Chromium's --host-resolver-rules, as curl --resolve does), and
+// OPENFIEF_E2E_TRUSTED_SPKI lists the keys of the run's CA and the Gateway's certificate, the only ones Chromium then
+// accepts besides its own roots (--ignore-certificate-errors-spki-list), so the page is a secure context with a
+// certificate that verifies, as passkeys need.
 // It prints one line per step and exits non-zero on the first failure.
 import { existsSync, readdirSync } from 'node:fs';
 import os from 'node:os';
@@ -53,7 +58,19 @@ async function sessionCookie(context) {
   return cookies.find((c) => c.name === '__Host-openfief_session');
 }
 
-const browser = await chromium.launch({ headless: true, ...browserOptions() });
+// chromiumArgs points Chromium at the Gateway and trusts the run's keys, when the test names them.
+function chromiumArgs() {
+  const args = [];
+  if (process.env.OPENFIEF_E2E_HOST_RULES) {
+    args.push(`--host-resolver-rules=${process.env.OPENFIEF_E2E_HOST_RULES}`);
+  }
+  if (process.env.OPENFIEF_E2E_TRUSTED_SPKI) {
+    args.push(`--ignore-certificate-errors-spki-list=${process.env.OPENFIEF_E2E_TRUSTED_SPKI}`);
+  }
+  return args;
+}
+
+const browser = await chromium.launch({ headless: true, args: chromiumArgs(), ...browserOptions() });
 let failed = false;
 try {
   const context = await browser.newContext();

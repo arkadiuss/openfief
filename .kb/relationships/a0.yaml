@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fa69c895803
+  - type: implements
+    from: SYM-plugins-smokescreen-grants
+    to: REQ-plugins-egress-audit-log
+    created_at: 2026-11-07T03:34:03.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3868e4d4af6e
+  - type: covered_by
+    from: SYM-plugins-smokescreen-grants
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:34:03.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750992821610

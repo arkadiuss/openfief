@@ -13,11 +13,16 @@
 #   6. runs `openfief plugin install ui --yes` and waits for the UI plugin to be Ready;
 #   7. runs `openfief enroll`, reads the one-time link it prints, has Chromium create the first passkey through it
 #      and sign in again (PASSKEY, test/e2e/passkey.mjs, as the end-to-end suite does), then stops it as Ctrl-C does
-#      and checks it exits cleanly.
-# Beyond the guide, step 2 also verifies the SBOM, and the negative checks prove the identity flags are not ignored.
+#      and checks it exits cleanly;
+#   8. audits the egress proxy's log against the PluginGrants with `egress-proxy audit` (EGRESS_AUDIT, built from this
+#      checkout, not the release): every request it allowed went to a host the asking instance's grant approves, and
+#      no line holds more than who asked, where to and the decision (D-200 criterion 16, GR-12). It reads only, and
+#      prints counts, instances and hosts.
+# Beyond the guide, step 2 also verifies the SBOM, step 8 is the audit, and the negative checks prove the identity
+# flags are not ignored.
 # On a failure it prints the cluster's state (pods, events, plugins, logs; never a Secret).
 #
-# Usage: CNPG_VERSION=<x.y.z> CNPG_SHA256=<sha256> PASSKEY=<passkey.mjs> \
+# Usage: CNPG_VERSION=<x.y.z> CNPG_SHA256=<sha256> PASSKEY=<passkey.mjs> EGRESS_AUDIT=<egress-proxy binary> \
 #          release-smoke.sh <version> <owner/repo> <empty work dir>
 # Optional: OS and ARCH of the CLI to download (default linux, amd64); CLI_VERSION=0 skips the `openfief version`
 # check, for releases that predate the command (2026.11.0-alpha.1). Needs gh (GH_TOKEN), cosign, kubectl, node,
@@ -37,7 +42,7 @@ say() {
   echo "release-smoke: $*"
 }
 
-usage='usage: CNPG_VERSION=<x.y.z> CNPG_SHA256=<sha256> PASSKEY=<passkey.mjs> release-smoke.sh <version> <owner/repo> <empty work dir>'
+usage='usage: CNPG_VERSION=<x.y.z> CNPG_SHA256=<sha256> PASSKEY=<passkey.mjs> EGRESS_AUDIT=<egress-proxy binary> release-smoke.sh <version> <owner/repo> <empty work dir>'
 [ "$#" -eq 3 ] || {
   echo "$usage" >&2
   exit 2
@@ -47,12 +52,14 @@ REPO="$2"
 work="$3"
 OS="${OS:-linux}"
 ARCH="${ARCH:-amd64}"
-: "${CNPG_VERSION:?$usage}" "${CNPG_SHA256:?$usage}" "${PASSKEY:?$usage}"
+: "${CNPG_VERSION:?$usage}" "${CNPG_SHA256:?$usage}" "${PASSKEY:?$usage}" "${EGRESS_AUDIT:?$usage}"
 [[ "$VERSION" =~ ^[0-9]{4}\.[0-9]+\.[0-9]+(-(alpha|beta)\.[0-9]+)?$ ]] || fail "'$VERSION' is not a release version"
 [[ "$REPO" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || fail "'$REPO' is not owner/repo"
 [[ "$CNPG_SHA256" =~ ^[0-9a-f]{64}$ ]] || fail "'$CNPG_SHA256' is not a sha256"
 PASSKEY="$(cd "$(dirname "$PASSKEY")" && pwd)/$(basename "$PASSKEY")"
 [ -f "$PASSKEY" ] || fail "$PASSKEY is not a file"
+EGRESS_AUDIT="$(cd "$(dirname "$EGRESS_AUDIT")" && pwd)/$(basename "$EGRESS_AUDIT")"
+[ -x "$EGRESS_AUDIT" ] || fail "$EGRESS_AUDIT is not an executable"
 mkdir -p "$work"
 [ -z "$(ls -A "$work")" ] || fail "$work is not empty: the assets go into a new, empty directory"
 cd "$work"
@@ -205,4 +212,8 @@ status=0
 wait "$enroll_pid" || status=$?
 enroll_pid=""
 [ "$status" -eq 0 ] || fail "openfief enroll exited with $status when stopped: $(cat enroll.err)"
+
+# 8. Audit the egress proxy's log.
+say "8. auditing the egress proxy's log against the PluginGrants"
+"$EGRESS_AUDIT" audit || fail "the egress proxy's log breaks D-200's criterion 16 or GR-12 (see the audit above)"
 say "$VERSION installs as the guide says"

@@ -636,3 +636,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da185aa2b93e
+  - type: verified_by
+    from: SCEN-plugins-egress-audit-log
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:30:46.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4cf70c33d88
+  - type: verified_by
+    from: SCEN-plugins-egress-audit-log
+    to: TEST-plugins-kube-egress-audit
+    created_at: 2026-11-07T03:30:47.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a195b425f1de
+  - type: verified_by
+    from: SCEN-plugins-egress-audit-log
+    to: TEST-egress-proxy-audit
+    created_at: 2026-11-07T03:30:47.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c7bf947ff44
+  - type: constrains
+    from: REQ-e2e-egress-log-holds-no-request-contents
+    to: FACT-SUBJECT-EE1803B6E89563B1
+    created_at: 2026-11-07T03:31:13.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-459dbb32f802
+  - type: requires_property
+    from: REQ-e2e-egress-log-holds-no-request-contents
+    to: FACT-PROP-476CE5CEDFB85649
+    created_at: 2026-11-07T03:31:13.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56bdd61e9213
+  - type: specified_by
+    from: REQ-e2e-egress-log-holds-no-request-contents
+    to: SCEN-e2e-egress-proxy-log
+    created_at: 2026-11-07T03:31:13.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01b32b41a3a9
