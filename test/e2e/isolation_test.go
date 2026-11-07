@@ -29,7 +29,9 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	pluginskube "github.com/arkadiuss/openfief/internal/plugins/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
+	"github.com/arkadiuss/openfief/internal/plugins/smokescreen"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -54,10 +56,8 @@ const (
 	// coreDeployment and coreService are the core's (deploy/core).
 	coreDeployment = "openfief-core"
 	coreService    = "openfief-core"
-	// proxyService and proxyContainer are the egress proxy's
-	// (deploy/egress-proxy).
-	proxyService   = "egress-proxy"
-	proxyContainer = "egress-proxy"
+	// proxyService is the egress proxy's (deploy/egress-proxy).
+	proxyService = "egress-proxy"
 	// clientContainer is the client pods' container (testdata/clients.yaml).
 	clientContainer = "curl"
 )
@@ -87,9 +87,6 @@ const (
 	// proxyLogTimeout bounds the wait for the proxy to log the test's
 	// requests.
 	proxyLogTimeout = 2 * time.Minute
-	// canonicalDecision is the message of the line Smokescreen logs for
-	// each request it decides.
-	canonicalDecision = "CANONICAL-PROXY-DECISION"
 	// canary is in the path, query, header and body of a request the test
 	// sends through the proxy; no proxy log line may hold it (GR-12).
 	canary = "openfief-iso-canary"
@@ -114,9 +111,6 @@ var (
 	errNoPort = errors.New("no such port")
 	// resolvingTimedOut is curl's error for a name lookup that timed out.
 	resolvingTimedOut = regexp.MustCompile(`^Resolving timed out`)
-	// hostPort is what a requested host may look like in the proxy's log: a
-	// host name or address and a port, nothing of a path, query or user.
-	hostPort = regexp.MustCompile(`^[A-Za-z0-9.-]+(:\d+)?$`)
 )
 
 // TestPluginIsolation checks plugin isolation, egress through the proxy and
@@ -978,30 +972,6 @@ func corePortTokens(env *isolation) []probeCase {
 	}
 }
 
-// proxyLine is one line of the egress proxy's log, decoded.
-type proxyLine map[string]any
-
-// text returns field key of l if it is a string, and "" otherwise.
-func (l proxyLine) text(key string) string {
-	if s, ok := l[key].(string); ok {
-		return s
-	}
-	return ""
-}
-
-// proxyLogKeys are the fields Smokescreen's decision lines may hold: who
-// asked (role, the plugin instance, and its address), what (proxy type
-// and host:port), the decision and its timing. Nothing else, so no path,
-// query, header or body is logged (GR-12).
-func proxyLogKeys() []string {
-	return []string{
-		"allow", "conn_establish_time_ms", "content_length", "decision_reason", "dns_lookup_time_ms",
-		"enforce_would_deny", "error", "id", "inbound_remote_addr", "level", "msg", "outbound_local_addr",
-		"outbound_remote_addr", "project", "proxy_type", "requested_host", "role", "start_time", "status_code",
-		"time", "trace_id",
-	}
-}
-
 // wantedLine is a decision line checkProxyLog waits for.
 type wantedLine struct {
 	role, proxyType, host string
@@ -1009,10 +979,12 @@ type wantedLine struct {
 
 // checkProxyLog waits until the egress proxy has logged a refusal for each
 // request outsideGrant sent, by instance (no role for the CONNECT without
-// a token), proxy type and host, then checks the whole log of the run:
-// every decision line holds only proxyLogKeys and a bare host:port, every
-// allowed CONNECT is to a host on its instance's allow-list, and no line
-// holds the canary or a token (D-200 criterion 16, GR-12).
+// a token), proxy type and host, then audits the whole log of the run as
+// the demo and the release smoke test do (smokescreen.AuditLog): every
+// decision line holds only who asked, where to and the decision, with a
+// bare host:port, and every allowed request went to a host on its
+// instance's allow-list; and no line holds the canary or a token (D-200
+// criterion 16, GR-12).
 func checkProxyLog(t *testing.T, k *kube, env *isolation) {
 	t.Helper()
 	wanted := []wantedLine{
@@ -1026,19 +998,19 @@ func checkProxyLog(t *testing.T, k *kube, env *isolation) {
 	var log []byte
 	err := waitFor(t.Context(), proxyLogTimeout, func(ctx context.Context) (string, bool, error) {
 		var err error
-		if log, err = k.proxyLog(ctx); err != nil {
+		if log, err = pluginskube.EgressProxyLog(ctx, k.clients); err != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, err)
 		}
-		missing := missingLines(decisionLines(log), wanted)
+		missing := missingLines(smokescreen.DecisionLines(log), wanted)
 		return fmt.Sprintf("no refusal logged for %v", missing), len(missing) == 0, nil
 	})
 	if err != nil {
 		t.Fatalf("waiting for the egress proxy's decision lines: %v", err)
 	}
-	for _, line := range decisionLines(log) {
-		checkDecisionLine(t, line)
+	audit := smokescreen.AuditLog(log, allowListHosts(t, k))
+	for _, p := range audit.Problems {
+		t.Errorf("the egress proxy's log: %s", p)
 	}
-	checkAllowedHosts(t, k, decisionLines(log))
 	tk := env.tokens
 	for name, secret := range map[string]string{
 		"the canary": canary, "the egress token": tk.egress, "its Proxy-Authorization header": proxyAuth(tk.egress),
@@ -1050,43 +1022,11 @@ func checkProxyLog(t *testing.T, k *kube, env *isolation) {
 	}
 }
 
-// proxyLog returns the logs of the egress proxy's pods.
-func (k *kube) proxyLog(ctx context.Context) ([]byte, error) {
-	pods, err := k.clients.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{LabelSelector: "app.kubernetes.io/name=" + proxyService})
-	if err != nil {
-		return nil, fmt.Errorf("listing the egress proxy's pods: %w", err)
-	}
-	var all []byte
-	for i := range pods.Items {
-		out, err := k.clients.CoreV1().Pods(namespace).GetLogs(pods.Items[i].Name,
-			&corev1.PodLogOptions{Container: proxyContainer}).DoRaw(ctx)
-		if err != nil {
-			return nil, fmt.Errorf("logs of %s: %w", pods.Items[i].Name, err)
-		}
-		all = append(all, out...)
-	}
-	return all, nil
-}
-
-// decisionLines returns the decision lines of log, one JSON object per
-// line; other lines are skipped.
-func decisionLines(log []byte) []proxyLine {
-	var lines []proxyLine
-	for raw := range bytes.SplitSeq(log, []byte("\n")) {
-		var l proxyLine
-		if json.Unmarshal(raw, &l) != nil || l["msg"] != canonicalDecision {
-			continue
-		}
-		lines = append(lines, l)
-	}
-	return lines
-}
-
 // missingLines returns the wanted refusals that no line of lines records.
-func missingLines(lines []proxyLine, wanted []wantedLine) []wantedLine {
+func missingLines(lines []smokescreen.DecisionLine, wanted []wantedLine) []wantedLine {
 	var missing []wantedLine
 	for _, w := range wanted {
-		found := slices.ContainsFunc(lines, func(l proxyLine) bool {
+		found := slices.ContainsFunc(lines, func(l smokescreen.DecisionLine) bool {
 			return l["role"] == w.role && l["proxy_type"] == w.proxyType && l["requested_host"] == w.host && l["allow"] == false
 		})
 		if !found {
@@ -1096,31 +1036,10 @@ func missingLines(lines []proxyLine, wanted []wantedLine) []wantedLine {
 	return missing
 }
 
-// checkDecisionLine checks that a decision line names its instance, host
-// and decision and holds nothing else of the request (GR-12).
-func checkDecisionLine(t *testing.T, l proxyLine) {
-	t.Helper()
-	for key := range l {
-		if !slices.Contains(proxyLogKeys(), key) {
-			t.Errorf("decision line %v: unexpected field %q", l["id"], key)
-		}
-	}
-	host := l.text("requested_host")
-	if !hostPort.MatchString(host) {
-		t.Errorf("decision line %v: requested_host %q is not a bare host and port", l["id"], host)
-	}
-	if _, ok := l["role"].(string); !ok {
-		t.Errorf("decision line %v: no instance (role)", l["id"])
-	}
-	if _, ok := l["allow"].(bool); !ok {
-		t.Errorf("decision line %v: no decision (allow)", l["id"])
-	}
-}
-
-// checkAllowedHosts checks that every CONNECT the proxy allowed is to a
-// host on its instance's current allow-list: outbound traffic goes only to
-// configured destinations (D-200 criterion 16).
-func checkAllowedHosts(t *testing.T, k *kube, lines []proxyLine) {
+// allowListHosts returns each instance's hosts on its current allow-list,
+// the effective hosts the operator gives the proxy: stricter than its grant
+// alone, which the demo's and the release smoke test's audits read.
+func allowListHosts(t *testing.T, k *kube) map[string][]plugins.EgressHost {
 	t.Helper()
 	cm, err := k.clients.CoreV1().ConfigMaps(namespace).Get(t.Context(), plugins.EgressAllowListConfigMap, metav1.GetOptions{})
 	if err != nil {
@@ -1130,19 +1049,9 @@ func checkAllowedHosts(t *testing.T, k *kube, lines []proxyLine) {
 	if err != nil {
 		t.Fatalf("decoding the allow-list: %v", err)
 	}
-	allowed := map[string][]string{}
+	hosts := map[string][]plugins.EgressHost{}
 	for _, l := range lists {
-		for _, h := range l.Hosts {
-			allowed[l.Plugin] = append(allowed[l.Plugin], h.String())
-		}
+		hosts[l.Plugin] = append(hosts[l.Plugin], l.Hosts...)
 	}
-	for _, l := range lines {
-		if l["allow"] != true {
-			continue
-		}
-		role, host := l.text("role"), l.text("requested_host")
-		if !slices.Contains(allowed[role], host) {
-			t.Errorf("the egress proxy allowed %s to %q, which is not on its allow-list %v", role, host, allowed[role])
-		}
-	}
+	return hosts
 }

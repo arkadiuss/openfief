@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e07fe454505
+  - type: constrains
+    from: REQ-m0-exit-05-bonds
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:31:45.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cf021aeedc
+  - type: requires_property
+    from: REQ-m0-exit-05-bonds
+    to: FACT-PROP-04734896F75CCA84
+    created_at: 2026-11-07T03:31:45.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d51b66414e1e

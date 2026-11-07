@@ -158016,37 +158016,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-proxy-line
-    title: proxyLine
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:34:26.841Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-proxy-line-text
-    title: proxyLine.text
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:34:31.864Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-proxy-log-keys
-    title: proxyLogKeys
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:34:36.898Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
   - id: SYM-e2e-isolation-wanted-line
     title: wantedLine
     sourceFile: test/e2e/isolation_test.go
@@ -158067,26 +158036,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-kube-proxy-log
-    title: kube.proxyLog
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:34:52.048Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-decision-lines
-    title: decisionLines
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:34:57.226Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
   - id: SYM-e2e-isolation-missing-lines
     title: missingLines
     sourceFile: test/e2e/isolation_test.go
@@ -158094,26 +158043,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-06T20:35:02.470Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-check-decision-line
-    title: checkDecisionLine
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:35:07.598Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-isolation
-  - id: SYM-e2e-isolation-check-allowed-hosts
-    title: checkAllowedHosts
-    sourceFile: test/e2e/isolation_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T20:35:12.671Z
     relationships:
       - type: executable_for
         target: TEST-e2e-isolation
@@ -159273,3 +159202,478 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-sdk-go-endpoint-cluster
+  - id: SYM-plugins-smokescreen-decision-line
+    title: DecisionLine
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:05.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-decision-line-text
+    title: DecisionLine.Text
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:12.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-decision-lines
+    title: DecisionLines
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:19.877Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-decision-keys
+    title: decisionKeys
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:26.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-destination
+    title: Destination
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:33.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-audit
+    title: Audit
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:40.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-audit-log
+    title: AuditLog
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:47.637Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-m0-exit-16-egress
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-line-problems
+    title: lineProblems
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:33:54.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-grants
+    title: grants
+    sourceFile: internal/plugins/smokescreen/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:01.526Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-smokescreen-test-decision
+    title: decision
+    sourceFile: internal/plugins/smokescreen/audit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:07.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-audit
+  - id: SYM-plugins-smokescreen-test-audit-grants
+    title: auditGrants
+    sourceFile: internal/plugins/smokescreen/audit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:13.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-audit
+  - id: SYM-plugins-smokescreen-test-audit-log
+    title: TestAuditLog
+    sourceFile: internal/plugins/smokescreen/audit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:20.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-audit
+  - id: SYM-plugins-smokescreen-test-decision-lines
+    title: TestDecisionLines
+    sourceFile: internal/plugins/smokescreen/audit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:26.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-audit
+  - id: SYM-plugins-kube-egress-proxy-log
+    title: EgressProxyLog
+    sourceFile: internal/plugins/kube/egressaudit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:33.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-kube-granted-egress
+    title: GrantedEgress
+    sourceFile: internal/plugins/kube/egressaudit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:40.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-egress-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-plugins-kube-test-audit-pod
+    title: auditPod
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:46.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-plugins-kube-test-egress-proxy-log
+    title: TestEgressProxyLog
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:34:53.045Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-plugins-kube-test-audit-grant
+    title: auditGrant
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:05.320Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-plugins-kube-test-granted-egress
+    title: TestGrantedEgress
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:11.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-plugins-kube-test-granted-egress-refuses-a-bad-host
+    title: TestGrantedEgressRefusesABadHost
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:18.058Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-egress-proxy-cmd-fn-run-audit
+    title: runAudit
+    sourceFile: cmd/egress-proxy/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:24.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-egress-proxy-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-egress-proxy-cmd-fn-report
+    title: report
+    sourceFile: cmd/egress-proxy/audit.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:31.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-egress-proxy-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-log
+  - id: SYM-egress-proxy-cmd-test-report
+    title: TestReport
+    sourceFile: cmd/egress-proxy/audit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:38.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-egress-proxy-audit
+  - id: SYM-egress-proxy-cmd-test-run-audit-refuses-bad-flags
+    title: TestRunAuditRefusesBadFlags
+    sourceFile: cmd/egress-proxy/audit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:44.453Z
+    relationships:
+      - type: executable_for
+        target: TEST-egress-proxy-audit
+  - id: SYM-demo-render-audit-fail
+    title: fail
+    sourceFile: scripts/demo/render-audit.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:51.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-render-audit
+      - type: implements
+        target: REQ-plugins-egress-audit-runs
+  - id: SYM-demo-render-audit-test-helper-fresh
+    title: fresh
+    sourceFile: scripts/tests/demo-render-audit.test.sh
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:35:57.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-render-audit
+  - id: SYM-demo-render-audit-test-helper-render
+    title: render
+    sourceFile: scripts/tests/demo-render-audit.test.sh
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:03.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-render-audit
+  - id: SYM-demo-render-audit-test-helper-check
+    title: check
+    sourceFile: scripts/tests/demo-render-audit.test.sh
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:09.687Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-render-audit
+  - id: SYM-demo-render-audit-test-helper-refuses
+    title: refuses
+    sourceFile: scripts/tests/demo-render-audit.test.sh
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:15.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-render-audit
+  - id: SYM-e2e-isolation-allow-list-hosts
+    title: allowListHosts
+    sourceFile: test/e2e/isolation_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:22.121Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-exposure-gateway-access
+    title: gatewayAccess
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:28.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-holds-core
+    title: holdsCore
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:34.971Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-check-route-passkey
+    title: checkRoutePasskey
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:41.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-patch-auth-origins
+    title: patchAuthOrigins
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:47.294Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-wait-core-rolled-out
+    title: waitCoreRolledOut
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:53.480Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-enroll-on-route
+    title: enrollOnRoute
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:36:59.760Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-spki-hash
+    title: spkiHash
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T03:37:05.934Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-plugins-kube-test-granted-egress-of
+    title: grantedEgressOf
+    sourceFile: internal/plugins/kube/egressaudit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:02:31.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-egress-audit
+  - id: SYM-e2e-routepasskey-reset-holds-core
+    title: resetHoldsCore
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:02:37.556Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-wait-other-bundle-tests
+    title: waitOtherBundleTests
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:02:43.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-routepasskey-component-core-patch
+    title: componentCorePatch
+    sourceFile: test/e2e/routepasskey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:02:50.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure

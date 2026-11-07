@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbab254d9418
+  - type: executable_for
+    from: SYM-plugins-kube-test-granted-egress-refuses-a-bad-host
+    to: TEST-plugins-kube-egress-audit
+    created_at: 2026-11-07T03:35:20.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-374e5173ebcb

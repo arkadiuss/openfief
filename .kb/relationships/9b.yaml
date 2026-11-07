@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81b9ca5de3f9
+  - type: implements
+    from: SYM-plugins-smokescreen-decision-keys
+    to: REQ-plugins-egress-audit-log
+    created_at: 2026-11-07T03:33:28.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eb50fe9302f
+  - type: covered_by
+    from: SYM-plugins-smokescreen-decision-keys
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:33:29.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d23da30ef444

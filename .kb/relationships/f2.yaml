@@ -721,13 +721,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-81dd3473c54b
   - type: executable_for
-    from: SYM-e2e-isolation-proxy-line
-    to: TEST-e2e-isolation
-    created_at: 2026-11-06T20:34:28.631Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-448c5319e602
-  - type: executable_for
     from: SYM-sdk-go-endpoint-test-test-endpoint-refuses-redirect-elsewhere
     to: TEST-sdk-go-endpoint
     created_at: 2026-11-06T21:57:37.474Z

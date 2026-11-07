@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07810afdb967
+  - type: constrains
+    from: REQ-m0-exit-03-idempotent-versioned-imports
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:31:36.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72c1c2f6ac85
+  - type: requires_property
+    from: REQ-m0-exit-03-idempotent-versioned-imports
+    to: FACT-PROP-F8C0B13CB66E10E0
+    created_at: 2026-11-07T03:31:36.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-996e863a1a0e

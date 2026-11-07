@@ -2,7 +2,7 @@
 # Tests for scripts/release-smoke.sh with stand-ins for gh, cosign, kubectl and node, and a fake release whose CLI
 # is a script (kibi: TEST-tooling-release-smoke): a release that verifies installs in the guide's order and passes;
 # a wrong identity accepted, a bad checksum, an unpinned image, a CloudNativePG manifest that isn't the pinned one, a
-# CLI reporting another version, a missing enrolment link and a failed passkey each fail it. Also checks that the
+# CLI reporting another version, a missing enrolment link, a failed passkey and a failed egress audit each fail it. Also checks that the
 # script runs the guide's commands (docs/guides/install.md) and that the workflow calls it. Offline: no registry,
 # Sigstore, cluster or browser.
 set -euo pipefail
@@ -114,6 +114,12 @@ cat >"$work/bin/kubectl" <<'EOF'
 echo "kubectl $*" >>"$FAKE_LOG"
 [ -z "${FAKE_KUBECTL_FAIL:-}" ] || case "$*" in *$FAKE_KUBECTL_FAIL*) exit 1 ;; esac
 EOF
+# egress-proxy logs its arguments and exits FAKE_AUDIT_EXIT, as `egress-proxy audit` does on a finding.
+cat >"$work/bin/egress-proxy" <<'EOF'
+#!/usr/bin/env bash
+echo "egress-proxy $*" >>"$FAKE_LOG"
+exit "${FAKE_AUDIT_EXIT:-0}"
+EOF
 # node logs the link it was given and exits FAKE_NODE_EXIT.
 cat >"$work/bin/node" <<'EOF'
 #!/usr/bin/env bash
@@ -131,7 +137,7 @@ run() {
   env PATH="$work/bin:$PATH" FAKE_LOG="$work/log" FAKE_RELEASE="$work/release" FAKE_COMMIT="$commit" \
     FAKE_SIGNED="$op $eg $co" FAKE_CLI_VERSION="openfief $version commit $commit" \
     FAKE_LINK='http://localhost:8080/enroll#code=ofenroll_example' LINK_TIMEOUT=5 \
-    CNPG_VERSION=1.30.1 CNPG_SHA256="$(cnpg_sum)" PASSKEY="$root/test/e2e/passkey.mjs" \
+    CNPG_VERSION=1.30.1 CNPG_SHA256="$(cnpg_sum)" PASSKEY="$root/test/e2e/passkey.mjs" EGRESS_AUDIT="$work/bin/egress-proxy" \
     "$@" bash "$root/scripts/release-smoke.sh" "$version" "$repo" "$work/w" >"$work/out" 2>&1
 }
 
@@ -157,9 +163,9 @@ fails_with() {
 release "$op $eg $co"
 check "a release that verifies installs" "$(passes)"
 # The steps in the guide's order: download, CLI, images, CloudNativePG, CRDs, database, install, UI, enrol.
-order="$(grep -oE '^(gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f [^ ]+|kubectl -n openfief wait [^ ]+|kubectl -n openfief rollout status [^ ]+|openfief plugin install ui --yes|openfief enroll|node passkey.mjs)' "$work/log" | uniq | tr '\n' '|')"
-want="gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f cnpg-1.30.1.yaml|kubectl apply --server-side -f openfief-crds-$version.yaml|kubectl apply --server-side -f openfief-db-$version.yaml|kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db|kubectl apply --server-side -f openfief-install-$version.yaml|kubectl -n openfief rollout status deployment/openfief-operator|kubectl -n openfief rollout status deployment/egress-proxy|kubectl -n openfief rollout status deployment/openfief-core|openfief plugin install ui --yes|kubectl -n openfief wait plugin.openfief.io/ui|openfief enroll|node passkey.mjs|"
-check "the steps run in the guide's order" "$(yes_if test "$order" = "$want")"
+order="$(grep -oE '^(gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f [^ ]+|kubectl -n openfief wait [^ ]+|kubectl -n openfief rollout status [^ ]+|openfief plugin install ui --yes|openfief enroll|node passkey.mjs|egress-proxy audit)' "$work/log" | uniq | tr '\n' '|')"
+want="gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f cnpg-1.30.1.yaml|kubectl apply --server-side -f openfief-crds-$version.yaml|kubectl apply --server-side -f openfief-db-$version.yaml|kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db|kubectl apply --server-side -f openfief-install-$version.yaml|kubectl -n openfief rollout status deployment/openfief-operator|kubectl -n openfief rollout status deployment/egress-proxy|kubectl -n openfief rollout status deployment/openfief-core|openfief plugin install ui --yes|kubectl -n openfief wait plugin.openfief.io/ui|openfief enroll|node passkey.mjs|egress-proxy audit|"
+check "the steps run in the guide's order, then the egress audit" "$(yes_if test "$order" = "$want")"
 check "it verifies the CLI, the checksums and the SBOM" "$(yes_if test "$(grep -c "^cosign verify-blob .*--certificate-identity $cli_id " "$work/log")" -eq 3)"
 check "it tries the CLI under a wrong identity" "$(yes_if grep -q "^cosign verify-blob .*--certificate-identity $images_id .*openfief-$version-linux-amd64\$" "$work/log")"
 check "it verifies each image once as images.yml" "$(yes_if test "$(grep -c "^cosign verify ghcr.io/.* --certificate-identity $images_id " "$work/log")" -eq 3)"
@@ -169,7 +175,7 @@ check "the link stays out of the log" "$(yes_if test "$(grep -c ofenroll_example
 mkdir -p "$work/full"
 touch "$work/full/x"
 if PATH="$work/bin:$PATH" CNPG_VERSION=1.30.1 CNPG_SHA256="$(cnpg_sum)" PASSKEY="$root/test/e2e/passkey.mjs" \
-  bash "$root/scripts/release-smoke.sh" "$version" "$repo" "$work/full" >"$work/out" 2>&1; then
+  EGRESS_AUDIT="$work/bin/egress-proxy" bash "$root/scripts/release-smoke.sh" "$version" "$repo" "$work/full" >"$work/out" 2>&1; then
   check "a work directory that isn't empty is refused" no
 else
   check "a work directory that isn't empty is refused" "$(yes_if grep -q 'is not empty' "$work/out")"
@@ -180,6 +186,7 @@ check "a CLI reporting another version fails" "$(fails_with 'openfief version pr
 check "CLI_VERSION=0 skips the version check" "$(passes FAKE_CLI_VERSION='usage' CLI_VERSION=0)"
 check "a missing link fails" "$(fails_with 'printed no link' FAKE_LINK=)"
 check "a failed passkey fails" "$(fails_with 'first passkey' FAKE_NODE_EXIT=1)"
+check "a failed egress audit fails" "$(fails_with "the egress proxy's log breaks" FAKE_AUDIT_EXIT=1)"
 check "an enrol that doesn't stop cleanly fails" "$(fails_with 'openfief enroll exited with' FAKE_ENROLL_EXIT=3)"
 check "a rollout that fails prints diagnostics" "$(fails_with 'release-smoke: diagnostics' FAKE_KUBECTL_FAIL='rollout status deployment/openfief-core')"
 check "diagnostics never read a Secret" "$(yes_if test "$(grep -ci secret "$work/log")" -eq 0)"

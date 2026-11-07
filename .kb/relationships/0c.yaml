@@ -650,3 +650,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a91c39f3d35
+  - type: constrains
+    from: REQ-m0-exit-14-secrets
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:32:29.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39e04885decc
+  - type: requires_property
+    from: REQ-m0-exit-14-secrets
+    to: FACT-PROP-EDAE25912D23F7DE
+    created_at: 2026-11-07T03:32:29.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-712c4c9e3fab
+  - type: specified_by
+    from: REQ-m0-exit-14-secrets
+    to: SCEN-e2e-credentials-only-in-secrets
+    created_at: 2026-11-07T03:32:29.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ab32dade37e
+  - type: specified_by
+    from: REQ-m0-exit-14-secrets
+    to: SCEN-e2e-credentials-mounted-only-in-granted-plugin
+    created_at: 2026-11-07T03:32:29.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05a7de028f59

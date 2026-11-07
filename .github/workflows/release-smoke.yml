@@ -4,7 +4,8 @@
 # image with cosign against the identities the guide gives (and checks cosign refuses a wrong one), checks the
 # CloudNativePG manifest's pinned sha256, applies CloudNativePG, the CRDs, the database and the install, waits for
 # every rollout, runs `openfief plugin install ui --yes` and `openfief enroll` from the downloaded CLI, and has
-# Chromium create the first passkey and sign in again (test/e2e/passkey.mjs). task release:smoke
+# Chromium create the first passkey and sign in again (test/e2e/passkey.mjs), then audits the egress proxy's log
+# against the PluginGrants with `egress-proxy audit` built from the checkout (D-200 criterion 16). task release:smoke
 # (scripts/release-smoke.sh) runs the steps.
 # release.yml calls it after every real publish; run it by hand against any published release with
 #   gh workflow run release-smoke.yml --ref main -f version=2026.11.0-alpha.1 -f cli_version=false
@@ -48,8 +49,8 @@ jobs:
     permissions:
       contents: read # download the release's assets and read the commit its tag names
     steps:
-      # The checkout brings only the harness: the task, the script and the browser's passkey ceremonies. Everything
-      # installed comes from the release.
+      # The checkout brings only the harness: the task, the script, the browser's passkey ceremonies and the egress
+      # audit. Everything installed comes from the release.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false

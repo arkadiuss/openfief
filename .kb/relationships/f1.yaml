@@ -846,3 +846,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5e3beeb912e
+  - type: verified_by
+    from: SCEN-plugins-egress-audit-release-smoke
+    to: TEST-tooling-release-smoke
+    created_at: 2026-11-07T03:30:49.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2818d46ea543
+  - type: verified_by
+    from: SCEN-plugins-egress-audit-release-smoke
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:30:50.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5636b63e6194
+  - type: constrains
+    from: REQ-e2e-core-plugin-port-refuses-bad-tokens
+    to: FACT-SUBJECT-E8D01CC33F2EE690
+    created_at: 2026-11-07T03:31:20.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdc91ac25c74
+  - type: requires_property
+    from: REQ-e2e-core-plugin-port-refuses-bad-tokens
+    to: FACT-PROP-757B53680BC41936
+    created_at: 2026-11-07T03:31:20.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3a0db51d57
+  - type: specified_by
+    from: REQ-e2e-core-plugin-port-refuses-bad-tokens
+    to: SCEN-e2e-core-refuses-bad-plugin-tokens
+    created_at: 2026-11-07T03:31:20.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-872b20f90ad3

@@ -115,6 +115,9 @@ func runBundle(m *testing.M, dir string) int {
 		err = installBundle(ctx, k, dir, logStderrf)
 		cancel()
 	}
+	if err == nil {
+		err = resetHoldsCore()
+	}
 	code := 1
 	if err != nil {
 		logStderrf("e2e: installing the release bundle failed: %v", err)
@@ -244,6 +247,7 @@ func bundleDeployments(t *testing.T) []appsv1.Deployment {
 // e2e:images pushed this checkout's images, and that the cluster runs
 // exactly those (SCEN-e2e-bundle-pinned-images).
 func TestBundlePinsImageDigests(t *testing.T) {
+	holdsCore(t)
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
@@ -294,6 +298,7 @@ func containerImages(d *appsv1.Deployment) []string {
 // becomes available: the operator, the egress proxy and the core
 // (SCEN-e2e-bundle-ready).
 func TestBundleBecomesReady(t *testing.T) {
+	holdsCore(t)
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
@@ -317,6 +322,7 @@ func TestBundleBecomesReady(t *testing.T) {
 // answers /readyz, lists accounts with a script token issued by its own CLI,
 // and refuses the read API without one (SCEN-e2e-bundle-read-api).
 func TestBundleReadAPI(t *testing.T) {
+	holdsCore(t)
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)

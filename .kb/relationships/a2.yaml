@@ -776,3 +776,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1aa71094e663
+  - type: constrains
+    from: REQ-m0-exit-02-double-entry
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:31:31.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f1bf16e79aa
+  - type: requires_property
+    from: REQ-m0-exit-02-double-entry
+    to: FACT-PROP-EE005BAEE772F80B
+    created_at: 2026-11-07T03:31:31.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1812873374c
+  - type: constrains
+    from: REQ-m0-exit-12-operator-scope
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:32:19.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdd72bd943ed
+  - type: requires_property
+    from: REQ-m0-exit-12-operator-scope
+    to: FACT-PROP-8115F9E8E8490808
+    created_at: 2026-11-07T03:32:19.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab0613aed5d2
+  - type: specified_by
+    from: REQ-m0-exit-12-operator-scope
+    to: SCEN-e2e-operator-namespace-scoped
+    created_at: 2026-11-07T03:32:19.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b63b70ba320

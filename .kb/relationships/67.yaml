@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fa34f1ce9f6
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-audit-grants
+    to: TEST-plugins-egress-audit
+    created_at: 2026-11-07T03:34:15.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dae7da1f6095

@@ -101,6 +101,7 @@ func buildCLI(ctx context.Context, reg suiteRegistry, signer suiteSigner, logf f
 // (SCEN-e2e-bundle-first-run). Only downloading the CLI stays outside the
 // suite (docs/dev/testing.md).
 func TestBundleFirstRun(t *testing.T) {
+	holdsCore(t)
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)

@@ -1,6 +1,6 @@
 ---
 title: On both kind and k3d, each plugin must run in its own pod, the XTB parser must have no egress at all, a granted plugin's request through the egress proxy for a host outside its grant must be refused, and a direct connection or a DNS lookup from a plugin pod must fail.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-200
 tags:
   - strict-modeling

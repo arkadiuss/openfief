@@ -797,3 +797,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee9de442c411
+  - type: constrains
+    from: REQ-plugins-egress-audit-runs
+    to: FACT-SUBJECT-D2335248569B4676
+    created_at: 2026-11-07T03:31:07.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb003636f41
+  - type: requires_property
+    from: REQ-plugins-egress-audit-runs
+    to: FACT-PROP-4081481CFB2E01BB
+    created_at: 2026-11-07T03:31:07.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1c0f92fbbbe
+  - type: specified_by
+    from: REQ-plugins-egress-audit-runs
+    to: SCEN-plugins-egress-audit-demo
+    created_at: 2026-11-07T03:31:07.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e5d0203e8e1
+  - type: specified_by
+    from: REQ-plugins-egress-audit-runs
+    to: SCEN-plugins-egress-audit-release-smoke
+    created_at: 2026-11-07T03:31:07.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4f12f4fb695
+  - type: executable_for
+    from: SYM-e2e-routepasskey-check-route-passkey
+    to: TEST-e2e-exposure
+    created_at: 2026-11-07T03:36:43.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e99d8cbe0d

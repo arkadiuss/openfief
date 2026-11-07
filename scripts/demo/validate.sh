@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Validates the demo's GitOps manifests offline (docs/dev/demo.md): deploy/demo, every git path its Flux
-# Kustomizations apply, and the deploy/demo/openfief and deploy/demo/routes templates CI publishes must build; every image
+# Kustomizations apply, and the deploy/demo/openfief, deploy/demo/routes and deploy/demo/audit templates CI publishes must build; every image
 # they deploy must be pinned by digest (D-17); every OCI source must require a cosign signature; and a layer with
 # Flux variable substitution may only use the variables the machine's cloud-init provides.
 # Usage: validate.sh [deploy/demo directory]   (kustomize and gojq on PATH)
@@ -58,6 +58,7 @@ validate_demo() {
     stack_paths "$dir/stack.yaml"
     echo "$dir/openfief false"
     echo "$dir/routes true"
+    echo "$dir/audit false"
   )
   rm -f "$out"
   unverified="$(gojq -r --yaml-input 'select(.kind == "OCIRepository" and .spec.verify.provider != "cosign") | .metadata.name' "$dir/stack.yaml")"

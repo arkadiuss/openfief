@@ -1,6 +1,6 @@
 ---
 title: On both kind and k3d, the egress proxy's log must show each plugin request with its host, its decision and the plugin instance and nothing of its path, query, headers, body or token, and every request it allowed must be to a host on that instance's egress allow-list.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-200
 tags:
   - strict-modeling

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80c05f52f422
+  - type: executable_for
+    from: SYM-egress-proxy-cmd-test-run-audit-refuses-bad-flags
+    to: TEST-egress-proxy-audit
+    created_at: 2026-11-07T03:35:46.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225eac79a7c7

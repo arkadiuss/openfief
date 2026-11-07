@@ -6,6 +6,8 @@
 #   demo-ingress   ./deploy/demo/ingress   the Let's Encrypt ClusterIssuer (HTTP-01 through k3s's Traefik)
 #   demo-routes    the signed artifact     ./routes: https://<ENV>.<DEMO_DOMAIN> (or <ipv4-with-dashes>.sslip.io) to the core
 #   demo-openfief  the signed artifact     ./app: operator, egress proxy, core, demo data; images pinned by digest (D-17)
+#   demo-egress-audit the signed artifact  ./audit: after each deploy, a Job checks the egress proxy's log against the
+#                                          PluginGrants (D-200 criterion 16, deploy/demo/audit); a failed audit fails it
 # The product bases ship Services only (D-28); the routes are this demo's own, on k3s's bundled Traefik.
 # The platform layers follow main in git. demo-openfief and demo-routes follow the OCI artifact that CI publishes
 # after every push to main (and every alpha or beta): deploy/demo/openfief rendered with the digests whose signatures
@@ -143,6 +145,27 @@ spec:
   interval: 10m
   path: ./app
   prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: openfief-demo-app
+---
+# The egress audit of each deploy (deploy/demo/audit): Flux applies the artifact's ./audit after demo-openfief and waits
+# for its Job, so a failed audit shows as this layer failing (flux get kustomizations; kubectl -n openfief logs
+# job/egress-audit). The Job carries the deploy's tag, and force re-creates it on each deploy.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-egress-audit
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: demo-openfief
+  interval: 10m
+  path: ./audit
+  prune: true
+  force: true
+  wait: true
+  timeout: 5m
   sourceRef:
     kind: OCIRepository
     name: openfief-demo-app

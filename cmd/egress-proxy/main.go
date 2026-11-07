@@ -4,6 +4,12 @@
 // cached, and per-plugin egress allow-lists from the operator's ConfigMap. It
 // runs in the openfief namespace with in-cluster credentials and stops on
 // SIGTERM, letting open tunnels drain.
+//
+// `egress-proxy audit` serves nothing: it reads the proxy's logs and the
+// PluginGrants and checks that every request the proxy allowed went to a
+// host its instance's grant approves, and that no log line holds more than
+// who asked, where to and the decision (audit.go). The demo runs it after
+// each deploy, and the release smoke test after its install.
 package main
 
 import (
@@ -36,6 +42,15 @@ import (
 const nodeIPEnv = "OPENFIEF_NODE_IP"
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == auditCommand {
+		if err := runAudit(context.Background(), os.Args[2:], os.Stdout); err != nil {
+			log := logrus.New()
+			log.SetFormatter(&logrus.JSONFormatter{})
+			log.WithError(err).Error("egress audit failed")
+			os.Exit(1)
+		}
+		return
+	}
 	addr := flag.String("listen", ":4750", "address plugins connect to")
 	denyCIDRs := flag.String("deny-cidr", "", "comma-separated ranges to refuse beyond the private and internal ones, "+
 		"such as a cluster's public or global IPv6 pod, Service and node ranges")

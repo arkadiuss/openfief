@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4aced4919cd
+  - type: executable_for
+    from: SYM-plugins-kube-test-granted-egress
+    to: TEST-plugins-kube-egress-audit
+    created_at: 2026-11-07T03:35:13.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28791db8e196

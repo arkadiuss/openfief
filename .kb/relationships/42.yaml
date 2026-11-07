@@ -826,13 +826,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2e519b1a6722
   - type: executable_for
-    from: SYM-e2e-isolation-proxy-line-text
-    to: TEST-e2e-isolation
-    created_at: 2026-11-06T20:34:33.655Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5ff6b914f5f4
-  - type: executable_for
     from: SYM-plugins-test-test-build-objects-optional-secret
     to: TEST-plugins-optional-secret-objects
     created_at: 2026-11-06T21:55:19.378Z

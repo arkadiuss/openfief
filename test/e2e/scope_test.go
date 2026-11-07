@@ -109,6 +109,7 @@ func scopeNamespaces() []string {
 // read a Secret anywhere or create or change anything outside openfief
 // (D-15; SCEN-e2e-operator-namespace-scoped).
 func TestBundleOperatorScope(t *testing.T) {
+	holdsCore(t)
 	t.Parallel()
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)

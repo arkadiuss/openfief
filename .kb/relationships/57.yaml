@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-712df89b8212
+  - type: constrains
+    from: REQ-m0-exit-08-built-in-ui
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-07T03:31:59.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c7ee963e778
+  - type: requires_property
+    from: REQ-m0-exit-08-built-in-ui
+    to: FACT-PROP-59C6E94DB002E23F
+    created_at: 2026-11-07T03:31:59.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b9f391db29
+  - type: specified_by
+    from: REQ-m0-exit-08-built-in-ui
+    to: SCEN-e2e-first-passkey-localhost
+    created_at: 2026-11-07T03:31:59.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0159dc8a26a
+  - type: specified_by
+    from: REQ-m0-exit-08-built-in-ui
+    to: SCEN-e2e-passkey-on-route-hostname
+    created_at: 2026-11-07T03:31:59.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8553663684ef
