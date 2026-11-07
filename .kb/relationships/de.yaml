@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6efa1d8665a4
+  - type: implements
+    from: SYM-pl-early-redemption-fees
+    to: REQ-treasurybonds-fees-from-reviewed-table
+    created_at: 2026-11-07T12:39:22.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d35a4f8d3e1

@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b0e039dfbf9
+  - type: implements
+    from: SYM-ingest-bond-lot-entered
+    to: REQ-ingest-bond-terms-owner-overrides
+    created_at: 2026-11-07T12:39:36.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269ec3f19fd4

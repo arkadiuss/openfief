@@ -161795,6 +161795,8 @@ symbols:
         target: TEST-pl-published
       - type: implements
         target: REQ-pl-published-series-rates
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
   - id: SYM-pl-attribution
     title: Attribution
     sourceFile: internal/jurisdiction/pl/published.go
@@ -161862,6 +161864,8 @@ symbols:
         target: TEST-pl-fees
       - type: implements
         target: REQ-pl-early-redemption-fee-table
+      - type: implements
+        target: REQ-treasurybonds-fees-from-reviewed-table
   - id: SYM-pl-first-of-month
     title: firstOfMonth
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161901,6 +161905,8 @@ symbols:
         target: TEST-pl-fees
       - type: implements
         target: REQ-pl-early-redemption-fee-table
+      - type: implements
+        target: REQ-treasurybonds-fees-from-reviewed-table
   - id: SYM-pl-fee-row-of
     title: feeRow
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -162587,6 +162593,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-mfbonds
       - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
+      - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-client-from-gov-pl
     title: MinistryClient.fromGovPL
@@ -162848,6 +162856,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-columns
@@ -163476,6 +163486,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-published
       - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
+      - type: implements
         target: REQ-treasurybonds-terms-from-published-data
   - id: SYM-treasurybonds-complete
     title: Complete
@@ -163488,6 +163500,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
         target: REQ-treasurybonds-terms-from-published-data
   - id: SYM-treasurybonds-test-helper-published
@@ -163578,6 +163592,8 @@ symbols:
         target: TEST-ingest-bondlot
       - type: implements
         target: REQ-ingest-bond-lot-terms-optional
+      - type: implements
+        target: REQ-ingest-bond-terms-owner-overrides
   - id: SYM-ingest-connectapi-entered-terms
     title: enteredTerms
     sourceFile: internal/ingest/connectapi/service.go
@@ -163673,6 +163689,8 @@ symbols:
         target: TEST-ingest-delivery-bonds
       - type: implements
         target: REQ-ingest-bond-lot-terms-optional
+      - type: implements
+        target: REQ-ingest-bond-terms-owner-overrides
   - id: SYM-ingest-delivery-attribution
     title: Attribution
     sourceFile: internal/ingest/delivery/bonds.go

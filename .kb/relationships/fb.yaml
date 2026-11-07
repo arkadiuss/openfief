@@ -993,3 +993,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdb24edf547e
+  - type: constrains
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-11-07T12:37:34.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50aa1509a3b
+  - type: requires_property
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: FACT-PROP-9976C38B3CFF268C
+    created_at: 2026-11-07T12:37:34.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a70d54e4794f
+  - type: specified_by
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: SCEN-treasurybonds-terms-from-published-data
+    created_at: 2026-11-07T12:37:34.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ab1d7824f2
+  - type: specified_by
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: SCEN-pl-published-series-rates
+    created_at: 2026-11-07T12:37:34.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e61b723d1b8b
+  - type: specified_by
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: SCEN-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T12:37:35.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02382ebf7467
+  - type: supersedes
+    from: REQ-treasurybonds-rates-from-ministry-data
+    to: REQ-treasurybonds-series-terms-from-issuer
+    created_at: 2026-11-07T12:37:35.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4853fbacd53a

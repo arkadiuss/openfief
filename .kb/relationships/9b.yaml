@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51d877e3350a
+  - type: implements
+    from: SYM-mfbonds-client-published
+    to: REQ-treasurybonds-rates-from-ministry-data
+    created_at: 2026-11-07T12:38:56.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c347e768d5ba

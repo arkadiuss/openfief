@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22ae18299de7
+  - type: implements
+    from: SYM-treasurybonds-complete-terms
+    to: REQ-treasurybonds-rates-from-ministry-data
+    created_at: 2026-11-07T12:38:17.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f62e5d1723

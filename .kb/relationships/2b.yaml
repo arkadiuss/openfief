@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abe259333af5
+  - type: constrains
+    from: REQ-treasurybonds-fees-from-reviewed-table
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-11-07T12:37:39.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f921a2cead7f
+  - type: requires_property
+    from: REQ-treasurybonds-fees-from-reviewed-table
+    to: FACT-PROP-D24BE31B5E6E9DE6
+    created_at: 2026-11-07T12:37:39.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-515ffe3aa241
+  - type: specified_by
+    from: REQ-treasurybonds-fees-from-reviewed-table
+    to: SCEN-pl-early-redemption-fee-table
+    created_at: 2026-11-07T12:37:39.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-006b0e664880
+  - type: supersedes
+    from: REQ-treasurybonds-fees-from-reviewed-table
+    to: REQ-treasurybonds-series-terms-from-issuer
+    created_at: 2026-11-07T12:37:39.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-698e19c64834
