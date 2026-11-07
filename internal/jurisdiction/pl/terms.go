@@ -62,6 +62,10 @@ type Terms struct {
 	// came from (D-97); it is nil for terms the owner entered. It doesn't
 	// change what the terms value.
 	Attribution *Attribution
+	// FeeSource says where EarlyRedemptionFee came from: the owner, the
+	// reviewed fee table, or the table's latest fee carried forward until
+	// the owner confirms it (D-97). It doesn't change what the terms value.
+	FeeSource FeeSource
 }
 
 // Indices are the published readings that set the rates of interest periods

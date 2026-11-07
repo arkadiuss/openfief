@@ -1679,6 +1679,59 @@ message InstrumentDetail {
   repeated InstrumentExemptionClass exemption_classes = 4;
   // Its display name (D-197), as Instrument.name.
   string name = 5;
+  // A treasury bond series' stored terms, each marked with where it came
+  // from (D-97); unset for any other instrument, and for a series whose
+  // terms are not stored yet, such as one the ministry's data didn't list
+  // when its lot was entered, until a sync fills them in.
+  BondSeriesTerms bond_terms = 6;
+}
+
+// BondSeriesTerms are what valuing a treasury bond series takes from its
+// issue letter (D-9), as stored, each with where it came from (D-97).
+message BondSeriesTerms {
+  // The series code, such as "EDO1136".
+  string series = 1;
+  // The first interest period's yearly rate, as a fraction: 5.35% is
+  // "0.0535".
+  string first_period_rate = 2;
+  // The yearly margin over the period index, as a fraction; "0" for a
+  // fixed-rate series.
+  string margin = 3;
+  // Where the rate and the margin came from: "published", the Ministry of
+  // Finance's published retail bond data, which attribution names; or
+  // "entered" by the owner.
+  string rates_source = 4;
+  // The early-redemption fee per bond, in PLN.
+  Money early_redemption_fee = 5;
+  // Where the fee came from: "table", the reviewed fee table of the issue
+  // letters; "assumed", the table's latest fee of the bond type carried
+  // forward to a series sold after the month the table was reviewed
+  // through, until the owner confirms or overrides it; or "entered" by the
+  // owner.
+  string fee_source = 6;
+  // The published data's attribution, as its licence (CC BY 4.0) asks;
+  // set only when rates_source is "published".
+  BondTermsAttribution attribution = 7;
+}
+
+// BondTermsAttribution names the published data series terms were read
+// from (D-97).
+message BondTermsAttribution {
+  // The source, such as "Ministerstwo Finansów".
+  string publisher = 1;
+  // The publication's title, such as "Dane dotyczące obligacji
+  // detalicznych".
+  string dataset = 2;
+  // The publication's licence, such as "CC BY 4.0".
+  string license = 3;
+  // The address of the file the terms were read from.
+  string url = 4;
+  // The day the publisher made the data, YYYY-MM-DD.
+  string made = 5;
+  // When the data was taken, an RFC 3339 time in UTC.
+  string fetched = 6;
+  // What was done to the data.
+  string processing = 7;
 }
 
 message GetInstrumentRequest {

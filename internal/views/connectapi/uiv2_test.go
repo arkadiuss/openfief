@@ -120,7 +120,8 @@ func (fakePrices) SourceOf(_ context.Context, s valuation.Series) (valuation.Ser
 }
 
 // uiv2API serves the read API over newLedger's acc-1, with a coupon, the
-// sync history, two prices of ETF1 and two attention items.
+// sync history, two prices of ETF1, two attention items and EDO0334's
+// stored terms.
 func uiv2API(t *testing.T) api {
 	t.Helper()
 	l := newLedger(t)
@@ -143,7 +144,8 @@ func uiv2API(t *testing.T) api {
 	}
 	var log bytes.Buffer
 	h, err := connectapi.New(newViews(t, l, app.WithJurisdiction(pl.NewPack(), fakeTerms{}), app.WithAttention(items),
-		app.WithSyncHistory(fakeHistory{}), app.WithRecordedChanges(&fakeChanges{coupon: coupon}), app.WithInstrumentPrices(prices)),
+		app.WithSyncHistory(fakeHistory{}), app.WithRecordedChanges(&fakeChanges{coupon: coupon}), app.WithInstrumentPrices(prices),
+		app.WithBondTerms(fakeSeriesTerms{})),
 		fakeVerifier{}, connectapi.WithLogger(slog.New(slog.NewJSONHandler(&log, nil))))
 	if err != nil {
 		t.Fatalf("connectapi.New: %v", err)

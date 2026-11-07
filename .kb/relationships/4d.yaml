@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5391f177858c
+  - type: implements
+    from: SYM-attention-app-bond-terms
+    to: REQ-attention-bond-fee-assumed
+    created_at: 2026-11-07T13:31:41.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d73e419da26d
+  - type: covered_by
+    from: SYM-attention-app-bond-terms
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:31:41.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0602e818b54e
+  - type: executable_for
+    from: SYM-attention-app-test-fake-bond-terms
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:31:58.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcd2cb3335a5

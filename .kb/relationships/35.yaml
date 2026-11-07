@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fb891f675ee
+  - type: implements
+    from: SYM-valuationv1-set-early-redemption-fee-request-get-origin
+    to: REQ-valuation-owner-sets-bond-fee
+    created_at: 2026-11-07T14:16:44.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b30b96947748
+  - type: covered_by
+    from: SYM-valuationv1-set-early-redemption-fee-request-get-origin
+    to: TEST-core-settings
+    created_at: 2026-11-07T14:16:44.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2acf7aa1e80

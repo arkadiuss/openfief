@@ -12,6 +12,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
@@ -66,6 +67,16 @@ func (s *settingsService) GetOwnerSettings(ctx context.Context, req *connect.Req
 			&valuationv1.InstrumentClass{Isin: isin, ExemptionClass: string(got.InstrumentClasses[isin])})
 	}
 	return connect.NewResponse(out), nil
+}
+
+// SetEarlyRedemptionFee confirms or overrides a treasury bond series'
+// early-redemption fee (D-97).
+func (s *settingsService) SetEarlyRedemptionFee(ctx context.Context, req *connect.Request[valuationv1.SetEarlyRedemptionFeeRequest]) (*connect.Response[valuationv1.SetEarlyRedemptionFeeResponse], error) {
+	err := s.settings.SetEarlyRedemptionFee(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetIsin(), req.Msg.GetFee())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&valuationv1.SetEarlyRedemptionFeeResponse{}), nil
 }
 
 // SetExemptionClass classifies an instrument for a yearly tax (D-132).
@@ -130,6 +141,10 @@ func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, app.ErrUnknownAccount):
 		return connect.NewError(connect.CodeNotFound, app.ErrUnknownAccount)
+	case errors.Is(err, app.ErrUnknownBond):
+		return connect.NewError(connect.CodeNotFound, app.ErrUnknownBond)
+	case errors.Is(err, pl.ErrFeeNotAssumed):
+		return connect.NewError(connect.CodeFailedPrecondition, pl.ErrFeeNotAssumed)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "settings call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)

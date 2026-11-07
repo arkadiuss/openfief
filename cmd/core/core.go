@@ -132,6 +132,7 @@ func historyOptions(pool *pgxpool.Pool, vstore *valuationpg.Store) viewsapp.Opti
 	opts := []viewsapp.Option{
 		viewsapp.WithSyncHistory(ingestpg.New(pool)), viewsapp.WithRecordedChanges(ledgerpg.New(pool)),
 		viewsapp.WithInstrumentPrices(vstore),
+		viewsapp.WithBondTerms(vstore),
 	}
 	return func(v *viewsapp.Views) {
 		for _, o := range opts {

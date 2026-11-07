@@ -839,17 +839,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44d17a4ef79f
+  - type: verified_by
+    from: SCEN-treasurybonds-sync-fills-missing-terms
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T13:26:31.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31df03a40caf
+  - type: verified_by
+    from: SCEN-treasurybonds-sync-fills-missing-terms
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-07T13:26:31.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eb9c2a6abca
+  - type: verified_by
+    from: SCEN-treasurybonds-sync-fills-missing-terms
+    to: TEST-ingest-bondlot
+    created_at: 2026-11-07T13:26:31.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf401ae7de5
+  - type: verified_by
+    from: SCEN-treasurybonds-sync-fills-missing-terms
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T13:26:31.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1280b09ea60c
   - type: implements
-    from: SYM-mfbonds-compound-file-sectors
-    to: REQ-valuation-mfbonds-published-rates
-    created_at: 2026-11-07T08:14:34.688Z
+    from: SYM-ui-series-terms
+    to: REQ-ui-instrument-bond-terms
+    created_at: 2026-11-07T13:33:06.214Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5da793bc18e1
+    id: rel-964caabf97db
   - type: covered_by
-    from: SYM-mfbonds-compound-file-sectors
-    to: TEST-valuation-mfbonds
-    created_at: 2026-11-07T08:14:34.732Z
+    from: SYM-ui-series-terms
+    to: TEST-ui-bond-terms
+    created_at: 2026-11-07T13:33:06.246Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-fb118c4a7ccc
+    id: rel-64ad149c5d9a
+  - type: implements
+    from: SYM-viewsv1-bond-terms-attribution-descriptor
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:19:34.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0a96ea3c8a
+  - type: covered_by
+    from: SYM-viewsv1-bond-terms-attribution-descriptor
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:19:35.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64c0c2b37dc3

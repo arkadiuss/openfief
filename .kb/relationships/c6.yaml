@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d33c64b09a5
+  - type: implements
+    from: SYM-treasurybonds-missing-terms
+    to: REQ-treasurybonds-sync-fills-missing-terms
+    created_at: 2026-11-07T13:29:03.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cd0c1b08631
+  - type: covered_by
+    from: SYM-treasurybonds-missing-terms
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T13:29:03.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b17f54e3266c

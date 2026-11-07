@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4557d144ed9b
+  - type: executable_for
+    from: SYM-ui-test-set-bond-fee
+    to: TEST-ui-bond-terms
+    created_at: 2026-11-07T13:34:05.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-627adeb01aa5

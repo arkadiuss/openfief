@@ -156,6 +156,31 @@ func TestBondLotCostByPurchase(t *testing.T) {
 	}
 }
 
+// TestBondLotPending: a lot is pending while any term the owner left to
+// the connector is still missing (D-97).
+func TestBondLotPending(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name        string
+		rates, fee  bool
+		wantPending bool
+	}{
+		{name: "every term entered or filled in"},
+		{name: "rates missing", rates: true, wantPending: true},
+		{name: "fee missing", fee: true, wantPending: true},
+		{name: "everything missing", rates: true, fee: true, wantPending: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			l := ingest.BondLot{PublishedRates: tt.rates, ReviewedFee: tt.fee}
+			if got := l.Pending(); got != tt.wantPending {
+				t.Errorf("Pending() = %v, want %v", got, tt.wantPending)
+			}
+		})
+	}
+}
+
 func TestBondLotKeyValidate(t *testing.T) {
 	t.Parallel()
 	c := bondLotCase{}

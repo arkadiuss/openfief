@@ -282,6 +282,27 @@ message BondTerms {
   // (D-97): unset for terms the owner entered. The core stores it with the
   // terms and hands it back in a sync request.
   BondTermsAttribution attribution = 5;
+  // Where early_redemption_fee came from (D-97). The core stores it with
+  // the terms, hands it back in a sync request, and asks the owner to
+  // confirm an assumed fee.
+  BondFeeSource fee_source = 6;
+}
+
+// BondFeeSource says where a series' early-redemption fee came from
+// (D-97).
+enum BondFeeSource {
+  // Treated as BOND_FEE_SOURCE_ENTERED, as from a connector that doesn't
+  // say.
+  BOND_FEE_SOURCE_UNSPECIFIED = 0;
+  // The owner entered it, or confirmed an assumed one.
+  BOND_FEE_SOURCE_ENTERED = 1;
+  // The reviewed fee table's fee for the series' sale month, read in its
+  // issue letter.
+  BOND_FEE_SOURCE_TABLE = 2;
+  // The reviewed table's latest fee of the series' bond type, carried
+  // forward to a series sold after the month the table was reviewed
+  // through, until the owner confirms or overrides it.
+  BOND_FEE_SOURCE_ASSUMED = 3;
 }
 
 // BondTermsAttribution names the source of series terms a connector read

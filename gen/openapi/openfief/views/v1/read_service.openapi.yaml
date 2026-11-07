@@ -524,6 +524,96 @@ components:
       description: |-
         BondPayout is what happens to what a hand-entered bond account's bonds
          pay, matching the option the bond registry offers (D-135).
+    openfief.views.v1.BondSeriesTerms:
+      type: object
+      properties:
+        series:
+          type: string
+          title: series
+          description: The series code, such as "EDO1136".
+        firstPeriodRate:
+          type: string
+          title: first_period_rate
+          description: |-
+            The first interest period's yearly rate, as a fraction: 5.35% is
+             "0.0535".
+        margin:
+          type: string
+          title: margin
+          description: |-
+            The yearly margin over the period index, as a fraction; "0" for a
+             fixed-rate series.
+        ratesSource:
+          type: string
+          title: rates_source
+          description: |-
+            Where the rate and the margin came from: "published", the Ministry of
+             Finance's published retail bond data, which attribution names; or
+             "entered" by the owner.
+        earlyRedemptionFee:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: early_redemption_fee
+          description: The early-redemption fee per bond, in PLN.
+        feeSource:
+          type: string
+          title: fee_source
+          description: |-
+            Where the fee came from: "table", the reviewed fee table of the issue
+             letters; "assumed", the table's latest fee of the bond type carried
+             forward to a series sold after the month the table was reviewed
+             through, until the owner confirms or overrides it; or "entered" by the
+             owner.
+        attribution:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.BondTermsAttribution'
+          title: attribution
+          description: |-
+            The published data's attribution, as its licence (CC BY 4.0) asks;
+             set only when rates_source is "published".
+      title: BondSeriesTerms
+      additionalProperties: false
+      description: |-
+        BondSeriesTerms are what valuing a treasury bond series takes from its
+         issue letter (D-9), as stored, each with where it came from (D-97).
+    openfief.views.v1.BondTermsAttribution:
+      type: object
+      properties:
+        publisher:
+          type: string
+          title: publisher
+          description: The source, such as "Ministerstwo Finansów".
+        dataset:
+          type: string
+          title: dataset
+          description: |-
+            The publication's title, such as "Dane dotyczące obligacji
+             detalicznych".
+        license:
+          type: string
+          title: license
+          description: The publication's licence, such as "CC BY 4.0".
+        url:
+          type: string
+          title: url
+          description: The address of the file the terms were read from.
+        made:
+          type: string
+          title: made
+          description: The day the publisher made the data, YYYY-MM-DD.
+        fetched:
+          type: string
+          title: fetched
+          description: When the data was taken, an RFC 3339 time in UTC.
+        processing:
+          type: string
+          title: processing
+          description: What was done to the data.
+      title: BondTermsAttribution
+      additionalProperties: false
+      description: |-
+        BondTermsAttribution names the published data series terms were read
+         from (D-97).
     openfief.views.v1.Book:
       type: object
       properties:
@@ -1059,6 +1149,15 @@ components:
           type: string
           title: name
           description: Its display name (D-197), as Instrument.name.
+        bondTerms:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.BondSeriesTerms'
+          title: bond_terms
+          description: |-
+            A treasury bond series' stored terms, each marked with where it came
+             from (D-97); unset for any other instrument, and for a series whose
+             terms are not stored yet, such as one the ministry's data didn't list
+             when its lot was entered, until a sync fills them in.
       title: InstrumentDetail
       additionalProperties: false
       description: InstrumentDetail is an instrument across the caller's accounts (D-195).

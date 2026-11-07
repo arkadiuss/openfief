@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f44f4e26d36c
+  - type: executable_for
+    from: SYM-ingest-test-bond-lot-pending
+    to: TEST-ingest-bondlot
+    created_at: 2026-11-07T13:28:58.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4b0dce8883
+  - type: implements
+    from: SYM-viewsv1-bond-terms-attribution-get-fetched
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:19:47.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39aa4600719d
+  - type: covered_by
+    from: SYM-viewsv1-bond-terms-attribution-get-fetched
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:19:47.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25248dffd854

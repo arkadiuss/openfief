@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a20cff3c8e7
+  - type: executable_for
+    from: SYM-attention-app-test-fake-bond-terms-all-bond-terms
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:32:03.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82212afe965e

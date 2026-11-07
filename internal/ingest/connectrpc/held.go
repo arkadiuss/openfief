@@ -68,8 +68,8 @@ func payoutTo(p ingest.Payout) connectorv1.BondPayout {
 }
 
 // bondTermsTo writes treasury bond series terms: rates as fractions, the
-// fee as an exact amount, and the attribution of terms read from published
-// data (D-97).
+// fee as an exact amount with where it came from, and the attribution of
+// terms read from published data (D-97).
 func bondTermsTo(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 	if len(terms) == 0 {
 		return nil
@@ -83,9 +83,25 @@ func bondTermsTo(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 			Margin:             t.Terms.Margin.String(),
 			EarlyRedemptionFee: moneyTo(t.Terms.EarlyRedemptionFee),
 			Attribution:        attributionTo(t.Terms.Attribution),
+			FeeSource:          feeSourceTo(t.Terms.FeeSource),
 		})
 	}
 	return out
+}
+
+// feeSourceTo writes where a series' early-redemption fee came from
+// (D-97); an invalid source is written unspecified, which reads as
+// entered.
+func feeSourceTo(s pl.FeeSource) connectorv1.BondFeeSource {
+	switch s {
+	case pl.FeeEntered:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED
+	case pl.FeeFromTable:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE
+	case pl.FeeAssumed:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED
+	}
+	return connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED
 }
 
 // attributionTo writes the attribution of terms read from published data,

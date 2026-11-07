@@ -19,6 +19,7 @@
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 {{if .Renamed}}<p class="alert alert-info" role="status">The name is saved. Every page shows it before the ticker and ISIN.</p>{{end}}
 {{with .Corrected}}<p class="alert alert-info" role="status">The ISIN is corrected: {{.}} row(s) booked anew with it.</p>{{end}}
+{{if .FeeSet}}<p class="alert alert-info" role="status">The early-redemption fee is saved as yours.</p>{{end}}
 {{with .Items}}
 <section class="banner" aria-labelledby="instrument-items-title">
   <h2 id="instrument-items-title" class="eyebrow">Needs you · {{len .}}</h2>
@@ -36,6 +37,38 @@
   <div class="card figure-card"><p class="label">Latest price</p><p class="figure-value">–</p><p class="muted note">No listing of it is held or priced.</p></div>
   {{end}}
 </section>
+
+{{if .Bond}}
+<section class="card" aria-labelledby="terms-title">
+  <h2 id="terms-title">Series terms</h2>
+  {{with .Terms}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Term of {{.Series}}</th><th scope="col" class="num">Value</th><th scope="col">From</th></tr></thead>
+    <tbody>
+    <tr><td>First-period rate</td><td class="num">{{.FirstRate}}</td><td>{{.RatesFrom}}</td></tr>
+    <tr><td>Margin</td><td class="num">{{.Margin}}</td><td>{{.RatesFrom}}</td></tr>
+    <tr><td>Early-redemption fee</td><td class="num">{{.Fee}}</td><td>{{.FeeFrom}}{{if .FeeAssumed}} <span class="pill pill-warn">to confirm</span>{{end}}</td></tr>
+    </tbody>
+  </table></div>
+  {{with .Attribution}}<p class="muted note" id="terms-source">{{.}}</p>{{end}}
+  {{if .FeeAssumed}}<p class="muted">The series was sold after the last month whose issue letters OpenFief's fee table was reviewed against, so its fee is the latest one its bond type's letters set. Check it in the series' issue letter, then confirm it or enter the right one.</p>{{end}}
+  {{if $.Data.Owner}}
+  <form method="post" action="/instruments/{{$.Data.Detail.Isin}}/fee">
+    <div class="fields">
+      <div class="field">
+        <label for="bond-fee">Early-redemption fee per bond</label>
+        <div class="unit"><input id="bond-fee" name="fee" inputmode="decimal" size="6" autocomplete="off" aria-describedby="bond-fee-help"><span>PLN</span></div>
+        <p class="help" id="bond-fee-help">{{if .FeeAssumed}}Leave it empty to confirm {{.Fee}}, or enter the fee the issue letter sets.{{else}}The fee you enter replaces this one, and the holdings are revalued.{{end}}</p>
+      </div>
+    </div>
+    <div class="actions"><button type="submit" class="{{if .FeeAssumed}}primary{{else}}secondary{{end}}">{{if .FeeAssumed}}Confirm or save the fee{{else}}Save the fee{{end}}</button></div>
+  </form>
+  {{end}}
+  {{else}}
+  <p class="muted">No terms are stored for this series yet. When the Ministry of Finance's data lists it, the next sync of its treasury bond connector fills them in; until then its holdings have no value.</p>
+  {{end}}
+</section>
+{{end}}
 
 <section class="card" aria-labelledby="prices-title">
   <h2 id="prices-title">Price history</h2>

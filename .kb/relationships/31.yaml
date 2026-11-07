@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8dabb97f042c
+  - type: implements
+    from: SYM-viewsv1-bond-terms-attribution-get-processing
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:20:06.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe0a970ed1a7
+  - type: covered_by
+    from: SYM-viewsv1-bond-terms-attribution-get-processing
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:20:06.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6f890371999

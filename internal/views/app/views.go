@@ -61,6 +61,7 @@ type Views struct {
 	prices      InstrumentPrices
 	names       InstrumentNames
 	starts      ChartStarts
+	bondTerms   BondTerms
 }
 
 // New returns the queries over the given ports, with totals, valuations and

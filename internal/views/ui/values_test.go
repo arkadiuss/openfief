@@ -30,6 +30,9 @@ type fakeSettings struct {
 	rate string
 	// classes are the owner's exemption classes by ISIN (D-132).
 	classes map[string]string
+	// fees are the owner's early-redemption fees by ISIN, "confirmed" for
+	// an assumed one confirmed (D-97).
+	fees map[string]string
 }
 
 // fakeFormats are the formats the fake offers, the Polish default first.

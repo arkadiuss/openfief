@@ -44,6 +44,9 @@ type Settings struct {
 	owners    Owners
 	pack      jurisdiction.Pack
 	reporting kernel.Currency
+	// fees are the bonds' stored fees the owner confirms or overrides
+	// (WithBondFees); nil until set.
+	fees BondFees
 }
 
 // NewSettings returns the settings use cases over store and recorder, with

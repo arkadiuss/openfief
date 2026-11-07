@@ -2,9 +2,11 @@ package connectapi
 
 import (
 	"context"
+	"time"
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/views"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -22,18 +24,47 @@ func (s *readService) GetInstrument(ctx context.Context, req *connect.Request[vi
 	}
 	for i := range in.Listings {
 		l := &in.Listings[i]
-		pl := &viewsv1.InstrumentListing{Instrument: pbInstrument(l.Instrument), PriceSource: l.Source}
+		listing := &viewsv1.InstrumentListing{Instrument: pbInstrument(l.Instrument), PriceSource: l.Source}
 		if l.Latest != nil {
-			pl.LatestPrice = pbInstrumentPrice(&views.InstrumentPrice{Price: *l.Latest, Primary: true})
+			listing.LatestPrice = pbInstrumentPrice(&views.InstrumentPrice{Price: *l.Latest, Primary: true})
 		}
-		out.Listings = append(out.Listings, pl)
+		out.Listings = append(out.Listings, listing)
 	}
 	for _, c := range in.Classes {
 		out.ExemptionClasses = append(out.ExemptionClasses, &viewsv1.InstrumentExemptionClass{
 			Wrapper: string(c.Wrapper), ExemptionClass: string(c.Class), OwnerChosen: c.OwnerChosen, Known: c.Known,
 		})
 	}
+	out.BondTerms = pbSeriesTerms(in.Terms)
 	return connect.NewResponse(&viewsv1.GetInstrumentResponse{Instrument: out}), nil
+}
+
+// The sources of a series' rates in the read API (D-97): the ministry's
+// published data, or the owner.
+const (
+	ratesPublished = "published"
+	ratesEntered   = "entered"
+)
+
+// pbSeriesTerms converts a treasury bond series' stored terms, each with
+// where it came from and the published data's attribution (D-97); nil for
+// none.
+func pbSeriesTerms(t *pl.Terms) *viewsv1.BondSeriesTerms {
+	if t == nil {
+		return nil
+	}
+	out := &viewsv1.BondSeriesTerms{
+		Series: t.Series.String(), FirstPeriodRate: t.FirstPeriodRate.String(), Margin: t.Margin.String(),
+		RatesSource: ratesEntered, EarlyRedemptionFee: pbMoney(t.EarlyRedemptionFee), FeeSource: t.FeeSource.String(),
+	}
+	if a := t.Attribution; a != nil {
+		out.RatesSource = ratesPublished
+		out.Attribution = &viewsv1.BondTermsAttribution{
+			Publisher: a.Publisher, Dataset: a.Dataset, License: a.License, Url: a.URL,
+			Made: a.Made.String(), Fetched: a.Fetched.UTC().Format(time.RFC3339), Processing: a.Processing,
+		}
+	}
+	return out
 }
 
 // pbInstrumentPrice converts one stored price of a listing.

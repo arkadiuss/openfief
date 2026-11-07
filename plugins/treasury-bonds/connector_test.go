@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"testing"
 	"time"
 
@@ -132,6 +133,7 @@ func TestImportBondLotsPublishedTerms(t *testing.T) {
 			change: func(l *connectorv1.BondLot) { l.FirstPeriodRate, l.Margin, l.EarlyRedemptionFee = "", "", nil },
 			want: &connectorv1.BondTerms{
 				Instrument: edo, FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: pln("3"),
+				FeeSource:   connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE,
 				Attribution: attribution("read; the early-redemption fee is not in the data: OpenFief took it from its reviewed table of the issue letters"),
 			},
 		},
@@ -140,13 +142,17 @@ func TestImportBondLotsPublishedTerms(t *testing.T) {
 			change: func(l *connectorv1.BondLot) { l.FirstPeriodRate, l.Margin = "", "" },
 			want: &connectorv1.BondTerms{
 				Instrument: edo, FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: pln("2"),
+				FeeSource:   connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED,
 				Attribution: attribution("read; the early-redemption fee is not in the data: the owner entered it"),
 			},
 		},
 		{
 			name:   "the rates entered override: the table's fee, no attribution",
 			change: func(l *connectorv1.BondLot) { l.EarlyRedemptionFee = nil },
-			want:   &connectorv1.BondTerms{Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("3")},
+			want: &connectorv1.BondTerms{
+				Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("3"),
+				FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE,
+			},
 		},
 	}
 	for _, tt := range tests {
@@ -255,7 +261,10 @@ func TestImportBondLots(t *testing.T) {
 				},
 			},
 		},
-		BondTerms: []*connectorv1.BondTerms{{Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("2")}},
+		BondTerms: []*connectorv1.BondTerms{{
+			Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("2"),
+			FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED,
+		}},
 	}
 	if diff := cmp.Diff(want, resp.Msg.GetDelivery(), protocmp.Transform()); diff != "" {
 		t.Errorf("ImportBondLots delivery (-want +got):\n%s", diff)
@@ -457,6 +466,67 @@ func TestSyncBooksAccountsNeverSeeded(t *testing.T) {
 	}
 	if diff := cmp.Diff(wantOpening, gotOpening); diff != "" {
 		t.Errorf("opening sync (-want +got):\n%s", diff)
+	}
+}
+
+// TestSyncFillsMissingTerms: a sync delivers the terms of each held series
+// the core stores none of and the published data now lists, and nothing
+// for a series whose terms are stored or that the data still doesn't list
+// (D-97); a ministry outage delivers no terms and still syncs.
+func TestSyncFillsMissingTerms(t *testing.T) {
+	t.Parallel()
+	req := heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)
+	edo := bondInstrument("EDO0536")
+	req.BondTerms = slices.DeleteFunc(req.GetBondTerms(), func(b *connectorv1.BondTerms) bool { return b.GetInstrument().GetSymbol() == "EDO0536" })
+	unlisted := bondInstrument("COI0530")
+	req.Accounts[0].Holdings = append(req.Accounts[0].Holdings, &connectorv1.Holding{Instrument: unlisted, Quantity: "3"})
+	resp, err := served(t, fakeCPI{}, fakeRates{}).Sync(t.Context(), asCore(req))
+	if err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	want := []*connectorv1.BondTerms{{
+		Instrument: edo, FirstPeriodRate: "0.0611", Margin: "0.0222", EarlyRedemptionFee: &connectorv1.Money{Amount: "3", Currency: "PLN"},
+		FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE,
+		Attribution: &connectorv1.BondTermsAttribution{
+			Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+			Url: "https://www.example.org/attachment/x", Made: "2026-10-26", Fetched: "2026-10-29T06:00:00Z",
+			Processing: "read; the early-redemption fee is not in the data: OpenFief took it from its reviewed table of the issue letters",
+		},
+	}}
+	if diff := cmp.Diff(want, resp.Msg.GetDelivery().GetBondTerms(), protocmp.Transform()); diff != "" {
+		t.Errorf("Sync bond terms (-want +got):\n%s", diff)
+	}
+
+	down := &connector{
+		coupons:   &treasurybonds.CouponSync{CPI: fakeCPI{}, Rates: fakeRates{}},
+		indices:   &treasurybonds.IndexSync{CPI: fakeCPI{}, Rates: fakeRates{}, Start: mustDate("2026-09-01")},
+		published: fakePublished{err: errOutage}, today: func() kernel.Date { return mustDate("2026-10-29") },
+	}
+	out, err := down.Sync(t.Context(), connect.NewRequest(req))
+	if err != nil {
+		t.Fatalf("Sync with the ministry's data down: %v", err)
+	}
+	if got := out.Msg.GetDelivery(); len(got.GetBondTerms()) != 0 || len(got.GetIndexReadings()) == 0 {
+		t.Errorf("Sync with the ministry's data down delivered %d terms and %d readings; want none and the readings",
+			len(got.GetBondTerms()), len(got.GetIndexReadings()))
+	}
+}
+
+// TestImportBondLotsPendingTerms books a lot that leaves every term to the
+// connector, of a series the published data doesn't list yet, without
+// terms, which a later sync fills in (D-97).
+func TestImportBondLotsPendingTerms(t *testing.T) {
+	t.Parallel()
+	lot := &connectorv1.BondLot{Series: "COI0530", Quantity: "3", PurchaseDate: "2026-05-04"}
+	resp, err := served(t, fakeCPI{}, fakeRates{}).ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{
+		BatchId: "b-1", AccountId: "acc-bonds", Lots: []*connectorv1.BondLot{lot},
+	}))
+	if err != nil {
+		t.Fatalf("ImportBondLots: %v", err)
+	}
+	if d := resp.Msg.GetDelivery(); len(d.GetTransactions()) != 2 || len(d.GetBondTerms()) != 0 {
+		t.Errorf("ImportBondLots delivered %d transactions and %d terms; want the deposit and the buy, and no terms",
+			len(d.GetTransactions()), len(d.GetBondTerms()))
 	}
 }
 

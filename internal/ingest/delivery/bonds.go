@@ -180,8 +180,8 @@ func feeFrom(m *connectorv1.Money) (kernel.Money, error) {
 }
 
 // BondTerms writes treasury bond series terms, in order: rates as
-// fractions, the fee as an exact PLN amount, and the attribution of terms
-// read from published data (D-97).
+// fractions, the fee as an exact PLN amount with where it came from, and
+// the attribution of terms read from published data (D-97).
 func BondTerms(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 	out := make([]*connectorv1.BondTerms, 0, len(terms))
 	for i := range terms {
@@ -192,9 +192,42 @@ func BondTerms(terms []ingest.BondTerms) []*connectorv1.BondTerms {
 			Margin:             t.Terms.Margin.String(),
 			EarlyRedemptionFee: money(t.Terms.EarlyRedemptionFee),
 			Attribution:        Attribution(t.Terms.Attribution),
+			FeeSource:          FeeSource(t.Terms.FeeSource),
 		})
 	}
 	return out
+}
+
+// FeeSource writes where a series' early-redemption fee came from (D-97);
+// an invalid source is written unspecified, which reads as entered.
+func FeeSource(s pl.FeeSource) connectorv1.BondFeeSource {
+	switch s {
+	case pl.FeeEntered:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED
+	case pl.FeeFromTable:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE
+	case pl.FeeAssumed:
+		return connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED
+	}
+	return connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED
+}
+
+// ErrUnknownFeeSource reports a fee source the contract doesn't define.
+var ErrUnknownFeeSource = errors.New("unknown early-redemption fee source")
+
+// FeeSourceFrom reads where a series' early-redemption fee came from
+// (D-97): unspecified is entered, as from a connector that doesn't say; a
+// value the contract doesn't define fails with ErrUnknownFeeSource.
+func FeeSourceFrom(s connectorv1.BondFeeSource) (pl.FeeSource, error) {
+	switch s {
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED, connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED:
+		return pl.FeeEntered, nil
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE:
+		return pl.FeeFromTable, nil
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED:
+		return pl.FeeAssumed, nil
+	}
+	return 0, fmt.Errorf("%w: %d", ErrUnknownFeeSource, int32(s))
 }
 
 // Attribution writes the attribution of terms read from published data,

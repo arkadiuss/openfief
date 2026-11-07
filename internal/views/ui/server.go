@@ -215,6 +215,7 @@ func (s *server) recordRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /instruments/{isin}", s.withSession(s.instrumentPage))
 	mux.HandleFunc("GET /instruments/{isin}/transactions", s.withSession(s.instrumentTransactionsFragment))
 	mux.HandleFunc("POST /instruments/{isin}/name", s.withOwner(s.renameInstrument))
+	mux.HandleFunc("POST /instruments/{isin}/fee", s.withOwner(s.setBondFee))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
 }

@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1dd93df41693
+  - type: implements
+    from: SYM-viewsv1-bond-series-terms-get-early-redemption-fee
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:18:24.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68de90bbbc16
+  - type: covered_by
+    from: SYM-viewsv1-bond-series-terms-get-early-redemption-fee
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:18:24.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-941724434d3c

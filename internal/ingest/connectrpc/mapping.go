@@ -445,7 +445,7 @@ func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, er
 }
 
 // ratesAndFeeFrom translates the rates, plain decimals, and the fee, a PLN
-// amount of zero or more, of one series' terms.
+// amount of zero or more, with where it came from, of one series' terms.
 func ratesAndFeeFrom(field string, b *connectorv1.BondTerms) (pl.Terms, error) {
 	first, err := decimalFrom(field+".first_period_rate", b.GetFirstPeriodRate())
 	if err != nil {
@@ -462,7 +462,28 @@ func ratesAndFeeFrom(field string, b *connectorv1.BondTerms) (pl.Terms, error) {
 	if !fee.Currency().Equal(pl.Nominal().Currency()) || fee.Sign() < 0 {
 		return pl.Terms{}, invalid(field+".early_redemption_fee is not a PLN amount of zero or more", nil)
 	}
-	return pl.Terms{FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee}, nil
+	src, err := feeSourceFrom(b.GetFeeSource())
+	if err != nil {
+		return pl.Terms{}, invalid(field+".fee_source", err)
+	}
+	return pl.Terms{FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee, FeeSource: src}, nil
+}
+
+// errUnknownFeeSource reports a fee source the contract doesn't define.
+var errUnknownFeeSource = errors.New("unknown early-redemption fee source")
+
+// feeSourceFrom translates where a series' early-redemption fee came from
+// (D-97): unspecified is entered, as from a connector that doesn't say.
+func feeSourceFrom(s connectorv1.BondFeeSource) (pl.FeeSource, error) {
+	switch s {
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED, connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED:
+		return pl.FeeEntered, nil
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE:
+		return pl.FeeFromTable, nil
+	case connectorv1.BondFeeSource_BOND_FEE_SOURCE_ASSUMED:
+		return pl.FeeAssumed, nil
+	}
+	return 0, fmt.Errorf("%w: %d", errUnknownFeeSource, int32(s))
 }
 
 // attributionFrom translates the attribution of terms read from published

@@ -46,12 +46,16 @@ func (f *fakeRead) ListActivity(_ context.Context, r *connect.Request[viewsv1.Li
 	}}), nil
 }
 
-// GetInstrument answers the synthetic instrument.
+// GetInstrument answers the synthetic instrument, and the synthetic
+// treasury bonds (bondDetail).
 func (f *fakeRead) GetInstrument(_ context.Context, r *connect.Request[viewsv1.GetInstrumentRequest]) (*connect.Response[viewsv1.GetInstrumentResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
 	in := syntheticInstrument()
+	if isin := r.Msg.GetIsin(); isin == assumedBond || isin == pendingBond {
+		return connect.NewResponse(&viewsv1.GetInstrumentResponse{Instrument: bondDetail(isin)}), nil
+	}
 	if r.Msg.GetIsin() != in.GetIsin() {
 		return nil, codeErr(connect.CodeNotFound, nil)
 	}

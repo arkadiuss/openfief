@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46a019431d1f
+  - type: implements
+    from: SYM-connectorv1-bond-terms-get-fee-source
+    to: REQ-valuation-bond-fee-source-stored
+    created_at: 2026-11-07T14:16:15.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b990f137cb
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-get-fee-source
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T14:16:15.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3073f6e6fea

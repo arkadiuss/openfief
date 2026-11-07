@@ -78,6 +78,12 @@ const (
 	// exemptions and the owner hasn't (D-132, D-148). It resolves once the
 	// owner classifies it. Subject: the ISIN.
 	KindInstrumentUnclassified Kind = "instrument-unclassified"
+	// KindBondFeeAssumed is a held treasury bond series sold after the
+	// month the reviewed early-redemption fee table was reviewed through,
+	// whose fee is the table's latest for its bond type, carried forward
+	// (D-97). It resolves once the owner confirms or overrides the fee.
+	// Subject: the series' ISIN.
+	KindBondFeeAssumed Kind = "bond-fee-assumed"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

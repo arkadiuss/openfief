@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8b2311c69221
+  - type: implements
+    from: SYM-ui-series-terms-view
+    to: REQ-ui-instrument-bond-terms
+    created_at: 2026-11-07T13:33:17.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db774417c61
+  - type: covered_by
+    from: SYM-ui-series-terms-view
+    to: TEST-ui-bond-terms
+    created_at: 2026-11-07T13:33:17.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89b1a8453e7

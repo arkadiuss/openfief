@@ -3,16 +3,77 @@ package pl
 import (
 	"errors"
 	"fmt"
+	"slices"
+	"strings"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
-// ErrNoReviewedFee reports a series whose early-redemption fee the reviewed
-// fee table doesn't hold: a series sold before the table's first row for its
-// bond type, or after the month the table was last reviewed through
-// (FeesReviewedThrough). The owner enters that series' terms instead (D-97).
-var ErrNoReviewedFee = errors.New("no reviewed early-redemption fee for the series")
+// Errors of the reviewed fee table and of the owner's fee.
+var (
+	// ErrNoReviewedFee reports a series sold before the reviewed fee
+	// table's first row for its bond type: the table holds no fee for it,
+	// so the owner enters that series' terms (D-97).
+	ErrNoReviewedFee = errors.New("no reviewed early-redemption fee for the series")
+	// ErrFeeNotAssumed reports the owner confirming a series' fee that is
+	// not assumed: there is nothing to confirm.
+	ErrFeeNotAssumed = errors.New("the series' early-redemption fee is not assumed")
+	// ErrUnknownFeeSource reports a fee source that is none of FeeSource's.
+	ErrUnknownFeeSource = errors.New("unknown early-redemption fee source")
+)
+
+// FeeSource says where a series' early-redemption fee came from (D-97).
+// The zero source is the owner's: terms the owner enters carry their own
+// fee.
+type FeeSource int
+
+// The fee sources.
+const (
+	// FeeEntered is a fee the owner entered, or an assumed one the owner
+	// confirmed.
+	FeeEntered FeeSource = iota
+	// FeeFromTable is the reviewed fee table's fee for the series' sale
+	// month, read in its issue letter.
+	FeeFromTable
+	// FeeAssumed is the latest reviewed fee of the series' bond type,
+	// carried forward to a series sold after the month the table was
+	// reviewed through, whose letter nobody has read yet. It stands until
+	// the owner confirms or overrides it.
+	FeeAssumed
+)
+
+// The fee sources' names, as stored and as the read API writes them.
+const (
+	feeEnteredName = "entered"
+	feeTableName   = "table"
+	feeAssumedName = "assumed"
+)
+
+// String returns "entered", "table" or "assumed", or a placeholder for an
+// invalid source.
+func (s FeeSource) String() string {
+	switch s {
+	case FeeEntered:
+		return feeEnteredName
+	case FeeFromTable:
+		return feeTableName
+	case FeeAssumed:
+		return feeAssumedName
+	}
+	return fmt.Sprintf("FeeSource(%d)", int(s))
+}
+
+// ParseFeeSource reads a fee source's name (FeeSource.String); any other
+// text fails with ErrUnknownFeeSource.
+func ParseFeeSource(name string) (FeeSource, error) {
+	for _, s := range []FeeSource{FeeEntered, FeeFromTable, FeeAssumed} {
+		if s.String() == name {
+			return s, nil
+		}
+	}
+	return 0, fmt.Errorf("%w: %q", ErrUnknownFeeSource, name)
+}
 
 // FeeRow is one row of the reviewed early-redemption fee table (D-97): from
 // the series first sold in the month starting From, every series of Type
@@ -124,31 +185,110 @@ func SaleMonth(s Series) (kernel.Date, error) {
 	return addMonths(firstOfMonth(s.MaturityYear, s.MaturityMonth), -st.TenorMonths)
 }
 
+// TableFee is a series' early-redemption fee from the reviewed table: the
+// fee, whether it is the table's own for the series or assumed, and the
+// row it comes from, which names its issue letter.
+type TableFee struct {
+	Fee    kernel.Money
+	Source FeeSource
+	Row    FeeRow
+}
+
 // EarlyRedemptionFee returns the early-redemption fee per bond of series s
-// from the reviewed table (EarlyRedemptionFees): the fee of the latest row
-// of its bond type from on or before its sale month (SaleMonth). A series
-// sold before the type's first row or after FeesReviewedThrough fails with
-// ErrNoReviewedFee: the table holds no fee it hasn't read in an issue letter.
-func EarlyRedemptionFee(s Series) (kernel.Money, error) {
+// from the reviewed table (EarlyRedemptionFees, D-97): the fee of the
+// latest row of its bond type from on or before its sale month
+// (SaleMonth), as FeeFromTable. A series sold after FeesReviewedThrough
+// carries that latest row's fee forward as FeeAssumed, until the owner
+// confirms or overrides it. A series sold before the type's first row
+// fails with ErrNoReviewedFee: the table has no fee to carry back.
+func EarlyRedemptionFee(s Series) (TableFee, error) {
+	return feeFrom(EarlyRedemptionFees(), FeesReviewedThrough(), s)
+}
+
+// feeFrom looks series s up in the fee table rows, reviewed through the
+// sale month through.
+func feeFrom(rows []FeeRow, through kernel.Date, s Series) (TableFee, error) {
 	sold, err := SaleMonth(s)
 	if err != nil {
-		return kernel.Money{}, err
-	}
-	if sold.After(FeesReviewedThrough()) {
-		return kernel.Money{}, fmt.Errorf("%w: %s is sold in %s, after the table was reviewed through %s",
-			ErrNoReviewedFee, s, sold, FeesReviewedThrough())
+		return TableFee{}, err
 	}
 	var (
-		fee   kernel.Money
+		out   TableFee
 		found bool
 	)
-	for _, r := range EarlyRedemptionFees() {
+	for _, r := range rows {
 		if r.Type == s.Type && !r.From.After(sold) {
-			fee, found = r.Fee, true
+			out, found = TableFee{Fee: r.Fee, Source: FeeFromTable, Row: r}, true
 		}
 	}
 	if !found {
-		return kernel.Money{}, fmt.Errorf("%w: %s is sold in %s, before the table's first %s row", ErrNoReviewedFee, s, sold, s.Type)
+		return TableFee{}, fmt.Errorf("%w: %s is sold in %s, before the table's first %s row", ErrNoReviewedFee, s, sold, s.Type)
 	}
-	return fee, nil
+	if sold.After(through) {
+		out.Source = FeeAssumed
+	}
+	return out, nil
+}
+
+// AssumedFeeDetail is what the owner is asked about a series whose fee is
+// assumed (FeeAssumed): "confirm the early-redemption fee for EDO1137:
+// 3.00 PLN assumed from the latest reviewed letter, list emisyjny nr
+// 96/2024 (EDO0934)". It names the letter when the table still has the
+// row the fee comes from.
+func AssumedFeeDetail(t *Terms) string {
+	out := fmt.Sprintf("confirm the early-redemption fee for %s: %s assumed from the latest reviewed letter", t.Series, inGrosze(t.EarlyRedemptionFee))
+	if f, err := EarlyRedemptionFee(t.Series); err == nil && f.Fee.Equal(t.EarlyRedemptionFee) {
+		out += ", " + f.Row.Letter
+	}
+	return out
+}
+
+// inGrosze writes m with exactly two decimal places, half up: "3.00 PLN".
+func inGrosze(m kernel.Money) string {
+	const places = 2
+	r, err := m.Amount().Round(places, kernel.RoundHalfUp)
+	if err != nil {
+		return m.String()
+	}
+	whole, frac, _ := strings.Cut(r.String(), ".")
+	frac += strings.Repeat("0", places-len(frac))
+	return whole + "." + frac + " " + m.Currency().String()
+}
+
+// FeesToConfirm returns the terms among held whose early-redemption fee is
+// assumed (FeeAssumed), in series order: each one the owner is asked to
+// confirm or override (D-97).
+func FeesToConfirm(held []Terms) []Terms {
+	var out []Terms
+	for i := range held {
+		if held[i].FeeSource == FeeAssumed {
+			out = append(out, held[i])
+		}
+	}
+	slices.SortFunc(out, func(a, b Terms) int { return strings.Compare(a.Series.String(), b.Series.String()) })
+	return out
+}
+
+// ConfirmFee returns t with its assumed fee confirmed by the owner: the
+// same fee, now the owner's (FeeEntered). A fee that is not assumed fails
+// with ErrFeeNotAssumed.
+func (t *Terms) ConfirmFee() (Terms, error) {
+	if t.FeeSource != FeeAssumed {
+		return Terms{}, fmt.Errorf("%w: %s's fee is %s", ErrFeeNotAssumed, t.Series, t.FeeSource)
+	}
+	out := *t
+	out.FeeSource = FeeEntered
+	return out, nil
+}
+
+// OverrideFee returns t with fee as the owner's early-redemption fee
+// (FeeEntered), whatever the fee came from before (D-97). A fee that is not
+// a PLN amount of zero or more fails with ErrInvalidTerms.
+func (t *Terms) OverrideFee(fee kernel.Money) (Terms, error) {
+	if !fee.Currency().Equal(pln()) || fee.Sign() < 0 {
+		return Terms{}, fmt.Errorf("%w: %s's early-redemption fee must be PLN, zero or more", ErrInvalidTerms, t.Series)
+	}
+	out := *t
+	out.EarlyRedemptionFee, out.FeeSource = fee, FeeEntered
+	return out, nil
 }
