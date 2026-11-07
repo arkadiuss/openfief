@@ -159976,3 +159976,1369 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-sdk-go-endpoint-cluster
+  - id: SYM-ledger-logcheck-log-check
+    title: LogCheck
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:13.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-logged-version
+    title: LoggedVersion
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:20.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-log-check-balanced
+    title: LogCheck.Balanced
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:28.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-account-log-count
+    title: AccountLogCount
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:35.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-unbalanced-version
+    title: UnbalancedVersion
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:42.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-version-key
+    title: versionKey
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:50.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-check-log
+    title: CheckLog
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:22:58.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-distinct
+    title: distinct
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:05.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-distinct-versions
+    title: distinctVersions
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:13.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-account-log-count-count
+    title: AccountLogCount.count
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:21.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-add-postings
+    title: addPostings
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:28.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-unbalanced-before
+    title: unbalancedBefore
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:36.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-logged-before
+    title: loggedBefore
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:43.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-version-ref
+    title: versionRef
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:51.205Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-logcheck-compare-versions
+    title: compareVersions
+    sourceFile: internal/ledger/logcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:23:58.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-log-check
+      - type: implements
+        target: REQ-AUTO-8C3982CF80A9A4DF
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-ledger-app-ledger-check-log
+    title: Ledger.CheckLog
+    sourceFile: internal/ledger/app/checklog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:05.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-check-log
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-report
+    title: ledgerReport
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:12.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-account-count
+    title: ledgerAccountCount
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:21.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-unbalanced
+    title: ledgerUnbalanced
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:33.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-amount
+    title: ledgerAmount
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:41.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-version
+    title: ledgerVersion
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:48.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-check-ledger
+    title: checkLedger
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:24:55.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-checkledger-ledger-report-of
+    title: ledgerReportOf
+    sourceFile: cmd/core/checkledger.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:03.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-config-parse-checks
+    title: parseChecks
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:10.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-config-parse-check-ledger
+    title: parseCheckLedger
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:17.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-core-main-run-check
+    title: runCheck
+    sourceFile: cmd/core/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:24.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-check-ledger
+      - type: implements
+        target: REQ-ledger-whole-log-check
+  - id: SYM-e2e-fixture-datapath-flex-query
+    title: flexQuery
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:31.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-queries
+    title: dataPathQueries
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:38.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-reference-for
+    title: referenceFor
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:46.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-statement-of
+    title: statementOf
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:25:53.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-listings
+    title: dataPathListings
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:00.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-search-result
+    title: searchResult
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:07.682Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-closes
+    title: dataPathCloses
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:14.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-rate
+    title: dataPathRate
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:22.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-rate-rules
+    title: dataPathRateRules
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:29.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-datapath-data-path-rates
+    title: dataPathRates
+    sourceFile: test/e2e/fixture/datapath.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:36.748Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-nbp-tables
+    title: nbpTables
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:44.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-data-path
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-ledger-logcheck-test-stored-version
+    title: storedVersion
+    sourceFile: internal/ledger/logcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:51.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-log-check
+  - id: SYM-ledger-logcheck-test-test-check-log
+    title: TestCheckLog
+    sourceFile: internal/ledger/logcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:26:58.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-log-check
+  - id: SYM-ledger-logcheck-test-version-of
+    title: versionOf
+    sourceFile: internal/ledger/logcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:06.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-log-check
+  - id: SYM-ledger-logcheck-test-describe-log-check
+    title: describeLogCheck
+    sourceFile: internal/ledger/logcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:13.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-log-check
+  - id: SYM-ledger-app-checklog-test-test-check-log
+    title: TestCheckLog
+    sourceFile: internal/ledger/app/checklog_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:20.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-check-log
+  - id: SYM-core-checkledger-test-test-parse-check-ledger
+    title: TestParseCheckLedger
+    sourceFile: cmd/core/checkledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:26.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-ledger
+  - id: SYM-core-checkledger-test-test-check-ledger
+    title: TestCheckLedger
+    sourceFile: cmd/core/checkledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:33.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-ledger
+  - id: SYM-core-checkledger-test-correct-deposit
+    title: correctDeposit
+    sourceFile: cmd/core/checkledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:40.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-ledger
+  - id: SYM-core-checkledger-test-check-ledger-logged
+    title: checkLedgerLogged
+    sourceFile: cmd/core/checkledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:46.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-ledger
+  - id: SYM-e2e-fixture-datapath-test-test-fixture-serves-data-path
+    title: TestFixtureServesDataPath
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:27:53.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-map-data-path
+    title: mapDataPath
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:01.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-week-booked
+    title: weekBooked
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:08.592Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-describe-transactions
+    title: describeTransactions
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:15.619Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-describe-book
+    title: describeBook
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:22.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-test-fixture-serves-data-path-rates
+    title: TestFixtureServesDataPathRates
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:30.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-fixture-datapath-test-test-fixture-serves-data-path-listings
+    title: TestFixtureServesDataPathListings
+    sourceFile: test/e2e/fixture/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:37.668Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-data-path
+  - id: SYM-e2e-datapath-test-test-data-path
+    title: TestDataPath
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:45.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path
+    title: dataPath
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:28:52.663Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-book-ibkr
+    title: dataPath.bookIBKR
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:00.274Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-corrected-deposit
+    title: dataPath.checkCorrectedDeposit
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:07.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-book-xtb
+    title: dataPath.bookXTB
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:15.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-xtb-opening
+    title: xtbOpening
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:22.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-xtb-week
+    title: xtbWeek
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:30.240Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-xtb-position
+    title: xtbPosition
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:37.873Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-book-bonds
+    title: dataPath.bookBonds
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:45.504Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-wait-prices
+    title: dataPath.waitPrices
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:29:53.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-week-of
+    title: weekOf
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:00.675Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-describe-prices
+    title: describePrices
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:08.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-double-entry
+    title: dataPath.checkDoubleEntry
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:15.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-postings-balance
+    title: dataPath.checkPostingsBalance
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:23.249Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-opening-lots
+    title: dataPath.checkOpeningLots
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:30.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-account-values
+    title: accountValues
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:38.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-values
+    title: dataPath.checkValues
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:45.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-wait-values
+    title: dataPath.waitValues
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:30:53.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-values-of
+    title: valuesOf
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:00.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-same-values
+    title: sameValues
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:07.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-check-price-checks
+    title: dataPath.checkPriceChecks
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:15.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-ledger-count
+    title: ledgerCount
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:22.817Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-ledger-report
+    title: ledgerReport
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:30.484Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-logged-version
+    title: loggedVersion
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:38.552Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-ledger-report-count-of
+    title: ledgerReport.countOf
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:46.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-ledger
+    title: dataPath.ledger
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:31:55.084Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-ledger-once
+    title: dataPath.ledgerOnce
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:03.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-wait-ledger
+    title: dataPath.waitLedger
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:10.978Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-sync-until
+    title: dataPath.syncUntil
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:18.511Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-wait-count
+    title: dataPath.waitCount
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:26.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-sync
+    title: dataPath.sync
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:33.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-sync-once
+    title: dataPath.syncOnce
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:41.504Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-core
+    title: dataPath.core
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:49.400Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-set-query
+    title: dataPath.setQuery
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:32:57.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-data-path-read
+    title: dataPath.read
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:05.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-first-sleeve
+    title: firstSleeve
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:12.864Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-account-id
+    title: accountID
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:20.471Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-decimal
+    title: decimal
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:28.147Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-canonical
+    title: canonical
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:35.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-same-decimal
+    title: sameDecimal
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:43.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-test-kernel-zero
+    title: kernelZero
+    sourceFile: test/e2e/datapath_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:50.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-lock-localhost-forward
+    title: lockLocalhostForward
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:33:58.653Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-fixture-tokens
+    title: fixtureTokens
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:06.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-deploy-fixture
+    title: deployFixture
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:13.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-kube-dump-fixture-on-failure
+    title: kube.dumpFixtureOnFailure
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:20.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-fixture-objects
+    title: fixtureObjects
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:28.400Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-fixture-certificates
+    title: fixtureCertificates
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:36.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-fixture-pem
+    title: fixturePEM
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:43.629Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-data-path-instance
+    title: dataPathInstance
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:51.208Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-data-path-instances
+    title: dataPathInstances
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:34:58.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-install-data-path
+    title: installDataPath
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:06.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-create-instance-secret
+    title: createInstanceSecret
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:13.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-install-with-cli
+    title: installWithCLI
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:21.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-install-args
+    title: installArgs
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:28.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-uninstall-with-cli
+    title: uninstallWithCLI
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:35.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-uninstall-args
+    title: uninstallArgs
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:43.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner
+    title: owner
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:50.865Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-request
+    title: ownerRequest
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:35:58.385Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-part
+    title: ownerPart
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:06.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-answer
+    title: ownerAnswer
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:13.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-sign-in-owner
+    title: signInOwner
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:21.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-enroll-link
+    title: enrollLink
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:29.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-stop-browser
+    title: stopBrowser
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:36.557Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-read
+    title: owner.read
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:43.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-post
+    title: owner.post
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:51.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-post-form
+    title: owner.postForm
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:36:58.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-statement-file
+    title: statementFile
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:37:06.094Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-upload
+    title: owner.upload
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:37:13.465Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-excerpt
+    title: excerpt
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T04:37:20.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path

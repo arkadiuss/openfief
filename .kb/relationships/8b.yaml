@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a2f7b71eef9
+  - type: executable_for
+    from: SYM-e2e-datapath-test-xtb-week
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:29:32.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc3d2da150ff

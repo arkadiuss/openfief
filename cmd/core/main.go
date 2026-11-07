@@ -80,6 +80,15 @@ func main() {
 	}
 }
 
+// runCheck runs the check command cmd names over d's database: check
+// balances or check ledger.
+func runCheck(ctx context.Context, d *deps, cmd *command, out io.Writer, log *slog.Logger) error {
+	if cmd.Name == cmdCheckLedger {
+		return checkLedger(ctx, d.pool, cmd.LedgerAccount, out, log)
+	}
+	return checkBalances(ctx, d.pool, cmd.AllChecks, out, log)
+}
+
 // run runs cmd, writing what a token command shows to out.
 func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
 	switch cmd.Name {
@@ -107,10 +116,8 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 			}
 			return enrollLink(ctx, d.pool, &cmd.Enroll, out, time.Now())
 		})
-	case cmdCheck:
-		return withPool(ctx, cmd.DSN, func(d *deps) error {
-			return checkBalances(ctx, d.pool, cmd.AllChecks, out, log)
-		})
+	case cmdCheck, cmdCheckLedger:
+		return withPool(ctx, cmd.DSN, func(d *deps) error { return runCheck(ctx, d, cmd, out, log) })
 	case cmdBind, cmdSync:
 		cl := clusterOrNil(log)
 		return withTracing(ctx, func() error {

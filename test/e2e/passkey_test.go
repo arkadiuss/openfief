@@ -52,6 +52,8 @@ func TestFirstPasskey(t *testing.T) {
 	diagnoseOnFailure(t, k)
 	waitCoreAvailable(t, k)
 	waitPluginReady(t, k, uiPlugin)
+	// The data path's owner (datapath_setup_test.go) forwards the same port.
+	lockLocalhostForward(t)
 	ctx, cancel := context.WithCancel(t.Context())
 	defer cancel()
 	out, lines := io.Pipe()

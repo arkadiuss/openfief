@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-966c815ee545
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-owner-answer
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:36:16.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f853b364cc7f

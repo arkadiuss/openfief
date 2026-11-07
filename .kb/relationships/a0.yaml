@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fa69c895803
+  - type: executable_for
+    from: SYM-e2e-datapath-test-week-of
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:30:03.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e20772b1e43

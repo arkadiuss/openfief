@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-023ca51b2599
+  - type: executable_for
+    from: SYM-core-checkledger-test-check-ledger-logged
+    to: TEST-core-check-ledger
+    created_at: 2026-11-07T04:27:49.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af125288c858
+  - type: executable_for
+    from: SYM-e2e-datapath-test-kernel-zero
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:33:53.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d504a9c6cc3
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-fixture-objects
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:34:30.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ec71988a10e

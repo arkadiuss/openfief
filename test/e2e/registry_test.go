@@ -63,9 +63,11 @@ var (
 // registry, which the suite signs: the NBP FX connector, the built-in UI,
 // which the operator deploys for the demo's ui instance (editApp), and the
 // suite's synthetic connector's two images (test/e2e/connector), and the
-// XTB connector, which isolation_test.go installs.
+// XTB connector, which isolation_test.go installs, and the IBKR Flex, EODHD
+// and treasury bond connectors, which the data path installs
+// (datapath_test.go).
 func pluginImages() []string {
-	return []string{fxImage, uiImage, connectorImage, connectorEgressImage, xtbImage}
+	return []string{fxImage, uiImage, connectorImage, connectorEgressImage, xtbImage, ibkrImage, eodhdImage, bondsImage}
 }
 
 // pluginResource is the operator's Plugin resource.

@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e02d183f476f
+  - type: constrains
+    from: REQ-ledger-whole-log-check
+    to: FACT-SUBJECT-7C2FEE31362B4307
+    created_at: 2026-11-07T04:21:52.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4027dbed2a3a
+  - type: requires_property
+    from: REQ-ledger-whole-log-check
+    to: FACT-PROP-27061ECE97BBF8E4
+    created_at: 2026-11-07T04:21:52.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12678b65687f
+  - type: specified_by
+    from: REQ-ledger-whole-log-check
+    to: SCEN-ledger-whole-log-check
+    created_at: 2026-11-07T04:21:52.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b54a553723cc
+  - type: specified_by
+    from: REQ-ledger-whole-log-check
+    to: SCEN-e2e-double-entry-whole-log
+    created_at: 2026-11-07T04:21:52.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d2359785cef

@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34ed56b7baa9
+  - type: implements
+    from: SYM-ledger-logcheck-add-postings
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:23:31.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89bd3061fcf0
+  - type: implements
+    from: SYM-ledger-logcheck-add-postings
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-11-07T04:23:31.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa2a16ad4539
+  - type: covered_by
+    from: SYM-ledger-logcheck-add-postings
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:23:31.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cb6d4a59c80
+  - type: executable_for
+    from: SYM-e2e-fixture-datapath-test-week-booked
+    to: TEST-e2e-fixture-data-path
+    created_at: 2026-11-07T04:28:10.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99fde061ed8f

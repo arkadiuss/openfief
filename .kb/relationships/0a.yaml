@@ -923,3 +923,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8871c5f68c7
+  - type: implements
+    from: SYM-ledger-logcheck-logged-version
+    to: REQ-ledger-whole-log-check
+    created_at: 2026-11-07T04:22:23.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd360fb09235
+  - type: implements
+    from: SYM-ledger-logcheck-logged-version
+    to: REQ-AUTO-8C3982CF80A9A4DF
+    created_at: 2026-11-07T04:22:23.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50759897a2b
+  - type: covered_by
+    from: SYM-ledger-logcheck-logged-version
+    to: TEST-ledger-log-check
+    created_at: 2026-11-07T04:22:23.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f40882ac8f
+  - type: implements
+    from: SYM-e2e-fixture-datapath-reference-for
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-07T04:25:48.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a07abf1f4b0
+  - type: covered_by
+    from: SYM-e2e-fixture-datapath-reference-for
+    to: TEST-e2e-fixture-data-path
+    created_at: 2026-11-07T04:25:48.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-931488837e1f

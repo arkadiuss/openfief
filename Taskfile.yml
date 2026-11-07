@@ -547,7 +547,7 @@ tasks:
       - '{{.KIBI}} prove --integration e2e'
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx, ui and xtb images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui and xtb, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d'
     requires:
       vars: [CLUSTER]
     cmds:

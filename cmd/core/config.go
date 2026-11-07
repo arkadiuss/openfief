@@ -43,6 +43,7 @@ const (
 	cmdSync        = "connector sync"
 	cmdEnrollLink  = "enroll-link"
 	cmdCheck       = "check balances"
+	cmdCheckLedger = "check ledger"
 )
 
 // Defaults of the serve flags.
@@ -67,7 +68,7 @@ const (
 
 var (
 	// errUsage reports a command line the core does not understand.
-	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances] [flags]")
+	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances|check ledger] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errSyncWorkers reports --sync-workers below one.
@@ -100,6 +101,9 @@ type command struct {
 	// AllChecks is check balances' --all: every balance assertion, not
 	// only the latest of each position and cash balance.
 	AllChecks bool
+	// LedgerAccount is check ledger's --account: the account whose stored
+	// versions the report lists; empty lists none.
+	LedgerAccount ledger.AccountID
 }
 
 // enrollArgs are enroll-link's flags: the origin the passkey is for, and
@@ -187,8 +191,8 @@ func parseCommand(name string, rest []string, getenv func(string) string) (comma
 		cmd.Connector, err = parseConnector(name, rest)
 	case cmdEnrollLink:
 		cmd.Enroll, err = parseEnrollLink(rest, getenv)
-	case cmdCheck:
-		cmd.AllChecks, err = parseCheck(rest)
+	case cmdCheck, cmdCheckLedger:
+		err = parseChecks(&cmd, rest)
 	default:
 		err = fmt.Errorf("%w: unknown command %q", errUsage, name)
 	}
@@ -414,6 +418,30 @@ func parseNone(name string, args []string) error {
 		return fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
 	}
 	return nil
+}
+
+// parseChecks parses the flags of the check command cmd names into cmd.
+func parseChecks(cmd *command, args []string) error {
+	var err error
+	if cmd.Name == cmdCheckLedger {
+		cmd.LedgerAccount, err = parseCheckLedger(args)
+		return err
+	}
+	cmd.AllChecks, err = parseCheck(args)
+	return err
+}
+
+// parseCheckLedger parses check ledger's flags: --account.
+func parseCheckLedger(args []string) (ledger.AccountID, error) {
+	fs := newFlags(cmdCheckLedger)
+	account := fs.String("account", "", "the ledger account ID whose stored versions to list")
+	if err := fs.Parse(args); err != nil {
+		return "", fmt.Errorf("%s: %w", cmdCheckLedger, err)
+	}
+	if fs.NArg() > 0 {
+		return "", fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
+	}
+	return ledger.AccountID(*account), nil
 }
 
 // parseCheck parses check balances' flags: --all.

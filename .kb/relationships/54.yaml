@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65fada4b4d32
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-fixture-tokens
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:34:08.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a31933257efc
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-deploy-fixture
+    to: TEST-e2e-data-path
+    created_at: 2026-11-07T04:34:15.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d6eb22c42b7

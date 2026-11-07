@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"maps"
 	"net/http"
 	"strings"
 	"time"
@@ -20,8 +21,8 @@ const (
 	NBPPath   = "/nbp"
 )
 
-// flexReference is the reference code SendRequest hands out and
-// GetStatement takes; made up.
+// flexReference is the reference code SendRequest hands out for every query
+// but the data path's (datapath.go), and GetStatement takes; made up.
 const flexReference = "2222222222"
 
 // nbpMaxDays is the longest range NBP's API serves in one call.
@@ -53,16 +54,18 @@ func window() dateRange {
 // results, whose field names are capitalized: the ones the synthetic Flex
 // statement holds.
 func listings() []map[string]string {
-	return []map[string]string{
-		{"Code": "TSTA", "Exchange": "LSE", "Currency": "USD", "ISIN": "PLTEST000010", "Name": "Synthetic Test A"},
-		{"Code": "TSTB", "Exchange": "XETRA", "Currency": "EUR", "ISIN": "IETEST000026", "Name": "Synthetic Test B"},
-	}
+	return append([]map[string]string{
+		searchResult("TSTA", "LSE", "USD", "PLTEST000010", "Synthetic Test A"),
+		searchResult("TSTB", "XETRA", "EUR", "IETEST000026", "Synthetic Test B"),
+	}, dataPathListings()...)
 }
 
-// closes are the synthetic close of each EODHD ticker the fixture knows, the
-// same every trading day, as decimal text.
+// closes are the synthetic close of each EODHD ticker the fixture knows,
+// the data path's included, the same every trading day, as decimal text.
 func closes() map[string]string {
-	return map[string]string{"TSTA.LSE": "102.40", "TSTB.XETRA": "107.00", "FAKE20.INDX": "2500.00"}
+	c := map[string]string{"TSTA.LSE": "102.40", "TSTB.XETRA": "107.00", "FAKE20.INDX": "2500.00"}
+	maps.Copy(c, dataPathCloses())
+	return c
 }
 
 // midRates are the synthetic NBP table A mid rates, the same every trading
@@ -95,6 +98,9 @@ func newHandler(creds credentials, log *slog.Logger) http.Handler {
 		eodhdCloses(w, r, creds.eodhdToken)
 	})
 	mux.HandleFunc("GET "+NBPPath+"/api/exchangerates/tables/A/{from}/{to}/", nbpTableA)
+	mux.HandleFunc("GET "+NBPDataPathPath+"/api/exchangerates/tables/A/{from}/{to}/", func(w http.ResponseWriter, r *http.Request) {
+		nbpTables(w, r, dataPathRates)
+	})
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Info("request", "method", r.Method, "path", r.URL.Path)
 		mux.ServeHTTP(w, r)
@@ -111,7 +117,7 @@ func flexSendRequest(w http.ResponseWriter, r *http.Request, token string) {
 	case q.Get("q") == "" || q.Get("v") != "3":
 		flexError(w, "1014", "Query is invalid.")
 	default:
-		writeXML(w, "<FlexStatementResponse><Status>Success</Status><ReferenceCode>"+flexReference+
+		writeXML(w, "<FlexStatementResponse><Status>Success</Status><ReferenceCode>"+referenceFor(q.Get("q"))+
 			"</ReferenceCode><Url>https://elsewhere.example/AccountManagement/FlexWebService/GetStatement</Url>"+
 			"</FlexStatementResponse>")
 	}
@@ -121,13 +127,14 @@ func flexSendRequest(w http.ResponseWriter, r *http.Request, token string) {
 // reference code SendRequest handed out.
 func flexGetStatement(w http.ResponseWriter, r *http.Request, token string) {
 	q := r.URL.Query()
+	statement, known := statementOf(q.Get("q"))
 	switch {
 	case !accepted(q.Get("t"), token):
 		flexError(w, "1015", "Token is invalid.")
-	case q.Get("q") != flexReference || q.Get("v") != "3":
+	case !known || q.Get("v") != "3":
 		flexError(w, "1014", "Query is invalid.")
 	default:
-		writeBody(w, "text/xml;charset=UTF-8", flexStatement)
+		writeBody(w, "text/xml;charset=UTF-8", statement)
 	}
 }
 
@@ -245,6 +252,12 @@ type nbpRate struct {
 // table per weekday within the window, or 404 when none falls in the range,
 // as NBP answers a weekend.
 func nbpTableA(w http.ResponseWriter, r *http.Request) {
+	nbpTables(w, r, func(time.Time) [][2]string { return midRates() })
+}
+
+// nbpTables answers NBP's table A API as nbpTableA does, with each day's
+// mid rates from rates.
+func nbpTables(w http.ResponseWriter, r *http.Request, rates func(time.Time) [][2]string) {
 	if r.URL.Query().Get("format") != "json" {
 		http.Error(w, "400 BadRequest - Nieprawidłowy format", http.StatusBadRequest)
 		return
@@ -263,7 +276,7 @@ func nbpTableA(w http.ResponseWriter, r *http.Request) {
 	tables := make([]nbpTable, 0, len(days))
 	for i, d := range days {
 		t := nbpTable{Table: "A", No: fmt.Sprintf("%03d/A/NBP/%d", i+1, d.Year()), EffectiveDate: d.Format(isoDate)}
-		for _, m := range midRates() {
+		for _, m := range rates(d) {
 			t.Rates = append(t.Rates, nbpRate{Currency: strings.ToLower(m[0]), Code: m[0], Mid: json.Number(m[1])})
 		}
 		tables = append(tables, t)
