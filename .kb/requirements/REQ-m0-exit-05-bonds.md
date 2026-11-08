@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-200#5
-  recorded_at: '2026-11-07T03:31:45.605Z'
+  recorded_at: '2026-11-08T00:36:39.281Z'
 id: REQ-m0-exit-05-bonds
 type: req
 ---

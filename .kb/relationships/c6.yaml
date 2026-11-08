@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2de886a10ed
+  - type: verified_by
+    from: SCEN-e2e-bond-values-reference
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:35:36.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cef14c6deba2
+  - type: executable_for
+    from: SYM-e2e-bonds-test-coi-coupons-due
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:13.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c7d4548e857

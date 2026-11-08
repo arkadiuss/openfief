@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d425cd836dc
+  - type: implements
+    from: SYM-e2e-fixture-bonds-ministry-handle
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:37:07.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b49ff2a6ac67
+  - type: covered_by
+    from: SYM-e2e-fixture-bonds-ministry-handle
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:37:07.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6090bf536953

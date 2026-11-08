@@ -1182,3 +1182,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-367babf1e5f6
+  - type: implements
+    from: SYM-e2e-fixture-xls-text-cell
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:37:55.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6f4c09f5511
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-text-cell
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:37:55.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-153abe9a6a25
+  - type: implements
+    from: SYM-e2e-fixture-xls-xls-file
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:38:07.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd755fabe8ac
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-xls-file
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:38:07.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96d8dbca19eb

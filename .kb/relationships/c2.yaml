@@ -832,3 +832,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6df01fd23798
+  - type: constrains
+    from: REQ-e2e-fixture-serves-bond-data
+    to: FACT-SUBJECT-12AEB9275CC95F4A
+    created_at: 2026-11-08T00:35:50.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73c200614a49
+  - type: requires_property
+    from: REQ-e2e-fixture-serves-bond-data
+    to: FACT-PROP-B8ADA05DDAE0DE6F
+    created_at: 2026-11-08T00:35:50.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222d6e45f33e
+  - type: specified_by
+    from: REQ-e2e-fixture-serves-bond-data
+    to: SCEN-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:35:50.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-403070d12516

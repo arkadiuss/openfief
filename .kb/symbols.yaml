@@ -161102,11 +161102,12 @@ symbols:
         target: TEST-e2e-data-path
   - id: SYM-e2e-datapath-test-data-path-book-bonds
     title: dataPath.bookBonds
-    sourceFile: test/e2e/datapath_test.go
+    sourceFile: test/e2e/bonds_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-07T04:29:45.504Z
+    granularity_reason: test-suite
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
@@ -167936,3 +167937,531 @@ symbols:
         target: TEST-ingest-connectrpc-registry
       - type: implements
         target: REQ-ingest-sync-names-provisional
+  - id: SYM-e2e-fixture-bonds-ministry
+    title: ministry
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:36:52.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-sheets
+    title: ministrySheets
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:36:59.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-handle
+    title: ministry.handle
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:05.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-withheld
+    title: ministry.withheld
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:11.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-gus-cpi
+    title: gusCPI
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:17.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-cpi-values
+    title: cpiValues
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:23.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-nbp-rate-archive
+    title: nbpRateArchive
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:29.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-handle-bond-indices
+    title: handleBondIndices
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:35.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-cell
+    title: xlsCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:41.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-sheet
+    title: xlsSheet
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:47.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-text-cell
+    title: textCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:53.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-number-cell
+    title: numberCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:59.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-file
+    title: xlsFile
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:05.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-biff-record
+    title: biffRecord
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:11.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-le16s
+    title: le16s
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:17.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-le32
+    title: le32
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:22.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-utf16le
+    title: utf16le
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:28.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-cell-record
+    title: cellRecord
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:34.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-bof
+    title: bof
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:40.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-bound-sheet
+    title: boundSheet
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:45.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-workbook-stream
+    title: workbookStream
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:51.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-compound-file
+    title: compoundFile
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:57.253Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-padded
+    title: padded
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:02.913Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-dir-entry
+    title: dirEntry
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:08.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp16
+    title: clamp16
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:14.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp32
+    title: clamp32
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:20.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp-byte
+    title: clampByte
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:25.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-test-fetched-at
+    title: fetchedAt
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:30.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-publish-ministry
+    title: publishMinistry
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:35.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-describe-published
+    title: describePublished
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:40.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-test-fixture-serves-ministry-data
+    title: TestFixtureServesMinistryData
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:45.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-test-fixture-serves-bond-indices
+    title: TestFixtureServesBondIndices
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:51.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-describe-reading
+    title: describeReading
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:56.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-bonds-test-bond-lot-form
+    title: bondLotForm
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:01.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-rekey-bonds
+    title: dataPath.rekeyBonds
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:06.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-coi-coupons-due
+    title: coiCouponsDue
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:11.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-publish-ministry
+    title: dataPath.publishMinistry
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:16.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-fixture-pod
+    title: fixturePod
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:21.731Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-isi-ns
+    title: dataPath.checkBondISINs
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:26.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bonds
+    title: dataPath.checkBonds
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:31.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-values
+    title: dataPath.checkBondValues
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:37.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-terms
+    title: dataPath.checkBondTerms
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:42.911Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-fixture-bonds-cpi-tenths
+    title: cpiTenths
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:46:32.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data

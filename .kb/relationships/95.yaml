@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba1fa8052f52
+  - type: implements
+    from: SYM-e2e-fixture-xls-padded
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:39:04.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-def0f6dabfd3
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-padded
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:04.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cd76d181edd

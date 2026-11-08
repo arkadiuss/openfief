@@ -937,3 +937,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebf1d67d31ae
+  - type: executable_for
+    from: SYM-e2e-bonds-test-data-path-rekey-bonds
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:08.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46a2cd4a397d
+  - type: executable_for
+    from: SYM-e2e-bonds-test-fixture-pod
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:23.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c54eed884fe

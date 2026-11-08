@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc305381c2ea
+  - type: implements
+    from: SYM-e2e-fixture-xls-workbook-stream
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:38:53.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7894fcba708a
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-workbook-stream
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:38:53.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0eb7cf47a9

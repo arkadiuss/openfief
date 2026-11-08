@@ -2,13 +2,19 @@
 // built only for the suite (scripts/e2e-images.sh) and never released. It
 // stands in for the external services the first-party network connectors
 // call, so an end-to-end test never calls a real broker or vendor
-// (docs/dev/testing.md): IBKR's Flex Web Service, EODHD's API and NBP's Web
-// API, each below its own path, which the connectors reach through their
-// baseUrl config fields:
+// (docs/dev/testing.md): IBKR's Flex Web Service, EODHD's API, NBP's Web
+// API and interest rate archive, GUS's SDP API, and the Ministry of
+// Finance's retail bond data on gov.pl and dane.gov.pl, each below its own
+// path, which the connectors reach through their base URL config fields:
 //
 //	https://<fixture>/ibkr/AccountManagement/FlexWebService   ibkr-flex
 //	https://<fixture>/eodhd                                   eodhd
 //	https://<fixture>/nbp                                     nbp-fx
+//	https://<fixture>/gus, /nbp-static, /gov, /dane           treasury-bonds
+//
+// The ministry's data stays withheld, answering 404, until a POST to
+// /control/ministry publishes it (bonds.go), so the suite books bond lots
+// before the data lists their series and then sees them re-keyed (D-214).
 //
 // It serves HTTPS only, with the certificate and key files -cert and -key
 // name, which the suite signs with a CA it makes for each run and hands the

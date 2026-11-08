@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-214#3
-  recorded_at: '2026-11-07T22:44:55.973Z'
+  recorded_at: '2026-11-08T00:36:40.657Z'
 id: REQ-treasurybonds-lot-waits-for-isin
 type: req
 ---

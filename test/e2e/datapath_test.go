@@ -56,7 +56,7 @@ const (
 
 // TestDataPath runs the connectors' data path end to end against the
 // institution fixture, as an owner does, and checks D-200's criteria 2, 3,
-// 4 and 6 on it. It deploys the fixture as an HTTPS Service with a
+// 4, 5 and 6 on it. It deploys the fixture as an HTTPS Service with a
 // certificate from a CA made for this run, and installs, with the openfief
 // CLI built from this checkout, nbp-fx, eodhd, ibkr-flex and
 // treasury-bonds, each with its base URL on the fixture, the fixture's
@@ -69,7 +69,11 @@ const (
 // IBKR's correction of one deposit, each statement picked by the query ID
 // in its Secret; the XTB account is seeded from an uploaded export of open
 // positions, its ticker confirmed, then a later export uploaded twice; a
-// bond lot is entered twice. Then:
+// TOS and an EDO lot are entered with their terms, the TOS lot twice, while
+// the fixture withholds the Ministry of Finance's data, so both are booked
+// under their provisional ISINs; then the fixture publishes it, a sync
+// re-keys both to the registry's ISINs, and a COI lot is entered with its
+// terms left to the connector, whose first coupon a sync books. Then:
 //
 //   - criterion 2 (SCEN-e2e-double-entry-whole-log): `core check ledger`
 //     finds every version of every transaction balanced and the whole log
@@ -84,6 +88,13 @@ const (
 //     their open dates, units and costs, and the net values, whose tax is
 //     on the gain over the PLN cost at NBP's rate of the day before each
 //     open date, match the hand-computed ones;
+//   - criterion 5 (SCEN-e2e-bond-values-reference, SCEN-e2e-bond-net-if-redeemed,
+//     SCEN-e2e-bond-registry-isin-and-terms): each series' gross accrued
+//     value on two days equals the reference valuer's and the hand
+//     calculation's, its net and liquidation values and the account's
+//     totals the hand calculation's (bonds_test.go), and the read API shows
+//     each series under its registry ISIN with its terms, the published
+//     ones with their attribution;
 //   - criterion 6 (SCEN-e2e-nbp-rates-every-conversion, SCEN-e2e-eodhd-prices,
 //     SCEN-e2e-cross-check-flagged): the PLN values and cash match the
 //     fixture's NBP rates of their day, the prices are EODHD's from the
@@ -106,30 +117,35 @@ func TestDataPath(t *testing.T) {
 	tokens := fixtureTokens{flex: syntheticCredential(t), eodhd: syntheticCredential(t)}
 	ca := deployFixture(t, k, tokens)
 	installDataPath(t, k, reg, dataPathInstances(ca, tokens))
-	p := &dataPath{k: k, token: issueToken(t, k), owner: signInOwner(t, k)}
+	p := &dataPath{k: k, token: issueToken(t, k), owner: signInOwner(t, k), fixtureCA: ca}
 	p.sleeve = firstSleeve(t, k, p.token)
 	p.ibkr, p.xtb, p.bonds = accountID(t, ibkrAccountName), accountID(t, xtbAccountName), accountID(t, bondsAccountName)
 
 	p.bookIBKR(t)
 	p.bookXTB(t)
 	p.bookBonds(t)
+	p.rekeyBonds(t)
 	p.waitPrices(t)
 
 	p.checkDoubleEntry(t)
 	p.checkOpeningLots(t)
 	p.checkValues(t)
+	p.checkBonds(t)
 	p.checkPriceChecks(t)
 }
 
 // dataPath is the data path's state: the cluster, a script token for the
-// read API, the signed-in owner, the sleeve the owner's accounts go in, and
-// their IDs.
+// read API, the signed-in owner, the sleeve the owner's accounts go in,
+// their IDs, the run's CA the fixture's certificate is signed by, and what
+// the bond account holds once its lots, re-key and coupons are booked.
 type dataPath struct {
 	k                *kube
 	token            string
 	owner            *owner
 	sleeve           string
 	ibkr, xtb, bonds string
+	fixtureCA        []byte
+	bondsBooked      ledgerCount
 }
 
 // bookIBKR seeds the IBKR account and books the weeks after it: nbp-fx and
@@ -253,27 +269,6 @@ func xtbPosition() *xtbtest.Position {
 	}
 }
 
-// bookBonds has the owner create a treasury bond account bound to the
-// treasury-bonds connector and enter a lot of a fixed-rate series, which
-// books a deposit and a buy on its purchase date (D-98); entering the same
-// lot again changes nothing.
-func (p *dataPath) bookBonds(t *testing.T) {
-	t.Helper()
-	p.owner.postForm(t, "/accounts", map[string]string{
-		"name": bondsAccountName, "institution": "treasury-bonds", "sleeve": p.sleeve, "instance": dpBonds,
-	})
-	lot := map[string]string{
-		"series": "TOS0329", "quantity": "10", "purchase_date": "2026-03-10", "purchase": "cash",
-		"first_rate": "5.65", "margin": "0", "fee": "0.7",
-	}
-	p.owner.postForm(t, "/accounts/"+p.bonds+"/bond-lots", lot)
-	before := p.waitLedger(t, p.bonds, ledgerCount{transactions: 2, versions: 2})
-	p.owner.postForm(t, "/accounts/"+p.bonds+"/bond-lots", lot)
-	if again := p.ledger(t, p.bonds); !cmp.Equal(before.Logged, again.Logged) {
-		t.Errorf("entering the same bond lot again changed the log (-before +after):\n%s", cmp.Diff(before.Logged, again.Logged))
-	}
-}
-
 // waitPrices syncs the eodhd instance, which prices what the accounts hold
 // (D-93), until the read API serves its closes of the three instruments
 // from the go-live week: EODHD's, of the eodhd instance, the source each
@@ -345,7 +340,7 @@ func (p *dataPath) checkDoubleEntry(t *testing.T) {
 			t.Errorf("core check ledger: the whole log sums to %s %s, want 0", s.Amount, s.Currency)
 		}
 	}
-	want := map[string]int{p.ibkr: 10, p.xtb: 4, p.bonds: 2}
+	want := map[string]int{p.ibkr: 10, p.xtb: 4, p.bonds: p.bondsBooked.versions}
 	for _, a := range r.Accounts {
 		if v, ok := want[a.Account]; ok && a.Versions != v {
 			t.Errorf("core check ledger: %s holds %d versions, want %d", a.Account, a.Versions, v)
@@ -355,7 +350,7 @@ func (p *dataPath) checkDoubleEntry(t *testing.T) {
 	if len(want) > 0 {
 		t.Errorf("core check ledger left out the accounts %v", want)
 	}
-	for account, current := range map[string]int{p.ibkr: 9, p.xtb: 4, p.bonds: 2} {
+	for account, current := range map[string]int{p.ibkr: 9, p.xtb: 4, p.bonds: p.bondsBooked.transactions} {
 		p.checkPostingsBalance(t, account, current)
 	}
 }
@@ -423,11 +418,13 @@ func (p *dataPath) checkOpeningLots(t *testing.T) {
 }
 
 // accountValues are an account's stored values on a date in PLN, as the
-// read API serves them: each holding's gross and, where checked, net value
-// by ISIN, and the day's total and cash.
+// read API serves them: each holding's gross and, where checked, net and
+// liquidation value by ISIN, and the day's total, cash and, where checked,
+// net and liquidation totals.
 type accountValues struct {
-	gross, net  map[string]string
-	total, cash string
+	gross, net, liquidation    map[string]string
+	total, cash                string
+	netTotal, liquidationTotal string
 }
 
 // checkValues checks D-200's criteria 4 and 6 on the stored valuations,
@@ -500,7 +497,7 @@ func (p *dataPath) waitValues(t *testing.T, account, date string, want *accountV
 // valuesOf reads from v the values want names.
 func valuesOf(t *testing.T, v *viewsv1.ListAccountValuationsResponse, want *accountValues) accountValues {
 	t.Helper()
-	got := accountValues{gross: map[string]string{}, net: map[string]string{}}
+	got := accountValues{gross: map[string]string{}, net: map[string]string{}, liquidation: map[string]string{}}
 	for _, val := range v.GetValuations() {
 		isin := val.GetInstrument().GetIsin()
 		if _, ok := want.gross[isin]; ok {
@@ -509,21 +506,32 @@ func valuesOf(t *testing.T, v *viewsv1.ListAccountValuationsResponse, want *acco
 		if _, ok := want.net[isin]; ok {
 			got.net[isin] = val.GetNetReporting().GetAmount()
 		}
+		if _, ok := want.liquidation[isin]; ok {
+			got.liquidation[isin] = val.GetLiquidationReporting().GetAmount()
+		}
 	}
 	if totals := v.GetTotals(); len(totals) > 0 {
 		got.total, got.cash = totals[0].GetValueReporting().GetAmount(), totals[0].GetCashReporting().GetAmount()
+		got.netTotal, got.liquidationTotal = totals[0].GetNetReporting().GetAmount(), totals[0].GetLiquidationReporting().GetAmount()
 	}
 	return got
 }
 
-// sameValues reports whether got and want hold the same amounts.
+// sameValues reports whether got and want hold the same amounts; the net
+// and liquidation totals only where want names them.
 func sameValues(t *testing.T, got, want *accountValues) bool {
 	t.Helper()
-	for _, m := range []struct{ got, want map[string]string }{{got.gross, want.gross}, {got.net, want.net}} {
+	maps := []struct{ got, want map[string]string }{{got.gross, want.gross}, {got.net, want.net}, {got.liquidation, want.liquidation}}
+	for _, m := range maps {
 		for isin, amount := range m.want {
 			if !sameDecimal(t, m.got[isin], amount) {
 				return false
 			}
+		}
+	}
+	for _, total := range []struct{ got, want string }{{got.netTotal, want.netTotal}, {got.liquidationTotal, want.liquidationTotal}} {
+		if total.want != "" && !sameDecimal(t, total.got, total.want) {
+			return false
 		}
 	}
 	return sameDecimal(t, got.total, want.total) && sameDecimal(t, got.cash, want.cash)

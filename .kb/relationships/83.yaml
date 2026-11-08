@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f7c6dd1ea50
+  - type: executable_for
+    from: SYM-e2e-fixture-bonds-test-test-fixture-serves-bond-indices
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:53.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa392531b8e7

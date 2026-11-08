@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c71213a4141
+  - type: executable_for
+    from: SYM-e2e-fixture-bonds-test-describe-published
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:42.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c36bb1e7571
