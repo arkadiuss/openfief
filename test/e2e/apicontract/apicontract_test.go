@@ -1,6 +1,7 @@
 package apicontract_test
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -327,5 +328,82 @@ func TestEnvelope(t *testing.T) {
 	}
 	if want := []byte{0, 0, 0, 0, 2, '{', '}'}; !cmp.Equal(got, want) {
 		t.Errorf("Envelope = %v, want %v", got, want)
+	}
+}
+
+func TestRESTStatus(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name, body string
+		want       apicontract.Status
+		wantErr    error
+	}{
+		{"not found", `{"code":5,"message":"no such account","details":[]}`, apicontract.Status{Code: 5, Message: "no such account", Details: []json.RawMessage{}}, nil},
+		{"with a detail", `{"code":3,"message":"bad","details":[{"@type":"type.googleapis.com/google.rpc.BadRequest"}]}`, apicontract.Status{
+			Code: 3, Message: "bad", Details: []json.RawMessage{json.RawMessage(`{"@type":"type.googleapis.com/google.rpc.BadRequest"}`)},
+		}, nil},
+		{"Connect's string code", `{"code":"not_found","message":"no such account"}`, apicontract.Status{}, apicontract.ErrNoStatus},
+		{"no details", `{"code":5,"message":"no such account"}`, apicontract.Status{}, apicontract.ErrNoStatus},
+		{"null details", `{"code":5,"message":"no such account","details":null}`, apicontract.Status{}, apicontract.ErrNoStatus},
+		{"no message", `{"code":5,"details":[]}`, apicontract.Status{}, apicontract.ErrNoStatus},
+		{"another field", `{"code":5,"message":"m","details":[],"error":"x"}`, apicontract.Status{}, apicontract.ErrNoStatus},
+		{"not JSON", `404 page not found`, apicontract.Status{}, apicontract.ErrNoStatus},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := apicontract.RESTStatus([]byte(tt.body))
+			if !errors.Is(err, tt.wantErr) {
+				t.Fatalf("RESTStatus(%s) error = %v, want %v", tt.body, err, tt.wantErr)
+			}
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("RESTStatus(%s) (-want +got):\n%s", tt.body, diff)
+			}
+		})
+	}
+}
+
+// declaredErrors returns the responses, by status, r's operation must
+// declare.
+func declaredErrors(r *apicontract.Route) map[int]string {
+	want := map[int]string{http.StatusBadRequest: "BadRequest", http.StatusUnauthorized: "Unauthorized"}
+	if strings.Contains(r.Operation.Path, "{") {
+		want[http.StatusNotFound] = "NotFound"
+	}
+	if r.Name == "GetModelPortfolio" {
+		want[http.StatusNotFound] = "ModelPortfolioOff"
+	}
+	return want
+}
+
+// TestErrorResponse walks the generated document's error responses: every
+// operation declares 400 and 401, an operation with a path parameter 404,
+// GetModelPortfolio its own 404, and nothing else outside the default.
+func TestErrorResponse(t *testing.T) {
+	t.Parallel()
+	doc, err := openapi3.NewLoader().LoadFromFile(specPath)
+	if err != nil {
+		t.Fatalf("loading %s: %v", specPath, err)
+	}
+	routes := readRoutes(t)
+	for _, r := range readServiceRoutes(t) {
+		want := declaredErrors(r)
+		for _, status := range []int{http.StatusBadRequest, http.StatusUnauthorized, http.StatusForbidden, http.StatusNotFound, http.StatusInternalServerError} {
+			var wantErr error
+			if want[status] == "" {
+				wantErr = apicontract.ErrUndeclaredStatus
+			}
+			if got, err := apicontract.ErrorResponse(doc, r.Operation, status); !errors.Is(err, wantErr) || got != want[status] {
+				t.Errorf("ErrorResponse(%s, %d) = %q, %v; want %q, %v", r.Name, status, got, err, want[status], wantErr)
+			}
+		}
+	}
+	gone := apicontract.Operation{Method: http.MethodGet, Path: "/v1/nothing-here"}
+	if _, err := apicontract.ErrorResponse(doc, gone, http.StatusNotFound); !errors.Is(err, apicontract.ErrNoOperation) {
+		t.Errorf("ErrorResponse of an operation the document lacks = %v, want %v", err, apicontract.ErrNoOperation)
+	}
+	post := apicontract.Operation{Method: http.MethodPost, Path: routes["ListAccounts"].Operation.Path}
+	if _, err := apicontract.ErrorResponse(doc, post, http.StatusBadRequest); !errors.Is(err, apicontract.ErrNoOperation) {
+		t.Errorf("ErrorResponse of POST %s = %v, want %v", post.Path, err, apicontract.ErrNoOperation)
 	}
 }

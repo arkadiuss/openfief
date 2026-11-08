@@ -90,6 +90,9 @@ vars:
   SCRIPT_TESTS:
     sh: ls scripts/tests/*.test.sh 2>/dev/null || true
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
+  # The read API's generated OpenAPI document and the error responses tools/openapierrors adds to it.
+  OPENAPI_SPEC: gen/openapi/openfief/views/v1/read_service.openapi.yaml
+  OPENAPI_ERRORS: proto/openfief/views/v1/read_service.openapi-errors.yaml
   PROTO_GUARD: 'if [ -z "$(find proto -name "*.proto" 2>/dev/null)" ]; then echo "no contracts yet, skipping"; exit 0; fi;'
   # Tools are called by explicit path: Task lets the OS environment override a Taskfile PATH.
   BIN: '{{.ROOT_DIR}}/.bin'
@@ -435,12 +438,14 @@ tasks:
     deps: [tool:proto]
     cmds:
       - '{{.PROTO_GUARD}} PATH="{{.BIN}}:$PATH" "{{.BIN}}/buf" generate'
+      # The generator declares only success and the default error; tools/openapierrors adds each operation's error responses.
+      - '{{.PROTO_GUARD}} go run ./tools/openapierrors -rules {{.OPENAPI_ERRORS}} -spec {{.OPENAPI_SPEC}}'
 
   proto:check:
     desc: Fail if sdk/go/gen or gen/openapi is not what proto:gen generates
     deps: [tool:proto]
     cmds:
-      - PATH='{{.BIN}}':"$PATH" bash scripts/proto-check.sh
+      - PATH='{{.BIN}}':"$PATH" OPENAPI_ERRORS='{{.OPENAPI_ERRORS}}' OPENAPI_SPEC='{{.OPENAPI_SPEC}}' bash scripts/proto-check.sh
 
   authz:validate:
     desc: Check the authorization model's SpiceDB schema against its relationships and assertions (zed validate, offline; D-164)

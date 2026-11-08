@@ -18,3 +18,90 @@ components:
       type: http
       scheme: bearer
       description: A script token (D-27) or a plugin's projected ServiceAccount token.
+  # The error body. The generator's with-google-error-detail option writes these two schemas as here; the base
+  # repeats them so that its responses below resolve on their own.
+  schemas:
+    google.protobuf.Any:
+      type: object
+      properties:
+        '@type':
+          type: string
+          description: A URL/resource name that uniquely identifies the type of the serialized message.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    google.rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code, which should be an enum value of google.rpc.Code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/google.protobuf.Any'
+          description: A list of messages that carry the error details.
+      description: The Status type defines a logical error model suitable for gRPC and REST APIs.
+  # The error responses tools/openapierrors adds to the operations, as read_service.openapi-errors.yaml
+  # assigns them. Over REST an error's body is the google.rpc.Status the generator's with-google-error-detail
+  # option declares, as Vanguard writes it: code is the numeric gRPC code (Connect's code), message is fixed
+  # text and never quotes what was asked, details is always present and empty.
+  responses:
+    BadRequest:
+      description: >-
+        The request is invalid: a missing or malformed parameter, a date range that ends before it starts or
+        is too long, a page token this API did not return, or a page size out of range (code 3,
+        INVALID_ARGUMENT). A yearly tax that needs an FX rate not stored yet answers code 9,
+        FAILED_PRECONDITION.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum: [3, 9]
+    Unauthorized:
+      description: >-
+        No bearer token, or one that is not valid (code 16, UNAUTHENTICATED). The WWW-Authenticate header
+        carries the Bearer challenge.
+      headers:
+        WWW-Authenticate:
+          description: '`Bearer`, or `Bearer error="invalid_token"` for a token that is not valid.'
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum: [16]
+    NotFound:
+      description: No account, instrument or connector instance has the ID in the path (code 5, NOT_FOUND).
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum: [5]
+    ModelPortfolioOff:
+      description: The model portfolio is off, so the read API doesn't serve it (D-52; code 5, NOT_FOUND).
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum: [5]

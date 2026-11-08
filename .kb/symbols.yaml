@@ -169275,3 +169275,424 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
+  - id: SYM-openapierrors-main
+    title: main
+    sourceFile: tools/openapierrors/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:43:58.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-run
+    title: run
+    sourceFile: tools/openapierrors/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:05.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-encode
+    title: encode
+    sourceFile: tools/openapierrors/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:11.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-rules
+    title: rules
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:17.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-parse-rules
+    title: parseRules
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:24.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-rules-statuses
+    title: rules.statuses
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:30.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-add-errors
+    title: addErrors
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:36.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-add-responses
+    title: addResponses
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:42.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-sort-responses
+    title: sortResponses
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:49.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-lookup
+    title: lookup
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:44:55.208Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-scalar
+    title: scalar
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:01.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-test-add-errors
+    title: TestAddErrors
+    sourceFile: tools/openapierrors/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:07.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-openapierrors
+  - id: SYM-openapierrors-test-parse-rules
+    title: TestParseRules
+    sourceFile: tools/openapierrors/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:13.696Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-openapierrors
+  - id: SYM-openapierrors-test-run
+    title: TestRun
+    sourceFile: tools/openapierrors/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:19.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-openapierrors
+  - id: SYM-e2e-apicontract-status
+    title: Status
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:25.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-e2e-apicontract-rest-status
+    title: RESTStatus
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:31.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-e2e-apicontract-error-response
+    title: ErrorResponse
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:36.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-e2e-apicontract-test-test-rest-status
+    title: TestRESTStatus
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:42.765Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-error-response
+    title: TestErrorResponse
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:48.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-views-connectapi-test-rest-errors-match-contract
+    title: TestRESTErrorsMatchContract
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:45:54.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-openapi-declares-errors
+    title: TestOpenAPIDeclaresErrors
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:00.383Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-openapi-refuses-wrong-errors
+    title: TestOpenAPIRefusesWrongErrors
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:06.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-helper-rest-error
+    title: restError
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:11.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-helper-ledger-api
+    title: ledgerAPI
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:16.993Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-helper-model-off-api
+    title: modelOffAPI
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:22.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-helper-contract-validate
+    title: contract.validate
+    sourceFile: internal/views/connectapi/handler_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:28.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-rest
+  - id: SYM-e2e-readapi-test-read-api-check-errors
+    title: readAPI.checkErrors
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:34.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-error
+    title: readAPI.checkError
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:39.387Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-declared-error
+    title: declaredError
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:44.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-call-per-method
+    title: callPerMethod
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T05:46:49.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-openapierrors-http-methods
+    title: httpMethods
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:21.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-add-to-path
+    title: addToPath
+    sourceFile: tools/openapierrors/errors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:27.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-openapierrors
+      - type: implements
+        target: REQ-views-read-api-declared-errors
+  - id: SYM-openapierrors-test-helper-replaced
+    title: replaced
+    sourceFile: tools/openapierrors/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:32.668Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-openapierrors
+  - id: SYM-views-connectapi-test-helper-declared-errors
+    title: declaredErrors
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:38.026Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-views-connectapi-test-helper-is-status-response
+    title: isStatusResponse
+    sourceFile: internal/views/connectapi/errors_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:43.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-errors
+  - id: SYM-e2e-apicontract-test-helper-declared-errors
+    title: declaredErrors
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T06:01:48.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract

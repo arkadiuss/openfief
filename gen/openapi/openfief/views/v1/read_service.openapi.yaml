@@ -16,6 +16,30 @@ components:
       scheme: bearer
       description: A script token (D-27) or a plugin's projected ServiceAccount token.
   schemas:
+    google.protobuf.Any:
+      type: object
+      properties:
+        '@type':
+          type: string
+          description: A URL/resource name that uniquely identifies the type of the serialized message.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    google.rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code, which should be an enum value of google.rpc.Code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/google.protobuf.Any'
+          description: A list of messages that carry the error details.
+      description: The Status type defines a logical error model suitable for gRPC and REST APIs.
     openfief.views.v1.Account:
       type: object
       properties:
@@ -2881,6 +2905,63 @@ components:
       description: |-
         YearlyTax is a tax wrapper's tax for one year on the value of its
          accounts, such as OKI's tax on asset value (D-127).
+  responses:
+    BadRequest:
+      description: >-
+        The request is invalid: a missing or malformed parameter, a date range that ends before it starts or is too long, a page token this API did not return, or a page size out of range (code 3, INVALID_ARGUMENT). A yearly tax that needs an FX rate not stored yet answers code 9, FAILED_PRECONDITION.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum:
+                      - 3
+                      - 9
+    ModelPortfolioOff:
+      description: The model portfolio is off, so the read API doesn't serve it (D-52; code 5, NOT_FOUND).
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum:
+                      - 5
+    NotFound:
+      description: No account, instrument or connector instance has the ID in the path (code 5, NOT_FOUND).
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum:
+                      - 5
+    Unauthorized:
+      description: >-
+        No bearer token, or one that is not valid (code 16, UNAUTHENTICATED). The WWW-Authenticate header carries the Bearer challenge.
+      headers:
+        WWW-Authenticate:
+          description: '`Bearer`, or `Bearer error="invalid_token"` for a token that is not valid.'
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/google.rpc.Status'
+              - type: object
+                properties:
+                  code:
+                    enum:
+                      - 16
 paths:
   /v1/accounts:
     get:
@@ -2896,6 +2977,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAccountsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}:
     get:
       tags:
@@ -2918,6 +3009,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAccountResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/balance-assertions:
     get:
       tags:
@@ -2950,6 +3053,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAssertionChecksResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/cash:
     get:
       tags:
@@ -2980,6 +3095,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListCashResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/holdings:
     get:
       tags:
@@ -3011,6 +3138,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListHoldingsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/lots:
     get:
       tags:
@@ -3042,6 +3181,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListLotsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/transactions:
     get:
       tags:
@@ -3080,6 +3231,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListTransactionsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/valuation-status:
     get:
       tags:
@@ -3104,6 +3267,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetValuationStatusResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/accounts/{accountId}/valuations:
     get:
       tags:
@@ -3143,6 +3318,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAccountValuationsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/activity:
     get:
       tags:
@@ -3176,6 +3363,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListActivityResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/allocation:
     get:
       tags:
@@ -3217,6 +3414,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/attention-items:
     get:
       tags:
@@ -3266,6 +3473,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAttentionItemsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/connector-bindings:
     get:
       tags:
@@ -3282,6 +3499,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListConnectorBindingsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/connector-instances/{connectorInstance}/sync-attempts:
     get:
       tags:
@@ -3321,6 +3548,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSyncAttemptsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/instruments/{isin}:
     get:
       tags:
@@ -3349,6 +3588,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetInstrumentResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/instruments/{isin}/holdings:
     get:
       tags:
@@ -3380,6 +3631,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListInstrumentHoldingsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/instruments/{isin}/prices:
     get:
       tags:
@@ -3417,6 +3680,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListInstrumentPricesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/instruments/{isin}/transactions:
     get:
       tags:
@@ -3455,6 +3730,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListInstrumentTransactionsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/model-portfolio:
     get:
       tags:
@@ -3493,6 +3780,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetModelPortfolioResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/ModelPortfolioOff'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/performance:
     get:
       tags:
@@ -3544,6 +3843,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetPerformanceResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/plugins:
     get:
       tags:
@@ -3563,6 +3872,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListPluginsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/price-checks:
     get:
       tags:
@@ -3599,6 +3918,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListPriceChecksResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/settings:
     get:
       tags:
@@ -3616,6 +3945,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetSettingsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/sleeve-kinds:
     get:
       tags:
@@ -3630,6 +3969,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSleeveKindsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/sleeves:
     get:
       tags:
@@ -3644,6 +3993,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSleevesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/sync-status:
     get:
       tags:
@@ -3661,6 +4020,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSyncStatusesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/transfers:
     get:
       tags:
@@ -3683,6 +4052,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListTransfersResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/valuation-status:
     get:
       tags:
@@ -3699,6 +4078,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListValuationStatusesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/valuations:
     get:
       tags:
@@ -3731,6 +4120,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListValuationTotalsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
   /v1/yearly-taxes:
     get:
       tags:
@@ -3757,6 +4156,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListYearlyTaxesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
 tags:
   - name: ReadService
     description: |-

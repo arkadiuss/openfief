@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e8b12047a70
+  - type: implements
+    from: SYM-openapierrors-lookup
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:57.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0874a55d392e
+  - type: covered_by
+    from: SYM-openapierrors-lookup
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:57.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d8a471ffbf6

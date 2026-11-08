@@ -1,0 +1,16 @@
+# The error responses each read API operation declares, by HTTP status, as names of the responses in
+# read_service.openapi-base.yaml. tools/openapierrors adds them to the generated document after buf generate
+# (task proto:gen; proto:check does the same), since the generator declares only the success and the default.
+# A later rule's status replaces an earlier one's for the same operation.
+#
+# every: each operation.
+every:
+  "400": BadRequest
+  "401": Unauthorized
+# pathParameters: each operation with a path parameter (an account ID, an ISIN, a connector instance).
+pathParameters:
+  "404": NotFound
+# operations: one operation, by its operationId.
+operations:
+  openfief.views.v1.ReadService.GetModelPortfolio:
+    "404": ModelPortfolioOff

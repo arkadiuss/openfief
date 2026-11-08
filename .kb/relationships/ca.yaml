@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ccfcd48974c
+  - type: implements
+    from: SYM-e2e-apicontract-status
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:45:27.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b69c48ee1fa
+  - type: covered_by
+    from: SYM-e2e-apicontract-status
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T05:45:27.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5a98f6d83f

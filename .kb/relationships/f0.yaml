@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a432b2d3c0b6
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-test-rest-status
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T05:45:44.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e51becc2fd1

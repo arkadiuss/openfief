@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51fbf7b41773
+  - type: implements
+    from: SYM-openapierrors-run
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:07.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32b0be7f66d7
+  - type: covered_by
+    from: SYM-openapierrors-run
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:07.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b557e7c68bd1

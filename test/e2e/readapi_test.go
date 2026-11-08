@@ -61,6 +61,11 @@ const (
 	readAPIBodyLimit = 8 << 20
 	// unissued is a bearer token the core never issued.
 	unissued = "e2e-never-issued"
+	// The gRPC codes of the google.rpc.Status bodies of the read API's
+	// declared errors over REST.
+	invalidArgument = 3
+	notFound        = 5
+	unauthenticated = 16
 	// accountMethods and instrumentMethods are how many calls
 	// accountCalls makes per account and instrumentCalls per ISIN.
 	accountMethods    = 9
@@ -135,6 +140,11 @@ type restReply struct {
 //     and connector instance, answers 200 with a body the document's
 //     schema accepts and that decodes strictly into the response message,
 //     and 401 without a token or with one the core never issued;
+//   - error responses (SCEN-views-read-api-declared-errors): each 401, the
+//     model portfolio's 404 while it is off, a 404 for an account ID no
+//     account has and a 400 for a date range that ends before it starts
+//     are the responses the operation declares, with a google.rpc.Status
+//     body the document's schema accepts and the declared code;
 //   - no write (SCEN-e2e-read-api-no-write): the document has only GET
 //     operations without a body, every ReadService method is unary with no
 //     side effects, every other HTTP method on every path answers 405 with
@@ -152,6 +162,7 @@ func (p *dataPath) checkReadAPI(t *testing.T) {
 	api.checkEveryResource(t, calls)
 	api.checkConformance(t, calls)
 	api.checkRefusesTokens(t, calls)
+	api.checkErrors(t)
 	api.checkOnlyGET(t, calls)
 	pod, err := p.k.corePod(t.Context())
 	if err != nil {
@@ -340,9 +351,7 @@ func (a *readAPI) checkConformance(t *testing.T, calls []readCall) {
 		r := a.rest(t, http.MethodGet, target, a.token)
 		switch {
 		case c.off:
-			if r.status != http.StatusNotFound {
-				t.Errorf("GET %s while the model portfolio is off: status %d, want 404", target, r.status)
-			}
+			a.checkError(t, c, target, r, declaredError{http.StatusNotFound, "ModelPortfolioOff", notFound})
 		case r.status != http.StatusOK:
 			t.Errorf("GET %s: status %d, body %q; want 200", target, r.status, excerpt(string(r.body)))
 		default:
@@ -358,29 +367,95 @@ func (a *readAPI) checkConformance(t *testing.T, calls []readCall) {
 }
 
 // checkRefusesTokens checks that every operation answers 401 without a
-// token and with one the core never issued.
+// token and with one the core never issued, as the operation declares it.
 func (a *readAPI) checkRefusesTokens(t *testing.T, calls []readCall) {
 	t.Helper()
-	for _, target := range a.targetPerMethod(t, calls) {
+	for _, c := range callPerMethod(calls) {
+		target := a.target(t, c)
 		for _, token := range []string{"", unissued} {
-			if r := a.rest(t, http.MethodGet, target, token); r.status != http.StatusUnauthorized {
-				t.Errorf("GET %s with token %q: status %d, body %q; want 401", target, token, r.status, excerpt(string(r.body)))
-			}
+			r := a.rest(t, http.MethodGet, target, token)
+			a.checkError(t, c, target, r, declaredError{http.StatusUnauthorized, "Unauthorized", unauthenticated})
 		}
 	}
+}
+
+// checkErrors checks a 404 for an account ID no account has and a 400 for
+// a date range that ends before it starts, each as its operation declares
+// it.
+func (a *readAPI) checkErrors(t *testing.T) {
+	t.Helper()
+	for _, e := range []struct {
+		call readCall
+		want declaredError
+	}{
+		{
+			readCall{rpc: "GetAccount", fields: map[string]string{"accountId": "e2e-no-such-account"}},
+			declaredError{http.StatusNotFound, "NotFound", notFound},
+		},
+		{
+			readCall{rpc: "ListValuationTotals", fields: map[string]string{"from": weekEnd, "to": goLive}},
+			declaredError{http.StatusBadRequest, "BadRequest", invalidArgument},
+		},
+	} {
+		target := a.target(t, e.call)
+		a.checkError(t, e.call, target, a.rest(t, http.MethodGet, target, a.token), e.want)
+	}
+}
+
+// declaredError is an error response the OpenAPI document declares: its
+// HTTP status, its name in components.responses and the gRPC code of its
+// google.rpc.Status body.
+type declaredError struct {
+	status   int
+	response string
+	code     int32
+}
+
+// checkError checks r, the answer to GET target, a call of c: it has
+// want's status, which c's operation declares as want's response, and a
+// body the document's schema accepts that decodes strictly into a
+// google.rpc.Status with want's code.
+func (a *readAPI) checkError(t *testing.T, c readCall, target string, r restReply, want declaredError) {
+	t.Helper()
+	if r.status != want.status {
+		t.Errorf("GET %s: status %d, body %q; want %d", target, r.status, excerpt(string(r.body)), want.status)
+		return
+	}
+	if got, err := apicontract.ErrorResponse(a.doc, a.routes[c.rpc].Operation, want.status); err != nil || got != want.response {
+		t.Errorf("GET %s: the document declares %d as %q (%v); want %q", target, want.status, got, err, want.response)
+	}
+	a.validate(t, target, r)
+	s, err := apicontract.RESTStatus(r.body)
+	if err != nil {
+		t.Errorf("GET %s: %v", target, err)
+		return
+	}
+	if s.Code != want.code {
+		t.Errorf("GET %s: code %d (%s); want %d", target, s.Code, s.Message, want.code)
+	}
+}
+
+// callPerMethod returns the first of calls of each method.
+func callPerMethod(calls []readCall) []readCall {
+	seen := map[string]bool{}
+	var first []readCall
+	for _, c := range calls {
+		if !seen[c.rpc] {
+			seen[c.rpc] = true
+			first = append(first, c)
+		}
+	}
+	return first
 }
 
 // targetPerMethod returns the REST target of the first of calls of each
 // method.
 func (a *readAPI) targetPerMethod(t *testing.T, calls []readCall) []string {
 	t.Helper()
-	seen := map[string]bool{}
-	var targets []string
-	for _, c := range calls {
-		if !seen[c.rpc] {
-			seen[c.rpc] = true
-			targets = append(targets, a.target(t, c))
-		}
+	first := callPerMethod(calls)
+	targets := make([]string, 0, len(first))
+	for _, c := range first {
+		targets = append(targets, a.target(t, c))
 	}
 	return targets
 }

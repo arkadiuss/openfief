@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5d3806d3197
+  - type: executable_for
+    from: SYM-e2e-readapi-test-declared-error
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T05:46:46.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b11e1010eecb

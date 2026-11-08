@@ -349,3 +349,72 @@ func excerpt(b []byte) []byte {
 	}
 	return b
 }
+
+// Errors of the error-response walk.
+var (
+	// ErrNoStatus reports a REST error body that is not a google.rpc.Status.
+	ErrNoStatus = errors.New("no google.rpc.Status in the body")
+	// ErrNoOperation reports an operation the OpenAPI document lacks.
+	ErrNoOperation = errors.New("no such operation in the OpenAPI document")
+	// ErrUndeclaredStatus reports an error status an operation doesn't
+	// declare on its own, only through its default response.
+	ErrUndeclaredStatus = errors.New("status not declared by the operation")
+)
+
+// responsesPrefix starts a reference to one of the document's
+// components.responses.
+const responsesPrefix = "#/components/responses/"
+
+// Status is a read API error's body over REST: the google.rpc.Status
+// Vanguard writes, with the numeric gRPC code (5 for not found, 16 for
+// unauthenticated), the error's message and its details, an empty list
+// when it has none.
+type Status struct {
+	Code    int32             `json:"code"`
+	Message string            `json:"message"`
+	Details []json.RawMessage `json:"details"`
+}
+
+// RESTStatus decodes a REST error body strictly: exactly code, message and
+// details, all present, details a list. Anything else is ErrNoStatus.
+func RESTStatus(body []byte) (Status, error) {
+	var present map[string]json.RawMessage
+	if err := json.Unmarshal(body, &present); err != nil {
+		return Status{}, fmt.Errorf("%w: %q: %w", ErrNoStatus, excerpt(body), err)
+	}
+	for _, name := range []string{"code", "message", "details"} {
+		if _, ok := present[name]; !ok {
+			return Status{}, fmt.Errorf("%w: no %s in %q", ErrNoStatus, name, excerpt(body))
+		}
+	}
+	dec := json.NewDecoder(bytes.NewReader(body))
+	dec.DisallowUnknownFields()
+	var s Status
+	if err := dec.Decode(&s); err != nil {
+		return Status{}, fmt.Errorf("%w: %q: %w", ErrNoStatus, excerpt(body), err)
+	}
+	if s.Details == nil {
+		return Status{}, fmt.Errorf("%w: details is null in %q", ErrNoStatus, excerpt(body))
+	}
+	return s, nil
+}
+
+// ErrorResponse returns the name, in the document's components.responses,
+// of the response doc declares for status on op. A status op answers only
+// through its default response is ErrUndeclaredStatus, so a check that
+// validates an error body knows the operation declares that error.
+func ErrorResponse(doc *openapi3.T, op Operation, status int) (string, error) {
+	item := doc.Paths.Value(op.Path)
+	if item == nil || item.GetOperation(op.Method) == nil {
+		return "", fmt.Errorf("%w: %s %s", ErrNoOperation, op.Method, op.Path)
+	}
+	ref := item.GetOperation(op.Method).Responses.Status(status)
+	if ref == nil {
+		return "", fmt.Errorf("%w: %d on %s %s", ErrUndeclaredStatus, status, op.Method, op.Path)
+	}
+	name, ok := strings.CutPrefix(ref.Ref, responsesPrefix)
+	if !ok {
+		return "", fmt.Errorf("%w: %d on %s %s is no reference to a declared error", ErrUndeclaredStatus, status, op.Method, op.Path)
+	}
+	return name, nil
+}

@@ -107,7 +107,7 @@ Clients in other languages come from the same [protobuf definitions](../../proto
 
 ## When a call fails
 
-Errors carry fixed texts, never your data, and a request ID you can find in the core's log:
+Errors carry fixed texts, never your data, and a request ID you can find in the core's log. Over REST the body is a `google.rpc.Status`, such as `{"code":5,"message":"no such account","details":[]}`, with the numeric gRPC code; the OpenAPI document declares the 400, 401 and 404 each operation can answer:
 
 | Status | Means |
 |---|---|
