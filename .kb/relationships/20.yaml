@@ -825,3 +825,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33c7820c061d
+  - type: constrains
+    from: REQ-m0-exit-05-bond-values
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-08T01:32:01.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cc4a5819363
+  - type: requires_property
+    from: REQ-m0-exit-05-bond-values
+    to: FACT-PROP-E3A934790EBED8EA
+    created_at: 2026-11-08T01:32:01.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe03774829e9
+  - type: specified_by
+    from: REQ-m0-exit-05-bond-values
+    to: SCEN-e2e-bond-values-reference
+    created_at: 2026-11-08T01:32:01.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6012ac7301e0
+  - type: specified_by
+    from: REQ-m0-exit-05-bond-values
+    to: SCEN-e2e-bond-net-if-redeemed
+    created_at: 2026-11-08T01:32:01.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a257c379baf3
+  - type: specified_by
+    from: REQ-m0-exit-05-bond-values
+    to: SCEN-e2e-bond-registry-isin-and-terms
+    created_at: 2026-11-08T01:32:01.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47f40b8ad9b8
+  - type: supersedes
+    from: REQ-m0-exit-05-bond-values
+    to: REQ-m0-exit-05-bonds
+    created_at: 2026-11-08T01:32:01.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ec494d2fbf4

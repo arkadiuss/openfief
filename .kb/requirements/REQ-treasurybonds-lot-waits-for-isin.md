@@ -1,6 +1,6 @@
 ---
 title: A lot of a series the Ministry of Finance's data doesn't list yet must wait, like its terms, until its ISIN arrives.
-status: open
+status: closed
 text_ref: design-decisions:D-214#3
 tags:
   - strict-modeling

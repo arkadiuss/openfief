@@ -890,13 +890,6 @@ relationships:
     id: rel-9ae3e1b2bf64
   - type: implements
     from: SYM-treasurybonds-series-instrument
-    to: REQ-treasurybonds-registry-isin
-    created_at: 2026-11-07T23:09:46.605Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2a725095033d
-  - type: implements
-    from: SYM-treasurybonds-series-instrument
     to: REQ-treasurybonds-series-code-ticker
     created_at: 2026-11-07T23:09:46.635Z
     created_by: kibi/upsert
@@ -909,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf4bd0dd08a4
+  - type: implements
+    from: SYM-treasurybonds-series-instrument
+    to: REQ-treasurybonds-identified-by-registry-isin
+    created_at: 2026-11-08T01:32:16.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd417e33143

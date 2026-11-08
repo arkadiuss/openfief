@@ -1,6 +1,6 @@
 ---
 title: A treasury bond must be identified by its real ISIN, the registry's, from the Ministry of Finance's data, never by one derived from its series code.
-status: open
+status: closed
 text_ref: design-decisions:D-214#1
 tags:
   - strict-modeling

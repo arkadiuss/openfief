@@ -192,7 +192,7 @@ func (p *dataPath) checkBonds(t *testing.T) {
 // reference valuer, github.com/maciekmm/obligacje (MIT) at commit 8e1c495,
 // run offline on the same terms, and against the hand calculation from the
 // issue letters' formulas (pl.ValueLot's doc); and each series' net and
-// liquidation (net-if-redeemed) values, and the account's totals, against
+// liquidation values, and the account's three totals, against
 // the hand calculation. The account is taxable; every rate is the fixture's
 // synthetic one, every CPI the demo dataset's (GUS, March 2025 104.9, March
 // 2026 103.0, August 2026 103.4). Per bond, N = 100:

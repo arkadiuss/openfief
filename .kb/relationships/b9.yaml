@@ -1189,20 +1189,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09476c2b43a0
-  - type: specified_by
-    from: REQ-treasurybonds-lot-waits-for-isin
-    to: SCEN-treasurybonds-provisional-isin
-    created_at: 2026-11-07T22:44:56.094Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f3c7b6ad56ae
-  - type: specified_by
-    from: REQ-treasurybonds-lot-waits-for-isin
-    to: SCEN-ingest-sync-names-provisional
-    created_at: 2026-11-07T22:44:56.126Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2ca02d8f674
   - type: executable_for
     from: SYM-ingest-app-test-helper-fake-rekeyer
     to: TEST-ingest-app-rekey
@@ -1217,10 +1203,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1aa09614d8f
-  - type: specified_by
-    from: REQ-treasurybonds-lot-waits-for-isin
-    to: SCEN-e2e-bond-registry-isin-and-terms
-    created_at: 2026-11-08T00:36:40.690Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-faf367121f92

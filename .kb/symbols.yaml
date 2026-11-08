@@ -163274,7 +163274,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-published
       - type: implements
-        target: REQ-treasurybonds-lot-waits-for-isin
+        target: REQ-treasurybonds-lot-provisional-isin-until-listed
       - type: implements
         target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
@@ -167107,7 +167107,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-waits-for-isin
+        target: REQ-treasurybonds-lot-provisional-isin-until-listed
       - type: implements
         target: REQ-treasurybonds-provisional-isin
   - id: SYM-treasurybonds-series-instrument
@@ -167122,7 +167122,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-registry-isin
+        target: REQ-treasurybonds-identified-by-registry-isin
       - type: implements
         target: REQ-treasurybonds-series-code-ticker
   - id: SYM-treasurybonds-test-map-registry-isin

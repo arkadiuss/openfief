@@ -867,20 +867,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad6e5776473f
-  - type: specified_by
-    from: REQ-treasurybonds-registry-isin
-    to: SCEN-treasurybonds-reads-registry-isin
-    created_at: 2026-11-07T22:44:47.609Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-33ad14ed78e7
-  - type: specified_by
-    from: REQ-treasurybonds-registry-isin
-    to: SCEN-ingest-rekey-provisional-instrument
-    created_at: 2026-11-07T22:44:47.632Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4c76f1257cf1
   - type: supersedes
     from: REQ-treasurybonds-registry-isin
     to: REQ-pl-bond-isin-from-series

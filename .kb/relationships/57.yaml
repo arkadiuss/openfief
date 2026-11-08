@@ -685,3 +685,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c75cce52bf91
+  - type: constrains
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-11-08T01:31:54.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b777dc9a4267
+  - type: requires_property
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: FACT-PROP-5C97361C505D0C1A
+    created_at: 2026-11-08T01:31:54.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5daf25de0c54
+  - type: specified_by
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: SCEN-treasurybonds-provisional-isin
+    created_at: 2026-11-08T01:31:54.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d0efa3b8f9
+  - type: specified_by
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: SCEN-ingest-sync-names-provisional
+    created_at: 2026-11-08T01:31:54.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-432275cdfbd1
+  - type: specified_by
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: SCEN-e2e-bond-registry-isin-and-terms
+    created_at: 2026-11-08T01:31:54.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de2a81440cdd
+  - type: supersedes
+    from: REQ-treasurybonds-lot-provisional-isin-until-listed
+    to: REQ-treasurybonds-lot-waits-for-isin
+    created_at: 2026-11-08T01:31:54.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdf897b54b08

@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b43d490d245b
+  - type: constrains
+    from: REQ-treasurybonds-identified-by-registry-isin
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-11-08T01:31:49.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64745ca6ffe1
+  - type: requires_property
+    from: REQ-treasurybonds-identified-by-registry-isin
+    to: FACT-PROP-9617576771F95AE6
+    created_at: 2026-11-08T01:31:49.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cfff9af8d15
+  - type: specified_by
+    from: REQ-treasurybonds-identified-by-registry-isin
+    to: SCEN-treasurybonds-reads-registry-isin
+    created_at: 2026-11-08T01:31:49.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7cb78c11f0
+  - type: specified_by
+    from: REQ-treasurybonds-identified-by-registry-isin
+    to: SCEN-ingest-rekey-provisional-instrument
+    created_at: 2026-11-08T01:31:49.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22d2be6b8e92
+  - type: supersedes
+    from: REQ-treasurybonds-identified-by-registry-isin
+    to: REQ-treasurybonds-registry-isin
+    created_at: 2026-11-08T01:31:49.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-075ff642853d

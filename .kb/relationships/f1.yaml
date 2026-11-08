@@ -944,13 +944,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3a5ebfad7dd
-  - type: implements
-    from: SYM-treasurybonds-provisional-instrument
-    to: REQ-treasurybonds-lot-waits-for-isin
-    created_at: 2026-11-07T23:09:41.217Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ef80d530dc87
   - type: covered_by
     from: SYM-treasurybonds-provisional-instrument
     to: TEST-treasurybonds-mapper
@@ -972,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db13331f8abf
+  - type: implements
+    from: SYM-treasurybonds-provisional-instrument
+    to: REQ-treasurybonds-lot-provisional-isin-until-listed
+    created_at: 2026-11-08T01:32:28.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52dfc8c7883

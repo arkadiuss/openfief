@@ -1,5 +1,5 @@
 ---
-title: Each held bond series' net and liquidation values and the account's totals equal the hand calculation
+title: Each held bond series' net and liquidation values and the account's three totals equal the hand calculation
 status: active
 tags:
   - acceptance:p10-5
