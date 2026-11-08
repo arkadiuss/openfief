@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-200#8
-  recorded_at: '2026-11-07T03:31:59.786Z'
+  recorded_at: '2026-11-08T07:27:43.020Z'
 id: REQ-m0-exit-08-built-in-ui
 type: req
 ---

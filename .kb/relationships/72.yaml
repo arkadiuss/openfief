@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06be4ec60c45
+  - type: executable_for
+    from: SYM-e2e-charts-test-chart-page
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:30:57.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e296ae476770

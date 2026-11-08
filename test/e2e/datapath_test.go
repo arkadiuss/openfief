@@ -56,7 +56,7 @@ const (
 
 // TestDataPath runs the connectors' data path end to end against the
 // institution fixture, as an owner does, and checks D-200's criteria 2, 3,
-// 4, 5, 6 and 7 on it. It deploys the fixture as an HTTPS Service with a
+// 4, 5, 6 and 7 on it, and criterion 8's charts. It deploys the fixture as an HTTPS Service with a
 // certificate from a CA made for this run, and installs, with the openfief
 // CLI built from this checkout, nbp-fx, eodhd, ibkr-flex and
 // treasury-bonds, each with its base URL on the fixture, the fixture's
@@ -107,7 +107,15 @@ const (
 //     answers the data path's record as the document describes, and 401
 //     without a valid token; nothing but GET is served and the script
 //     token reaches no owner service; and the SDK's Connect client answers
-//     the same as REST (readapi_test.go).
+//     the same as REST (readapi_test.go);
+//   - criterion 8's charts (SCEN-e2e-charts-match-read-api,
+//     SCEN-e2e-charts-only-read-api): what the overview's value, return
+//     and allocation charts, each data path account's charts and each
+//     instrument's price chart draw in the owner's Chromium equals what
+//     the read API answers the script token for the same days, and while
+//     the UI drew them the core's log shows it calling nothing outside
+//     the read API but the session check and two lookups without
+//     numbers, and its pod reaches nothing but the core (charts_test.go).
 func TestDataPath(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -141,6 +149,7 @@ func TestDataPath(t *testing.T) {
 	p.checkBonds(t)
 	p.checkPriceChecks(t)
 	p.checkReadAPI(t)
+	p.checkCharts(t)
 }
 
 // dataPath is the data path's state: the cluster, a script token for the

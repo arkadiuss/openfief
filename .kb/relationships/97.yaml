@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88e137651632
+  - type: implements
+    from: SYM-e2e-chartcheck-bar
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:29:26.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6da2d1dd7bf
+  - type: covered_by
+    from: SYM-e2e-chartcheck-bar
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:29:26.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83de1938b110

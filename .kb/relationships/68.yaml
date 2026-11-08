@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e0f889583cf
+  - type: implements
+    from: SYM-e2e-chartcheck-price-charts
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:27.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b9b8ae3d6ab
+  - type: covered_by
+    from: SYM-e2e-chartcheck-price-charts
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:27.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f622f424e50b
+  - type: executable_for
+    from: SYM-e2e-charts-test-data-path-overview-value
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:11.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ba4a68e7706

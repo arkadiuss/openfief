@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9480f74eff75
+  - type: implements
+    from: SYM-e2e-chartcheck-chart
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:29:21.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c2bb9a2047
+  - type: covered_by
+    from: SYM-e2e-chartcheck-chart
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:29:21.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7281d7b24df

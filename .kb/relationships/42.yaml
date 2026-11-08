@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a974a612aee
+  - type: implements
+    from: SYM-e2e-chartcheck-log-line
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:29:37.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1290d87452ff
+  - type: covered_by
+    from: SYM-e2e-chartcheck-log-line
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:29:37.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84e2149053ff

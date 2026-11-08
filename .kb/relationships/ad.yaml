@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-265dd23a0a76
+  - type: executable_for
+    from: SYM-e2e-chartcheck-test-test-calls
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:30:42.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3082102739e6

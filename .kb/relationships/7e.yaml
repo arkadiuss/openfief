@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-908d9979fdfc
+  - type: executable_for
+    from: SYM-e2e-charts-test-check-ui-reaches-only-core
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:49.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eef2489fb91d

@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f58efbb5b88a
+  - type: executable_for
+    from: SYM-e2e-charts-test-page-look-drawn
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:48.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b7b72db1fd9

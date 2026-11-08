@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73082c1624ac
+  - type: executable_for
+    from: SYM-e2e-charts-test-core-logs
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:44.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffee16a4abf0

@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6648f82ffcb8
+  - type: executable_for
+    from: SYM-e2e-settingslink-test-check-settings-link-passkey
+    to: TEST-e2e-exposure
+    created_at: 2026-11-08T07:33:05.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668f8cfb3a60

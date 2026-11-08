@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9129991c8cc
+  - type: implements
+    from: SYM-e2e-chartcheck-listing-chart
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:33.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239cd5835717
+  - type: covered_by
+    from: SYM-e2e-chartcheck-listing-chart
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:33.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63008164a29f

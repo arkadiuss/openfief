@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb1b8d4fd4f2
+  - type: executable_for
+    from: SYM-e2e-charts-test-missing
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:54.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7a3df444828

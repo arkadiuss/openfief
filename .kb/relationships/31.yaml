@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8481facf2ca1
+  - type: executable_for
+    from: SYM-e2e-chartcheck-test-price
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:30:14.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b81848118d60

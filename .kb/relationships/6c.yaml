@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caeb13e752ab
+  - type: executable_for
+    from: SYM-e2e-chartcheck-test-money
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:29:58.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d741ec11ee4

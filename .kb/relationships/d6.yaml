@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79a6f2f3d51c
+  - type: executable_for
+    from: SYM-e2e-charts-test-page-look
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:08.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d32773c19fb5
+  - type: executable_for
+    from: SYM-e2e-charts-test-data-path-check-charts
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:19.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-933e625b875a

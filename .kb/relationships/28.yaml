@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2d9b8b16405
+  - type: executable_for
+    from: SYM-e2e-charts-test-data-path-allocation
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:23.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8af148dc02

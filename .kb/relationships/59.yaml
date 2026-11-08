@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca9bbd984b48
+  - type: implements
+    from: SYM-e2e-chartcheck-chart-from
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:27:59.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d296137afc6a
+  - type: covered_by
+    from: SYM-e2e-chartcheck-chart-from
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:27:59.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d476e20a9a05

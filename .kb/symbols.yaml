@@ -169696,3 +169696,675 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-apicontract
+  - id: SYM-e2e-chartcheck-value-kinds
+    title: ValueKinds
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:27:52.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-chart-from
+    title: ChartFrom
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:27:57.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-days-before
+    title: DaysBefore
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:03.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-value-chart
+    title: ValueChart
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:09.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-total-of
+    title: totalOf
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:15.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-performance-chart
+    title: PerformanceChart
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:20.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-price-charts
+    title: PriceCharts
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:25.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-listing-chart
+    title: listingChart
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:31.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-allocation
+    title: Allocation
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:36.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-share-percent
+    title: sharePercent
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:42.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-plain-money
+    title: PlainMoney
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:47.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-calls
+    title: Calls
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:52.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-plugin-calls
+    title: PluginCalls
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:28:58.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-read-requests
+    title: ReadRequests
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:03.360Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-disallowed
+    title: Disallowed
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:08.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-window-contains
+    title: Window.contains
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:14.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-chart
+    title: Chart
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:19.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-bar
+    title: Bar
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:24.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-call
+    title: Call
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:30.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-log-line
+    title: logLine
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:35.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-window
+    title: Window
+    sourceFile: test/e2e/chartcheck/chartcheck.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:40.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-chartcheck
+      - type: implements
+        target: REQ-m0-exit-08-built-in-ui
+  - id: SYM-e2e-chartcheck-test-test-chart-from
+    title: TestChartFrom
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:46.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-days-before
+    title: TestDaysBefore
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:51.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-money
+    title: money
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:29:56.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-value-chart
+    title: TestValueChart
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:01.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-performance-chart
+    title: TestPerformanceChart
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:07.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-price
+    title: price
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:12.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-price-charts
+    title: TestPriceCharts
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:18.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-allocation
+    title: TestAllocation
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:23.572Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-plain-money
+    title: TestPlainMoney
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:29.384Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-at
+    title: at
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:34.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-calls
+    title: TestCalls
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:40.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-chartcheck-test-test-disallowed
+    title: TestDisallowed
+    sourceFile: test/e2e/chartcheck/chartcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:46.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-chartcheck
+  - id: SYM-e2e-charts-test-ui-non-read-calls
+    title: uiNonReadCalls
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:50.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-chart-page
+    title: chartPage
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:30:56.039Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-drawn-charts
+    title: drawnCharts
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:01.082Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-page-look
+    title: pageLook
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:06.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-page-window
+    title: pageWindow
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:12.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-check-charts
+    title: dataPath.checkCharts
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:17.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-number-format
+    title: dataPath.numberFormat
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:22.999Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-chart-pages
+    title: dataPath.chartPages
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:28.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-check-chart-page
+    title: dataPath.checkChartPage
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:34.190Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-compare-page
+    title: comparePage
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:40.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-page-look-drawn
+    title: pageLook.drawn
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:45.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-missing
+    title: missing
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:51.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-drawn-only
+    title: drawnOnly
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:31:57.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-performance
+    title: dataPath.performance
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:03.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-overview-value
+    title: dataPath.overviewValue
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:09.304Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-overview-performance
+    title: dataPath.overviewPerformance
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:15.135Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-allocation
+    title: dataPath.allocation
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:21.025Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-account-charts
+    title: dataPath.accountCharts
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:26.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-data-path-instrument-charts
+    title: dataPath.instrumentCharts
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:32.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-check-ui-calls
+    title: checkUICalls
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:37.390Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-core-logs
+    title: coreLogs
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:42.647Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-check-ui-reaches-only-core
+    title: checkUIReachesOnlyCore
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:48.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-charts-test-owner-look
+    title: owner.look
+    sourceFile: test/e2e/charts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:53.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-round-trip
+    title: owner.roundTrip
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:32:58.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-settingslink-test-check-settings-link-passkey
+    title: checkSettingsLinkPasskey
+    sourceFile: test/e2e/settingslink_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T07:33:03.562Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
