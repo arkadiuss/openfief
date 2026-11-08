@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8010d9470292
+  - type: verified_by
+    from: SCEN-views-instrument-isin-provisional
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-08T02:00:38.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70878654094e

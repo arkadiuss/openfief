@@ -144564,6 +144564,8 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-names
       - type: implements
+        target: REQ-views-instrument-isin-provisional
+      - type: implements
         target: REQ-views-instrument-names
   - id: SYM-views-connectapi-test-rest-instrument-names
     title: TestRESTInstrumentNames
@@ -168465,3 +168467,88 @@ symbols:
         target: TEST-e2e-fixture-bonds
       - type: implements
         target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-views-connectapi-mark-provisional
+    title: markProvisional
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:00:53.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional
+  - id: SYM-views-connectapi-test-rest-provisional-isin
+    title: TestRESTProvisionalISIN
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:04.935Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-ui-test-isin-pending-pill
+    title: TestISINPendingPill
+    sourceFile: internal/views/ui/isinpending_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:10.687Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-ui-test-helper-fake-read-bonds
+    title: fakeRead.bonds
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:15.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-ui-test-helper-pending-bond-instrument
+    title: pendingBondInstrument
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:21.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-viewsv1-instrument-get-isin-provisional
+    title: Instrument.GetIsinProvisional
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:27:50.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional
+  - id: SYM-viewsv1-instrument-detail-get-isin-provisional
+    title: InstrumentDetail.GetIsinProvisional
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:27:57.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional

@@ -8,11 +8,13 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
 
 // The messages that name an instrument by its ISIN, whose name field the
-// read API fills in with its display name (D-197).
+// read API fills in with its display name (D-197), and whose
+// isin_provisional field it sets (D-214).
 const (
 	instrumentMessage protoreflect.FullName = "openfief.views.v1.Instrument"
 	detailMessage     protoreflect.FullName = "openfief.views.v1.InstrumentDetail"
@@ -21,7 +23,8 @@ const (
 // namesInterceptor fills in, on every answer, the display name of each
 // instrument it names (D-197): Instrument.name and InstrumentDetail.name,
 // read from the views once per answer that names any. An instrument with
-// no name keeps an empty one.
+// no name keeps an empty one. It also marks each instrument held under a
+// treasury bond series' provisional ISIN (D-214).
 type namesInterceptor struct {
 	views *app.Views
 	log   *slog.Logger
@@ -42,6 +45,7 @@ func (n *namesInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 		if len(named) == 0 {
 			return resp, nil
 		}
+		markProvisional(named)
 		names, err := n.views.InstrumentNames(ctx)
 		if err != nil {
 			return nil, toConnectError(ctx, n.log, err)
@@ -94,6 +98,25 @@ func fillNames(named []protoreflect.Message, names map[string]string) {
 		isin := m.Get(fields.ByName("isin")).String()
 		if name, ok := names[isin]; ok {
 			m.Set(fields.ByName("name"), protoreflect.ValueOfString(name))
+		}
+	}
+}
+
+// markProvisional sets isin_provisional on each of named whose ISIN is a
+// treasury bond series' provisional ISIN (D-214): an Instrument's when it
+// is its symbol's series', an InstrumentDetail's when it is any series'.
+func markProvisional(named []protoreflect.Message) {
+	for _, m := range named {
+		fields := m.Descriptor().Fields()
+		isin := m.Get(fields.ByName("isin")).String()
+		var provisional bool
+		if m.Descriptor().FullName() == instrumentMessage {
+			provisional = pl.IsProvisional(isin, m.Get(fields.ByName("symbol")).String())
+		} else {
+			_, provisional = pl.ProvisionalSeries(isin)
+		}
+		if provisional {
+			m.Set(fields.ByName("isin_provisional"), protoreflect.ValueOfBool(true))
 		}
 	}
 }

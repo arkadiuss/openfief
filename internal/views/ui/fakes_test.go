@@ -484,13 +484,19 @@ func (f *fakeRead) ListAccountValuations(_ context.Context, r *connect.Request[v
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
+	vals := []*viewsv1.Valuation{{
+		Date: r.Msg.GetTo(), Instrument: syntheticInstrument(), Basis: viewsv1.ValuationBasis_VALUATION_BASIS_MARKET,
+		Value: &viewsv1.Money{Amount: "250.00", Currency: "EUR"}, ValueReporting: pln("1000.00"),
+		NetReporting: pln("950.00"), LiquidationMissing: "marginal_rate",
+	}}
+	if f.bonds() {
+		vals = append(vals, &viewsv1.Valuation{
+			Date: r.Msg.GetTo(), Instrument: pendingBondInstrument(), Basis: viewsv1.ValuationBasis_VALUATION_BASIS_GROSS_ACCRUED,
+			Value: pln("2010.00"), ValueReporting: pln("2010.00"), NetReporting: pln("2008.10"), LiquidationReporting: pln("2000.00"),
+		})
+	}
 	return connect.NewResponse(&viewsv1.ListAccountValuationsResponse{
-		AccountId: accountID, From: r.Msg.GetFrom(), To: r.Msg.GetTo(), ReportingCurrency: "PLN",
-		Valuations: []*viewsv1.Valuation{{
-			Date: r.Msg.GetTo(), Instrument: syntheticInstrument(), Basis: viewsv1.ValuationBasis_VALUATION_BASIS_MARKET,
-			Value: &viewsv1.Money{Amount: "250.00", Currency: "EUR"}, ValueReporting: pln("1000.00"),
-			NetReporting: pln("950.00"), LiquidationMissing: "marginal_rate",
-		}},
+		AccountId: accountID, From: r.Msg.GetFrom(), To: r.Msg.GetTo(), ReportingCurrency: "PLN", Valuations: vals,
 		Totals: []*viewsv1.DateTotal{{Date: r.Msg.GetTo(), ValueReporting: pln("1000.00"), NetReporting: pln("950.00"), CashReporting: pln("0"), NetOffsetReporting: pln("10.00")}},
 	}), nil
 }
@@ -521,18 +527,32 @@ func (f *fakeRead) ListHoldings(_ context.Context, r *connect.Request[viewsv1.Li
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&viewsv1.ListHoldingsResponse{AccountId: accountID, Date: r.Msg.GetDate(), Holdings: []*viewsv1.Holding{
+	holdings := []*viewsv1.Holding{
 		{Instrument: syntheticInstrument(), Quantity: "10", NoLongerUpdated: true, RemovedInstances: []string{"ibkr-old"}},
-	}}), nil
+	}
+	if f.bonds() {
+		holdings = append(holdings, &viewsv1.Holding{Instrument: pendingBondInstrument(), Quantity: "20"})
+	}
+	return connect.NewResponse(&viewsv1.ListHoldingsResponse{AccountId: accountID, Date: r.Msg.GetDate(), Holdings: holdings}), nil
 }
 
 func (f *fakeRead) ListLots(_ context.Context, r *connect.Request[viewsv1.ListLotsRequest]) (*connect.Response[viewsv1.ListLotsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&viewsv1.ListLotsResponse{AccountId: accountID, Date: r.Msg.GetDate(), Lots: []*viewsv1.Lot{
+	lots := []*viewsv1.Lot{
 		{Instrument: syntheticInstrument(), Opened: "2026-01-02", Quantity: "10", Cost: &viewsv1.Money{Amount: "2000.00", Currency: "EUR"}, Opening: true},
-	}}), nil
+	}
+	if f.bonds() {
+		lots = append(lots, &viewsv1.Lot{Instrument: pendingBondInstrument(), Opened: "2026-03-02", Quantity: "20", Cost: pln("2000.00")})
+	}
+	return connect.NewResponse(&viewsv1.ListLotsResponse{AccountId: accountID, Date: r.Msg.GetDate(), Lots: lots}), nil
+}
+
+// pendingBondInstrument is series COI1130 under its provisional ISIN, as
+// the read API marks it (D-214).
+func pendingBondInstrument() *viewsv1.Instrument {
+	return &viewsv1.Instrument{Isin: pendingBond, Symbol: "COI1130", IsinProvisional: true}
 }
 
 func (f *fakeRead) ListCash(_ context.Context, r *connect.Request[viewsv1.ListCashRequest]) (*connect.Response[viewsv1.ListCashResponse], error) {
@@ -617,6 +637,15 @@ func (f *fakeRead) locked(fn func()) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	fn()
+}
+
+// bonds reports whether the fake account is at the treasury bond registry,
+// where it also holds 20 bonds of series COI1130 under its provisional ISIN
+// (D-214).
+func (f *fakeRead) bonds() bool {
+	var institution string
+	f.locked(func() { institution = f.institution })
+	return institution == bondInstitution
 }
 
 // check notes a call's bearer token and refuses unknown sessions.

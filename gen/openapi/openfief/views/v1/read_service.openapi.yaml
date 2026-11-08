@@ -1121,6 +1121,14 @@ components:
           description: |-
             The instrument's display name (D-197): the first one a connector
              delivered for its ISIN, or the owner's; empty when it has none.
+        isinProvisional:
+          type: boolean
+          title: isin_provisional
+          description: |-
+            Whether isin is a treasury bond series' provisional ISIN: `PL`, the
+             series code in symbol, `00` and a check digit. A lot of a series the
+             Ministry of Finance's data doesn't list yet is booked under it, and
+             moves to the registry's ISIN when the data lists it (D-214).
       title: Instrument
       additionalProperties: false
       description: 'Instrument is something that can be held: an ISIN plus a venue symbol.'
@@ -1158,6 +1166,12 @@ components:
              from (D-97); unset for any other instrument, and for a series whose
              terms are not stored yet, such as one the ministry's data didn't list
              when its lot was entered, until a sync fills them in.
+        isinProvisional:
+          type: boolean
+          title: isin_provisional
+          description: |-
+            Whether isin is a treasury bond series' provisional ISIN, as
+             Instrument.isin_provisional (D-214).
       title: InstrumentDetail
       additionalProperties: false
       description: InstrumentDetail is an instrument across the caller's accounts (D-195).

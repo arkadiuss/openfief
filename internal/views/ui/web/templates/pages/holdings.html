@@ -14,7 +14,7 @@
     <tbody>
     {{range .Holdings}}
     <tr>
-      <td><a href="/instruments/{{.Valuation.Instrument.Isin}}?account={{.AccountID}}">{{instrument .Valuation.Instrument}}</a></td>
+      <td><a href="/instruments/{{.Valuation.Instrument.Isin}}?account={{.AccountID}}">{{instrument .Valuation.Instrument}}</a>{{template "isin-pending" .Valuation.Instrument}}</td>
       <td><a href="/accounts/{{.AccountID}}">{{.Account}}</a></td>
       <td class="num">{{money .Valuation.Value}}</td>{{template "valuation-values" .Valuation}}
     </tr>

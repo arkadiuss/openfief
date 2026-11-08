@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79ccbd463573
+  - type: executable_for
+    from: SYM-ui-test-isin-pending-pill
+    to: TEST-ui-isin-pending
+    created_at: 2026-11-08T02:01:12.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87bb6304730f
