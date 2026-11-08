@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22a2298426ff
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-postings
+    to: TEST-ingest-app-rekey
+    created_at: 2026-11-07T23:07:57.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8db1c2633470

@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ae3e1b2bf64
+  - type: implements
+    from: SYM-treasurybonds-series-instrument
+    to: REQ-treasurybonds-series-code-ticker
+    created_at: 2026-11-07T23:09:46.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3193458e5b1
+  - type: covered_by
+    from: SYM-treasurybonds-series-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-07T23:09:46.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf4bd0dd08a4
+  - type: implements
+    from: SYM-treasurybonds-series-instrument
+    to: REQ-treasurybonds-identified-by-registry-isin
+    created_at: 2026-11-08T01:32:16.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd417e33143

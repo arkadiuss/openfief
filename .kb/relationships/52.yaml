@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e9e3ba0b13c
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-provisional-isin
+    created_at: 2026-11-07T23:16:21.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92685bdc528d

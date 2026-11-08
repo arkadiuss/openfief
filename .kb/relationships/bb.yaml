@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81da81006b69
+  - type: executable_for
+    from: SYM-attention-app-test-helper-bond-buy
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:06:58.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1db870c5471a

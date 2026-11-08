@@ -797,3 +797,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82cf761d4d77
+  - type: implements
+    from: SYM-e2e-fixture-xls-dir-entry
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:39:10.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-994c8a6aa57a
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-dir-entry
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:10.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff03e82bf4e5
+  - type: implements
+    from: SYM-e2e-fixture-bonds-cpi-tenths
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:46:34.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd00d7f37845
+  - type: covered_by
+    from: SYM-e2e-fixture-bonds-cpi-tenths
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:46:34.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-908d9979fdfc

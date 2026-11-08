@@ -60,21 +60,23 @@ func lot(t *testing.T, series, quantity, purchased, first string) ingest.BondLot
 	}
 }
 
-// instrument returns the derived instrument of series or fails the test.
+// instrument returns the provisional instrument of series (D-214), what a
+// lot is booked under while the published data lists no ISIN of it, or
+// fails the test.
 func instrument(t *testing.T, series string) ledger.Instrument {
 	t.Helper()
 	s, err := pl.ParseSeries(series)
 	if err != nil {
 		t.Fatalf("ParseSeries: %v", err)
 	}
-	in, err := treasurybonds.Instrument(s)
+	in, err := treasurybonds.ProvisionalInstrument(s)
 	if err != nil {
-		t.Fatalf("Instrument: %v", err)
+		t.Fatalf("ProvisionalInstrument: %v", err)
 	}
 	return in
 }
 
-func TestInstrument(t *testing.T) {
+func TestProvisionalInstrument(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		series, wantISIN string
@@ -89,13 +91,16 @@ func TestInstrument(t *testing.T) {
 			t.Parallel()
 			in := instrument(t, tt.series)
 			if in.ISIN.String() != tt.wantISIN || in.Symbol != tt.series {
-				t.Errorf("Instrument(%s) = %s, want %s/%s", tt.series, in, tt.wantISIN, tt.series)
+				t.Errorf("ProvisionalInstrument(%s) = %s, want %s/%s", tt.series, in, tt.wantISIN, tt.series)
 			}
 			if _, err := ledger.ParseISIN(in.ISIN.String()); err != nil || in.Validate() != nil {
-				t.Errorf("Instrument(%s) = %s is not a valid instrument: %v", tt.series, in, err)
+				t.Errorf("ProvisionalInstrument(%s) = %s is not a valid instrument: %v", tt.series, in, err)
 			}
 			if again := instrument(t, tt.series); again != in {
-				t.Errorf("Instrument(%s) differs between calls: %s, %s", tt.series, in, again)
+				t.Errorf("ProvisionalInstrument(%s) differs between calls: %s, %s", tt.series, in, again)
+			}
+			if !pl.IsProvisional(in.ISIN.String(), in.Symbol) {
+				t.Errorf("ProvisionalInstrument(%s) = %s is not provisional", tt.series, in)
 			}
 		})
 	}
@@ -159,7 +164,7 @@ func TestMap(t *testing.T) {
 		Account: account, GoLive: mustDate(t, "2026-05-15"), Lots: lots,
 		Deleted: []ingest.BondLotKey{key(t, "EDO0536", "2026-05-10"), key(t, "EDO0536", "2026-05-20")},
 	}
-	m, terms, err := treasurybonds.Mapper{}.Map(&e, today)
+	m, terms, err := treasurybonds.Mapper{}.Map(&e, nil, today)
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}
@@ -201,7 +206,7 @@ func TestMap(t *testing.T) {
 	// any order, and a deleted lot deletes both.
 	e.GoLive = kernel.Date{}
 	e.Lots, e.Deleted = []ingest.BondLot{lots[1], lots[0]}, []ingest.BondLotKey{key(t, "EDO0536", "2026-05-10")}
-	onDates, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	onDates, _, err := treasurybonds.Mapper{}.Map(&e, nil, today)
 	if err != nil {
 		t.Fatalf("Map without go-live: %v", err)
 	}
@@ -260,7 +265,7 @@ func TestMapDeletesWhatWasBookedForTheLot(t *testing.T) {
 			booked(own, "lot:COI1028:2024-10-10:redemption", "2028-10-10"),
 		},
 	}
-	m, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	m, _, err := treasurybonds.Mapper{}.Map(&e, nil, today)
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}
@@ -287,7 +292,7 @@ func TestMapDeletesWhatWasBookedForTheLot(t *testing.T) {
 		booked(own, "lot:COI1028:2024-10-10", "2025-01-02"),
 		booked(own, "lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"),
 	}
-	opening, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	opening, _, err := treasurybonds.Mapper{}.Map(&e, nil, today)
 	if err != nil {
 		t.Fatalf("Map with go-live: %v", err)
 	}
@@ -317,11 +322,11 @@ func TestMapKeepsKeysAcrossReEntry(t *testing.T) {
 		if goLive != "" {
 			live = mustDate(t, goLive)
 		}
-		first, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, today)
+		first, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, nil, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
-		fixed, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, today)
+		fixed, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, nil, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
@@ -345,7 +350,7 @@ func TestMapPendingLot(t *testing.T) {
 	pending := lot(t, "COI1130", "10", "2026-11-03", "0.05")
 	pending.PublishedRates, pending.ReviewedFee = true, true
 	entered := lot(t, "EDO1136", "5", "2026-11-03", "0.06")
-	m, terms, err := treasurybonds.Mapper{}.Map(&ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{pending, entered}}, mustDate(t, "2026-11-07"))
+	m, terms, err := treasurybonds.Mapper{}.Map(&ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{pending, entered}}, nil, mustDate(t, "2026-11-07"))
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}
@@ -384,7 +389,7 @@ func TestMapRefuses(t *testing.T) {
 			t.Parallel()
 			e := tt.entries
 			e.Account = tt.account
-			m, terms, err := treasurybonds.Mapper{}.Map(&e, today)
+			m, terms, err := treasurybonds.Mapper{}.Map(&e, nil, today)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("Map error (-want +got):\n%s", diff)
 			}
@@ -392,5 +397,93 @@ func TestMapRefuses(t *testing.T) {
 				t.Errorf("a refused batch mapped %d transactions and %d terms; want nothing", len(m.Transactions), len(terms))
 			}
 		})
+	}
+}
+
+// listing returns synthetic published data that lists the registry ISIN
+// of each "series=ISIN" pair, and no rates.
+func listing(t *testing.T, pairs ...string) *pl.Published {
+	t.Helper()
+	p := &pl.Published{}
+	for _, pair := range pairs {
+		code, isin, _ := strings.Cut(pair, "=")
+		s, err := pl.ParseSeries(code)
+		if err != nil {
+			t.Fatalf("ParseSeries: %v", err)
+		}
+		p.ISINs = append(p.ISINs, pl.PublishedISIN{Series: s, ISIN: isin})
+	}
+	return p
+}
+
+// registry returns the instrument of series with the synthetic registry
+// ISIN isin, or fails the test.
+func registry(t *testing.T, series, isin string) ledger.Instrument {
+	t.Helper()
+	i, err := ledger.ParseISIN(isin)
+	if err != nil {
+		t.Fatalf("ParseISIN: %v", err)
+	}
+	return ledger.Instrument{ISIN: i, Symbol: series}
+}
+
+// TestSeriesInstrument: a series is its registry ISIN as the published
+// data lists it, and its provisional instrument while the data lists none
+// or wasn't read (D-214).
+func TestSeriesInstrument(t *testing.T) {
+	t.Parallel()
+	p := listing(t, "EDO0536=PL9999000018")
+	tests := []struct {
+		name, series string
+		p            *pl.Published
+		want         ledger.Instrument
+	}{
+		{name: "listed: the registry's ISIN", series: "EDO0536", p: p, want: registry(t, "EDO0536", "PL9999000018")},
+		{name: "not listed yet: provisional", series: "EDO1136", p: p, want: instrument(t, "EDO1136")},
+		{name: "data not read: provisional", series: "EDO0536", want: instrument(t, "EDO0536")},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := treasurybonds.SeriesInstrument(tt.p, series(t, tt.series))
+			if err != nil {
+				t.Fatalf("SeriesInstrument: %v", err)
+			}
+			if got != tt.want {
+				t.Errorf("SeriesInstrument(%s) = %s, want %s", tt.series, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestMapRegistryISIN books a lot of a series the published data lists
+// under its registry ISIN, with its terms, and one of a series it doesn't
+// list yet under its provisional ISIN; the keys name the series either
+// way, so a later re-key keeps them (D-214).
+func TestMapRegistryISIN(t *testing.T) {
+	t.Parallel()
+	e := ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{
+		lot(t, "EDO0536", "10", "2026-05-04", "0.06"), lot(t, "EDO1136", "3", "2026-11-02", "0.06"),
+	}}
+	m, terms, err := treasurybonds.Mapper{}.Map(&e, listing(t, "EDO0536=PL9999000018"), mustDate(t, "2026-11-07"))
+	if err != nil {
+		t.Fatalf("Map: %v", err)
+	}
+	edo, waiting := registry(t, "EDO0536", "PL9999000018"), instrument(t, "EDO1136")
+	got := map[string]string{}
+	for _, r := range rows(t, &m) {
+		got[r.Key.ExternalID] = strings.Join(r.Postings, ", ")
+	}
+	want := map[string]string{
+		"lot:EDO0536:2026-05-04:deposit": "cash:PLN 1000 PLN, equity:PLN -1000 PLN",
+		"lot:EDO0536:2026-05-04:buy":     "holding:" + edo.String() + " 1000 PLN 10, cash:PLN -1000 PLN",
+		"lot:EDO1136:2026-11-02:deposit": "cash:PLN 300 PLN, equity:PLN -300 PLN",
+		"lot:EDO1136:2026-11-02:buy":     "holding:" + waiting.String() + " 300 PLN 3, cash:PLN -300 PLN",
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("Map postings (-want +got):\n%s", diff)
+	}
+	if len(terms) != 2 || terms[0].Instrument != edo || terms[1].Instrument != waiting {
+		t.Errorf("Map terms = %v, want the terms of %s and %s", terms, edo, waiting)
 	}
 }

@@ -55,7 +55,7 @@ const pages = {
   accounts: '/accounts', account: '/accounts/acc-synthetic-1', 'account-transactions': '/accounts/acc-synthetic-1?tab=transactions',
   'account-lots': '/accounts/acc-synthetic-1?tab=lots', 'account-cash': '/accounts/acc-synthetic-1?tab=cash',
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
-  instrument: '/instruments/XX0000000001?account=acc-synthetic-1', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
+  instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
   settings: '/settings', setup: '/setup',
 };

@@ -307,20 +307,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ba2027d4874
-  - type: implements
-    from: SYM-treasurybonds-instrument
-    to: REQ-AUTO-FD50BCD71546E83F
-    created_at: 2026-10-29T01:22:13.638Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ba2d4807e972
-  - type: covered_by
-    from: SYM-treasurybonds-instrument
-    to: TEST-treasurybonds-mapper
-    created_at: 2026-10-29T01:22:13.661Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-615c3bb33c9e
   - type: executable_for
     from: SYM-ingest-app-test-helper-file-delivery
     to: TEST-ingest-app-uploads
@@ -601,13 +587,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adbb3aee5dac
-  - type: implements
-    from: SYM-treasurybonds-instrument
-    to: REQ-treasurybonds-lot-on-purchase-date
-    created_at: 2026-11-01T07:58:10.941Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-adf732b8b480
   - type: covered_by
     from: SYM-ingest-xtb-mapping-opening
     to: TEST-ingest-xtb-opening
@@ -993,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53c23c6ea609
+  - type: executable_for
+    from: SYM-core-test-helper-rekey-connector
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:50.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a6ef74f9adc

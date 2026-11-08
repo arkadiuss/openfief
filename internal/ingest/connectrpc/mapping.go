@@ -345,15 +345,45 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 	if err != nil {
 		return app.Delivery{}, err
 	}
-	names, err := instrumentNamesFrom(d)
+	names, isins, err := instrumentsFrom(d)
 	if err != nil {
 		return app.Delivery{}, err
 	}
 	return app.Delivery{
 		Institution: ingest.InstitutionID(d.GetInstitution()), Mapping: m,
 		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms,
-		CrossCheckPrices: crossChecks, InstrumentNames: names, Watermark: watermark,
+		CrossCheckPrices: crossChecks, InstrumentNames: names, RegistryISINs: isins, Watermark: watermark,
 	}, nil
+}
+
+// instrumentsFrom translates what d says of its instruments: their
+// display names (D-197) and the registry ISINs of provisional ones
+// (D-214); none for none.
+func instrumentsFrom(d *connectorv1.Delivery) ([]ledger.InstrumentName, []ingest.RegistryISIN, error) {
+	names, err := instrumentNamesFrom(d)
+	if err != nil || len(d.GetRegistryIsins()) == 0 {
+		return names, nil, err
+	}
+	isins, err := translate("registry_isins", d.GetRegistryIsins(), registryISINFrom)
+	if err != nil {
+		return nil, nil, err
+	}
+	return names, isins, nil
+}
+
+// registryISINFrom translates the registry's ISIN of a provisional
+// instrument (D-214): the instrument and a valid ISIN. Whether the core may
+// re-key with it is the use case's to decide.
+func registryISINFrom(field string, r *connectorv1.RegistryIsin) (ingest.RegistryISIN, error) {
+	in, err := instrumentFrom(field+".instrument", r.GetInstrument())
+	if err != nil {
+		return ingest.RegistryISIN{}, err
+	}
+	isin, err := ledger.ParseISIN(r.GetIsin())
+	if err != nil {
+		return ingest.RegistryISIN{}, invalid(field+".isin", err)
+	}
+	return ingest.RegistryISIN{Instrument: in, ISIN: isin}, nil
 }
 
 // instrumentNamesFrom translates d's instrument names (D-197); none for
@@ -396,7 +426,8 @@ func deliveryItems(d *connectorv1.Delivery) int {
 	n := len(d.GetTransactions()) + len(d.GetBalanceAssertions()) + len(d.GetProblems()) +
 		len(d.GetPrices()) + len(d.GetFxRates()) + len(d.GetIndexReadings()) + len(d.GetIndexLevels()) +
 		len(d.GetBondTerms()) + len(d.GetCrossCheckPrices()) + len(d.GetBrokerAccounts()) +
-		len(d.GetTickers()) + len(d.GetTickerTransactions()) + len(d.GetInstrumentNames()) + len(d.GetTickerAssertions())
+		len(d.GetTickers()) + len(d.GetTickerTransactions()) + len(d.GetInstrumentNames()) + len(d.GetTickerAssertions()) +
+		len(d.GetRegistryIsins())
 	for _, t := range d.GetTransactions() {
 		n += len(t.GetPostings())
 	}

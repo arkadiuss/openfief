@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c4fcb66f47e
+  - type: verified_by
+    from: SCEN-e2e-bond-registry-isin-and-terms
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:35:39.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729c45f6315b

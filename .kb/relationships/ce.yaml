@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-194335ae53ba
+  - type: verified_by
+    from: SCEN-ledger-rekey-new-versions
+    to: TEST-ledger-rekey
+    created_at: 2026-11-07T22:44:30.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d98d9b5500c2
+  - type: verified_by
+    from: SCEN-ledger-rekey-new-versions
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T22:44:30.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c60bf366e567
+  - type: verified_by
+    from: SCEN-ledger-rekey-new-versions
+    to: TEST-core-rekey
+    created_at: 2026-11-07T22:44:30.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d4510dcd6b

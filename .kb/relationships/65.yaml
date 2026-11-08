@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1f92dc79810
+  - type: implements
+    from: SYM-treasurybonds-registry-isi-ns
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:10:51.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73fb20b103a9
+  - type: covered_by
+    from: SYM-treasurybonds-registry-isi-ns
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T23:10:51.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c70d3935c1e3
+  - type: executable_for
+    from: SYM-portfolio-postgres-test-rekey-instrument
+    to: TEST-portfolio-postgres-rekey
+    created_at: 2026-11-07T23:13:54.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbda412fea6

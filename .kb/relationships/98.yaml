@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ae112e5dbef
+  - type: executable_for
+    from: SYM-e2e-bonds-test-data-path-publish-ministry
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:18.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b42d1f2063

@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9be7e0cb993
+  - type: implements
+    from: SYM-ingest-app-checked-inputs
+    to: REQ-ingest-rekey-provisional-instrument
+    created_at: 2026-11-07T23:07:09.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-162024c7d6e4
+  - type: covered_by
+    from: SYM-ingest-app-checked-inputs
+    to: TEST-ingest-app-rekey
+    created_at: 2026-11-07T23:07:09.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0503e80541c9

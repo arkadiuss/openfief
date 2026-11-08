@@ -881,3 +881,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-923b38fee443
+  - type: constrains
+    from: REQ-treasurybonds-reads-registry-isin
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-11-07T22:45:04.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44b493265d63
+  - type: requires_property
+    from: REQ-treasurybonds-reads-registry-isin
+    to: FACT-PROP-8F167E3ED1144414
+    created_at: 2026-11-07T22:45:04.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90525dd75e5b
+  - type: specified_by
+    from: REQ-treasurybonds-reads-registry-isin
+    to: SCEN-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T22:45:04.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52799d14c620
+  - type: executable_for
+    from: SYM-core-test-helper-seed-provisional-extras
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:06:06.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83ef3f2ca2da

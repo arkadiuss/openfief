@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef059429cc26
+  - type: constrains
+    from: REQ-views-ghostfolio-rekey-resync
+    to: FACT-SUBJECT-30D618C3C5B4C80D
+    created_at: 2026-11-07T22:45:33.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6aa4663a7e1
+  - type: requires_property
+    from: REQ-views-ghostfolio-rekey-resync
+    to: FACT-PROP-1A47B9813BA708DA
+    created_at: 2026-11-07T22:45:33.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5dc878d4d62
+  - type: specified_by
+    from: REQ-views-ghostfolio-rekey-resync
+    to: SCEN-views-ghostfolio-rekey-resync
+    created_at: 2026-11-07T22:45:33.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28baaaffebc7
+  - type: executable_for
+    from: SYM-ghostfolio-test-sync-after-rekey
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-11-07T23:14:32.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7f3ec6f586e

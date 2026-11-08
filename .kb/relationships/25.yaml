@@ -895,3 +895,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64c0c2b37dc3
+  - type: verified_by
+    from: SCEN-valuation-rekey-inputs
+    to: TEST-valuation-postgres-rekey
+    created_at: 2026-11-07T22:44:31.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64ca4df39a3f
+  - type: verified_by
+    from: SCEN-valuation-rekey-inputs
+    to: TEST-portfolio-postgres-rekey
+    created_at: 2026-11-07T22:44:31.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73a19c885bc8
+  - type: verified_by
+    from: SCEN-valuation-rekey-inputs
+    to: TEST-core-rekey
+    created_at: 2026-11-07T22:44:31.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ecf70b61230
+  - type: executable_for
+    from: SYM-treasurybonds-test-series-instrument
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-07T23:10:02.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c8be1df5c2e
+  - type: implements
+    from: SYM-mfbonds-unique-isi-ns
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:10:45.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-674f4432aca0
+  - type: covered_by
+    from: SYM-mfbonds-unique-isi-ns
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T23:10:45.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3459767bfc57

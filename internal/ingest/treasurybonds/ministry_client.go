@@ -32,7 +32,7 @@ const (
 	// License is the licence of the ministry's data.
 	License = "CC BY 4.0"
 	// PublishedProcessing is what the reader does to the data.
-	PublishedProcessing = "OpenFief read each series' code, first-period rate (the first \"Oprocentowanie\" column) " +
+	PublishedProcessing = "OpenFief read each series' code, its ISIN (\"Kod ISIN\"), first-period rate (the first \"Oprocentowanie\" column) " +
 		"and margin (\"Marża\") from the sheet of its bond type, rounded them half even to six decimal places " +
 		"as fractions, and left out every other column"
 
@@ -164,14 +164,14 @@ func (c *MinistryClient) fromDane(ctx context.Context, now time.Time) (*pl.Publi
 
 // published parses the spreadsheet data into the published data with att.
 func published(data []byte, att *pl.Attribution) (*pl.Published, error) {
-	rates, err := ParseWorkbook(data)
+	rates, isins, err := ParseWorkbook(data)
 	if err != nil {
 		return nil, fmt.Errorf("spreadsheet %s: %w", att.URL, err)
 	}
 	if err := att.Validate(); err != nil {
 		return nil, fmt.Errorf("spreadsheet %s: %w", att.URL, err)
 	}
-	return &pl.Published{Rates: rates, Attribution: *att}, nil
+	return &pl.Published{Rates: rates, ISINs: isins, Attribution: *att}, nil
 }
 
 // get fetches u with hc and returns its body, at most limit bytes, and its

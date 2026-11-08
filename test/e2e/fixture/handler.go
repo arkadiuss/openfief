@@ -81,8 +81,9 @@ type credentials struct {
 	eodhdToken string
 }
 
-// newHandler serves the three services below their paths, and logs each
-// request's method and path, never its query, which holds the tokens.
+// newHandler serves the services below their paths, the treasury-bonds
+// connector's too (bonds.go), and logs each request's method and path,
+// never its query, which holds the tokens.
 func newHandler(creds credentials, log *slog.Logger) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET "+FlexPath+"/SendRequest", func(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +102,8 @@ func newHandler(creds credentials, log *slog.Logger) http.Handler {
 	mux.HandleFunc("GET "+NBPDataPathPath+"/api/exchangerates/tables/A/{from}/{to}/", func(w http.ResponseWriter, r *http.Request) {
 		nbpTables(w, r, dataPathRates)
 	})
+	(&ministry{}).handle(mux)
+	handleBondIndices(mux)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Info("request", "method", r.Method, "path", r.URL.Path)
 		mux.ServeHTTP(w, r)

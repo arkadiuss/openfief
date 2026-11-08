@@ -43,9 +43,12 @@ func header(marginCol int) []xcell {
 }
 
 // syntheticWorkbook is a workbook in the ministry's layout with made-up
-// series and rates: a description sheet, OTS with no margin column, EDO
-// with a sub-header row, a row of another type and a series without its
-// rate yet, and DOR with its numbers written each way Excel writes them.
+// series, rates and registry ISINs: a description sheet, OTS with no margin
+// column, an ISIN with a wrong check digit and one padded with spaces, EDO
+// with a sub-header row, a row of another type, a provisional ISIN, a
+// series listed with its ISIN before its rate and one without either yet,
+// and DOR with its numbers written each way Excel writes them and no ISIN
+// column.
 func syntheticWorkbook(tb testing.TB) []byte {
 	tb.Helper()
 	return xls(tb,
@@ -53,15 +56,16 @@ func syntheticWorkbook(tb testing.TB) []byte {
 		xsheet{name: "OTS", rows: [][]xcell{
 			header(-1),
 			{text(0, "OTS0199"), text(1, "PL0000000001"), num(9, "0.0111")},
-			{text(0, "OTS0299"), text(1, "PL0000000002"), num(9, "0.0123")},
+			{text(0, "OTS0299"), text(1, " PL9999000059 "), num(9, "0.0123")},
 		}},
 		xsheet{name: "EDO", rows: [][]xcell{
 			header(20),
 			{text(9, " w 1. roku"), text(10, " w 2. roku")},
-			{text(0, "EDO0199"), num(9, "0.0611"), num(10, "0.0711"), num(20, "0.0222")},
-			{text(0, "EDO0299"), num(9, "0.0612"), num(20, "0.0222")},
-			{text(0, "COI0199"), num(9, "0.05"), num(20, "0.01")},
-			{text(0, "EDO0399"), num(20, "0.0222")},
+			{text(0, "EDO0199"), text(1, "PL9999000018"), num(9, "0.0611"), num(10, "0.0711"), num(20, "0.0222")},
+			{text(0, "EDO0299"), text(1, "PLEDO0299005"), num(9, "0.0612"), num(20, "0.0222")},
+			{text(0, "COI0199"), text(1, "PL9999000026"), num(9, "0.05"), num(20, "0.01")},
+			{text(0, "EDO0399"), text(1, "PL9999000034"), num(20, "0.0222")},
+			{text(0, "EDO0599"), text(1, "-")},
 			{text(0, "EDO0499"), num(9, "0.0613")},
 		}},
 		xsheet{name: "DOR", rows: [][]xcell{
@@ -75,10 +79,12 @@ func syntheticWorkbook(tb testing.TB) []byte {
 // TestParseWorkbook reads a synthetic workbook: every series of the bond
 // type sheets, rate and margin as fractions, fixed-rate types with no
 // margin, rows without a series or a rate left out, numbers written each
-// way exact, and a double's rounding error rounded away.
+// way exact, and a double's rounding error rounded away; and each series'
+// registry ISIN (D-214), one listed before its rates too, but none that
+// isn't a valid Polish ISIN or is a provisional one.
 func TestParseWorkbook(t *testing.T) {
 	t.Parallel()
-	got, err := treasurybonds.ParseWorkbook(syntheticWorkbook(t))
+	got, isins, err := treasurybonds.ParseWorkbook(syntheticWorkbook(t))
 	if err != nil {
 		t.Fatalf("ParseWorkbook: %v", err)
 	}
@@ -93,11 +99,20 @@ func TestParseWorkbook(t *testing.T) {
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("ParseWorkbook (-want +got):\n%s", diff)
 	}
+	wantISINs := []pl.PublishedISIN{
+		{Series: rates(t, "OTS0299", "0", "0").Series, ISIN: "PL9999000059"},
+		{Series: rates(t, "EDO0199", "0", "0").Series, ISIN: "PL9999000018"},
+		{Series: rates(t, "EDO0399", "0", "0").Series, ISIN: "PL9999000034"},
+	}
+	if diff := cmp.Diff(wantISINs, isins); diff != "" {
+		t.Errorf("ParseWorkbook ISINs (-want +got):\n%s", diff)
+	}
 }
 
 // TestParseWorkbookRefuses checks what the reader refuses: anything that
 // is no workbook, a cut-short file, percentages instead of fractions, a
-// series listed twice, and a workbook without any rate.
+// series listed twice, one ISIN listed for two series, and a workbook
+// without any rate.
 func TestParseWorkbookRefuses(t *testing.T) {
 	t.Parallel()
 	good := syntheticWorkbook(t)
@@ -116,6 +131,9 @@ func TestParseWorkbookRefuses(t *testing.T) {
 		{name: "a series twice", wantErr: treasurybonds.ErrNoRates, data: xls(t, xsheet{name: "TOS", rows: [][]xcell{
 			header(-1), {text(0, "TOS0199"), num(9, "0.044")}, {text(0, "TOS0199"), num(9, "0.045")},
 		}})},
+		{name: "one ISIN for two series", wantErr: treasurybonds.ErrNoRates, data: xls(t, xsheet{name: "TOS", rows: [][]xcell{
+			header(-1), {text(0, "TOS0199"), text(1, "PL9999000018"), num(9, "0.044")}, {text(0, "TOS0299"), text(1, "PL9999000018")},
+		}})},
 		{name: "no headers", wantErr: treasurybonds.ErrNoRates, data: xls(t, xsheet{name: "TOS", rows: [][]xcell{
 			{text(0, "TOS0199"), num(9, "0.044")},
 		}})},
@@ -124,7 +142,7 @@ func TestParseWorkbookRefuses(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := treasurybonds.ParseWorkbook(tt.data)
+			_, _, err := treasurybonds.ParseWorkbook(tt.data)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("ParseWorkbook error (-want +got):\n%s", diff)
 			}
@@ -155,7 +173,7 @@ func FuzzParseWorkbook(f *testing.F) {
 	f.Add(good)
 	f.Add(good[:600])
 	f.Fuzz(func(t *testing.T, data []byte) {
-		if _, err := treasurybonds.ParseWorkbook(data); err == nil && len(data) < 512 {
+		if _, _, err := treasurybonds.ParseWorkbook(data); err == nil && len(data) < 512 {
 			t.Errorf("ParseWorkbook read rates from %d bytes", len(data))
 		}
 	})

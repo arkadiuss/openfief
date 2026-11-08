@@ -67425,21 +67425,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-postgres
-  - id: SYM-treasurybonds-instrument
-    title: Instrument
-    sourceFile: internal/ingest/treasurybonds/mapper.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T01:22:12.145Z
-    relationships:
-      - type: covered_by
-        target: TEST-treasurybonds-mapper
-      - type: implements
-        target: REQ-AUTO-FD50BCD71546E83F
-      - type: implements
-        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper
     title: Mapper
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67477,6 +67462,8 @@ symbols:
         target: REQ-treasurybonds-lots-any-order
       - type: implements
         target: REQ-treasurybonds-one-instance-all-accounts
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
   - id: SYM-treasurybonds-add-terms
     title: addTerms
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67565,16 +67552,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T01:23:04.299Z
-    relationships:
-      - type: executable_for
-        target: TEST-treasurybonds-mapper
-  - id: SYM-treasurybonds-test-instrument
-    title: TestInstrument
-    sourceFile: internal/ingest/treasurybonds/mapper_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T01:23:11.346Z
     relationships:
       - type: executable_for
         target: TEST-treasurybonds-mapper
@@ -102974,6 +102951,8 @@ symbols:
         target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
         target: REQ-treasurybonds-lot-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
   - id: SYM-treasurybonds-lot-id
     title: lotID
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -144585,6 +144564,8 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-names
       - type: implements
+        target: REQ-views-instrument-isin-provisional
+      - type: implements
         target: REQ-views-instrument-names
   - id: SYM-views-connectapi-test-rest-instrument-names
     title: TestRESTInstrumentNames
@@ -161123,11 +161104,12 @@ symbols:
         target: TEST-e2e-data-path
   - id: SYM-e2e-datapath-test-data-path-book-bonds
     title: dataPath.bookBonds
-    sourceFile: test/e2e/datapath_test.go
+    sourceFile: test/e2e/bonds_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-07T04:29:45.504Z
+    granularity_reason: test-suite
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
@@ -162676,6 +162658,8 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+      - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-columns
     title: columns
@@ -162702,6 +162686,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-mfbonds
       - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+      - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-is
     title: is
@@ -162711,19 +162697,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-07T08:19:21.114Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-sheet-rates
-    title: sheetRates
-    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:19:29.421Z
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
@@ -163302,6 +163275,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-lot-provisional-isin-until-listed
       - type: implements
         target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
@@ -164060,6 +164035,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-published
       - type: implements
+        target: REQ-treasurybonds-provisional-isin
+      - type: implements
         target: REQ-treasurybonds-sync-fills-missing-terms
   - id: SYM-treasurybonds-fill-missing
     title: FillMissing
@@ -164072,6 +164049,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
       - type: implements
         target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
@@ -164739,19 +164718,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-bond-terms
-  - id: SYM-treasury-bonds-missing-terms
-    title: missingTerms
-    sourceFile: plugins/treasury-bonds/connector.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T13:34:15.584Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-treasury-bonds
-      - type: implements
-        target: REQ-treasurybonds-sync-fills-missing-terms
   - id: SYM-treasury-bonds-test-sync-fills-missing-terms
     title: TestSyncFillsMissingTerms
     sourceFile: plugins/treasury-bonds/connector_test.go
@@ -166530,3 +166496,2059 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-kibi-coverage
+  - id: SYM-core-rekeyers
+    title: rekeyers
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:07.478Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-rekey
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-core-test-sync-rekeys-provisional-bonds
+    title: TestSyncRekeysProvisionalBonds
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:12.879Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-check-rekeyed
+    title: checkRekeyed
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:17.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-check-rekeyed-ledger
+    title: checkRekeyedLedger
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:22.727Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-check-rekeyed-name-and-model
+    title: checkRekeyedNameAndModel
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:27.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-check-rekeyed-stores
+    title: checkRekeyedStores
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:33.213Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-posts-only-to
+    title: postsOnlyTo
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:38.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-provisional-coi
+    title: provisionalCOI
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:43.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-rekey-connector
+    title: rekeyConnector
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:48.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-rekey-connector-sync
+    title: rekeyConnector.Sync
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:53.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-rekey-connector-check-named-once
+    title: rekeyConnector.checkNamedOnce
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:05:59.394Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-core-test-helper-seed-provisional-extras
+    title: seedProvisionalExtras
+    sourceFile: cmd/core/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:04.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-rekey
+  - id: SYM-attention-app-incomplete-bond-series
+    title: IncompleteBondSeries
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:11.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+      - type: implements
+        target: REQ-attention-bond-series-incomplete-after-week
+  - id: SYM-attention-app-bond-series-held
+    title: bondSeriesHeld
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:16.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-earlier
+    title: earlier
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:22.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-held-series
+    title: heldSeries
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:28.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-incomplete-detail
+    title: incompleteDetail
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:34.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-incomplete-series
+    title: incompleteSeries
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:39.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-state
+    title: state
+    sourceFile: internal/attention/app/bondseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:45.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-bond-series
+      - type: implements
+        target: REQ-attention-bond-series-incomplete
+  - id: SYM-attention-app-test-incomplete-bond-series
+    title: TestIncompleteBondSeries
+    sourceFile: internal/attention/app/bondseries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:51.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-bond-series
+  - id: SYM-attention-app-test-helper-bond-buy
+    title: bondBuy
+    sourceFile: internal/attention/app/bondseries_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:06:56.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-bond-series
+  - id: SYM-attention-app-test-helper-instrument-of
+    title: instrumentOf
+    sourceFile: internal/attention/app/bondseries_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:02.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-bond-series
+  - id: SYM-ingest-app-checked-inputs
+    title: checkedInputs
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:07.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-app-connectors-rekey
+    title: Connectors.rekey
+    sourceFile: internal/ingest/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:13.205Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-app-holdings-scope-provisional-instruments
+    title: HoldingsScope.ProvisionalInstruments
+    sourceFile: internal/ingest/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:18.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-app-instrument-rekeyer
+    title: InstrumentRekeyer
+    sourceFile: internal/ingest/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:24.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-app-provisional-source
+    title: ProvisionalSource
+    sourceFile: internal/ingest/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:29.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-app-test-connectors-rekey
+    title: TestConnectorsRekey
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:35.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-holdings-scope-provisional
+    title: TestHoldingsScopeProvisional
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:40.434Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-fake-rekeyer
+    title: fakeRekeyer
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:45.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-fake-rekeyer-rekey-instrument
+    title: fakeRekeyer.RekeyInstrument
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:50.168Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-postings
+    title: postings
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:07:55.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-postings-current-transactions
+    title: postings.CurrentTransactions
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:00.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-registry-isin
+    title: registryISIN
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:05.198Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-test-helper-rekey-log
+    title: rekeyLog
+    sourceFile: internal/ingest/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:10.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-rekey
+  - id: SYM-ingest-app-scheduler-bound-holdings
+    title: Scheduler.boundHoldings
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:15.557Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-rekey
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-connectrpc-instruments-from
+    title: instrumentsFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:20.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-connectrpc-registry-isin-from
+    title: registryISINFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:26.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-connectrpc-test-registry-isi-ns-round-trip
+    title: TestRegistryISINsRoundTrip
+    sourceFile: internal/ingest/connectrpc/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:31.665Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-registry
+  - id: SYM-ingest-connectrpc-test-sync-request-names-provisional
+    title: TestSyncRequestNamesProvisional
+    sourceFile: internal/ingest/connectrpc/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:36.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-registry
+  - id: SYM-ingest-delivery-provisional
+    title: Provisional
+    sourceFile: internal/ingest/delivery/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:41.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-delivery-registry-isi-ns
+    title: RegistryISINs
+    sourceFile: internal/ingest/delivery/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:47.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-check-registry-isi-ns
+    title: CheckRegistryISINs
+    sourceFile: internal/ingest/registryisin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:52.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-registryisin
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-provisional-instruments
+    title: ProvisionalInstruments
+    sourceFile: internal/ingest/registryisin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:08:58.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-registryisin
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-ingest-registry-isin
+    title: RegistryISIN
+    sourceFile: internal/ingest/registryisin.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:03.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-registryisin
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-registry-isin-rekeyed
+    title: RegistryISIN.Rekeyed
+    sourceFile: internal/ingest/registryisin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:08.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-registryisin
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-registry-isin-validate
+    title: RegistryISIN.Validate
+    sourceFile: internal/ingest/registryisin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:13.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-registryisin
+      - type: implements
+        target: REQ-ingest-rekey-provisional-instrument
+  - id: SYM-ingest-test-check-registry-isi-ns
+    title: TestCheckRegistryISINs
+    sourceFile: internal/ingest/registryisin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:18.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-registryisin
+  - id: SYM-ingest-test-provisional-instruments
+    title: TestProvisionalInstruments
+    sourceFile: internal/ingest/registryisin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:24.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-registryisin
+  - id: SYM-ingest-test-registry-isin-validate
+    title: TestRegistryISINValidate
+    sourceFile: internal/ingest/registryisin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:29.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-registryisin
+  - id: SYM-ingest-test-helper-isin-of
+    title: isinOf
+    sourceFile: internal/ingest/registryisin_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:34.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-registryisin
+  - id: SYM-treasurybonds-provisional-instrument
+    title: ProvisionalInstrument
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:39.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-treasurybonds-lot-provisional-isin-until-listed
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
+  - id: SYM-treasurybonds-series-instrument
+    title: SeriesInstrument
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:44.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-treasurybonds-identified-by-registry-isin
+      - type: implements
+        target: REQ-treasurybonds-series-code-ticker
+  - id: SYM-treasurybonds-test-map-registry-isin
+    title: TestMapRegistryISIN
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:50.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-provisional-instrument
+    title: TestProvisionalInstrument
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:09:55.614Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-series-instrument
+    title: TestSeriesInstrument
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:01.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-listing
+    title: listing
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:05.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-treasurybonds-test-helper-registry
+    title: registry
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:10.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-mfbonds-published-rows
+    title: publishedRows
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:16.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-mfbonds-row-isin
+    title: rowISIN
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:22.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-mfbonds-row-of
+    title: rowOf
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:27.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-mfbonds-series-row
+    title: seriesRow
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:32.959Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-mfbonds-sheet-rows
+    title: sheetRows
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:38.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-mfbonds-unique-isi-ns
+    title: uniqueISINs
+    sourceFile: internal/ingest/treasurybonds/ministry_rates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:43.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-treasurybonds-registry-isi-ns
+    title: RegistryISINs
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:49.308Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-treasurybonds-sync-published
+    title: SyncPublished
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:10:54.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-treasurybonds-test-complete-terms-without-data
+    title: TestCompleteTermsWithoutData
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:00.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-registry-isi-ns
+    title: TestRegistryISINs
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:05.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-pl-is-provisional
+    title: IsProvisional
+    sourceFile: internal/jurisdiction/pl/isin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:10.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-isin
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
+  - id: SYM-pl-provisional-prefix
+    title: ProvisionalPrefix
+    sourceFile: internal/jurisdiction/pl/isin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:16.469Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-isin
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
+  - id: SYM-pl-provisional-series
+    title: ProvisionalSeries
+    sourceFile: internal/jurisdiction/pl/isin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:21.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-isin
+      - type: implements
+        target: REQ-treasurybonds-provisional-isin
+  - id: SYM-pl-test-provisional-prefix
+    title: TestProvisionalPrefix
+    sourceFile: internal/jurisdiction/pl/isin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:27.086Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-isin
+  - id: SYM-pl-test-provisional-series
+    title: TestProvisionalSeries
+    sourceFile: internal/jurisdiction/pl/isin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:32.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-isin
+  - id: SYM-pl-test-published-isin-of
+    title: TestPublishedISINOf
+    sourceFile: internal/jurisdiction/pl/isin_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:37.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-isin
+  - id: SYM-pl-published-isin-of
+    title: Published.ISINOf
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:42.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-isin
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-pl-published-isin
+    title: PublishedISIN
+    sourceFile: internal/jurisdiction/pl/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:48.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-isin
+      - type: implements
+        target: REQ-treasurybonds-reads-registry-isin
+  - id: SYM-ledger-app-names-rekey-instrument
+    title: Names.RekeyInstrument
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:53.825Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-ledger-rekey-instrument
+    title: Ledger.RekeyInstrument
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:11:58.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-ledger-after-rekey
+    title: Ledger.afterRekey
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:04.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-ledger-rekey-all
+    title: Ledger.rekeyAll
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:09.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-ledger-rekey-in-tx
+    title: Ledger.rekeyInTx
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:14.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-posting-keys
+    title: postingKeys
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:19.600Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-posts-to-holding
+    title: postsToHolding
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:24.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-rekey-account
+    title: rekeyAccount
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:29.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-rekey-one
+    title: rekeyOne
+    sourceFile: internal/ledger/app/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:34.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-app-test-names-rekey-instrument
+    title: TestNamesRekeyInstrument
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:40.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-rekey-instrument
+    title: TestRekeyInstrument
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:45.386Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-helper-check-not-held
+    title: checkNotHeld
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:50.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-helper-check-rekeyed-again
+    title: checkRekeyedAgain
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:12:55.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-helper-check-rekeyed-log
+    title: checkRekeyedLog
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:00.981Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-helper-same-dates
+    title: sameDates
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:05.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-app-test-helper-save-bond-accounts
+    title: saveBondAccounts
+    sourceFile: internal/ledger/app/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:10.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-rekey
+  - id: SYM-ledger-rekeyed
+    title: Rekeyed
+    sourceFile: internal/ledger/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:16.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-rekeyed-names
+    title: RekeyedNames
+    sourceFile: internal/ledger/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:21.268Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-name-of
+    title: nameOf
+    sourceFile: internal/ledger/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:26.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-rekey
+      - type: implements
+        target: REQ-ledger-rekey-new-versions
+  - id: SYM-ledger-test-rekeyed
+    title: TestRekeyed
+    sourceFile: internal/ledger/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:31.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-rekey
+  - id: SYM-ledger-test-rekeyed-names
+    title: TestRekeyedNames
+    sourceFile: internal/ledger/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:36.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-rekey
+  - id: SYM-ledger-test-helper-by-hand
+    title: byHand
+    sourceFile: internal/ledger/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:41.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-rekey
+  - id: SYM-portfolio-postgres-store-rekey-instrument
+    title: Store.RekeyInstrument
+    sourceFile: internal/portfolio/postgres/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:46.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-postgres-rekey
+      - type: implements
+        target: REQ-valuation-rekey-inputs
+  - id: SYM-portfolio-postgres-test-rekey-instrument
+    title: TestRekeyInstrument
+    sourceFile: internal/portfolio/postgres/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:52.307Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres-rekey
+  - id: SYM-portfolio-postgres-test-helper-rekey-model
+    title: rekeyModel
+    sourceFile: internal/portfolio/postgres/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:13:57.235Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres-rekey
+  - id: SYM-valuation-postgres-store-rekey-instrument
+    title: Store.RekeyInstrument
+    sourceFile: internal/valuation/postgres/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:02.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-rekey
+      - type: implements
+        target: REQ-valuation-rekey-inputs
+  - id: SYM-valuation-postgres-rekeyed
+    title: rekeyed
+    sourceFile: internal/valuation/postgres/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:08.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-rekey
+      - type: implements
+        target: REQ-valuation-rekey-inputs
+  - id: SYM-valuation-postgres-rekeys
+    title: rekeys
+    sourceFile: internal/valuation/postgres/rekey.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:13.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-rekey
+      - type: implements
+        target: REQ-valuation-rekey-inputs
+  - id: SYM-valuation-postgres-test-rekey-instrument
+    title: TestRekeyInstrument
+    sourceFile: internal/valuation/postgres/rekey_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:19.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-rekey
+  - id: SYM-valuation-postgres-test-helper-rekey-rows
+    title: rekeyRows
+    sourceFile: internal/valuation/postgres/rekey_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:24.747Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-rekey
+  - id: SYM-ghostfolio-test-sync-after-rekey
+    title: TestSyncAfterRekey
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:30.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-ghostfolio-test-helper-fake-record-rekey-record
+    title: fakeRecord.rekeyRecord
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:35.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-plugins-treasury-bonds-from-published
+    title: fromPublished
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:41.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-plugins-treasury-bonds-test-import-bond-lots-wait-for-isin
+    title: TestImportBondLotsWaitForISIN
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:47.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-plugins-treasury-bonds-test-sync-delivers-registry-isi-ns
+    title: TestSyncDeliversRegistryISINs
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:53.594Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-connectorv1-delivery-get-registry-isins
+    title: Delivery.GetRegistryIsins
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:14:59.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin
+    title: RegistryIsin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:04.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-descriptor
+    title: RegistryIsin.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:10.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-get-instrument
+    title: RegistryIsin.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:16.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-get-isin
+    title: RegistryIsin.GetIsin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:22.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-proto-message
+    title: RegistryIsin.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:28.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-proto-reflect
+    title: RegistryIsin.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:34.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-reset
+    title: RegistryIsin.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:40.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-registry-isin-string
+    title: RegistryIsin.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:46.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-connectorv1-sync-request-get-provisional-instruments
+    title: SyncRequest.GetProvisionalInstruments
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T23:15:52.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-registry
+      - type: implements
+        target: REQ-ingest-sync-names-provisional
+  - id: SYM-e2e-fixture-bonds-ministry
+    title: ministry
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:36:52.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-sheets
+    title: ministrySheets
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:36:59.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-handle
+    title: ministry.handle
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:05.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-ministry-withheld
+    title: ministry.withheld
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:11.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-gus-cpi
+    title: gusCPI
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:17.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-cpi-values
+    title: cpiValues
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:23.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-nbp-rate-archive
+    title: nbpRateArchive
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:29.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-handle-bond-indices
+    title: handleBondIndices
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:35.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-cell
+    title: xlsCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:41.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-sheet
+    title: xlsSheet
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:47.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-text-cell
+    title: textCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:53.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-number-cell
+    title: numberCell
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:37:59.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-xls-file
+    title: xlsFile
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:05.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-biff-record
+    title: biffRecord
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:11.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-le16s
+    title: le16s
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:17.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-le32
+    title: le32
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:22.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-utf16le
+    title: utf16le
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:28.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-cell-record
+    title: cellRecord
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:34.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-bof
+    title: bof
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:40.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-bound-sheet
+    title: boundSheet
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:45.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-workbook-stream
+    title: workbookStream
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:51.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-compound-file
+    title: compoundFile
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:38:57.253Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-padded
+    title: padded
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:02.913Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-dir-entry
+    title: dirEntry
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:08.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp16
+    title: clamp16
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:14.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp32
+    title: clamp32
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:20.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-xls-clamp-byte
+    title: clampByte
+    sourceFile: test/e2e/fixture/xls.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:25.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-e2e-fixture-bonds-test-fetched-at
+    title: fetchedAt
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:30.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-publish-ministry
+    title: publishMinistry
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:35.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-describe-published
+    title: describePublished
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:40.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-test-fixture-serves-ministry-data
+    title: TestFixtureServesMinistryData
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:45.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-test-fixture-serves-bond-indices
+    title: TestFixtureServesBondIndices
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:51.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-fixture-bonds-test-describe-reading
+    title: describeReading
+    sourceFile: test/e2e/fixture/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:39:56.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-bonds
+  - id: SYM-e2e-bonds-test-bond-lot-form
+    title: bondLotForm
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:01.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-rekey-bonds
+    title: dataPath.rekeyBonds
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:06.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-coi-coupons-due
+    title: coiCouponsDue
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:11.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-publish-ministry
+    title: dataPath.publishMinistry
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:16.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-fixture-pod
+    title: fixturePod
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:21.731Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-isi-ns
+    title: dataPath.checkBondISINs
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:26.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bonds
+    title: dataPath.checkBonds
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:31.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-values
+    title: dataPath.checkBondValues
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:37.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-bonds-test-data-path-check-bond-terms
+    title: dataPath.checkBondTerms
+    sourceFile: test/e2e/bonds_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:40:42.911Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-fixture-bonds-cpi-tenths
+    title: cpiTenths
+    sourceFile: test/e2e/fixture/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T00:46:32.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-bonds
+      - type: implements
+        target: REQ-e2e-fixture-serves-bond-data
+  - id: SYM-views-connectapi-mark-provisional
+    title: markProvisional
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:00:53.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional
+  - id: SYM-views-connectapi-test-rest-provisional-isin
+    title: TestRESTProvisionalISIN
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:04.935Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-ui-test-isin-pending-pill
+    title: TestISINPendingPill
+    sourceFile: internal/views/ui/isinpending_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:10.687Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-ui-test-helper-fake-read-bonds
+    title: fakeRead.bonds
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:15.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-ui-test-helper-pending-bond-instrument
+    title: pendingBondInstrument
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:01:21.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-lots
+      - type: executable_for
+        target: TEST-ui-isin-pending
+  - id: SYM-viewsv1-instrument-get-isin-provisional
+    title: Instrument.GetIsinProvisional
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:27:50.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional
+  - id: SYM-viewsv1-instrument-detail-get-isin-provisional
+    title: InstrumentDetail.GetIsinProvisional
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T02:27:57.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-isin-provisional

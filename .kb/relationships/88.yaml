@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-100a71d3ae96
+  - type: executable_for
+    from: SYM-core-test-helper-provisional-coi
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:45.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52df3de440b3

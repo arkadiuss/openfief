@@ -867,3 +867,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90926fc599c1
+  - type: verified_by
+    from: SCEN-treasurybonds-provisional-isin
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-07T22:44:25.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fd14d4e52ff
+  - type: verified_by
+    from: SCEN-treasurybonds-provisional-isin
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T22:44:26.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a17c0e451e
+  - type: verified_by
+    from: SCEN-treasurybonds-provisional-isin
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T22:44:26.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fe0888d9353
+  - type: verified_by
+    from: SCEN-treasurybonds-provisional-isin
+    to: TEST-pl-isin
+    created_at: 2026-11-07T22:44:26.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a5101c34ad
+  - type: constrains
+    from: REQ-valuation-rekey-inputs
+    to: FACT-SUBJECT-C9A2DD105594C862
+    created_at: 2026-11-07T22:45:27.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-978324cfe360
+  - type: requires_property
+    from: REQ-valuation-rekey-inputs
+    to: FACT-PROP-FB022D095F11F933
+    created_at: 2026-11-07T22:45:27.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecd5cff297a2
+  - type: specified_by
+    from: REQ-valuation-rekey-inputs
+    to: SCEN-valuation-rekey-inputs
+    created_at: 2026-11-07T22:45:27.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a1df6f1a3ea
+  - type: implements
+    from: SYM-ledger-app-posting-keys
+    to: REQ-ledger-rekey-new-versions
+    created_at: 2026-11-07T23:12:21.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8e789c17fad
+  - type: covered_by
+    from: SYM-ledger-app-posting-keys
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:21.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c71213a4141
+  - type: executable_for
+    from: SYM-e2e-fixture-bonds-test-describe-published
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:42.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c36bb1e7571

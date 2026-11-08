@@ -120,8 +120,12 @@ type Scheduler struct {
 	Scope ScopeSource
 	// Held says what the accounts bound to an instance hold, which every
 	// sync of it carries (D-117); nil sends nothing.
-	Held   HeldSource
-	Policy ingest.SyncPolicy
+	Held HeldSource
+	// Provisional says which instruments the accounts bound to an instance
+	// post to under a provisional ISIN, which every sync of it names
+	// (D-214); nil names none.
+	Provisional ProvisionalSource
+	Policy      ingest.SyncPolicy
 	// Workers is how many syncs Tick runs at once: one when it is zero or
 	// less (D-189). Each sync holds its delivery in memory while it imports
 	// it, so the owner raises it only together with the core's memory
@@ -316,7 +320,10 @@ func (s *Scheduler) runBatches(ctx context.Context, instance string, mode ingest
 			// kept the claim for this one.
 			claim = SyncClaim{Watermark: watermark}
 		}
-		call := SyncCall{ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope, Held: plan.held, BondTerms: plan.terms}
+		call := SyncCall{
+			ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope, Held: plan.held, BondTerms: plan.terms,
+			Provisional: plan.provisional,
+		}
 		keep := i < len(batches)-1
 		if res, err = s.run(ctx, instance, &claim, &call, keep); err != nil {
 			return res, err
@@ -327,12 +334,13 @@ func (s *Scheduler) runBatches(ctx context.Context, instance string, mode ingest
 
 // syncPlan is what an attempt asks for: the modes of its batches, and what
 // a market-data connector is to price, or what the accounts bound to the
-// instance hold (D-117).
+// instance hold (D-117) and post to under a provisional ISIN (D-214).
 type syncPlan struct {
-	modes []ingest.Mode
-	scope ingest.MarketDataScope
-	held  []ingest.HeldAccount
-	terms []ingest.BondTerms
+	modes       []ingest.Mode
+	scope       ingest.MarketDataScope
+	held        []ingest.HeldAccount
+	terms       []ingest.BondTerms
+	provisional []ledger.Instrument
 }
 
 // plan returns the plan of a sync of instance: mode when the caller asks
@@ -363,7 +371,7 @@ func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode)
 // told returns what a sync of instance tells it: the market-data scope when
 // it is a market-data connector, one whose manifest declares it and whose
 // grant approves that (D-93, D-123), and what bound, its bound accounts,
-// hold (D-117).
+// hold (D-117) and post to under a provisional ISIN (D-214).
 func (s *Scheduler) told(ctx context.Context, instance string, bound []ledger.AccountID) (syncPlan, error) {
 	var p syncPlan
 	marketData, err := s.Connectors.marketData(ctx, instance)
@@ -375,12 +383,31 @@ func (s *Scheduler) told(ctx context.Context, instance string, bound []ledger.Ac
 			return syncPlan{}, fmt.Errorf("market-data scope: %w", err)
 		}
 	}
-	if len(bound) > 0 && s.Held != nil {
-		if p.held, p.terms, err = s.Held.HeldAccounts(ctx, bound); err != nil {
-			return syncPlan{}, fmt.Errorf("holdings of the bound accounts: %w", err)
-		}
+	if err := s.boundHoldings(ctx, bound, &p); err != nil {
+		return syncPlan{}, err
 	}
 	return p, nil
+}
+
+// boundHoldings adds to p what bound, the instance's bound accounts, hold
+// (D-117) and the instruments they post to under a provisional ISIN
+// (D-214); nothing for none, or without Held and Provisional.
+func (s *Scheduler) boundHoldings(ctx context.Context, bound []ledger.AccountID, p *syncPlan) error {
+	if len(bound) == 0 {
+		return nil
+	}
+	var err error
+	if s.Held != nil {
+		if p.held, p.terms, err = s.Held.HeldAccounts(ctx, bound); err != nil {
+			return fmt.Errorf("holdings of the bound accounts: %w", err)
+		}
+	}
+	if s.Provisional != nil {
+		if p.provisional, err = s.Provisional.ProvisionalInstruments(ctx, bound); err != nil {
+			return fmt.Errorf("provisional instruments of the bound accounts: %w", err)
+		}
+	}
+	return nil
 }
 
 // run runs one batch of an attempt on the claimed instance: it starts the

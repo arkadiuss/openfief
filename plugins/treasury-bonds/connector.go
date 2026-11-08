@@ -31,9 +31,10 @@ type connector struct {
 }
 
 // Sync delivers the CPI and reference-rate readings for the months after
-// the watermark, and the watermark of the last of each, and the terms of
-// any held series the core stores none of that the ministry's data now
-// lists (missingTerms). It also books each
+// the watermark, and the watermark of the last of each, the terms of any
+// held series the core stores none of that the ministry's data now lists,
+// and the registry's ISIN of each series the request names as provisional
+// that the data now lists (fromPublished, D-97, D-214). It also books each
 // coupon, as interest, and each maturity, as a redemption, that fell due
 // on the open lots the request says the bound accounts hold, each followed
 // by a withdrawal when the account pays it out (D-101, D-117, D-135): a
@@ -60,27 +61,39 @@ func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.S
 	if d, err = withCoupons(ctx, c.coupons, req.Msg, d, today); err != nil {
 		return nil, err
 	}
-	d.BondTerms = missingTerms(ctx, c.published, req.Msg)
+	if _, err := delivery.Provisional(req.Msg); err != nil {
+		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	d.BondTerms, d.RegistryIsins = fromPublished(ctx, c.published, req.Msg)
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: watermark}), nil
 }
 
-// missingTerms returns the terms of the held series whose terms the core
-// stores none of and the published data now lists (D-97,
-// treasurybonds.FillMissing): lots entered before the ministry's data
-// listed their series. It never replaces terms the core stores. A request
-// whose holdings don't parse was refused already; a failure to read the
-// data delivers no terms, and the next sync tries again, so a ministry
-// outage never holds back the index readings and coupons.
-func missingTerms(ctx context.Context, published treasurybonds.PublishedSource, req *connectorv1.SyncRequest) []*connectorv1.BondTerms {
+// fromPublished returns what the published data now lists for req
+// (treasurybonds.SyncPublished): the terms of the held series whose terms
+// the core stores none of (D-97, treasurybonds.FillMissing), lots entered
+// before the ministry's data listed their series, and the registry's ISIN
+// of each instrument req names as provisional (D-214,
+// treasurybonds.RegistryISINs), series
+// booked before the data listed their ISIN or under the ISIN earlier
+// versions derived from the series code. It never replaces terms the core
+// stores. A request whose holdings don't parse was refused already; a
+// failure to read the data delivers neither, and the next sync tries
+// again, so a ministry outage never holds back the index readings and
+// coupons.
+func fromPublished(ctx context.Context, published treasurybonds.PublishedSource, req *connectorv1.SyncRequest) ([]*connectorv1.BondTerms, []*connectorv1.RegistryIsin) {
 	held, stored, err := delivery.Held(req)
 	if err != nil {
-		return nil
+		return nil, nil
 	}
-	filled, err := treasurybonds.FillMissing(ctx, published, treasurybonds.MissingTerms(held, stored))
+	provisional, err := delivery.Provisional(req)
 	if err != nil {
-		return nil
+		return nil, nil
 	}
-	return delivery.BondTerms(filled)
+	filled, isins, err := treasurybonds.SyncPublished(ctx, published, treasurybonds.MissingTerms(held, stored), provisional)
+	if err != nil {
+		return nil, nil
+	}
+	return delivery.BondTerms(filled), delivery.RegistryISINs(isins)
 }
 
 // withCoupons returns d with the coupons, booked by coupons, due on what req says the bound
@@ -110,7 +123,9 @@ func withCoupons(ctx context.Context, coupons *treasurybonds.CouponSync, req *co
 func status(code connect.Code, err error) *connect.Error { return connect.NewError(code, err) }
 
 // ImportBondLots maps the lots into deposits and buys in the account the
-// core names with them (D-118), plus each series' terms: those the owner
+// core names with them (D-118), each as its series' instrument, with the
+// registry's ISIN the ministry's data lists, or the provisional one while
+// it lists none or can't be read (D-214), plus each series' terms: those the owner
 // entered, and for the rest the first-period rate and margin from the
 // Ministry of Finance's published data, with its attribution, and the fee
 // from the reviewed table, assumed past the month it was reviewed through
@@ -126,13 +141,14 @@ func (c *connector) ImportBondLots(ctx context.Context, req *connect.Request[con
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}
-	if termsErr := treasurybonds.CompleteTerms(ctx, c.published, &entries); termsErr != nil {
+	published, termsErr := treasurybonds.CompleteTerms(ctx, c.published, &entries)
+	if termsErr != nil {
 		if errors.Is(termsErr, pl.ErrNotPublished) || errors.Is(termsErr, pl.ErrNoReviewedFee) {
 			return nil, status(connect.CodeInvalidArgument, fmt.Errorf("%w; enter the series' terms with the lot", termsErr))
 		}
 		return nil, status(connect.CodeUnavailable, fmt.Errorf("treasury-bonds: %w", termsErr))
 	}
-	m, terms, err := c.mapper.Map(&entries, c.today())
+	m, terms, err := c.mapper.Map(&entries, published, c.today())
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}

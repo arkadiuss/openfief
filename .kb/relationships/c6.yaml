@@ -930,3 +930,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7961441b0b9c
+  - type: implements
+    from: SYM-ingest-delivery-registry-isi-ns
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:08:48.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea73a185063d
+  - type: covered_by
+    from: SYM-ingest-delivery-registry-isi-ns
+    to: TEST-ingest-connectrpc-registry
+    created_at: 2026-11-07T23:08:48.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45c4fc23139b
+  - type: implements
+    from: SYM-treasurybonds-missing-terms
+    to: REQ-treasurybonds-provisional-isin
+    created_at: 2026-11-07T23:16:38.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2de886a10ed
+  - type: verified_by
+    from: SCEN-e2e-bond-values-reference
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:35:36.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cef14c6deba2
+  - type: executable_for
+    from: SYM-e2e-bonds-test-coi-coupons-due
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:13.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c7d4548e857

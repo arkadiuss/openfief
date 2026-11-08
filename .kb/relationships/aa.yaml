@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c28788a3096
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-registry-isi-ns-round-trip
+    to: TEST-ingest-connectrpc-registry
+    created_at: 2026-11-07T23:08:33.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c78642f8669

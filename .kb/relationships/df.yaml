@@ -776,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3a77a37fcb0
+  - type: implements
+    from: SYM-attention-app-incomplete-series
+    to: REQ-attention-bond-series-incomplete
+    created_at: 2026-11-07T23:06:41.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f483d6f2f8e
+  - type: covered_by
+    from: SYM-attention-app-incomplete-series
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:06:41.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-427df98c717c
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-provisional-isin
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-08T02:01:06.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aac24fce583

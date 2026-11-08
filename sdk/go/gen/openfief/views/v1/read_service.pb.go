@@ -1262,9 +1262,14 @@ type Instrument struct {
 	Symbol string                 `protobuf:"bytes,2,opt,name=symbol,proto3" json:"symbol,omitempty"`
 	// The instrument's display name (D-197): the first one a connector
 	// delivered for its ISIN, or the owner's; empty when it has none.
-	Name          string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Whether isin is a treasury bond series' provisional ISIN: `PL`, the
+	// series code in symbol, `00` and a check digit. A lot of a series the
+	// Ministry of Finance's data doesn't list yet is booked under it, and
+	// moves to the registry's ISIN when the data lists it (D-214).
+	IsinProvisional bool `protobuf:"varint,4,opt,name=isin_provisional,json=isinProvisional,proto3" json:"isin_provisional,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Instrument) Reset() {
@@ -1316,6 +1321,13 @@ func (x *Instrument) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *Instrument) GetIsinProvisional() bool {
+	if x != nil {
+		return x.IsinProvisional
+	}
+	return false
 }
 
 // Sleeve is a part of the portfolio with one role.
@@ -8051,9 +8063,12 @@ type InstrumentDetail struct {
 	// from (D-97); unset for any other instrument, and for a series whose
 	// terms are not stored yet, such as one the ministry's data didn't list
 	// when its lot was entered, until a sync fills them in.
-	BondTerms     *BondSeriesTerms `protobuf:"bytes,6,opt,name=bond_terms,json=bondTerms,proto3" json:"bond_terms,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	BondTerms *BondSeriesTerms `protobuf:"bytes,6,opt,name=bond_terms,json=bondTerms,proto3" json:"bond_terms,omitempty"`
+	// Whether isin is a treasury bond series' provisional ISIN, as
+	// Instrument.isin_provisional (D-214).
+	IsinProvisional bool `protobuf:"varint,7,opt,name=isin_provisional,json=isinProvisional,proto3" json:"isin_provisional,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *InstrumentDetail) Reset() {
@@ -8126,6 +8141,13 @@ func (x *InstrumentDetail) GetBondTerms() *BondSeriesTerms {
 		return x.BondTerms
 	}
 	return nil
+}
+
+func (x *InstrumentDetail) GetIsinProvisional() bool {
+	if x != nil {
+		return x.IsinProvisional
+	}
+	return false
 }
 
 // BondSeriesTerms are what valuing a treasury bond series takes from its
@@ -8850,12 +8872,13 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"$openfief/views/v1/read_service.proto\x12\x11openfief.views.v1\x1a\x1cgoogle/api/annotations.proto\";\n" +
 	"\x05Money\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\tR\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"L\n" +
+	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"w\n" +
 	"\n" +
 	"Instrument\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12\x16\n" +
 	"\x06symbol\x18\x02 \x01(\tR\x06symbol\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"\x98\x01\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12)\n" +
+	"\x10isin_provisional\x18\x04 \x01(\bR\x0fisinProvisional\"\x98\x01\n" +
 	"\x06Sleeve\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x121\n" +
@@ -9401,7 +9424,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\awrapper\x18\x01 \x01(\tR\awrapper\x12'\n" +
 	"\x0fexemption_class\x18\x02 \x01(\tR\x0eexemptionClass\x12!\n" +
 	"\fowner_chosen\x18\x03 \x01(\bR\vownerChosen\x12\x14\n" +
-	"\x05known\x18\x04 \x01(\bR\x05known\"\xba\x02\n" +
+	"\x05known\x18\x04 \x01(\bR\x05known\"\xe5\x02\n" +
 	"\x10InstrumentDetail\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12@\n" +
 	"\blistings\x18\x02 \x03(\v2$.openfief.views.v1.InstrumentListingR\blistings\x12\x1f\n" +
@@ -9410,7 +9433,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x11exemption_classes\x18\x04 \x03(\v2+.openfief.views.v1.InstrumentExemptionClassR\x10exemptionClasses\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x12A\n" +
 	"\n" +
-	"bond_terms\x18\x06 \x01(\v2\".openfief.views.v1.BondSeriesTermsR\tbondTerms\"\xc6\x02\n" +
+	"bond_terms\x18\x06 \x01(\v2\".openfief.views.v1.BondSeriesTermsR\tbondTerms\x12)\n" +
+	"\x10isin_provisional\x18\a \x01(\bR\x0fisinProvisional\"\xc6\x02\n" +
 	"\x0fBondSeriesTerms\x12\x16\n" +
 	"\x06series\x18\x01 \x01(\tR\x06series\x12*\n" +
 	"\x11first_period_rate\x18\x02 \x01(\tR\x0ffirstPeriodRate\x12\x16\n" +

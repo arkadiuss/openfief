@@ -986,3 +986,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2b6802dc8cc
+  - type: executable_for
+    from: SYM-core-test-helper-check-rekeyed-stores
+    to: TEST-core-rekey
+    created_at: 2026-11-07T23:05:35.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cce5035c26f
+  - type: implements
+    from: SYM-viewsv1-instrument-get-isin-provisional
+    to: REQ-views-instrument-isin-provisional
+    created_at: 2026-11-08T02:27:52.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21d9db05c588
+  - type: covered_by
+    from: SYM-viewsv1-instrument-get-isin-provisional
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-08T02:27:52.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bbcba808c2d

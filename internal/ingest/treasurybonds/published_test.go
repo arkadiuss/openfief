@@ -21,7 +21,9 @@ var errOutage = errors.New("synthetic outage")
 
 // published is a synthetic source of published data that counts its reads:
 // EDO1136 at 6.11% with a 2.22% margin, EDO1236 at 6.55% with a 2% margin
-// and TOS1129 at 4.33%.
+// and TOS1129 at 4.33%, with the synthetic registry ISINs PL9999000018 of
+// EDO1136 and PL9999000026 of EDO1236, and PL9999000034 of COI1130, whose
+// rates it doesn't list yet (D-214).
 type published struct {
 	reads int
 	err   error
@@ -35,7 +37,8 @@ func (p *published) Published(context.Context) (*pl.Published, error) {
 	edo, err1 := pl.ParseSeries("EDO1136")
 	tos, err2 := pl.ParseSeries("TOS1129")
 	later, err3 := pl.ParseSeries("EDO1236")
-	if err := errors.Join(err1, err2, err3); err != nil {
+	coi, err4 := pl.ParseSeries("COI1130")
+	if err := errors.Join(err1, err2, err3, err4); err != nil {
 		return nil, err
 	}
 	return &pl.Published{
@@ -43,6 +46,9 @@ func (p *published) Published(context.Context) (*pl.Published, error) {
 			{Series: edo, FirstPeriodRate: kernel.NewDecimal(611, -4), Margin: kernel.NewDecimal(222, -4)},
 			{Series: later, FirstPeriodRate: kernel.NewDecimal(655, -4), Margin: kernel.NewDecimal(200, -4)},
 			{Series: tos, FirstPeriodRate: kernel.NewDecimal(433, -4)},
+		},
+		ISINs: []pl.PublishedISIN{
+			{Series: edo, ISIN: "PL9999000018"}, {Series: later, ISIN: "PL9999000026"}, {Series: coi, ISIN: "PL9999000034"},
 		},
 		Attribution: syntheticAttribution("read"),
 	}, nil
@@ -66,7 +72,8 @@ func syntheticAttribution(processing string) pl.Attribution {
 // came from, the reviewed table's fee by sale month, carried forward as
 // assumed past the reviewed month, and nothing for terms the owner
 // entered, which win. A lot that left everything to a series the data
-// doesn't list yet stays pending.
+// doesn't list yet stays pending. The data is read once whenever there is
+// a lot, for its series' registry ISIN (D-214).
 func TestCompleteTerms(t *testing.T) {
 	t.Parallel()
 	table := syntheticAttribution("read; the early-redemption fee is not in the data: OpenFief took it from its reviewed table of the issue letters")
@@ -76,11 +83,10 @@ func TestCompleteTerms(t *testing.T) {
 		name       string
 		lot        func(l *ingest.BondLot)
 		want       func(l *ingest.BondLot)
-		wantReads  int
 		wantErrors []error
 	}{
 		{
-			name: "nothing left out: the owner's terms, no read",
+			name: "nothing left out: the owner's terms",
 			lot:  func(*ingest.BondLot) {},
 			want: func(*ingest.BondLot) {},
 		},
@@ -91,7 +97,6 @@ func TestCompleteTerms(t *testing.T) {
 				l.Terms.FirstPeriodRate, l.Terms.Margin = kernel.NewDecimal(611, -4), kernel.NewDecimal(222, -4)
 				l.Terms.EarlyRedemptionFee, l.Terms.Attribution, l.Terms.FeeSource = pln(t, "3.00"), &table, pl.FeeFromTable
 			},
-			wantReads: 1,
 		},
 		{
 			name: "everything left out, sold after the fee table was reviewed: the fee assumed",
@@ -104,7 +109,6 @@ func TestCompleteTerms(t *testing.T) {
 				l.Terms.FirstPeriodRate, l.Terms.Margin = kernel.NewDecimal(655, -4), kernel.NewDecimal(200, -4)
 				l.Terms.EarlyRedemptionFee, l.Terms.Attribution, l.Terms.FeeSource = pln(t, "3.00"), &assumed, pl.FeeAssumed
 			},
-			wantReads: 1,
 		},
 		{
 			name: "everything left out of a series the data doesn't list yet: pending, no error",
@@ -116,7 +120,6 @@ func TestCompleteTerms(t *testing.T) {
 				*l = lot(t, "COI1130", "10", "2026-11-03", "0.05")
 				l.PublishedRates, l.ReviewedFee = true, true
 			},
-			wantReads: 1,
 		},
 		{
 			name: "the rates left out, the fee entered",
@@ -124,10 +127,9 @@ func TestCompleteTerms(t *testing.T) {
 			want: func(l *ingest.BondLot) {
 				l.Terms.FirstPeriodRate, l.Terms.Margin, l.Terms.Attribution = kernel.NewDecimal(611, -4), kernel.NewDecimal(222, -4), &entered
 			},
-			wantReads: 1,
 		},
 		{
-			name: "only the fee left out: the table's, no read, no attribution",
+			name: "only the fee left out: the table's, no attribution",
 			lot:  func(l *ingest.BondLot) { l.ReviewedFee = true },
 			want: func(l *ingest.BondLot) {
 				l.Terms.EarlyRedemptionFee, l.Terms.FeeSource = pln(t, "3.00"), pl.FeeFromTable
@@ -150,7 +152,7 @@ func TestCompleteTerms(t *testing.T) {
 				*l = lot(t, "COI1130", "10", "2026-11-03", "0.05")
 				l.PublishedRates = true
 			},
-			wantReads: 1, wantErrors: []error{pl.ErrNotPublished},
+			wantErrors: []error{pl.ErrNotPublished},
 		},
 		{
 			name: "a series sold before its type's first fee row",
@@ -168,9 +170,9 @@ func TestCompleteTerms(t *testing.T) {
 			tt.lot(&l)
 			src := &published{}
 			e := ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{l}}
-			err := treasurybonds.CompleteTerms(context.Background(), src, &e)
-			if src.reads != tt.wantReads {
-				t.Errorf("read the published data %d times, want %d", src.reads, tt.wantReads)
+			_, err := treasurybonds.CompleteTerms(context.Background(), src, &e)
+			if src.reads != 1 {
+				t.Errorf("read the published data %d times, want once", src.reads)
 			}
 			if tt.wantErrors != nil {
 				wantErrors(t, err, tt.wantErrors)
@@ -205,15 +207,18 @@ func wantLots(t *testing.T, err error, want, got []ingest.BondLot) {
 }
 
 // TestCompleteTermsReadsOnce reads the published data once for a batch of
-// lots, and returns a failure to read it as it came.
+// lots and returns it, returns a failure to read it as it came when a lot
+// needs its rates, and otherwise no data, so the lots wait for their
+// registry ISIN (D-214); a batch of deletions alone reads nothing.
 func TestCompleteTermsReadsOnce(t *testing.T) {
 	t.Parallel()
 	edo, tos := lot(t, "EDO1136", "10", "2026-11-03", "0"), lot(t, "TOS1129", "5", "2026-11-04", "0")
 	edo.PublishedRates, tos.PublishedRates = true, true
 	src := &published{}
 	e := ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{edo, tos}}
-	if err := treasurybonds.CompleteTerms(context.Background(), src, &e); err != nil {
-		t.Fatalf("CompleteTerms: %v", err)
+	p, err := treasurybonds.CompleteTerms(context.Background(), src, &e)
+	if err != nil || p == nil {
+		t.Fatalf("CompleteTerms = %v, %v, want the data read", p, err)
 	}
 	if src.reads != 1 {
 		t.Errorf("read the published data %d times, want once", src.reads)
@@ -223,9 +228,29 @@ func TestCompleteTermsReadsOnce(t *testing.T) {
 	}
 	down := &published{err: errOutage}
 	e = ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{edo}}
-	err := treasurybonds.CompleteTerms(context.Background(), down, &e)
+	_, err = treasurybonds.CompleteTerms(context.Background(), down, &e)
 	if diff := cmp.Diff(errOutage, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("CompleteTerms error (-want +got):\n%s", diff)
+	}
+}
+
+// TestCompleteTermsWithoutData returns data that lists nothing, so the
+// lots wait for their registry ISIN (D-214), for lots whose terms the owner
+// entered while the data can't be read, and for a batch of deletions
+// alone, which reads nothing.
+func TestCompleteTermsWithoutData(t *testing.T) {
+	t.Parallel()
+	down := &published{err: errOutage}
+	e := ingest.BondLotEntries{Account: account, Lots: []ingest.BondLot{lot(t, "EDO1136", "10", "2026-11-03", "0.05")}}
+	p, err := treasurybonds.CompleteTerms(context.Background(), down, &e)
+	if err != nil || p == nil || len(p.ISINs)+len(p.Rates) != 0 {
+		t.Errorf("CompleteTerms of entered terms while the data is down = %v, %v, want data listing nothing", p, err)
+	}
+	none := &published{}
+	e = ingest.BondLotEntries{Account: account, Deleted: []ingest.BondLotKey{key(t, "EDO1136", "2026-11-03")}}
+	p, err = treasurybonds.CompleteTerms(context.Background(), none, &e)
+	if err != nil || p == nil || len(p.ISINs)+len(p.Rates) != 0 || none.reads != 0 {
+		t.Errorf("CompleteTerms of deletions = %v, %v after %d reads, want data listing nothing and no read", p, err, none.reads)
 	}
 }
 
@@ -245,20 +270,25 @@ func held(t *testing.T, codes ...string) []ingest.HeldAccount {
 	return []ingest.HeldAccount{a}
 }
 
-// TestMissingTerms lists the held series without stored terms, each once
-// in series order, and never one whose terms are stored or an instrument
-// that is no bond of this connector.
+// TestMissingTerms lists the held bond instruments without stored terms,
+// under their provisional ISIN or the registry's (D-214), each once in
+// order, and never one whose terms are stored or an instrument that is no
+// treasury bond.
 func TestMissingTerms(t *testing.T) {
 	t.Parallel()
 	etf := ledger.Instrument{ISIN: instrument(t, "EDO1136").ISIN, Symbol: "SYNT"}
+	foreign := registry(t, "EDO0536", "DE0000000009")
 	stored := []ingest.BondTerms{{Instrument: instrument(t, "EDO1136")}}
 	accounts := held(t, "TOS1129", "EDO1136", "EDO1236", "TOS1129")
-	accounts[0].Holdings = append(accounts[0].Holdings, ledger.Holding{Instrument: etf})
+	accounts[0].Holdings = append(accounts[0].Holdings,
+		ledger.Holding{Instrument: etf}, ledger.Holding{Instrument: foreign},
+		ledger.Holding{Instrument: registry(t, "COI1130", "PL9999000034")})
 	var got []string
-	for _, s := range treasurybonds.MissingTerms(accounts, stored) {
-		got = append(got, s.String())
+	for _, in := range treasurybonds.MissingTerms(accounts, stored) {
+		got = append(got, in.String())
 	}
-	if diff := cmp.Diff([]string{"EDO1236", "TOS1129"}, got); diff != "" {
+	want := []string{"PL9999000034/COI1130", instrument(t, "EDO1236").String(), instrument(t, "TOS1129").String()}
+	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("MissingTerms (-want +got):\n%s", diff)
 	}
 	if got := treasurybonds.MissingTerms(held(t, "EDO1136"), stored); got != nil {
@@ -267,21 +297,23 @@ func TestMissingTerms(t *testing.T) {
 }
 
 // TestFillMissing fills in the series the data lists, the fee assumed past
-// the reviewed month, leaves out one it doesn't list, reads the data only
-// when something is missing and returns a failure to read it.
+// the reviewed month, keyed by its registry ISIN when it was held under its
+// provisional one (D-214), and leaves out one whose rates it doesn't list.
+// SyncPublished reads the data only when something is missing or
+// provisional, once, and returns a failure to read it.
 func TestFillMissing(t *testing.T) {
 	t.Parallel()
 	src := &published{}
-	if got, err := treasurybonds.FillMissing(t.Context(), src, nil); got != nil || err != nil || src.reads != 0 {
-		t.Errorf("FillMissing(none) = %v, %v after %d reads, want nothing and no read", got, err, src.reads)
+	if terms, isins, err := treasurybonds.SyncPublished(t.Context(), src, nil, nil); terms != nil || isins != nil || err != nil || src.reads != 0 {
+		t.Errorf("SyncPublished(none) = %v, %v, %v after %d reads, want nothing and no read", terms, isins, err, src.reads)
 	}
-	missing := []pl.Series{series(t, "COI1130"), series(t, "EDO1236")}
-	got, err := treasurybonds.FillMissing(t.Context(), src, missing)
-	if err != nil {
-		t.Fatalf("FillMissing: %v", err)
+	missing := []ledger.Instrument{instrument(t, "COI1130"), instrument(t, "EDO1236")}
+	got, isins, err := treasurybonds.SyncPublished(t.Context(), src, missing, nil)
+	if err != nil || isins != nil {
+		t.Fatalf("SyncPublished = %v, %v", isins, err)
 	}
 	assumed := syntheticAttribution("read; the early-redemption fee is not in the data: OpenFief assumed the latest fee of its reviewed table of the issue letters, for the owner to confirm")
-	want := []ingest.BondTerms{{Instrument: instrument(t, "EDO1236"), Terms: pl.Terms{
+	want := []ingest.BondTerms{{Instrument: registry(t, "EDO1236", "PL9999000026"), Terms: pl.Terms{
 		Series: series(t, "EDO1236"), FirstPeriodRate: kernel.NewDecimal(655, -4), Margin: kernel.NewDecimal(200, -4),
 		EarlyRedemptionFee: pln(t, "3.00"), Attribution: &assumed, FeeSource: pl.FeeAssumed,
 	}}}
@@ -291,9 +323,39 @@ func TestFillMissing(t *testing.T) {
 	if src.reads != 1 {
 		t.Errorf("read the data %d times, want once", src.reads)
 	}
-	_, err = treasurybonds.FillMissing(t.Context(), &published{err: errOutage}, missing)
+	_, _, err = treasurybonds.SyncPublished(t.Context(), &published{err: errOutage}, missing, nil)
 	if diff := cmp.Diff(errOutage, err, cmpopts.EquateErrors()); diff != "" {
-		t.Errorf("FillMissing error (-want +got):\n%s", diff)
+		t.Errorf("SyncPublished error (-want +got):\n%s", diff)
+	}
+}
+
+// TestRegistryISINs: a sync delivers the registry ISIN of each provisional
+// instrument whose series the data lists, an ISIN listed before the
+// series' rates too, and nothing for a series the data doesn't list, an
+// instrument under its registry ISIN already, or one whose ISIN isn't its
+// series' provisional one (D-214).
+func TestRegistryISINs(t *testing.T) {
+	t.Parallel()
+	src := &published{}
+	mismatched := ledger.Instrument{ISIN: instrument(t, "EDO1136").ISIN, Symbol: "EDO1236"}
+	provisional := []ledger.Instrument{
+		instrument(t, "EDO1136"), instrument(t, "COI1130"), instrument(t, "TOS1129"),
+		registry(t, "EDO1236", "PL9999000026"), mismatched,
+	}
+	terms, got, err := treasurybonds.SyncPublished(t.Context(), src, nil, provisional)
+	if err != nil || terms != nil {
+		t.Fatalf("SyncPublished = %v, %v", terms, err)
+	}
+	isin := func(s string) ledger.ISIN { return registry(t, "X", s).ISIN }
+	want := []ingest.RegistryISIN{
+		{Instrument: instrument(t, "EDO1136"), ISIN: isin("PL9999000018")},
+		{Instrument: instrument(t, "COI1130"), ISIN: isin("PL9999000034")},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("SyncPublished registry ISINs (-want +got):\n%s", diff)
+	}
+	if src.reads != 1 {
+		t.Errorf("read the data %d times, want once", src.reads)
 	}
 }
 

@@ -8,7 +8,7 @@
 <div class="page-head">
   <div>
     <h1>{{.Name}}</h1>
-    <p class="lede ids">{{range $i, $t := .Tickers}}{{if $i}} · {{end}}<span class="mono">{{$t}}</span>{{end}}{{if .Tickers}} · {{end}}ISIN <span class="mono">{{.Detail.Isin}}</span></p>
+    <p class="lede ids">{{range $i, $t := .Tickers}}{{if $i}} · {{end}}<span class="mono">{{$t}}</span>{{end}}{{if .Tickers}} · {{end}}ISIN <span class="mono">{{.Detail.Isin}}</span>{{template "isin-pending" .Detail}}</p>
     <p class="pills head-pills"><span class="pill pill-neutral">{{enum .Detail.AssetClass ""}}</span></p>
   </div>
 </div>

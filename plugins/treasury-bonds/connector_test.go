@@ -82,8 +82,13 @@ func mustDate(s string) kernel.Date {
 	return d
 }
 
+// registryEDO is the synthetic registry ISIN fakePublished lists for
+// EDO0536 (D-214).
+const registryEDO = "PL9999000018"
+
 // fakePublished serves synthetic published data: EDO0536 at 6.11% and a
-// 2.22% margin, and TOS0529 at 4.33%, or err.
+// 2.22% margin, with the registry ISIN registryEDO, and TOS0529 at 4.33%,
+// with none listed yet, or err.
 type fakePublished struct{ err error }
 
 func (f fakePublished) Published(context.Context) (*pl.Published, error) {
@@ -100,6 +105,7 @@ func (f fakePublished) Published(context.Context) (*pl.Published, error) {
 			{Series: edo, FirstPeriodRate: kernel.NewDecimal(611, -4), Margin: kernel.NewDecimal(222, -4)},
 			{Series: tos, FirstPeriodRate: kernel.NewDecimal(433, -4)},
 		},
+		ISINs: []pl.PublishedISIN{{Series: edo, ISIN: registryEDO}},
 		Attribution: pl.Attribution{
 			Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
 			URL: "https://www.example.org/attachment/x", Made: mustDate("2026-10-26"),
@@ -112,10 +118,11 @@ func (f fakePublished) Published(context.Context) (*pl.Published, error) {
 // series' terms: the connector delivers the published first-period rate and
 // margin with their attribution, and the reviewed table's fee (D-97); terms
 // the owner entered win over the published ones and carry no attribution.
+// Either way the series is its registry ISIN (D-214).
 func TestImportBondLotsPublishedTerms(t *testing.T) {
 	t.Parallel()
 	client := served(t, fakeCPI{}, fakeRates{})
-	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	edo := &connectorv1.Instrument{Isin: registryEDO, Symbol: "EDO0536"}
 	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
 	attribution := func(processing string) *connectorv1.BondTermsAttribution {
 		return &connectorv1.BondTermsAttribution{
@@ -190,6 +197,52 @@ func TestImportBondLotsPublishedDataUnavailable(t *testing.T) {
 	}
 }
 
+// TestImportBondLotsWaitForISIN books a lot whose terms the owner entered
+// while the published data can't be read, and one of a series the data
+// doesn't list an ISIN of yet, under their provisional ISIN, keyed by the
+// series, so a later sync's registry ISIN re-keys them (D-214).
+func TestImportBondLotsWaitForISIN(t *testing.T) {
+	t.Parallel()
+	today := mustDate("2026-10-29")
+	tos := &connectorv1.BondLot{
+		Series: "TOS0529", Quantity: "3", PurchaseDate: "2026-05-04", FirstPeriodRate: "0.0433", Margin: "0",
+		EarlyRedemptionFee: &connectorv1.Money{Amount: "0.70", Currency: "PLN"},
+	}
+	tests := []struct {
+		name string
+		src  fakePublished
+		lot  *connectorv1.BondLot
+		want *connectorv1.Instrument
+	}{
+		{name: "the data can't be read", src: fakePublished{err: errOutage}, lot: edoLot(), want: bondInstrument("EDO0536")},
+		{name: "the data lists no ISIN of the series", lot: tos, want: bondInstrument("TOS0529")},
+		{name: "the data lists the series' ISIN", lot: edoLot(), want: &connectorv1.Instrument{Isin: registryEDO, Symbol: "EDO0536"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			c := &connector{published: tt.src, today: func() kernel.Date { return today }}
+			resp, err := c.ImportBondLots(t.Context(), connect.NewRequest(&connectorv1.ImportBondLotsRequest{
+				BatchId: "b-1", AccountId: "acc-bonds", Lots: []*connectorv1.BondLot{tt.lot},
+			}))
+			if err != nil {
+				t.Fatalf("ImportBondLots: %v", err)
+			}
+			d := resp.Msg.GetDelivery()
+			buy := d.GetTransactions()[1]
+			if diff := cmp.Diff(tt.want, buy.GetPostings()[0].GetBook().GetInstrument(), protocmp.Transform()); diff != "" {
+				t.Errorf("the buy's instrument (-want +got):\n%s", diff)
+			}
+			if got := buy.GetKey().GetExternalId(); got != "lot:"+tt.lot.GetSeries()+":2026-05-04:buy" {
+				t.Errorf("the buy's key = %q, want it keyed by the series", got)
+			}
+			if diff := cmp.Diff(tt.want, d.GetBondTerms()[0].GetInstrument(), protocmp.Transform()); diff != "" {
+				t.Errorf("the terms' instrument (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
 // served serves a connector whose today is
 // 2026-10-29 and whose index readings start in September 2026, with the SDK
 // as the plugin does, and returns a client that calls it as the core.
@@ -235,7 +288,7 @@ func TestImportBondLots(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
-	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	edo := &connectorv1.Instrument{Isin: registryEDO, Symbol: "EDO0536"}
 	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
 	cash := &connectorv1.Book{Kind: connectorv1.BookKind_BOOK_KIND_CASH, Currency: "PLN"}
 	key := func(id string) *connectorv1.TransactionKey {
@@ -357,14 +410,16 @@ func heldRequest(mode connectorv1.Mode) *connectorv1.SyncRequest {
 	}
 }
 
-// bondInstrument is the instrument of series code, as the connector derives
-// it (D-99); the zero instrument for a code that is no series.
+// bondInstrument is the provisional instrument of series code, which
+// versions before D-214 booked every series under and a series the
+// published data lists no ISIN of yet is booked under; the zero instrument
+// for a code that is no series.
 func bondInstrument(code string) *connectorv1.Instrument {
 	s, err := pl.ParseSeries(code)
 	if err != nil {
 		return &connectorv1.Instrument{}
 	}
-	in, err := treasurybonds.Instrument(s)
+	in, err := treasurybonds.ProvisionalInstrument(s)
 	if err != nil {
 		return &connectorv1.Instrument{}
 	}
@@ -470,13 +525,14 @@ func TestSyncBooksAccountsNeverSeeded(t *testing.T) {
 }
 
 // TestSyncFillsMissingTerms: a sync delivers the terms of each held series
-// the core stores none of and the published data now lists, and nothing
-// for a series whose terms are stored or that the data still doesn't list
-// (D-97); a ministry outage delivers no terms and still syncs.
+// the core stores none of and the published data now lists, keyed by its
+// registry ISIN when it is held under its provisional one (D-214), and
+// nothing for a series whose terms are stored or that the data still
+// doesn't list (D-97); a ministry outage delivers no terms and still syncs.
 func TestSyncFillsMissingTerms(t *testing.T) {
 	t.Parallel()
 	req := heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)
-	edo := bondInstrument("EDO0536")
+	edo := &connectorv1.Instrument{Isin: registryEDO, Symbol: "EDO0536"}
 	req.BondTerms = slices.DeleteFunc(req.GetBondTerms(), func(b *connectorv1.BondTerms) bool { return b.GetInstrument().GetSymbol() == "EDO0536" })
 	unlisted := bondInstrument("COI0530")
 	req.Accounts[0].Holdings = append(req.Accounts[0].Holdings, &connectorv1.Holding{Instrument: unlisted, Quantity: "3"})
@@ -509,6 +565,44 @@ func TestSyncFillsMissingTerms(t *testing.T) {
 	if got := out.Msg.GetDelivery(); len(got.GetBondTerms()) != 0 || len(got.GetIndexReadings()) == 0 {
 		t.Errorf("Sync with the ministry's data down delivered %d terms and %d readings; want none and the readings",
 			len(got.GetBondTerms()), len(got.GetIndexReadings()))
+	}
+}
+
+// TestSyncDeliversRegistryISINs: a sync delivers the registry ISIN of each
+// instrument the request names as provisional whose series the published
+// data lists, and nothing for one it doesn't list yet or one that isn't
+// under its series' provisional ISIN; a ministry outage delivers none and
+// still syncs, and a malformed instrument is refused (D-214).
+func TestSyncDeliversRegistryISINs(t *testing.T) {
+	t.Parallel()
+	req := heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)
+	other := &connectorv1.Instrument{Isin: bondInstrument("EDO0536").GetIsin(), Symbol: "TOS0529"}
+	req.ProvisionalInstruments = []*connectorv1.Instrument{bondInstrument("EDO0536"), bondInstrument("TOS0529"), other}
+	resp, err := served(t, fakeCPI{}, fakeRates{}).Sync(t.Context(), asCore(req))
+	if err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	want := []*connectorv1.RegistryIsin{{Instrument: bondInstrument("EDO0536"), Isin: registryEDO}}
+	if diff := cmp.Diff(want, resp.Msg.GetDelivery().GetRegistryIsins(), protocmp.Transform()); diff != "" {
+		t.Errorf("Sync registry ISINs (-want +got):\n%s", diff)
+	}
+
+	down := &connector{
+		coupons:   &treasurybonds.CouponSync{CPI: fakeCPI{}, Rates: fakeRates{}},
+		indices:   &treasurybonds.IndexSync{CPI: fakeCPI{}, Rates: fakeRates{}, Start: mustDate("2026-09-01")},
+		published: fakePublished{err: errOutage}, today: func() kernel.Date { return mustDate("2026-10-29") },
+	}
+	out, err := down.Sync(t.Context(), connect.NewRequest(req))
+	if err != nil {
+		t.Fatalf("Sync with the ministry's data down: %v", err)
+	}
+	if got := out.Msg.GetDelivery(); len(got.GetRegistryIsins()) != 0 || len(got.GetIndexReadings()) == 0 {
+		t.Errorf("Sync with the ministry's data down delivered %d registry ISINs and %d readings; want none and the readings",
+			len(got.GetRegistryIsins()), len(got.GetIndexReadings()))
+	}
+	req.ProvisionalInstruments = []*connectorv1.Instrument{{Isin: "not an ISIN", Symbol: "EDO0536"}}
+	if _, err := down.Sync(t.Context(), connect.NewRequest(req)); connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("Sync with a malformed provisional instrument = %v, want InvalidArgument", err)
 	}
 }
 
@@ -612,7 +706,7 @@ func TestImportBondLotsBeforeGoLiveAndDeleted(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
-	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	edo := &connectorv1.Instrument{Isin: registryEDO, Symbol: "EDO0536"}
 	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
 	key := func(id string) *connectorv1.TransactionKey {
 		return &connectorv1.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalId: id}

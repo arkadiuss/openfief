@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3baa6294b644
+  - type: executable_for
+    from: SYM-treasurybonds-test-complete-terms-without-data
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T23:11:01.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ead90501a77
+  - type: implements
+    from: SYM-e2e-fixture-xls-number-cell
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:38:01.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cab3f3d1b3
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-number-cell
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:38:01.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a974a612aee

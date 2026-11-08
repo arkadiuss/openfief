@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-257b8fba96c6
+  - type: verified_by
+    from: SCEN-ui-bond-lot-help-isin
+    to: TEST-ui-bond-lots
+    created_at: 2026-11-07T22:44:35.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5d3806d3197

@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b19074a21ded
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-check-not-held
+    to: TEST-ledger-app-rekey
+    created_at: 2026-11-07T23:12:52.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b45d2658390

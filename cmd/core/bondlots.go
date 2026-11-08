@@ -168,7 +168,7 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 		Sources: sourceInputs{rankings: d.rankings}, Declarations: d.entries,
 		Tickers: store, Lookup: d.entries, Instances: d.entries, Attention: valuationAttention{items: d.attention},
-		Names: d.names,
+		Names: d.names, Rekeyers: d.rekeyers,
 	}
 }
 

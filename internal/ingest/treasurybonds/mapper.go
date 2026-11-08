@@ -20,15 +20,7 @@ const Institution = ingest.TreasuryBonds
 // writes; the ledger account ID follows it.
 const SourcePrefix = "treasury-bonds:"
 
-// isinCountry is the country code of the ISINs Instrument derives: Polish,
-// so the views count the holding as a treasury bond.
-const isinCountry = "PL"
-
-// isinFiller pads a seven-character series code to an ISIN's nine-character
-// national number.
-const isinFiller = "00"
-
-// checkDigits is how many check digits Instrument tries.
+// checkDigits is how many check digits ProvisionalInstrument tries.
 const checkDigits = 10
 
 // Errors mapping lots.
@@ -45,15 +37,35 @@ var (
 	ErrConflictingTerms = errors.New("one series with two different terms")
 )
 
-// Instrument returns the instrument of bond series s: its venue symbol is
-// the series code, such as EDO0536, and its ISIN is derived from the code
-// as "PL", the code, "00" and the check digit that makes it valid, such as
-// PLEDO0536000. The owner enters only the series code (D-9), and the
-// issuer's offer and interest tables name series by code, so the ISIN is
-// derived, not the one the registry may have assigned; the same series
-// always gets the same instrument.
-func Instrument(s pl.Series) (ledger.Instrument, error) {
-	body := isinCountry + s.String() + isinFiller
+// SeriesInstrument returns the instrument of bond series s (D-214): its
+// venue symbol, the ticker, is the series code, such as EDO0536, and its
+// ISIN the registry's, as the ministry's published data p lists it. While p
+// lists no ISIN of s, or p is nil because the data couldn't be read, it is
+// the provisional instrument (ProvisionalInstrument), which the core
+// re-keys to the registry's ISIN once a sync delivers it.
+func SeriesInstrument(p *pl.Published, s pl.Series) (ledger.Instrument, error) {
+	if p != nil {
+		if code, err := p.ISINOf(s); err == nil {
+			isin, err := ledger.ParseISIN(code)
+			if err != nil {
+				return ledger.Instrument{}, fmt.Errorf("the ISIN of %s: %w", s, err)
+			}
+			return ledger.Instrument{ISIN: isin, Symbol: s.String()}, nil
+		}
+	}
+	return ProvisionalInstrument(s)
+}
+
+// ProvisionalInstrument returns the instrument series s is held under while
+// the registry's ISIN of it isn't known (D-214): its symbol the series code
+// and its ISIN the provisional one, "PL", the code, "00" and the check
+// digit that makes it valid (pl.ProvisionalPrefix), such as PLEDO0536000.
+// It is what a lot of a series the ministry's data doesn't list yet is
+// booked under, and what versions before D-214 booked every series under,
+// so the core recognises both and re-keys them; it never identifies the
+// series once the registry's ISIN is known.
+func ProvisionalInstrument(s pl.Series) (ledger.Instrument, error) {
+	body := pl.ProvisionalPrefix(s)
 	for d := range checkDigits {
 		if isin, err := ledger.ParseISIN(body + strconv.Itoa(d)); err == nil {
 			return ledger.Instrument{ISIN: isin, Symbol: s.String()}, nil
@@ -71,7 +83,9 @@ type Mapper struct {
 }
 
 // Map validates each lot of e, entered on e.Account, as of today
-// (ingest.BondLot.Validate) and books it on its real purchase date (D-98):
+// (ingest.BondLot.Validate) and books it, as its series' instrument in the
+// ministry's published data p (SeriesInstrument, D-214), which may be nil,
+// on its real purchase date (D-98):
 // two transactions, a deposit of its cost against equity and the buy of
 // its bonds for that cost, so the account's cash stays at zero, its
 // history starts at its first purchase, and the money counts as having
@@ -85,7 +99,10 @@ type Mapper struct {
 // their cash goes with it (D-154). Map also returns each series' terms once, in the
 // order the series first appear, but none for a lot still pending (its
 // series not in the ministry's data yet, BondLot.Pending): a later sync fills
-// those in. Any invalid lot, one series bought on one
+// those in. A lot of a series p lists no ISIN of is booked under its
+// provisional instrument, as it waits for its terms: a later sync delivers
+// the registry's ISIN, and the core re-keys it. The keys name the series,
+// never the ISIN, so a re-key keeps them. Any invalid lot, one series bought on one
 // day twice in the batch, or one series with two different terms refuses
 // the whole batch.
 //
@@ -95,7 +112,7 @@ type Mapper struct {
 // purchase date: entering it again unchanged changes nothing, and with
 // another quantity, price or terms makes a new version that supersedes the
 // old (D-18).
-func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
+func (m Mapper) Map(e *ingest.BondLotEntries, p *pl.Published, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
 	m.account = e.Account
 	if m.account == "" {
 		return ingest.Mapping{}, nil, ErrNoAccount
@@ -111,7 +128,7 @@ func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping
 		if err := l.Validate(today); err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
-		in, err := m.unique(seen, l.Key())
+		in, err := m.unique(seen, l.Key(), p)
 		if err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
@@ -126,7 +143,7 @@ func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping
 		}
 		out.Transactions = append(out.Transactions, txs...)
 	}
-	deleted, err := m.mapDeleted(e, seen)
+	deleted, err := m.mapDeleted(e, seen, p)
 	if err != nil {
 		return ingest.Mapping{}, nil, err
 	}
@@ -135,14 +152,14 @@ func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping
 }
 
 // mapDeleted returns the deletions of e's deleted lots, recording each in
-// seen.
-func (m Mapper) mapDeleted(e *ingest.BondLotEntries, seen map[ingest.BondLotKey]bool) ([]ledger.Transaction, error) {
+// seen, and naming each series' instrument in p.
+func (m Mapper) mapDeleted(e *ingest.BondLotEntries, seen map[ingest.BondLotKey]bool, p *pl.Published) ([]ledger.Transaction, error) {
 	var out []ledger.Transaction
 	for i, k := range e.Deleted {
 		if err := k.Validate(); err != nil {
 			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
 		}
-		in, err := m.unique(seen, k)
+		in, err := m.unique(seen, k, p)
 		if err != nil {
 			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
 		}
@@ -155,14 +172,15 @@ func (m Mapper) mapDeleted(e *ingest.BondLotEntries, seen map[ingest.BondLotKey]
 	return out, nil
 }
 
-// unique records k in seen and returns its series' instrument, or fails
-// with ErrDuplicateLot when the batch named k already.
-func (m Mapper) unique(seen map[ingest.BondLotKey]bool, k ingest.BondLotKey) (ledger.Instrument, error) {
+// unique records k in seen and returns its series' instrument in p
+// (SeriesInstrument), or fails with ErrDuplicateLot when the batch named k
+// already.
+func (m Mapper) unique(seen map[ingest.BondLotKey]bool, k ingest.BondLotKey, p *pl.Published) (ledger.Instrument, error) {
 	if seen[k] {
 		return ledger.Instrument{}, fmt.Errorf("%w: %s on %s", ErrDuplicateLot, k.Series, k.Purchased)
 	}
 	seen[k] = true
-	return Instrument(k.Series)
+	return SeriesInstrument(p, k.Series)
 }
 
 // addTerms appends t for in to terms unless its series is already there,

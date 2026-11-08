@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0752997cf7b
+  - type: implements
+    from: SYM-mfbonds-parse-workbook
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:16:51.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beab6b659e55

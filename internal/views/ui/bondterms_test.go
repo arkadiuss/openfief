@@ -27,12 +27,13 @@ const (
 var errNotAssumedFake = errors.New("the series' early-redemption fee is not assumed")
 
 // bondDetail is the synthetic bond with ISIN isin: EDO1137, with published
-// rates and an assumed fee, or COI1130, without terms.
+// rates and an assumed fee, or COI1130, without terms and under its
+// provisional ISIN (D-214).
 func bondDetail(isin string) *viewsv1.InstrumentDetail {
 	in := &viewsv1.Instrument{Isin: isin, Symbol: "EDO1137"}
 	out := &viewsv1.InstrumentDetail{Isin: isin, AssetClass: assetTreasuryBond, Listings: []*viewsv1.InstrumentListing{{Instrument: in}}}
 	if isin == pendingBond {
-		in.Symbol = "COI1130"
+		in.Symbol, in.IsinProvisional, out.IsinProvisional = "COI1130", true, true
 		return out
 	}
 	out.BondTerms = &viewsv1.BondSeriesTerms{

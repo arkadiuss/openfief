@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86268e7dab5b
+  - type: executable_for
+    from: SYM-valuation-postgres-test-rekey-instrument
+    to: TEST-valuation-postgres-rekey
+    created_at: 2026-11-07T23:14:21.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf32a37d6d0

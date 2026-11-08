@@ -84,6 +84,13 @@ const (
 	// (D-97). It resolves once the owner confirms or overrides the fee.
 	// Subject: the series' ISIN.
 	KindBondFeeAssumed Kind = "bond-fee-assumed"
+	// KindBondSeriesIncomplete is a treasury bond series an account has held
+	// for seven days or more that is still without the registry's ISIN or
+	// without terms, because the Ministry of Finance's data doesn't list it
+	// yet (D-214). It resolves once both arrive or no account holds the
+	// series. Subject: the ISIN it is held under, provisional or the
+	// registry's.
+	KindBondSeriesIncomplete Kind = "bond-series-incomplete"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

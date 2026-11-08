@@ -334,7 +334,16 @@ func dataPathInstances(ca []byte, tokens fixtureTokens) []dataPathInstance {
 		},
 		{
 			name: dpBonds, image: bondsImage, clusterService: true,
-			config:  map[string]any{"gusBaseUrl": base + "/gus", "nbpBaseUrl": base + "/nbp-static"},
+			// GUS, NBP's archive, gov.pl and dane.gov.pl are the fixture's,
+			// which withholds the Ministry of Finance's data until the bond
+			// lots are booked under their provisional ISINs (D-214). The
+			// first sync reads CPI from 2025 on, the readings the data path's
+			// series need, so it takes one request a year.
+			config: map[string]any{
+				"start":      "2025-01-01",
+				"gusBaseUrl": base + "/gus", "nbpBaseUrl": base + "/nbp-static",
+				"govPlBaseUrl": base + "/gov", "daneGovPlBaseUrl": base + "/dane",
+			},
 			secrets: map[string]map[string]string{caBundleRole: bundle},
 		},
 		{name: dpXTB, image: xtbImage},

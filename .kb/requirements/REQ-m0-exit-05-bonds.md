@@ -1,6 +1,6 @@
 ---
 title: For every held bond series the gross accrued value must match an open-source reference valuer on the same date to within 0.01 PLN, or, where no such valuer can be pinned, a hand calculation from the Ministry of Finance's issue letters, one per bond type and held series, with its formulas recorded in research; net-if-redeemed must match a hand calculation for at least one series of each type held; and totals must use the configured basis, net by default.
-status: open
+status: closed
 text_ref: design-decisions:D-200#5
 tags:
   - strict-modeling
@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-200#5
-  recorded_at: '2026-11-07T03:31:45.605Z'
+  recorded_at: '2026-11-08T00:36:39.281Z'
 id: REQ-m0-exit-05-bonds
 type: req
 ---

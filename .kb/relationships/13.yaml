@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae430a92de37
+  - type: implements
+    from: SYM-pl-published-isin
+    to: REQ-treasurybonds-reads-registry-isin
+    created_at: 2026-11-07T23:11:50.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d71b0d0e886
+  - type: covered_by
+    from: SYM-pl-published-isin
+    to: TEST-pl-isin
+    created_at: 2026-11-07T23:11:50.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb277d796164

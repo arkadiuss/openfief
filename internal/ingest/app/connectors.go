@@ -49,7 +49,10 @@ type Delivery struct {
 	// InstrumentNames are the display names the delivery gives its
 	// instruments (D-197).
 	InstrumentNames []ledger.InstrumentName
-	Watermark       string
+	// RegistryISINs are the registry's ISINs of instruments the sync
+	// request named as provisional (D-214), which the core re-keys to.
+	RegistryISINs []ingest.RegistryISIN
+	Watermark     string
 }
 
 // InstrumentNamer records the display names connectors deliver for
@@ -100,14 +103,16 @@ type ConnectorCaller interface {
 // SyncCall is one Sync call to a connector instance: the import batch, its
 // mode, the watermark of the previous sync, and, for a market-data
 // connector, what to price (D-93), and for one bound to accounts, what each
-// of them holds with the bond terms of their treasury bonds (D-117).
+// of them holds with the bond terms of their treasury bonds (D-117), and
+// the instruments they post to under a provisional ISIN (D-214).
 type SyncCall struct {
-	ID        ingest.BatchID
-	Mode      ingest.Mode
-	Watermark string
-	Scope     ingest.MarketDataScope
-	Held      []ingest.HeldAccount
-	BondTerms []ingest.BondTerms
+	ID          ingest.BatchID
+	Mode        ingest.Mode
+	Watermark   string
+	Scope       ingest.MarketDataScope
+	Held        []ingest.HeldAccount
+	BondTerms   []ingest.BondTerms
+	Provisional []ledger.Instrument
 }
 
 // NamedFile is a statement file to import: its contents, the name the owner
@@ -294,6 +299,11 @@ type Connectors struct {
 	// Names records the display names deliveries give instruments
 	// (D-197); nil records none.
 	Names InstrumentNamer
+	// Rekeyers re-key, in order, what each context stores under a
+	// provisional instrument once a delivery brings its registry ISIN
+	// (D-214); the ledger's must come last (rekey). A delivery with
+	// registry ISINs fails without any.
+	Rekeyers []InstrumentRekeyer
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -450,7 +460,9 @@ type deliveryScope struct {
 // opening batch (D-23), then prices, FX rates, index readings, index
 // levels and cross-check prices with the instance as their source, the
 // instance recorded as a source of each kind of market data, then
-// treasury bond series terms. Every index reading must be valid and every
+// treasury bond series terms, and last the re-key of each provisional
+// instrument the delivery brings the registry's ISIN of (D-214). Every
+// index reading and registry ISIN must be valid and every
 // transaction and balance assertion must be in an account the instance is
 // bound to, and in one of scope.only when it is set, or nothing is
 // imported.
@@ -463,7 +475,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	readings, err := sourcedReadings(instance, d.IndexReadings)
+	readings, err := checkedInputs(instance, d)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
@@ -562,12 +574,14 @@ func (c *Connectors) keepDeclared(ctx context.Context, instance string, declared
 
 // declaredDeliveries returns d without the bond terms, index levels
 // (D-179) and index readings (D-186) instance may not deliver: those its
-// signed manifest doesn't declare or its grant doesn't approve. Each kind dropped adds an ingest
+// signed manifest doesn't declare or its grant doesn't approve. Registry
+// ISINs (D-214) go with the bond terms: only a connector that may deliver
+// bond terms may re-key a bond series, and they count among them. Each kind dropped adds an ingest
 // problem to m and raises the instance's one attention item, which a
 // delivery that drops nothing clears. The rest of d is imported either
 // way.
 func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
-	drop := ingest.UndeclaredDeliveries(*declared, len(d.BondTerms), len(d.IndexLevels), len(d.IndexReadings))
+	drop := ingest.UndeclaredDeliveries(*declared, len(d.BondTerms)+len(d.RegistryISINs), len(d.IndexLevels), len(d.IndexReadings))
 	problems, detail := drop.Problems, drop.Detail
 	if c.Attention != nil {
 		var err error
@@ -585,7 +599,7 @@ func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, de
 	}
 	out := *d
 	if !declared.BondTerms {
-		out.BondTerms = nil
+		out.BondTerms, out.RegistryISINs = nil, nil
 	}
 	if !declared.IndexLevels {
 		out.IndexLevels = nil
@@ -689,7 +703,9 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 
 // storeMarketData records the instance as a source of each kind of market
 // data d carries, then stores its valuation inputs and its treasury bond
-// series terms, and the display names it gives instruments (D-197).
+// series terms, and the display names it gives instruments (D-197), and
+// last re-keys each provisional instrument d brings the registry's ISIN of
+// (D-214).
 // readings are d's index readings with their source; none is stored when
 // d no longer carries any, as when they were dropped as undeclared
 // (D-186).
@@ -706,7 +722,10 @@ func (c *Connectors) storeMarketData(ctx context.Context, instance string, id in
 	if err := c.storeTerms(ctx, instance, id, d.BondTerms); err != nil {
 		return err
 	}
-	return c.storeNames(ctx, instance, d.InstrumentNames)
+	if err := c.storeNames(ctx, instance, d.InstrumentNames); err != nil {
+		return err
+	}
+	return c.rekey(ctx, d.RegistryISINs)
 }
 
 // storeInputs stores a delivery's prices, FX rates and the validated index
@@ -823,6 +842,21 @@ func (c *Connectors) storeLevels(ctx context.Context, instance string, id ingest
 		return fmt.Errorf("store index levels: %w", err)
 	}
 	return nil
+}
+
+// checkedInputs returns d's index readings with instance as their source
+// (sourcedReadings), after checking its registry ISINs
+// (ingest.CheckRegistryISINs): one that is invalid refuses the delivery
+// before anything is imported.
+func checkedInputs(instance string, d *Delivery) ([]ingest.IndexReading, error) {
+	readings, err := sourcedReadings(instance, d.IndexReadings)
+	if err != nil {
+		return nil, err
+	}
+	if _, err := ingest.CheckRegistryISINs(d.RegistryISINs); err != nil {
+		return nil, fmt.Errorf("refused: %w", err)
+	}
+	return readings, nil
 }
 
 // sourcedReadings returns copies of readings with instance as their source,

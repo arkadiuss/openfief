@@ -321,13 +321,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46d4a80bf903
-  - type: executable_for
-    from: SYM-treasurybonds-test-instrument
-    to: TEST-treasurybonds-mapper
-    created_at: 2026-10-29T01:23:13.192Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-99e3ed235291
   - type: implements
     from: SYM-treasury-bonds-status
     to: REQ-plugins-treasury-bonds-connector
@@ -811,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d8eccd9b87b
+  - type: implements
+    from: SYM-connectorv1-registry-isin-string
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:15:48.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ef5f36ae4c
+  - type: covered_by
+    from: SYM-connectorv1-registry-isin-string
+    to: TEST-ingest-connectrpc-registry
+    created_at: 2026-11-07T23:15:48.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ee7989228ee

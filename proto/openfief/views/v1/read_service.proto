@@ -300,6 +300,11 @@ message Instrument {
   // The instrument's display name (D-197): the first one a connector
   // delivered for its ISIN, or the owner's; empty when it has none.
   string name = 3;
+  // Whether isin is a treasury bond series' provisional ISIN: `PL`, the
+  // series code in symbol, `00` and a check digit. A lot of a series the
+  // Ministry of Finance's data doesn't list yet is booked under it, and
+  // moves to the registry's ISIN when the data lists it (D-214).
+  bool isin_provisional = 4;
 }
 
 // SleeveRole is what a sleeve is for.
@@ -1684,6 +1689,9 @@ message InstrumentDetail {
   // terms are not stored yet, such as one the ministry's data didn't list
   // when its lot was entered, until a sync fills them in.
   BondSeriesTerms bond_terms = 6;
+  // Whether isin is a treasury bond series' provisional ISIN, as
+  // Instrument.isin_provisional (D-214).
+  bool isin_provisional = 7;
 }
 
 // BondSeriesTerms are what valuing a treasury bond series takes from its

@@ -937,3 +937,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7be33680d400
+  - type: implements
+    from: SYM-attention-app-held-series
+    to: REQ-attention-bond-series-incomplete
+    created_at: 2026-11-07T23:06:30.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-799ad58246fb
+  - type: covered_by
+    from: SYM-attention-app-held-series
+    to: TEST-attention-bond-series
+    created_at: 2026-11-07T23:06:30.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73321d77b7e6

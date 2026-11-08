@@ -141,6 +141,8 @@ sequenceDiagram
 
 The read API serves the report as `GetModelPortfolio`, rebased to 100 on go-live, and answers 404 while the model is off ([Read API](read-api.md#the-model-portfolio)).
 
+When a treasury bond series held under its [provisional ISIN](../glossary.md) gets its [registry ISIN](../glossary.md) (D-214), `postgres.Store.RekeyInstrument` ([rekey.go](../../internal/portfolio/postgres/rekey.go)) renames the model's target of it in place; when the model already targets the registry's ISIN, the provisional target's weight joins that one's, since both name the same series, so the weights still sum to 100. Run again, it changes nothing.
+
 ### Built: the owner's sleeve entries
 
 The owner adds and renames kinds and adds and changes sleeves in the built-in UI, on its Sleeves page and in the first-run wizard (D-71, D-73). D-79 makes each kind of owner entry its own service, so the core serves `openfief.portfolio.v1.SleeveService` ([sleeves.proto](../../proto/openfief/portfolio/v1/sleeves.proto)) to view plugins only, with the `ModelPortfolioService`'s conventions: the caller's plugin token, the browser's origin and the owner's session in the request, owner scope only.
@@ -174,6 +176,7 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 | Behavior | Tests | kibi |
 |---|---|---|
 | A sleeve needs an ID, a name and one known role | `TestSleeveValidate`, `TestParseRole` in [sleeve_test.go](../../internal/portfolio/sleeve_test.go) | REQ-portfolio-sleeve-role |
+| A re-key renames the model's target of a provisional instrument, or joins its weight to the registry's, and changes nothing run again (D-214) | `TestRekeyInstrument` in [postgres/rekey_test.go](../../internal/portfolio/postgres/rekey_test.go) (`task test:pg`) | REQ-valuation-rekey-inputs, TEST-portfolio-postgres-rekey |
 | Kind keys, the built-in kinds, fixed default roles, the override rules, the defaults and kind by sleeve | `TestKindValidate`, `TestDefaultKinds`, `TestCheckKind`, `TestCheckSleeve`, `TestDefaultSleeves`, `TestMissingDefaults`, `TestKindBySleeve` in [kind_test.go](../../internal/portfolio/kind_test.go) | REQ-portfolio-sleeve-kind, REQ-portfolio-default-kinds, REQ-portfolio-kind-role-fixed, REQ-portfolio-sleeve-role-override, REQ-portfolio-allocation-by-kind, REQ-portfolio-role-differs-explicit |
 | Keys made from names | `TestKeyFromName` in [key_test.go](../../internal/portfolio/key_test.go) | REQ-portfolio-key-from-name |
 | The owner's sleeve entries: keys from names, fixed roles, the override, taken and unknown IDs, owner only | `TestSleevesAddKind`, `TestSleevesRenameKind`, `TestSleevesAddAndUpdateSleeve`, `TestSleevesOwnerOnly`, `TestSleevesStoreFailure` in [app/sleeves_test.go](../../internal/portfolio/app/sleeves_test.go); `TestSleeveServiceRoundTrip`, `TestSleeveServiceErrors` in [connectapi/sleeves_test.go](../../internal/portfolio/connectapi/sleeves_test.go); `TestOnboardingServices` in [cmd/core](../../cmd/core/onboarding_test.go) under `task test:pg` | REQ-portfolio-sleeve-service, REQ-core-owner-entry-services, REQ-core-owner-entry-service-callers |

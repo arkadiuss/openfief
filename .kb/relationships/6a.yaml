@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28241cb54605
+  - type: implements
+    from: SYM-e2e-fixture-xls-cell-record
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:38:36.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccc28463dc21
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-cell-record
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:38:36.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d35b6d692e19
+  - type: executable_for
+    from: SYM-e2e-bonds-test-data-path-check-bond-terms
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T00:40:44.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4271ad258043

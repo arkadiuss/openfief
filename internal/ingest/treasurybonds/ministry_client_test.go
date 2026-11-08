@@ -111,7 +111,7 @@ func TestClientPublished(t *testing.T) {
 	t.Parallel()
 	file := syntheticWorkbook(t)
 	now := time.Date(2099, time.November, 7, 6, 0, 0, 0, time.UTC)
-	wantRates, err := treasurybonds.ParseWorkbook(file)
+	wantRates, wantISINs, err := treasurybonds.ParseWorkbook(file)
 	if err != nil {
 		t.Fatalf("ParseWorkbook: %v", err)
 	}
@@ -154,7 +154,7 @@ func TestClientPublished(t *testing.T) {
 				}
 			}
 			if tt.wantErrs == nil {
-				wantPublished(t, got, err, &pl.Published{Rates: wantRates, Attribution: wantAttribution(t, tt.wantFrom, gov.URL, dane.URL, now)})
+				wantPublished(t, got, err, &pl.Published{Rates: wantRates, ISINs: wantISINs, Attribution: wantAttribution(t, tt.wantFrom, gov.URL, dane.URL, now)})
 			}
 		})
 	}

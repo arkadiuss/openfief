@@ -141,7 +141,7 @@
     <tbody>
     {{range .Holdings}}
     <tr>
-      <td><a href="{{$.HoldingLink .Holding.Instrument}}">{{instrument .Holding.Instrument}}</a>{{template "no-longer-updated" .Holding}}</td>
+      <td><a href="{{$.HoldingLink .Holding.Instrument}}">{{instrument .Holding.Instrument}}</a>{{template "isin-pending" .Holding.Instrument}}{{template "no-longer-updated" .Holding}}</td>
       <td class="num">{{amount .Holding.Quantity}}</td>
       {{with .Valuation}}
       <td class="num">{{money .Value}}</td>{{template "valuation-values" .}}<td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
@@ -219,7 +219,7 @@
     <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th>{{if $.BondLot}}<th scope="col">Correction</th>{{end}}</tr></thead>
     <tbody>
     {{range .Lots}}
-    <tr><td><a href="{{$.HoldingLink .Instrument}}">{{instrument .Instrument}}</a>{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
+    <tr><td><a href="{{$.HoldingLink .Instrument}}">{{instrument .Instrument}}</a>{{template "isin-pending" .Instrument}}{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
       <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td>
       {{if $.BondLot}}<td><form method="post" action="/accounts/{{$.Account.Id}}/bond-lots/delete?tab=lots" class="inline">
         <input type="hidden" name="series" value="{{.Instrument.Symbol}}"><input type="hidden" name="purchase_date" value="{{.Opened}}">
@@ -265,12 +265,12 @@
       <div class="field">
         <label for="lot-margin">Margin</label>
         <div class="unit"><input id="lot-margin" name="margin" value="{{.Margin}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-rates-help"><span>%</span></div>
-        <p class="help" id="lot-rates-help">Optional, both or neither. Left empty, they come from the Ministry of Finance's published retail bond data (source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief).</p>
+        <p class="help" id="lot-rates-help">Optional, both or neither. Left empty, they come from the Ministry of Finance's published retail bond data (source: Ministerstwo Finansów, CC BY 4.0, processed by OpenFief), as does the series' ISIN. A series the data doesn't list yet waits for them; after a week it shows in the Inbox.</p>
       </div>
       <div class="field">
         <label for="lot-fee">Early-redemption fee per bond</label>
         <div class="unit"><input id="lot-fee" name="fee" value="{{.Fee}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="lot-fee-help"><span>PLN</span></div>
-        <p class="help" id="lot-fee-help">Optional. Left empty, it comes from OpenFief's reviewed table of the issue letters.</p>
+        <p class="help" id="lot-fee-help">Optional. Left empty, it comes from OpenFief's reviewed table of the issue letters; for a series sold after the table was last reviewed, the latest fee is assumed and the Inbox asks you to confirm it.</p>
       </div>
     </div>
     <div class="actions"><button type="submit">Add bond lot</button></div>

@@ -1112,3 +1112,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-941724434d3c
+  - type: verified_by
+    from: SCEN-ingest-rekey-provisional-instrument
+    to: TEST-ingest-app-rekey
+    created_at: 2026-11-07T22:44:28.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8dcf338a36f
+  - type: verified_by
+    from: SCEN-ingest-rekey-provisional-instrument
+    to: TEST-ingest-registryisin
+    created_at: 2026-11-07T22:44:28.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a17a432332
+  - type: verified_by
+    from: SCEN-ingest-rekey-provisional-instrument
+    to: TEST-core-rekey
+    created_at: 2026-11-07T22:44:28.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-553d82a1f02b
+  - type: executable_for
+    from: SYM-portfolio-postgres-test-helper-rekey-model
+    to: TEST-portfolio-postgres-rekey
+    created_at: 2026-11-07T23:13:59.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-207aa49f7e1a
+  - type: implements
+    from: SYM-e2e-fixture-xls-xls-sheet
+    to: REQ-e2e-fixture-serves-bond-data
+    created_at: 2026-11-08T00:37:49.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3407620ead78
+  - type: covered_by
+    from: SYM-e2e-fixture-xls-xls-sheet
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:37:49.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edf54ba04ee2

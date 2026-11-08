@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63135f6c843c
+  - type: constrains
+    from: REQ-ui-isin-pending-pill
+    to: FACT-SUBJECT-68F34FCC9E61F6FE
+    created_at: 2026-11-08T02:00:51.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d98ffc00f72
+  - type: requires_property
+    from: REQ-ui-isin-pending-pill
+    to: FACT-PROP-533AAC6C50E86620
+    created_at: 2026-11-08T02:00:51.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4dfead4b07d
+  - type: specified_by
+    from: REQ-ui-isin-pending-pill
+    to: SCEN-ui-isin-pending-pill
+    created_at: 2026-11-08T02:00:51.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66ba1623cead

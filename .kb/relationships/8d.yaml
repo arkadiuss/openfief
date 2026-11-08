@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-324ac316e63b
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-provisional-instruments
+    to: REQ-ingest-sync-names-provisional
+    created_at: 2026-11-07T23:07:20.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0e2a1b0966f
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope-provisional-instruments
+    to: TEST-ingest-app-rekey
+    created_at: 2026-11-07T23:07:20.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-593238b96cfc
+  - type: executable_for
+    from: SYM-e2e-fixture-bonds-test-test-fixture-serves-ministry-data
+    to: TEST-e2e-fixture-bonds
+    created_at: 2026-11-08T00:39:47.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-636bcddf29cc

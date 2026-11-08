@@ -19,3 +19,7 @@
 
 {{/* D-91: a holding or lot behind a removed connector instance. */}}
 {{define "no-longer-updated"}}{{if .NoLongerUpdated}} <span class="pill pill-warn" title="A transaction behind it came from a connector instance that is no longer installed">no longer updated</span> <span class="muted">from {{range $i, $n := .RemovedInstances}}{{if $i}}, {{end}}<span class="mono">{{$n}}</span>{{end}}</span>{{end}}{{end}}
+
+{{/* D-214: an instrument (or its detail) held under a treasury bond
+     series' provisional ISIN. */}}
+{{define "isin-pending"}}{{if .GetIsinProvisional}} <span class="pill pill-neutral" title="A provisional ISIN: it moves to the registry's ISIN when the Ministry of Finance's data lists the series">pending<span class="sr-only">: a provisional ISIN, which moves to the registry's when the Ministry of Finance's data lists the series</span></span>{{end}}{{end}}

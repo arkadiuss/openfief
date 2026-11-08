@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7070d7d8b2c1
+  - type: implements
+    from: SYM-ingest-connectrpc-instruments-from
+    to: REQ-ingest-rekey-provisional-instrument
+    created_at: 2026-11-07T23:08:22.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-213a29ba66c1
+  - type: covered_by
+    from: SYM-ingest-connectrpc-instruments-from
+    to: TEST-ingest-connectrpc-registry
+    created_at: 2026-11-07T23:08:22.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2fa29f8861d

@@ -1,6 +1,6 @@
 ---
 title: 'OpenFief must derive a treasury bond''s ISIN from its series code: PL, the series code, 00 and a check digit, such as PLEDO0536000 for EDO0536.'
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

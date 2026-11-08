@@ -36,16 +36,18 @@ type fakeCaller struct {
 	scope     ingest.MarketDataScope
 	held      []ingest.HeldAccount
 	terms     []ingest.BondTerms
-	file      string
-	media     string
-	cash      *kernel.Money
-	lots      []ingest.BondLot
-	entries   ingest.BondLotEntries
+	// provisional is what the last sync named as provisional (D-214).
+	provisional []ledger.Instrument
+	file        string
+	media       string
+	cash        *kernel.Money
+	lots        []ingest.BondLot
+	entries     ingest.BondLotEntries
 }
 
 func (f *fakeCaller) Sync(_ context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
 	f.instance, f.id, f.mode, f.watermark, f.scope = instance, call.ID, call.Mode, call.Watermark, call.Scope
-	f.held, f.terms = call.Held, call.BondTerms
+	f.held, f.terms, f.provisional = call.Held, call.BondTerms, call.Provisional
 	return f.delivery, f.err
 }
 
