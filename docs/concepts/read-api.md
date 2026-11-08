@@ -331,7 +331,7 @@ The values above are synthetic, like every value in the tests.
 
 ## Decisions
 
-- **D-6**: the read-only public API under `/v1` with an OpenAPI spec. Built in this context; the [built-in UI](ui.md) and the [Ghostfolio view](ghostfolio.md) read through it. MCP access is not part of it.
+- **D-6**: the read-only public API under `/v1` with an OpenAPI spec. Built in this context; the [built-in UI](ui.md) and the [Ghostfolio view](ghostfolio.md) read through it. MCP is served only as D-213 allows (REQ-views-mcp-only-as-d213-allows), and nothing serves it yet.
 - **D-50**: protobuf with HTTP annotations, Connect plus REST through Vanguard, OpenAPI generated from the same definitions. Built as described above.
 - **D-7**: data never enters through the public API. Enforced by the service definition and by REST answering 405 to anything but `GET`.
 - **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). The built-in UI draws value over time from `GetPerformance`, as the time-weighted return index, rather than from `ListValuationTotals`; the charts themselves are the UI's.

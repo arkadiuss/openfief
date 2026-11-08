@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-069fd7c1036a
+  - type: constrains
+    from: REQ-views-mcp-only-as-d213-allows
+    to: FACT-SUBJECT-8D841D423BEA5EE7
+    created_at: 2026-11-08T06:51:00.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4c247f90e27
+  - type: requires_property
+    from: REQ-views-mcp-only-as-d213-allows
+    to: FACT-PROP-257F8FA18FE3A766
+    created_at: 2026-11-08T06:51:00.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cb76dc1140b
+  - type: supersedes
+    from: REQ-views-mcp-only-as-d213-allows
+    to: REQ-AUTO-B8D1BCB44E147E0C
+    created_at: 2026-11-08T06:51:00.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7342d096dc0b
