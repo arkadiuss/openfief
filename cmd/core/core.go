@@ -205,7 +205,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	deps := &connectorDeps{
 		pool: pool, ledger: l, sleeves: sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
-		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models,
+		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(pool), names, l),
 	}

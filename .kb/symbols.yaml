@@ -168552,3 +168552,13 @@ symbols:
         target: TEST-views-connectapi-names
       - type: implements
         target: REQ-views-instrument-isin-provisional
+  - id: SYM-core-test-connector-deps-complete
+    title: TestCoreConnectorDepsComplete
+    sourceFile: cmd/core/deps_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T03:54:42.417Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-connectors
