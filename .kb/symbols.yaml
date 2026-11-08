@@ -168562,3 +168562,716 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-connectors
+  - id: SYM-e2e-apicontract-route
+    title: Route
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:19.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-operation
+    title: Operation
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:25.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-operations
+    title: Operations
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:31.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-sort-operations
+    title: sortOperations
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:37.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-routes
+    title: Routes
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:42.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-route-operations
+    title: RouteOperations
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:48.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-procedure
+    title: Procedure
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:07:54.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-route-of
+    title: routeOf
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:00.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-pattern
+    title: pattern
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:06.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-http-pattern
+    title: httpPattern
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:11.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-template
+    title: template
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:17.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-parse-template
+    title: parseTemplate
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:23.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-route-target
+    title: Route.Target
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:29.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-route-fill
+    title: Route.Fill
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:35.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-route-check-fields
+    title: Route.checkFields
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:42.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-envelope
+    title: Envelope
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:48.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-connect-error-code
+    title: ConnectErrorCode
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:08:54.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-excerpt
+    title: excerpt
+    sourceFile: test/e2e/apicontract/apicontract.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:00.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-apicontract
+      - type: implements
+        target: REQ-e2e-apicontract-walks-contract
+  - id: SYM-e2e-apicontract-test-read-service-routes
+    title: readServiceRoutes
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:05.759Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-read-routes
+    title: readRoutes
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:11.267Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-read-service-routes-match-the-open-api-document
+    title: TestReadServiceRoutesMatchTheOpenAPIDocument
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:17.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-target
+    title: TestTarget
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:23.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-fill
+    title: TestFill
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:30.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-synthetic-method
+    title: syntheticMethod
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:35.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-synthetic-routes
+    title: syntheticRoutes
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:40.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-routes-of-other-services
+    title: TestRoutesOfOtherServices
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:46.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-envelope
+    title: envelope
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:52.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-connect-error-code
+    title: TestConnectErrorCode
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:09:57.969Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-apicontract-test-test-envelope
+    title: TestEnvelope
+    sourceFile: test/e2e/apicontract/apicontract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:03.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-apicontract
+  - id: SYM-e2e-readapi-test-read-api
+    title: readAPI
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:08.813Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-call
+    title: readCall
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:13.953Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-call-string
+    title: readCall.String
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:19.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-rest-reply
+    title: restReply
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:24.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-data-path-check-read-api
+    title: dataPath.checkReadAPI
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:29.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-data-path-read-api
+    title: dataPath.readAPI
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:34.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-with-bearer
+    title: withBearer
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:40.129Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-data-path-read-calls
+    title: dataPath.readCalls
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:45.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-account-calls
+    title: accountCalls
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:51.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-instrument-calls
+    title: instrumentCalls
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:10:56.733Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-allocation-calls
+    title: allocationCalls
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:02.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-enum-names
+    title: enumNames
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:07.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-every-resource
+    title: readAPI.checkEveryResource
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:13.042Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-conformance
+    title: readAPI.checkConformance
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:18.465Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-refuses-tokens
+    title: readAPI.checkRefusesTokens
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:23.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-target-per-method
+    title: readAPI.targetPerMethod
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:29.484Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-validate
+    title: readAPI.validate
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:35.084Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-check-holds-data
+    title: checkHoldsData
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:40.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-only-get
+    title: readAPI.checkOnlyGET
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:46.493Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-not-allowed
+    title: readAPI.checkNotAllowed
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:52.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-other-services
+    title: readAPI.checkOtherServices
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:11:57.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-refused
+    title: readAPI.checkRefused
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:02.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-contract-services
+    title: contractServices
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:08.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-check-connect-equals-rest
+    title: readAPI.checkConnectEqualsREST
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:13.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-compare
+    title: readAPI.compare
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:18.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-decoded
+    title: decoded
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:24.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-decode-rest
+    title: readAPI.decodeREST
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:29.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-target
+    title: readAPI.target
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:35.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-read-api-rest
+    title: readAPI.rest
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:40.483Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-send
+    title: send
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:45.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-sdk-method
+    title: sdkMethod
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:51.004Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-unary
+    title: unary
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:12:56.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-readapi-test-sdk-methods
+    title: sdkMethods
+    sourceFile: test/e2e/readapi_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T04:13:01.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path

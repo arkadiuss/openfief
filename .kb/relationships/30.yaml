@@ -776,3 +776,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe36ab0e46be
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-test-routes-of-other-services
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:09:48.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd74262eac2
+  - type: executable_for
+    from: SYM-e2e-readapi-test-sdk-method
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:12:53.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45d66688e836

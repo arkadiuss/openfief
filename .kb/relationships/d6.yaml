@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9892edbefb1f
+  - type: verified_by
+    from: SCEN-e2e-read-api-openapi-conformance
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:06:59.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a6f2f3d51c

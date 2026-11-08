@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24c003f735b5
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-test-target
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:09:25.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32bfe54c7722

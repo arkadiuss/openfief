@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71f065dac920
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-envelope
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:09:54.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ca916ebfe3

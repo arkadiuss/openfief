@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-442a5ee6a988
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-check-conformance
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:11:20.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35a6e45cdf29
