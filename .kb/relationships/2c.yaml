@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50f43d6e7bdf
+  - type: executable_for
+    from: SYM-e2e-readapi-test-account-calls
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:10:53.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e95dd280e228
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-rest
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:12:42.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b98cddb1e332

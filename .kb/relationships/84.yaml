@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28791db8e196
+  - type: implements
+    from: SYM-e2e-apicontract-operation
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:07:27.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9db031a26be
+  - type: covered_by
+    from: SYM-e2e-apicontract-operation
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:07:27.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d76f233704a

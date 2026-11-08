@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f853b364cc7f
+  - type: implements
+    from: SYM-e2e-apicontract-http-pattern
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:08:13.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23e8d3295860
+  - type: covered_by
+    from: SYM-e2e-apicontract-http-pattern
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:08:13.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c8636de2e03

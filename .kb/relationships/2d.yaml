@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12adacc5de1c
+  - type: implements
+    from: SYM-e2e-apicontract-route
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:07:21.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9b43119002
+  - type: covered_by
+    from: SYM-e2e-apicontract-route
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:07:21.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e8b12047a70

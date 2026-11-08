@@ -1063,3 +1063,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4df938b7deaa
+  - type: verified_by
+    from: SCEN-e2e-read-api-every-resource
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:06:58.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d39856c27f1

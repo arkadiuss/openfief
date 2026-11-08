@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e78b7f43c645
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-check-connect-equals-rest
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:12:15.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e6852d5c21

@@ -783,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8546530bfa44
+  - type: implements
+    from: SYM-e2e-apicontract-pattern
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:08:07.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f37c65e589f
+  - type: covered_by
+    from: SYM-e2e-apicontract-pattern
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:08:07.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ee758e27a2
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-target-per-method
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:11:31.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-911ecd3ba799

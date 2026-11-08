@@ -56,7 +56,7 @@ const (
 
 // TestDataPath runs the connectors' data path end to end against the
 // institution fixture, as an owner does, and checks D-200's criteria 2, 3,
-// 4, 5 and 6 on it. It deploys the fixture as an HTTPS Service with a
+// 4, 5, 6 and 7 on it. It deploys the fixture as an HTTPS Service with a
 // certificate from a CA made for this run, and installs, with the openfief
 // CLI built from this checkout, nbp-fx, eodhd, ibkr-flex and
 // treasury-bonds, each with its base URL on the fixture, the fixture's
@@ -99,7 +99,15 @@ const (
 //     SCEN-e2e-cross-check-flagged): the PLN values and cash match the
 //     fixture's NBP rates of their day, the prices are EODHD's from the
 //     eodhd instance, and IBKR's mark 1.96% above it is flagged while one
-//     0.48% above it matches.
+//     0.48% above it matches;
+//   - criterion 7 (SCEN-e2e-read-api-every-resource,
+//     SCEN-e2e-read-api-openapi-conformance, SCEN-e2e-read-api-no-write,
+//     SCEN-e2e-read-api-connect-equals-rest): every operation of the read
+//     API's OpenAPI document, which lists exactly ReadService's routes,
+//     answers the data path's record as the document describes, and 401
+//     without a valid token; nothing but GET is served and the script
+//     token reaches no owner service; and the SDK's Connect client answers
+//     the same as REST (readapi_test.go).
 func TestDataPath(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -132,6 +140,7 @@ func TestDataPath(t *testing.T) {
 	p.checkValues(t)
 	p.checkBonds(t)
 	p.checkPriceChecks(t)
+	p.checkReadAPI(t)
 }
 
 // dataPath is the data path's state: the cluster, a script token for the
