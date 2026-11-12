@@ -170368,3 +170368,667 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-exposure
+  - id: SYM-e2e-ghostfoliocheck-count-keys
+    title: countKeys
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:20.720Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-syncs
+    title: Syncs
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:26.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-pass-of
+    title: passOf
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:32.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-comment-key
+    title: CommentKey
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:37.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-net-units
+    title: NetUnits
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:43.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-latest
+    title: Latest
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:49.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-describe
+    title: Describe
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:54:55.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-describe-balances
+    title: DescribeBalances
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:01.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-editable
+    title: Editable
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:06.772Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-edited
+    title: Edited
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:12.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-sync
+    title: Sync
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:17.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-test-test-syncs
+    title: TestSyncs
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:23.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-comment-key
+    title: TestCommentKey
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:28.307Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-net-units
+    title: TestNetUnits
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:33.653Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-latest
+    title: TestLatest
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:38.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-describe
+    title: TestDescribe
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:43.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-editable
+    title: TestEditable
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:49.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-test-edited
+    title: TestEdited
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:54.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-act
+    title: act
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:55:59.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-dec
+    title: dec
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:04.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-date
+    title: date
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:09.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfoliocheck-test-cur
+    title: cur
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:14.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfoliocheck
+  - id: SYM-e2e-ghostfolio-test-test-ghostfolio
+    title: TestGhostfolio
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:20.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view
+    title: gfView
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:25.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-state
+    title: gfState
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:30.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-new-gf-view
+    title: newGFView
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:35.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-wait-valued
+    title: gfView.waitValued
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:40.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-project
+    title: gfView.project
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:46.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-first-pass
+    title: gfView.checkFirstPass
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:51.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-holds-projection
+    title: gfView.checkHoldsProjection
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:56:56.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-actual
+    title: gfView.actual
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:01.518Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-comments
+    title: gfView.checkComments
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:06.487Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-bonds
+    title: gfView.checkBonds
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:11.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-cash
+    title: gfView.checkCash
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:16.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-cash-of
+    title: gfView.cashOf
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:22.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-cash-accounts-of
+    title: cashAccountsOf
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:27.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-gf-view-check-edit-reverted
+    title: gfView.checkEditReverted
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:32.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-lines-not-in
+    title: linesNotIn
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:37.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-deploy-ghostfolio
+    title: deployGhostfolio
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:42.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-start-ghostfolio
+    title: startGhostfolio
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:48.063Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-is-ghostfolio-api
+    title: isGhostfolioAPI
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:53.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-apply-ghostfolio
+    title: applyGhostfolio
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:57:59.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-random-hex
+    title: randomHex
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:05.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-owner
+    title: gfOwner
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:10.962Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-sign-up-owner
+    title: signUpOwner
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:16.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-owner-send
+    title: gfOwner.send
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:22.256Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-owner-request
+    title: gfOwner.request
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:27.948Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-own
+    title: gfOwn
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:33.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-owner-add-own
+    title: gfOwner.addOwn
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:39.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-gf-owner-own-now
+    title: gfOwner.ownNow
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:44.923Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-install-view
+    title: installView
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:50.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-view-install-args
+    title: viewInstallArgs
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:58:56.225Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-wait-pass
+    title: waitPass
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:59:02.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-setup-test-restart-view
+    title: restartView
+    sourceFile: test/e2e/ghostfolio_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-08T08:59:07.588Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-activity
+    title: Activity
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T12:11:47.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-balance
+    title: Balance
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T12:11:56.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfoliocheck-report
+    title: Report
+    sourceFile: test/e2e/ghostfoliocheck/ghostfoliocheck.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T12:12:05.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-ghostfoliocheck
+      - type: implements
+        target: REQ-m0-exit-09-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-check-activities
+    title: checkActivities
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T12:12:14.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio
+  - id: SYM-e2e-ghostfolio-test-check-balances
+    title: checkBalances
+    sourceFile: test/e2e/ghostfolio_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T12:12:23.552Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-ghostfolio

@@ -65,8 +65,13 @@ var (
 // suite's synthetic connector's two images (test/e2e/connector), and the
 // XTB connector, which isolation_test.go installs, and the IBKR Flex, EODHD
 // and treasury bond connectors, which the data path installs
-// (datapath_test.go).
+// (datapath_test.go). The Ghostfolio shard's task e2e:images builds only
+// the UI and the Ghostfolio view (ghostfolio_test.go), which are all it
+// signs.
 func pluginImages() []string {
+	if os.Getenv(shardEnv) == shardGhostfolio {
+		return []string{uiImage, ghostfolioImage}
+	}
 	return []string{fxImage, uiImage, connectorImage, connectorEgressImage, xtbImage, ibkrImage, eodhdImage, bondsImage}
 }
 

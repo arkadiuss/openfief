@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d476e20a9a05
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-test-gf-view-check-bonds
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:57:13.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6554243a9cc6
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-test-gf-view-check-cash
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:57:18.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1fdeffa538

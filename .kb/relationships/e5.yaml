@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f01ad8164d4
+  - type: executable_for
+    from: SYM-e2e-ghostfoliocheck-test-test-comment-key
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:30.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b496eb713ce8

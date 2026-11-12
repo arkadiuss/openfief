@@ -368,7 +368,7 @@ func diagnoseOnFailure(t *testing.T, k *kube) {
 // diagnosedNamespaces are the namespaces whose pods the diagnostics show in
 // full.
 func diagnosedNamespaces() []string {
-	return []string{namespace, "cnpg-system", clientNamespace}
+	return []string{namespace, "cnpg-system", clientNamespace, gfNamespace}
 }
 
 // dumpDiagnostics logs what explains a failure: every pod and event in the

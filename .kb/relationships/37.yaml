@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-573dfcc72625
+  - type: executable_for
+    from: SYM-e2e-ghostfoliocheck-test-cur
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:56:16.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9849fd02174c

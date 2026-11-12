@@ -713,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a8862b3e0a0
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-edited
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:55:14.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9cd42652b8
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-edited
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:14.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e80773cf49

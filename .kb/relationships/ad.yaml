@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3082102739e6
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-describe-balances
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:55:03.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e029a9c5060e
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-describe-balances
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:03.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-884e4b6cf228

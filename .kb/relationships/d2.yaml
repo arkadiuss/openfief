@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c8636de2e03
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-sign-up-owner
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:58:18.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b62a48ab51c8

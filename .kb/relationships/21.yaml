@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b50d0be3f51
+  - type: executable_for
+    from: SYM-e2e-ghostfoliocheck-test-test-syncs
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:24.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2b86878ca23

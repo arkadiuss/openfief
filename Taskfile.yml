@@ -538,7 +538,8 @@ tasks:
         bundle=0
         OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' \
           go test -tags e2e -count=1 -v -timeout 20m -run '^TestBundle' ./test/e2e/... || bundle=$?
-        go test -tags e2e -count=1 -v -timeout 20m -skip '^TestBundle' ./test/e2e/...
+        # TestGhostfolio runs in its own shard (task e2e:ghostfolio).
+        go test -tags e2e -count=1 -v -timeout 20m -skip '^(TestBundle|TestGhostfolio)' ./test/e2e/...
         if [ "$bundle" -ne 0 ]; then
           echo 'e2e: the bundle run failed (see the TestBundle output above)' >&2
           exit "$bundle"
@@ -551,13 +552,38 @@ tasks:
       - task: kibi:sync
       - '{{.KIBI}} prove --integration e2e'
 
+  e2e:prove:ghostfolio:
+    desc: 'Run the Ghostfolio shard through kibi prove, which runs task e2e:ghostfolio and records a receipt on its end-to-end test (what CI''s e2e-ghostfolio job runs; docs/dev/kibi.md)'
+    deps: [kibi:install]
+    cmds:
+      - task: kibi:sync
+      - '{{.KIBI}} prove --integration e2e-ghostfolio'
+
+  e2e:ghostfolio:
+    desc: 'The end-to-end Ghostfolio shard (test/e2e, TestGhostfolio) on a local kind or k3d cluster, after task e2e:images SHARD=ghostfolio: the demo''s stack, a real Ghostfolio in its own namespace and the Ghostfolio view against it (D-200 criterion 9); refuses non-local clusters'
+    deps: [tool:kustomize]
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - task: cnpg:manifest
+      # The same TestMain install as task e2e's demo run, signing only the UI and the Ghostfolio view
+      # (OPENFIEF_E2E_SHARD), which are all task e2e:images SHARD=ghostfolio pushed.
+      - |
+        set -e
+        if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
+          echo 'e2e:ghostfolio: {{.E2E_REGISTRY_ENV}} is missing; run task e2e:images CLUSTER=<k3d|kind> SHARD=ghostfolio first' >&2
+          exit 1
+        fi
+        . '{{.E2E_REGISTRY_ENV}}'
+        export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.CNPG_MANIFEST}}' OPENFIEF_E2E_SHARD=ghostfolio
+        go test -tags e2e -count=1 -v -timeout 30m -run '^TestGhostfolio$' ./test/e2e/
+
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d; SHARD=ghostfolio builds only core, operator, egress-proxy, demo-seed, ui and ghostfolio for task e2e:ghostfolio'
     requires:
       vars: [CLUSTER]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}'
+      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}' '{{.SHARD | default "all"}}'
 
   e2e:gateway:
     desc: 'Give the local e2e cluster a Gateway API implementation for the exposure test: Envoy Gateway on kind, pinned by version and sha256; on k3d, the bundled Traefik''s Gateway API provider, which the CI job turns on at cluster creation (test/e2e/testdata/traefik-gateway.yaml), e.g. task e2e:gateway CLUSTER=kind'

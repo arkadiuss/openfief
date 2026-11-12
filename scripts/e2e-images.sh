@@ -18,14 +18,18 @@
 # deploys; the operator asks for IfNotPresent, so the kubelet never pulls it itself.
 # It writes the two registry addresses, and the bundle's images as the cluster names them, to <env file>, which task
 # e2e passes to the suite.
-# Usage: e2e-images.sh <k3d|kind> <cluster name> <env file>
+# The shard picks the images: `all`, the default, builds every image above for task e2e; `ghostfolio` builds only what
+# the Ghostfolio shard runs (task e2e:ghostfolio): core, operator, egress-proxy and demo-seed for the demo's stack, and
+# the UI, which the demo's stack deploys, and the Ghostfolio view as plugins, with no bundle images.
+# Usage: e2e-images.sh <k3d|kind> <cluster name> <env file> [all|ghostfolio]
 set -euo pipefail
 shopt -s inherit_errexit
 
-usage='usage: e2e-images.sh <k3d|kind> <cluster name> <env file>'
+usage='usage: e2e-images.sh <k3d|kind> <cluster name> <env file> [all|ghostfolio]'
 cluster_kind="${1:?$usage}"
 cluster_name="${2:?$usage}"
 env_file="${3:?$usage}"
+shard="${4:-all}"
 case "$cluster_kind" in
   k3d | kind) ;;
   *)
@@ -43,11 +47,27 @@ manifest_types='application/vnd.oci.image.index.v1+json, application/vnd.oci.ima
 
 images=()
 pushed=()
-# The images the bootstrap install runs (deploy/operator, deploy/egress-proxy, deploy/core), which the bundle pins.
-bundle=(core operator egress-proxy)
-for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile \
-  test/e2e/fixture/Dockerfile plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile \
-  plugins/ibkr-flex/Dockerfile plugins/eodhd/Dockerfile plugins/treasury-bonds/Dockerfile; do
+case "$shard" in
+  all)
+    # The images the bootstrap install runs (deploy/operator, deploy/egress-proxy, deploy/core), which the bundle pins.
+    bundle=(core operator egress-proxy)
+    dockerfiles=(cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile
+      test/e2e/fixture/Dockerfile plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile
+      plugins/ibkr-flex/Dockerfile plugins/eodhd/Dockerfile plugins/treasury-bonds/Dockerfile)
+    connectors=(e2e-connector:manifest.json e2e-connector-egress:manifest-egress.json)
+    ;;
+  ghostfolio)
+    bundle=()
+    dockerfiles=(cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile
+      plugins/ui/Dockerfile plugins/ghostfolio/Dockerfile)
+    connectors=()
+    ;;
+  *)
+    echo "e2e-images: unknown shard '$shard'; use all or ghostfolio" >&2
+    exit 1
+    ;;
+esac
+for dockerfile in "${dockerfiles[@]}"; do
   name="$(basename "$(dirname "$dockerfile")")"
   image="openfief.test/$name:e2e"
   echo "e2e-images: building $image from $dockerfile"
@@ -62,7 +82,7 @@ for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/D
 done
 # The suite's synthetic connector (test/e2e/connector), never released: built twice, each image labelled with its
 # own manifest, so the suite can upgrade from the first to the second, which asks for an egress host more.
-for variant in e2e-connector:manifest.json e2e-connector-egress:manifest-egress.json; do
+for variant in "${connectors[@]}"; do
   name="${variant%%:*}"
   manifest="test/e2e/connector/${variant#*:}"
   image="openfief.test/$name:e2e"

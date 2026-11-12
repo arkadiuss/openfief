@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9f1fee3e4c1
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-gf-own
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:58:35.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15bdec99ab69

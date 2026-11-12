@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-133aa851c081
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-net-units
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:54:45.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b8fdd349bf
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-net-units
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:54:45.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce3d0b1fb2c8

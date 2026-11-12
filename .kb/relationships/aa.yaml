@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c78642f8669
+  - type: executable_for
+    from: SYM-e2e-ghostfoliocheck-test-test-edited
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:56.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608eb3c222ef

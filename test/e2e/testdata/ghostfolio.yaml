@@ -1,0 +1,185 @@
+# A real Ghostfolio for D-200 criterion 9 (../ghostfolio_test.go), in a namespace of its own outside openfief, as an
+# owner's Ghostfolio running in the same cluster is (D-74). Images are pinned by digest: Ghostfolio 3.93.0, the only
+# release the view supports (internal/views/ghostfolio, SupportedVersions), and Redis 7.2.17, the cache Ghostfolio
+# needs. Its PostgreSQL is a one-instance CloudNativePG cluster from the operator the suite already installed, with the
+# same default PostgreSQL image as openfief-db, so no other database image is pulled; CloudNativePG writes the
+# connection URI into the Secret ghostfolio-db-app. The suite creates the Secret ghostfolio-env for each run, with a
+# random JWT key, access token salt and Redis password; nothing here is a credential. The namespace has no
+# NetworkPolicy, so the view plugin reaches Ghostfolio through the egress rule the operator adds (D-74) and nothing
+# else needs admitting.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openfief-e2e-ghostfolio
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ghostfolio-db
+  namespace: openfief-e2e-ghostfolio
+spec:
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 1Gi
+  bootstrap:
+    initdb:
+      database: ghostfolio
+      owner: ghostfolio
+  postgresql:
+    parameters:
+      shared_buffers: 32MB
+      max_connections: '30'
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostfolio-redis
+  namespace: openfief-e2e-ghostfolio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ghostfolio-redis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ghostfolio-redis
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        # The image's redis user.
+        runAsUser: 999
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: redis
+          # redis 7.2.17-alpine
+          image: docker.io/library/redis@sha256:3d2b46efa3280299fe6e117a33fccdfeb495c39098f95d076fadd12a88005b0a
+          args: ["--requirepass", "$(REDIS_PASSWORD)", "--save", "", "--appendonly", "no"]
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ghostfolio-env
+                  key: REDIS_PASSWORD
+          ports:
+            - name: redis
+              containerPort: 6379
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghostfolio-redis
+  namespace: openfief-e2e-ghostfolio
+spec:
+  selector:
+    app.kubernetes.io/name: ghostfolio-redis
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostfolio
+  namespace: openfief-e2e-ghostfolio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ghostfolio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ghostfolio
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        # The image's node user; its entrypoint migrates the database, then starts the API.
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ghostfolio
+          # ghostfolio/ghostfolio 3.93.0
+          image: docker.io/ghostfolio/ghostfolio@sha256:e5724d034def0e308c0089d3622711f2f643254870227e383f71f0b368f33489
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ghostfolio-db-app
+                  key: uri
+            - name: REDIS_HOST
+              value: ghostfolio-redis
+            - name: REDIS_PORT
+              value: '6379'
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ghostfolio-env
+                  key: REDIS_PASSWORD
+            - name: ACCESS_TOKEN_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: ghostfolio-env
+                  key: ACCESS_TOKEN_SALT
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ghostfolio-env
+                  key: JWT_SECRET_KEY
+          ports:
+            - name: http
+              containerPort: 3333
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 384Mi
+            limits:
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghostfolio
+  namespace: openfief-e2e-ghostfolio
+spec:
+  selector:
+    app.kubernetes.io/name: ghostfolio
+  ports:
+    - name: http
+      port: 3333
+      # A number, not the port's name, so the operator's egress rule for the view names it as it is (D-74).
+      targetPort: 3333

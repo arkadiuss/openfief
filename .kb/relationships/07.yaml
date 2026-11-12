@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8d72d1e262b
+  - type: executable_for
+    from: SYM-e2e-ghostfoliocheck-test-test-net-units
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:35.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea1c6c670f0c
