@@ -6,11 +6,18 @@
 // Usage: OPENFIEF_E2E_ENROLL_LINK=<one-time enrollment link> node owner.mjs
 // Protocol: once signed in it prints one line, "owner: ready". It then reads one JSON request per line on stdin,
 //   {"path": "/accounts", "form": {"name": "..."}}                       a form, sent URL-encoded
+//   {"path": "/settings/model", "fields": [["kind", "index"], ["id", "MODA"]]}  a form with repeated names, URL-encoded, in order
 //   {"path": "/accounts/x/statements", "multipart": [{"name": "mode", "value": "auto"},
 //    {"name": "statement", "filename": "f.xlsx", "base64": "..."}]}      a multipart form, in the order given
 // POSTs it, follows redirects, and prints one line per request: "owner-result: " and the JSON
-// {"status": 200, "redirected": true, "path": "/accounts", "body": "..."}. It exits when stdin ends, non-zero on the
-// first failure to sign in or to send. It never prints the session cookie.
+// {"status": 200, "redirected": true, "path": "/accounts", "body": "..."}. A request
+//   {"page": "/?date=2026-03-13"}                                         a page to look at, with its charts
+// instead opens the page in the signed-in tab, waits until app.js has drawn every chart on it, and answers
+// {"status": 200, "path": "/?date=...", "charts": [...], "bars": [...], "model": [...]}: per canvas what its Chart.js
+// chart draws, its days and per dataset its values ("" for a gap), per bar of the allocation its key, share, width and
+// value as the page writes them (charts_test.go), and, when the page has a "Model portfolio" heading, the cells of the
+// table under it, row by row, as text; null when it has none (model_test.go). It exits when stdin ends, non-zero on
+// the first failure to sign in or to send. It never prints the session cookie.
 import { existsSync, readdirSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -62,7 +69,7 @@ async function send(page, req) {
           }
         }
       } else {
-        body = new URLSearchParams(req.form || {});
+        body = new URLSearchParams(req.fields || req.form || {});
       }
       const res = await fetch(req.path, { method: 'POST', body, credentials: 'same-origin', redirect: 'follow' });
       const text = await res.text();
@@ -70,6 +77,43 @@ async function send(page, req) {
     },
     { req, maxBody },
   );
+}
+
+// look opens path in the signed-in tab and reads what its charts draw: what Chart.js holds for each canvas once
+// app.js has drawn it, not the data attribute it was drawn from, and each allocation bar's text and width.
+async function look(page, path) {
+  const res = await page.goto(origin + path, { timeout });
+  await page.waitForFunction(
+    () => Array.from(document.querySelectorAll('canvas[data-chart]')).every((c) => c.dataset.drawn === 'true'),
+    null,
+    { timeout },
+  );
+  const drawn = await page.evaluate(() => {
+    const text = (el) => (el ? el.textContent.trim() : '');
+    const charts = Array.from(document.querySelectorAll('canvas[data-chart]')).map((canvas) => {
+      const chart = window.Chart.getChart(canvas);
+      return {
+        aria: canvas.getAttribute('aria-label'),
+        labels: chart.data.labels.map(String),
+        series: chart.data.datasets.map((d) => d.data.map((v) => (v === null || v === undefined ? '' : String(v)))),
+      };
+    });
+    const bars = Array.from(document.querySelectorAll('ul.bars > li')).map((li) => ({
+      key: text(li.querySelector('.bar-head > span:first-child')),
+      share: text(li.querySelector('.bar-head > .mono')),
+      width: (li.querySelector('rect.fill') || { getAttribute: () => '' }).getAttribute('width') || '',
+      value: text(li.querySelector('.bar-value')),
+    }));
+    // The max drawdown table of the model portfolio, which the page shows only while the model portfolio is on.
+    const heading = Array.from(document.querySelectorAll('h3')).find((h) => text(h) === 'Model portfolio');
+    const model = heading
+      ? Array.from(heading.parentElement.querySelectorAll('table tbody tr')).map((tr) =>
+          Array.from(tr.children).map((td) => text(td).replace(/\s+/g, ' ')),
+        )
+      : null;
+    return { path: location.pathname + location.search, charts, bars, model };
+  });
+  return { status: res ? res.status() : 0, ...drawn };
 }
 
 const browser = await chromium.launch({ headless: true, ...browserOptions() });
@@ -100,7 +144,8 @@ try {
     if (!line.trim()) {
       continue;
     }
-    const result = await send(page, JSON.parse(line));
+    const req = JSON.parse(line);
+    const result = req.page ? await look(page, req.page) : await send(page, req);
     console.log('owner-result: ' + JSON.stringify(result));
   }
 } catch (err) {

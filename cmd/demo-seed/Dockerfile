@@ -3,7 +3,7 @@
 # the Go build runs on the build platform and cross-compiles. It imports nothing from sdk/go, so
 # go.mod alone builds it (a binary that imports sdk/go would also need go.work and sdk/go copied in).
 # Base images are pinned by digest; Renovate updates tag and digest together.
-FROM --platform=$BUILDPLATFORM golang:1.27.3-trixie@sha256:c124b9ad3452f46061b5054607d26ea51730dae5372c5e469920063ba2bc6dcc AS build
+FROM --platform=$BUILDPLATFORM golang:1.27.4-trixie@sha256:b54b2639de8c1bfe538ec5ffc45f29b1932235ac5f6d63c059853646677112d9 AS build
 WORKDIR /src
 # The core module and the SDK module build as one Go workspace (go.work). The repository is private, so
 # the SDK can't be fetched as a module version: it is copied in, and the workspace's checksums are in go.work.sum.

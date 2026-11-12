@@ -1063,3 +1063,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4df938b7deaa
+  - type: verified_by
+    from: SCEN-e2e-read-api-every-resource
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:06:58.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d39856c27f1
+  - type: implements
+    from: SYM-openapierrors-encode
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:13.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b70c92f07102
+  - type: covered_by
+    from: SYM-openapierrors-encode
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:13.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23a96d42615
+  - type: implements
+    from: SYM-e2e-modelseries-series
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:10:17.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da846861107b
+  - type: covered_by
+    from: SYM-e2e-modelseries-series
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:10:17.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c599619dee56

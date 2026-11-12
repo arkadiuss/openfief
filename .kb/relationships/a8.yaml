@@ -986,3 +986,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b5b23f2407e
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-model-off-api
+    to: TEST-views-connectapi-errors
+    created_at: 2026-11-08T05:46:25.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f66d7b5fdc1
+  - type: verified_by
+    from: SCEN-e2e-ghostfolio-second-sync-unchanged
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:59:31.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-689bed708a18
+  - type: verified_by
+    from: SCEN-e2e-ghostfolio-second-sync-unchanged
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:59:31.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12f7e5824b6b

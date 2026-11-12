@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa392531b8e7
+  - type: executable_for
+    from: SYM-e2e-readapi-test-allocation-calls
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:11:04.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-507e28217b9d
+  - type: executable_for
+    from: SYM-e2e-readapi-test-call-per-method
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T05:46:52.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5fcfb95f76a

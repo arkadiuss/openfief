@@ -944,3 +944,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-832f52a6bbf8
+  - type: implements
+    from: SYM-e2e-modelcheck-target-of
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:12:02.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-883c0ee6703d
+  - type: covered_by
+    from: SYM-e2e-modelcheck-target-of
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:12:02.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7e698444627
+  - type: executable_for
+    from: SYM-e2e-model-test-model-path
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:13:57.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b283c90692b
+  - type: executable_for
+    from: SYM-e2e-modelcheck-test-pick
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:48:19.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78e0732ee45b

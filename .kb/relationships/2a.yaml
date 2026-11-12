@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-292e4fae614b
+  - type: verified_by
+    from: SCEN-e2e-read-api-connect-equals-rest
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:07:02.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60919002df59
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-check-other-services
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:11:59.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9081f1d011dd
+  - type: executable_for
+    from: SYM-e2e-model-test-data-path-check-model-off
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:14:13.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18ad33ba732

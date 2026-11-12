@@ -30,3 +30,5 @@ plugins:
       - short-service-tags
       - services=openfief.views.v1.ReadService
       - trim-unused-types
+      # Declares the google.rpc.Status error body Vanguard writes over REST, as each operation's default response.
+      - with-google-error-detail

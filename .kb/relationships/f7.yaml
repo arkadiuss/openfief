@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c3396027feb
+  - type: constrains
+    from: REQ-e2e-apicontract-walks-contract
+    to: FACT-SUBJECT-CA779E400CC49C78
+    created_at: 2026-11-08T04:07:11.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3928e4cd0926
+  - type: requires_property
+    from: REQ-e2e-apicontract-walks-contract
+    to: FACT-PROP-E3B75F0406656DEC
+    created_at: 2026-11-08T04:07:11.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8400af1425fa
+  - type: specified_by
+    from: REQ-e2e-apicontract-walks-contract
+    to: SCEN-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:07:11.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-691e11a3b676

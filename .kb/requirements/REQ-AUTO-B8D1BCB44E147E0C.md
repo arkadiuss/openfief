@@ -1,6 +1,6 @@
 ---
 title: The MCP server must not be exposed before M2.
-status: open
+status: closed
 text_ref: design-decisions:D-6#4
 tags:
   - strict-modeling

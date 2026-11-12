@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c85096a1bae
+  - type: implements
+    from: SYM-e2e-chartcheck-plain-money
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:49.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958f492dcf25
+  - type: covered_by
+    from: SYM-e2e-chartcheck-plain-money
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:49.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-453773330432

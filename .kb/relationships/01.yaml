@@ -993,3 +993,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36dbe3967718
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-pass-of
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:54:33.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3acc4b791cc9
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-pass-of
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:54:33.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4507dc0720a
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-sync
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:55:19.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b9d3e66fdf1
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-sync
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:55:19.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5243b9d8f46f

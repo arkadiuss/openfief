@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-200#9
-  recorded_at: '2026-11-07T03:32:04.493Z'
+  recorded_at: '2026-11-08T08:59:34.210Z'
 id: REQ-m0-exit-09-ghostfolio
 type: req
 ---

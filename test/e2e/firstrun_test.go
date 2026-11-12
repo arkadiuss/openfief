@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net/http"
 	"os"
 	"os/exec"
 	"slices"
@@ -168,7 +167,7 @@ func enrollWithCLI(t *testing.T) {
 		cancel()
 		t.Fatalf("%v (openfief enroll: %v; stderr: %s)", err, wait(), stderr.String())
 	}
-	waitHTTP(t, localCore+"/readyz", http.StatusOK)
+	waitHTTP(t)
 	browser, bcancel := context.WithTimeout(ctx, browserTimeout)
 	defer bcancel()
 	node := exec.CommandContext(browser, "node", passkeyScript)

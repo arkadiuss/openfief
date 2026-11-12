@@ -25,6 +25,18 @@
         "default"
       ],
       "description": "Command proof: runs task e2e once per kibi prove and judges every selected test by its exit code."
+    },
+    {
+      "id": "e2e-ghostfolio",
+      "producer": "command",
+      "command": [
+        "task",
+        "e2e:ghostfolio"
+      ],
+      "targets": [
+        "default"
+      ],
+      "description": "Command proof: runs task e2e:ghostfolio once per kibi prove and judges every selected test by its exit code."
     }
   ]
 }

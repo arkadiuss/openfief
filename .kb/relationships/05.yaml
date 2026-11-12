@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51b60bc0e670
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-api-check-errors
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T05:46:36.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96bf91d7b2f8
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-is-ghostfolio-api
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:57:55.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b976f557059c

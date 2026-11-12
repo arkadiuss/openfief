@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16ec588d2271
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-ledger-api
+    to: TEST-views-connectapi-errors
+    created_at: 2026-11-08T05:46:19.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff53a49e9067

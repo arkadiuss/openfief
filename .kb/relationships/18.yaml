@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82212afe965e
+  - type: executable_for
+    from: SYM-e2e-readapi-test-data-path-read-calls
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:10:47.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d970ba5cba0e

@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-214e273e2280
+  - type: executable_for
+    from: SYM-e2e-readapi-test-sdk-methods
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:13:03.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bca6f32aacd

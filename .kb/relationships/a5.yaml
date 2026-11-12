@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5437048a66bc
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-synthetic-routes
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:09:42.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8ffa1eec5b7
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-test-gf-state
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:56:32.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28db9e88f84

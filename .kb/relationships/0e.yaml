@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c0858f255a0
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-test-check-balances
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-12T12:12:26.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ffde30cf975

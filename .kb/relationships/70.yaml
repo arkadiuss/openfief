@@ -552,3 +552,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7cf32a37d6d0
+  - type: implements
+    from: SYM-openapierrors-parse-rules
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:26.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5636c2a68724
+  - type: covered_by
+    from: SYM-openapierrors-parse-rules
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:26.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9480f74eff75
+  - type: implements
+    from: SYM-e2e-chartcheck-chart
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:29:21.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c2bb9a2047
+  - type: covered_by
+    from: SYM-e2e-chartcheck-chart
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:29:21.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7281d7b24df
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-gf-owner-add-own
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:58:41.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-070a9b8fb25c

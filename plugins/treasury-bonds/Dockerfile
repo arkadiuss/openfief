@@ -1,7 +1,7 @@
 # OpenFief's first-party treasury bond connector plugin (D-9, D-49). Built by CI from the repository root
 # (scripts/ci-images.sh), for linux/amd64 and linux/arm64: the Go build runs on the build platform and cross-compiles.
 # Base images are pinned by digest; Renovate updates tag and digest together.
-FROM --platform=$BUILDPLATFORM golang:1.27.3-trixie@sha256:c124b9ad3452f46061b5054607d26ea51730dae5372c5e469920063ba2bc6dcc AS build
+FROM --platform=$BUILDPLATFORM golang:1.27.4-trixie@sha256:b54b2639de8c1bfe538ec5ffc45f29b1932235ac5f6d63c059853646677112d9 AS build
 WORKDIR /src
 # The core module and the SDK module build as one Go workspace (go.work). The SDK can't be fetched as a module
 # version yet: it is copied in, and the workspace's checksums are in go.work.sum.

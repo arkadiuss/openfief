@@ -156,7 +156,10 @@ func peer(ns, key, value string) map[string]any {
 // every other bundle test has finished, since it restarts the core they
 // use, it applies the component's patch of the core's auth origins and
 // creates and uses a passkey on the route's hostname through the Gateway
-// (checkRoutePasskey, SCEN-e2e-passkey-on-route-hostname).
+// (checkRoutePasskey, SCEN-e2e-passkey-on-route-hostname). Then, signed
+// in on localhost, the owner's browser creates a passkey for the route's
+// hostname through the settings page's one-time link and uses it there
+// (checkSettingsLinkPasskey, SCEN-e2e-passkey-second-host-settings-link).
 func TestBundleExposure(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -175,6 +178,7 @@ func TestBundleExposure(t *testing.T) {
 	waitHTTPS(t, gw.client, "/v1/accounts", http.StatusUnauthorized, "")
 	waitHTTPS(t, gw.client, "/login", http.StatusOK, loginButton)
 	checkRoutePasskey(t, k, gw, &certs)
+	checkSettingsLinkPasskey(t, k, gw, &certs)
 }
 
 // bundleObject is what the exposure test reads of an object in the bundle.

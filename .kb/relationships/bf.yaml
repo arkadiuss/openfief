@@ -1210,3 +1210,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96d8dbca19eb
+  - type: constrains
+    from: REQ-tooling-download-retry
+    to: FACT-SUBJECT-BF6BE57113490A1C
+    created_at: 2026-11-12T15:11:58.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a710b904754
+  - type: requires_property
+    from: REQ-tooling-download-retry
+    to: FACT-PROP-567429DEE3CDE372
+    created_at: 2026-11-12T15:11:58.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5331b501becc
+  - type: specified_by
+    from: REQ-tooling-download-retry
+    to: SCEN-tooling-download-retry
+    created_at: 2026-11-12T15:11:58.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec86defa0612

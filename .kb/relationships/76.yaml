@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4425e8c42f2
+  - type: executable_for
+    from: SYM-e2e-chartcheck-test-test-price-charts
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:30:19.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6f164e73e32

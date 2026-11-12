@@ -71,7 +71,7 @@ func TestFirstPasskey(t *testing.T) {
 		cancel()
 		t.Fatalf("%v (openfief enroll: %v)", err, <-done)
 	}
-	waitHTTP(t, localCore+"/readyz", http.StatusOK)
+	waitHTTP(t)
 	browser, bcancel := context.WithTimeout(ctx, browserTimeout)
 	defer bcancel()
 	cmd := exec.CommandContext(browser, "node", passkeyScript)
@@ -116,9 +116,11 @@ func readLink(ctx context.Context, out io.Reader) (string, error) {
 	}
 }
 
-// waitHTTP waits until GET url, from this machine, answers want.
-func waitHTTP(t *testing.T, url string, want int) {
+// waitHTTP waits until GET localCore/readyz, from this machine, answers
+// 200: the port-forward `openfief enroll` started reaches a ready core.
+func waitHTTP(t *testing.T) {
 	t.Helper()
+	url := localCore + "/readyz"
 	err := waitFor(t.Context(), enrollTimeout, func(ctx context.Context) (string, bool, error) {
 		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, http.NoBody)
 		if err != nil {
@@ -131,7 +133,7 @@ func waitHTTP(t *testing.T, url string, want int) {
 		if err := resp.Body.Close(); err != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, err)
 		}
-		return resp.Status, resp.StatusCode == want, nil
+		return resp.Status, resp.StatusCode == http.StatusOK, nil
 	})
 	if err != nil {
 		t.Fatalf("GET %s: %v", url, err)

@@ -776,3 +776,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27cdfe207a1e
+  - type: implements
+    from: SYM-openapierrors-rules-statuses
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:32.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75cb4d3509de
+  - type: covered_by
+    from: SYM-openapierrors-rules-statuses
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:32.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a024639c303
+  - type: implements
+    from: SYM-e2e-apicontract-error-response
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:45:38.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1fe750a3177
+  - type: covered_by
+    from: SYM-e2e-apicontract-error-response
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T05:45:38.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e57bd1af196d
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-helper-failing-syncer
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-11-12T13:28:39.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0a90b713d4e

@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f22030f2eed
+  - type: executable_for
+    from: SYM-openapierrors-test-add-errors
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:45:09.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50128085125a
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-restart-view
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:59:09.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc533a37752

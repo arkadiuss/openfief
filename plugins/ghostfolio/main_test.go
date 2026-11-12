@@ -232,7 +232,7 @@ func TestLoop(t *testing.T) {
 	s := &countingSyncer{calls: make(chan int, 1)}
 	done := make(chan struct{})
 	go func() {
-		loop(ctx, s, time.Millisecond, slog.New(slog.DiscardHandler))
+		loop(ctx, s, time.Millisecond, time.Millisecond, slog.New(slog.DiscardHandler))
 		close(done)
 	}()
 	deadline := time.After(10 * time.Second)
@@ -251,5 +251,50 @@ func TestLoop(t *testing.T) {
 	case <-done:
 	case <-time.After(10 * time.Second):
 		t.Fatal("the loop didn't stop")
+	}
+}
+
+// failingSyncer fails its first fails syncs, then succeeds, and reports
+// each call's number.
+type failingSyncer struct {
+	fails int
+	n     int
+	calls chan int
+}
+
+func (f *failingSyncer) Sync(context.Context) (ghostfolio.Report, error) {
+	f.n++
+	f.calls <- f.n
+	if f.n <= f.fails {
+		return ghostfolio.Report{}, errSyntheticFailure
+	}
+	return ghostfolio.Report{Imported: 1}, nil
+}
+
+// TestLoopRetriesFailedSyncSoon shows a failed sync tried again after the
+// retry delay, not after the interval: with an hour's interval and a 10 ms
+// retry, two failures and a success come within seconds, and then the loop
+// waits for the interval.
+func TestLoopRetriesFailedSyncSoon(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	s := &failingSyncer{fails: 2, calls: make(chan int, 8)}
+	go loop(ctx, s, time.Hour, 10*time.Millisecond, slog.New(slog.DiscardHandler))
+	deadline := time.After(10 * time.Second)
+	for want := 1; want <= 3; want++ {
+		select {
+		case n := <-s.calls:
+			if n != want {
+				t.Fatalf("call %d, want %d", n, want)
+			}
+		case <-deadline:
+			t.Fatalf("sync %d didn't come within seconds of a failure", want)
+		}
+	}
+	select {
+	case n := <-s.calls:
+		t.Fatalf("sync %d came before the interval after a success", n)
+	case <-time.After(200 * time.Millisecond):
 	}
 }

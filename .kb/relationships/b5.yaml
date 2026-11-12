@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-389f14bf6467
+  - type: implements
+    from: SYM-e2e-modelcheck-performance-chart
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:11:03.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-063badf311f8
+  - type: covered_by
+    from: SYM-e2e-modelcheck-performance-chart
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:11:03.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2836c4b3634d
+  - type: executable_for
+    from: SYM-e2e-modelcheck-test-test-aligned
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:12:55.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0984219389c4

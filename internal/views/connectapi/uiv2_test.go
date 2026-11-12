@@ -162,9 +162,7 @@ func serveJSON(t *testing.T, a api, target string, want int, out any) {
 	if rec.Code != want {
 		t.Fatalf("GET %s = %d, want %d\n%s", target, rec.Code, want, rec.Body)
 	}
-	if rec.Code == http.StatusOK {
-		loadContract(t).check(t, req, rec)
-	}
+	loadContract(t).check(t, req, rec)
 	if out != nil {
 		if err := json.Unmarshal(rec.Body.Bytes(), out); err != nil {
 			t.Fatalf("decoding %s: %v", rec.Body, err)

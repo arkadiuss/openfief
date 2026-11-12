@@ -71,12 +71,12 @@ jobs:
 
   docs-build:
     # Builds the docs site that the docs job publishes, once both end-to-end runs passed, so kibi's requirements
-    # report on the site shows their receipts (docs/dev/kibi.md). Each e2e job uploads the kibi.proof-run.v1
+    # report on the site shows their receipts (docs/dev/kibi.md). Each e2e and e2e-ghostfolio job uploads the kibi.proof-run.v1
     # artifact `task e2e:prove` wrote; task kibi:ingest has kibi ingest them into this checkout of the same
     # commit, which kibi accepts only when the workspace snapshot matches the one the runs were made from.
     name: build docs
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: [check, e2e]
+    needs: [check, e2e, e2e-ghostfolio]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -248,6 +248,69 @@ jobs:
         with:
           name: e2e-proof-${{ matrix.cluster }}
           path: .kb/proof/runs/e2e.json
+          if-no-files-found: error
+          retention-days: 7
+
+  e2e-ghostfolio:
+    # D-200 criterion 9 against a real Ghostfolio, in a shard of its own so the e2e jobs don't grow (pipeline.md,
+    # "End-to-end tests"): the same demo stack and TestMain, then test/e2e/ghostfolio_test.go runs Ghostfolio 3.93.0,
+    # pinned by digest, with its own CloudNativePG database and Redis in the namespace openfief-e2e-ghostfolio, signs a
+    # user up and installs the Ghostfolio view against it. Only the images that run are built (task e2e:images
+    # SHARD=ghostfolio), and the exposure test's Gateway isn't installed. On both clusters, as D-200 asks of every
+    # criterion. Its proof run goes to docs-build with the e2e jobs' ones.
+    name: e2e ghostfolio (${{ matrix.cluster }})
+    needs: plan
+    if: needs.plan.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster: [k3d, kind]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+          # kibi prove runs from the npm packages.
+          node: 'true'
+      - name: task e2e:k3s-image
+        id: k3s
+        if: matrix.cluster == 'k3d'
+        run: echo "image=$(task e2e:k3s-image)" >>"$GITHUB_OUTPUT"
+      - name: Create a k3d cluster
+        if: matrix.cluster == 'k3d'
+        uses: AbsaOSS/k3d-action@4e8b3239042be1dc0aed6c5eb80c13b18200fc79 # v2.4.0
+        with:
+          cluster-name: openfief-e2e
+          args: >-
+            --api-port 127.0.0.1:6550
+            --image ${{ steps.k3s.outputs.image }}
+            --k3s-arg --secrets-encryption@server:0
+          # renovate: datasource=github-releases depName=k3d-io/k3d
+          k3d-version: v5.9.0
+      - name: Create a kind cluster
+        if: matrix.cluster == 'kind'
+        uses: helm/kind-action@1544676c07bb3570fcb70166beaa07c4528fd4aa # v1.15.1
+        with:
+          cluster_name: openfief-e2e
+          # renovate: datasource=github-releases depName=kubernetes-sigs/kind
+          version: v0.33.0
+      - name: task e2e:images
+        run: task e2e:images CLUSTER="$CLUSTER" SHARD=ghostfolio
+        env:
+          CLUSTER: ${{ matrix.cluster }}
+      - name: task e2e:prove:ghostfolio
+        run: task e2e:prove:ghostfolio
+      - name: Upload the proof run
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-proof-ghostfolio-${{ matrix.cluster }}
+          path: .kb/proof/runs/e2e-ghostfolio.json
           if-no-files-found: error
           retention-days: 7
 

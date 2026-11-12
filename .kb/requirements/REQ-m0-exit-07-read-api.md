@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-200#7
-  recorded_at: '2026-11-07T03:31:55.080Z'
+  recorded_at: '2026-11-08T04:07:18.587Z'
 id: REQ-m0-exit-07-read-api
 type: req
 ---

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
@@ -80,13 +81,21 @@ func loadContract(t *testing.T) contract {
 	return contract{doc: doc, router: router}
 }
 
-// check validates a 200 response rec gave to req against the generated
-// OpenAPI document.
+// check validates the response rec gave to req, a success or an error,
+// against the generated OpenAPI document.
 func (c contract) check(t *testing.T, req *http.Request, rec *httptest.ResponseRecorder) {
 	t.Helper()
+	if err := c.validate(req, rec); err != nil {
+		t.Errorf("%s %s: %v\n%s", req.Method, req.URL, err, rec.Body)
+	}
+}
+
+// validate returns why the response rec gave to req does not match the
+// generated OpenAPI document, or nil.
+func (c contract) validate(req *http.Request, rec *httptest.ResponseRecorder) error {
 	route, params, err := c.router.FindRoute(req)
 	if err != nil {
-		t.Fatalf("%s %s is not in the OpenAPI document: %v", req.Method, req.URL, err)
+		return fmt.Errorf("not in the OpenAPI document: %w", err)
 	}
 	in := &openapi3filter.RequestValidationInput{
 		Request: req, PathParams: params, Route: route,
@@ -98,8 +107,9 @@ func (c contract) check(t *testing.T, req *http.Request, rec *httptest.ResponseR
 		Options: &openapi3filter.Options{IncludeResponseStatus: true, MultiError: true},
 	}
 	if err := openapi3filter.ValidateResponse(context.Background(), out); err != nil {
-		t.Errorf("%s %s: response does not match the OpenAPI document: %v\n%s", req.Method, req.URL, err, rec.Body)
+		return fmt.Errorf("response does not match the OpenAPI document: %w", err)
 	}
+	return nil
 }
 
 func TestREST(t *testing.T) {
@@ -155,7 +165,7 @@ func TestREST(t *testing.T) {
 			if rec.Code != tt.want {
 				t.Fatalf("GET %s = %d, want %d\n%s", tt.target, rec.Code, tt.want, rec.Body)
 			}
-			if rec.Code == http.StatusOK {
+			if tt.target != "/v1/nothing-here" {
 				c.check(t, req, rec)
 			}
 		})
@@ -167,11 +177,13 @@ func TestRESTInternalError(t *testing.T) {
 	l := newLedger(t)
 	l.fail = errStore
 	a := newAPI(t, l)
+	c := loadContract(t)
 	for _, target := range []string{"/v1/sleeves", "/v1/accounts/acc-1/cash?date=2026-03-02", "/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_CURRENCY"} {
-		_, rec := a.serve(t, http.MethodGet, target, goodToken)
+		req, rec := a.serve(t, http.MethodGet, target, goodToken)
 		if rec.Code != http.StatusInternalServerError {
 			t.Errorf("GET %s = %d, want 500", target, rec.Code)
 		}
+		c.check(t, req, rec) // the default response
 		if body := rec.Body.String(); strings.Contains(body, "store unavailable") || !strings.Contains(body, "req-1") {
 			t.Errorf("GET %s: body %s should name the request ID and not the error", target, body)
 		}

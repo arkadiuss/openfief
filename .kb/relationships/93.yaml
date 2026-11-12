@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-784550536f2e
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-test-error-response
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T05:45:50.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56b3e352fd0a

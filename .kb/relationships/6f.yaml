@@ -797,3 +797,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-231c28adcd6c
+  - type: implements
+    from: SYM-e2e-apicontract-parse-template
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:08:25.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9334bd1987c0
+  - type: covered_by
+    from: SYM-e2e-apicontract-parse-template
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:08:25.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-431c78e1f1dd
+  - type: executable_for
+    from: SYM-e2e-readapi-test-read-call
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:10:15.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db126bfc2f3
+  - type: verified_by
+    from: SCEN-views-read-api-declared-errors
+    to: TEST-views-connectapi-errors
+    created_at: 2026-11-08T05:43:44.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-674987318ad2
+  - type: verified_by
+    from: SCEN-views-read-api-declared-errors
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:43:44.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed7ad1b0c54
+  - type: verified_by
+    from: SCEN-views-read-api-declared-errors
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T05:43:44.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eb26ba7cca7
+  - type: verified_by
+    from: SCEN-views-read-api-declared-errors
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T05:43:44.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5b6e1e1920
+  - type: executable_for
+    from: SYM-e2e-charts-test-page-window
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:14.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d23704d28d7

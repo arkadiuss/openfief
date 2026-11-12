@@ -776,3 +776,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f35808c5ffe1
+  - type: implements
+    from: SYM-e2e-apicontract-procedure
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:07:56.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9558b7feb987
+  - type: covered_by
+    from: SYM-e2e-apicontract-procedure
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:07:56.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1060cf2b2f8
+  - type: implements
+    from: SYM-e2e-chartcheck-value-chart
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:11.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a693789b199d
+  - type: covered_by
+    from: SYM-e2e-chartcheck-value-chart
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:11.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2d8c09bccd
+  - type: executable_for
+    from: SYM-e2e-charts-test-owner-look
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:55.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afd55ed96259

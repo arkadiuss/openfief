@@ -120,7 +120,7 @@ verify_image() {
 
 # 1. Download the assets.
 say "1. downloading $VERSION's assets from $REPO"
-gh release download "$VERSION" --repo "$REPO" \
+bash "$(dirname "$0")/retry.sh" gh release download "$VERSION" --repo "$REPO" \
   --pattern "openfief-crds-$VERSION.yaml" --pattern "openfief-install-$VERSION.yaml" \
   --pattern "openfief-db-$VERSION.yaml" --pattern "$cnpg" \
   --pattern "$cli" --pattern "$cli.sigstore.json" \

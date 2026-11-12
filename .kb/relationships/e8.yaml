@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-048c6e030fb8
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-deploy-ghostfolio
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:57:44.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b1b4553ff5e

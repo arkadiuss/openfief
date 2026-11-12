@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fcc941a1f20
+  - type: implements
+    from: SYM-e2e-modelcheck-no-gap
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:11:49.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2cfe4da6e39
+  - type: covered_by
+    from: SYM-e2e-modelcheck-no-gap
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:11:49.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f2ba57fa82

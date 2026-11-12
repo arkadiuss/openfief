@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4c145d3ee54
+  - type: executable_for
+    from: SYM-e2e-charts-test-data-path-check-chart-page
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:31:36.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c8830e7908

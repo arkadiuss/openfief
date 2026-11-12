@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0deae01469cc
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-contract-validate
+    to: TEST-views-connectapi-rest
+    created_at: 2026-11-08T05:46:30.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-291463dd21af

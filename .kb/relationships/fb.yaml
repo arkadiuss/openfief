@@ -1042,3 +1042,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06da46d7963c
+  - type: constrains
+    from: REQ-views-read-api-declared-errors
+    to: FACT-SUBJECT-5D5273B6E7DF2D96
+    created_at: 2026-11-08T05:43:53.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4757be61d995
+  - type: requires_property
+    from: REQ-views-read-api-declared-errors
+    to: FACT-PROP-21D60333A323C426
+    created_at: 2026-11-08T05:43:53.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af567f53f6d0
+  - type: specified_by
+    from: REQ-views-read-api-declared-errors
+    to: SCEN-views-read-api-declared-errors
+    created_at: 2026-11-08T05:43:53.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38cafd427d7a

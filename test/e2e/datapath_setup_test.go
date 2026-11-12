@@ -533,11 +533,15 @@ type owner struct {
 }
 
 // ownerRequest is one form owner.mjs sends from the signed-in page: Form
-// URL-encoded, or Multipart in its order.
+// URL-encoded, Fields URL-encoded in their order with names that may
+// repeat, or Multipart in its order; or, with Page, a page it opens to
+// read its charts (charts_test.go).
 type ownerRequest struct {
-	Path      string            `json:"path"`
+	Path      string            `json:"path,omitempty"`
 	Form      map[string]string `json:"form,omitempty"`
+	Fields    [][2]string       `json:"fields,omitempty"`
 	Multipart []ownerPart       `json:"multipart,omitempty"`
+	Page      string            `json:"page,omitempty"`
 }
 
 // ownerPart is a multipart form's field, or a file named Filename with its
@@ -569,7 +573,7 @@ func signInOwner(t *testing.T, k *kube) *owner {
 	ctx, cancel := context.WithCancel(context.WithoutCancel(t.Context()))
 	t.Cleanup(cancel)
 	link := enrollLink(t, k)
-	waitHTTP(t, localCore+"/readyz", http.StatusOK)
+	waitHTTP(t)
 	var logs bytes.Buffer
 	browser := exec.CommandContext(ctx, "node", ownerScript)
 	browser.Env = append(os.Environ(), linkEnv+"="+link)
@@ -678,36 +682,53 @@ func (o *owner) read(stdout io.Reader, ready chan<- bool) {
 // answer.
 func (o *owner) post(t *testing.T, req *ownerRequest) ownerAnswer {
 	t.Helper()
+	var a ownerAnswer
+	if err := json.Unmarshal([]byte(o.roundTrip(t, req)), &a); err != nil {
+		t.Fatalf("POST %s: decoding the answer: %v", req.Path, err)
+	}
+	return a
+}
+
+// roundTrip sends req to owner.mjs and returns its answer's JSON.
+func (o *owner) roundTrip(t *testing.T, req *ownerRequest) string {
+	t.Helper()
+	what := "POST " + req.Path
+	if req.Page != "" {
+		what = "GET " + req.Page
+	}
 	line, err := json.Marshal(req)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if _, err := o.stdin.Write(append(line, '\n')); err != nil {
-		t.Fatalf("POST %s: %v", req.Path, err)
+		t.Fatalf("%s: %v", what, err)
 	}
 	select {
 	case got, ok := <-o.answers:
 		if !ok {
-			t.Fatalf("POST %s: %v", req.Path, errOwnerGone)
+			t.Fatalf("%s: %v", what, errOwnerGone)
 		}
-		var a ownerAnswer
-		if err := json.Unmarshal([]byte(got), &a); err != nil {
-			t.Fatalf("POST %s: decoding the answer: %v", req.Path, err)
-		}
-		return a
+		return got
 	case <-time.After(ownerTimeout):
-		t.Fatalf("POST %s: no answer within %s", req.Path, ownerTimeout)
+		t.Fatalf("%s: no answer within %s", what, ownerTimeout)
 	}
-	return ownerAnswer{}
+	return ""
 }
 
 // postForm sends a form that redirects on success, as every owner form of
 // the UI but the upload does, and fails t unless it was taken.
 func (o *owner) postForm(t *testing.T, path string, form map[string]string) {
 	t.Helper()
-	a := o.post(t, &ownerRequest{Path: path, Form: form})
+	o.postRequest(t, &ownerRequest{Path: path, Form: form})
+}
+
+// postRequest sends req, a form that redirects on success, and fails t
+// unless it was taken.
+func (o *owner) postRequest(t *testing.T, req *ownerRequest) {
+	t.Helper()
+	a := o.post(t, req)
 	if a.Status != http.StatusOK || !a.Redirected {
-		t.Fatalf("POST %s: status %d, redirected %t, at %s; want it taken and redirected:\n%s", path, a.Status, a.Redirected, a.Path, excerpt(a.Body))
+		t.Fatalf("POST %s: status %d, redirected %t, at %s; want it taken and redirected:\n%s", req.Path, a.Status, a.Redirected, a.Path, excerpt(a.Body))
 	}
 }
 

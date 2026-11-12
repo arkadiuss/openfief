@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b8bad9b169c
+  - type: executable_for
+    from: SYM-e2e-readapi-test-decoded
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:12:26.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae13bd1060a8

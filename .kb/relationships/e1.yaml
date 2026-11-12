@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4d834046f66
+  - type: implements
+    from: SYM-e2e-chartcheck-total-of
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:16.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9160da471298
+  - type: covered_by
+    from: SYM-e2e-chartcheck-total-of
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:16.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18e64bc89de7

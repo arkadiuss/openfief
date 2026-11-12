@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b981a1fc13e
+  - type: executable_for
+    from: SYM-e2e-apicontract-test-read-routes
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:09:13.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea87d0f79862
+  - type: implements
+    from: SYM-e2e-modelseries-weekend
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:47:59.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2434f9b5a8c
+  - type: covered_by
+    from: SYM-e2e-modelseries-weekend
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:47:59.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-301fcfed9bef

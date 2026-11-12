@@ -90,6 +90,9 @@ vars:
   SCRIPT_TESTS:
     sh: ls scripts/tests/*.test.sh 2>/dev/null || true
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
+  # The read API's generated OpenAPI document and the error responses tools/openapierrors adds to it.
+  OPENAPI_SPEC: gen/openapi/openfief/views/v1/read_service.openapi.yaml
+  OPENAPI_ERRORS: proto/openfief/views/v1/read_service.openapi-errors.yaml
   PROTO_GUARD: 'if [ -z "$(find proto -name "*.proto" 2>/dev/null)" ]; then echo "no contracts yet, skipping"; exit 0; fi;'
   # Tools are called by explicit path: Task lets the OS environment override a Taskfile PATH.
   BIN: '{{.ROOT_DIR}}/.bin'
@@ -131,14 +134,14 @@ tasks:
   tool:hcloud:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/hetznercloud/cli/cmd/hcloud@{{.HCLOUD_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/hetznercloud/cli/cmd/hcloud@{{.HCLOUD_VERSION}}
     status:
       - '{{.BIN}}/hcloud version 2>&1 | grep -q "^hcloud {{trimPrefix "v" .HCLOUD_VERSION}}"'
 
   tool:kustomize:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install sigs.k8s.io/kustomize/kustomize/v5@{{.KUSTOMIZE_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install sigs.k8s.io/kustomize/kustomize/v5@{{.KUSTOMIZE_VERSION}}
     status:
       - '{{.BIN}}/kustomize version 2>&1 | grep -qx "{{.KUSTOMIZE_VERSION}}"'
 
@@ -155,7 +158,7 @@ tasks:
         version='{{trimPrefix "v" .FLUX_VERSION}}'
         work="$(mktemp -d)"
         trap 'rm -rf "$work"' EXIT
-        curl -fsSL --retry 3 -o "$work/flux.tar.gz" "https://github.com/fluxcd/flux2/releases/download/v${version}/flux_${version}_linux_${arch}.tar.gz"
+        bash scripts/retry.sh curl -fsSL -o "$work/flux.tar.gz" "https://github.com/fluxcd/flux2/releases/download/v${version}/flux_${version}_linux_${arch}.tar.gz"
         echo "$sum  $work/flux.tar.gz" | sha256sum -c -
         tar -xzf "$work/flux.tar.gz" -C "$work" flux
         mkdir -p '{{.BIN}}'
@@ -166,21 +169,21 @@ tasks:
   tool:crane:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/google/go-containerregistry/cmd/crane@{{.CRANE_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/google/go-containerregistry/cmd/crane@{{.CRANE_VERSION}}
     status:
       - '{{.BIN}}/crane version 2>&1 | grep -qx "{{.CRANE_VERSION}}"'
 
   tool:gojq:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/itchyny/gojq/cmd/gojq@{{.GOJQ_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/itchyny/gojq/cmd/gojq@{{.GOJQ_VERSION}}
     status:
       - '{{.BIN}}/gojq --version 2>&1 | grep -q "^gojq {{trimPrefix "v" .GOJQ_VERSION}} "'
 
   tool:golangci-lint:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.GOLANGCI_LINT_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.GOLANGCI_LINT_VERSION}}
     status:
       - '{{.BIN}}/golangci-lint version 2>&1 | grep -q "version {{trimPrefix "v" .GOLANGCI_LINT_VERSION}} "'
       - '{{if .GO_TOOLCHAIN}}{{.BIN}}/golangci-lint version 2>&1 | grep -q "built with {{.GO_TOOLCHAIN}} "{{end}}'
@@ -188,7 +191,7 @@ tasks:
   tool:govulncheck:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install golang.org/x/vuln/cmd/govulncheck@{{.GOVULNCHECK_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install golang.org/x/vuln/cmd/govulncheck@{{.GOVULNCHECK_VERSION}}
     status:
       - '{{.BIN}}/govulncheck -version 2>&1 | grep -q "govulncheck@{{.GOVULNCHECK_VERSION}}"'
       - '{{if .GO_TOOLCHAIN}}go version {{.BIN}}/govulncheck 2>&1 | grep -q ": {{.GO_TOOLCHAIN}}$"{{end}}'
@@ -196,28 +199,28 @@ tasks:
   tool:lefthook:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/evilmartians/lefthook/v2@{{.LEFTHOOK_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/evilmartians/lefthook/v2@{{.LEFTHOOK_VERSION}}
     status:
       - '{{.BIN}}/lefthook version 2>&1 | grep -qx "{{trimPrefix "v" .LEFTHOOK_VERSION}}"'
 
   tool:actionlint:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
     status:
       - '{{.BIN}}/actionlint -version 2>&1 | head -n1 | grep -qx "{{.ACTIONLINT_VERSION}}"'
 
   tool:hugo:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 bash scripts/retry.sh go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
     status:
       - '{{.BIN}}/hugo version 2>&1 | grep -q "hugo {{.HUGO_VERSION}} "'
 
   tool:zed:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
     status:
       - '{{.BIN}}/zed version 2>&1 | grep -qx "client: zed {{.ZED_VERSION}}"'
 
@@ -228,49 +231,49 @@ tasks:
   tool:buf:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
     status:
       - '{{.BIN}}/buf --version 2>&1 | grep -qx "{{trimPrefix "v" .BUF_VERSION}}"'
 
   tool:protoc-gen-go:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-go --version 2>&1 | grep -qx "protoc-gen-go {{.PROTOC_GEN_GO_VERSION}}"'
 
   tool:protoc-gen-connect-go:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-connect-go --version 2>&1 | grep -qx "{{trimPrefix "v" .PROTOC_GEN_CONNECT_GO_VERSION}}"'
 
   tool:protoc-gen-connect-openapi:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/sudorandom/protoc-gen-connect-openapi@{{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/sudorandom/protoc-gen-connect-openapi@{{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-connect-openapi --version 2>&1 | grep -q "^protoc-gen-connect-openapi {{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}} "'
 
   tool:cyclonedx-gomod:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{.CYCLONEDX_GOMOD_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{.CYCLONEDX_GOMOD_VERSION}}
     status:
       - '{{.BIN}}/cyclonedx-gomod version 2>&1 | grep -q "{{.CYCLONEDX_GOMOD_VERSION}}"'
 
   tool:task:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/go-task/task/v3/cmd/task@{{.TASK_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/go-task/task/v3/cmd/task@{{.TASK_VERSION}}
     status:
       - '{{.BIN}}/task --version 2>&1 | grep -qx "{{trimPrefix "v" .TASK_VERSION}}"'
 
   tool:controller-gen:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install sigs.k8s.io/controller-tools/cmd/controller-gen@{{.CONTROLLER_GEN_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install sigs.k8s.io/controller-tools/cmd/controller-gen@{{.CONTROLLER_GEN_VERSION}}
     status:
       - '{{.BIN}}/controller-gen --version 2>&1 | grep -qx "Version: {{.CONTROLLER_GEN_VERSION}}"'
 
@@ -312,7 +315,7 @@ tasks:
       - task: kibi:check
 
   check:commit:
-    desc: 'Pre-commit pipeline: only the checks the staged change can affect (tools/affected prints what and why); FULL=1 runs check:commit:full'
+    desc: 'Pre-commit pipeline: only the checks the staged change can affect (tools/affected prints what and why; each step is timed); FULL=1 runs check:commit:full'
     cmds:
       - bash scripts/check-commit.sh '{{.TASK_EXE}}' '{{.GO_MODULES}}' '{{.FULL}}'
 
@@ -435,12 +438,14 @@ tasks:
     deps: [tool:proto]
     cmds:
       - '{{.PROTO_GUARD}} PATH="{{.BIN}}:$PATH" "{{.BIN}}/buf" generate'
+      # The generator declares only success and the default error; tools/openapierrors adds each operation's error responses.
+      - '{{.PROTO_GUARD}} go run ./tools/openapierrors -rules {{.OPENAPI_ERRORS}} -spec {{.OPENAPI_SPEC}}'
 
   proto:check:
     desc: Fail if sdk/go/gen or gen/openapi is not what proto:gen generates
     deps: [tool:proto]
     cmds:
-      - PATH='{{.BIN}}':"$PATH" bash scripts/proto-check.sh
+      - PATH='{{.BIN}}':"$PATH" OPENAPI_ERRORS='{{.OPENAPI_ERRORS}}' OPENAPI_SPEC='{{.OPENAPI_SPEC}}' bash scripts/proto-check.sh
 
   authz:validate:
     desc: Check the authorization model's SpiceDB schema against its relationships and assertions (zed validate, offline; D-164)
@@ -533,7 +538,8 @@ tasks:
         bundle=0
         OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' \
           go test -tags e2e -count=1 -v -timeout 20m -run '^TestBundle' ./test/e2e/... || bundle=$?
-        go test -tags e2e -count=1 -v -timeout 20m -skip '^TestBundle' ./test/e2e/...
+        # TestGhostfolio runs in its own shard (task e2e:ghostfolio).
+        go test -tags e2e -count=1 -v -timeout 20m -skip '^(TestBundle|TestGhostfolio)' ./test/e2e/...
         if [ "$bundle" -ne 0 ]; then
           echo 'e2e: the bundle run failed (see the TestBundle output above)' >&2
           exit "$bundle"
@@ -546,13 +552,38 @@ tasks:
       - task: kibi:sync
       - '{{.KIBI}} prove --integration e2e'
 
+  e2e:prove:ghostfolio:
+    desc: 'Run the Ghostfolio shard through kibi prove, which runs task e2e:ghostfolio and records a receipt on its end-to-end test (what CI''s e2e-ghostfolio job runs; docs/dev/kibi.md)'
+    deps: [kibi:install]
+    cmds:
+      - task: kibi:sync
+      - '{{.KIBI}} prove --integration e2e-ghostfolio'
+
+  e2e:ghostfolio:
+    desc: 'The end-to-end Ghostfolio shard (test/e2e, TestGhostfolio) on a local kind or k3d cluster, after task e2e:images SHARD=ghostfolio: the demo''s stack, a real Ghostfolio in its own namespace and the Ghostfolio view against it (D-200 criterion 9); refuses non-local clusters'
+    deps: [tool:kustomize]
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - task: cnpg:manifest
+      # The same TestMain install as task e2e's demo run, signing only the UI and the Ghostfolio view
+      # (OPENFIEF_E2E_SHARD), which are all task e2e:images SHARD=ghostfolio pushed.
+      - |
+        set -e
+        if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
+          echo 'e2e:ghostfolio: {{.E2E_REGISTRY_ENV}} is missing; run task e2e:images CLUSTER=<k3d|kind> SHARD=ghostfolio first' >&2
+          exit 1
+        fi
+        . '{{.E2E_REGISTRY_ENV}}'
+        export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.CNPG_MANIFEST}}' OPENFIEF_E2E_SHARD=ghostfolio
+        go test -tags e2e -count=1 -v -timeout 30m -run '^TestGhostfolio$' ./test/e2e/
+
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d; SHARD=ghostfolio builds only core, operator, egress-proxy, demo-seed, ui and ghostfolio for task e2e:ghostfolio'
     requires:
       vars: [CLUSTER]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}'
+      - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}' '{{.SHARD | default "all"}}'
 
   e2e:gateway:
     desc: 'Give the local e2e cluster a Gateway API implementation for the exposure test: Envoy Gateway on kind, pinned by version and sha256; on k3d, the bundled Traefik''s Gateway API provider, which the CI job turns on at cluster creation (test/e2e/testdata/traefik-gateway.yaml), e.g. task e2e:gateway CLUSTER=kind'
@@ -580,7 +611,7 @@ tasks:
         mkdir -p "$(dirname '{{.CNPG_MANIFEST}}')"
         work="$(mktemp -d)"
         trap 'rm -rf "$work"' EXIT
-        curl -fsSL --retry 3 -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
+        bash scripts/retry.sh curl -fsSL -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
         echo '{{.CNPG_MANIFEST_SHA256}}  '"$work/cnpg.yaml" | sha256sum -c -
         mv "$work/cnpg.yaml" '{{.CNPG_MANIFEST}}'
     status:
@@ -979,7 +1010,7 @@ tasks:
     sources: [package.json, package-lock.json, patches/*.patch]
     generates: [node_modules/.package-lock.json]
     cmds:
-      - npm ci
+      - bash scripts/retry.sh npm ci
 
   kibi:doctor:
     desc: Diagnose the kibi setup

@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9ddbfcc4b03
+  - type: executable_for
+    from: SYM-e2e-readapi-test-with-bearer
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T04:10:42.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a07cd1a8f3b2
+  - type: executable_for
+    from: SYM-e2e-charts-test-data-path-instrument-charts
+    to: TEST-e2e-data-path
+    created_at: 2026-11-08T07:32:34.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af6d17639cac

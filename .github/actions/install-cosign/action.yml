@@ -1,0 +1,36 @@
+name: Install cosign
+description: >-
+  sigstore/cosign-installer, tried up to three times (after 15 and 45 seconds), because the installer downloads cosign
+  from GitHub and one failed download would fail a signing or verifying job for no fault of the change. The first
+  two failures are only warnings; the third fails the step. The checkout must exist: the action is read from it.
+runs:
+  using: composite
+  steps:
+    - name: Install cosign
+      id: first
+      uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      continue-on-error: true
+
+    - name: Wait, then install cosign again
+      if: steps.first.outcome == 'failure'
+      shell: bash
+      run: |
+        echo "::warning title=cosign-installer::the first try failed; trying again in 15 s"
+        sleep 15
+
+    - name: Install cosign (second try)
+      id: again
+      if: steps.first.outcome == 'failure'
+      uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      continue-on-error: true
+
+    - name: Wait, then install cosign a last time
+      if: steps.first.outcome == 'failure' && steps.again.outcome == 'failure'
+      shell: bash
+      run: |
+        echo "::warning title=cosign-installer::the second try failed; trying again in 45 s"
+        sleep 45
+
+    - name: Install cosign (last try)
+      if: steps.first.outcome == 'failure' && steps.again.outcome == 'failure'
+      uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2

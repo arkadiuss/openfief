@@ -797,3 +797,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51fbf7b41773
+  - type: implements
+    from: SYM-openapierrors-run
+    to: REQ-views-read-api-declared-errors
+    created_at: 2026-11-08T05:44:07.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32b0be7f66d7
+  - type: covered_by
+    from: SYM-openapierrors-run
+    to: TEST-tooling-openapierrors
+    created_at: 2026-11-08T05:44:07.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b557e7c68bd1
+  - type: executable_for
+    from: SYM-tooling-ci-gate-test-bare-downloads
+    to: TEST-tooling-ci-gate
+    created_at: 2026-11-12T15:37:45.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d12252e9735
+  - type: executable_for
+    from: SYM-tooling-retry-test-run
+    to: TEST-tooling-retry
+    created_at: 2026-11-12T15:37:58.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-720b6a41d2c8

@@ -720,3 +720,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b0eb7cf47a9
+  - type: implements
+    from: SYM-e2e-ghostfoliocheck-describe
+    to: REQ-m0-exit-09-ghostfolio
+    created_at: 2026-11-08T08:54:57.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-632241b6593b
+  - type: covered_by
+    from: SYM-e2e-ghostfoliocheck-describe
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:54:57.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f572abc3f9a
+  - type: verified_by
+    from: SCEN-e2e-ghostfolio-holds-projection
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:59:30.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27bc20bb19e6
+  - type: verified_by
+    from: SCEN-e2e-ghostfolio-holds-projection
+    to: TEST-e2e-ghostfoliocheck
+    created_at: 2026-11-08T08:59:30.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e98db4b11163

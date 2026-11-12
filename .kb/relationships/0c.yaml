@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05a7de028f59
+  - type: implements
+    from: SYM-e2e-chartcheck-days-before
+    to: REQ-m0-exit-08-built-in-ui
+    created_at: 2026-11-08T07:28:05.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-941d0369fead
+  - type: covered_by
+    from: SYM-e2e-chartcheck-days-before
+    to: TEST-e2e-chartcheck
+    created_at: 2026-11-08T07:28:05.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f8cce952572

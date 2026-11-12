@@ -951,3 +951,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8b72e0d21e98
+  - type: specified_by
+    from: REQ-m0-exit-07-read-api
+    to: SCEN-e2e-read-api-every-resource
+    created_at: 2026-11-08T04:07:18.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dce4e7544b4
+  - type: specified_by
+    from: REQ-m0-exit-07-read-api
+    to: SCEN-e2e-read-api-openapi-conformance
+    created_at: 2026-11-08T04:07:18.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ac008229a34
+  - type: specified_by
+    from: REQ-m0-exit-07-read-api
+    to: SCEN-e2e-read-api-no-write
+    created_at: 2026-11-08T04:07:18.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe4a3ccb71a
+  - type: specified_by
+    from: REQ-m0-exit-07-read-api
+    to: SCEN-e2e-read-api-connect-equals-rest
+    created_at: 2026-11-08T04:07:18.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12adcf3bf997
+  - type: implements
+    from: SYM-e2e-modelcheck-aligned
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:10:56.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c40171fc0c0b
+  - type: covered_by
+    from: SYM-e2e-modelcheck-aligned
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:10:56.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90cf73533003

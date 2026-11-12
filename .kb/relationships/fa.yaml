@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b21034f771a8
+  - type: executable_for
+    from: SYM-e2e-ghostfolio-setup-test-gf-owner-own-now
+    to: TEST-e2e-ghostfolio
+    created_at: 2026-11-08T08:58:47.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2974edf47ff0

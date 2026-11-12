@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc992593e75f
+  - type: implements
+    from: SYM-e2e-apicontract-route-fill
+    to: REQ-e2e-apicontract-walks-contract
+    created_at: 2026-11-08T04:08:37.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3c13930f085
+  - type: covered_by
+    from: SYM-e2e-apicontract-route-fill
+    to: TEST-e2e-apicontract
+    created_at: 2026-11-08T04:08:37.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9176e3e28c1
+  - type: implements
+    from: SYM-e2e-modelcheck-drawdown-of
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:12:08.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df0872eab538
+  - type: covered_by
+    from: SYM-e2e-modelcheck-drawdown-of
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:12:08.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c00dba5b51
