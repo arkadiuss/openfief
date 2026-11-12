@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21b5d271da8e
+  - type: executable_for
+    from: SYM-audit-identity-app-audit-test-test-refused-sign-in-is-recorded
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:21:12.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3707c2ab69

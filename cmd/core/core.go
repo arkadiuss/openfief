@@ -70,9 +70,12 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	return nil
 }
 
-// newTokens returns the script token use cases over pool.
-func newTokens(pool *pgxpool.Pool, now func() time.Time) *identityapp.Tokens {
-	return identityapp.NewTokens(identitypg.New(pool), now, nil)
+// newTokens returns the script token use cases over pool, for the core's own
+// token commands: what they change is recorded in the audit log as the
+// core's (D-211).
+func newTokens(pool *pgxpool.Pool, now func() time.Time) tokenAdmin {
+	store := identitypg.New(pool)
+	return tokenAdmin{store: store, tokens: identityapp.NewTokens(store, now, nil)}
 }
 
 // core is the wired core service: what each of its ports serves (D-115),

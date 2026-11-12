@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0294eabe5fc1
+  - type: constrains
+    from: REQ-identity-audit-append-only
+    to: FACT-SUBJECT-3A8BE8CFCF97CC06
+    created_at: 2026-11-12T19:17:54.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ad686ef2433
+  - type: requires_property
+    from: REQ-identity-audit-append-only
+    to: FACT-PROP-490A5307A7D0107D
+    created_at: 2026-11-12T19:17:54.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d7a74582ca2
+  - type: specified_by
+    from: REQ-identity-audit-append-only
+    to: SCEN-identity-audit-append-only
+    created_at: 2026-11-12T19:17:54.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40861518ccca
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-key-of
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:45:46.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d7477f2367c

@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2638ca24986b
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-test-atomically-rolls-back-state-and-entry
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:19:07.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a15bf49c7c7

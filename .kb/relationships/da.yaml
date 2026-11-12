@@ -888,3 +888,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45b64a4dafcb
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-string
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:07:01.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37160596ae37
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-string
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:07:01.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faf76ff19c3b
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-outcome-number
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:08:35.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9220fb9e27ff
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-outcome-number
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:08:35.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-589a480554be
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-sign-in
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:18:40.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23b3830b71ca
+  - type: executable_for
+    from: SYM-audit-identity-audit-test-check-ref-rejected
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:45:13.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e58679718b4
+  - type: executable_for
+    from: SYM-audit-identity-connectapi-audit-test-test-list-audit-entries-pages
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:48:23.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd67851125c

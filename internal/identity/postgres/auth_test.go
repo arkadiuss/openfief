@@ -353,7 +353,8 @@ func TestAuthOverPostgres(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewAuth: %v", err)
 	}
-	link, err := app.IssueEnrollmentLink(ctx, store, nil, now, origins, localOrigin(t), 0)
+	link, err := app.IssueEnrollmentLink(ctx, store, nil, now, origins, localOrigin(t), 0,
+		identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID})
 	if err != nil {
 		t.Fatalf("IssueEnrollmentLink: %v", err)
 	}

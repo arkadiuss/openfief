@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9420ba903e8e
+  - type: executable_for
+    from: SYM-audit-identity-audit-test-test-audit-filter-matches
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:19:54.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3ee3ba5a922
+  - type: covered_by
+    from: SYM-audit-identity-app-owner-store-link
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:47:11.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-604942f23631
+  - type: implements
+    from: SYM-audit-identity-app-owner-store-link
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:47:11.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47b5156b25cd

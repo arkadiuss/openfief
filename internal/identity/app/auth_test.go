@@ -22,6 +22,11 @@ const (
 // authStart is when the tests' clock starts.
 func authStart() time.Time { return time.Date(2026, 10, 28, 10, 0, 0, 0, time.UTC) }
 
+// testSystem is the actor of links the tests issue as the core's enroll-link command would.
+func testSystem() identity.Actor {
+	return identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
+}
+
 // authFixture is the auth use cases over in-memory stores, the real
 // WebAuthn ceremonies and a settable clock.
 type authFixture struct {
@@ -66,7 +71,7 @@ func origin(t *testing.T, text string) identity.Origin {
 // link issues an enrollment link for target and returns its code.
 func (f *authFixture) link(t *testing.T, target string, ttl time.Duration) string {
 	t.Helper()
-	l, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, target), ttl)
+	l, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, target), ttl, testSystem())
 	if err != nil {
 		t.Fatalf("IssueEnrollmentLink: %v", err)
 	}
@@ -85,7 +90,7 @@ func TestIssueEnrollmentLinkRefusesOrigin(t *testing.T) {
 	t.Parallel()
 	f := newAuthFixture(t, demoConfig{})
 	for _, text := range []string{"http://localhost:9090", "https://fief.example.org"} {
-		_, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, text), 0)
+		_, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, text), 0, testSystem())
 		if !errors.Is(err, app.ErrForbidden) || !errors.Is(err, identity.ErrOriginNotAllowed) {
 			t.Errorf("IssueEnrollmentLink(%s) = %v, want %v and %v", text, err, app.ErrForbidden, identity.ErrOriginNotAllowed)
 		}

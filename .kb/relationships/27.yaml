@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e275b59bd7f
+  - type: covered_by
+    from: SYM-audit-identity-connectapi-service-pb-outcomes
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:46:39.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59c683445022
+  - type: implements
+    from: SYM-audit-identity-connectapi-service-pb-outcomes
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:46:39.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2e60f10fd63

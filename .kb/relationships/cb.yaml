@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-923ad225a2f7
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-test-audit-entries-filter
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:47:24.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-247c6cca1556

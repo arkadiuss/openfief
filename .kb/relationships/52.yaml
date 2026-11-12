@@ -1056,3 +1056,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92685bdc528d
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-get-next-page-token
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:13:26.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51068f5ec03a
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-get-next-page-token
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:13:26.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-337efe75a565
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-seeded-log
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:46:58.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5e834f3479b
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-seeded-log-index
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:47:04.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0755c02cef60

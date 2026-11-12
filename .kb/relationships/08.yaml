@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c54eed884fe
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-at
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:06:15.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb5b3472e3da
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-at
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:06:15.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0c485d30943
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-tx-fixture-created
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:48:56.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c65837aed189

@@ -124,3 +124,52 @@ func (t *Tokens) List(ctx context.Context) ([]identity.ScriptToken, error) {
 	}
 	return toks, nil
 }
+
+// IssueToken creates a read-only token for actor, as Tokens.Issue does, and
+// records in the audit log, in the same transaction, that actor created it
+// (D-211): if the entry can't be written, no token is created. The entry
+// names the token by its ID; the secret is returned only here and never
+// reaches the log. store must be over the same database as t's store, so one
+// transaction covers both. Besides Auth.CreateScriptToken, core token issue
+// calls it, as the core itself.
+func IssueToken(ctx context.Context, store AuthStore, t *Tokens, actor identity.Actor, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+	var (
+		tok    identity.ScriptToken
+		secret string
+	)
+	err := within(ctx, store, func(ctx context.Context) error {
+		var issueErr error
+		if tok, secret, issueErr = t.Issue(ctx, name, ttl); issueErr != nil {
+			return issueErr
+		}
+		return appendTokenEntry(ctx, store, t, actor, identity.ActionScriptTokenCreated, tok.ID)
+	})
+	if err != nil {
+		return identity.ScriptToken{}, "", err
+	}
+	return tok, secret, nil
+}
+
+// RevokeToken revokes the token id as Tokens.Revoke does, and records in the
+// audit log, in the same transaction, that actor did (D-211).
+func RevokeToken(ctx context.Context, store AuthStore, t *Tokens, actor identity.Actor, id identity.ScriptTokenID) error {
+	return within(ctx, store, func(ctx context.Context) error {
+		if err := t.Revoke(ctx, id); err != nil {
+			return err
+		}
+		return appendTokenEntry(ctx, store, t, actor, identity.ActionScriptTokenRevoked, id)
+	})
+}
+
+// appendTokenEntry appends the entry that actor did action to the token id,
+// naming it by its ID alone.
+func appendTokenEntry(ctx context.Context, store Auditor, t *Tokens, actor identity.Actor, action identity.AuditAction, id identity.ScriptTokenID) error {
+	e, err := identity.NewAuditEntry(t.now(), actor, action, identity.OutcomeOK, identity.Ref{Kind: identity.RefScriptToken, ID: string(id)})
+	if err != nil {
+		return fmt.Errorf("building an audit entry: %w", err)
+	}
+	if err := store.AppendAudit(ctx, &e); err != nil {
+		return fmt.Errorf("appending an audit entry: %w", err)
+	}
+	return nil
+}

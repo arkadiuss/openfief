@@ -881,3 +881,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6aff562ecb5b
+  - type: covered_by
+    from: SYM-audit-identity-app-tokens-issue-token
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:11:21.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d5da601e16
+  - type: implements
+    from: SYM-audit-identity-app-tokens-issue-token
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:11:21.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-654675798ad6
+  - type: covered_by
+    from: SYM-audit-identity-postgres-audit-scan-audit
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:15:22.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dde72713e98
+  - type: implements
+    from: SYM-audit-identity-postgres-audit-scan-audit
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:15:22.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b54a1e6aaae2
+  - type: implements
+    from: SYM-audit-identity-postgres-audit-scan-audit
+    to: REQ-identity-audit-append-only
+    created_at: 2026-11-12T20:15:22.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de6ae8d46bc8
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-test-audit-trail-of-owner-actions
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:20:33.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22d0ff429834
+  - type: executable_for
+    from: SYM-audit-identity-connectapi-audit-test-new-audit-fixture
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:46:06.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-932242f0010b

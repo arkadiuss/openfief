@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-375c6053fa3b
+  - type: executable_for
+    from: SYM-audit-identity-app-audit-test-test-refused-sign-in-stays-refused-when-the-log-is-down
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:21:18.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-162b55e4e1f2

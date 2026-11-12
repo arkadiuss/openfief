@@ -2,7 +2,9 @@ package connectapi
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
+	"strconv"
 	"time"
 
 	"connectrpc.com/connect"
@@ -199,6 +201,138 @@ func (s *authService) SignOutEverywhere(ctx context.Context, req *connect.Reques
 		return nil, s.fail(ctx, err)
 	}
 	return connect.NewResponse(&identityv1.SignOutEverywhereResponse{RevokedSessions: int64(n)}), nil
+}
+
+// ListAuditEntries returns a page of the audit log (D-211) for an owner
+// session. A page token that is not one a previous page handed out, or a
+// filter out of range, is an invalid argument.
+func (s *authService) ListAuditEntries(ctx context.Context, req *connect.Request[identityv1.ListAuditEntriesRequest]) (*connect.Response[identityv1.ListAuditEntriesResponse], error) {
+	m := req.Msg
+	f, err := auditFilter(m)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	page, err := s.auth.AuditEntries(ctx, m.GetOrigin(), m.GetSessionToken(), &f)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &identityv1.ListAuditEntriesResponse{Entries: make([]*identityv1.AuditEntry, 0, len(page.Entries))}
+	for i := range page.Entries {
+		out.Entries = append(out.Entries, pbAuditEntry(&page.Entries[i]))
+	}
+	if page.Next != 0 {
+		out.NextPageToken = strconv.FormatInt(page.Next, 10)
+	}
+	return connect.NewResponse(out), nil
+}
+
+// auditFilter converts a request to the filter it asks for; an unknown enum
+// value or a bad page token wraps app.ErrInvalidRequest.
+func auditFilter(m *identityv1.ListAuditEntriesRequest) (identity.AuditFilter, error) {
+	f := identity.AuditFilter{ActorID: m.GetActorId(), Limit: int(m.GetPageSize())}
+	var ok bool
+	if m.GetActorKind() != identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED {
+		if f.ActorKind, ok = domainActorKinds()[m.GetActorKind()]; !ok {
+			return identity.AuditFilter{}, fmt.Errorf("%w: unknown actor kind", app.ErrInvalidRequest)
+		}
+	}
+	if m.GetAction() != identityv1.AuditAction_AUDIT_ACTION_UNSPECIFIED {
+		if f.Action, ok = domainActions()[m.GetAction()]; !ok {
+			return identity.AuditFilter{}, fmt.Errorf("%w: unknown action", app.ErrInvalidRequest)
+		}
+	}
+	if m.GetFrom() != nil {
+		f.From = m.GetFrom().AsTime()
+	}
+	if m.GetTo() != nil {
+		f.To = m.GetTo().AsTime()
+	}
+	if tok := m.GetPageToken(); tok != "" {
+		before, err := strconv.ParseInt(tok, 10, 64)
+		if err != nil || before <= 0 {
+			return identity.AuditFilter{}, fmt.Errorf("%w: bad page token", app.ErrInvalidRequest)
+		}
+		f.Before = before
+	}
+	return f, nil
+}
+
+// The audit enums, from the domain to the contract, as functions: the package
+// holds no global state. A value the domain has and a table lacks fails the
+// contract test of this package.
+
+// pbActorKinds is the contract value of each domain value.
+func pbActorKinds() map[identity.ActorKind]identityv1.AuditActorKind {
+	return map[identity.ActorKind]identityv1.AuditActorKind{
+		identity.ActorOwner:          identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER,
+		identity.ActorEnrollmentCode: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ENROLLMENT_CODE,
+		identity.ActorSystem:         identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM,
+		identity.ActorAnonymous:      identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS,
+	}
+}
+
+// pbActions is the contract value of each domain value.
+func pbActions() map[identity.AuditAction]identityv1.AuditAction {
+	return map[identity.AuditAction]identityv1.AuditAction{
+		identity.ActionSignIn:               identityv1.AuditAction_AUDIT_ACTION_SIGN_IN,
+		identity.ActionSignOut:              identityv1.AuditAction_AUDIT_ACTION_SIGN_OUT,
+		identity.ActionSignOutEverywhere:    identityv1.AuditAction_AUDIT_ACTION_SIGN_OUT_EVERYWHERE,
+		identity.ActionPasskeyAdded:         identityv1.AuditAction_AUDIT_ACTION_PASSKEY_ADDED,
+		identity.ActionPasskeyRemoved:       identityv1.AuditAction_AUDIT_ACTION_PASSKEY_REMOVED,
+		identity.ActionEnrollmentLinkIssued: identityv1.AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_ISSUED,
+		identity.ActionEnrollmentLinkUsed:   identityv1.AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_USED,
+		identity.ActionScriptTokenCreated:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_CREATED,
+		identity.ActionScriptTokenRevoked:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_REVOKED,
+	}
+}
+
+// pbOutcomes is the contract value of each domain value.
+func pbOutcomes() map[identity.AuditOutcome]identityv1.AuditOutcome {
+	return map[identity.AuditOutcome]identityv1.AuditOutcome{
+		identity.OutcomeOK:      identityv1.AuditOutcome_AUDIT_OUTCOME_OK,
+		identity.OutcomeRefused: identityv1.AuditOutcome_AUDIT_OUTCOME_REFUSED,
+		identity.OutcomeFailed:  identityv1.AuditOutcome_AUDIT_OUTCOME_FAILED,
+	}
+}
+
+// pbRefKinds is the contract value of each domain value.
+func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
+	return map[identity.RefKind]identityv1.AuditRefKind{
+		identity.RefSession:        identityv1.AuditRefKind_AUDIT_REF_KIND_SESSION,
+		identity.RefPasskey:        identityv1.AuditRefKind_AUDIT_REF_KIND_PASSKEY,
+		identity.RefEnrollmentCode: identityv1.AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE,
+		identity.RefScriptToken:    identityv1.AuditRefKind_AUDIT_REF_KIND_SCRIPT_TOKEN,
+	}
+}
+
+// domainActorKinds is pbActorKinds the other way.
+func domainActorKinds() map[identityv1.AuditActorKind]identity.ActorKind {
+	return invert(pbActorKinds())
+}
+
+// domainActions is pbActions the other way.
+func domainActions() map[identityv1.AuditAction]identity.AuditAction { return invert(pbActions()) }
+
+// invert returns m with its values as keys.
+func invert[K, V comparable](m map[K]V) map[V]K {
+	out := make(map[V]K, len(m))
+	for k, v := range m {
+		out[v] = k
+	}
+	return out
+}
+
+// pbAuditEntry converts an entry. Every field is a closed value, a time or
+// an ID.
+func pbAuditEntry(e *identity.AuditEntry) *identityv1.AuditEntry {
+	out := &identityv1.AuditEntry{
+		Seq: e.Seq, At: timestamppb.New(e.At), Actor: &identityv1.AuditActor{Kind: pbActorKinds()[e.Actor.Kind], Id: e.Actor.ID},
+		Action: pbActions()[e.Action], Outcome: pbOutcomes()[e.Outcome], Refs: make([]*identityv1.AuditRef, 0, len(e.Refs)),
+	}
+	for _, r := range e.Refs {
+		out.Refs = append(out.Refs, &identityv1.AuditRef{Kind: pbRefKinds()[r.Kind], Id: r.ID})
+	}
+	return out
 }
 
 // pbSession converts a session; it never carries the token.

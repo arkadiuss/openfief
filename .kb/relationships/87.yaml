@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a57ae64e26bb
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-ref-proto-reflect
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:09:37.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c39737e0db63
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-ref-proto-reflect
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:09:37.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4492f2407800

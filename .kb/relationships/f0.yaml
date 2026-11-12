@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e51becc2fd1
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-outcome-enum
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:08:20.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71b0016e4acb
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-outcome-enum
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:08:21.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef12d789b06

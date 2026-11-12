@@ -116,15 +116,17 @@ type NewSession struct {
 }
 
 // Login runs authenticator on the allowed origin text with proof and, when
-// it succeeds, issues a session on that origin's host.
+// it succeeds, issues a session on that origin's host. Either way it writes
+// an audit entry (D-211): the session and its sign-in commit together, and a
+// refusal is recorded on its own (see refused).
 func (a *Auth) Login(ctx context.Context, authenticator Authenticator, origin string, proof Proof) (NewSession, error) {
 	o, err := a.origin(origin)
 	if err != nil {
-		return NewSession{}, err
+		return NewSession{}, a.refused(ctx, err)
 	}
 	got, err := authenticator.Authenticate(ctx, o, proof)
 	if err != nil {
-		return NewSession{}, fmt.Errorf("authenticating: %w", err)
+		return NewSession{}, a.refused(ctx, fmt.Errorf("authenticating: %w", err))
 	}
 	return a.issueSession(ctx, &got, o)
 }
@@ -174,7 +176,13 @@ func (a *Auth) Logout(ctx context.Context, origin, token string) error {
 	if err != nil {
 		return err
 	}
-	if err := a.store.RevokeSession(ctx, s.ID, a.now().UTC()); err != nil {
+	err = within(ctx, a.store, func(ctx context.Context) error {
+		if revokeErr := a.store.RevokeSession(ctx, s.ID, a.now().UTC()); revokeErr != nil {
+			return fmt.Errorf("revoking the session: %w", revokeErr)
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionSignOut, identity.OutcomeOK, identity.Ref{Kind: identity.RefSession, ID: string(s.ID)})
+	})
+	if err != nil {
 		return fmt.Errorf("logging out: %w", err)
 	}
 	return nil
@@ -198,10 +206,18 @@ func (a *Auth) WhoAmI(ctx context.Context, origin, token string) (identity.Owner
 // many it revoked. It needs an owner session but no recent passkey check:
 // it only takes ways in away.
 func (a *Auth) SignOutEverywhere(ctx context.Context, origin, token string) (int, error) {
-	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
+	_, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
 		return 0, err
 	}
-	n, err := a.store.RevokeSessions(ctx, a.now().UTC())
+	var n int
+	err = within(ctx, a.store, func(ctx context.Context) error {
+		var revokeErr error
+		if n, revokeErr = a.store.RevokeSessions(ctx, a.now().UTC()); revokeErr != nil {
+			return fmt.Errorf("revoking every session: %w", revokeErr)
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionSignOutEverywhere, identity.OutcomeOK)
+	})
 	if err != nil {
 		return 0, fmt.Errorf("signing out everywhere: %w", err)
 	}
@@ -356,7 +372,13 @@ func (a *Auth) issueSession(ctx context.Context, got *Authenticated, o identity.
 			return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 		}
 	}
-	if err := a.store.SaveSession(ctx, &s, identity.HashKey(key)); err != nil {
+	err = within(ctx, a.store, func(ctx context.Context) error {
+		if saveErr := a.store.SaveSession(ctx, &s, identity.HashKey(key)); saveErr != nil {
+			return fmt.Errorf("saving the session: %w", saveErr)
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionSignIn, identity.OutcomeOK, identity.Ref{Kind: identity.RefSession, ID: string(s.ID)})
+	})
+	if err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
 	return NewSession{Session: s, Token: identity.FormatSessionToken(s.ID, key)}, nil

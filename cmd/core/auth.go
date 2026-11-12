@@ -195,7 +195,7 @@ func (d demoMarker) DemoMarked(ctx context.Context) (bool, error) {
 // e.Origins, the setting serve reads too, is refused (D-126).
 func enrollLink(ctx context.Context, pool *pgxpool.Pool, e *enrollArgs, out io.Writer, now time.Time) error {
 	origin, ttl := e.Origin, e.TTL
-	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, e.Origins, origin, ttl)
+	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, e.Origins, origin, ttl, systemActor())
 	if errors.Is(err, identity.ErrOriginNotAllowed) {
 		return fmt.Errorf("enroll-link: %w: add it to %s (docs/guides/expose.md)", err, authOriginsEnv)
 	}

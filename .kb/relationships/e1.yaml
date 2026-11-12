@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18e64bc89de7
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-counts
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:45:19.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f0d5482d5bb
