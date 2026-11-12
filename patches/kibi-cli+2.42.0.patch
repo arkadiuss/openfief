@@ -1,24 +1,24 @@
 diff --git a/node_modules/kibi-cli/dist/commands/sync.js b/node_modules/kibi-cli/dist/commands/sync.js
-index d86a055..550c405 100644
+index 79ba5f7..00cffd6 100644
 --- a/node_modules/kibi-cli/dist/commands/sync.js
 +++ b/node_modules/kibi-cli/dist/commands/sync.js
-@@ -41,6 +41,9 @@ import { adoptUpsertOnlySymbolManifest, findUntrackedDocumentMatches, } from "./
- // Manual deletion of a written-but-unstaged source leaves a recovery receipt
- // behind; sync refuses to guess, so the error must name the way out.
- const PENDING_SOURCE_RECOVERY_HINT = " If the file was deleted on purpose, run 'kibi branch recover --apply' to rebuild the branch KB from the sources that remain.";
+@@ -41,6 +41,9 @@ import { persistEntities, persistRelationships, queryStoreTotals, retractEntitie
+ import { atomicPublish, atomicPublishGeneration, cleanupStaging, createUniqueStagingPath, prepareStagingEnvironment, } from "./sync/staging.js";
+ import { adoptUpsertOnlySymbolManifest, findUntrackedDocumentMatches, } from "./sync/untracked-targets.js";
+ export { SyncError };
 +// Local patch (OpenFief): how long a sync waits for its compiling SWI process
 +// to halt on its own after kb_detach. The wait ends as soon as it exits.
 +const SYNC_COMPILER_EXIT_GRACE_MS = 60000;
- export class SyncError extends Error {
-     constructor(message) {
-         super(message);
-@@ -1232,8 +1235,22 @@ export async function syncCommand(options = {}, runtime = {}) {
+ function relationshipKey(relationship) {
+     return `${relationship.type}\0${relationship.from}\0${relationship.to}`;
+ }
+@@ -1236,8 +1239,22 @@ export async function syncCommand(options = {}, runtime = {}) {
              if (!saveResult.success) {
                  throw new SyncError(`Failed to save staging KB: ${saveResult.error || "Unknown error"}`);
              }
 -            await prolog.query("kb_detach");
 -            await prolog.terminate();
-+            // Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): let the
++            // Local patch (OpenFief, patches/kibi-cli+2.42.0.patch): let the
 +            // compiling SWI process finish before the staging store is
 +            // published. It halts on stdin EOF, running its at_halt hooks and
 +            // closing its journal streams; publishing only after that exit
@@ -38,7 +38,7 @@ index d86a055..550c405 100644
              if (recoveryBackupPath !== undefined) {
                  if (!existsSync(livePath)) {
 diff --git a/node_modules/kibi-cli/dist/engine.js b/node_modules/kibi-cli/dist/engine.js
-index dfdb5c7..ec9fda3 100644
+index 0b5590e..7e68ee5 100644
 --- a/node_modules/kibi-cli/dist/engine.js
 +++ b/node_modules/kibi-cli/dist/engine.js
 @@ -815,6 +815,7 @@ export class EngineClient {
@@ -62,8 +62,8 @@ index dfdb5c7..ec9fda3 100644
          }
      }
 +    /**
-+     * Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): print what the
-+     * attach-time dedupe of patches/kibi-core+0.26.1.patch removed from the
++     * Local patch (OpenFief, patches/kibi-cli+2.42.0.patch): print what the
++     * attach-time dedupe of patches/kibi-core+0.31.0.patch removed from the
 +     * store this engine serves, once per client. The engine daemon's own
 +     * stderr goes nowhere, so the count travels as kb_dedupe_report/2. Under
 +     * GitHub Actions the line is a workflow warning.
@@ -96,7 +96,7 @@ index abcabac..4bc388a 100644
                  const timeoutId = setTimeout(() => {
                      const stage = this.lastDiagnosticStage(this.errorBuffer) ?? "unknown";
 -                    const msg = `Query timeout after ${this.timeout / 1000}s (stage=${stage}, pid=${this.process?.pid ?? 0}, killed=${this.process?.killed ? "yes" : "no"}, exitCode=${this.process?.exitCode ?? "null"}, signal=${this.process?.signalCode ?? "null"}, goal=${goalLabel}). If several fresh Kibi commands hang or crawl the same way, the engine state is likely wedged: run 'kibi engine stop' (then 'kibi sync --rebuild' if needed) and retry.`;
-+                    // Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): the
++                    // Local patch (OpenFief, patches/kibi-cli+2.42.0.patch): the
 +                    // message reported killed=no, read before terminate() below
 +                    // stops the process, and suggested a wedged engine. It now
 +                    // reports the process after the stop: a timed-out query's

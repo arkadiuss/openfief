@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Tests for the attach-time dedupe in patches/kibi-core+0.26.1.patch (docs/dev/kibi.md#setup-notes), run on the
+# Tests for the attach-time dedupe in patches/kibi-core+0.31.0.patch (docs/dev/kibi.md#setup-notes), run on the
 # installed kibi-core with kibi's own SWI-Prolog (kibi: TEST-tooling-kibi-dedupe). Each case builds a small graph in
 # memory and calls kb_dedupe_graph_triples/1, the step kb_attach runs before indexing: a graph holding an entity and
 # a relationship twice keeps one copy of each triple and reports the counts, on stderr and in kb_dedupe_report/2,
@@ -20,8 +20,8 @@ if [ ! -f "$core" ] || [ ! -f "$resolver" ]; then
   exit 1
 fi
 # npm ci applies the patch; an install from before the patch existed lacks it.
-if ! grep -q 'kb_dedupe_graph_triples' "$core" || [ ! -f "$root/patches/kibi-core+0.26.1.patch" ]; then
-  echo "kibi-dedupe.test.sh: the installed kibi-core lacks patches/kibi-core+0.26.1.patch; run task kibi:install" >&2
+if ! grep -q 'kb_dedupe_graph_triples' "$core" || [ ! -f "$root/patches/kibi-core+0.31.0.patch" ]; then
+  echo "kibi-dedupe.test.sh: the installed kibi-core lacks patches/kibi-core+0.31.0.patch; run task kibi:install" >&2
   exit 1
 fi
 # kibi's resolver names the SWI-Prolog it runs (its bundled build) and that build's home.

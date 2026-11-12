@@ -47,10 +47,10 @@ mkdir -p "$repo/.kb/requirements" "$repo/patches" "$repo/node_modules/kibi-cli" 
 git -C "$repo" init -q
 printf '.kb/usage.log\n/node_modules\n/site/.gen/\n' >"$repo/.gitignore"
 echo "requirement one" >"$repo/.kb/requirements/REQ-one.md"
-echo "cli patch" >"$repo/patches/kibi-cli+2.36.0.patch"
-echo "core patch" >"$repo/patches/kibi-core+0.26.1.patch"
-echo '{"version": "2.36.0"}' >"$repo/node_modules/kibi-cli/package.json"
-echo '{"version": "0.26.1"}' >"$repo/node_modules/kibi-core/package.json"
+echo "cli patch" >"$repo/patches/kibi-cli+2.42.0.patch"
+echo "core patch" >"$repo/patches/kibi-core+0.31.0.patch"
+echo '{"version": "2.42.0"}' >"$repo/node_modules/kibi-cli/package.json"
+echo '{"version": "0.31.0"}' >"$repo/node_modules/kibi-core/package.json"
 git -C "$repo" add -A
 cache="$repo/site/.gen/cache/kibi-coverage"
 
@@ -133,7 +133,7 @@ echo "requirement two" >"$repo/.kb/requirements/REQ-two.md"
 run 5
 check "a new .kb file Git doesn't track yet regenerates" "$([ "$(coverage_calls)" -eq 1 ] && echo yes || echo no)"
 
-echo "core patch, changed" >"$repo/patches/kibi-core+0.26.1.patch"
+echo "core patch, changed" >"$repo/patches/kibi-core+0.31.0.patch"
 run 5
 check "a changed kibi patch regenerates, keeping only the three newest reports" \
   "$([ "$(coverage_calls)" -eq 1 ] && [ "$(cached)" -eq 3 ] && echo yes || echo no)"

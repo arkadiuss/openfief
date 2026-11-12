@@ -1,5 +1,5 @@
 diff --git a/node_modules/kibi-core/src/kb.pl b/node_modules/kibi-core/src/kb.pl
-index 8dd3d81..18b6cec 100644
+index 856f3c1..eb778bc 100644
 --- a/node_modules/kibi-core/src/kb.pl
 +++ b/node_modules/kibi-core/src/kb.pl
 @@ -2,6 +2,7 @@
@@ -10,7 +10,7 @@ index 8dd3d81..18b6cec 100644
      kb_detach/0,
      kb_save/0,
      kb_sync_checkpoint/0,
-@@ -120,6 +121,8 @@ kb_uri('urn-kibi:').
+@@ -124,6 +125,8 @@ kb_uri('urn-kibi:').
  :- dynamic kb_generation/1.
  :- dynamic kb_legacy_sentinel_stamp/1.
  :- dynamic kb_audit_sequence/1.
@@ -19,7 +19,7 @@ index 8dd3d81..18b6cec 100644
  :- dynamic kb_dirty/0.
  % Rebuildable read indexes. RDF remains authoritative; a dirty marker causes
  % the next unbound discovery query to rebuild these daemon-lifetime indexes.
-@@ -209,8 +212,45 @@ kb_attach_journaled(Directory) :-
+@@ -221,8 +224,45 @@ kb_attach_journaled(Directory) :-
      assert(kb_legacy_sentinel_stamp(SentinelStamp)),
  
      load_kb_pl_files(Directory),
@@ -27,7 +27,7 @@ index 8dd3d81..18b6cec 100644
      kb_rebuild_indexes.
  
 +%% kb_dedupe_graph_triples(+Graph)
-+% Local patch (OpenFief, patches/kibi-core+0.26.1.patch): kibi 2.36's sync
++% Local patch (OpenFief, patches/kibi-core+0.31.0.patch): kibi's sync
 +% can publish a store holding exact duplicate triples (whole entities and
 +% relationships stored twice), and every kb_entity/3 and kb_relationship/3
 +% lookup then answers twice; requirement proofs multiply those answers until
@@ -36,7 +36,7 @@ index 8dd3d81..18b6cec 100644
 +% when it finds duplicates. The removal is journaled like any other write, so
 +% the store on disk is repaired too. The pass is loud: it prints the counts on
 +% stderr and records them in kb_dedupe_report/2, which the patched CLI prints
-+% (patches/kibi-cli+2.36.0.patch), so the publish defect stays visible.
++% (patches/kibi-cli+2.42.0.patch), so the publish defect stays visible.
 +kb_dedupe_graph_triples(Graph) :-
 +    retractall(kb_dedupe_report(_, _)),
 +    aggregate_all(count, rdf(_, kb:type, _, Graph), TypeCount),
