@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9176e3e28c1
+  - type: implements
+    from: SYM-e2e-modelcheck-drawdown-of
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:12:08.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df0872eab538
+  - type: covered_by
+    from: SYM-e2e-modelcheck-drawdown-of
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:12:08.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c00dba5b51

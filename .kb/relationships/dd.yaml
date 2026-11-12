@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6aad798b5da7
+  - type: specified_by
+    from: REQ-m0-exit-19-model-portfolio
+    to: SCEN-e2e-model-portfolio-off-shows-nothing
+    created_at: 2026-11-12T16:09:23.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a342eed54c1f
+  - type: specified_by
+    from: REQ-m0-exit-19-model-portfolio
+    to: SCEN-e2e-model-portfolio-backtest-hand-calculation
+    created_at: 2026-11-12T16:09:23.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a0b344112b

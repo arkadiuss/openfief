@@ -533,11 +533,13 @@ type owner struct {
 }
 
 // ownerRequest is one form owner.mjs sends from the signed-in page: Form
-// URL-encoded, or Multipart in its order; or, with Page, a page it opens
-// to read its charts (charts_test.go).
+// URL-encoded, Fields URL-encoded in their order with names that may
+// repeat, or Multipart in its order; or, with Page, a page it opens to
+// read its charts (charts_test.go).
 type ownerRequest struct {
 	Path      string            `json:"path,omitempty"`
 	Form      map[string]string `json:"form,omitempty"`
+	Fields    [][2]string       `json:"fields,omitempty"`
 	Multipart []ownerPart       `json:"multipart,omitempty"`
 	Page      string            `json:"page,omitempty"`
 }
@@ -717,9 +719,16 @@ func (o *owner) roundTrip(t *testing.T, req *ownerRequest) string {
 // the UI but the upload does, and fails t unless it was taken.
 func (o *owner) postForm(t *testing.T, path string, form map[string]string) {
 	t.Helper()
-	a := o.post(t, &ownerRequest{Path: path, Form: form})
+	o.postRequest(t, &ownerRequest{Path: path, Form: form})
+}
+
+// postRequest sends req, a form that redirects on success, and fails t
+// unless it was taken.
+func (o *owner) postRequest(t *testing.T, req *ownerRequest) {
+	t.Helper()
+	a := o.post(t, req)
 	if a.Status != http.StatusOK || !a.Redirected {
-		t.Fatalf("POST %s: status %d, redirected %t, at %s; want it taken and redirected:\n%s", path, a.Status, a.Redirected, a.Path, excerpt(a.Body))
+		t.Fatalf("POST %s: status %d, redirected %t, at %s; want it taken and redirected:\n%s", req.Path, a.Status, a.Redirected, a.Path, excerpt(a.Body))
 	}
 }
 

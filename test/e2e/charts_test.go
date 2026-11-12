@@ -63,11 +63,16 @@ func uiNonReadCalls() []string {
 
 // chartPage is a page of the UI with charts, and how to work out from the
 // read API what its charts must draw. need says what the page must draw
-// for the check to mean something: a line chart with days, or bars.
+// for the check to mean something: a line chart with days, or bars. With
+// checkModel, the page's model portfolio table must be model's rows, or,
+// with none, the page must have no model portfolio section at all
+// (model_test.go).
 type chartPage struct {
-	path   string
-	expect func(ctx context.Context) (drawnCharts, error)
-	need   string
+	path       string
+	expect     func(ctx context.Context) (drawnCharts, error)
+	need       string
+	checkModel bool
+	model      [][]string
 }
 
 // drawnCharts is what a page's charts draw: its line charts in page order
@@ -87,6 +92,9 @@ type pageLook struct {
 		Aria string `json:"aria"`
 	} `json:"charts"`
 	Bars []chartcheck.Bar `json:"bars"`
+	// Model is the cells of the model portfolio's max drawdown table, row
+	// by row; null when the page has no model portfolio section.
+	Model [][]string `json:"model"`
 }
 
 // pageWindow is when the UI drew a page.
@@ -227,6 +235,11 @@ func comparePage(ctx context.Context, page *chartPage, look *pageLook, format *v
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
 		return "the page draws something else than the read API answers (-read API +page):\n" + diff
+	}
+	if page.checkModel {
+		if diff := cmp.Diff(page.model, look.Model, cmpopts.EquateEmpty()); diff != "" {
+			return "the page's model portfolio table differs (-want +page):\n" + diff
+		}
 	}
 	return missing(page.need, &got)
 }

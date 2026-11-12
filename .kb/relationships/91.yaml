@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2c0644a1b53
+  - type: executable_for
+    from: SYM-e2e-model-test-data-path-check-model-portfolio
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:13:52.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1faab54a8b96

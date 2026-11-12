@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c7d4548e857
+  - type: implements
+    from: SYM-e2e-modelseries-outside
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:48:05.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a65a39657db
+  - type: covered_by
+    from: SYM-e2e-modelseries-outside
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:48:05.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97d1c18da14c

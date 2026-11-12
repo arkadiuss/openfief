@@ -171143,3 +171143,664 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-retry
+  - id: SYM-e2e-modelseries-step
+    title: Step
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:09:43.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-close
+    title: Close
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:09:49.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-all
+    title: All
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:09:55.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-find
+    title: Find
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:02.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-series-closes
+    title: Series.Closes
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:09.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-series
+    title: Series
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:14.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-segment
+    title: segment
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:21.550Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-segments
+    title: segments
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:28.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-day
+    title: Day
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:34.497Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-line
+    title: Line
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:40.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-value-on
+    title: valueOn
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:46.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-aligned
+    title: Aligned
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:10:53.523Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-performance-chart
+    title: PerformanceChart
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:00.151Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-target
+    title: Target
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:06.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-drawdown
+    title: Drawdown
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:13.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-history
+    title: History
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:20.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-summary
+    title: Summary
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:26.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-targets
+    title: targets
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:33.425Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-expected
+    title: Expected
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:39.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-no-gap
+    title: noGap
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:46.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-summarize
+    title: Summarize
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:53.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-target-of
+    title: targetOf
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:11:59.196Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-drawdown-of
+    title: drawdownOf
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:05.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-canonical
+    title: canonical
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:11.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-drawdown-rows
+    title: DrawdownRows
+    sourceFile: test/e2e/modelcheck/modelcheck.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:18.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelcheck
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-test-must-decimal
+    title: mustDecimal
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:23.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-must-date
+    title: mustDate
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:29.559Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-backtest-of-series
+    title: backtestOfSeries
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:35.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-hand-table-equals-backtest
+    title: TestHandTableEqualsBacktest
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:41.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-line
+    title: TestLine
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:46.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-aligned
+    title: TestAligned
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:52.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-performance-chart
+    title: TestPerformanceChart
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:12:58.397Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-expected-and-summarize
+    title: TestExpectedAndSummarize
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:04.161Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-test-drawdown-rows
+    title: TestDrawdownRows
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:10.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelseries-test-day
+    title: day
+    sourceFile: test/e2e/modelseries/modelseries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:15.518Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelseries
+  - id: SYM-e2e-modelseries-test-test-find
+    title: TestFind
+    sourceFile: test/e2e/modelseries/modelseries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:21.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelseries
+  - id: SYM-e2e-modelseries-test-test-closes
+    title: TestCloses
+    sourceFile: test/e2e/modelseries/modelseries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:26.893Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelseries
+  - id: SYM-e2e-modelseries-test-test-closes-unbounded
+    title: TestClosesUnbounded
+    sourceFile: test/e2e/modelseries/modelseries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:32.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelseries
+  - id: SYM-e2e-fixture-model-closes
+    title: modelCloses
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:38.561Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-test-test-fixture-serves-model-series
+    title: TestFixtureServesModelSeries
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:44.439Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-model-test-data-path-check-model-portfolio
+    title: dataPath.checkModelPortfolio
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:49.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-model-path
+    title: modelPath
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:13:54.839Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-model-fields
+    title: modelFields
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:00.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-data-path-save-model
+    title: dataPath.saveModel
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:05.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-data-path-check-model-off
+    title: dataPath.checkModelOff
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:10.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-data-path-wait-model-backtest
+    title: dataPath.waitModelBacktest
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:16.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-data-path-check-model-backtest
+    title: dataPath.checkModelBacktest
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:21.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-model-test-data-path-overview-performance-with-model
+    title: dataPath.overviewPerformanceWithModel
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:26.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-datapath-setup-test-owner-post-request
+    title: owner.postRequest
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:14:32.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-modelseries-dated
+    title: dated
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:47:42.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-series-parsed
+    title: Series.parsed
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:47:49.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-weekend
+    title: weekend
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:47:56.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelseries-outside
+    title: outside
+    sourceFile: test/e2e/modelseries/modelseries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:48:02.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-modelseries
+      - type: implements
+        target: REQ-m0-exit-19-model-portfolio
+  - id: SYM-e2e-modelcheck-test-line-summary
+    title: lineSummary
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:48:09.387Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-modelcheck-test-pick
+    title: pick
+    sourceFile: test/e2e/modelcheck/modelcheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:48:16.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-modelcheck
+  - id: SYM-e2e-model-test-model-first-days
+    title: modelFirstDays
+    sourceFile: test/e2e/model_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T16:48:21.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path

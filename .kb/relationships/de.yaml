@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c83901523b04
+  - type: executable_for
+    from: SYM-e2e-model-test-model-first-days
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:48:25.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e9a6effbe6

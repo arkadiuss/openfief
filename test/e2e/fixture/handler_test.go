@@ -110,6 +110,55 @@ func TestFixtureServesEODHD(t *testing.T) {
 	}
 }
 
+// TestFixtureServesModelSeries checks that the connectors' own EODHD client
+// reads the model portfolio's two synthetic index series from the fixture,
+// each from its first day, with no from at all as the connector's first sync
+// asks, and within a from and a to across the year end, beyond the window
+// the other closes are bound to.
+func TestFixtureServesModelSeries(t *testing.T) {
+	t.Parallel()
+	srv := fixtureServer(t)
+	c := eodhd.New(srv.Client(), srv.URL+EODHDPath, eodhdAccepted)
+	tests := []struct {
+		name, ticker string
+		from, to     string
+		want         []string
+	}{
+		{
+			name: "MODA from its first day, as a first sync asks", ticker: "MODA.INDX", to: "2025-12-03",
+			want: []string{"2025-12-01 100", "2025-12-02 100", "2025-12-03 100"},
+		},
+		{
+			name: "MODB starts two days later", ticker: "MODB.INDX", to: "2025-12-04",
+			want: []string{"2025-12-03 50", "2025-12-04 50"},
+		},
+		{
+			name: "the year end, before the window", ticker: "MODA.INDX", from: "2025-12-30", to: "2026-01-02",
+			want: []string{"2025-12-30 96", "2025-12-31 110", "2026-01-01 110", "2026-01-02 110"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var from kernel.Date
+			if tt.from != "" {
+				from = day(t, tt.from)
+			}
+			closes, err := c.Closes(t.Context(), tt.ticker, from, day(t, tt.to))
+			if err != nil {
+				t.Fatalf("Closes(%s): %v", tt.ticker, err)
+			}
+			got := make([]string, 0, len(closes))
+			for _, cl := range closes {
+				got = append(got, cl.Date.String()+" "+cl.Close.String())
+			}
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("closes of %s (-want +got):\n%s", tt.ticker, diff)
+			}
+		})
+	}
+}
+
 // checkCloses checks the weekday closes of the synthetic TSTB.XETRA from a
 // Friday to the Tuesday after, with c.
 func checkCloses(t *testing.T, c *eodhd.Client) {

@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82c513ff3d21
+  - type: executable_for
+    from: SYM-e2e-datapath-setup-test-owner-post-request
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:14:34.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e615764b1b9a

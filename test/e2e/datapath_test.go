@@ -56,7 +56,7 @@ const (
 
 // TestDataPath runs the connectors' data path end to end against the
 // institution fixture, as an owner does, and checks D-200's criteria 2, 3,
-// 4, 5, 6 and 7 on it, and criterion 8's charts. It deploys the fixture as an HTTPS Service with a
+// 4, 5, 6 and 7 on it, criterion 8's charts and criterion 19. It deploys the fixture as an HTTPS Service with a
 // certificate from a CA made for this run, and installs, with the openfief
 // CLI built from this checkout, nbp-fx, eodhd, ibkr-flex and
 // treasury-bonds, each with its base URL on the fixture, the fixture's
@@ -115,7 +115,16 @@ const (
 //     the read API answers the script token for the same days, and while
 //     the UI drew them the core's log shows it calling nothing outside
 //     the read API but the session check and two lookups without
-//     numbers, and its pod reaches nothing but the core (charts_test.go).
+//     numbers, and its pod reaches nothing but the core (charts_test.go);
+//   - criterion 19 (SCEN-e2e-model-portfolio-off-shows-nothing,
+//     SCEN-e2e-model-portfolio-backtest-hand-calculation): last, with the
+//     model portfolio off the read API answers 404 and the overview draws
+//     none of it; the owner saves two index targets, MODA 60% and MODB 40%,
+//     and turns it on; the read API's backtest across a yearly rebalance
+//     and its max drawdowns equal the hand calculation over the fixture's
+//     synthetic index series, and the overview draws the same line and
+//     lists the same drawdowns; turned off again, it is gone
+//     (model_test.go).
 func TestDataPath(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -150,6 +159,7 @@ func TestDataPath(t *testing.T) {
 	p.checkPriceChecks(t)
 	p.checkReadAPI(t)
 	p.checkCharts(t)
+	p.checkModelPortfolio(t)
 }
 
 // dataPath is the data path's state: the cluster, a script token for the

@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9b947b70833
+  - type: implements
+    from: SYM-e2e-modelseries-close
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:09:52.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef3c4b8dec16
+  - type: covered_by
+    from: SYM-e2e-modelseries-close
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:09:52.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a375c08043e

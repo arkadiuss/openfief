@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-470c77a001ef
+  - type: executable_for
+    from: SYM-e2e-model-test-model-fields
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:14:02.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89f17d0bfbb5

@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2b86878ca23
+  - type: executable_for
+    from: SYM-e2e-model-test-data-path-overview-performance-with-model
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T16:14:29.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87c016e92d4d

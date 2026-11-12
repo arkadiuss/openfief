@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70878654094e
+  - type: executable_for
+    from: SYM-e2e-modelcheck-test-test-line
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:12:49.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6206e7257a47

@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e0617b65dab
+  - type: executable_for
+    from: SYM-e2e-modelseries-test-test-find
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:13:24.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de8e1c9709d9

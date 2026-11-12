@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/test/e2e/modelseries"
 )
 
 // The services' paths on the fixture: each connector's baseUrl is the
@@ -191,6 +192,10 @@ func eodhdCloses(w http.ResponseWriter, r *http.Request, token string) {
 	if !eodhdAuthorized(w, r, token) {
 		return
 	}
+	if series, ok := modelseries.Find(r.PathValue("ticker")); ok {
+		modelCloses(w, r, series)
+		return
+	}
 	price, ok := closes()[r.PathValue("ticker")]
 	if !ok {
 		http.NotFound(w, r)
@@ -204,6 +209,32 @@ func eodhdCloses(w http.ResponseWriter, r *http.Request, token string) {
 	bars := []eodhdBar{}
 	for _, d := range weekdays(asked) {
 		bars = append(bars, eodhdBar{Date: d.Format(isoDate), Close: json.Number(price)})
+	}
+	writeJSON(w, bars)
+}
+
+// modelCloses answers EODHD's end-of-day API for one of the model
+// portfolio's synthetic index series: its level on every weekday within the
+// query's from and to, each optional, over the series' own days, which the
+// window doesn't bound (the series start in December 2025, and the model
+// portfolio's backtest crosses a year end).
+func modelCloses(w http.ResponseWriter, r *http.Request, series modelseries.Series) {
+	var from, to time.Time
+	for key, dst := range map[string]*time.Time{"from": &from, "to": &to} {
+		raw := r.URL.Query().Get(key)
+		if raw == "" {
+			continue
+		}
+		d, err := time.Parse(isoDate, raw)
+		if err != nil {
+			http.Error(w, key+": "+err.Error(), http.StatusUnprocessableEntity)
+			return
+		}
+		*dst = d
+	}
+	bars := []eodhdBar{}
+	for _, c := range series.Closes(from, to) {
+		bars = append(bars, eodhdBar{Date: c.Date, Close: json.Number(c.Level)})
 	}
 	writeJSON(w, bars)
 }

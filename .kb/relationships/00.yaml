@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a09ccc0c3f85
+  - type: executable_for
+    from: SYM-e2e-modelcheck-test-test-drawdown-rows
+    to: TEST-e2e-modelcheck
+    created_at: 2026-11-12T16:13:12.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a0fa1bba175

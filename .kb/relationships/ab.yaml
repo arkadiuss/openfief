@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7162cba5c648
+  - type: implements
+    from: SYM-e2e-modelseries-dated
+    to: REQ-m0-exit-19-model-portfolio
+    created_at: 2026-11-12T16:47:45.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ded75db6315
+  - type: covered_by
+    from: SYM-e2e-modelseries-dated
+    to: TEST-e2e-modelseries
+    created_at: 2026-11-12T16:47:45.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9084e5dfe559
