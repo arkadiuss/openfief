@@ -424,14 +424,17 @@ func waitPass(t *testing.T, k *kube, pod string) ghostfoliocheck.Sync {
 		if len(passes) == 0 {
 			return "no pass logged yet", false, nil
 		}
-		pass = passes[0]
+		// The view tries a failed sync again within seconds (a pod can start
+		// before its network rules allow the core); the latest pass counts,
+		// and one that keeps failing fails the wait with its error.
+		pass = passes[len(passes)-1]
+		if pass.Err != "" {
+			return "the latest sync failed: " + pass.Err, false, nil
+		}
 		return "a pass logged", true, nil
 	})
 	if err != nil {
-		t.Fatalf("waiting for a sync of %s: %v", pod, err)
-	}
-	if pass.Err != "" {
-		t.Fatalf("the sync of %s failed: %s", pod, pass.Err)
+		t.Fatalf("waiting for a successful sync of %s: %v", pod, err)
 	}
 	return pass
 }

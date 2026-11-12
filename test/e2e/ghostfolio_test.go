@@ -89,8 +89,10 @@ func TestGhostfolio(t *testing.T) {
 	v.checkFirstPass(t, &first)
 	before := v.checkHoldsProjection(t)
 
+	// The transactions the projection leaves out stay left out on every pass.
+	v.leftOut = first.LeftOut
 	second := waitPass(t, k, restartView(t, k))
-	if diff := cmp.Diff(ghostfoliocheck.Sync{}, second); diff != "" {
+	if diff := cmp.Diff(ghostfoliocheck.Sync{LeftOut: v.leftOut}, second); diff != "" {
 		t.Errorf("the second sync's report (-want +got):\n%s", diff)
 	}
 	after := v.checkHoldsProjection(t)
@@ -112,6 +114,9 @@ type gfView struct {
 	record viewsv1connect.ReadServiceClient
 	owner  *gfOwner
 	today  kernel.Date
+	// leftOut is how many transactions the first pass left out of the
+	// projection, which every later pass leaves out too.
+	leftOut int
 }
 
 // gfState is what the owned accounts hold, a line per activity and per
@@ -376,7 +381,7 @@ func (v *gfView) checkEditReverted(t *testing.T, before *gfState) {
 	v.owner.send(t, http.MethodPut, "/api/v1/activities/"+edited.ID, ghostfoliocheck.Edited(&edited), nil)
 
 	pass := waitPass(t, v.k, restartView(t, v.k))
-	if diff := cmp.Diff(ghostfoliocheck.Sync{Report: ghostfoliocheck.Report{Imported: 1, Deleted: 1}}, pass); diff != "" {
+	if diff := cmp.Diff(ghostfoliocheck.Sync{Report: ghostfoliocheck.Report{Imported: 1, Deleted: 1}, LeftOut: v.leftOut}, pass); diff != "" {
 		t.Errorf("the sync after the edit, report (-want +got):\n%s", diff)
 	}
 	after := v.checkHoldsProjection(t)

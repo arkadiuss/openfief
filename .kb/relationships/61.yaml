@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e57bd1af196d
+  - type: executable_for
+    from: SYM-plugins-ghostfolio-test-helper-failing-syncer
+    to: TEST-plugins-ghostfolio-main
+    created_at: 2026-11-12T13:28:39.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0a90b713d4e

@@ -84,7 +84,7 @@ Ghostfolio stores numbers as IEEE 754 doubles, which print back any decimal of u
 
 ### The plugin
 
-[plugins/ghostfolio](../../plugins/ghostfolio/) is the [plugin](../glossary.md) image: a thin [main.go](../../plugins/ghostfolio/main.go) and [config.go](../../plugins/ghostfolio/config.go) on the SDK, a [manifest.json](../../plugins/ghostfolio/manifest.json) and a Dockerfile that CI builds and signs like every first-party plugin ([Plugins](plugins.md#first-party-plugins)). It serves nothing: views are clients of the read API (D-49), and the core schedules only connectors, so the plugin runs the loop on its own timer, at start and then every `interval`. A failed pass is logged and the next tick finishes it; logs carry only counts.
+[plugins/ghostfolio](../../plugins/ghostfolio/) is the [plugin](../glossary.md) image: a thin [main.go](../../plugins/ghostfolio/main.go) and [config.go](../../plugins/ghostfolio/config.go) on the SDK, a [manifest.json](../../plugins/ghostfolio/manifest.json) and a Dockerfile that CI builds and signs like every first-party plugin ([Plugins](plugins.md#first-party-plugins)). It serves nothing: views are clients of the read API (D-49), and the core schedules only connectors, so the plugin runs the loop on its own timer, at start and then every `interval`. A failed pass is logged and tried again sooner, after 5 seconds, doubling up to 5 minutes or the interval, so a pod that starts before its network rules or the core are ready doesn't wait out a whole interval; every step is safe to repeat, and logs carry only counts.
 
 ```mermaid
 flowchart LR

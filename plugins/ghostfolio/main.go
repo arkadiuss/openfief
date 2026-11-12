@@ -96,7 +96,7 @@ func run(ctx context.Context, log *slog.Logger) error {
 		return err
 	}
 	log.Info("ghostfolio syncing", "interval", cfg.interval.String(), "supported_versions", ghostfolio.SupportedVersions)
-	loop(ctx, s, cfg.interval, log)
+	loop(ctx, s, cfg.interval, firstRetry, log)
 	return nil
 }
 
@@ -151,23 +151,37 @@ type syncer interface {
 	Sync(ctx context.Context) (ghostfolio.Report, error)
 }
 
+// firstRetry is how soon a failed sync is tried again; each further failure
+// doubles the wait, up to maxRetry or the interval, whichever is shorter.
+const (
+	firstRetry = 5 * time.Second
+	maxRetry   = 5 * time.Minute
+)
+
 // loop syncs at once, then every interval, until ctx is done. A failed
-// sync is logged and retried at the next tick: every step is safe to
-// repeat (D-64). Only counts are logged, never an amount.
-func loop(ctx context.Context, s syncer, interval time.Duration, log *slog.Logger) {
-	t := time.NewTicker(interval)
-	defer t.Stop()
+// sync is logged and tried again sooner, after retry, doubling up to
+// maxRetry or the interval: a view whose pod starts before its network
+// rules or the core are ready shouldn't wait out a whole interval. Every
+// step is safe to repeat (D-64). Only counts are logged, never an amount.
+func loop(ctx context.Context, s syncer, interval, retry time.Duration, log *slog.Logger) {
+	wait := retry
 	for {
+		next := interval
 		rep, err := s.Sync(ctx)
 		if err != nil {
 			log.Error("sync failed", "error", err.Error())
+			next = min(wait, maxRetry, interval)
+			wait *= 2
 		} else {
+			wait = retry
 			log.Info("synced", "accounts_created", rep.AccountsCreated, "imported", rep.Imported,
 				"deleted", rep.Deleted, "accounts_cleared", rep.AccountsCleared, "balances_set", rep.BalancesSet,
 				"balances_deleted", rep.BalancesDeleted, "left_out", len(rep.Problems))
 		}
+		t := time.NewTimer(next)
 		select {
 		case <-ctx.Done():
+			t.Stop()
 			return
 		case <-t.C:
 		}
