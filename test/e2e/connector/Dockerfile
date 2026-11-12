@@ -2,7 +2,7 @@
 # and never released. MANIFEST is the manifest the image carries as its signed label (D-42): manifest.json, or
 # manifest-egress.json for the image the suite upgrades to; the suite declares the same one in each Plugin.
 # Base images are pinned by digest, as plugins/nbp-fx/Dockerfile pins them; Renovate updates tag and digest together.
-FROM golang:1.27.3-trixie@sha256:c124b9ad3452f46061b5054607d26ea51730dae5372c5e469920063ba2bc6dcc AS build
+FROM golang:1.27.4-trixie@sha256:b54b2639de8c1bfe538ec5ffc45f29b1932235ac5f6d63c059853646677112d9 AS build
 WORKDIR /src
 # The core module and the SDK module build as one Go workspace (go.work).
 COPY go.mod go.sum go.work go.work.sum ./
