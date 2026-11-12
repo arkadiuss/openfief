@@ -26,7 +26,7 @@ url="https://github.com/kubernetes-sigs/controller-tools/releases/download/envte
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
-curl -fsSL --retry 3 -o "$tmp/$archive" "$url"
+bash "$(dirname "$0")/retry.sh" curl -fsSL -o "$tmp/$archive" "$url"
 if command -v sha512sum >/dev/null; then
   got="$(sha512sum "$tmp/$archive" | cut -d' ' -f1)"
 else

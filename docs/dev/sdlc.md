@@ -7,8 +7,8 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 1. **Intent.** A behavior change starts from a kibi requirement ([kibi.md](kibi.md)); a product or architecture choice starts from a decision in DESIGN.md.
 2. **Branch** from `main`; branches are short-lived and `main` is never committed to directly. The release workflow doesn't commit to `main` either: it opens a pull request with the catalog update of D-88, which the author reviews and merges.
 3. **Change** the code with tests at the right level ([testing.md](testing.md)) and the code linked to its requirements.
-4. **Local pipeline.** Tests, lint and vulnerability checks run on the pre-commit hook for what the commit can affect, and they are the same checks CI runs in full, so local green means CI green.
-5. **PR** to `main`; CI repeats the checks and runs the end-to-end tests. Merge when green and reviewed.
+4. **Local pipeline.** Tests, lint and vulnerability checks run on the pre-commit hook for what the commit can affect, and they are the same checks CI runs in full, so local green means CI green. The hook takes a few minutes at most; its steps are timed.
+5. **PR** to `main`, or a push of the implementation branch; CI repeats the checks in full and runs the end-to-end tests. `main` advances only to a commit on which CI is green: a pull request merges when green and reviewed, and the implementation branch is fast-forwarded into `main` once CI has passed on that exact commit.
 6. **`main`** deploys to the demo environment.
 7. **Release** through a separate release workflow.
 
@@ -19,8 +19,9 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - `task vuln` fails on any finding, and also when a vulnerability database can't be reached.
 - kibi's relationship shards and `symbols.yaml` merge record by record through kibi's merge driver (`.gitattributes`); `task setup` registers it in each clone.
 - The docs site is built in every `task check`, and each push to `main` publishes it ([docs.md](docs.md)).
-- The pre-commit hook checks only what a commit can affect: lint and tests of the changed Go packages and of every package that imports them, found from Go's import graph rather than from paths. A commit of docs or requirements alone runs no Go step, but still builds the docs and runs the staleness gate and kibi's staged check. A change every check reads (module files, lint or task configuration, tools, scripts, contracts, generated code, embedded assets) or one the selector can't place runs the full check. When in doubt, full.
-- The selector is a tested Go tool, and every hook and CI run prints what it selected and why.
+- The pre-commit hook checks only what a commit can affect: lint and tests of the changed Go packages and of every package that imports them, found from Go's import graph rather than from paths. A commit of docs or requirements alone runs no Go step, but still builds the docs and runs the staleness gate and kibi's staged check. A change every check reads (module files, lint or task configuration, tools, scripts, contracts, generated code, embedded assets) or one the selector can't place runs the full check. When in doubt, full. A merge is checked like any commit, from its diff against its first parent.
+- The selector is a tested Go tool, and every hook and CI run prints what it selected and why; the hook also prints each step's time and the total.
+- Downloads CI makes (tool installs, test assets, release manifests, npm packages, the cosign installer) are retried on a server error or a dropped connection and never on a client error, and the pinned tools are cached by their versions; checksums stay as strict as before ([pipeline.md](pipeline.md#download-retries-and-the-tool-cache)).
 
 ## Commits and PRs
 
@@ -30,7 +31,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 
 ## CI and environments
 
-- CI runs on GitHub Actions **(P)**: the same checks as the hook, end-to-end tests on k3s plus kind (D-12), and multi-arch images with an SBOM, signed with cosign (D-17).
+- CI runs on GitHub Actions **(P)**, on every pull request and every push to `main` or the implementation branch: the same checks as the hook, in full, end-to-end tests on k3s plus kind (D-12), and multi-arch images with an SBOM, signed with cosign (D-17).
 - CI builds, signs and publishes only the images whose binary's dependency closure, Dockerfile or shared build inputs changed; an unchanged image keeps the digest signed for an earlier commit, tagged for the new one once its signature verifies **(P)**, so the demo always deploys a signed digest. A pull request of docs or requirements alone skips the end-to-end and PostgreSQL jobs. Every push to `main` runs the whole suite, and a release builds every image.
 - Demo and test environment: a Hetzner machine running k3s, deployed by the pipeline from `main` and from beta releases. It holds synthetic data only: never real broker credentials or portfolio data (GR-12).
 - Deploy credentials live in a protected GitHub Environment, never in the repository **(P)**.

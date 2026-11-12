@@ -1,11 +1,16 @@
-# CI for pull requests and main (docs/dev/sdlc.md). Every step calls a task target; see Taskfile.yml.
+# CI for pull requests, main and the implementation branch (docs/dev/sdlc.md). Every step calls a task target; see
+# Taskfile.yml. The check job runs the full `task check` on every push, which is the gate the pre-commit hook leaves
+# out (docs site, whole knowledge base, whole-repository tests): main advances only to a commit whose run on the
+# implementation branch is green. Only main publishes images and deploys (the jobs check github.ref).
 name: CI
 
 on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'claude/openfief-implementation-*'
   # By hand, on main: the same run as a push. all_images rebuilds and signs every image instead of carrying the
   # unchanged ones forward, the way out if the selector ever keeps an image it should have rebuilt.
   workflow_dispatch:

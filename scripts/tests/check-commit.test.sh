@@ -100,12 +100,24 @@ check "FULL selects the full check without listing anything" \
 check "the full check runs" "$(same "$work/tasks" 'check:commit:full')"
 
 git -C "$repo" rev-parse HEAD >"$repo/.git/MERGE_HEAD"
-hook FAKE_PLAN='check:commit:full\n' && rc=0 || rc=$?
-check "a merge being committed selects the full check" "$([ "$rc" -eq 0 ] && grep -q -- '-full a merge is being committed' "$work/log" && echo yes || echo no)"
+hook FAKE_PLAN='lint:go\tMODULE=.\nkibi:staged\n' && rc=0 || rc=$?
+check "a merge being committed is planned from its staged diff like any commit, not run in full" \
+  "$([ "$rc" -eq 0 ] && grep -q -- 'go run ./tools/affected hook -in ' "$work/log" && ! grep -q -- ' -full ' "$work/log" && echo yes || echo no)"
+check "a merge runs the steps the selector chose" "$(same "$work/tasks" "$(printf 'lint:go|MODULE=.\nkibi:staged')")"
+check "the merge's changes are the index against its first parent" \
+  "$(if tr '\0' '\n' <"$work/seen/changes" | grep -qx internal/kernel/money.go; then echo yes; else echo no; fi)"
 rm -f "$repo/.git/MERGE_HEAD"
 
+hook FAKE_PLAN='fmt:check:files\tMODULE=.\nlint:go\tMODULE=.\n' && rc=0 || rc=$?
+check "each step says how long it took, and the hook the total" \
+  "$(if grep -q '^check-commit: fmt:check:files MODULE=.: [0-9]*s$' "$work/out" && grep -q '^check-commit: lint:go MODULE=.: [0-9]*s$' "$work/out" && grep -q '^check-commit: total [0-9]*s$' "$work/out"; then echo yes; else echo no; fi)"
+
+hook FAKE_PLAN='lint:go\tMODULE=.\nkibi:staged\n' FAKE_FAIL=lint:go && rc=0 || rc=$?
+check "a failing step is timed and the total still printed" \
+  "$(if grep -q '^check-commit: lint:go MODULE=.: [0-9]*s$' "$work/out" && grep -q '^check-commit: total [0-9]*s$' "$work/out"; then echo yes; else echo no; fi)"
+
 DRY_RUN=1 hook FAKE_PLAN='kibi:staged\n' && rc=0 || rc=$?
-check "DRY_RUN plans and runs nothing" "$([ "$rc" -eq 0 ] && [ ! -s "$work/tasks" ] && grep -q 'go run' "$work/log" && echo yes || echo no)"
+check "DRY_RUN plans and runs nothing" "$([ "$rc" -eq 0 ] && [ ! -s "$work/tasks" ] && grep -q 'go run' "$work/log" && ! grep -q '^check-commit:' "$work/out" && echo yes || echo no)"
 
 if [ "$failures" -gt 0 ]; then
   echo "check-commit.test.sh: $failures of $cases checks failed" >&2

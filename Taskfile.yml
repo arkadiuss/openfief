@@ -134,14 +134,14 @@ tasks:
   tool:hcloud:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/hetznercloud/cli/cmd/hcloud@{{.HCLOUD_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/hetznercloud/cli/cmd/hcloud@{{.HCLOUD_VERSION}}
     status:
       - '{{.BIN}}/hcloud version 2>&1 | grep -q "^hcloud {{trimPrefix "v" .HCLOUD_VERSION}}"'
 
   tool:kustomize:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install sigs.k8s.io/kustomize/kustomize/v5@{{.KUSTOMIZE_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install sigs.k8s.io/kustomize/kustomize/v5@{{.KUSTOMIZE_VERSION}}
     status:
       - '{{.BIN}}/kustomize version 2>&1 | grep -qx "{{.KUSTOMIZE_VERSION}}"'
 
@@ -158,7 +158,7 @@ tasks:
         version='{{trimPrefix "v" .FLUX_VERSION}}'
         work="$(mktemp -d)"
         trap 'rm -rf "$work"' EXIT
-        curl -fsSL --retry 3 -o "$work/flux.tar.gz" "https://github.com/fluxcd/flux2/releases/download/v${version}/flux_${version}_linux_${arch}.tar.gz"
+        bash scripts/retry.sh curl -fsSL -o "$work/flux.tar.gz" "https://github.com/fluxcd/flux2/releases/download/v${version}/flux_${version}_linux_${arch}.tar.gz"
         echo "$sum  $work/flux.tar.gz" | sha256sum -c -
         tar -xzf "$work/flux.tar.gz" -C "$work" flux
         mkdir -p '{{.BIN}}'
@@ -169,21 +169,21 @@ tasks:
   tool:crane:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/google/go-containerregistry/cmd/crane@{{.CRANE_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/google/go-containerregistry/cmd/crane@{{.CRANE_VERSION}}
     status:
       - '{{.BIN}}/crane version 2>&1 | grep -qx "{{.CRANE_VERSION}}"'
 
   tool:gojq:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/itchyny/gojq/cmd/gojq@{{.GOJQ_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/itchyny/gojq/cmd/gojq@{{.GOJQ_VERSION}}
     status:
       - '{{.BIN}}/gojq --version 2>&1 | grep -q "^gojq {{trimPrefix "v" .GOJQ_VERSION}} "'
 
   tool:golangci-lint:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.GOLANGCI_LINT_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.GOLANGCI_LINT_VERSION}}
     status:
       - '{{.BIN}}/golangci-lint version 2>&1 | grep -q "version {{trimPrefix "v" .GOLANGCI_LINT_VERSION}} "'
       - '{{if .GO_TOOLCHAIN}}{{.BIN}}/golangci-lint version 2>&1 | grep -q "built with {{.GO_TOOLCHAIN}} "{{end}}'
@@ -191,7 +191,7 @@ tasks:
   tool:govulncheck:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install golang.org/x/vuln/cmd/govulncheck@{{.GOVULNCHECK_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install golang.org/x/vuln/cmd/govulncheck@{{.GOVULNCHECK_VERSION}}
     status:
       - '{{.BIN}}/govulncheck -version 2>&1 | grep -q "govulncheck@{{.GOVULNCHECK_VERSION}}"'
       - '{{if .GO_TOOLCHAIN}}go version {{.BIN}}/govulncheck 2>&1 | grep -q ": {{.GO_TOOLCHAIN}}$"{{end}}'
@@ -199,28 +199,28 @@ tasks:
   tool:lefthook:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/evilmartians/lefthook/v2@{{.LEFTHOOK_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/evilmartians/lefthook/v2@{{.LEFTHOOK_VERSION}}
     status:
       - '{{.BIN}}/lefthook version 2>&1 | grep -qx "{{trimPrefix "v" .LEFTHOOK_VERSION}}"'
 
   tool:actionlint:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/rhysd/actionlint/cmd/actionlint@{{.ACTIONLINT_VERSION}}
     status:
       - '{{.BIN}}/actionlint -version 2>&1 | head -n1 | grep -qx "{{.ACTIONLINT_VERSION}}"'
 
   tool:hugo:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 bash scripts/retry.sh go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
     status:
       - '{{.BIN}}/hugo version 2>&1 | grep -q "hugo {{.HUGO_VERSION}} "'
 
   tool:zed:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
     status:
       - '{{.BIN}}/zed version 2>&1 | grep -qx "client: zed {{.ZED_VERSION}}"'
 
@@ -231,49 +231,49 @@ tasks:
   tool:buf:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
     status:
       - '{{.BIN}}/buf --version 2>&1 | grep -qx "{{trimPrefix "v" .BUF_VERSION}}"'
 
   tool:protoc-gen-go:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-go --version 2>&1 | grep -qx "protoc-gen-go {{.PROTOC_GEN_GO_VERSION}}"'
 
   tool:protoc-gen-connect-go:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install connectrpc.com/connect/cmd/protoc-gen-connect-go@{{.PROTOC_GEN_CONNECT_GO_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-connect-go --version 2>&1 | grep -qx "{{trimPrefix "v" .PROTOC_GEN_CONNECT_GO_VERSION}}"'
 
   tool:protoc-gen-connect-openapi:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/sudorandom/protoc-gen-connect-openapi@{{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/sudorandom/protoc-gen-connect-openapi@{{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}}
     status:
       - '{{.BIN}}/protoc-gen-connect-openapi --version 2>&1 | grep -q "^protoc-gen-connect-openapi {{.PROTOC_GEN_CONNECT_OPENAPI_VERSION}} "'
 
   tool:cyclonedx-gomod:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{.CYCLONEDX_GOMOD_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{.CYCLONEDX_GOMOD_VERSION}}
     status:
       - '{{.BIN}}/cyclonedx-gomod version 2>&1 | grep -q "{{.CYCLONEDX_GOMOD_VERSION}}"'
 
   tool:task:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' go install github.com/go-task/task/v3/cmd/task@{{.TASK_VERSION}}
+      - GOBIN='{{.BIN}}' bash scripts/retry.sh go install github.com/go-task/task/v3/cmd/task@{{.TASK_VERSION}}
     status:
       - '{{.BIN}}/task --version 2>&1 | grep -qx "{{trimPrefix "v" .TASK_VERSION}}"'
 
   tool:controller-gen:
     internal: true
     cmds:
-      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install sigs.k8s.io/controller-tools/cmd/controller-gen@{{.CONTROLLER_GEN_VERSION}}
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install sigs.k8s.io/controller-tools/cmd/controller-gen@{{.CONTROLLER_GEN_VERSION}}
     status:
       - '{{.BIN}}/controller-gen --version 2>&1 | grep -qx "Version: {{.CONTROLLER_GEN_VERSION}}"'
 
@@ -315,7 +315,7 @@ tasks:
       - task: kibi:check
 
   check:commit:
-    desc: 'Pre-commit pipeline: only the checks the staged change can affect (tools/affected prints what and why); FULL=1 runs check:commit:full'
+    desc: 'Pre-commit pipeline: only the checks the staged change can affect (tools/affected prints what and why; each step is timed); FULL=1 runs check:commit:full'
     cmds:
       - bash scripts/check-commit.sh '{{.TASK_EXE}}' '{{.GO_MODULES}}' '{{.FULL}}'
 
@@ -611,7 +611,7 @@ tasks:
         mkdir -p "$(dirname '{{.CNPG_MANIFEST}}')"
         work="$(mktemp -d)"
         trap 'rm -rf "$work"' EXIT
-        curl -fsSL --retry 3 -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
+        bash scripts/retry.sh curl -fsSL -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
         echo '{{.CNPG_MANIFEST_SHA256}}  '"$work/cnpg.yaml" | sha256sum -c -
         mv "$work/cnpg.yaml" '{{.CNPG_MANIFEST}}'
     status:
@@ -1010,7 +1010,7 @@ tasks:
     sources: [package.json, package-lock.json, patches/*.patch]
     generates: [node_modules/.package-lock.json]
     cmds:
-      - npm ci
+      - bash scripts/retry.sh npm ci
 
   kibi:doctor:
     desc: Diagnose the kibi setup

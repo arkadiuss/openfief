@@ -31,13 +31,34 @@ runs:
         go-version: 1.27.4
         cache-dependency-path: Taskfile.yml
 
+    # The pinned tools (.bin/: Go tools, the envtest API server and etcd, the flux CLI, CloudNativePG's manifest) are
+    # cached by their pinned versions: every `*_VERSION` and checksum variable of the Taskfile plus go.mod's go and
+    # toolchain lines, so a bump of any of them builds a new cache and nothing else does. The tool targets skip an
+    # install whose binary is there at the pinned version (their `status`), so a hit makes `task setup:ci` almost
+    # free and a miss costs what it did before. The e2e job's own state under .bin/e2e is never cached. The key
+    # names the job, since jobs install different subsets and a cache is written once.
+    - name: Hash the pinned tool versions
+      id: tools-key
+      shell: bash
+      run: |
+        sum="$({ grep -E '^  [A-Z0-9_]+_(VERSION|SHA256|SHA512)[A-Z0-9_]*:' Taskfile.yml; grep -E '^(go|toolchain) ' go.mod; } | sha256sum | cut -d' ' -f1)"
+        echo "sum=$sum" >>"$GITHUB_OUTPUT"
+
+    - name: Cache the pinned tools
+      uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+      with:
+        path: |
+          .bin
+          !.bin/e2e
+        key: tools-${{ runner.os }}-${{ runner.arch }}-${{ github.job }}-${{ steps.tools-key.outputs.sum }}
+
     # The only tool installed outside a task target: Task must exist before any target can run.
     # The version is read from Taskfile.yml, so it stays pinned in one place.
     - name: Install Task
       shell: bash
       run: |
         version="$(sed -nE 's/^  TASK_VERSION: *([^ #]+).*/\1/p' Taskfile.yml)"
-        GOBIN="$GITHUB_WORKSPACE/.bin" go install "github.com/go-task/task/v3/cmd/task@${version}"
+        GOBIN="$GITHUB_WORKSPACE/.bin" bash scripts/retry.sh go install "github.com/go-task/task/v3/cmd/task@${version}"
         echo "$GITHUB_WORKSPACE/.bin" >>"$GITHUB_PATH"
 
     # kibi compiles one store per branch and refuses to write on a detached HEAD, which is what

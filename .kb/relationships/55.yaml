@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-100960af1948
+  - type: constrains
+    from: REQ-tooling-hook-merge-first-parent
+    to: FACT-SUBJECT-AD0E41D410701C0F
+    created_at: 2026-11-12T15:11:42.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84081da4388
+  - type: requires_property
+    from: REQ-tooling-hook-merge-first-parent
+    to: FACT-PROP-4CDA2AE51057FB70
+    created_at: 2026-11-12T15:11:42.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c19ba40cd6b
+  - type: specified_by
+    from: REQ-tooling-hook-merge-first-parent
+    to: SCEN-tooling-hook-merge-diff
+    created_at: 2026-11-12T15:11:42.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0369e461c22

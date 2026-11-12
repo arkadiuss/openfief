@@ -171063,3 +171063,83 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-ghostfolio-main
+  - id: SYM-tooling-ci-gate-test-check
+    title: check
+    sourceFile: scripts/tests/ci-gate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:37:37.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-gate
+  - id: SYM-tooling-ci-gate-test-bare-downloads
+    title: bare_downloads
+    sourceFile: scripts/tests/ci-gate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:37:42.970Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-gate
+  - id: SYM-tooling-ci-gate-test-yes-if
+    title: yes_if
+    sourceFile: scripts/tests/ci-gate.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:37:49.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-gate
+  - id: SYM-tooling-retry-test-run
+    title: run
+    sourceFile: scripts/tests/retry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:37:54.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-retry
+  - id: SYM-tooling-retry-test-calls
+    title: calls
+    sourceFile: scripts/tests/retry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:38:01.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-retry
+  - id: SYM-tooling-retry-test-waits
+    title: waits
+    sourceFile: scripts/tests/retry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:38:06.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-retry
+  - id: SYM-tooling-retry-test-check
+    title: check
+    sourceFile: scripts/tests/retry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:38:12.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-retry
+  - id: SYM-tooling-retry-test-is
+    title: is
+    sourceFile: scripts/tests/retry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T15:38:18.467Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-retry

@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e308edb07ed3
+  - type: executable_for
+    from: SYM-tooling-retry-test-calls
+    to: TEST-tooling-retry
+    created_at: 2026-11-12T15:38:04.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e69485aa9138

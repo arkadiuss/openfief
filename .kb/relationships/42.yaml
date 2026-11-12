@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84e2149053ff
+  - type: executable_for
+    from: SYM-tooling-ci-gate-test-check
+    to: TEST-tooling-ci-gate
+    created_at: 2026-11-12T15:37:40.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d839088bb84f

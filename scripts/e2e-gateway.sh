@@ -33,7 +33,7 @@ fetch() {
   mkdir -p "$(dirname "$file")"
   if [ ! -f "$file" ]; then
     echo "e2e-gateway: downloading $url"
-    curl -fsSL --retry 3 -o "$file.part" "$url"
+    bash "$(dirname "$0")/retry.sh" curl -fsSL -o "$file.part" "$url"
     mv "$file.part" "$file"
   fi
   if ! echo "$sha256  $file" | sha256sum -c - >/dev/null; then
