@@ -125161,6 +125161,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-authz
+      - type: covered_by
+        target: TEST-views-app-authz-list
       - type: implements
         target: REQ-identity-read-access-viewable-accounts-only
       - type: implements
@@ -133023,6 +133025,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-app-registry
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
       - type: implements
         target: REQ-portfolio-account-in-one-sleeve
   - id: SYM-portfolio-app-registry-account-sleeves
@@ -133049,6 +133055,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-app-registry
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
       - type: implements
         target: REQ-portfolio-account-in-one-sleeve
   - id: SYM-portfolio-app-registry-ensure-defaults
@@ -174792,3 +174802,173 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-audit-postgres
+  - id: SYM-identity-spicedb-authorizer-may-act
+    title: Authorizer.MayAct
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:30.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: implements
+        target: REQ-identity-authz-one-interface
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-authorizer-actable-accounts
+    title: Authorizer.ActableAccounts
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:40.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-identity-spicedb-object-id
+    title: ObjectID
+    status: active
+    sourceFile: internal/identity/spicedb/ids.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:49.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-account-placed
+    title: Syncer.AccountPlaced
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:58.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-account-unplaced
+    title: Syncer.AccountUnplaced
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:08.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-reconcile
+    title: Syncer.Reconcile
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:17.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-plan
+    title: Plan
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:25.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-parse-authz
+    title: parseAuthz
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:34.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-new-authorization
+    title: newAuthorization
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:42.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-reconcile-access
+    title: reconcileAccess
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:39.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-placement-sync-account-placed
+    title: placementSync.AccountPlaced
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:48.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-placement-sync-account-removed
+    title: placementSync.AccountRemoved
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:56.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers

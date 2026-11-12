@@ -9,6 +9,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/identity"
+	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -41,7 +42,7 @@ func (d *denyingAuthorizer) MayAct(_ context.Context, c identity.Caller, a ident
 
 // withAuthorizer returns f's views asking a, with f's bindings of
 // ibkr-main to acc-1 and acc-2.
-func withAuthorizer(t *testing.T, f *fixture, a *denyingAuthorizer) *app.Views {
+func withAuthorizer(t *testing.T, f *fixture, a identityapp.Authorizer) *app.Views {
 	t.Helper()
 	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger),
 		app.WithAuthorizer(a), app.WithConnections(twoBindings{}))

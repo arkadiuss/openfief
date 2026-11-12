@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a410667a493
+  - type: implements
+    from: SYM-identity-spicedb-syncer-account-placed
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:53:01.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd664d025ad2
+  - type: covered_by
+    from: SYM-identity-spicedb-syncer-account-placed
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-12T22:53:01.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4368edf9528
+  - type: covered_by
+    from: SYM-identity-spicedb-syncer-account-placed
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-12T22:53:01.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e84068971819

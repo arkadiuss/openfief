@@ -1210,3 +1210,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e2b01fb5250
+  - type: verified_by
+    from: SCEN-identity-spicedb-relationships-follow-accounts
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-12T22:51:42.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ed802c2ff01
+  - type: verified_by
+    from: SCEN-identity-spicedb-relationships-follow-accounts
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-12T22:51:42.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2abcc2489980
+  - type: verified_by
+    from: SCEN-identity-spicedb-relationships-follow-accounts
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-12T22:51:42.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68221e613941
+  - type: verified_by
+    from: SCEN-identity-spicedb-relationships-follow-accounts
+    to: TEST-core-authz-sync
+    created_at: 2026-11-12T23:04:11.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b5c3d8f06d

@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bac3cc8b8d7c
+  - type: implements
+    from: SYM-core-placement-sync-account-placed
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:54:51.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cca140da43c
+  - type: covered_by
+    from: SYM-core-placement-sync-account-placed
+    to: TEST-core-authz-sync
+    created_at: 2026-11-12T22:54:51.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5faac69b0a89

@@ -2,11 +2,11 @@
 // `task authz:validate` checks it against the relationships and assertions
 // in validation.yaml; CI runs it as part of `task check`.
 //
-// Until SpiceDB answers the core's authorization interface (from the second
-// alpha), the core's only implementation, identity.MayAct, gives the same
-// answers as this schema with the relationships below: the owner may act on
-// every account, and every other holder of read access (D-137) views every
-// account.
+// Until SpiceDB answers the core's authorization interface (the --authz flag,
+// D-164), identity.MayAct gives the same answers as this schema with the
+// relationships below: the owner may act on every account, and every other
+// holder of read access (D-137) views every account, each through a household
+// grant (D-209). The contract test (internal/identity/spicedb) checks it.
 
 // person is someone with their own passkey: the owner, and from the second
 // alpha the viewers the owner enrolls (D-65).
@@ -21,16 +21,28 @@ definition view_plugin {}
 // demo_session is a read-scoped session from the demo authenticator.
 definition demo_session {}
 
+// sleeve is one of the household's sleeves (D-71). A grant of a sleeve
+// covers every account in it, those placed there later too (D-209).
+definition sleeve {
+	// viewer is a person, script token or view plugin granted the sleeve to
+	// view (D-209). A grant only ever lets its holder view.
+	relation viewer: person | script_token | view_plugin
+
+	// view is viewing every account in the sleeve.
+	permission view = viewer
+}
+
 // household is the one household an installation serves, with no tenants
 // (D-65).
 definition household {
 	// owner holds every account and alone changes anything.
 	relation owner: person
 
-	// reader is every other holder of read access (D-137), viewing every
-	// account until script tokens and view plugins are granted accounts as
-	// viewers are (D-164).
-	relation reader: script_token | view_plugin | demo_session
+	// reader is the household grant (D-209): the holder views every
+	// account of the household, present and future, and changes none. The
+	// owner gives it to a person, a script token or a view plugin, and every
+	// demo session has it (D-137, D-68).
+	relation reader: person | script_token | view_plugin | demo_session:*
 
 	// change_accounts is changing every account of the household.
 	permission change_accounts = owner
@@ -43,13 +55,17 @@ definition household {
 definition account {
 	relation household: household
 
-	// viewer is someone, a script token or a view plugin granted this
-	// account to view (D-65, D-164). From the second alpha.
+	// sleeve is the sleeve the account is in, when it is in one (D-71).
+	relation sleeve: sleeve
+
+	// viewer is a person, script token or view plugin granted this account
+	// alone to view (D-65, D-164, D-209).
 	relation viewer: person | script_token | view_plugin
 
 	// change is changing the account or anything recorded in it.
 	permission change = household->change_accounts
 
-	// view is reading the account and everything recorded in it.
-	permission view = change + viewer + household->view_accounts
+	// view is reading the account and everything recorded in it: the
+	// owner's, a grant of the account, of its sleeve or of the household.
+	permission view = change + viewer + sleeve->view + household->view_accounts
 }

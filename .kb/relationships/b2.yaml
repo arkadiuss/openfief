@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56addd27b1d3
+  - type: covered_by
+    from: SYM-views-app-views-viewable
+    to: TEST-views-app-authz-list
+    created_at: 2026-11-12T22:55:29.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3e131192039

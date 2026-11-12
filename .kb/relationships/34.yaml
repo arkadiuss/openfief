@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e8cc388e560
+  - type: verified_by
+    from: SCEN-identity-spicedb-fails-closed
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-12T22:51:42.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fbca567ad31
+  - type: verified_by
+    from: SCEN-identity-spicedb-fails-closed
+    to: TEST-core-authz-flags
+    created_at: 2026-11-12T22:51:42.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb5c9fea45c4
+  - type: verified_by
+    from: SCEN-identity-spicedb-fails-closed
+    to: TEST-views-app-authz-list
+    created_at: 2026-11-12T22:51:42.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e30021398614

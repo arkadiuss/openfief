@@ -50,7 +50,8 @@ func defaultServe(t *testing.T) serveConfig {
 			Workers:        1,
 			ServiceAccount: "openfief-core",
 		},
-		Auth: authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
+		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
+		Authz: authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout},
 	}
 }
 

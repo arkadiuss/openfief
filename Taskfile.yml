@@ -26,6 +26,11 @@ vars:
   # zed checks the authorization model's SpiceDB schema against its assertions (authz/, D-164).
   # renovate: datasource=go depName=github.com/authzed/zed
   ZED_VERSION: v1.2.1
+  # SpiceDB itself, which `task test:authz` runs in testing mode for the authorization contract test
+  # (internal/identity/spicedb). Not installed by `task tools`: it compiles for minutes. Keep it at or near the
+  # SpiceDB the cluster runs (deploy/spicedb, when it lands) and at a release authzed-go in go.mod speaks to.
+  # renovate: datasource=go depName=github.com/authzed/spicedb
+  SPICEDB_VERSION: v1.57.1
   # renovate: datasource=go depName=github.com/bufbuild/buf
   BUF_VERSION: v1.75.0
   # The code generators must match the runtime versions in sdk/go/go.mod (google.golang.org/protobuf, connectrpc.com/connect).
@@ -223,6 +228,14 @@ tasks:
       - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
     status:
       - '{{.BIN}}/zed version 2>&1 | grep -qx "client: zed {{.ZED_VERSION}}"'
+
+  tool:spicedb:
+    internal: true
+    cmds:
+      # Built from the pinned module like zed above, so Go's checksum database vouches for the source.
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/spicedb/cmd/spicedb@{{.SPICEDB_VERSION}}
+    status:
+      - '{{.BIN}}/spicedb version 2>&1 | grep -q "{{.SPICEDB_VERSION}}"'
 
   tool:proto:
     internal: true
@@ -502,6 +515,12 @@ tasks:
     desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'
     cmds:
       - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
+
+  test:authz:
+    desc: 'The authorization contract test against a real SpiceDB in testing mode (pinned, built into .bin/ on first use): SpiceDB must answer as identity.MayAct does, e.g. task test:authz -- -run TestContract -v'
+    deps: [tool:spicedb]
+    cmds:
+      - '{{.GO_GUARD}} SPICEDB="{{.BIN}}/spicedb" bash scripts/test-authz.sh {{.CLI_ARGS}}'
 
   e2e:
     desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images: first an install from the release bundle of this checkout''s images, then the demo''s stack; refuses non-local clusters'

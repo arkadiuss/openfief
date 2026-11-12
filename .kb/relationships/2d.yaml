@@ -874,3 +874,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcbf9d9fec84
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-fails-closed
+    created_at: 2026-11-12T22:52:00.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ab1b95fd00
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-matches-policy
+    created_at: 2026-11-12T22:52:00.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f274293307
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-relationships-follow-accounts
+    created_at: 2026-11-12T22:52:00.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7812822ead61
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-authz-flag-default-policy
+    created_at: 2026-11-12T22:52:00.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e94121ca461

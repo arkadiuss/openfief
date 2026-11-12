@@ -1021,3 +1021,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-078314104051
+  - type: implements
+    from: SYM-identity-spicedb-syncer-account-unplaced
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:53:11.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b319dd58eae3
+  - type: covered_by
+    from: SYM-identity-spicedb-syncer-account-unplaced
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-12T22:53:11.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12a66de4140f
+  - type: covered_by
+    from: SYM-identity-spicedb-syncer-account-unplaced
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-12T22:53:11.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c893cf4869

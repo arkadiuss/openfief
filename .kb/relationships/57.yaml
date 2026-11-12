@@ -776,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e69485aa9138
+  - type: validates
+    from: TEST-identity-spicedb-contract
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:52:16.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0902241d9663
+  - type: validates
+    from: TEST-identity-spicedb-contract
+    to: REQ-identity-authz-tokens-plugins-granted-accounts
+    created_at: 2026-11-12T22:52:16.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-453bd48fc17e
+  - type: validates
+    from: TEST-identity-spicedb-contract
+    to: REQ-identity-authz-spicedb-schema
+    created_at: 2026-11-12T22:52:16.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bedb89ec9690

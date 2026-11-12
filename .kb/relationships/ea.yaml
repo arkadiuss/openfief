@@ -762,3 +762,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9142950d08e
+  - type: implements
+    from: SYM-identity-spicedb-authorizer-actable-accounts
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:52:43.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8927e7eb8255
+  - type: implements
+    from: SYM-identity-spicedb-authorizer-actable-accounts
+    to: REQ-views-authz-totals-over-viewable
+    created_at: 2026-11-12T22:52:43.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-557b6ebd65f8
+  - type: covered_by
+    from: SYM-identity-spicedb-authorizer-actable-accounts
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-12T22:52:43.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d1cda10e983
+  - type: covered_by
+    from: SYM-identity-spicedb-authorizer-actable-accounts
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-12T22:52:43.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59df984f5198
+  - type: implements
+    from: SYM-portfolio-app-registry-remove-account
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:55:21.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f606cc9d99
+  - type: covered_by
+    from: SYM-portfolio-app-registry-remove-account
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-12T22:55:21.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46c26cd23aa8

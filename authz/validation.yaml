@@ -1,43 +1,84 @@
 # The relationships and assertions `zed validate` checks schema.zed against (task authz:validate).
-# Synthetic IDs only. The first block is what holds in M0 (D-163); the viewer lines are the second
-# alpha's grants (D-65, D-164), declared so the schema is checked with them now.
+# Synthetic IDs only. The first block is today's: the owner and the household grants (D-209) that
+# give every other holder of read access (D-137) what identity.MayAct gives it. The grants of one
+# account and of a sleeve are the second alpha's (D-65, D-164), declared so the schema is checked
+# with them now.
 schemaFile: ./schema.zed
 relationships: |-
   household:home#owner@person:owner
   household:home#reader@script_token:nightly
   household:home#reader@view_plugin:ui
-  household:home#reader@demo_session:demo
+  household:home#reader@person:family
+  household:home#reader@demo_session:*
   account:brokerage#household@household:home
   account:bonds#household@household:home
   account:bonds#viewer@person:viewer
   account:bonds#viewer@script_token:granted
+  sleeve:core#viewer@script_token:sleeve_token
+  sleeve:core#viewer@person:sleeve_viewer
+  sleeve:satellite#viewer@view_plugin:sleeve_plugin
+  account:brokerage#sleeve@sleeve:core
+  account:later#household@household:home
+  account:later#sleeve@sleeve:core
+  account:moved#household@household:home
+  account:unplaced#household@household:home
 assertions:
   assertTrue:
-    # The owner views and changes every account.
+    # The owner views and changes every account, whatever its sleeve.
     - account:brokerage#view@person:owner
     - account:brokerage#change@person:owner
     - account:bonds#view@person:owner
     - account:bonds#change@person:owner
-    # Every other holder of read access views every account.
+    - account:later#change@person:owner
+    - account:unplaced#change@person:owner
+    # A household grant views every account of the household: a script token, a view plugin, a
+    # person, and every demo session.
     - account:brokerage#view@script_token:nightly
     - account:bonds#view@script_token:nightly
     - account:brokerage#view@view_plugin:ui
     - account:bonds#view@view_plugin:ui
+    - account:brokerage#view@person:family
+    - account:bonds#view@person:family
     - account:brokerage#view@demo_session:demo
-    - account:bonds#view@demo_session:demo
-    # A viewer views only the accounts granted to it.
+    - account:bonds#view@demo_session:another
+    # A household grant covers an account the household gains later, in a sleeve or in none.
+    - account:later#view@script_token:nightly
+    - account:later#view@person:family
+    - account:later#view@demo_session:demo
+    - account:unplaced#view@view_plugin:ui
+    # A grant of one account views that account.
     - account:bonds#view@person:viewer
     - account:bonds#view@script_token:granted
+    # A grant of a sleeve views every account in it, one placed there later too.
+    - account:brokerage#view@script_token:sleeve_token
+    - account:later#view@script_token:sleeve_token
+    - account:brokerage#view@person:sleeve_viewer
+    - account:later#view@person:sleeve_viewer
   assertFalse:
-    # No holder of read access changes anything.
+    # No holder of read access changes anything, whatever grant it holds: a viewer grant only ever
+    # gives view.
     - account:brokerage#change@script_token:nightly
     - account:bonds#change@script_token:nightly
     - account:brokerage#change@view_plugin:ui
     - account:brokerage#change@demo_session:demo
-    # A viewer neither changes its account nor views another.
+    - account:brokerage#change@person:family
+    - account:later#change@person:family
     - account:bonds#change@person:viewer
+    - account:bonds#change@script_token:granted
+    - account:brokerage#change@script_token:sleeve_token
+    - account:later#change@person:sleeve_viewer
+    # A grant of one account is not another's, and a sleeve's grant stops at its accounts: bonds is
+    # in no sleeve, and satellite holds none.
     - account:brokerage#view@person:viewer
     - account:brokerage#view@script_token:granted
-    - account:bonds#change@script_token:granted
+    - account:bonds#view@script_token:sleeve_token
+    - account:bonds#view@person:sleeve_viewer
+    - account:brokerage#view@view_plugin:sleeve_plugin
+    - account:later#view@view_plugin:sleeve_plugin
+    # An account takes its sleeve's grant only while it is in the sleeve: moved has no account#sleeve
+    # tuple, as after its tuple was removed, and unplaced never had one.
+    - account:moved#view@script_token:sleeve_token
+    - account:unplaced#view@person:sleeve_viewer
     # Nobody else views anything.
     - account:brokerage#view@person:stranger
+    - account:later#view@script_token:stranger

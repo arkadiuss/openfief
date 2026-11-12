@@ -37,6 +37,20 @@ func (v *Views) mayView(ctx context.Context, account ledger.AccountID) error {
 // over (D-163).
 func (v *Views) viewable(ctx context.Context, accounts []ledger.Account) ([]ledger.Account, error) {
 	caller := identityapp.CallerFrom(ctx)
+	if lister, ok := v.authz.(identityapp.AccountLister); ok {
+		// One call for every account, as SpiceDB answers a list (D-164).
+		set, err := lister.ActableAccounts(ctx, caller, identity.ActionView)
+		if err != nil {
+			return nil, fmt.Errorf("authorizing the views of the accounts: %w", err)
+		}
+		out := make([]ledger.Account, 0, len(accounts))
+		for i := range accounts {
+			if _, ok := set[string(accounts[i].ID)]; ok {
+				out = append(out, accounts[i])
+			}
+		}
+		return out, nil
+	}
 	out := make([]ledger.Account, 0, len(accounts))
 	for i := range accounts {
 		ok, err := v.authz.MayAct(ctx, caller, identity.ActionView, string(accounts[i].ID))
