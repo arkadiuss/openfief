@@ -881,3 +881,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28d14cd38a5d
+  - type: covered_by
+    from: SYM-audit-identity-audit-actor-validate
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:02:20.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bf36a7f9f37
+  - type: implements
+    from: SYM-audit-identity-audit-actor-validate
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-12T20:02:20.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54ac30b2d2ce
+  - type: implements
+    from: SYM-audit-identity-audit-actor-validate
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-12T20:02:20.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b0762e28840
+  - type: covered_by
+    from: SYM-audit-identity-connectapi-service-pb-audit-entry
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:14:35.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b3045bb6a99
+  - type: implements
+    from: SYM-audit-identity-connectapi-service-pb-audit-entry
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:14:35.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c854353de84

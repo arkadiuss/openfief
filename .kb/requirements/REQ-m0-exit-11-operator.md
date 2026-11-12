@@ -1,6 +1,6 @@
 ---
 title: A Plugin without a matching PluginGrant must not be deployed, an upgrade requesting a new egress host must stay on the old version until granted, an image referenced by tag or without a valid cosign signature from a trusted signer must be rejected, including when applied with plain kubectl, and the Plugin's status must show verified only for an image the catalog pins.
-status: open
+status: closed
 text_ref: design-decisions:D-200#11
 tags:
   - strict-modeling

@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"maps"
 	"slices"
 	"sync"
 	"time"
@@ -33,6 +34,9 @@ type memAuthStore struct {
 	ceremonies map[string]identity.Ceremony
 	codes      map[identity.EnrollmentCodeID]memCode
 	sessions   map[identity.SessionID]memSession
+	audit      []identity.AuditEntry
+	// auditFail, when set, is what AppendAudit returns instead of writing.
+	auditFail error
 }
 
 func newMemAuthStore() *memAuthStore {
@@ -235,3 +239,78 @@ var errDuplicate = errors.New("duplicate passkey")
 type demoMarker bool
 
 func (d demoMarker) DemoMarked(context.Context) (bool, error) { return bool(d), nil }
+
+// snapshot is what Atomically restores when its function fails.
+type snapshot struct {
+	owner      *identity.Owner
+	passkeys   []identity.Passkey
+	ceremonies map[string]identity.Ceremony
+	codes      map[identity.EnrollmentCodeID]memCode
+	sessions   map[identity.SessionID]memSession
+	audit      []identity.AuditEntry
+}
+
+// Atomically runs fn and, when it fails, puts every table back as it was
+// before, like a rolled back transaction.
+func (m *memAuthStore) Atomically(ctx context.Context, fn func(ctx context.Context) error) error {
+	m.mu.Lock()
+	before := snapshot{
+		owner: m.owner, passkeys: slices.Clone(m.passkeys), ceremonies: maps.Clone(m.ceremonies),
+		codes: maps.Clone(m.codes), sessions: maps.Clone(m.sessions), audit: slices.Clone(m.audit),
+	}
+	m.mu.Unlock()
+	err := fn(ctx)
+	if err != nil {
+		m.mu.Lock()
+		m.owner, m.passkeys, m.ceremonies, m.codes, m.sessions, m.audit =
+			before.owner, before.passkeys, before.ceremonies, before.codes, before.sessions, before.audit
+		m.mu.Unlock()
+	}
+	return err
+}
+
+func (m *memAuthStore) AppendAudit(_ context.Context, e *identity.AuditEntry) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if m.auditFail != nil {
+		return m.auditFail
+	}
+	if err := e.Validate(); err != nil {
+		return fmt.Errorf("fake store: %w", err)
+	}
+	stored := *e
+	stored.Seq = int64(len(m.audit)) + 1
+	m.audit = append(m.audit, stored)
+	return nil
+}
+
+func (m *memAuthStore) AuditEntries(_ context.Context, f *identity.AuditFilter) (app.AuditPage, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	var page app.AuditPage
+	for i := len(m.audit) - 1; i >= 0; i-- {
+		if !f.Matches(&m.audit[i]) {
+			continue
+		}
+		if len(page.Entries) == f.PageSize() {
+			page.Next = page.Entries[len(page.Entries)-1].Seq
+			break
+		}
+		page.Entries = append(page.Entries, m.audit[i])
+	}
+	return page, nil
+}
+
+// entries returns the audit log, oldest first.
+func (m *memAuthStore) entries() []identity.AuditEntry {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	return slices.Clone(m.audit)
+}
+
+// failAudit makes every later AppendAudit fail with err.
+func (m *memAuthStore) failAudit(err error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.auditFail = err
+}

@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b62a48ab51c8
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-action
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:06:02.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ea648ac0361
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-action
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:06:02.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44e14134d7d2

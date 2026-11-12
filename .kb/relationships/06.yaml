@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92927d1eadeb
+  - type: specified_by
+    from: REQ-m0-exit-18-uninstall
+    to: SCEN-e2e-uninstall-leaves-no-pod-or-secret
+    created_at: 2026-11-12T19:58:42.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bb123bfcdc8
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-request-descriptor
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:11:39.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb728202c242
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-request-descriptor
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:11:39.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7b7621f5ba3
+  - type: covered_by
+    from: SYM-audit-cmd-core-token-token-admin-revoke
+    to: TEST-core-read-api
+    created_at: 2026-11-12T20:16:17.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0196b8198f9
+  - type: implements
+    from: SYM-audit-cmd-core-token-token-admin-revoke
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:16:18.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c925ab4cda

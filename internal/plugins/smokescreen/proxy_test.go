@@ -119,6 +119,8 @@ type proxyFixture struct {
 	server    *httptest.Server
 	dials     *dialLog
 	lists     *swappableLists
+	// listener is the proxy's listening socket, which records being closed.
+	listener *closeWatcher
 	// stop ends Serve and returns its error; the test's cleanup calls it too.
 	stop func() error
 }
@@ -175,19 +177,42 @@ func startProxyDenying(t *testing.T, noSource bool, deny []netip.Prefix) *proxyF
 			f.dials.add(address)
 			return (&net.Dialer{}).DialContext(ctx, network, server.Listener.Addr().String())
 		},
-		Deny:         deny,
-		Healthcheck:  http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusTeapot) }),
-		DrainTimeout: 100 * time.Millisecond,
+		Deny:        deny,
+		Healthcheck: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusTeapot) }),
+		// Long enough that a test's own connections, closed before cleanup stops the proxy, go idle within it even
+		// on a loaded machine (100 ms timed out there, and Serve rightly reported it); a tunnel a test leaves open
+		// still waits it out, which is what TestProxyServeStops checks.
+		DrainTimeout: 2 * time.Second,
 	})
-	f.proxyAddr, f.stop = r.addr, r.stop
+	f.proxyAddr, f.listener, f.stop = r.addr, r.listener, r.stop
 	return f
 }
 
 // running is a served proxy: its address, and a stop function that ends
 // Serve and returns its error; stopping twice is fine.
 type running struct {
-	addr string
-	stop func() error
+	addr     string
+	listener *closeWatcher
+	stop     func() error
+}
+
+// closeWatcher is a listener that records that it was closed. A test asks
+// it whether the proxy gave up its socket: dialing the address instead says
+// nothing, because once the port is free another listener, in this process or
+// any other, may be handed the same ephemeral port.
+type closeWatcher struct {
+	net.Listener
+
+	closed atomic.Bool
+}
+
+// Close records the close, then closes the wrapped listener.
+func (c *closeWatcher) Close() error {
+	c.closed.Store(true)
+	if err := c.Listener.Close(); err != nil {
+		return fmt.Errorf("close listener: %w", err)
+	}
+	return nil
 }
 
 // serve builds a proxy on a fresh local listener and serves it until the
@@ -197,7 +222,8 @@ func serve(t *testing.T, e *app.Egress, opts *smokescreen.Options) running {
 	logger := logrus.New()
 	logger.SetOutput(io.Discard)
 	opts.Log = logger
-	opts.Listener = listen(t)
+	listener := &closeWatcher{Listener: listen(t)}
+	opts.Listener = listener
 	proxy, err := smokescreen.New(e, opts)
 	if err != nil {
 		t.Fatal(err)
@@ -219,7 +245,7 @@ func serve(t *testing.T, e *app.Egress, opts *smokescreen.Options) running {
 			t.Error(err)
 		}
 	})
-	return running{addr: opts.Listener.Addr().String(), stop: stop}
+	return running{addr: listener.Addr().String(), listener: listener, stop: stop}
 }
 
 // listen opens a local listener for the proxy.
@@ -516,9 +542,8 @@ func TestProxyServeStops(t *testing.T) {
 	if ne, ok := errors.AsType[net.Error](err); err == nil || (ok && ne.Timeout()) {
 		t.Errorf("read from a tunnel after shutdown = %v, want it closed", err)
 	}
-	if c, err := (&net.Dialer{}).DialContext(t.Context(), "tcp", f.proxyAddr); err == nil {
-		closeOrFail(t, c)
-		t.Error("the proxy still accepts connections after shutdown")
+	if !f.listener.closed.Load() {
+		t.Error("the proxy still accepts connections after shutdown: its listener is open")
 	}
 }
 

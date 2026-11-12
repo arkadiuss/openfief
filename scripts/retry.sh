@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Runs a command that downloads something (curl, go install, npm ci, gh release download) and runs it again when
 # it failed for a reason a later try can fix: the server answered 429 or 5xx, the connection failed, reset or
-# timed out, or a name didn't resolve. Any other failure, a 4xx answer other than 429 above all, is final at once:
+# timed out, a name didn't resolve, or a keyless cosign signature couldn't read GitHub's OIDC token because the token
+# service answered something that isn't JSON. Any other failure, a 4xx answer other than 429 above all, is final at once:
 # retrying a 404 or a failed checksum only hides it for a minute (docs/dev/pipeline.md#download-retries).
 # The reason is read from the command's own error text, so the command must say what went wrong: use curl -sS (not
 # -s alone), and keep the checksum check after the download, exactly as strict as before, in the caller.
@@ -32,6 +33,9 @@ transient+='|HTTP (429|5[0-9][0-9])'
 transient+='|i/o timeout|TLS handshake timeout|connection reset|connection refused|unexpected EOF|server misbehaving'
 transient+='|no such host|Temporary failure in name resolution|Operation timed out|ETIMEDOUT|ECONNRESET|ECONNREFUSED'
 transient+='|EAI_AGAIN|ESOCKETTIMEDOUT|socket hang up'
+# cosign: GitHub's token service answered an error page where cosign expects JSON (a missing id-token permission
+# fails differently, so it stays final).
+transient+='|fetching ambient OIDC credentials: invalid character'
 
 err="$(mktemp)"
 trap 'rm -f "$err"' EXIT

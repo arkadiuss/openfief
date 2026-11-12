@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-323eccc7c808
+  - type: executable_for
+    from: SYM-e2e-connector-until-uninstalled
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-12T19:58:19.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a11e66ff2f5
+  - type: covered_by
+    from: SYM-audit-identity-postgres-audit-store-audit-entries
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:15:43.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c25bf5e9f63
+  - type: implements
+    from: SYM-audit-identity-postgres-audit-store-audit-entries
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:15:43.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8b60d342148

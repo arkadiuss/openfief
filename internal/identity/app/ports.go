@@ -28,9 +28,14 @@ var (
 )
 
 // AuthStore keeps the owner, passkeys, ceremonies, enrollment codes and
-// sessions. Enrollment codes and sessions are stored with the SHA-256 hash
-// of their key, never the key. *identity/postgres.Store implements it.
+// sessions, and the audit log their changes are recorded in. Enrollment codes
+// and sessions are stored with the SHA-256 hash of their key, never the key.
+// *identity/postgres.Store implements it. The script token Store the Auth use
+// cases are built with must be over the same database, so a token's creation
+// and its audit entry share a transaction.
 type AuthStore interface {
+	Atomic
+	Auditor
 	OwnerStore
 	PasskeyStore
 	CeremonyStore

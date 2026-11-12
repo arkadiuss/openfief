@@ -21,7 +21,7 @@ var errBadRow = errors.New("bad row")
 // Owner returns the owner, or an error wrapping app.ErrNoOwner.
 func (s *Store) Owner(ctx context.Context) (identity.Owner, error) {
 	var o identity.Owner
-	err := s.pool.QueryRow(ctx, `SELECT handle, created_at FROM identity.owner WHERE id = 1`).Scan(&o.Handle, &o.CreatedAt)
+	err := s.db(ctx).QueryRow(ctx, `SELECT handle, created_at FROM identity.owner WHERE id = 1`).Scan(&o.Handle, &o.CreatedAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return identity.Owner{}, app.ErrNoOwner
 	}
@@ -35,7 +35,7 @@ func (s *Store) Owner(ctx context.Context) (identity.Owner, error) {
 // EnsureOwner stores candidate as the owner unless there is one, and
 // returns the stored owner.
 func (s *Store) EnsureOwner(ctx context.Context, candidate identity.Owner) (identity.Owner, error) {
-	_, err := s.pool.Exec(ctx, `INSERT INTO identity.owner (id, handle, created_at) VALUES (1, $1, $2) ON CONFLICT (id) DO NOTHING`,
+	_, err := s.db(ctx).Exec(ctx, `INSERT INTO identity.owner (id, handle, created_at) VALUES (1, $1, $2) ON CONFLICT (id) DO NOTHING`,
 		candidate.Handle, candidate.CreatedAt)
 	if err != nil {
 		return identity.Owner{}, fmt.Errorf("storing the owner: %w", err)
@@ -61,7 +61,7 @@ func (s *Store) SavePasskey(ctx context.Context, p *identity.Passkey) error {
 	if aaguid == nil {
 		aaguid = []byte{}
 	}
-	_, err := s.pool.Exec(ctx, `INSERT INTO identity.passkeys (`+webauthnColumns+`)
+	_, err := s.db(ctx).Exec(ctx, `INSERT INTO identity.passkeys (`+webauthnColumns+`)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
 		p.CredentialID, p.RPID, p.Name, p.PublicKey, p.AttestationType, p.AttestationFormat, aaguid,
 		int64(p.SignCount), transports, p.UserVerified, p.BackupEligible, p.BackupState, p.CreatedAt, lastUsed)
@@ -73,7 +73,7 @@ func (s *Store) SavePasskey(ctx context.Context, p *identity.Passkey) error {
 
 // Passkeys returns every passkey, in creation then ID order.
 func (s *Store) Passkeys(ctx context.Context) ([]identity.Passkey, error) {
-	rows, err := s.pool.Query(ctx, `SELECT `+webauthnColumns+` FROM identity.passkeys ORDER BY created_at, credential_id`)
+	rows, err := s.db(ctx).Query(ctx, `SELECT `+webauthnColumns+` FROM identity.passkeys ORDER BY created_at, credential_id`)
 	if err != nil {
 		return nil, fmt.Errorf("listing passkeys: %w", err)
 	}
@@ -109,7 +109,7 @@ func scanPasskey(row pgx.CollectableRow) (identity.Passkey, error) {
 
 // UpdatePasskeyUse stores p's sign count, backup state and last use.
 func (s *Store) UpdatePasskeyUse(ctx context.Context, p *identity.Passkey) error {
-	tag, err := s.pool.Exec(ctx, `UPDATE identity.passkeys SET sign_count = $2, backup_state = $3, last_used_at = $4
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.passkeys SET sign_count = $2, backup_state = $3, last_used_at = $4
 		WHERE credential_id = $1`, p.CredentialID, int64(p.SignCount), p.BackupState, p.LastUsedAt)
 	if err != nil {
 		return fmt.Errorf("recording the use of passkey %s: %w", p.ID(), err)
@@ -124,7 +124,8 @@ func (s *Store) UpdatePasskeyUse(ctx context.Context, p *identity.Passkey) error
 // lock on the table so two removals can't both pass the check, and revokes,
 // as of at, every session it signed in, in the same transaction.
 func (s *Store) DeletePasskey(ctx context.Context, id []byte, at time.Time) error {
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+	err := s.Atomically(ctx, func(ctx context.Context) error {
+		tx := s.db(ctx)
 		if _, err := tx.Exec(ctx, `LOCK TABLE identity.passkeys IN SHARE ROW EXCLUSIVE MODE`); err != nil {
 			return fmt.Errorf("removing a passkey: %w", err)
 		}
@@ -157,16 +158,20 @@ func (s *Store) DeletePasskey(ctx context.Context, id []byte, at time.Time) erro
 
 // SaveCeremony stores a ceremony, deleting those expired at its start.
 func (s *Store) SaveCeremony(ctx context.Context, c *identity.Ceremony) error {
-	var code *string
+	var code, session *string
 	if c.EnrollmentCode != "" {
 		code = (*string)(&c.EnrollmentCode)
 	}
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+	if c.Session != "" {
+		session = (*string)(&c.Session)
+	}
+	err := s.Atomically(ctx, func(ctx context.Context) error {
+		tx := s.db(ctx)
 		if _, err := tx.Exec(ctx, `DELETE FROM identity.ceremonies WHERE expires_at <= $1`, c.CreatedAt); err != nil {
 			return fmt.Errorf("deleting expired ceremonies: %w", err)
 		}
-		_, err := tx.Exec(ctx, `INSERT INTO identity.ceremonies (id, kind, origin, state, enrollment_code_id, created_at, expires_at)
-			VALUES ($1, $2, $3, $4, $5, $6, $7)`, c.ID, c.Kind.String(), c.Origin.String(), c.State, code, c.CreatedAt, c.ExpiresAt)
+		_, err := tx.Exec(ctx, `INSERT INTO identity.ceremonies (id, kind, origin, state, enrollment_code_id, session_id, created_at, expires_at)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, c.ID, c.Kind.String(), c.Origin.String(), c.State, code, session, c.CreatedAt, c.ExpiresAt)
 		if err != nil {
 			return fmt.Errorf("storing a ceremony: %w", err)
 		}
@@ -182,13 +187,13 @@ func (s *Store) SaveCeremony(ctx context.Context, c *identity.Ceremony) error {
 // wrapping app.ErrUnknownCeremony.
 func (s *Store) TakeCeremony(ctx context.Context, id string) (identity.Ceremony, error) {
 	var (
-		c            identity.Ceremony
-		kind, origin string
-		code         *string
+		c             identity.Ceremony
+		kind, origin  string
+		code, session *string
 	)
-	err := s.pool.QueryRow(ctx, `DELETE FROM identity.ceremonies WHERE id = $1
-		RETURNING id, kind, origin, state, enrollment_code_id, created_at, expires_at`, id).
-		Scan(&c.ID, &kind, &origin, &c.State, &code, &c.CreatedAt, &c.ExpiresAt)
+	err := s.db(ctx).QueryRow(ctx, `DELETE FROM identity.ceremonies WHERE id = $1
+		RETURNING id, kind, origin, state, enrollment_code_id, session_id, created_at, expires_at`, id).
+		Scan(&c.ID, &kind, &origin, &c.State, &code, &session, &c.CreatedAt, &c.ExpiresAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return identity.Ceremony{}, app.ErrUnknownCeremony
 	}
@@ -204,13 +209,16 @@ func (s *Store) TakeCeremony(ctx context.Context, id string) (identity.Ceremony,
 	if code != nil {
 		c.EnrollmentCode = identity.EnrollmentCodeID(*code)
 	}
+	if session != nil {
+		c.Session = identity.SessionID(*session)
+	}
 	c.CreatedAt, c.ExpiresAt = c.CreatedAt.UTC(), c.ExpiresAt.UTC()
 	return c, nil
 }
 
 // SaveEnrollmentCode stores a new code with its key's hash.
 func (s *Store) SaveEnrollmentCode(ctx context.Context, c *identity.EnrollmentCode, keyHash []byte) error {
-	_, err := s.pool.Exec(ctx, `INSERT INTO identity.enrollment_codes (id, origin, key_sha256, created_at, expires_at)
+	_, err := s.db(ctx).Exec(ctx, `INSERT INTO identity.enrollment_codes (id, origin, key_sha256, created_at, expires_at)
 		VALUES ($1, $2, $3, $4, $5)`, string(c.ID), c.Origin.String(), keyHash, c.CreatedAt, c.ExpiresAt)
 	if err != nil {
 		return fmt.Errorf("storing enrollment code %s: %w", c.ID, err)
@@ -227,7 +235,7 @@ func (s *Store) EnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID
 		hash   []byte
 		used   *time.Time
 	)
-	err := s.pool.QueryRow(ctx, `SELECT id, origin, key_sha256, created_at, expires_at, used_at
+	err := s.db(ctx).QueryRow(ctx, `SELECT id, origin, key_sha256, created_at, expires_at, used_at
 		FROM identity.enrollment_codes WHERE id = $1`, string(id)).Scan(&c.ID, &origin, &hash, &c.CreatedAt, &c.ExpiresAt, &used)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return identity.EnrollmentCode{}, nil, fmt.Errorf("%w: %s", app.ErrUnknownEnrollmentCode, id)
@@ -248,7 +256,7 @@ func (s *Store) EnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID
 // UseEnrollmentCode marks the code id used at at, failing with an error
 // wrapping identity.ErrEnrollmentCodeUsed when it already was.
 func (s *Store) UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error {
-	tag, err := s.pool.Exec(ctx, `UPDATE identity.enrollment_codes SET used_at = GREATEST($2, created_at)
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.enrollment_codes SET used_at = GREATEST($2, created_at)
 		WHERE id = $1 AND used_at IS NULL`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("using enrollment code %s: %w", id, err)
@@ -269,7 +277,7 @@ func (s *Store) SaveSession(ctx context.Context, ss *identity.Session, keyHash [
 	if !ss.PasskeyCheckedAt.IsZero() {
 		checked = &ss.PasskeyCheckedAt
 	}
-	_, err := s.pool.Exec(ctx, `INSERT INTO identity.sessions
+	_, err := s.db(ctx).Exec(ctx, `INSERT INTO identity.sessions
 		(id, scope, authenticator, rp_id, key_sha256, created_at, last_seen_at, expires_at, idle_seconds,
 		 passkey_id, passkey_checked_at)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
@@ -284,14 +292,8 @@ func (s *Store) SaveSession(ctx context.Context, ss *identity.Session, keyHash [
 // Session returns the session id and its key's hash, or an error wrapping
 // app.ErrUnknownSession.
 func (s *Store) Session(ctx context.Context, id identity.SessionID) (identity.Session, []byte, error) {
-	rows, err := s.pool.Query(ctx, `SELECT `+sessionColumns+`, key_sha256 FROM identity.sessions WHERE id = $1`, string(id))
-	if err != nil {
-		return identity.Session{}, nil, fmt.Errorf("loading session %s: %w", id, err)
-	}
 	var hash []byte
-	ss, err := pgx.CollectExactlyOneRow(rows, func(row pgx.CollectableRow) (identity.Session, error) {
-		return scanSession(row, &hash)
-	})
+	ss, err := scanSession(s.db(ctx).QueryRow(ctx, `SELECT `+sessionColumns+`, key_sha256 FROM identity.sessions WHERE id = $1`, string(id)), &hash)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return identity.Session{}, nil, fmt.Errorf("%w: %s", app.ErrUnknownSession, id)
 	}
@@ -303,7 +305,7 @@ func (s *Store) Session(ctx context.Context, id identity.SessionID) (identity.Se
 
 // scanSession reads a row of sessionColumns, then into extra any further
 // columns.
-func scanSession(row pgx.CollectableRow, extra ...any) (identity.Session, error) {
+func scanSession(row pgx.Row, extra ...any) (identity.Session, error) {
 	var (
 		ss                         identity.Session
 		id, scope, auth            string
@@ -336,7 +338,7 @@ func scanSession(row pgx.CollectableRow, extra ...any) (identity.Session, error)
 
 // TouchSession stores at as the session's last use, never moving it back.
 func (s *Store) TouchSession(ctx context.Context, id identity.SessionID, at time.Time) error {
-	_, err := s.pool.Exec(ctx, `UPDATE identity.sessions SET last_seen_at = GREATEST(last_seen_at, $2) WHERE id = $1`, string(id), at)
+	_, err := s.db(ctx).Exec(ctx, `UPDATE identity.sessions SET last_seen_at = GREATEST(last_seen_at, $2) WHERE id = $1`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("recording the use of session %s: %w", id, err)
 	}
@@ -346,7 +348,7 @@ func (s *Store) TouchSession(ctx context.Context, id identity.SessionID, at time
 // RevokeSession marks the session revoked at at, keeping an earlier
 // revocation, or fails with an error wrapping app.ErrUnknownSession.
 func (s *Store) RevokeSession(ctx context.Context, id identity.SessionID, at time.Time) error {
-	tag, err := s.pool.Exec(ctx, `UPDATE identity.sessions SET revoked_at = COALESCE(revoked_at, GREATEST($2, created_at))
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.sessions SET revoked_at = COALESCE(revoked_at, GREATEST($2, created_at))
 		WHERE id = $1`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("revoking session %s: %w", id, err)
@@ -360,7 +362,7 @@ func (s *Store) RevokeSession(ctx context.Context, id identity.SessionID, at tim
 // RevokeSessions revokes, as of at, every session not revoked yet, and
 // returns how many it revoked.
 func (s *Store) RevokeSessions(ctx context.Context, at time.Time) (int, error) {
-	tag, err := s.pool.Exec(ctx, `UPDATE identity.sessions SET revoked_at = GREATEST($1, created_at) WHERE revoked_at IS NULL`, at)
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.sessions SET revoked_at = GREATEST($1, created_at) WHERE revoked_at IS NULL`, at)
 	if err != nil {
 		return 0, fmt.Errorf("revoking every session: %w", err)
 	}
@@ -370,7 +372,7 @@ func (s *Store) RevokeSessions(ctx context.Context, at time.Time) (int, error) {
 // PasskeyCheckSession stores at as the session's last passkey check, never
 // moving it back, or fails with an error wrapping app.ErrUnknownSession.
 func (s *Store) PasskeyCheckSession(ctx context.Context, id identity.SessionID, at time.Time) error {
-	tag, err := s.pool.Exec(ctx, `UPDATE identity.sessions
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.sessions
 		SET passkey_checked_at = GREATEST(COALESCE(passkey_checked_at, $2), $2) WHERE id = $1`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("recording a passkey check of session %s: %w", id, err)

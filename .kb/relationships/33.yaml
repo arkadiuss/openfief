@@ -797,3 +797,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3db0a9d4ce4c
+  - type: covered_by
+    from: SYM-audit-identity-audit-audit-filter-page-size
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:07:39.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e3c42341114
+  - type: implements
+    from: SYM-audit-identity-audit-audit-filter-page-size
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:07:39.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f3f8aabbd3
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-proto-reflect
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:13:39.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9494e458f3
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-proto-reflect
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:13:39.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eeb2e099498

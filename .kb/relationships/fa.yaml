@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2974edf47ff0
+  - type: executable_for
+    from: SYM-e2e-secrets-test-volume-secret-names
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T20:03:26.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dffe97679168
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-authed-count
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:17:05.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc0b847f8311

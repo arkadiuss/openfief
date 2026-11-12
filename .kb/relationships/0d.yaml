@@ -769,3 +769,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02bea1e84106
+  - type: constrains
+    from: REQ-identity-audit-owner-view
+    to: FACT-SUBJECT-3A8BE8CFCF97CC06
+    created_at: 2026-11-12T19:18:18.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3b389cee87
+  - type: requires_property
+    from: REQ-identity-audit-owner-view
+    to: FACT-PROP-0C1B1A24A0AF5759
+    created_at: 2026-11-12T19:18:18.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-718838f5a4a0
+  - type: specified_by
+    from: REQ-identity-audit-owner-view
+    to: SCEN-identity-audit-owner-view
+    created_at: 2026-11-12T19:18:18.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8460bdc87fe
+  - type: covered_by
+    from: SYM-audit-identity-postgres-store-store-db
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:15:50.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e3070f8cb1
+  - type: implements
+    from: SYM-audit-identity-postgres-store-store-db
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:15:50.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18e33ba0bbf6

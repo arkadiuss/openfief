@@ -126,6 +126,9 @@ const (
 	// AuthServiceSignOutEverywhereProcedure is the fully-qualified name of the AuthService's
 	// SignOutEverywhere RPC.
 	AuthServiceSignOutEverywhereProcedure = "/openfief.identity.v1.AuthService/SignOutEverywhere"
+	// AuthServiceListAuditEntriesProcedure is the fully-qualified name of the AuthService's
+	// ListAuditEntries RPC.
+	AuthServiceListAuditEntriesProcedure = "/openfief.identity.v1.AuthService/ListAuditEntries"
 )
 
 // AuthServiceClient is a client for the openfief.identity.v1.AuthService service.
@@ -186,6 +189,14 @@ type AuthServiceClient interface {
 	// SignOutEverywhere revokes every session, on every host and of either
 	// scope, the caller's own included (D-183). Owner scope.
 	SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error)
+	// ListAuditEntries returns a page of the audit log (D-211), newest first,
+	// filtered by actor, action and time. Owner scope only: a read-scoped
+	// (demo) session is refused with PERMISSION_DENIED, and the log is not on
+	// the read API (D-137), so no script token or view plugin reads it there.
+	// Reading the log is itself no entry. An entry names who, what, which
+	// records by ID, when and the outcome, never an amount, a secret or a
+	// question's text (GR-12).
+	ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the openfief.identity.v1.AuthService service. By
@@ -301,6 +312,12 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("SignOutEverywhere")),
 			connect.WithClientOptions(opts...),
 		),
+		listAuditEntries: connect.NewClient[v1.ListAuditEntriesRequest, v1.ListAuditEntriesResponse](
+			httpClient,
+			baseURL+AuthServiceListAuditEntriesProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ListAuditEntries")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -323,6 +340,7 @@ type authServiceClient struct {
 	beginPasskeyCheck    *connect.Client[v1.BeginPasskeyCheckRequest, v1.BeginPasskeyCheckResponse]
 	finishPasskeyCheck   *connect.Client[v1.FinishPasskeyCheckRequest, v1.FinishPasskeyCheckResponse]
 	signOutEverywhere    *connect.Client[v1.SignOutEverywhereRequest, v1.SignOutEverywhereResponse]
+	listAuditEntries     *connect.Client[v1.ListAuditEntriesRequest, v1.ListAuditEntriesResponse]
 }
 
 // GetLoginMethods calls openfief.identity.v1.AuthService.GetLoginMethods.
@@ -410,6 +428,11 @@ func (c *authServiceClient) SignOutEverywhere(ctx context.Context, req *connect.
 	return c.signOutEverywhere.CallUnary(ctx, req)
 }
 
+// ListAuditEntries calls openfief.identity.v1.AuthService.ListAuditEntries.
+func (c *authServiceClient) ListAuditEntries(ctx context.Context, req *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error) {
+	return c.listAuditEntries.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the openfief.identity.v1.AuthService service.
 type AuthServiceHandler interface {
 	// GetLoginMethods says which ways in the login page can offer at origin.
@@ -468,6 +491,14 @@ type AuthServiceHandler interface {
 	// SignOutEverywhere revokes every session, on every host and of either
 	// scope, the caller's own included (D-183). Owner scope.
 	SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error)
+	// ListAuditEntries returns a page of the audit log (D-211), newest first,
+	// filtered by actor, action and time. Owner scope only: a read-scoped
+	// (demo) session is refused with PERMISSION_DENIED, and the log is not on
+	// the read API (D-137), so no script token or view plugin reads it there.
+	// Reading the log is itself no entry. An entry names who, what, which
+	// records by ID, when and the outcome, never an amount, a secret or a
+	// question's text (GR-12).
+	ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -579,6 +610,12 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("SignOutEverywhere")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceListAuditEntriesHandler := connect.NewUnaryHandler(
+		AuthServiceListAuditEntriesProcedure,
+		svc.ListAuditEntries,
+		connect.WithSchema(authServiceMethods.ByName("ListAuditEntries")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.identity.v1.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceGetLoginMethodsProcedure:
@@ -615,6 +652,8 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceFinishPasskeyCheckHandler.ServeHTTP(w, r)
 		case AuthServiceSignOutEverywhereProcedure:
 			authServiceSignOutEverywhereHandler.ServeHTTP(w, r)
+		case AuthServiceListAuditEntriesProcedure:
+			authServiceListAuditEntriesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -690,4 +729,8 @@ func (UnimplementedAuthServiceHandler) FinishPasskeyCheck(context.Context, *conn
 
 func (UnimplementedAuthServiceHandler) SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.SignOutEverywhere is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListAuditEntries is not implemented"))
 }

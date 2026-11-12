@@ -1175,3 +1175,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afc533a37752
+  - type: covered_by
+    from: SYM-audit-identity-audit-audit-entry-validate
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:07:09.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32dc5ae40550
+  - type: implements
+    from: SYM-audit-identity-audit-audit-entry-validate
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-12T20:07:09.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be313aeed919
+  - type: implements
+    from: SYM-audit-identity-audit-audit-entry-validate
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-12T20:07:09.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8de5ed9c788a

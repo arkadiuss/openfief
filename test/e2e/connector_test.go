@@ -88,7 +88,11 @@ var errNotListed = errors.New("not listed")
 // uninstall`, the CLI built from this checkout, then removes the Plugin, its
 // grant, its Secret, its workload and its allow-list entry, while the
 // deposit stays in the read API, marked as from a removed instance (D-58;
-// SCEN-e2e-uninstall-keeps-data).
+// SCEN-e2e-uninstall-keeps-data). A second deposit, booked from the same
+// instance under a changed config before the uninstall, stays too, marked
+// the same way, and once the instance is gone no pod of it and no Secret
+// labelled as its own remains (D-200 criterion 18,
+// SCEN-e2e-uninstall-leaves-no-pod-or-secret).
 func TestConnectorCredentialsAndUninstall(t *testing.T) {
 	t.Parallel()
 	k := mustConnect(t)
@@ -130,9 +134,55 @@ func TestConnectorCredentialsAndUninstall(t *testing.T) {
 	waitDeposit(t, k, token, account, depositPrefix+date, false)
 	checkCredentialNowhereElse(t, k, credential)
 
+	// A second deposit, a day earlier, from the same instance: the owner
+	// changes the Plugin's config, the operator rolls the pod, and a sync
+	// books it next to the first.
+	second := time.Now().UTC().AddDate(0, 0, -2).Format(time.DateOnly)
+	if err := unstructured.SetNestedMap(plugin.Object, map[string]any{"account": account, "date": second}, "spec", "config"); err != nil {
+		t.Fatal(err)
+	}
+	if err := k.applyOne(t.Context(), plugin); err != nil {
+		t.Fatal(err)
+	}
+	waitPluginReady(t, k, booksPlugin)
+	syncUntilDeposit(t, k, booksPlugin, token, account, depositPrefix+second)
+	waitDeposit(t, k, token, account, depositPrefix+date, false)
+
 	uninstallBooks(t)
 	waitUninstalled(t, k, booksPlugin)
-	waitDeposit(t, k, token, account, depositPrefix+date, true)
+	for _, d := range []string{date, second} {
+		waitDeposit(t, k, token, account, depositPrefix+d, true)
+	}
+}
+
+// syncUntilDeposit syncs instance until the read API lists the deposit with
+// externalID in account. A sync right after a config change may reach the
+// pod the operator is replacing, which books the old deposit again, so the
+// sync is repeated until the new one is there.
+func syncUntilDeposit(t *testing.T, k *kube, instance, token, account, externalID string) {
+	t.Helper()
+	err := waitFor(t.Context(), syncTimeout, func(ctx context.Context) (string, bool, error) {
+		pod, err := k.corePod(ctx)
+		if err != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, err)
+		}
+		out, err := k.exec(ctx, namespace, pod, "core", nil,
+			"/core", "connector", "sync", "--instance", instance, "--mode", "transactions")
+		if err != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, err)
+		}
+		_, err = findTransaction(ctx, k, token, account, externalID)
+		switch {
+		case errors.Is(err, errNotListed):
+			return fmt.Sprintf("synced (%s), deposit %s not listed", bytes.TrimSpace(out), externalID), false, nil
+		case err != nil:
+			return "", false, err
+		}
+		return "deposit listed", true, nil
+	})
+	if err != nil {
+		t.Fatalf("syncing instance %s until deposit %s is listed in account %s: %v", instance, externalID, account, err)
+	}
 }
 
 // credentialSecret is the Secret instance mounts for the connector's
@@ -407,7 +457,13 @@ func (k *kube) configMapsHolding(t *testing.T, needle []byte) []string {
 // podsHolding names every pod in the cluster with needle in its spec.
 func (k *kube) podsHolding(t *testing.T, needle []byte) []string {
 	t.Helper()
-	pods, err := k.clients.CoreV1().Pods(metav1.NamespaceAll).List(t.Context(), metav1.ListOptions{})
+	return k.podsHoldingIn(t, metav1.NamespaceAll, needle)
+}
+
+// podsHoldingIn names every pod of ns with needle in its spec.
+func (k *kube) podsHoldingIn(t *testing.T, ns string, needle []byte) []string {
+	t.Helper()
+	pods, err := k.clients.CoreV1().Pods(ns).List(t.Context(), metav1.ListOptions{})
 	if err != nil {
 		t.Fatalf("listing pods: %v", err)
 	}
@@ -471,20 +527,26 @@ func dumpDatabase(t *testing.T, k *kube) []byte {
 }
 
 // waitUninstalled waits until instance's Plugin, PluginGrant, credentials
-// Secret, Deployment, Service, NetworkPolicy, ServiceAccount and allow-list
-// entry are all gone.
+// Secret, Deployment, pods, Service, NetworkPolicy, ServiceAccount and
+// allow-list entry are all gone, and no Secret labelled as the instance's
+// is left, of whatever role.
 func waitUninstalled(t *testing.T, k *kube, instance string) {
 	t.Helper()
-	err := waitFor(t.Context(), uninstallTimeout, func(ctx context.Context) (string, bool, error) {
+	if err := untilUninstalled(t.Context(), k, instance); err != nil {
+		t.Fatalf("waiting for instance %s to be uninstalled: %v", instance, err)
+	}
+}
+
+// untilUninstalled is waitUninstalled's wait, for a ctx that outlives the
+// test: a Cleanup runs after t.Context() is canceled.
+func untilUninstalled(ctx context.Context, k *kube, instance string) error {
+	return waitFor(ctx, uninstallTimeout, func(ctx context.Context) (string, bool, error) {
 		left, err := k.instanceLeft(ctx, instance)
 		if err != nil {
 			return "", false, err
 		}
 		return fmt.Sprintf("%s: %s", errStillThere, strings.Join(left, ", ")), len(left) == 0, nil
 	})
-	if err != nil {
-		t.Fatalf("waiting for instance %s to be uninstalled: %v", instance, err)
-	}
 }
 
 // instanceLeft names what is left of instance.
@@ -514,6 +576,23 @@ func (k *kube) instanceLeft(ctx context.Context, instance string) ([]string, err
 		if _, ok := cm.Data[instance]; ok {
 			left = append(left, "allow-list entry")
 		}
+	}
+	// The Deployment going is not its pods going, and a Secret of any role,
+	// the CA bundle's too, goes with the instance when it carries the
+	// instance's label (D-182).
+	pods, err := k.clients.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{LabelSelector: operator.LabelPlugin + "=" + instance})
+	if err != nil {
+		return nil, fmt.Errorf("%w: listing pods: %w", errRetry, err)
+	}
+	for i := range pods.Items {
+		left = append(left, "pod "+pods.Items[i].Name)
+	}
+	secrets, err := k.clients.CoreV1().Secrets(namespace).List(ctx, metav1.ListOptions{LabelSelector: plugins.OwnerInstanceLabel + "=" + instance})
+	if err != nil {
+		return nil, fmt.Errorf("%w: listing Secrets: %w", errRetry, err)
+	}
+	for i := range secrets.Items {
+		left = append(left, "labelled Secret "+secrets.Items[i].Name)
 	}
 	return left, nil
 }

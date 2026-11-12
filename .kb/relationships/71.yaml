@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-359d416632ed
+  - type: covered_by
+    from: SYM-audit-identity-audit-audit-filter-validate
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:07:47.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdd816db7103
+  - type: implements
+    from: SYM-audit-identity-audit-audit-filter-validate
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:07:47.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4521a3c48c8a
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-tx-fixture-counts
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:48:49.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f82ba440d88

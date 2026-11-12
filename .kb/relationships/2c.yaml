@@ -1126,3 +1126,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b98cddb1e332
+  - type: covered_by
+    from: SYM-audit-identity-postgres-store-tx-key
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:16:24.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b5aaf210f91
+  - type: implements
+    from: SYM-audit-identity-postgres-store-tx-key
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:16:25.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e57537510227
+  - type: covered_by
+    from: SYM-audit-identity-postgres-audit-audit-query
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:44:34.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-183da6ff1feb
+  - type: implements
+    from: SYM-audit-identity-postgres-audit-audit-query
+    to: REQ-identity-audit-every-change
+    created_at: 2026-11-12T20:44:34.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c98543b502
+  - type: implements
+    from: SYM-audit-identity-postgres-audit-audit-query
+    to: REQ-identity-audit-append-only
+    created_at: 2026-11-12T20:44:34.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9485bc445e4

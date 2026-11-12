@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-608eb3c222ef
+  - type: executable_for
+    from: SYM-e2e-connector-sync-until-deposit
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-12T19:58:11.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-161e230c0ae0
+  - type: verified_by
+    from: SCEN-identity-audit-every-change
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T19:17:42.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0bb65e4e152
+  - type: verified_by
+    from: SCEN-identity-audit-every-change
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T19:17:42.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe7728c5e18
+  - type: executable_for
+    from: SYM-audit-identity-app-audit-test-test-audit-fails-closed
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:19:41.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca5fd71cb0b9

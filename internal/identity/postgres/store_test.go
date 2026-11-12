@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -27,8 +28,12 @@ import (
 const dsnVar = "OPENFIEF_PG_DSN"
 
 // newPool returns a pool on a fresh database with the identity migrations
-// applied, dropped when the test ends.
-func newPool(t *testing.T) *pgxpool.Pool {
+// applied, dropped when the test ends. With true as appRole it creates the
+// database's owner, an ordinary role without superuser rights, like the app
+// role CloudNativePG makes, and every connection of the pool runs as it, so
+// the migrations create the tables as it and it holds only the privileges the
+// migrations leave it.
+func newPool(t *testing.T, appRole ...bool) *pgxpool.Pool {
 	t.Helper()
 	dsn := os.Getenv(dsnVar)
 	if dsn == "" {
@@ -37,20 +42,31 @@ func newPool(t *testing.T) *pgxpool.Pool {
 	ctx := t.Context()
 	sum := sha256.Sum256([]byte(t.Name()))
 	name := "identity_" + hex.EncodeToString(sum[:8]) + "_" + strconv.Itoa(os.Getpid())
-	adminExec(ctx, t, dsn, "DROP DATABASE IF EXISTS "+name+" WITH (FORCE)")
-	adminExec(ctx, t, dsn, "CREATE DATABASE "+name)
+	role := ""
+	if len(appRole) > 0 && appRole[0] {
+		role = name + "_app"
+	}
+	createDatabase(ctx, t, dsn, name, role)
 	cfg, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		t.Fatalf("parsing %s: %v", dsnVar, err)
 	}
 	cfg.ConnConfig.Database = name
+	if role != "" {
+		cfg.AfterConnect = func(ctx context.Context, conn *pgx.Conn) error {
+			if _, setErr := conn.Exec(ctx, "SET ROLE "+role); setErr != nil {
+				return fmt.Errorf("setting the role: %w", setErr)
+			}
+			return nil
+		}
+	}
 	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		t.Fatalf("connecting to %s: %v", name, err)
 	}
 	t.Cleanup(func() {
 		pool.Close()
-		adminExec(context.WithoutCancel(ctx), t, dsn, "DROP DATABASE IF EXISTS "+name+" WITH (FORCE)")
+		dropDatabase(context.WithoutCancel(ctx), t, dsn, name, role)
 	})
 	for range 2 { // a second run applies nothing
 		if err := postgres.Migrate(ctx, pool); err != nil {
@@ -58,6 +74,28 @@ func newPool(t *testing.T) *pgxpool.Pool {
 		}
 	}
 	return pool
+}
+
+// createDatabase creates the database name, owned by the new role when there
+// is one.
+func createDatabase(ctx context.Context, t *testing.T, dsn, name, role string) {
+	t.Helper()
+	dropDatabase(ctx, t, dsn, name, role)
+	owner := ""
+	if role != "" {
+		adminExec(ctx, t, dsn, "CREATE ROLE "+role+" NOSUPERUSER NOLOGIN")
+		owner = " OWNER " + role
+	}
+	adminExec(ctx, t, dsn, "CREATE DATABASE "+name+owner)
+}
+
+// dropDatabase drops the database name, and the role, if any, after it.
+func dropDatabase(ctx context.Context, t *testing.T, dsn, name, role string) {
+	t.Helper()
+	adminExec(ctx, t, dsn, "DROP DATABASE IF EXISTS "+name+" WITH (FORCE)")
+	if role != "" {
+		adminExec(ctx, t, dsn, "DROP ROLE IF EXISTS "+role)
+	}
 }
 
 // adminExec runs sql on the server's own database.

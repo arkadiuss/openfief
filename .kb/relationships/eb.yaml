@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d776e7768ad8
+  - type: executable_for
+    from: SYM-audit-identity-app-authstore-test-snapshot
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:18:47.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bf71e2590aa

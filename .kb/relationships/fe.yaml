@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-037bfddca8c7
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-action-type
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:03:49.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c20c8d1d926a
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-action-type
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:03:49.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b43551a52dff
+  - type: executable_for
+    from: SYM-audit-identity-app-authstore-test-mem-auth-store-atomically
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:17:34.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93719e99a6c9

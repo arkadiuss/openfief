@@ -162,8 +162,11 @@ type Ceremony struct {
 	// EnrollmentCode is the code a registration began with; empty when an
 	// owner session began it.
 	EnrollmentCode EnrollmentCodeID
-	CreatedAt      time.Time
-	ExpiresAt      time.Time
+	// Session is the owner session that began a registration without a
+	// code, for the audit log (D-211); empty otherwise.
+	Session   SessionID
+	CreatedAt time.Time
+	ExpiresAt time.Time
 }
 
 // NewCeremony returns a ceremony of kind on origin with state, begun at now

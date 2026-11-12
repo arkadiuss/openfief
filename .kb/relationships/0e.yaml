@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ffde30cf975
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-new-tx-fixture
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:46:19.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49f669394ff6

@@ -888,3 +888,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89f17d0bfbb5
+  - type: covered_by
+    from: SYM-audit-identity-audit-known-actor-kind
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:11:27.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be207c0d8402
+  - type: implements
+    from: SYM-audit-identity-audit-known-actor-kind
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-12T20:11:27.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbef7c500bb4
+  - type: implements
+    from: SYM-audit-identity-audit-known-actor-kind
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-12T20:11:27.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e75e2e27b18
+  - type: executable_for
+    from: SYM-audit-identity-postgres-store-test-drop-database
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T21:14:34.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac342c79ecb

@@ -867,3 +867,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ec494d2fbf4
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-request-get-session-token
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:12:27.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ef00e65f230
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-request-get-session-token
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:12:27.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d844c3d3325c
+  - type: executable_for
+    from: SYM-audit-identity-audit-test-test-audit-filter-validate
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:20:07.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9fcd61e380e
+  - type: covered_by
+    from: SYM-audit-identity-audit-audit-filter-validate-actor
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:44:15.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a31d939a5db
+  - type: implements
+    from: SYM-audit-identity-audit-audit-filter-validate-actor
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:44:15.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a67726a936

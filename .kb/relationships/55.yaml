@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0369e461c22
+  - type: executable_for
+    from: SYM-e2e-refusal-cli-check-operator-refusal
+    to: TEST-e2e-cli-refusal
+    created_at: 2026-11-12T20:03:59.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a17bb12da34c
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-action
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:03:07.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6e0028a1b91
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-action
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:03:07.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f527c59570b9

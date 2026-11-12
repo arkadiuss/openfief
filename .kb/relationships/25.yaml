@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c894bd06b482
+  - type: covered_by
+    from: SYM-audit-identity-audit-ref-validate
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:14:54.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d17344e8847
+  - type: implements
+    from: SYM-audit-identity-audit-ref-validate
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-12T20:14:54.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d36c7366a7bc
+  - type: implements
+    from: SYM-audit-identity-audit-ref-validate
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-12T20:14:54.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ee83903e88

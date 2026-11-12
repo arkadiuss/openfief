@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8a21d27e355
+  - type: executable_for
+    from: SYM-audit-identity-connectapi-handler-test-session-store-append-audit
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:18:20.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56addd27b1d3

@@ -12,6 +12,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -376,6 +377,33 @@ func TestCoreServesTheReadAPI(t *testing.T) {
 	checkRefused(t, srv, secret, "a revoked token")
 	if strings.Contains(listed, secret) {
 		t.Error("token list shows the secret")
+	}
+	checkTokenAudit(t, pool, secret)
+}
+
+// checkTokenAudit checks that the core's own token commands left their audit
+// entries (D-211): created and revoked by the core, in that order, with no
+// part of the secret in the log.
+func checkTokenAudit(t *testing.T, pool *pgxpool.Pool, secret string) {
+	t.Helper()
+	rows, err := pool.Query(t.Context(), `SELECT actor_kind || ' ' || action || ' ' || outcome FROM identity.audit_log ORDER BY id`)
+	if err != nil {
+		t.Fatalf("reading the audit log: %v", err)
+	}
+	got, err := pgx.CollectRows(rows, pgx.RowTo[string])
+	if err != nil {
+		t.Fatalf("reading the audit log: %v", err)
+	}
+	if want := []string{"system script_token_created ok", "system script_token_revoked ok"}; !slices.Equal(got, want) {
+		t.Errorf("audit log = %v, want %v", got, want)
+	}
+	var dump string
+	if err := pool.QueryRow(t.Context(), `SELECT string_agg(l::text, ' ') FROM identity.audit_log l`).Scan(&dump); err != nil {
+		t.Fatalf("dumping the audit log: %v", err)
+	}
+	_, key, _ := strings.Cut(strings.TrimPrefix(secret, "ofs_"), "_")
+	if strings.Contains(dump, key) || strings.Contains(dump, secret) {
+		t.Error("the audit log holds the script token's key")
 	}
 }
 

@@ -11,10 +11,49 @@ import (
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 )
 
+// tokenAdmin is the script token use cases of the core's own commands. It
+// issues and revokes as the system actor, so each change is in the audit log
+// with the change itself (D-211).
+type tokenAdmin struct {
+	store  identityapp.AuthStore
+	tokens *identityapp.Tokens
+}
+
+// systemActor is the core, as the audit log names it.
+func systemActor() identity.Actor {
+	return identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
+}
+
+// Issue creates a token and its audit entry.
+func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+	tok, secret, err := identityapp.IssueToken(ctx, a.store, a.tokens, systemActor(), name, ttl)
+	if err != nil {
+		return identity.ScriptToken{}, "", fmt.Errorf("issuing as the core: %w", err)
+	}
+	return tok, secret, nil
+}
+
+// Revoke revokes a token and writes its audit entry.
+func (a tokenAdmin) Revoke(ctx context.Context, id identity.ScriptTokenID) error {
+	if err := identityapp.RevokeToken(ctx, a.store, a.tokens, systemActor(), id); err != nil {
+		return fmt.Errorf("revoking as the core: %w", err)
+	}
+	return nil
+}
+
+// List returns every token.
+func (a tokenAdmin) List(ctx context.Context) ([]identity.ScriptToken, error) {
+	toks, err := a.tokens.List(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("listing: %w", err)
+	}
+	return toks, nil
+}
+
 // tokenCommand runs a token command over tokens and writes what it shows to
 // out: for token issue, the secret alone on the first line, then the
 // token's ID and expiry; nothing else ever shows a secret.
-func tokenCommand(ctx context.Context, cmd *command, tokens *identityapp.Tokens, out io.Writer, now time.Time) error {
+func tokenCommand(ctx context.Context, cmd *command, tokens tokenAdmin, out io.Writer, now time.Time) error {
 	switch cmd.Name {
 	case cmdTokenIssue:
 		tok, secret, err := tokens.Issue(ctx, cmd.TokenName, cmd.TTL)

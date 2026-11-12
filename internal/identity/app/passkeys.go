@@ -34,7 +34,7 @@ func (a *Auth) BeginRegistration(ctx context.Context, origin string, grant Regis
 	if err != nil {
 		return Started{}, err
 	}
-	code, err := a.checkGrant(ctx, o, grant)
+	code, session, err := a.checkGrant(ctx, o, grant)
 	if err != nil {
 		return Started{}, err
 	}
@@ -50,7 +50,7 @@ func (a *Auth) BeginRegistration(ctx context.Context, origin string, grant Regis
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a registration: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyRegistration, o, begun.State, code)
+	c, err := a.saveCeremony(ctx, identity.CeremonyRegistration, o, begun.State, code, session)
 	if err != nil {
 		return Started{}, err
 	}
@@ -88,6 +88,10 @@ func (a *Auth) FinishRegistration(ctx context.Context, origin, ceremonyID string
 	if err != nil {
 		return Registered{}, fmt.Errorf("loading the owner: %w", err)
 	}
+	if c.EnrollmentCode == "" && c.Session == "" {
+		// Begun before the audit log named who begins a registration: begin again.
+		return Registered{}, fmt.Errorf("%w: the registration names neither a code nor a session", ErrCeremony)
+	}
 	p, err := a.ceremonies.FinishRegistration(o, &owner, c.State, credential)
 	if err != nil {
 		return Registered{}, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
@@ -110,7 +114,7 @@ func (a *Auth) BeginLogin(ctx context.Context, origin string) (Started, error) {
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a login: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyLogin, o, begun.State, "")
+	c, err := a.saveCeremony(ctx, identity.CeremonyLogin, o, begun.State, "", "")
 	if err != nil {
 		return Started{}, err
 	}
@@ -186,7 +190,7 @@ func (a *Auth) BeginPasskeyCheck(ctx context.Context, origin, token string) (Sta
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a passkey check: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyPasskeyCheck, o, begun.State, "")
+	c, err := a.saveCeremony(ctx, identity.CeremonyPasskeyCheck, o, begun.State, "", "")
 	if err != nil {
 		return Started{}, err
 	}
@@ -261,7 +265,12 @@ func (a *Auth) RemovePasskey(ctx context.Context, origin, token, id string) (boo
 	if err != nil {
 		return false, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
 	}
-	err = a.store.DeletePasskey(ctx, credID, a.now().UTC())
+	err = within(ctx, a.store, func(ctx context.Context) error {
+		if deleteErr := a.store.DeletePasskey(ctx, credID, a.now().UTC()); deleteErr != nil {
+			return fmt.Errorf("deleting the passkey: %w", deleteErr)
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionPasskeyRemoved, identity.OutcomeOK, identity.Ref{Kind: identity.RefPasskey, ID: id})
+	})
 	switch {
 	case errors.Is(err, ErrUnknownPasskey):
 		return false, fmt.Errorf("%w: %w", ErrNotFound, err)
@@ -272,28 +281,29 @@ func (a *Auth) RemovePasskey(ctx context.Context, origin, token, id string) (boo
 }
 
 // checkGrant checks that grant allows creating a passkey on o, and returns
-// the enrollment code's ID when it is a code.
-func (a *Auth) checkGrant(ctx context.Context, o identity.Origin, grant RegistrationGrant) (identity.EnrollmentCodeID, error) {
+// the enrollment code's ID when it is a code, or the owner session's ID when
+// it is a session.
+func (a *Auth) checkGrant(ctx context.Context, o identity.Origin, grant RegistrationGrant) (identity.EnrollmentCodeID, identity.SessionID, error) {
 	switch {
 	case grant.EnrollmentCode != "" && grant.SessionToken != "":
-		return "", fmt.Errorf("%w: an enrollment code or a session, not both", ErrInvalidRequest)
+		return "", "", fmt.Errorf("%w: an enrollment code or a session, not both", ErrInvalidRequest)
 	case grant.EnrollmentCode != "":
 		c, err := a.enrollmentCode(ctx, o, grant.EnrollmentCode)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
-		return c.ID, nil
+		return c.ID, "", nil
 	case grant.SessionToken != "":
 		s, err := a.Session(ctx, o, grant.SessionToken, identity.SessionScopeOwner)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
 		if err := s.CheckRecentPasskey(a.now().UTC()); err != nil {
-			return "", fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
+			return "", "", fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
 		}
-		return "", nil
+		return "", s.ID, nil
 	}
-	return "", fmt.Errorf("%w: creating a passkey needs an enrollment code or an owner session", ErrForbidden)
+	return "", "", fmt.Errorf("%w: creating a passkey needs an enrollment code or an owner session", ErrForbidden)
 }
 
 // enrollmentCode returns the stored code text stands for when it may be
@@ -320,34 +330,59 @@ func (a *Auth) enrollmentCode(ctx context.Context, o identity.Origin, text strin
 }
 
 // storeRegistration uses up the enrollment code of c, if any, stores p and,
-// for a code, logs owner in on c's origin.
+// for a code, logs owner in on c's origin, all in one transaction with the
+// audit entries that record them (D-211): the code's use and the passkey's
+// creation, by whoever began the registration, and the sign-in.
 func (a *Auth) storeRegistration(ctx context.Context, c *identity.Ceremony, owner *identity.Owner, p *identity.Passkey) (Registered, error) {
-	if c.EnrollmentCode != "" {
-		err := a.store.UseEnrollmentCode(ctx, c.EnrollmentCode, p.CreatedAt)
-		if errors.Is(err, identity.ErrEnrollmentCodeUsed) {
-			return Registered{}, fmt.Errorf("%w: %w", ErrForbidden, err)
+	var out Registered
+	err := within(ctx, a.store, func(ctx context.Context) error {
+		actor := identity.Actor{Kind: identity.ActorOwner, ID: string(c.Session)}
+		if c.EnrollmentCode != "" {
+			actor = identity.Actor{Kind: identity.ActorEnrollmentCode, ID: string(c.EnrollmentCode)}
+			if err := a.useCode(ctx, c, p, actor); err != nil {
+				return err
+			}
 		}
+		if err := a.store.SavePasskey(ctx, p); err != nil {
+			return fmt.Errorf("storing a passkey: %w", err)
+		}
+		passkey := identity.Ref{Kind: identity.RefPasskey, ID: p.ID()}
+		if err := a.record(ctx, actor, identity.ActionPasskeyAdded, identity.OutcomeOK, passkey); err != nil {
+			return err
+		}
+		out = Registered{Passkey: *p}
+		if c.EnrollmentCode == "" {
+			return nil
+		}
+		// Creating the passkey verified the owner on it, so it signs the session
+		// in and counts as its first passkey check (D-183).
+		s, err := a.issueSession(ctx, &Authenticated{
+			Owner: *owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey, Passkey: p.CredentialID,
+		}, c.Origin)
 		if err != nil {
-			return Registered{}, fmt.Errorf("using an enrollment code: %w", err)
+			return err
 		}
-	}
-	if err := a.store.SavePasskey(ctx, p); err != nil {
-		return Registered{}, fmt.Errorf("storing a passkey: %w", err)
-	}
-	out := Registered{Passkey: *p}
-	if c.EnrollmentCode == "" {
-		return out, nil
-	}
-	// Creating the passkey verified the owner on it, so it signs the session
-	// in and counts as its first passkey check (D-183).
-	s, err := a.issueSession(ctx, &Authenticated{
-		Owner: *owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey, Passkey: p.CredentialID,
-	}, c.Origin)
+		out.Session = &s
+		return nil
+	})
 	if err != nil {
 		return Registered{}, err
 	}
-	out.Session = &s
 	return out, nil
+}
+
+// useCode uses up the enrollment code of c for creating p and records it,
+// naming the code and the passkey, as actor's.
+func (a *Auth) useCode(ctx context.Context, c *identity.Ceremony, p *identity.Passkey, actor identity.Actor) error {
+	err := a.store.UseEnrollmentCode(ctx, c.EnrollmentCode, p.CreatedAt)
+	if errors.Is(err, identity.ErrEnrollmentCodeUsed) {
+		return fmt.Errorf("%w: %w", ErrForbidden, err)
+	}
+	if err != nil {
+		return fmt.Errorf("using an enrollment code: %w", err)
+	}
+	code := identity.Ref{Kind: identity.RefEnrollmentCode, ID: string(c.EnrollmentCode)}
+	return a.record(ctx, actor, identity.ActionEnrollmentLinkUsed, identity.OutcomeOK, code, identity.Ref{Kind: identity.RefPasskey, ID: p.ID()})
 }
 
 // hostPasskeys returns the passkeys of o's host.
@@ -365,14 +400,15 @@ func (a *Auth) hostPasskeys(ctx context.Context, o identity.Origin) ([]identity.
 	return out, nil
 }
 
-// saveCeremony stores a new ceremony of kind on o with state.
-func (a *Auth) saveCeremony(ctx context.Context, kind identity.CeremonyKind, o identity.Origin, state []byte, code identity.EnrollmentCodeID) (identity.Ceremony, error) {
+// saveCeremony stores a new ceremony of kind on o with state, begun with
+// the enrollment code or the owner session, for a registration.
+func (a *Auth) saveCeremony(ctx context.Context, kind identity.CeremonyKind, o identity.Origin, state []byte, code identity.EnrollmentCodeID, session identity.SessionID) (identity.Ceremony, error) {
 	id, err := a.randomHex(identity.CeremonyIDBytes)
 	if err != nil {
 		return identity.Ceremony{}, fmt.Errorf("beginning a %s: %w", kind, err)
 	}
 	c := identity.NewCeremony(id, kind, o, state, a.now().UTC())
-	c.EnrollmentCode = code
+	c.EnrollmentCode, c.Session = code, session
 	if err := a.store.SaveCeremony(ctx, &c); err != nil {
 		return identity.Ceremony{}, fmt.Errorf("beginning a %s: %w", kind, err)
 	}

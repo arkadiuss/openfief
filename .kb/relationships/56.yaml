@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8bf7f47a06d
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-seq
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:06:35.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26032a9aa30f
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-get-seq
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:06:35.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d483fc8905a

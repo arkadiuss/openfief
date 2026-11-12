@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b81848118d60
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-reset
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:06:55.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33372ab6bced
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-entry-reset
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:06:55.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837fbaaec1ae

@@ -853,3 +853,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2565db2269b1
+  - type: covered_by
+    from: SYM-audit-identity-audit-audit-actions
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:03:57.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41af31c510f0
+  - type: implements
+    from: SYM-audit-identity-audit-audit-actions
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-12T20:03:57.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e8c56d62fe
+  - type: implements
+    from: SYM-audit-identity-audit-audit-actions
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-12T20:03:57.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61bc97e24212
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-kind-enum
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:05:09.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b717b5b685a
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-kind-enum
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:05:09.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a410667a493

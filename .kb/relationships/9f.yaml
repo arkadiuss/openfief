@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6c162486edc0
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-reset
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:13:45.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dcfadc7631b
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-reset
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:13:45.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4108e9945e76

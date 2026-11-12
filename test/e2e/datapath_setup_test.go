@@ -367,7 +367,7 @@ func installDataPath(t *testing.T, k *kube, reg suiteRegistry, instances []dataP
 		if err != nil {
 			t.Fatal(err)
 		}
-		t.Cleanup(func() { uninstallWithCLI(t, in.name) })
+		t.Cleanup(func() { uninstallWithCLI(t, k, in.name) })
 		for role, files := range in.secrets {
 			if role != caBundleRole {
 				createInstanceSecret(t, k, in.name, role, files)
@@ -507,8 +507,10 @@ func installArgs(in *dataPathInstance, image plugins.ImageRef, config string) []
 	return args
 }
 
-// uninstallWithCLI runs `openfief plugin uninstall <instance> --yes`.
-func uninstallWithCLI(t *testing.T, instance string) {
+// uninstallWithCLI runs `openfief plugin uninstall <instance> --yes` and,
+// when it succeeds, waits for what waitUninstalled waits for: the instance's
+// objects and pods gone and no Secret labelled as its own left.
+func uninstallWithCLI(t *testing.T, k *kube, instance string) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), cliTimeout)
 	defer cancel()
@@ -516,6 +518,10 @@ func uninstallWithCLI(t *testing.T, instance string) {
 	cmd.Args = append(cmd.Args, uninstallArgs(instance)...)
 	if out, err := cmd.CombinedOutput(); err != nil {
 		t.Errorf("openfief plugin uninstall %s: %v\n%s", instance, err, out)
+		return
+	}
+	if err := untilUninstalled(ctx, k, instance); err != nil {
+		t.Errorf("after openfief plugin uninstall %s: %v", instance, err)
 	}
 }
 

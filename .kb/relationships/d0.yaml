@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a351573e6c34
+  - type: executable_for
+    from: SYM-audit-identity-audit-test-test-audit-actions-are-closed
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-12T20:19:14.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9714b003e57

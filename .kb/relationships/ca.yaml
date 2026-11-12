@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-663cd97fb39f
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-string
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:04:48.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9186510a6466
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-string
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:04:48.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-522b7bd24f82

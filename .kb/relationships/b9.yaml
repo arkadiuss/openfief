@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa68e3016190
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-must
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:45:59.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-918b96a9c58d

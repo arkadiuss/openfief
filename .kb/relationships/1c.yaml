@@ -951,3 +951,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3bca6f32aacd
+  - type: executable_for
+    from: SYM-audit-identity-connectapi-audit-test-audit-start
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:44:47.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4fcd644de6

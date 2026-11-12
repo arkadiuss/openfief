@@ -125,6 +125,15 @@ service AuthService {
   // SignOutEverywhere revokes every session, on every host and of either
   // scope, the caller's own included (D-183). Owner scope.
   rpc SignOutEverywhere(SignOutEverywhereRequest) returns (SignOutEverywhereResponse);
+
+  // ListAuditEntries returns a page of the audit log (D-211), newest first,
+  // filtered by actor, action and time. Owner scope only: a read-scoped
+  // (demo) session is refused with PERMISSION_DENIED, and the log is not on
+  // the read API (D-137), so no script token or view plugin reads it there.
+  // Reading the log is itself no entry. An entry names who, what, which
+  // records by ID, when and the outcome, never an amount, a secret or a
+  // question's text (GR-12).
+  rpc ListAuditEntries(ListAuditEntriesRequest) returns (ListAuditEntriesResponse);
 }
 
 // SessionScope is what a session may do.
@@ -438,4 +447,102 @@ message SignOutEverywhereRequest {
 message SignOutEverywhereResponse {
   // How many sessions were revoked, the caller's own included.
   int64 revoked_sessions = 1;
+}
+
+// AuditActorKind is what kind of party made a change an audit entry records.
+enum AuditActorKind {
+  AUDIT_ACTOR_KIND_UNSPECIFIED = 0;
+  // The owner in a session; the actor's id is the session's id.
+  AUDIT_ACTOR_KIND_OWNER = 1;
+  // The holder of a one-time enrollment code; the actor's id is the code's id.
+  AUDIT_ACTOR_KIND_ENROLLMENT_CODE = 2;
+  // The core itself, such as its enroll-link command; the id is "core".
+  AUDIT_ACTOR_KIND_SYSTEM = 3;
+  // A caller that proved nothing, such as a refused sign-in; no id.
+  AUDIT_ACTOR_KIND_ANONYMOUS = 4;
+}
+
+// AuditAction is what an audit entry records, a closed set: it carries no
+// free text. Later milestones add values.
+enum AuditAction {
+  AUDIT_ACTION_UNSPECIFIED = 0;
+  AUDIT_ACTION_SIGN_IN = 1;
+  AUDIT_ACTION_SIGN_OUT = 2;
+  AUDIT_ACTION_SIGN_OUT_EVERYWHERE = 3;
+  AUDIT_ACTION_PASSKEY_ADDED = 4;
+  AUDIT_ACTION_PASSKEY_REMOVED = 5;
+  AUDIT_ACTION_ENROLLMENT_LINK_ISSUED = 6;
+  AUDIT_ACTION_ENROLLMENT_LINK_USED = 7;
+  AUDIT_ACTION_SCRIPT_TOKEN_CREATED = 8;
+  AUDIT_ACTION_SCRIPT_TOKEN_REVOKED = 9;
+}
+
+// AuditOutcome is how the recorded change ended.
+enum AuditOutcome {
+  AUDIT_OUTCOME_UNSPECIFIED = 0;
+  AUDIT_OUTCOME_OK = 1;
+  // Understood and not made, such as a sign-in whose credential did not verify.
+  AUDIT_OUTCOME_REFUSED = 2;
+  AUDIT_OUTCOME_FAILED = 3;
+}
+
+// AuditRefKind is the kind of record an audit entry names.
+enum AuditRefKind {
+  AUDIT_REF_KIND_UNSPECIFIED = 0;
+  AUDIT_REF_KIND_SESSION = 1;
+  AUDIT_REF_KIND_PASSKEY = 2;
+  AUDIT_REF_KIND_ENROLLMENT_CODE = 3;
+  AUDIT_REF_KIND_SCRIPT_TOKEN = 4;
+}
+
+// AuditActor is who made the change.
+message AuditActor {
+  AuditActorKind kind = 1;
+  // The session's, enrollment code's or "core" ID; empty for an anonymous
+  // caller.
+  string id = 2;
+}
+
+// AuditRef names one record by kind and ID, never by name, amount or secret.
+message AuditRef {
+  AuditRefKind kind = 1;
+  string id = 2;
+}
+
+// AuditEntry is one record of the append-only audit log. It has no
+// free-text field.
+message AuditEntry {
+  // The entry's place in the log; larger is newer.
+  int64 seq = 1;
+  google.protobuf.Timestamp at = 2;
+  AuditActor actor = 3;
+  AuditAction action = 4;
+  AuditOutcome outcome = 5;
+  repeated AuditRef refs = 6;
+}
+
+message ListAuditEntriesRequest {
+  string origin = 1;
+  string session_token = 2;
+  // Only entries of this kind of actor; unspecified selects every kind.
+  AuditActorKind actor_kind = 3;
+  // Only entries of this actor; needs actor_kind.
+  string actor_id = 4;
+  // Only entries of this action; unspecified selects every action.
+  AuditAction action = 5;
+  // Only entries at or after this time; unset is open.
+  google.protobuf.Timestamp from = 6;
+  // Only entries before this time; unset is open.
+  google.protobuf.Timestamp to = 7;
+  // The page size: 50 when zero, at most 200.
+  int32 page_size = 8;
+  // The next_page_token of the previous page, with the same filter; empty
+  // starts from the newest.
+  string page_token = 9;
+}
+
+message ListAuditEntriesResponse {
+  repeated AuditEntry entries = 1;
+  // Empty on the last page.
+  string next_page_token = 2;
 }

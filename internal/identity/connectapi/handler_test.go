@@ -51,6 +51,39 @@ type sessionStore struct {
 	owner    *identity.Owner
 	sessions map[identity.SessionID]identity.Session
 	hashes   map[identity.SessionID][]byte
+	audit    []identity.AuditEntry
+}
+
+// Atomically runs fn: the connectapi tests check the mapping to Connect, and
+// the rollback is the store's, tested against PostgreSQL.
+func (*sessionStore) Atomically(ctx context.Context, fn func(ctx context.Context) error) error {
+	return fn(ctx)
+}
+
+func (s *sessionStore) AppendAudit(_ context.Context, e *identity.AuditEntry) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	stored := *e
+	stored.Seq = int64(len(s.audit)) + 1
+	s.audit = append(s.audit, stored)
+	return nil
+}
+
+func (s *sessionStore) AuditEntries(_ context.Context, f *identity.AuditFilter) (app.AuditPage, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	var page app.AuditPage
+	for i := len(s.audit) - 1; i >= 0; i-- {
+		if !f.Matches(&s.audit[i]) {
+			continue
+		}
+		if len(page.Entries) == f.PageSize() {
+			page.Next = page.Entries[len(page.Entries)-1].Seq
+			break
+		}
+		page.Entries = append(page.Entries, s.audit[i])
+	}
+	return page, nil
 }
 
 func (s *sessionStore) Owner(context.Context) (identity.Owner, error) {

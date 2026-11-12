@@ -685,3 +685,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6e4a3819583
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-reset
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:04:41.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-763380a42aa1
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-reset
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:04:41.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e2296b0801
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-kind-type
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:05:36.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b69715ab27ee
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-audit-actor-kind-type
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:05:36.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bab1f313b04e
+  - type: covered_by
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-get-entries
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-12T20:13:19.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a7ea1fe99d7
+  - type: implements
+    from: SYM-audit-gen-identity-v1-auth-pb-list-audit-entries-response-get-entries
+    to: REQ-identity-audit-owner-view
+    created_at: 2026-11-12T20:13:19.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c9184637e7f
+  - type: executable_for
+    from: SYM-audit-identity-app-authstore-test-mem-auth-store-entries
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:17:47.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e22644cd4c2b
+  - type: executable_for
+    from: SYM-audit-identity-app-audit-test-test-registration-by-session-names-the-session
+    to: TEST-identity-audit-app
+    created_at: 2026-11-12T20:21:25.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53db6b13b157

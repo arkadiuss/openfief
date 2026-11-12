@@ -375,7 +375,7 @@ func installView(t *testing.T, k *kube, reg suiteRegistry, securityToken string)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { uninstallWithCLI(t, gfInstance) })
+	t.Cleanup(func() { uninstallWithCLI(t, k, gfInstance) })
 	createInstanceSecret(t, k, gfInstance, gfTokenRole, map[string]string{gfTokenFile: securityToken})
 	config, err := json.Marshal(map[string]any{"interval": gfInterval})
 	if err != nil {

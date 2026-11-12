@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3054b7d2c245
+  - type: executable_for
+    from: SYM-audit-identity-postgres-audit-test-test-audit-entries-pages
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-12T20:47:37.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47d9bfef60b1
