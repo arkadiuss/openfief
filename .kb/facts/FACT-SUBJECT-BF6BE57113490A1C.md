@@ -1,12 +1,12 @@
 ---
 title: Tooling Downloads
 status: active
-text_ref: docs/dev/sdlc.md#gate-tiers
+text_ref: docs/dev/sdlc.md#tooling
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-dev-sdlc-md-gate-tiers
+  - provenance:docs-dev-sdlc-md-tooling
   - lane:strict
   - fact:subject
   - vocabulary:new-subject

@@ -720,24 +720,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-291463dd21af
-  - type: constrains
-    from: REQ-tooling-ci-implementation-branch
-    to: FACT-SUBJECT-34325AB9064B2A5A
-    created_at: 2026-11-12T15:11:51.998Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bc3b8f16b4c4
-  - type: requires_property
-    from: REQ-tooling-ci-implementation-branch
-    to: FACT-PROP-D0C686D3D23C18F5
-    created_at: 2026-11-12T15:11:52.060Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1a3b95b5b3a8
-  - type: specified_by
-    from: REQ-tooling-ci-implementation-branch
-    to: SCEN-tooling-ci-implementation-branch
-    created_at: 2026-11-12T15:11:52.118Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d9fd95843a29

@@ -1,12 +1,12 @@
 ---
 title: The pre-commit hook must print how long each step took and the total, also when a step fails.
 status: open
-text_ref: docs/dev/sdlc.md#gate-tiers
+text_ref: docs/dev/sdlc.md#tooling
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-dev-sdlc-md-gate-tiers
+  - provenance:docs-dev-sdlc-md-tooling
   - lane:strict
 semantic_text: The pre-commit hook must print how long each step took and the total, also when a step fails.
 logic_claims:
@@ -40,4 +40,4 @@ The fast-gate plan sets a target of a median of 5 minutes and a p95 of 8 for the
 
 > the script runs them in order, prints each one's time (`check-commit: <task>: 41s`) and the total, and stops at the first failure.
 
-docs/dev/sdlc.md#gate-tiers
+docs/dev/sdlc.md#tooling

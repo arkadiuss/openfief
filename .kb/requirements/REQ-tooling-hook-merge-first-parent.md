@@ -1,12 +1,12 @@
 ---
 title: The pre-commit hook must check a merge being committed from its diff against its first parent with the same affected-check selection as any other commit, so a merge of a test-only branch runs that branch's checks and not the whole check.
 status: open
-text_ref: docs/dev/sdlc.md#gate-tiers
+text_ref: docs/dev/sdlc.md#tooling
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-dev-sdlc-md-gate-tiers
+  - provenance:docs-dev-sdlc-md-tooling
   - lane:strict
 semantic_text: The pre-commit hook must check a merge being committed from its diff against its first parent with the same affected-check selection as any other commit, so a merge of a test-only branch runs that branch's checks and not the whole check.
 logic_claims:
@@ -40,4 +40,4 @@ The hook used to run the full check for every merge, about 37 minutes, which the
 
 > A merge needs no special case: while it is being committed, the staged diff is the merge's diff against its first parent (`HEAD`), so the selection covers what the merge brings in.
 
-docs/dev/sdlc.md#gate-tiers
+docs/dev/sdlc.md#tooling

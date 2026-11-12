@@ -1,12 +1,12 @@
 ---
 title: Downloads CI makes of its own, tool installs, test assets, release manifests and the cosign installer included, must be retried with backoff when the server answers 429 or 5xx or the connection fails, must never be retried on any other 4xx answer, and must keep their checksum checks as strict as before.
 status: open
-text_ref: docs/dev/sdlc.md#gate-tiers
+text_ref: docs/dev/sdlc.md#tooling
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-dev-sdlc-md-gate-tiers
+  - provenance:docs-dev-sdlc-md-tooling
   - lane:strict
 semantic_text: Downloads CI makes of its own, tool installs, test assets, release manifests and the cosign installer included, must be retried with backoff when the server answers 429 or 5xx or the connection fails, must never be retried on any other 4xx answer, and must keep their checksum checks as strict as before.
 logic_claims:
@@ -40,4 +40,4 @@ The envtest download failed a CI run with curl's exit 22 on a 504, and curl's ow
 
 > It never retries anything else: a 4xx answer other than 429, a certificate problem, a failed checksum or a compile error is final at once.
 
-docs/dev/sdlc.md#gate-tiers
+docs/dev/sdlc.md#tooling

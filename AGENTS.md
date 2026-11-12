@@ -33,4 +33,4 @@ Proposals (P), research (R), tensions (T) and open questions (OQ) are undecided:
 - Use the glossary's domain terms exactly.
 - Never weaken lint, tests or hooks to get green, and never use `--no-verify`. Fix the cause or ask.
 - Never commit to `main`.
-- Use `task` for everything: `task check` before handing work back (CI runs it on every pushed branch and `main` advances only after it is green; the pre-commit hook runs `task check:commit`, which prints each step's time), `task --list` for all targets, and `task setup` once per clone. Don't call tools directly when a target exists.
+- Use `task` for everything: `task check` before handing work back (the pre-commit hook runs `task check:commit`, which prints each step's time), `task --list` for all targets, and `task setup` once per clone. Don't call tools directly when a target exists.

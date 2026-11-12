@@ -1,12 +1,12 @@
 ---
 title: CI must cache the pinned tools by the versions the Taskfile pins, so that a run whose pinned versions did not change installs none of them again.
 status: open
-text_ref: docs/dev/sdlc.md#gate-tiers
+text_ref: docs/dev/sdlc.md#tooling
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-dev-sdlc-md-gate-tiers
+  - provenance:docs-dev-sdlc-md-tooling
   - lane:strict
 semantic_text: CI must cache the pinned tools by the versions the Taskfile pins, so that a run whose pinned versions did not change installs none of them again.
 logic_claims:
@@ -40,4 +40,4 @@ Every CI job installed the tools again, a large share of its time and of its exp
 
 > The setup action caches `.bin/` (without `.bin/e2e`, the e2e job's own state) with `actions/cache`, keyed by runner, job and a hash of the Taskfile's `*_VERSION` and checksum variables plus `go.mod`'s `go` and `toolchain` lines.
 
-docs/dev/sdlc.md#gate-tiers
+docs/dev/sdlc.md#tooling

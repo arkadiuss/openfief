@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# The gate the pre-commit hook leaves out is CI's, and the downloads CI makes retry (docs/dev/pipeline.md#gate-tiers;
-# kibi: TEST-tooling-ci-gate). Reads the real workflows, the setup action and the scripts: ci.yml runs on pushes to main and
-# to the implementation branch, its check job runs the whole `task check`, only main publishes, no workflow installs
+# The gate the pre-commit hook leaves out is CI's, and the downloads CI makes retry (docs/dev/pipeline.md#download-retries-and-the-tool-cache;
+# kibi: TEST-tooling-ci-gate). Reads the real workflows, the setup action and the scripts: ci.yml runs on pushes to main, its
+# check job runs the whole `task check`, only main publishes, no workflow installs
 # cosign except through the retrying composite action, and every download of ours goes through scripts/retry.sh.
 # Then a synthetic script with a bare download, which the download check must refuse. Needs gojq on PATH; offline.
 set -euo pipefail
@@ -33,8 +33,7 @@ yes_if() {
   if [ "$(gojq -r --yaml-input "$1" "$2")" = true ]; then echo yes; else echo no; fi
 }
 
-check "ci.yml runs on pushes to main and to the implementation branch" \
-  "$(yes_if '(.on // .true).push.branches | (index("main") != null) and (index("claude/openfief-implementation-*") != null)' "$ci")"
+check "ci.yml runs on pushes to main" "$(yes_if '(.on // .true).push.branches | index("main") != null' "$ci")"
 check "ci.yml still runs on pull requests to main" "$(yes_if '(.on // .true).pull_request.branches | index("main") != null' "$ci")"
 check "the check job runs the whole task check, on every push" \
   "$(yes_if '.jobs.check | (has("if") | not) and any(.steps[]; .run == "task check")' "$ci")"
