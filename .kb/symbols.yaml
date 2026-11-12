@@ -171804,3 +171804,25 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
+  - id: SYM-plugins-smokescreen-test-fn-close-watcher
+    title: closeWatcher
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T18:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-fn-close-watcher-close
+    title: closeWatcher.Close
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T18:30:03.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
