@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87c016e92d4d
+  - type: executable_for
+    from: SYM-e2e-secrets-test-audit-secret
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T20:03:45.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-369a4f1cb272

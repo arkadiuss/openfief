@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48b08190edf0
+  - type: executable_for
+    from: SYM-e2e-refusal-cli-check-agrees
+    to: TEST-e2e-cli-refusal
+    created_at: 2026-11-12T19:57:01.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05ce6e33c63d

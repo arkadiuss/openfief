@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f263b0d65ac9
+  - type: executable_for
+    from: SYM-e2e-refusal-cli-must-refuse
+    to: TEST-e2e-cli-refusal
+    created_at: 2026-11-12T19:57:05.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a943c33dc372

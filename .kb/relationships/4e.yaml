@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7edc03698a7
+  - type: executable_for
+    from: SYM-e2e-secrets-test-container-secret-names
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T20:03:31.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1086936aad33

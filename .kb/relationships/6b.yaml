@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b577162bea4
+  - type: verified_by
+    from: SCEN-e2e-uninstall-leaves-no-pod-or-secret
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-12T19:58:34.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb2820ae262b
+  - type: verified_by
+    from: SCEN-e2e-uninstall-leaves-no-pod-or-secret
+    to: TEST-e2e-data-path
+    created_at: 2026-11-12T19:58:34.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd94c37bee3a

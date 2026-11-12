@@ -171826,3 +171826,233 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-smokescreen-proxy
+  - id: SYM-e2e-refusal-cli-test-cli-refusal-agrees-with-operator
+    title: TestCLIRefusalAgreesWithOperator
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:56:41.469Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal
+  - id: SYM-e2e-refusal-cli-check-agrees
+    title: checkCLIAgreesWithOperator
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:56:57.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal
+  - id: SYM-e2e-refusal-cli-must-refuse
+    title: mustRefuseWithCLI
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:02.212Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal
+  - id: SYM-e2e-refusal-cli-check-nothing-applied
+    title: checkNothingApplied
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:06.809Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal
+  - id: SYM-e2e-refusal-cli-instance-deployed
+    title: kube.instanceDeployed
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:11.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal
+  - id: SYM-e2e-secrets-test-secret-rule
+    title: secretRule
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:25.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-fixed-secret-rules
+    title: fixedSecretRules
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:29.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-rule-for
+    title: ruleFor
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:34.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-pod-class
+    title: podClass
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:38.190Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-secrets-referenced-by
+    title: secretsReferencedBy
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:54.924Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-mounted-secrets
+    title: mountedSecrets
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:57:59.512Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-check-secrets-audit
+    title: checkSecretsAudit
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:58:03.545Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-connector-sync-until-deposit
+    title: syncUntilDeposit
+    status: active
+    sourceFile: test/e2e/connector_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:58:08.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-pods-holding-in
+    title: kube.podsHoldingIn
+    status: active
+    sourceFile: test/e2e/connector_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:58:12.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-until-uninstalled
+    title: untilUninstalled
+    status: active
+    sourceFile: test/e2e/connector_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T19:58:16.589Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-secrets-test-volume-secret-names
+    title: volumeSecretNames
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:23.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-container-secret-names
+    title: containerSecretNames
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:28.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-sensitive-value
+    title: sensitiveValue
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:33.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-pod-users
+    title: podUsers
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:37.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-audit-secret
+    title: auditSecret
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:42.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-missing-secret-problems
+    title: missingSecretProblems
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:46.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-secrets-test-sensitive-elsewhere
+    title: kube.sensitiveElsewhere
+    status: active
+    sourceFile: test/e2e/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:51.285Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-refusal-cli-check-operator-refusal
+    title: checkOperatorRefusal
+    status: active
+    sourceFile: test/e2e/refusal_cli_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T20:03:56.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-cli-refusal

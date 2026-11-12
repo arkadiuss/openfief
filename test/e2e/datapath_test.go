@@ -116,6 +116,14 @@ const (
 //     the UI drew them the core's log shows it calling nothing outside
 //     the read API but the session check and two lookups without
 //     numbers, and its pod reaches nothing but the core (charts_test.go);
+//   - criterion 14 (SCEN-e2e-secrets-audit-every-secret): with every
+//     instance's Secrets in place, every Secret of the openfief namespace has
+//     a declared rule, only the pods it allows use it and those it requires
+//     do (the core the database's; each instance its own, nothing else the
+//     operator's, the UI's or the proxy's), and no sensitive value of any of
+//     them is in a ConfigMap, a pod spec of the namespace, a Plugin, a
+//     PluginGrant or, for the connectors' credentials, the database
+//     (secrets_test.go);
 //   - criterion 19 (SCEN-e2e-model-portfolio-off-shows-nothing,
 //     SCEN-e2e-model-portfolio-backtest-hand-calculation): last, with the
 //     model portfolio off the read API answers 404 and the overview draws
@@ -141,7 +149,8 @@ func TestDataPath(t *testing.T) {
 	waitPluginReady(t, k, uiPlugin)
 	tokens := fixtureTokens{flex: syntheticCredential(t), eodhd: syntheticCredential(t)}
 	ca := deployFixture(t, k, tokens)
-	installDataPath(t, k, reg, dataPathInstances(ca, tokens))
+	instances := dataPathInstances(ca, tokens)
+	installDataPath(t, k, reg, instances)
 	p := &dataPath{k: k, token: issueToken(t, k), owner: signInOwner(t, k), fixtureCA: ca}
 	p.sleeve = firstSleeve(t, k, p.token)
 	p.ibkr, p.xtb, p.bonds = accountID(t, ibkrAccountName), accountID(t, xtbAccountName), accountID(t, bondsAccountName)
@@ -152,6 +161,7 @@ func TestDataPath(t *testing.T) {
 	p.rekeyBonds(t)
 	p.waitPrices(t)
 
+	checkSecretsAudit(t, k, mountedSecrets(instances))
 	p.checkDoubleEntry(t)
 	p.checkOpeningLots(t)
 	p.checkValues(t)

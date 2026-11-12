@@ -811,3 +811,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63c5e85c68f4
+  - type: constrains
+    from: REQ-m0-exit-11-operator-v2
+    to: FACT-SUBJECT-7CD4A7ADC3A2410F
+    created_at: 2026-11-12T19:56:11.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06ff35aec1ba
+  - type: requires_property
+    from: REQ-m0-exit-11-operator-v2
+    to: FACT-PROP-0D3F918331530383
+    created_at: 2026-11-12T19:56:11.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf856cd33333
+  - type: supersedes
+    from: REQ-m0-exit-11-operator-v2
+    to: REQ-m0-exit-11-operator
+    created_at: 2026-11-12T19:56:11.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aafe018944b6
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-no-grant-not-deployed
+    created_at: 2026-11-12T19:56:11.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db7e8ae94d03
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-tag-refused
+    created_at: 2026-11-12T19:56:11.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9611a4c3facd
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-unsigned-refused
+    created_at: 2026-11-12T19:56:11.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53f95dcf8dc2
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-untrusted-signer-refused
+    created_at: 2026-11-12T19:56:11.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d92be76faf3f
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-upgrade-waits-for-grant
+    created_at: 2026-11-12T19:56:11.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129e48162dc1
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-plugin-verified-when-catalog-pinned
+    created_at: 2026-11-12T19:56:11.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0d5d7857899
+  - type: specified_by
+    from: REQ-m0-exit-11-operator-v2
+    to: SCEN-e2e-cli-refusal-matches-operator
+    created_at: 2026-11-12T19:56:11.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cb76a0a55e1

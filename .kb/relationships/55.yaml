@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0369e461c22
+  - type: executable_for
+    from: SYM-e2e-refusal-cli-check-operator-refusal
+    to: TEST-e2e-cli-refusal
+    created_at: 2026-11-12T20:03:59.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a17bb12da34c
