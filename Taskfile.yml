@@ -668,7 +668,7 @@ tasks:
       # One retry: Rekor can answer 409 "equivalent entry already exists" when cosign's own upload retry follows a
       # write that landed; a second run signs with fresh ephemeral keys, so it can't conflict with the first.
       - >-
-        cosign sign --yes '{{.IMAGE}}' || { echo 'image:sign: retrying once'; sleep 10; cosign sign --yes '{{.IMAGE}}'; }
+        bash scripts/retry.sh cosign sign --yes '{{.IMAGE}}' || { echo 'image:sign: retrying once'; sleep 10; bash scripts/retry.sh cosign sign --yes '{{.IMAGE}}'; }
 
   trustroot:update:
     desc: Refresh the operator's bundled Sigstore trust root (D-56) through TUF; review the diff and commit it
@@ -700,7 +700,7 @@ tasks:
         pushed="$('{{.BIN}}/flux' push artifact "$artifact:$TAG" --path=dist/demo-manifests \
           --source="https://github.com/$REPO" --revision="$TAG@sha1:$(git rev-parse HEAD)" --output json)"
         ref="$(printf '%s' "$pushed" | '{{.BIN}}/gojq' -r '.repository + "@" + .digest')"
-        cosign sign --yes "$ref"
+        bash scripts/retry.sh cosign sign --yes "$ref"
         '{{.BIN}}/flux' tag artifact "$artifact:$TAG" --tag demo
         echo "deploy: $ref is the demo's app layer; Flux on the demo machine applies it within minutes"
 
@@ -843,7 +843,7 @@ tasks:
         set -e
         for f in dist/cli/openfief-*; do
           case "$f" in *.sigstore.json) continue ;; esac
-          cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
+          bash scripts/retry.sh cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
         done
 
   release:cli:verify:
