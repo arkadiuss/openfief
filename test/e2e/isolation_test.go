@@ -544,7 +544,10 @@ func checkXTBObjects(t *testing.T, k *kube, env *isolation) {
 			Egress: []string{core, proxy}, EgressPolicy: true,
 			Env:            []string{plugins.EnvHTTPSProxy, plugins.EnvNoProxy, operator.EnvEgressIdentityFile},
 			TokenAudiences: []string{plugins.CoreAudience, plugins.EgressAudience},
-			Listed:         true, AllowList: fxAllowList, Effective: []string{fxEgress + ":443"},
+			// installFXAt grants it the exempt host besides NBP (egressallowed_test.go).
+			Listed:    true,
+			AllowList: fxAllowList + egressFixtureHost + ":443\n",
+			Effective: []string{fxEgress + ":443", egressFixtureHost + ":443"},
 		},
 	}
 	for instance, w := range want {
