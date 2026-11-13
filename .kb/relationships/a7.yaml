@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c6865527458
+  - type: executable_for
+    from: SYM-e2e-spicedb-credentials-job-name
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T08:30:50.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-467f1bdc5bc3

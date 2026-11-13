@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38f5f2edfbdb
+  - type: implements
+    from: SYM-release-bundle-check-init-job
+    to: REQ-identity-credentials-job-core-image
+    created_at: 2026-11-13T08:30:36.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59fcb2efccd
+  - type: covered_by
+    from: SYM-release-bundle-check-init-job
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T08:30:36.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69152e2cbe13

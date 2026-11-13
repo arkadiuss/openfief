@@ -25,6 +25,9 @@
 #     nothing, renders the bundle this way so that everything but the digests is checked.
 # An image the install names that already carries its digest is a third party's (SpiceDB; the Job that generates the
 # platform's credentials runs the core's image, D-216): it stays as the base pins it, and is neither given nor verified here, since only images.yml signs ours.
+# That Job is named per release, since its pod template can't change and the core's image does: the bundle renames it
+# openfief-init-credentials-<version>, the version lowercased with dots and pluses as dashes, which must keep the name
+# a DNS-1123 label of 63 characters at most (deploy/spicedb/secrets.yaml). Its label app.kubernetes.io/name stays.
 # Every other image the install names must get a digest. With VERIFY=1 and REPO=<owner/repo> (the release workflow), each
 # pinned image must also carry a keyless cosign signature from that repository's images.yml on main, for that same
 # digest (scripts/verified-digest.sh, which needs cosign and gojq).
@@ -57,6 +60,18 @@ fail() {
 # The version names the files, so it may hold only what a file name and a tag can.
 [[ "$version" =~ ^[0-9A-Za-z][0-9A-Za-z.-]*$ ]] || fail "'$version' is not a version"
 
+# init_job is the base's name of the Job that generates the platform's credentials, and init_job_name prints the name the
+# bundle gives it for version $1: init_job-<version>, DNS-1123 safe, or fails when that is longer than 63 characters.
+init_job=openfief-init-credentials
+init_job_name() {
+  local suffix name
+  suffix="$(tr '[:upper:]' '[:lower:]' <<<"$1" | tr '.+' '--' | sed 's/-*$//')"
+  name="$init_job-$suffix"
+  [[ "$name" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$ && ${#name} -le 63 ]] ||
+    fail "'$1' makes the Job name '$name', which is not a DNS label of at most 63 characters"
+  printf '%s\n' "$name"
+}
+
 # check_cnpg fails unless CNPG names CloudNativePG's release manifest, cnpg-<version>.yaml as upstream names it,
 # with the pinned sha256 CNPG_SHA256.
 check_cnpg() {
@@ -86,6 +101,16 @@ check_database() {
 install_images() {
   gojq -r --yaml-input -s \
     '[.[] | .. | objects | (.containers?, .initContainers?) // empty | .[] | .image] | unique | .[]' "$1"
+}
+
+# check_init_job fails unless the manifests in file $1 hold exactly one Job labelled app.kubernetes.io/name=openfief-init-credentials,
+# named for the version, and no Job under the base's name.
+check_init_job() {
+  local jobs
+  jobs="$(gojq -r --yaml-input -s \
+    '[.[] | select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .metadata.name] | join(",")' "$1")"
+  [ "$jobs" = "$(init_job_name "$version")" ] ||
+    fail "the install must hold one Job labelled app.kubernetes.io/name=$init_job, named $(init_job_name "$version"), not: '$jobs'"
 }
 
 # check_no_exemption fails if a manifest in file $1 sets the egress proxy's test-only exemption from its refused
@@ -136,13 +161,16 @@ given_images() {
   done
 }
 
-# pin writes to $2 a kustomization that sets each image of base file $1 to its given digest, and prints nothing.
+# pin writes to $2 a kustomization that sets each image of base file $1 to its given digest and names the credentials
+# Job for the version, and prints nothing.
 # It fails when the install names an image that isn't a bare repository, or one without a given digest.
 pin() {
   local base="$1" kustomization="$2" image name ref
   declare -A used=()
-  printf 'apiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\nresources:\n  - %s\nimages:\n' \
+  printf 'apiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\nresources:\n  - %s\n' \
     "$(basename "$base")" >"$kustomization"
+  printf 'patches:\n  - target:\n      kind: Job\n      name: %s\n    patch: |-\n      - op: replace\n        path: /metadata/name\n        value: %s\nimages:\n' \
+    "$init_job" "$(init_job_name "$version")" >>"$kustomization"
   while IFS= read -r image; do
     name="${image##*/}"
     if [[ "$image" =~ ^[a-z0-9][a-z0-9._:/-]*:[A-Za-z0-9_][A-Za-z0-9_.-]*@${digest_re}$ ]]; then
@@ -206,6 +234,7 @@ done >"$work/install/base.yaml"
 pin "$work/install/base.yaml" "$work/install/kustomization.yaml"
 kustomize build "$work/install" >"$work/install.yaml"
 check_pinned "$work/install.yaml"
+check_init_job "$work/install.yaml"
 check_no_exemption "$work/install.yaml"
 if [ "${VERIFY:-0}" = 1 ]; then
   verify "$work/install.yaml"

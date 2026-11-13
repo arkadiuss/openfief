@@ -79,18 +79,25 @@ registry.example.org:5000/e2e/core@$da"
   gojq -e --yaml-input -s 'any(.[]; .kind == "Deployment" and .metadata.name == "openfief-core")' \
     "a/openfief-install-$version.yaml" >/dev/null || fail_case "the install has no core Deployment"
   # The credentials Job runs the core's image, the very digest the core runs, and `core init-credentials` (D-216).
-  job_image="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job" and .metadata.name == "openfief-spicedb-secrets") | .spec.template.spec.containers[] | "\(.image) \(.args | join(" "))"] | join(",")' "a/openfief-install-$version.yaml")"
+  job_image="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .spec.template.spec.containers[] | "\(.image) \(.args | join(" "))"] | join(",")' "a/openfief-install-$version.yaml")"
   [ "$job_image" = "registry.example.org:5000/e2e/core@$da init-credentials" ] ||
     fail_case "the credentials Job runs '$job_image', want the core's image with init-credentials"
+  # The Job is named for the release (its pod template can't change, and the image does) under a stable label, and the
+  # base's name is gone, so an upgrade makes a new Job and Flux prunes the old.
+  job_names="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job") | "\(.metadata.name)=\(.metadata.labels["app.kubernetes.io/name"])"] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$job_names" = "openfief-init-credentials-2026-11-0-alpha-1=openfief-init-credentials" ] ||
+    fail_case "the install's Jobs are '$job_names', want openfief-init-credentials-2026-11-0-alpha-1 with the label openfief-init-credentials"
+  pod_label="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job") | .spec.template.metadata.labels["app.kubernetes.io/name"]] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$pod_label" = "openfief-init-credentials" ] || fail_case "the Job's pod is labelled '$pod_label', which the NetworkPolicy selects"
   # The one right to create a Secret in the whole install is that Job's Role, which grants it and nothing else (D-216):
   # no Role or ClusterRole, wildcards included, may create a Secret, but that one, in the openfief namespace.
   creators="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Role" or .kind == "ClusterRole") | select(any(.rules[]?; ((.resources // []) | any(. == "secrets" or . == "*")) and ((.verbs // []) | any(. == "create" or . == "*")))) | "\(.kind) \(.metadata.namespace // "-")/\(.metadata.name)"] | join(",")' "a/openfief-install-$version.yaml")"
-  [ "$creators" = "Role openfief/openfief-spicedb-secrets" ] || fail_case "the install's Roles that may create Secrets: '$creators'"
-  rules="$(gojq -c --yaml-input -s '[.[] | select(.kind == "Role" and .metadata.name == "openfief-spicedb-secrets") | .rules] | .[]' "a/openfief-install-$version.yaml")"
+  [ "$creators" = "Role openfief/openfief-init-credentials" ] || fail_case "the install's Roles that may create Secrets: '$creators'"
+  rules="$(gojq -c --yaml-input -s '[.[] | select(.kind == "Role" and .metadata.name == "openfief-init-credentials") | .rules] | .[]' "a/openfief-install-$version.yaml")"
   [ "$rules" = '[{"apiGroups":[""],"resources":["secrets"],"verbs":["create"]}]' ] || fail_case "the credentials Job's Role grants $rules, want create on secrets alone"
   # Only its own ServiceAccount is bound to it, and no ClusterRoleBinding names it.
-  bound="$(gojq -r --yaml-input -s '[.[] | select(.kind == "RoleBinding" and .roleRef.name == "openfief-spicedb-secrets") | .subjects[] | "\(.kind) \(.namespace)/\(.name)"] | join(",")' "a/openfief-install-$version.yaml")"
-  [ "$bound" = "ServiceAccount openfief/openfief-spicedb-secrets" ] || fail_case "the credentials Job's Role is bound to '$bound'"
+  bound="$(gojq -r --yaml-input -s '[.[] | select(.kind == "RoleBinding" and .roleRef.name == "openfief-init-credentials") | .subjects[] | "\(.kind) \(.namespace)/\(.name)"] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$bound" = "ServiceAccount openfief/openfief-init-credentials" ] || fail_case "the credentials Job's Role is bound to '$bound'"
   # The database the install brings by default (D-14): exactly the cluster the install reads, and nothing it runs.
   database="$(gojq -r --yaml-input -s '[.[] | select(. != null) | "\(.apiVersion) \(.kind) \(.metadata.namespace)/\(.metadata.name) \(.spec.bootstrap.initdb.database)/\(.spec.bootstrap.initdb.owner)"] | join(",")' \
     "a/openfief-db-$version.yaml")"
@@ -187,13 +194,16 @@ for base in operator egress-proxy core spicedb; do
   printf 'apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: %s\nspec:\n  template:\n    spec:\n      containers:\n        - name: %s\n          image: ghcr.io/arkadiuss/openfief/%s\n' \
     "$base" "$base" "$base" >"fake/$base/deployment.yaml"
 done
+# The stand-in for deploy/spicedb also holds the credentials Job, as the real one does, so the bundle can name it.
+printf 'resources:\n  - deployment.yaml\n  - job.yaml\n' >fake/spicedb/kustomization.yaml
+printf 'apiVersion: batch/v1\nkind: Job\nmetadata:\n  name: openfief-init-credentials\n  labels:\n    app.kubernetes.io/name: openfief-init-credentials\nspec:\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/name: openfief-init-credentials\n    spec:\n      restartPolicy: Never\n      containers:\n        - name: init-credentials\n          image: ghcr.io/arkadiuss/openfief/core\n' >fake/spicedb/job.yaml
 sed -i 's|openfief/core$|openfief/core:latest|' fake/core/deployment.yaml
 deploy="$work/fake" expect_fail "a base image with a tag" "with a tag or digest" "$version" d "${refs[@]}"
 sed -i 's|openfief/core:latest$|openfief/core|' fake/core/deployment.yaml
 # SpiceDB's stand-in is a third party's image with tag and digest, which the bundle leaves as it is; by tag alone it
 # can't be pinned without hiding the tag.
 sed -i "s|image: ghcr.io/arkadiuss/openfief/spicedb$|image: quay.io/example/x:1.0.0@$da|" fake/spicedb/deployment.yaml
-deploy="$work/fake" run "$version" f "${refs[@]}" >/dev/null || fail_case "a third-party image with tag and digest wasn't left as it is"
+out="$(deploy="$work/fake" run "$version" f "${refs[@]}")" || fail_case "a third-party image with tag and digest wasn't left as it is: $out"
 grep -qF "quay.io/example/x:1.0.0@$da" "f/openfief-install-$version.yaml" || fail_case "the third-party image wasn't kept as the base pins it"
 sed -i "s|image: quay.io/example/x:1.0.0@.*$|image: quay.io/example/x:1.0.0|" fake/spicedb/deployment.yaml
 deploy="$work/fake" expect_fail "a third-party image by tag alone" "with a tag or digest" "$version" d "${refs[@]}"
@@ -217,6 +227,22 @@ sed -i 's|name: openfief-db$|name: other-db|' fake/database/openfief-db.yaml
 deploy="$work/fake" expect_fail "a database the install doesn't read" "exactly the Cluster openfief/openfief-db" \
   "$version" d "${refs[@]}"
 [ ! -e d ] || fail_case "a refused database wrote files"
+
+# The Job's name carries the version whatever it holds: lowercased, dots as dashes, a DNS label of at most 63 characters.
+if ! out="$(run 2026.11.0-RC.2 g "${refs[@]}")"; then
+  fail_case "a version with dots and capitals: $out"
+else
+  got="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job") | .metadata.name] | join(",")' g/openfief-install-2026.11.0-RC.2.yaml)"
+  [ "$got" = "openfief-init-credentials-2026-11-0-rc-2" ] || fail_case "the Job for 2026.11.0-RC.2 is '$got'"
+fi
+# A '+' can't reach a file name or a tag, so the version check refuses it before the Job's name could be wrong.
+expect_fail "a version with a plus" "is not a version" "2026.11.0+build.5" h "${refs[@]}"
+expect_fail "a version too long for the Job's name" "not a DNS label of at most 63 characters" \
+  "1.0.0-alpha.$(printf '1%.0s' {1..40})" i "${refs[@]}"
+[ ! -e i ] || fail_case "a version too long for the Job's name wrote files"
+# A base without the Job leaves a bundle that can't run its credentials: refused.
+mkdir -p "$work/nojob" && cp -r fake/. "$work/nojob/" && sed -i 's|name: other-db$|name: openfief-db|' "$work/nojob/database/openfief-db.yaml" && printf 'resources:\n  - deployment.yaml\n' >"$work/nojob/spicedb/kustomization.yaml"
+deploy="$work/nojob" expect_fail "an install without the credentials Job" "the install must hold one Job labelled" "$version" j "${refs[@]}"
 
 # The install guide names the CloudNativePG release and the sha256 the Taskfile pins, which the bundle ships.
 pinned_version="$(sed -n 's/^  CNPG_VERSION: *//p' "$root/Taskfile.yml")"

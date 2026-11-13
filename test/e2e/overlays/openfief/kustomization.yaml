@@ -8,6 +8,8 @@
 # with that key, so the operator deploys it as on the demo and the core proxies browsers to it (D-81). The demo's nbp
 # instance keeps its placeholder digest and never runs: it would call NBP's real API, and the suite calls no external
 # institution; ../../plugins_test.go runs nbp-fx as an instance that doesn't.
+# The Job that generates SpiceDB's credentials keeps the demo's name, openfief-init-credentials-000000000000 (these are
+# tags, with no digest to name it for); the suite finds it by its label, app.kubernetes.io/name=openfief-init-credentials.
 # Everything else, args and policies included, is the demo's, so a failure here is a failure on the demo.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

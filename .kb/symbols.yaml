@@ -176207,3 +176207,62 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-spicedb
+  - id: SYM-release-bundle-init-job-name
+    title: init_job_name
+    status: active
+    sourceFile: scripts/release-bundle.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T08:30:28.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-identity-credentials-job-core-image
+  - id: SYM-release-bundle-check-init-job
+    title: check_init_job
+    status: active
+    sourceFile: scripts/release-bundle.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T08:30:33.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-identity-credentials-job-core-image
+  - id: SYM-demo-name-init-job
+    title: name_init_job
+    status: active
+    sourceFile: scripts/demo/pin-images.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T08:30:38.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-pin-images
+      - type: implements
+        target: REQ-identity-credentials-job-core-image
+  - id: SYM-e2e-spicedb-credentials-job
+    title: credentialsJob
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T08:30:43.586Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-credentials-job-name
+    title: credentialsJobName
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T08:30:48.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb

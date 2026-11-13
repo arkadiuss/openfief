@@ -3,6 +3,8 @@
 # `images:` in <dir>/openfief/kustomization.yaml it verifies <image>:<tag> with cosign against the keyless
 # identity of this repository's images workflow on main, and writes the digest that verified. It fails if any
 # image doesn't verify or a placeholder digest is left. CI runs it on its own checkout, then publishes the result.
+# It also names the Job that generates the platform's credentials for the core's digest, openfief-init-credentials-<the
+# first 12 hex digits>, so a new image is a new Job (a Job's pod template is immutable) and Flux prunes the old one.
 # Usage: pin-images.sh <tag> <owner/repo> [deploy/demo directory]
 set -euo pipefail
 
@@ -43,6 +45,18 @@ set_digest() {
   printf '%s\n' "$out" >"$file"
 }
 
+# name_init_job sets the suffix of the credentials Job's name in a kustomization to the first 12 hex digits of core
+# digest $2, and fails when the kustomization doesn't name the Job.
+name_init_job() {
+  local file="$1" short="${2:7:12}" out
+  out="$(sed -E "s/^( +value: openfief-init-credentials-)[0-9a-f]{12}\$/\1$short/" "$file")"
+  grep -q "^ *value: openfief-init-credentials-$short\$" <<<"$out" || {
+    echo "pin-images: no credentials Job name to set in $file" >&2
+    return 1
+  }
+  printf '%s\n' "$out" >"$file"
+}
+
 # pin_images pins every listed image and fails if a placeholder is left.
 pin_images() {
   local tag="$1" repo="$2" dir="${3:-deploy/demo}" kustomization image digest
@@ -54,9 +68,10 @@ pin_images() {
   for image in $(image_names "$kustomization"); do
     digest="$(verified_digest "$image" "$tag" "$repo")"
     set_digest "$kustomization" "$image" "$digest"
+    [[ "$image" != */core ]] || name_init_job "$kustomization" "$digest"
     echo "pin-images: $image:$tag -> $digest"
   done
-  if grep -q "$placeholder" "$kustomization"; then
+  if grep -q "$placeholder\|openfief-init-credentials-000000000000" "$kustomization"; then
     echo "pin-images: a placeholder digest is left in $kustomization" >&2
     return 1
   fi

@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eebcb7f2fa84
+  - type: implements
+    from: SYM-demo-name-init-job
+    to: REQ-identity-credentials-job-core-image
+    created_at: 2026-11-13T08:30:40.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2c69c59ad7b
+  - type: covered_by
+    from: SYM-demo-name-init-job
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-11-13T08:30:40.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd30a3573ebc

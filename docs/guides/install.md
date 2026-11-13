@@ -129,6 +129,15 @@ for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do
 done
 ```
 
+The install file holds a Job that generates SpiceDB's two credentials the first time. A Job's pod template can't change once it exists and every release has a new core image, so the Job is named for the release, `openfief-init-credentials-<version>`, and carries the label `app.kubernetes.io/name=openfief-init-credentials`: an upgrade applies a new Job, which keeps the Secrets that exist and rotates nothing. With plain `kubectl`, the completed Jobs of earlier releases stay, one per upgrade, and do no harm. To clear them, delete them before you apply the next release, or prune them after it:
+
+```bash
+kubectl -n openfief delete job -l app.kubernetes.io/name=openfief-init-credentials
+kubectl apply --server-side --prune --prune-allowlist=batch/v1/Job -l app.kubernetes.io/name=openfief-init-credentials -f "openfief-install-$VERSION.yaml"
+```
+
+The first command is plain: it deletes the Jobs before the apply, and the apply makes this release's again, which only keeps the Secrets. The second applies the objects that carry the label (the Job and its ServiceAccount, Role, RoleBinding and policy) and deletes the Jobs with the label that this file no longer holds; run it after the ordinary apply, not instead of it.
+
 Nothing is exposed outside the cluster: every Service is a ClusterIP (D-28). [Expose OpenFief](expose.md) adds a route when you want one.
 
 ## 6. Install the built-in UI

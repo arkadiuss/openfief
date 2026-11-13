@@ -73,9 +73,9 @@ check "no policy of the spicedb base names a plugin" \
 check "the core's own policy names SpiceDB nowhere, so the base without it is unchanged" \
   "$(policy openfief-core) | [.spec.egress[].to[]?.podSelector.matchLabels[\"app.kubernetes.io/name\"]?] | all(. != \"openfief-spicedb\")" "$work/core.yaml"
 check "the credentials Job reaches the API server and DNS only, and nothing reaches it" \
-  "$(policy openfief-spicedb-secrets) | .spec.policyTypes == [\"Ingress\", \"Egress\"] and (.spec.ingress // []) == [] and (.spec.egress | length == 2) and .spec.egress[0].ports == [{protocol: \"TCP\", port: 6443}] and (.spec.egress[1].to[0].podSelector.matchLabels[\"k8s-app\"] == \"kube-dns\")" "$work/spicedb.yaml"
+  "$(policy openfief-init-credentials) | .spec.policyTypes == [\"Ingress\", \"Egress\"] and (.spec.ingress // []) == [] and (.spec.egress | length == 2) and .spec.egress[0].ports == [{protocol: \"TCP\", port: 6443}] and (.spec.egress[1].to[0].podSelector.matchLabels[\"k8s-app\"] == \"kube-dns\")" "$work/spicedb.yaml"
 check "SpiceDB's ServiceAccount has no API rights and no token; only the credentials Job may create Secrets" \
-  "([.[] | select(.kind == \"ServiceAccount\" and .metadata.name == \"openfief-spicedb\") | .automountServiceAccountToken] == [false]) and ([.[] | select(.kind == \"RoleBinding\" or .kind == \"ClusterRoleBinding\") | .subjects[].name] == [\"openfief-spicedb-secrets\"]) and ([.[] | select(.kind == \"Role\") | .rules[]] == [{apiGroups: [\"\"], resources: [\"secrets\"], verbs: [\"create\"]}])" "$work/spicedb.yaml"
+  "([.[] | select(.kind == \"ServiceAccount\" and .metadata.name == \"openfief-spicedb\") | .automountServiceAccountToken] == [false]) and ([.[] | select(.kind == \"RoleBinding\" or .kind == \"ClusterRoleBinding\") | .subjects[].name] == [\"openfief-init-credentials\"]) and ([.[] | select(.kind == \"Role\") | .rules[]] == [{apiGroups: [\"\"], resources: [\"secrets\"], verbs: [\"create\"]}])" "$work/spicedb.yaml"
 
 if [ "$failures" -ne 0 ]; then
   echo "network-policies: $failures of $cases cases failed" >&2

@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"maps"
 	"net/http"
 	"slices"
 	"strings"
@@ -33,7 +34,9 @@ const (
 	// spicedbRoleName the Secret of the password of SpiceDB's role in the openfief-db cluster.
 	spicedbPresharedName = "openfief-spicedb-key"
 	spicedbRoleName      = "openfief-db-spicedb"
-	spicedbJob           = "openfief-spicedb-secrets"
+	// spicedbJobApp is the stable label of the Job that generates them, on the Job and its pod: the Job's name carries
+	// the release, or the core image's digest on a dev build, so it is found by this label (deploy/spicedb).
+	spicedbJobApp = "openfief-init-credentials"
 	// spicedbDatabase is the CloudNativePG Database SpiceDB's datastore is.
 	spicedbDatabase = "openfief-db-spicedb"
 	// authzSpiceDBFlag and authzInsecureFlag switch the core to SpiceDB, plaintext on the Service behind its policy.
@@ -68,7 +71,7 @@ func TestSpiceDBDeployed(t *testing.T) {
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
 	waitSpiceDBAvailable(t, k)
-	waitJobComplete(t, k, spicedbJob)
+	waitJobComplete(t, k, credentialsJobName(t, k))
 
 	key := secretValue(t, k, spicedbPresharedName, "key")
 	password := secretValue(t, k, spicedbRoleName, "password")
@@ -91,7 +94,7 @@ func TestSpiceDBDeployed(t *testing.T) {
 	}
 	checkSpiceDBPod(t, &d.Spec.Template.Spec)
 
-	for _, app := range []string{spicedbDeployment, coreDeployment, spicedbJob} {
+	for _, app := range []string{spicedbDeployment, coreDeployment, spicedbJobApp} {
 		logs := podLogs(t.Context(), t, k, app)
 		for name, value := range map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password} {
 			if bytes.Contains(logs, value) {
@@ -103,21 +106,41 @@ func TestSpiceDBDeployed(t *testing.T) {
 	checkCredentialsKept(t, k, job, map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password})
 }
 
+// credentialsJob returns the one Job that generates the credentials, found by its stable label: its name is
+// per release (deploy/spicedb), so the test can't know it.
+func credentialsJob(t *testing.T, k *kube) *batchv1.Job {
+	t.Helper()
+	jobs, err := k.clients.BatchV1().Jobs(namespace).List(t.Context(), metav1.ListOptions{LabelSelector: appLabel + "=" + spicedbJobApp})
+	if err != nil {
+		t.Fatalf("listing the credentials Jobs: %v", err)
+	}
+	if len(jobs.Items) != 1 {
+		t.Fatalf("%d Jobs are labelled %s=%s, want 1", len(jobs.Items), appLabel, spicedbJobApp)
+	}
+	if want := spicedbJobApp + "-"; !strings.HasPrefix(jobs.Items[0].Name, want) {
+		t.Errorf("the credentials Job is named %s, want a name per release, %s<suffix>", jobs.Items[0].Name, want)
+	}
+	return &jobs.Items[0]
+}
+
+// credentialsJobName returns the name of the credentials Job.
+func credentialsJobName(t *testing.T, k *kube) string {
+	t.Helper()
+	return credentialsJob(t, k).Name
+}
+
 // checkCredentialsJob checks that the Job that generated the credentials runs the
 // core's own image, as the Deployment of the core does, with `init-credentials`
 // and a hardened container (D-216), and returns it.
 func checkCredentialsJob(t *testing.T, k *kube) *batchv1.Job {
 	t.Helper()
-	job, err := k.clients.BatchV1().Jobs(namespace).Get(t.Context(), spicedbJob, metav1.GetOptions{})
-	if err != nil {
-		t.Fatalf("getting Job %s: %v", spicedbJob, err)
-	}
+	job := credentialsJob(t, k)
 	core, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
 	if err != nil {
 		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
 	}
 	if len(job.Spec.Template.Spec.Containers) != 1 || len(core.Spec.Template.Spec.Containers) == 0 {
-		t.Fatalf("Job %s has %d containers, want 1", spicedbJob, len(job.Spec.Template.Spec.Containers))
+		t.Fatalf("Job %s has %d containers, want 1", job.Name, len(job.Spec.Template.Spec.Containers))
 	}
 	c := &job.Spec.Template.Spec.Containers[0]
 	if want := core.Spec.Template.Spec.Containers[0].Image; c.Image != want || !strings.Contains(c.Image, "@sha256:") {
@@ -156,14 +179,18 @@ func checkCredentialsKept(t *testing.T, k *kube, job *batchv1.Job, values map[st
 // completes, deletes it when t ends, and returns its pod's log.
 func rerunCredentialsJob(t *testing.T, k *kube, job *batchv1.Job) []byte {
 	t.Helper()
-	name := spicedbJob + "-again"
+	name := job.Name + "-again"
+	// The Job's own label differs from the stable one, so the credentials Job stays the only one found by it; the pod
+	// keeps the label the Job's NetworkPolicy selects.
+	jobLabels := maps.Clone(job.Labels)
+	jobLabels[appLabel] = spicedbJobApp + "-again"
 	again := &batchv1.Job{
-		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace, Labels: job.Labels},
+		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace, Labels: jobLabels},
 		Spec: batchv1.JobSpec{
 			BackoffLimit:          job.Spec.BackoffLimit,
 			ActiveDeadlineSeconds: job.Spec.ActiveDeadlineSeconds,
 			Template: corev1.PodTemplateSpec{
-				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{appLabel: spicedbJob, "app.kubernetes.io/part-of": "openfief"}},
+				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{appLabel: spicedbJobApp, "app.kubernetes.io/part-of": "openfief"}},
 				Spec:       job.Spec.Template.Spec,
 			},
 		},
