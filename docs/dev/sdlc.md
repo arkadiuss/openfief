@@ -26,6 +26,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 ## Commits and PRs
 
 - Conventional Commits; release notes are generated from them **(P)**.
+- Every commit carries its author's DCO sign-off, `git commit -s` (D-5): the `commit-msg` hook refuses one without it, and CI checks pull requests and every push to `main`.
 - One concern per PR. The PR says which requirements or decisions it implements and how it was verified.
 - Never bypass hooks, and never skip, disable or quarantine tests.
 

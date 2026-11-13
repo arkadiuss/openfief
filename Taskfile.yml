@@ -643,6 +643,13 @@ tasks:
     cmds:
       - bash scripts/dco-check.sh '{{.BASE}}' '{{.HEAD}}'
 
+  dco:message:
+    desc: 'DCO sign-off check (D-5) of the message of the commit being made, as the commit-msg hook runs it, e.g. task dco:message MSG=.git/COMMIT_EDITMSG'
+    requires:
+      vars: [MSG]
+    cmds:
+      - bash scripts/dco-check.sh --message '{{.MSG}}'
+
   ci:images:
     desc: 'JSON list of the images CI builds (cmd/*/Dockerfile, plugins/*/Dockerfile; KIND=plugins or commands for one kind), e.g. task ci:images PREFIX=ghcr.io/owner/openfief'
     silent: true

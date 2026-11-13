@@ -1199,6 +1199,16 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-dco
+  - id: SYM-dco-check-test-message
+    title: message
+    status: active
+    sourceFile: scripts/tests/dco-check.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-dco
   - id: SYM-ci-images-images
     title: images
     status: active
