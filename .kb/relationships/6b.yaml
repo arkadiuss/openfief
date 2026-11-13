@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f87487ebb76a
+  - type: executable_for
+    from: SYM-access-identity-connectapi-access-test-testaccesscallsareowneronly
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:12:48.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a28da77477c
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-testaccesspage
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:16:14.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-774d6136549c

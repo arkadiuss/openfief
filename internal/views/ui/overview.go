@@ -260,6 +260,7 @@ func (s *server) home(r *http.Request, sess session, date kernel.Date, accounts 
 		return "overview", homeErr
 	}
 	data.Status = statusLine{ValuedThrough: latestValued(statuses), Open: data.Open, Failing: data.Failing}
+	data.Ask.Model = s.askHasModel(r, sess)
 	if q := r.URL.Query().Get(askParam); q != "" {
 		card, askErr := s.ask.answer(r, sess, q)
 		if askErr != nil {

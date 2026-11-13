@@ -153,7 +153,7 @@ func firstGroup(p *regexp.Regexp, s string, names ...string) string {
 // showKindOf returns what a show command's word names.
 func showKindOf(word string) showKind {
 	switch word {
-	case "account":
+	case accountParam:
 		return showAccount
 	case dimSleeve:
 		return showSleeve
@@ -182,9 +182,9 @@ func parseAllocation(word string) (askQuery, bool) {
 func parsePeriod(words string, today kernel.Date) (askPeriod, bool) {
 	fixed := map[string]periodKind{
 		"": periodYear, labelThisYear: periodYear, "ytd": periodYear, "year to date": periodYear, "year": periodYear,
-		"this month": periodMonth, "month": periodMonth, "mtd": periodMonth,
+		labelThisMonth: periodMonth, "month": periodMonth, "mtd": periodMonth,
 		"last 12 months": periodTwelveMonths, "12 months": periodTwelveMonths, "1y": periodTwelveMonths,
-		"last year": periodLastYear, "all": periodAll, "all time": periodAll, "since tracking began": periodAll,
+		labelLastYear: periodLastYear, tabAll: periodAll, "all time": periodAll, "since tracking began": periodAll,
 		"since the start": periodAll,
 	}
 	if k, ok := fixed[words]; ok {
@@ -253,6 +253,12 @@ func pad2(s string) string {
 // labelThisYear names the default period.
 const labelThisYear = "this year"
 
+// labelThisMonth names the month period.
+const labelThisMonth = "this month"
+
+// labelLastYear names the last calendar year period.
+const labelLastYear = "last year"
+
 // span is a performance command's days: its first, the zero date for the
 // charts' default start, and its last, with the words naming it.
 type span struct {
@@ -269,11 +275,11 @@ func periodRange(p askPeriod, to kernel.Date) span {
 	case periodYear:
 		return span{yearStart(to.Year()), to, labelThisYear}
 	case periodMonth:
-		return span{monthStart(to), to, "this month"}
+		return span{monthStart(to), to, labelThisMonth}
 	case periodTwelveMonths:
 		return span{to.AddDays(-daysInYear), to, "over the last 12 months"}
 	case periodLastYear:
-		return span{yearStart(to.Year() - 1), yearStart(to.Year()).AddDays(-1), "last year"}
+		return span{yearStart(to.Year() - 1), yearStart(to.Year()).AddDays(-1), labelLastYear}
 	case periodAll:
 		return span{kernel.Date{}, to, "since tracking began"}
 	case periodSince:

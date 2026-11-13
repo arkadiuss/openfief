@@ -1042,3 +1042,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7de876666477
+  - type: implements
+    from: SYM-access-views-ui-access-tokenholder
+    to: REQ-ui-access-script-tokens
+    created_at: 2026-11-13T18:14:58.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c31b27c70fd
+  - type: covered_by
+    from: SYM-access-views-ui-access-tokenholder
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:14:58.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b68395666216
+  - type: implements
+    from: SYM-access-views-ui-access-postedfields
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:15:14.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca30291dd834
+  - type: covered_by
+    from: SYM-access-views-ui-access-postedfields
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:14.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c15922890bc

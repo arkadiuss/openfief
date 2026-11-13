@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e810e9a5291
+  - type: implements
+    from: SYM-access-views-ui-access-server-createtokenfailed
+    to: REQ-ui-access-script-tokens
+    created_at: 2026-11-13T18:15:25.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6548565f0e4d
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-createtokenfailed
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:25.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1faa4015c06
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-scripted-reply
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:26:26.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-add971a147a1

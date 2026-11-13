@@ -1049,3 +1049,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-402a708cb259
+  - type: implements
+    from: SYM-ask-model-modelrouter-go-with-ask-model-service
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:19:44.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8817adbfa508
+  - type: covered_by
+    from: SYM-ask-model-modelrouter-go-with-ask-model-service
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:44.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86d3c4ce071b
+  - type: implements
+    from: SYM-ask-model-ask-go-askers
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:19:49.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec3c60bba7b1
+  - type: covered_by
+    from: SYM-ask-model-ask-go-askers
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:19:49.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a5be97a948
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-available
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:53.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bacdfc2e7737

@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a01d29ff22d
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-scope-sessions
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:18:10.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c44c85a98c38
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-response-descriptor
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:36:18.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-810b6c931157
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-response-descriptor
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:36:18.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8ab1825998f

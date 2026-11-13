@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ca5b3e54108
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-ask-message-string
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:36:40.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f89fcffa87f
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-ask-message-string
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:36:40.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee758020159

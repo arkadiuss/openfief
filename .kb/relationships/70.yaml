@@ -622,3 +622,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76f9932c7068
+  - type: validates
+    from: TEST-models-app-ask
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:12:10.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67d7d6cc6f88
+  - type: validates
+    from: TEST-models-app-ask
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:12:10.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ef80f3b6b1e
+  - type: validates
+    from: TEST-models-app-ask
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:12:10.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b46b5118db22
+  - type: implements
+    from: SYM-ask-model-asktools-go-value-query
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:49.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d51cc5abe6a
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-value-query
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:49.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13678227b6b5
+  - type: implements
+    from: SYM-ask-model-asktools-go-value-tool
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:59:51.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c496d13ada7
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-value-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:59:51.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03bfb8bb39ac

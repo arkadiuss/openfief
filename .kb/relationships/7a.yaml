@@ -895,3 +895,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee031f1244d6
+  - type: executable_for
+    from: SYM-ask-model-askmodel-page-test-go-test-ask-box-answers-beyond-its-commands-with-amodel
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:27:42.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b59ab53d9bae
+  - type: executable_for
+    from: SYM-ask-limits-test-rewritehost
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T20:02:23.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc1b78ae4399

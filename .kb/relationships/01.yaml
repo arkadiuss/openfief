@@ -1126,3 +1126,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e69c7048908
+  - type: implements
+    from: SYM-access-identity-app-owner-viewpluginaccess
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:12:11.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e66faa33b157
+  - type: covered_by
+    from: SYM-access-identity-app-owner-viewpluginaccess
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:12:11.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b866d046a911
+  - type: executable_for
+    from: SYM-ask-limits-test-testrequestbodyrequiresparametersonopenrouterwithtools
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T20:02:07.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9659a6bf85

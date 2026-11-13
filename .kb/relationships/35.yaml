@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6c179d623ba
+  - type: implements
+    from: SYM-access-identity-app-owner-tokenaccess
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:12:07.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d5ad384d3f
+  - type: covered_by
+    from: SYM-access-identity-app-owner-tokenaccess
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:12:07.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deb0e859b33a

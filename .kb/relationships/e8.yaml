@@ -846,3 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d36699c4e41f
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-durationdays
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:17:09.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce54e9006aa2
+  - type: specified_by
+    from: REQ-models-ask-box-model-through-router
+    to: SCEN-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:11:43.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48762a912f6f
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client-generate-ask
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:40:02.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3182b897acb1
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client-generate-ask
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:40:02.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-112ae1ff6776

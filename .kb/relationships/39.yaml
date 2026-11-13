@@ -741,3 +741,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f81ebbc00e5c
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-test-model-loop-bad-calls-get-afailure-and-run-nothing
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:29:52.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c54546aa457
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-ask-tool-arguments
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:24.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d4807f138bb
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-file-openfief-models-v1-ask-proto-raw-desc-gzip
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:39:11.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b2f6671c9e1
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-file-openfief-models-v1-ask-proto-raw-desc-gzip
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:39:11.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc83fc93572

@@ -18,15 +18,6 @@
 </section>
 {{end}}
 
-{{if .NewSecret}}
-<section class="card notice" aria-labelledby="secret-title">
-  <h2 id="secret-title">Script token {{.NewToken.Name}} created</h2>
-  <p>Copy the secret now. It is shown only this once and can't be shown again.</p>
-  <p><code class="secret">{{.NewSecret}}</code></p>
-  <p class="muted">Scripts send it as <code>Authorization: Bearer &lt;secret&gt;</code> to the read API under <code>/v1</code>.</p>
-</section>
-{{end}}
-
 {{with .Enrollment}}
 <section class="card notice" aria-labelledby="link-title">
   <h2 id="link-title">Enrollment link created</h2>
@@ -69,43 +60,9 @@
   </form>
 </section>
 
-<section class="card" aria-labelledby="tokens-title">
-  <h2 id="tokens-title">Script tokens</h2>
-  <p class="muted">Read-only tokens for your own scripts.</p>
-  <div class="table"><table>
-    <thead><tr><th scope="col">Name</th><th scope="col">ID</th><th scope="col">Status</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
-    <tbody>
-    {{range .Tokens}}
-    <tr>
-      <td>{{.Name}}</td><td><code>{{.Id}}</code></td>
-      <td>{{if eq .Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<span class="pill pill-ok">{{enum .Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{else}}<span class="pill pill-neutral">{{enum .Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{end}}</td>
-      <td class="mono">{{.CreatedAt.AsTime.Format "2006-01-02"}}</td><td class="mono">{{.ExpiresAt.AsTime.Format "2006-01-02"}}</td>
-      <td>{{if eq .Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<form method="post" action="/settings/tokens/{{.Id}}/revoke" class="inline"><button type="submit" class="danger">Revoke</button></form>{{end}}</td>
-    </tr>
-    {{else}}
-    <tr><td colspan="6" class="empty">No script tokens.</td></tr>
-    {{end}}
-    </tbody>
-  </table></div>
-  <form method="post" action="/settings/tokens">
-    <div class="fields">
-      <div class="field">
-        <label for="token-name">Name</label>
-        <input id="token-name" name="name" required maxlength="64" pattern="[A-Za-z0-9._\-]+" autocomplete="off" aria-describedby="token-name-help">
-        <p class="help" id="token-name-help">Letters, digits, dots, dashes and underscores.</p>
-      </div>
-      <div class="field">
-        <label for="token-days">Days valid</label>
-        <input id="token-days" name="days" type="number" min="1" max="365" value="{{.DefaultDays}}">
-      </div>
-    </div>
-    <div class="actions"><button type="submit">Create script token</button></div>
-  </form>
-</section>
-
 <section class="card" aria-labelledby="sessions-title">
   <h2 id="sessions-title">Sessions</h2>
-  <p class="muted">Signs out every browser and device, on every host, this one included. Script tokens keep working: revoke them above.</p>
+  <p class="muted">Signs out every browser and device, on every host, this one included. Script tokens keep working: revoke them on the <a href="/access#tokens-title">Access page</a>.</p>
   <form method="post" action="/logout">
     <input type="hidden" name="everywhere" value="yes">
     <div class="actions"><button type="submit" class="danger">Sign out everywhere</button></div>

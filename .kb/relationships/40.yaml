@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-958454e34b6d
+  - type: implements
+    from: SYM-ask-model-askmodel-go-tier-list
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:25:50.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11d60e6fde4e
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-tier-list
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:25:50.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-337dc5e4984d

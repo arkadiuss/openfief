@@ -1105,3 +1105,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4413d4f909a4
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-permits-needs-amodel-that-serves-tools
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:21:09.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ccc4be4ff60

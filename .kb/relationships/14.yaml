@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e077c5320355
+  - type: executable_for
+    from: SYM-access-identity-app-grants-test-fakedirectory-accessviewplugins
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T18:12:02.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7ed649701d0
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-proto-message
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:33:22.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66792ba109e0
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-proto-message
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:33:22.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ec579505359

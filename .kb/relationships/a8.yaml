@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34520fc0cae5
+  - type: executable_for
+    from: SYM-ask-model-askmodel-page-test-go-sorted-copy
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:27:47.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13bfda8db230
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-card-result-carries-the-data-and-nothing-to-draw-it
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:35.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49dc8d3d3d77
+  - type: implements
+    from: SYM-ask-model-asktools-go-sync-tool
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:59:34.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68ffdbd954be
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-sync-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:59:34.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c965b12e15c2

@@ -75,6 +75,8 @@ func (directory) ViewPluginInstalled(_ context.Context, name string) (bool, erro
 
 func (directory) ViewPlugins(context.Context) ([]string, error) { return []string{"ui"}, nil }
 
+func (directory) AccessViewPlugins(context.Context) ([]string, error) { return []string{"ui"}, nil }
+
 // grantsServed is the AuthService over a store with grants, an owner session
 // planted in it and a client that presents the view plugin ui.
 type grantsServed struct {

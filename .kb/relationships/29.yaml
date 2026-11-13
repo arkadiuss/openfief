@@ -993,3 +993,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd393b2f0770
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-descriptor
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:26:12.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab2dad36fac
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:26:12.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-518385a5235a
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-descriptor
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:28:02.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a7d89a22ee5
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:28:02.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563d0e17ebb4
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-protomessage
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:29:34.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b923914b6af
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:29:34.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b62df9b6e36e
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-new-ask-model-service-client
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:39:38.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af568dea7733
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-new-ask-model-service-client
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:39:38.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45de1f7d21e8

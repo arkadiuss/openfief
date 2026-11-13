@@ -1105,3 +1105,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75d6ba2c0853
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-string
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:33:15.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b3ac0791244
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-string
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:33:16.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c416de76ba9
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-response
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:38:16.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a23121242b
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-response
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:38:16.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-882303dbdfd9
+  - type: validates
+    from: TEST-ui-plugin
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:41:12.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8526f5e79ff9

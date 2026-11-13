@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6226b7c7aa0
+  - type: implements
+    from: SYM-ask-model-askmodel-go-model-answerer-ask
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:25:13.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60e52bbfcc88
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-model-answerer-ask
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:25:13.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b629de0a7ea8

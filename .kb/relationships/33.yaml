@@ -895,3 +895,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96d4e5e8da8e
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-reset
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:28:25.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0f38e0beb4e
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:28:25.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3c843fb755f
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-service-refuses-too-much
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:24:14.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3faf0dbb7bd
+  - type: implements
+    from: SYM-ask-model-askanswer-go-command-answerer-run
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:24:39.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fba9157cf9a
+  - type: covered_by
+    from: SYM-ask-model-askanswer-go-command-answerer-run
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:24:39.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a385e5be9b1
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-ask-fixture-may-receive
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:58:31.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e3902d984a2

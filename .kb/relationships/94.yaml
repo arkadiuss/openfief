@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-539aac1fe51d
+  - type: implements
+    from: SYM-ask-model-ask-go-new-ask-l29
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:21:41.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77b83b052cd7
+  - type: covered_by
+    from: SYM-ask-model-ask-go-new-ask-l29
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:21:41.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03c838e3c759
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model-turn-on
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:26:36.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b4d6246d66
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-proto-reflect
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:35:09.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0657c27ea1d8
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-proto-reflect
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:35:09.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729b096078bc

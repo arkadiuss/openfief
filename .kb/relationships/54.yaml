@@ -1070,3 +1070,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20d842dbc8ff
+  - type: implements
+    from: SYM-access-identity-app-grants-grants-checktargets
+    to: REQ-identity-script-token-created-with-grants
+    created_at: 2026-11-13T18:11:46.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16848cf4c8ae
+  - type: covered_by
+    from: SYM-access-identity-app-grants-grants-checktargets
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:46.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73bb34fcf0d3
+  - type: implements
+    from: SYM-access-identity-app-grants-grants-viewpluginaccess
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:11:56.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a4f08ffbcac
+  - type: covered_by
+    from: SYM-access-identity-app-grants-grants-viewpluginaccess
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:56.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffb4f074ffe0
+  - type: verified_by
+    from: SCEN-ui-ask-model-loop-limits
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:00:49.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53d16dde0693

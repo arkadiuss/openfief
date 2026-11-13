@@ -7,7 +7,8 @@
 // network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
 // at 360 px the overview's Ask box (D-194) takes "/", answers a suggestion chip, a typed command and one it doesn't
-// understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions;
+// understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions; with a
+// model (D-203) it says where a question goes, shows the model's text with the card it read and refuses a question no model may receive;
 // at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
@@ -57,7 +58,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', setup: '/setup',
+  settings: '/settings', access: '/access', setup: '/setup',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -210,6 +211,43 @@ async function askBox(browser) {
   await ctx.close();
 }
 
+// askModelBox checks the Ask box with a model (D-203) at phone width, in light and dark: the box says a question beyond its
+// commands goes to the model; the answer shows the model's text and the card it read; a model that may not receive the
+// question's data tier (T0) is refused with nothing sent, and the page says so; a command still answers as before; and none of it scrolls
+// sideways. The model is the fakes' (browserAskModel); it is taken away again at the end.
+async function askModelBox(browser) {
+  for (const scheme of ['light', 'dark']) {
+    const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: scheme, isMobile: true, hasTouch: true }, true);
+    const page = await ctx.newPage();
+    const ask = async (question, selector) => {
+      await page.fill('#ask-q', question);
+      await page.click('.ask-form button[type="submit"]');
+      await page.waitForSelector(selector, { timeout: 5000 });
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      check(overflow <= 0, `phone ${scheme}: the answer to "${question}" scrolls ${overflow} px sideways`);
+    };
+    await page.goto(base + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+    check((await page.textContent('#ask-help')).includes('goes to the model'), `phone ${scheme}: the Ask box does not say where a question goes`);
+    await ask('how diversified am I', '#answer .used-card');
+    const text = await page.textContent('#answer .model-text');
+    check(text.includes('Most of it is listed.') && text.includes('The rest is cash.'), `phone ${scheme}: the model's text is not shown`);
+    check((await page.textContent('#answer .used-card')).includes('By asset class'), `phone ${scheme}: the card the model read is not shown`);
+    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model.png`), fullPage: true });
+    await ask('allocation by currency', '#answer:has-text("By currency")');
+    check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
+      `phone ${scheme}: a command is not answered by the box itself`);
+    await page.goto(base + '/test/ask-model?tiers=T2', { waitUntil: 'networkidle' });
+    await ask('how diversified am I', '#answer .answer-title');
+    check((await page.textContent('#answer .answer-title')).includes('No model may see this question') && (await page.textContent('#answer')).includes('Nothing was sent')
+      && (await page.locator('#answer .used-card').count()) === 0,
+      `phone ${scheme}: the refusal of a question no model may receive is not shown, or a card is drawn anyway`);
+    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refused.png`), fullPage: true });
+    await page.goto(base + '/test/ask-model?tiers=off', { waitUntil: 'networkidle' });
+    check((await page.textContent('#ask-help')).includes('no AI model'), `phone ${scheme}: the Ask box does not go back to no model`);
+    await ctx.close();
+  }
+}
+
 // sideways returns how many pixels the page scrolls sideways.
 async function sideways(page) {
   return page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -262,7 +300,7 @@ async function recordPages(browser) {
 
 // app checks installability, the worker's cache, the offline page and sign-out, in a profile of its own: an
 // incognito context is never installable.
-// passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the settings ask to
+// passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the Access page asks to
 // confirm with a passkey, the button runs an assertion with Chromium's virtual authenticator, which holds a synthetic
 // passkey for localhost, and the token is then created and its secret shown.
 async function passkeyCheck(browser) {
@@ -282,14 +320,14 @@ async function passkeyCheck(browser) {
       userHandle: randomBytes(32).toString('base64'), signCount: 0,
     },
   });
-  await page.goto(base + '/settings', { waitUntil: 'networkidle' });
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
   await page.fill('#token-name', 'nightly');
-  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/settings/tokens"] button[type="submit"]')]);
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/access/tokens"] button[type="submit"]')]);
   const confirm = page.locator('[data-webauthn="check"]');
   check(await confirm.isVisible(), 'passkey check: no "Confirm with your passkey" after a refused action');
   await page.screenshot({ path: path.join(out, 'desktop-light-passkey-check.png'), fullPage: true });
-  // The page is already at /settings/tokens, the refused post's answer, so wait for the post again, not the URL.
-  const posted = page.waitForResponse((r) => r.url() === base + '/settings/tokens' && r.request().method() === 'POST', { timeout: 30_000 });
+  // The page is already at /access/tokens, the refused post's answer, so wait for the post again, not the URL.
+  const posted = page.waitForResponse((r) => r.url() === base + '/access/tokens' && r.request().method() === 'POST', { timeout: 30_000 });
   await confirm.click();
   await posted;
   await page.waitForLoadState('networkidle');
@@ -467,6 +505,7 @@ try {
   await phoneRows(browser);
   await removedRedirect(browser);
   await askBox(browser);
+  await askModelBox(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
   await app();

@@ -40,6 +40,29 @@ type answerCard struct {
 	// Help are the commands the box understands, for a question it
 	// doesn't; empty otherwise.
 	Help []askHelp
+	// Model is the model that wrote Text, as "provider/model", when a model
+	// answered (D-203); empty for the commands' own answers.
+	Model string
+	// Source, when set, is what the card's header says in place of "Answered
+	// from your data": a card about a model that did not answer.
+	Source string
+	// Used are the cards the model read to write its answer, shown under its
+	// text: exactly the cards its tool calls produced and it was sent.
+	Used []answerCard
+	// Withheld are the cards the model asked for that the router would not
+	// send it, because no model of the route may receive their data tier
+	// (D-206).
+	Withheld []withheldCard
+}
+
+// withheldCard is a card the model asked for and did not get: the tool that
+// makes it, as the person knows it, and the data tier that kept it back. It
+// holds none of the card's data.
+type withheldCard struct {
+	Label string
+	Tier  string
+	// Data is what the tier is, in words.
+	Data string
 }
 
 // answerRow is one row of an answer's table: what it is about, a detail
@@ -75,6 +98,22 @@ func (a commandAnswerer) answer(r *http.Request, sess session, question string) 
 	if !ok {
 		return unknownAnswer(question), nil
 	}
+	card, err := a.run(r, sess, &q)
+	if err != nil {
+		return answerCard{}, err
+	}
+	card.Question = question
+	return card, nil
+}
+
+// run answers the command q understood, reading with sess. It is what the
+// model's tools call too (D-203): the same read-only answerers, with the
+// asking person's own session. A query that is no command gets the commands
+// the box understands.
+func (a commandAnswerer) run(r *http.Request, sess session, q *askQuery) (answerCard, error) {
+	if q.Command == askUnknown {
+		return unknownAnswer(""), nil
+	}
 	date, err := a.s.latestDate(r, sess)
 	if err != nil {
 		return answerCard{}, err
@@ -84,7 +123,7 @@ func (a commandAnswerer) answer(r *http.Request, sess session, question string) 
 	case askNeeds:
 		card, err = a.needs(r, sess)
 	case askShow:
-		card, err = a.show(r, sess, &q, date)
+		card, err = a.show(r, sess, q, date)
 	case askSync:
 		card, err = a.sync(r, sess, q.Term)
 	case askAllocation:
@@ -94,9 +133,8 @@ func (a commandAnswerer) answer(r *http.Request, sess session, question string) 
 	case askValue:
 		card, err = a.value(r, sess, q.Date, date)
 	case askUnknown:
-		return unknownAnswer(question), nil
+		return unknownAnswer(""), nil
 	}
-	card.Question = question
 	return card, err
 }
 
@@ -194,7 +232,7 @@ func targetRows(targets []askTarget) []answerRow {
 		if i == answerRows {
 			break
 		}
-		out = append(out, answerRow{Label: t.Label, Detail: [...]string{"", "account", dimSleeve, kindInstrument}[t.Kind]})
+		out = append(out, answerRow{Label: t.Label, Detail: [...]string{"", accountParam, dimSleeve, kindInstrument}[t.Kind]})
 	}
 	return out
 }

@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 // maxReplyBytes caps what is read of the provider's reply.
@@ -164,9 +166,40 @@ func (c *chatClient) complete(ctx context.Context, req *chatRequest) (*chatReply
 	return parseReply(raw)
 }
 
+// openRouterHost is the host of OpenRouter's API, the one OpenAI-compatible
+// server that takes routing preferences in a request's `provider` object.
+const openRouterHost = "openrouter.ai"
+
+// onOpenRouter reports whether the client's base URL is OpenRouter's: its
+// host is openrouter.ai or one of its subdomains. Other servers get no
+// `provider` object: OpenAI's own API refuses a request member it does not
+// know, so the member is sent only where it is part of the protocol.
+func (c *chatClient) onOpenRouter() bool {
+	u, err := url.Parse(c.baseURL)
+	if err != nil {
+		return false
+	}
+	host := strings.ToLower(u.Hostname())
+	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
+}
+
+// requestBody returns the JSON object req is sent as. On OpenRouter a
+// request that sends tools also asks `provider.require_parameters`, so the
+// router only picks a host that supports every parameter of the request,
+// tools included: without it a host that silently drops them can answer
+// with no tool call, which the Ask box would read as an answer from data it
+// never read. Host pinning (`order`, `allow_fallbacks`) is not set here.
+func (c *chatClient) requestBody(req *chatRequest) map[string]any {
+	body := req.body()
+	if len(req.Tools) > 0 && c.onOpenRouter() {
+		body["provider"] = map[string]any{"require_parameters": true}
+	}
+	return body
+}
+
 // post sends req to the provider and returns the body of its 2xx answer.
 func (c *chatClient) post(ctx context.Context, req *chatRequest) ([]byte, error) {
-	body, err := json.Marshal(req.body())
+	body, err := json.Marshal(c.requestBody(req))
 	if err != nil {
 		return nil, fmt.Errorf("%w: encoding", errRejected)
 	}

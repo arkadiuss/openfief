@@ -916,3 +916,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79e3066f003c
+  - type: implements
+    from: SYM-access-views-ui-access-pluginholder
+    to: REQ-ui-access-view-plugins
+    created_at: 2026-11-13T18:15:03.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21dcdbdde419
+  - type: covered_by
+    from: SYM-access-views-ui-access-pluginholder
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:03.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-003e5952ddb9
+  - type: covered_by
+    from: SYM-ask-limits-pb-getoutputtokens
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T20:01:52.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e6765d1ae7
+  - type: implements
+    from: SYM-ask-limits-pb-getoutputtokens
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T20:01:52.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-637eb41ed1dc

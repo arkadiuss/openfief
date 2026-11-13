@@ -860,3 +860,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-817adc38c48b
+  - type: verified_by
+    from: SCEN-ui-access-page-lists-tokens-and-plugins
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:09:50.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c2769cb3b5e
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-string
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:25:55.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f00cc8fefed
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:25:55.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5ca770914ca
+  - type: covered_by
+    from: SYM-ask-limits-ask-limits
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:00:59.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62832c8a6be3
+  - type: implements
+    from: SYM-ask-limits-ask-limits
+    to: REQ-ui-ask-model-loop-limits
+    created_at: 2026-11-13T20:00:59.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-442fc33cc34f

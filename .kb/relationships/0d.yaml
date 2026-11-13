@@ -853,3 +853,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eefc5de0065f
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-getorigin
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:28:07.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebef2b4e880a
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-getorigin
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:28:07.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fae6096ba2b
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-response-string
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:38:26.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdcf156e40c3
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-response-string
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:38:26.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74ca74394c54

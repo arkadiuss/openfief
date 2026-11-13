@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4fa80fc927c
+  - type: implements
+    from: SYM-ask-model-asktools-go-show-query
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:29.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5843ff6548c7
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-show-query
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:29.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db1902f7ee67

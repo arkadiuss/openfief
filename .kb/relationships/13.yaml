@@ -916,3 +916,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86e3b8be1397
+  - type: implements
+    from: SYM-access-identity-app-grants-grants-checkupdate
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:35:44.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e22f7db2c022
+  - type: covered_by
+    from: SYM-access-identity-app-grants-grants-checkupdate
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:35:44.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e29200e5e2
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-generate
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:20:18.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae792e9c5e52
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-generate
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:18.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eea2fd0ed1b7

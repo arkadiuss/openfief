@@ -1,0 +1,135 @@
+{{define "scripts"}}
+<script src="/static/webauthn.js" defer></script>
+{{end}}
+{{define "grant-choices"}}
+<fieldset class="grants">
+  <legend>What it may view</legend>
+  <label class="check" for="{{.Prefix}}-household"><input type="checkbox" id="{{.Prefix}}-household" name="grant" value="{{.Household.Value}}"{{if .Household.Checked}} checked{{end}}> {{.Household.Label}}</label>
+  <p class="help">Every account, now and any you add later.</p>
+  {{if .Sleeves}}
+  <p class="label">Sleeves</p>
+  <div class="grant-list">
+    {{range $i, $c := .Sleeves}}<label class="check" for="{{$.Prefix}}-sleeve-{{$i}}"><input type="checkbox" id="{{$.Prefix}}-sleeve-{{$i}}" name="grant" value="{{$c.Value}}"{{if $c.Checked}} checked{{end}}> {{$c.Label}}</label>{{end}}
+  </div>
+  <p class="help">A sleeve covers the accounts you place in it later.</p>
+  {{end}}
+  {{if .Accounts}}
+  <p class="label">Accounts</p>
+  <div class="grant-list">
+    {{range $i, $c := .Accounts}}<label class="check" for="{{$.Prefix}}-account-{{$i}}"><input type="checkbox" id="{{$.Prefix}}-account-{{$i}}" name="grant" value="{{$c.Value}}"{{if $c.Checked}} checked{{end}}> {{$c.Label}}</label>{{end}}
+  </div>
+  {{end}}
+</fieldset>
+{{end}}
+{{define "holds"}}{{if .Holds}}<ul class="plain">{{range .Holds}}<li>{{.}}</li>{{end}}</ul>{{else}}<span class="muted">Nothing</span>{{end}}{{end}}
+{{define "content"}}
+{{template "settings-nav" .}}
+{{with .Data}}
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+
+{{with .PasskeyCheck}}
+<section class="card notice" aria-labelledby="check-title">
+  <h2 id="check-title">Confirm with your passkey</h2>
+  <p>{{.What}} needs a passkey check made in the last five minutes, so a stolen session can't add a way in. Confirm with your passkey and it goes ahead.</p>
+  <form method="post" action="{{.Action}}" id="passkey-check-retry">
+    {{range .Fields}}<input type="hidden" name="{{.Name}}" value="{{.Value}}">{{end}}
+    <div class="actions"><button type="button" data-webauthn="check" data-retry="passkey-check-retry">Confirm with your passkey</button></div>
+    <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
+  </form>
+</section>
+{{end}}
+
+{{if .NewSecret}}
+<section class="card notice" aria-labelledby="secret-title">
+  <h2 id="secret-title">Script token {{.NewToken.Name}} created</h2>
+  <p>Copy the secret now. It is shown only this once and can't be shown again.</p>
+  <p><code class="secret">{{.NewSecret}}</code></p>
+  <p class="muted">Scripts send it as <code>Authorization: Bearer &lt;secret&gt;</code> to the read API under <code>/v1</code>.</p>
+</section>
+{{end}}
+
+{{if not .Enforced}}
+<p class="alert alert-warn" role="note">Grants take effect when SpiceDB authorization is on. Until then every script token and view plugin reads every account, whatever it is granted here. Grants you make now are stored and recorded, so they apply as they are when it is switched on.</p>
+{{end}}
+
+<section class="card" aria-labelledby="tokens-title">
+  <h2 id="tokens-title">Script tokens</h2>
+  <p class="muted">Read-only tokens for your own scripts. A token views only what it is granted: the whole household, sleeves or accounts. It can never change anything.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Status</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col">MCP</th><th scope="col">May view</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody>
+    {{range .Tokens}}
+    <tr>
+      <td>{{.Token.Name}}<br><code>{{.ID}}</code></td>
+      <td>{{if eq .Token.Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<span class="pill pill-ok">{{enum .Token.Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{else}}<span class="pill pill-neutral">{{enum .Token.Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{end}}</td>
+      <td class="mono">{{.Token.CreatedAt.AsTime.Format "2006-01-02"}}</td><td class="mono">{{.Token.ExpiresAt.AsTime.Format "2006-01-02"}}</td>
+      <td>{{if .Token.McpAllowed}}allowed{{else}}no{{end}}</td>
+      <td>{{template "holds" .}}
+        {{if .Editable}}<details class="change">
+          <summary>Change what it may view</summary>
+          <form method="post" action="{{.Action}}">
+            {{template "grant-choices" .Choices}}
+            <div class="actions"><button type="submit">Save access</button></div>
+          </form>
+        </details>{{end}}</td>
+      <td>{{if .Editable}}<form method="post" action="/access/tokens/{{.ID}}/revoke" class="inline"><button type="submit" class="danger">Revoke</button></form>{{end}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="7" class="empty">No script tokens.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <h3 id="new-token-title">New script token</h3>
+  <form method="post" action="/access/tokens" aria-labelledby="new-token-title">
+    <div class="fields">
+      <div class="field">
+        <label for="token-name">Name</label>
+        <input id="token-name" name="name" required maxlength="64" pattern="[A-Za-z0-9._\-]+" autocomplete="off" aria-describedby="token-name-help"{{with .Posted}} value="{{.Name}}"{{end}}>
+        <p class="help" id="token-name-help">Letters, digits, dots, dashes and underscores.</p>
+      </div>
+      <div class="field">
+        <label for="token-days">Days valid</label>
+        <input id="token-days" name="days" type="number" min="1" max="365" value="{{with .Posted}}{{.Days}}{{else}}{{.DefaultDays}}{{end}}" aria-describedby="token-days-help">
+        <p class="help" id="token-days-help">At most 365. After that the token stops working.</p>
+      </div>
+    </div>
+    {{template "grant-choices" .New}}
+    <label class="check" for="token-mcp"><input type="checkbox" id="token-mcp" name="mcp"{{with .Posted}}{{if .MCP}} checked{{end}}{{end}}> May use MCP</label>
+    <p class="help">Saved with the token. The core doesn't serve MCP yet, so this changes nothing today; when it does, only tokens you allowed here may connect, and they still view only what they are granted.</p>
+    <div class="actions"><button type="submit" class="primary">Create script token</button></div>
+  </form>
+</section>
+
+<section class="card" aria-labelledby="view-plugins-title">
+  <h2 id="view-plugins-title">View plugins</h2>
+  <p class="muted">Installed view plugins other than the built-in interface, which reads with your own session. Each views only what it is granted here; a plugin with no grant views nothing.</p>
+  {{if .PluginsUnavailable}}
+  <p class="alert alert-warn">The installed view plugins can't be read now: the core can't reach the cluster.</p>
+  {{else if .Plugins}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instance</th><th scope="col">May view</th></tr></thead>
+    <tbody>
+    {{range .Plugins}}
+    <tr>
+      <td>{{.ID}}</td>
+      <td>{{template "holds" .}}
+        <details class="change">
+          <summary>Change what it may view</summary>
+          <form method="post" action="{{.Action}}">
+            {{template "grant-choices" .Choices}}
+            <div class="actions"><button type="submit">Save access</button></div>
+          </form>
+        </details></td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}
+  <div class="state">{{template "kasztan" "asleep"}}<div>
+    <p class="state-title">No view plugins installed.</p>
+    <p class="muted">Install one with <code>openfief plugin install</code>; it appears here once the operator runs it, and you grant it accounts.</p>
+  </div></div>
+  {{end}}
+</section>
+{{end}}
+{{end}}

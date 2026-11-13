@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-980e83f01e8d
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-ask-fixture-check-no-text
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:58:20.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c09e499c3eed

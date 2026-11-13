@@ -874,3 +874,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3b01e8b14a0
+  - type: executable_for
+    from: SYM-access-identity-app-accessgrants-test-testcreatescripttokenasksthemodelfirst
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:04.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0630200a81da
+  - type: implements
+    from: SYM-access-views-ui-access-accessdata
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:13:54.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-062764ae8bfc
+  - type: covered_by
+    from: SYM-access-views-ui-access-accessdata
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:13:54.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a576131e1c8
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:24:59.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e35bb8895d6
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:24:59.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608386158054
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-get-origin
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:37:55.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e19e33b418
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-get-origin
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:37:55.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bdd456272ac

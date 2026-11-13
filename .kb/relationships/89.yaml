@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-645ac8be2344
+  - type: implements
+    from: SYM-access-views-ui-access-server-accessroutes
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:14:04.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ad12a63d068
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-accessroutes
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:14:04.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4432f3b739a8

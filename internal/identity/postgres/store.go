@@ -67,9 +67,9 @@ func (s *Store) Atomically(ctx context.Context, fn func(ctx context.Context) err
 // SaveScriptToken stores a new token with its key's hash.
 func (s *Store) SaveScriptToken(ctx context.Context, t *identity.ScriptToken, keyHash []byte) error {
 	_, err := s.db(ctx).Exec(ctx, `
-		INSERT INTO identity.script_tokens (id, name, scope, key_sha256, created_at, expires_at)
-		VALUES ($1, $2, $3, $4, $5, $6)`,
-		string(t.ID), t.Name, t.Scope.String(), keyHash, t.CreatedAt, t.ExpiresAt)
+		INSERT INTO identity.script_tokens (id, name, scope, key_sha256, created_at, expires_at, mcp_allowed)
+		VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+		string(t.ID), t.Name, t.Scope.String(), keyHash, t.CreatedAt, t.ExpiresAt, t.MCPAllowed)
 	if err != nil {
 		return fmt.Errorf("saving script token %s: %w", t.ID, err)
 	}
@@ -77,7 +77,7 @@ func (s *Store) SaveScriptToken(ctx context.Context, t *identity.ScriptToken, ke
 }
 
 // rowColumns are the columns scanToken reads, in its order.
-const rowColumns = `id, name, scope, created_at, expires_at, revoked_at`
+const rowColumns = `id, name, scope, created_at, expires_at, revoked_at, mcp_allowed`
 
 // ScriptToken returns the token id and its key's hash, or an error wrapping
 // app.ErrUnknownToken.
@@ -141,7 +141,7 @@ func scanToken(row pgx.Row, extra ...any) (identity.ScriptToken, error) {
 		t               identity.ScriptToken
 		revoked         *time.Time
 	)
-	dest := append([]any{&id, &name, &scope, &t.CreatedAt, &t.ExpiresAt, &revoked}, extra...)
+	dest := append([]any{&id, &name, &scope, &t.CreatedAt, &t.ExpiresAt, &revoked, &t.MCPAllowed}, extra...)
 	if err := row.Scan(dest...); err != nil {
 		return identity.ScriptToken{}, fmt.Errorf("scanning a script token: %w", err)
 	}

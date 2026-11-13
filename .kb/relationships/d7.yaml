@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb3f8d1ed497
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-service
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:21:46.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ecc50c9634d
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-service
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:21:46.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d406cf7e50ff
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-ask-message-get-data-tier
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:37:07.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-680301071ca7
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-ask-message-get-data-tier
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:37:07.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d091f08367ea

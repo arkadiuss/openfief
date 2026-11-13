@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e366f23faf02
+  - type: implements
+    from: SYM-ask-model-asktools-go-ask-tool
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:13.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b16609aa428
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-ask-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:13.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58284afd728b

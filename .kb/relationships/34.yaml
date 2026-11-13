@@ -958,3 +958,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef7c33b9d158
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-only-session-asker
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:23.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de832458af6b
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-unimplemented-ask-model-service-handler-generate-ask
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:40:41.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-530beb880637
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-unimplemented-ask-model-service-handler-generate-ask
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:40:41.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86327e52a004

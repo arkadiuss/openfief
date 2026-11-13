@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -98,6 +100,85 @@ func TestCompleteSendsTheChatProtocol(t *testing.T) {
 	}
 }
 
+// TestRequestBodyRequiresParametersOnOpenRouterWithTools checks the request
+// body per base URL and per whether it sends tools: only OpenRouter, and only
+// with tools, gets provider.require_parameters, so a host that would drop the
+// tools is never picked; a server that refuses unknown members, such as
+// OpenAI's own, never sees the member.
+func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
+	t.Parallel()
+	tools := []chatTool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}}
+	tests := []struct {
+		name    string
+		baseURL string
+		tools   []chatTool
+		want    bool
+	}{
+		{name: "OpenRouter with tools", baseURL: "https://openrouter.ai/api/v1", tools: tools, want: true},
+		{name: "OpenRouter host in capitals", baseURL: "https://OpenRouter.ai/api/v1", tools: tools, want: true},
+		{name: "OpenRouter without tools", baseURL: "https://openrouter.ai/api/v1", want: false},
+		{name: "OpenAI with tools", baseURL: "https://api.openai.com/v1", tools: tools, want: false},
+		{name: "Ollama with tools", baseURL: "http://ollama.models.svc:11434/v1", tools: tools, want: false},
+		{name: "a host that only ends in the name", baseURL: "https://notopenrouter.ai/v1", tools: tools, want: false},
+		{name: "OpenRouter's name in the path", baseURL: "https://example.com/openrouter.ai/v1", tools: tools, want: false},
+		{name: "an unparsable base URL", baseURL: "://", tools: tools, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			c := &chatClient{baseURL: tt.baseURL}
+			body := c.requestBody(&chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}, Tools: tt.tools})
+			got, has := body["provider"]
+			if has != tt.want {
+				t.Fatalf("provider member present = %v, want %v", has, tt.want)
+			}
+			if tt.want {
+				if diff := cmp.Diff(map[string]any{"require_parameters": true}, got); diff != "" {
+					t.Errorf("provider (-want +got):\n%s", diff)
+				}
+			}
+			raw, err := json.Marshal(body)
+			if err != nil || !json.Valid(raw) {
+				t.Errorf("the body does not encode: %v", err)
+			}
+		})
+	}
+}
+
+// TestCompleteSendsRequireParametersToOpenRouterOnTheWire checks the member
+// reaches the provider in the posted JSON, as the member the protocol names.
+func TestCompleteSendsRequireParametersToOpenRouterOnTheWire(t *testing.T) {
+	t.Parallel()
+	f, c := newFake(t, textReply)
+	c.hc = &http.Client{Transport: rewriteHost{to: c.baseURL, rt: c.hc.Transport}}
+	c.baseURL = "https://openrouter.ai/api/v1"
+	req := &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}, Tools: []chatTool{{Name: "lookup"}}}
+	if _, err := c.complete(t.Context(), req); err != nil {
+		t.Fatalf("complete: %v", err)
+	}
+	want := map[string]any{"require_parameters": true}
+	if diff := cmp.Diff(want, f.body["provider"]); diff != "" {
+		t.Errorf("provider as the server saw it (-want +got):\n%s", diff)
+	}
+}
+
+// rewriteHost sends every request to the fake server at to, whatever its
+// address, so a test can name OpenRouter's base URL without any network.
+type rewriteHost struct {
+	to string
+	rt http.RoundTripper
+}
+
+func (r rewriteHost) RoundTrip(req *http.Request) (*http.Response, error) {
+	target, err := url.Parse(r.to)
+	if err != nil {
+		return nil, fmt.Errorf("parsing the fake's address: %w", err)
+	}
+	req = req.Clone(req.Context())
+	req.URL.Scheme, req.URL.Host = target.Scheme, target.Host
+	return r.rt.RoundTrip(req) //nolint:wrapcheck // a test helper: the client's own error
+}
+
 func TestCompleteReadsToolCalls(t *testing.T) {
 	t.Parallel()
 	_, c := newFake(t, `{"choices":[{"message":{"content":null,"tool_calls":[
@@ -185,14 +266,14 @@ func TestCompleteErrors(t *testing.T) {
 func TestCompleteUnreachableProviderIsUnavailable(t *testing.T) {
 	t.Parallel()
 	srv := httptest.NewServer(http.NotFoundHandler())
-	url := srv.URL
+	addr := srv.URL
 	srv.Close()
-	c := &chatClient{hc: http.DefaultClient, baseURL: url, key: func() (string, error) { return fakeKey, nil }}
+	c := &chatClient{hc: http.DefaultClient, baseURL: addr, key: func() (string, error) { return fakeKey, nil }}
 	_, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}})
 	if !errors.Is(err, errUnavailable) {
 		t.Fatalf("error = %v, want %v", err, errUnavailable)
 	}
-	if strings.Contains(err.Error(), url) {
+	if strings.Contains(err.Error(), addr) {
 		t.Errorf("error %q names the URL", err)
 	}
 }

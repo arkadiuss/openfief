@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52175d741cff
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-askers
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:22:34.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23d6f2ef2000

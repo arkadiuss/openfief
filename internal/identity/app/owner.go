@@ -19,18 +19,30 @@ const DefaultScriptTokenTTL = 30 * 24 * time.Hour
 
 // CreateScriptToken issues a read-only script token (D-27) for an owner
 // session (author decision, auth split: script tokens come from a logged-in
-// session) with a passkey check in the last five minutes (D-183), lasting
-// ttl, or DefaultScriptTokenTTL when ttl is zero. It returns the token and
-// its secret, shown only here.
-func (a *Auth) CreateScriptToken(ctx context.Context, origin, token, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+// session) with a passkey check in the last five minutes (D-183), as spec
+// says: lasting spec.TTL, or DefaultScriptTokenTTL when it is zero, with the
+// MCP flag and the grants spec names (D-210; see Grants.IssueTokenWith). It
+// returns the token and its secret, shown only here.
+func (a *Auth) CreateScriptToken(ctx context.Context, origin, token string, spec NewToken) (identity.ScriptToken, string, error) {
 	_, s, err := a.recentOwner(ctx, origin, token)
 	if err != nil {
 		return identity.ScriptToken{}, "", err
 	}
-	if ttl == 0 {
-		ttl = DefaultScriptTokenTTL
+	if spec.TTL == 0 {
+		spec.TTL = DefaultScriptTokenTTL
 	}
-	tok, secret, err := IssueToken(ctx, a.store, a.tokens, ownerActor(&s), name, ttl)
+	var (
+		tok    identity.ScriptToken
+		secret string
+	)
+	switch {
+	case a.grants != nil:
+		tok, secret, err = a.grants.IssueTokenWith(ctx, ownerActor(&s), &spec)
+	case len(spec.Targets) > 0:
+		err = errNoGrants
+	default:
+		tok, secret, err = IssueTokenWith(ctx, a.store, a.tokens, ownerActor(&s), spec.Name, spec.TTL, spec.MCPAllowed)
+	}
 	if errors.Is(err, identity.ErrInvalidName) || errors.Is(err, identity.ErrInvalidTTL) {
 		return identity.ScriptToken{}, "", fmt.Errorf("%w: %w", ErrInvalidRequest, err)
 	}
@@ -40,12 +52,84 @@ func (a *Auth) CreateScriptToken(ctx context.Context, origin, token, name string
 	return tok, secret, nil
 }
 
-// ScriptTokens returns every script token for an owner session.
-func (a *Auth) ScriptTokens(ctx context.Context, origin, token string) ([]identity.ScriptToken, error) {
+// TokenAccess is a script token with the grants in force that say what it may
+// view (D-210).
+type TokenAccess struct {
+	Token  identity.ScriptToken
+	Grants []identity.Grant
+}
+
+// ScriptTokens returns every script token, each with its grants in force, for
+// an owner session.
+func (a *Auth) ScriptTokens(ctx context.Context, origin, token string) ([]TokenAccess, error) {
 	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
 		return nil, err
 	}
-	return a.tokens.List(ctx)
+	toks, err := a.tokens.List(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var grants []identity.Grant
+	if a.grants != nil {
+		if grants, err = a.grants.List(ctx, identity.GrantMatch{}, true); err != nil {
+			return nil, err
+		}
+	}
+	out := make([]TokenAccess, 0, len(toks))
+	for i := range toks {
+		out = append(out, TokenAccess{Token: toks[i], Grants: grantsOf(grants, identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(toks[i].ID)})})
+	}
+	return out, nil
+}
+
+// ViewPluginAccess is an installed view plugin with the grants in force that
+// say what it may view (D-210).
+type ViewPluginAccess struct {
+	Instance string
+	Grants   []identity.Grant
+}
+
+// ViewPlugins returns the installed view plugins that read with their own
+// identity, each with its grants in force, for an owner session: not the
+// built-in UI, which reads as the signed-in person. An error wrapping
+// ErrDirectoryUnknown says the core can't read the installed plugins now.
+func (a *Auth) ViewPlugins(ctx context.Context, origin, token string) ([]ViewPluginAccess, error) {
+	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
+		return nil, err
+	}
+	if a.grants == nil {
+		return nil, errNoGrants
+	}
+	return a.grants.ViewPluginAccess(ctx)
+}
+
+// UpdateGrants adds and removes the grants of a script token or a view plugin
+// for an owner session, as Grants.UpdateGrants does, and returns the grants it
+// holds afterwards.
+func (a *Auth) UpdateGrants(ctx context.Context, origin, token string, holder identity.GrantHolder, add, remove []identity.GrantTarget) ([]identity.Grant, error) {
+	_, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
+		return nil, err
+	}
+	if a.grants == nil {
+		return nil, errNoGrants
+	}
+	return a.grants.UpdateGrants(ctx, ownerActor(&s), holder, add, remove)
+}
+
+// GrantsEnforced reports whether grants limit what holders view now (see
+// Grants.Enforced); false without the grant use cases.
+func (a *Auth) GrantsEnforced() bool { return a.grants != nil && a.grants.Enforced() }
+
+// grantsOf returns the grants of holder among grants, in their order.
+func grantsOf(grants []identity.Grant, holder identity.GrantHolder) []identity.Grant {
+	var out []identity.Grant
+	for i := range grants {
+		if grants[i].Holder == holder {
+			out = append(out, grants[i])
+		}
+	}
+	return out
 }
 
 // RevokeScriptToken revokes the script token id for an owner session.

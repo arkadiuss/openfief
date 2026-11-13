@@ -895,3 +895,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de95b740b5e4
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-most-sensitive
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:45.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9087eeceed6b
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-get-origin
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:35:22.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aabc4187df56
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-get-origin
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:35:23.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4866243b5dc2
+  - type: verified_by
+    from: SCEN-ui-ask-question-tagged-t0
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:00:48.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b600cc81ed85

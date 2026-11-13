@@ -100,6 +100,33 @@ func TestUploadClient(t *testing.T) {
 	}
 }
 
+// TestAskClient checks that the Ask box's model calls (D-203) present the same
+// token as the AuthService client, with a longer timeout, since the core may
+// try several models for one call.
+func TestAskClient(t *testing.T) {
+	t.Parallel()
+	var got string
+	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
+		got = r.Header.Get("Authorization")
+	}))
+	t.Cleanup(srv.Close)
+	c := askClient(tokenFile(t))
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodPost, srv.URL, http.NoBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := c.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if got != "Bearer synthetic-projected-token" || c.Timeout != askTimeout || askTimeout <= coreTimeout {
+		t.Errorf("Authorization = %q, timeout %v; want the projected token and %v, longer than %v", got, c.Timeout, askTimeout, coreTimeout)
+	}
+}
+
 // TestReadClient checks that the read API client never goes through a
 // proxy, sets no Authorization of its own and has a timeout.
 func TestReadClient(t *testing.T) {

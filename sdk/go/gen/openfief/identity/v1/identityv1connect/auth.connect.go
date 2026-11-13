@@ -135,6 +135,12 @@ const (
 	AuthServiceRevokeGrantProcedure = "/openfief.identity.v1.AuthService/RevokeGrant"
 	// AuthServiceListGrantsProcedure is the fully-qualified name of the AuthService's ListGrants RPC.
 	AuthServiceListGrantsProcedure = "/openfief.identity.v1.AuthService/ListGrants"
+	// AuthServiceUpdateGrantsProcedure is the fully-qualified name of the AuthService's UpdateGrants
+	// RPC.
+	AuthServiceUpdateGrantsProcedure = "/openfief.identity.v1.AuthService/UpdateGrants"
+	// AuthServiceListViewPluginsProcedure is the fully-qualified name of the AuthService's
+	// ListViewPlugins RPC.
+	AuthServiceListViewPluginsProcedure = "/openfief.identity.v1.AuthService/ListViewPlugins"
 )
 
 // AuthServiceClient is a client for the openfief.identity.v1.AuthService service.
@@ -172,11 +178,16 @@ type AuthServiceClient interface {
 	// with a recent passkey check (D-183).
 	RemovePasskey(context.Context, *connect.Request[v1.RemovePasskeyRequest]) (*connect.Response[v1.RemovePasskeyResponse], error)
 	// CreateScriptToken issues a read-only script token (D-27) and returns its
-	// secret, the only time it is shown. Owner scope, with a recent passkey
-	// check (D-183).
+	// secret, the only time it is shown. The request may name the token's
+	// grants (D-209) and whether it may use MCP (D-213); the token, its grants
+	// and their audit entries are stored in one transaction, and then the grants
+	// are passed on to the authorization model. If that fails the token is
+	// revoked again and no secret is returned (UNAVAILABLE). Owner scope, with a
+	// recent passkey check (D-183).
 	CreateScriptToken(context.Context, *connect.Request[v1.CreateScriptTokenRequest]) (*connect.Response[v1.CreateScriptTokenResponse], error)
 	// ListScriptTokens returns every script token, expired and revoked ones
-	// included, in creation order. Owner scope.
+	// included, in creation order, each with the grants in force that say what
+	// it may view (D-210). Owner scope.
 	ListScriptTokens(context.Context, *connect.Request[v1.ListScriptTokensRequest]) (*connect.Response[v1.ListScriptTokensResponse], error)
 	// RevokeScriptToken revokes a script token. Owner scope.
 	RevokeScriptToken(context.Context, *connect.Request[v1.RevokeScriptTokenRequest]) (*connect.Response[v1.RevokeScriptTokenResponse], error)
@@ -223,6 +234,19 @@ type AuthServiceClient interface {
 	// ListGrants returns the grants, oldest first, optionally of one holder
 	// and optionally only those in force. Owner scope.
 	ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error)
+	// UpdateGrants adds and removes grants of one script token or view plugin
+	// in a single call (D-210), as the Access page's form does. Everything is
+	// checked before anything changes: the holder must exist, and so must each
+	// target to add (NOT_FOUND). Adding a grant the holder has and removing one
+	// it lacks change nothing. Each change is an audit entry, as CreateGrant and
+	// RevokeGrant make them. The response holds the holder's grants in force
+	// afterwards. Owner scope only.
+	UpdateGrants(context.Context, *connect.Request[v1.UpdateGrantsRequest]) (*connect.Response[v1.UpdateGrantsResponse], error)
+	// ListViewPlugins returns the installed view plugins that read with their
+	// own identity, each with its grants in force (D-210): not the built-in UI,
+	// which reads with the signed-in person's session. UNAVAILABLE when the core
+	// can't read the installed plugins now. Owner scope only.
+	ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the openfief.identity.v1.AuthService service. By
@@ -362,6 +386,18 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("ListGrants")),
 			connect.WithClientOptions(opts...),
 		),
+		updateGrants: connect.NewClient[v1.UpdateGrantsRequest, v1.UpdateGrantsResponse](
+			httpClient,
+			baseURL+AuthServiceUpdateGrantsProcedure,
+			connect.WithSchema(authServiceMethods.ByName("UpdateGrants")),
+			connect.WithClientOptions(opts...),
+		),
+		listViewPlugins: connect.NewClient[v1.ListViewPluginsRequest, v1.ListViewPluginsResponse](
+			httpClient,
+			baseURL+AuthServiceListViewPluginsProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ListViewPlugins")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -388,6 +424,8 @@ type authServiceClient struct {
 	createGrant          *connect.Client[v1.CreateGrantRequest, v1.CreateGrantResponse]
 	revokeGrant          *connect.Client[v1.RevokeGrantRequest, v1.RevokeGrantResponse]
 	listGrants           *connect.Client[v1.ListGrantsRequest, v1.ListGrantsResponse]
+	updateGrants         *connect.Client[v1.UpdateGrantsRequest, v1.UpdateGrantsResponse]
+	listViewPlugins      *connect.Client[v1.ListViewPluginsRequest, v1.ListViewPluginsResponse]
 }
 
 // GetLoginMethods calls openfief.identity.v1.AuthService.GetLoginMethods.
@@ -495,6 +533,16 @@ func (c *authServiceClient) ListGrants(ctx context.Context, req *connect.Request
 	return c.listGrants.CallUnary(ctx, req)
 }
 
+// UpdateGrants calls openfief.identity.v1.AuthService.UpdateGrants.
+func (c *authServiceClient) UpdateGrants(ctx context.Context, req *connect.Request[v1.UpdateGrantsRequest]) (*connect.Response[v1.UpdateGrantsResponse], error) {
+	return c.updateGrants.CallUnary(ctx, req)
+}
+
+// ListViewPlugins calls openfief.identity.v1.AuthService.ListViewPlugins.
+func (c *authServiceClient) ListViewPlugins(ctx context.Context, req *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error) {
+	return c.listViewPlugins.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the openfief.identity.v1.AuthService service.
 type AuthServiceHandler interface {
 	// GetLoginMethods says which ways in the login page can offer at origin.
@@ -530,11 +578,16 @@ type AuthServiceHandler interface {
 	// with a recent passkey check (D-183).
 	RemovePasskey(context.Context, *connect.Request[v1.RemovePasskeyRequest]) (*connect.Response[v1.RemovePasskeyResponse], error)
 	// CreateScriptToken issues a read-only script token (D-27) and returns its
-	// secret, the only time it is shown. Owner scope, with a recent passkey
-	// check (D-183).
+	// secret, the only time it is shown. The request may name the token's
+	// grants (D-209) and whether it may use MCP (D-213); the token, its grants
+	// and their audit entries are stored in one transaction, and then the grants
+	// are passed on to the authorization model. If that fails the token is
+	// revoked again and no secret is returned (UNAVAILABLE). Owner scope, with a
+	// recent passkey check (D-183).
 	CreateScriptToken(context.Context, *connect.Request[v1.CreateScriptTokenRequest]) (*connect.Response[v1.CreateScriptTokenResponse], error)
 	// ListScriptTokens returns every script token, expired and revoked ones
-	// included, in creation order. Owner scope.
+	// included, in creation order, each with the grants in force that say what
+	// it may view (D-210). Owner scope.
 	ListScriptTokens(context.Context, *connect.Request[v1.ListScriptTokensRequest]) (*connect.Response[v1.ListScriptTokensResponse], error)
 	// RevokeScriptToken revokes a script token. Owner scope.
 	RevokeScriptToken(context.Context, *connect.Request[v1.RevokeScriptTokenRequest]) (*connect.Response[v1.RevokeScriptTokenResponse], error)
@@ -581,6 +634,19 @@ type AuthServiceHandler interface {
 	// ListGrants returns the grants, oldest first, optionally of one holder
 	// and optionally only those in force. Owner scope.
 	ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error)
+	// UpdateGrants adds and removes grants of one script token or view plugin
+	// in a single call (D-210), as the Access page's form does. Everything is
+	// checked before anything changes: the holder must exist, and so must each
+	// target to add (NOT_FOUND). Adding a grant the holder has and removing one
+	// it lacks change nothing. Each change is an audit entry, as CreateGrant and
+	// RevokeGrant make them. The response holds the holder's grants in force
+	// afterwards. Owner scope only.
+	UpdateGrants(context.Context, *connect.Request[v1.UpdateGrantsRequest]) (*connect.Response[v1.UpdateGrantsResponse], error)
+	// ListViewPlugins returns the installed view plugins that read with their
+	// own identity, each with its grants in force (D-210): not the built-in UI,
+	// which reads with the signed-in person's session. UNAVAILABLE when the core
+	// can't read the installed plugins now. Owner scope only.
+	ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -716,6 +782,18 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("ListGrants")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceUpdateGrantsHandler := connect.NewUnaryHandler(
+		AuthServiceUpdateGrantsProcedure,
+		svc.UpdateGrants,
+		connect.WithSchema(authServiceMethods.ByName("UpdateGrants")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceListViewPluginsHandler := connect.NewUnaryHandler(
+		AuthServiceListViewPluginsProcedure,
+		svc.ListViewPlugins,
+		connect.WithSchema(authServiceMethods.ByName("ListViewPlugins")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.identity.v1.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceGetLoginMethodsProcedure:
@@ -760,6 +838,10 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceRevokeGrantHandler.ServeHTTP(w, r)
 		case AuthServiceListGrantsProcedure:
 			authServiceListGrantsHandler.ServeHTTP(w, r)
+		case AuthServiceUpdateGrantsProcedure:
+			authServiceUpdateGrantsHandler.ServeHTTP(w, r)
+		case AuthServiceListViewPluginsProcedure:
+			authServiceListViewPluginsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -851,4 +933,12 @@ func (UnimplementedAuthServiceHandler) RevokeGrant(context.Context, *connect.Req
 
 func (UnimplementedAuthServiceHandler) ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListGrants is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) UpdateGrants(context.Context, *connect.Request[v1.UpdateGrantsRequest]) (*connect.Response[v1.UpdateGrantsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.UpdateGrants is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListViewPlugins is not implemented"))
 }

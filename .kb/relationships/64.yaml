@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb646eb2c9bd
+  - type: executable_for
+    from: SYM-access-identity-postgres-grants-test-testissuetokenwithgrantsisatomicoverpostgres
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T18:36:12.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b5be9c3959

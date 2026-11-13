@@ -118,6 +118,29 @@ func (d *grantDirectory) ViewPlugins(ctx context.Context) ([]string, error) {
 	return out, nil
 }
 
+// AccessViewPlugins implements identityapp.Directory: the view plugins that
+// read with their own identity, so the owner's Access page lists them
+// (D-210). It leaves out the plugin that serves browsers, which reads with the
+// signed-in person's session, and a plugin being removed. Outside a cluster
+// there is none.
+func (d *grantDirectory) AccessViewPlugins(ctx context.Context) ([]string, error) {
+	if d.plugins == nil {
+		return nil, nil
+	}
+	records, err := d.records(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var out []string
+	for i := range records {
+		if !records[i].Deleting && isViewRecord(&records[i]) && records[i].BrowserPath == "" {
+			out = append(out, records[i].Instance)
+		}
+	}
+	slices.Sort(out)
+	return out, nil
+}
+
 // records returns the installed plugins, or an error wrapping
 // identityapp.ErrDirectoryUnknown when there is no cluster or the cache of
 // them has not synced.
@@ -263,7 +286,7 @@ func newGrants(store identityapp.GrantStore, tokens *identityapp.Tokens, dir ide
 	if az.syncer == nil {
 		return identityapp.NewGrants(store, tokens, dir, nil, now)
 	}
-	return identityapp.NewGrants(store, tokens, dir, az.syncer, now)
+	return identityapp.NewGrants(store, tokens, dir, az.syncer, now).WithPing(az.ping)
 }
 
 var _ accessSyncer = (*spicedb.Syncer)(nil)
@@ -283,5 +306,9 @@ func (householdOnly) ViewPluginInstalled(context.Context, string) (bool, error) 
 }
 
 func (householdOnly) ViewPlugins(context.Context) ([]string, error) {
+	return nil, fmt.Errorf("%w: a command of the core reads no plugins", identityapp.ErrDirectoryUnknown)
+}
+
+func (householdOnly) AccessViewPlugins(context.Context) ([]string, error) {
 	return nil, fmt.Errorf("%w: a command of the core reads no plugins", identityapp.ErrDirectoryUnknown)
 }

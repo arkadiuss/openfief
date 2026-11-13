@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c09c40f91d07
+  - type: implements
+    from: SYM-access-identity-connectapi-grants-authservice-listviewplugins
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:13:03.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8972fe0b8fe
+  - type: covered_by
+    from: SYM-access-identity-connectapi-grants-authservice-listviewplugins
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:13:03.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3c6f5f33601
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-router-permits-calls-nothing
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:21:25.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e27f37c730a

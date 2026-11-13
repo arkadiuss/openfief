@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-422c0125a5f9
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response-reset
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:34:02.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dde07f20998
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response-reset
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:34:02.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59236be36f3e

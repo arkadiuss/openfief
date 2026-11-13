@@ -832,3 +832,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb0fcdc2bdf8
+  - type: verified_by
+    from: SCEN-ui-ask-model-fallback-as-before
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:12:04.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc844515ab3c
+  - type: verified_by
+    from: SCEN-ui-ask-model-fallback-as-before
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:12:04.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02151845d764
+  - type: validates
+    from: TEST-models-connectapi-ask
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:12:11.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-614b5f5fea84
+  - type: validates
+    from: TEST-models-connectapi-ask
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:12:11.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46629e68146d
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-response-string
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:35:57.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5915844c4260
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-response-string
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:35:57.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f5f777dda69

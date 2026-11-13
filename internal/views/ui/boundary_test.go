@@ -22,7 +22,10 @@ import (
 // statements (D-7, D-49) to the core, and the MarketDataService client the
 // owner's ranking of market-data sources (D-94), and the TransferService
 // client the owner's decisions on suggested transfers (D-105), and the
-// AttentionService client the owner's actions on attention items (D-130).
+// AttentionService client the owner's actions on attention items (D-130),
+// and the AskModelService client the Ask box's door to the model router
+// (D-203): the model sees only what the answerers read through the public
+// read API, with the asking person's own session.
 func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	t.Parallel()
 	files, err := filepath.Glob("*.go")
@@ -39,6 +42,7 @@ func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1",
+		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1",
 		"github.com/arkadiuss/openfief/sdk/go/openfief",
 	}
 	fset := token.NewFileSet()

@@ -979,3 +979,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01f22f9dd6ff
+  - type: implements
+    from: SYM-access-views-ui-access-holdsinwords
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:14:52.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2dff46697df
+  - type: covered_by
+    from: SYM-access-views-ui-access-holdsinwords
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:14:52.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-638834a93697

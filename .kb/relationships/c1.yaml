@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37ac063d990c
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-reset
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:25:04.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e267212bf9
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:25:04.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-712e9a1905b5
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-reset
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:26:58.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cc48e5d342c
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:26:58.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ee74506dbc9

@@ -1000,3 +1000,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eada961cac11
+  - type: implements
+    from: SYM-access-views-ui-access-server-updategrantsfailed
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:15:56.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0ed1308e271
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-updategrantsfailed
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:56.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f3dbd075e1
+  - type: specified_by
+    from: REQ-ui-ask-model-fallback-as-before
+    to: SCEN-ui-ask-model-fallback-as-before
+    created_at: 2026-11-13T18:11:39.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a498f9f2b4b2
+  - type: implements
+    from: SYM-ask-model-modelrouter-go-ask-sessions-asker
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:19:38.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b528209b5d9e
+  - type: covered_by
+    from: SYM-ask-model-modelrouter-go-ask-sessions-asker
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:38.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00ff52fac3e8

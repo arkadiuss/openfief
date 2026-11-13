@@ -423,3 +423,32 @@ func TestOwnerGrantsAnUngrantedViewPluginTheHousehold(t *testing.T) {
 	f.plugins.records = nil
 	wantUngranted(t, check, "after the uninstall")
 }
+
+// TestGrantDirectoryAccessViewPlugins checks the view plugins the Access page
+// lists (D-210): those that hold or ask for the view capability, less the one
+// that serves browsers, which reads as the signed-in person, and any being
+// removed; none outside a cluster, and an error while the cache has not
+// synced.
+func TestGrantDirectoryAccessViewPlugins(t *testing.T) {
+	t.Parallel()
+	ctx := t.Context()
+	plugins := &fakePlugins{records: []views.PluginRecord{
+		{Instance: "ui", Effective: []string{"view"}, BrowserPath: "/"},
+		{Instance: "ghostfolio", Effective: []string{"view"}},
+		{Instance: "asks-for-view", Requested: []string{"view"}},
+		{Instance: "ibkr", Effective: []string{"connector"}},
+		{Instance: "removing", Effective: []string{"view"}, Deleting: true},
+	}}
+	d := &grantDirectory{accounts: fakeAccounts{}, sleeves: fakeSleeves{}, plugins: plugins}
+	got, err := d.AccessViewPlugins(ctx)
+	if err != nil || !slices.Equal(got, []string{"asks-for-view", "ghostfolio"}) {
+		t.Errorf("AccessViewPlugins = %v, %v, want the two that read as themselves, sorted", got, err)
+	}
+	if got, err := (&grantDirectory{}).AccessViewPlugins(ctx); err != nil || len(got) != 0 {
+		t.Errorf("AccessViewPlugins outside a cluster = %v, %v, want none", got, err)
+	}
+	plugins.unsynced = true
+	if _, err := d.AccessViewPlugins(ctx); !errors.Is(err, identityapp.ErrDirectoryUnknown) {
+		t.Errorf("AccessViewPlugins before the cache synced = %v, want ErrDirectoryUnknown", err)
+	}
+}

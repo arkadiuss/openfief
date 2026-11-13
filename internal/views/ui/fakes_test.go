@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -23,6 +24,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -85,6 +87,18 @@ type fakeAuth struct {
 	ownPasskey bool
 	// granted are the grants CreateGrant made, as "holder-kind/id -> target".
 	granted []string
+	// tokenReq is the last CreateScriptToken request, and createErr makes it
+	// fail as the core does.
+	tokenReq  *identityv1.CreateScriptTokenRequest
+	createErr error
+	// updates are the UpdateGrants calls, as "holder-kind/id +added -removed",
+	// and updateErr makes them fail as the core does.
+	updates   []string
+	updateErr error
+	// pluginsDown makes ListViewPlugins say the core can't read its cluster.
+	pluginsDown bool
+	// enforced is the grants_enforced the lists answer.
+	enforced bool
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -220,8 +234,12 @@ func (f *fakeAuth) CreateScriptToken(_ context.Context, r *connect.Request[ident
 		return nil, err
 	}
 	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.createErr != nil {
+		return nil, f.createErr
+	}
 	f.tokenTTL = r.Msg.GetTtl().AsDuration()
-	f.mu.Unlock()
+	f.tokenReq = r.Msg
 	return connect.NewResponse(&identityv1.CreateScriptTokenResponse{
 		Token:  &identityv1.ScriptToken{Id: "0123456789abcdef", Name: r.Msg.GetName()},
 		Secret: "ofs_0123456789abcdef_synthetic-secret",
@@ -256,9 +274,56 @@ func (f *fakeAuth) ListScriptTokens(_ context.Context, r *connect.Request[identi
 		return nil, err
 	}
 	ts := timestamppb.New(time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC))
-	return connect.NewResponse(&identityv1.ListScriptTokensResponse{Tokens: []*identityv1.ScriptToken{
-		{Id: "fedcba9876543210", Name: "backup-script", Status: identityv1.ScriptTokenStatus_SCRIPT_TOKEN_STATUS_ACTIVE, CreatedAt: ts, ExpiresAt: ts},
+	return connect.NewResponse(&identityv1.ListScriptTokensResponse{GrantsEnforced: f.flag(&f.enforced), Tokens: []*identityv1.ScriptToken{
+		{
+			Id: "fedcba9876543210", Name: "backup-script", Status: identityv1.ScriptTokenStatus_SCRIPT_TOKEN_STATUS_ACTIVE, CreatedAt: ts, ExpiresAt: ts,
+			McpAllowed: true, Grants: []*identityv1.Grant{
+				{HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_SCRIPT_TOKEN, HolderId: "fedcba9876543210", TargetKind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, TargetId: "core"},
+			},
+		},
+		{Id: "0011223344556677", Name: "old-script", Status: identityv1.ScriptTokenStatus_SCRIPT_TOKEN_STATUS_REVOKED, CreatedAt: ts, ExpiresAt: ts},
 	}}), nil
+}
+
+func (f *fakeAuth) ListViewPlugins(_ context.Context, r *connect.Request[identityv1.ListViewPluginsRequest]) (*connect.Response[identityv1.ListViewPluginsResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if f.flag(&f.pluginsDown) {
+		return nil, codeErr(connect.CodeUnavailable, nil)
+	}
+	return connect.NewResponse(&identityv1.ListViewPluginsResponse{GrantsEnforced: f.flag(&f.enforced), Plugins: []*identityv1.ViewPlugin{
+		{Instance: "ghostfolio", Grants: []*identityv1.Grant{
+			{HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, HolderId: "ghostfolio", TargetKind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, TargetId: accountID},
+		}},
+		{Instance: "sheets"},
+	}}), nil
+}
+
+func (f *fakeAuth) UpdateGrants(_ context.Context, r *connect.Request[identityv1.UpdateGrantsRequest]) (*connect.Response[identityv1.UpdateGrantsResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.updateErr != nil {
+		return nil, f.updateErr
+	}
+	words := []string{r.Msg.GetHolderKind().String() + "/" + r.Msg.GetHolderId()}
+	for _, t := range r.Msg.GetAdd() {
+		words = append(words, "+"+t.GetKind().String()+"/"+t.GetId())
+	}
+	for _, t := range r.Msg.GetRemove() {
+		words = append(words, "-"+t.GetKind().String()+"/"+t.GetId())
+	}
+	f.updates = append(f.updates, strings.Join(words, " "))
+	return connect.NewResponse(&identityv1.UpdateGrantsResponse{}), nil
 }
 
 func (f *fakeAuth) RevokeScriptToken(_ context.Context, r *connect.Request[identityv1.RevokeScriptTokenRequest]) (*connect.Response[identityv1.RevokeScriptTokenResponse], error) {
@@ -708,8 +773,11 @@ type harness struct {
 	// checkpoints is the CashCheckpointService (D-158).
 	checkpoints *fakeCheckpoints
 	read        *fakeRead
-	handler     http.Handler
-	tokenFile   string
+	// askModel is the core's router for the Ask box (D-203), off until a
+	// test turns it on.
+	askModel  *fakeAskModel
+	handler   http.Handler
+	tokenFile string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -736,7 +804,9 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	h.syncs = &fakeSyncs{}
 	h.names = &fakeInstruments{}
 	h.read.transfers = h.transfers
+	h.askModel = &fakeAskModel{}
 	mux := http.NewServeMux()
+	mux.Handle(modelsv1connect.NewAskModelServiceHandler(h.askModel))
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
 	mux.Handle(ingestv1connect.NewBondLotServiceHandler(h.bondLots))
@@ -766,6 +836,7 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		Accounts:        ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		MarketData:      valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		AskModel:        modelsv1connect.NewAskModelServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),

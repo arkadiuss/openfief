@@ -105,15 +105,45 @@ func (r *Router) Generate(ctx context.Context, role modelrouter.Role, actor Acto
 	if err != nil {
 		return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
 	}
-	route := stored.Routes[role]
-	plan, err := modelrouter.MakePlan(&modelrouter.PlanInput{
-		Switch: stored.Switch, Role: role, Route: route, Policy: stored.Policy,
-		DataTiers: tiers, Needs: req.Needs(), Catalog: r.catalogOf(ctx, route),
-	})
+	plan, err := r.plan(ctx, &stored, role, tiers, req.Needs())
 	if err != nil {
 		return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
 	}
 	return r.try(ctx, role, actor, plan.Candidates, req)
+}
+
+// Permits reports whether a request with data of tiers, asking what needs
+// says, could be sent to a model of role's route now: nil, or the error
+// Generate would refuse it with (modelrouter.ErrSwitchOff,
+// modelrouter.ErrFeatureOff, modelrouter.ErrNoRoute,
+// modelrouter.ErrDataTierDenied or modelrouter.ErrNoCapableModel). It calls
+// no provider and writes no audit entry: it is a question about the
+// settings, not a call. A caller that holds data it may not be allowed to
+// send, such as a tool's result, asks it before adding the data to a
+// request, so a refusal names that data and not the whole request.
+func (r *Router) Permits(ctx context.Context, role modelrouter.Role, tiers modelrouter.DataTierSet, needs modelrouter.Needs) error {
+	stored, err := r.settings.Settings(ctx)
+	if err != nil {
+		return fmt.Errorf("loading the models settings: %w", err)
+	}
+	if _, planErr := r.plan(ctx, &stored, role, tiers, needs); planErr != nil {
+		return planErr
+	}
+	return nil
+}
+
+// plan decides which models of role's route may be sent a request with
+// tiers and needs, under the settings stored.
+func (r *Router) plan(ctx context.Context, stored *modelrouter.Settings, role modelrouter.Role, tiers modelrouter.DataTierSet, needs modelrouter.Needs) (modelrouter.Plan, error) {
+	route := stored.Routes[role]
+	plan, err := modelrouter.MakePlan(&modelrouter.PlanInput{
+		Switch: stored.Switch, Role: role, Route: route, Policy: stored.Policy,
+		DataTiers: tiers, Needs: needs, Catalog: r.catalogOf(ctx, route),
+	})
+	if err != nil {
+		return plan, fmt.Errorf("planning a call: %w", err)
+	}
+	return plan, nil
 }
 
 // checkSwitch returns the error for role's feature being off, or nil.

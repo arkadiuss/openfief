@@ -909,3 +909,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcb93b427660
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getorigin
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:26:18.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c4921b2faf
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getorigin
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:26:18.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5bcde5ee585
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response-descriptor
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:34:30.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1262d5bc7f33
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response-descriptor
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:34:30.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87bb14378c50
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-reset
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:34:50.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3099943be5
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-reset
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:34:50.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf3a30f617db

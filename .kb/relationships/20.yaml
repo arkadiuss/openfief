@@ -923,3 +923,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfab43e0a4d3
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-descriptor
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:27:23.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-829d2cc03355
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:27:23.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b919e07a3388
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-new-ask-fixture
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:48.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf1fe8759be0
+  - type: implements
+    from: SYM-ask-model-askmodel-go-ask-conversation-answer
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:25:39.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0fb9403c686
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-ask-conversation-answer
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:25:39.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba8e9f8c077d
+  - type: implements
+    from: SYM-ask-model-askmodelclient-go-ask-message-to
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:30:59.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-149a0665a174
+  - type: covered_by
+    from: SYM-ask-model-askmodelclient-go-ask-message-to
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:30:59.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6834a07d293d

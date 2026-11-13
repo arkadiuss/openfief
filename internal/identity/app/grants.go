@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/identity"
@@ -81,6 +82,13 @@ type Directory interface {
 	// plugins, those that hold or ask for the view capability, or an
 	// error wrapping ErrDirectoryUnknown.
 	ViewPlugins(ctx context.Context) ([]string, error)
+	// AccessViewPlugins returns the instance names of the installed view
+	// plugins that read with their own identity and so need grants (D-210):
+	// those that hold or ask for the view capability, less the one that
+	// serves browsers, which reads as the signed-in person, and any being
+	// removed. It fails with an error wrapping ErrDirectoryUnknown when the
+	// core can't tell.
+	AccessViewPlugins(ctx context.Context) ([]string, error)
 }
 
 // Grants are the use cases of the owner's grants (D-209, D-211). Each change
@@ -93,6 +101,9 @@ type Grants struct {
 	dir    Directory
 	proj   GrantProjector
 	now    func() time.Time
+	// ping asks the authorization model whether it answers; nil with the
+	// policy, which has nothing to ask.
+	ping func(context.Context) error
 }
 
 // NewGrants returns the grant use cases over store, checking script tokens
@@ -100,6 +111,20 @@ type Grants struct {
 // proj (nil with the policy) and reading the time from now.
 func NewGrants(store GrantStore, tokens *Tokens, dir Directory, proj GrantProjector, now func() time.Time) *Grants {
 	return &Grants{store: store, tokens: tokens, dir: dir, proj: proj, now: now}
+}
+
+// Enforced reports whether the grants limit what holders view now: they do
+// while the authorization model answers, and have no effect under the policy,
+// which lets every holder of read access view every account.
+func (g *Grants) Enforced() bool { return g.proj != nil }
+
+// WithPing returns g asking ping, before it stores a token that is to hold
+// grants, whether the authorization model answers: a model that doesn't makes
+// the token's creation fail with an error wrapping ErrGrantNotProjected and
+// store nothing. ping is nil with the policy.
+func (g *Grants) WithPing(ping func(context.Context) error) *Grants {
+	g.ping = ping
+	return g
 }
 
 // Create grants target to holder on behalf of actor, which records it in the
@@ -234,58 +259,119 @@ func (g *Grants) RevokeToken(ctx context.Context, actor identity.Actor, id ident
 	return nil
 }
 
+// NewToken is what the owner chooses when creating a script token (D-210):
+// its name, how long it lasts, whether it may use MCP (D-213), and the grants
+// it starts with.
+type NewToken struct {
+	Name string
+	// TTL is the token's lifetime, at most identity.MaxTTL.
+	TTL time.Duration
+	// MCPAllowed is stored with the token and changes nothing until MCP is
+	// served.
+	MCPAllowed bool
+	// Targets are the grants the token is given: accounts, sleeves or the
+	// household. None leaves a token that views nothing under SpiceDB.
+	Targets []identity.GrantTarget
+}
+
 // IssueToken creates a read-only token for actor as IssueToken does and,
-// when household is set, its household grant (D-209): the token, the grant
-// and the audit entries of both in one transaction (D-211), and then the
-// grant is written to the authorization model. If that write fails, the
-// token is revoked at once, with its own audit entry, no secret is returned,
-// and the error wraps ErrTokenRevoked and ErrGrantNotProjected; if the
-// revocation fails too, the error says the token must be revoked by hand. A
-// token without the household grant needs nothing of the model. The caller
-// makes sure the model answers before it asks for a grant, so a failure here
-// is the rare race.
+// when household is set, its household grant (D-209): see IssueTokenWith.
 func (g *Grants) IssueToken(ctx context.Context, actor identity.Actor, name string, ttl time.Duration, household bool) (identity.ScriptToken, string, error) {
-	var (
-		tok    identity.ScriptToken
-		secret string
-		grant  identity.Grant
-	)
-	err := within(ctx, g.store, func(ctx context.Context) error {
-		var issueErr error
-		if tok, secret, issueErr = IssueToken(ctx, g.store, g.tokens, actor, name, ttl); issueErr != nil {
-			return issueErr
-		}
-		if !household {
-			return nil
-		}
-		var grantErr error
-		holder := identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(tok.ID)}
-		if grant, grantErr = identity.NewGrant(holder, identity.Household(), g.now().UTC().Truncate(time.Microsecond)); grantErr != nil {
-			return fmt.Errorf("building the household grant: %w", grantErr)
-		}
-		if _, saveErr := g.store.SaveGrant(ctx, &grant); saveErr != nil {
-			return fmt.Errorf("saving the grant: %w", saveErr)
-		}
-		return g.record(ctx, actor, identity.ActionGrantCreated, &grant)
-	})
+	spec := NewToken{Name: name, TTL: ttl}
+	if household {
+		spec.Targets = []identity.GrantTarget{identity.Household()}
+	}
+	return g.IssueTokenWith(ctx, actor, &spec)
+}
+
+// IssueTokenWith creates a read-only token for actor and the grants spec
+// names (D-209, D-210): the token, its grants and the audit entries of all of
+// them in one transaction (D-211), and then the grants are written to the
+// authorization model. If that write fails, the token is revoked at once,
+// with its own audit entry, no secret is returned, and the error wraps
+// ErrTokenRevoked and ErrGrantNotProjected; if the revocation fails too, the
+// error says the token must be revoked by hand. Before storing anything it
+// checks that every target exists, as an error wrapping ErrNotFound, and,
+// when the token is to hold grants, that the model answers: a model that
+// doesn't fails with an error wrapping ErrGrantNotProjected and stores
+// nothing. A token without grants needs nothing of the model.
+func (g *Grants) IssueTokenWith(ctx context.Context, actor identity.Actor, spec *NewToken) (identity.ScriptToken, string, error) {
+	targets, err := g.checkTargets(ctx, spec.Targets)
 	if err != nil {
 		return identity.ScriptToken{}, "", err
 	}
-	if !household {
+	if len(targets) > 0 && g.ping != nil {
+		if pingErr := g.ping(ctx); pingErr != nil {
+			return identity.ScriptToken{}, "", fmt.Errorf("%w: the authorization model does not answer: %w", ErrGrantNotProjected, pingErr)
+		}
+	}
+	tok, secret, grants, err := g.storeToken(ctx, actor, spec, targets)
+	if err != nil {
+		return identity.ScriptToken{}, "", err
+	}
+	if len(grants) == 0 {
 		return tok, secret, nil
 	}
-	projectErr := g.project(ctx, []identity.Grant{grant})
+	projectErr := g.project(ctx, grants)
 	if projectErr == nil {
 		return tok, secret, nil
 	}
 	rctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), revokeTimeout)
 	defer cancel()
-	// The grant never reached the model, so the removal RevokeToken then asks of it may fail too:
+	// The grants never reached the model, so the removal RevokeToken then asks of it may fail too:
 	// the token is revoked in the table either way, and the model holds nothing of it.
 	if revokeErr := g.RevokeToken(rctx, actor, tok.ID); revokeErr != nil && !errors.Is(revokeErr, ErrGrantNotProjected) {
-		return identity.ScriptToken{ID: tok.ID}, "", fmt.Errorf("token %s was issued but its grant could not reach the authorization model, and revoking it failed, so revoke it by hand: %w", tok.ID, errors.Join(projectErr, revokeErr))
+		return identity.ScriptToken{ID: tok.ID}, "", fmt.Errorf("token %s was issued but its grants could not reach the authorization model, and revoking it failed, so revoke it by hand: %w", tok.ID, errors.Join(projectErr, revokeErr))
 	}
 	return identity.ScriptToken{ID: tok.ID}, "", fmt.Errorf("token %s: %w: %w", tok.ID, ErrTokenRevoked, projectErr)
+}
+
+// UpdateGrants changes what holder may view on behalf of actor: it ends the
+// grants of each target in remove, then makes those of each target in add,
+// every change an audit entry (D-211) passed on to the authorization model as
+// Create and Revoke do. Everything is checked before anything changes: the
+// holder must exist, as must each target to add. Removing a grant holder
+// doesn't hold, and adding one it holds already, change nothing. It returns
+// the grants in force afterwards. A failure part way, which only a store or
+// model outage causes, leaves the changes made before it, each of them
+// audited, and the error says what failed.
+func (g *Grants) UpdateGrants(ctx context.Context, actor identity.Actor, holder identity.GrantHolder, add, remove []identity.GrantTarget) ([]identity.Grant, error) {
+	add, err := g.checkUpdate(ctx, holder, add, remove)
+	if err != nil {
+		return nil, err
+	}
+	for _, t := range remove {
+		if revokeErr := g.Revoke(ctx, actor, holder, t); revokeErr != nil && !errors.Is(revokeErr, ErrNotFound) {
+			return nil, revokeErr
+		}
+	}
+	for _, t := range add {
+		if _, createErr := g.Create(ctx, actor, holder, t); createErr != nil {
+			return nil, createErr
+		}
+	}
+	return g.List(ctx, identity.GrantMatch{Holder: holder}, true)
+}
+
+// ViewPluginAccess returns the installed view plugins that read with their
+// own identity, in name order, each with its grants in force (D-210). An
+// error wrapping ErrDirectoryUnknown says the core can't read the plugins
+// now.
+func (g *Grants) ViewPluginAccess(ctx context.Context) ([]ViewPluginAccess, error) {
+	names, err := g.dir.AccessViewPlugins(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("listing the view plugins: %w", err)
+	}
+	inForce, err := g.List(ctx, identity.GrantMatch{}, true)
+	if err != nil {
+		return nil, err
+	}
+	slices.Sort(names)
+	out := make([]ViewPluginAccess, 0, len(names))
+	for _, name := range names {
+		out = append(out, ViewPluginAccess{Instance: name, Grants: grantsOf(inForce, identity.GrantHolder{Kind: identity.GrantHolderViewPlugin, ID: name})})
+	}
+	return out, nil
 }
 
 // Cutover is the step D-209 describes for the day SpiceDB takes over: every
@@ -629,4 +715,89 @@ func (g *Grants) inForceOf(ctx context.Context, holder identity.GrantHolder, tar
 		return identity.Grant{}, fmt.Errorf("%w: the grant ended meanwhile", ErrNotFound)
 	}
 	return inForce[0], nil
+}
+
+// checkTargets validates each of targets, drops a repeated one, and checks
+// that it exists: an invalid one wraps ErrInvalidRequest, a missing one
+// ErrNotFound.
+func (g *Grants) checkTargets(ctx context.Context, targets []identity.GrantTarget) ([]identity.GrantTarget, error) {
+	var out []identity.GrantTarget
+	for _, t := range targets {
+		if err := t.Validate(); err != nil {
+			return nil, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+		}
+		if slices.Contains(out, t) {
+			continue
+		}
+		ok, err := g.dir.TargetExists(ctx, t)
+		if err != nil {
+			return nil, fmt.Errorf("looking for the %s: %w", t.Kind, err)
+		}
+		if !ok {
+			return nil, fmt.Errorf("%w: no such %s", ErrNotFound, t.Kind)
+		}
+		out = append(out, t)
+	}
+	return out, nil
+}
+
+// checkUpdate checks what UpdateGrants is asked: the holder is valid, may hold
+// grants and exists, every target to remove is valid and every target to add
+// exists. It returns the targets to add without repeats.
+func (g *Grants) checkUpdate(ctx context.Context, holder identity.GrantHolder, add, remove []identity.GrantTarget) ([]identity.GrantTarget, error) {
+	if err := holder.Validate(); err != nil {
+		return nil, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+	}
+	if holder.Kind == identity.GrantHolderPerson {
+		return nil, fmt.Errorf("%w: viewers don't exist yet", ErrInvalidRequest)
+	}
+	ok, err := g.holderExists(ctx, holder)
+	if err != nil {
+		return nil, err
+	}
+	if !ok {
+		return nil, fmt.Errorf("%w: no such %s", ErrNotFound, holder.Kind)
+	}
+	for _, t := range remove {
+		if validErr := t.Validate(); validErr != nil {
+			return nil, fmt.Errorf("%w: %w", ErrInvalidRequest, validErr)
+		}
+	}
+	return g.checkTargets(ctx, add)
+}
+
+// storeToken stores the token spec describes, a grant of each of targets and
+// the audit entry of each, in one transaction, and returns them with the
+// token's secret.
+func (g *Grants) storeToken(ctx context.Context, actor identity.Actor, spec *NewToken, targets []identity.GrantTarget) (identity.ScriptToken, string, []identity.Grant, error) {
+	var (
+		tok    identity.ScriptToken
+		secret string
+		grants []identity.Grant
+	)
+	err := within(ctx, g.store, func(ctx context.Context) error {
+		var issueErr error
+		if tok, secret, issueErr = IssueTokenWith(ctx, g.store, g.tokens, actor, spec.Name, spec.TTL, spec.MCPAllowed); issueErr != nil {
+			return issueErr
+		}
+		holder := identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(tok.ID)}
+		for _, target := range targets {
+			grant, grantErr := identity.NewGrant(holder, target, g.now().UTC().Truncate(time.Microsecond))
+			if grantErr != nil {
+				return fmt.Errorf("building a grant: %w", grantErr)
+			}
+			if _, saveErr := g.store.SaveGrant(ctx, &grant); saveErr != nil {
+				return fmt.Errorf("saving the grant: %w", saveErr)
+			}
+			if recordErr := g.record(ctx, actor, identity.ActionGrantCreated, &grant); recordErr != nil {
+				return recordErr
+			}
+			grants = append(grants, grant)
+		}
+		return nil
+	})
+	if err != nil {
+		return identity.ScriptToken{}, "", nil, err
+	}
+	return tok, secret, grants, nil
 }

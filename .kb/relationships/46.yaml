@@ -958,3 +958,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-631a2a0a6549
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:33:55.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58fbe7dd18cc
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-response
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:33:55.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f65d1739f9b
+  - type: specified_by
+    from: REQ-models-openrouter-require-parameters
+    to: SCEN-models-openrouter-require-parameters
+    created_at: 2026-11-13T20:00:55.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbbf94a3a744

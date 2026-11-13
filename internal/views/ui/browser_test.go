@@ -18,6 +18,10 @@ const (
 	browserSignIn = "/test/sign-in"
 	// browserEndedSession is where they get a session the core rejects.
 	browserEndedSession = "/test/ended-session"
+	// browserAskModel is where they set up the Ask box's model (D-203): the
+	// tiers query parameter lists the data tiers the model may receive, and
+	// "off" takes the model away again.
+	browserAskModel = "/test/ask-model"
 )
 
 // browserInboxItems adds an item of each kind the Inbox settles in place
@@ -69,6 +73,10 @@ func TestServeForBrowser(t *testing.T) {
 	// that expired or was revoked (D-151's wipe when the session ends).
 	mux.HandleFunc("GET "+browserEndedSession, func(w http.ResponseWriter, r *http.Request) {
 		setSession(w, "session-ended", issued(identityv1.SessionScope_SESSION_SCOPE_OWNER))
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	mux.HandleFunc("GET "+browserAskModel, func(w http.ResponseWriter, r *http.Request) {
+		browserSetUpAskModel(h.askModel, r.URL.Query().Get("tiers"))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	srv := &http.Server{Addr: addr, Handler: mux, ReadHeaderTimeout: time.Second}

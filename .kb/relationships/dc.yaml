@@ -797,3 +797,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86cfd21a8046
+  - type: specified_by
+    from: REQ-ui-access-script-tokens
+    to: SCEN-ui-access-page-lists-tokens-and-plugins
+    created_at: 2026-11-13T18:09:57.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a12c4e7bda
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:39:32.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff3585d1577
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:39:32.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e24db35a9f21

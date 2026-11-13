@@ -58,6 +58,13 @@ func NewTokens(store Store, now func() time.Time, random io.Reader) *Tokens {
 // returns it with its secret. The secret is returned only here: the store
 // keeps its key's hash, so no one can show it again.
 func (t *Tokens) Issue(ctx context.Context, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+	return t.IssueWith(ctx, name, ttl, false)
+}
+
+// IssueWith creates a token as Issue does, and records whether the owner
+// allowed it to use MCP (D-210, D-213): a flag that is stored with the token
+// and changes nothing until the MCP server is served.
+func (t *Tokens) IssueWith(ctx context.Context, name string, ttl time.Duration, mcpAllowed bool) (identity.ScriptToken, string, error) {
 	idBytes := make([]byte, identity.IDBytes)
 	key := make([]byte, identity.KeyBytes)
 	if _, err := io.ReadFull(t.random, idBytes); err != nil {
@@ -71,6 +78,7 @@ func (t *Tokens) Issue(ctx context.Context, name string, ttl time.Duration) (ide
 	if err != nil {
 		return identity.ScriptToken{}, "", fmt.Errorf("issuing a script token: %w", err)
 	}
+	tok.MCPAllowed = mcpAllowed
 	if err := t.store.SaveScriptToken(ctx, &tok, identity.HashKey(key)); err != nil {
 		return identity.ScriptToken{}, "", fmt.Errorf("issuing a script token: %w", err)
 	}
@@ -149,13 +157,19 @@ type auditedAtomic interface {
 // transaction covers both. Besides Auth.CreateScriptToken, core token issue
 // calls it, as the core itself.
 func IssueToken(ctx context.Context, store auditedAtomic, t *Tokens, actor identity.Actor, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+	return IssueTokenWith(ctx, store, t, actor, name, ttl, false)
+}
+
+// IssueTokenWith is IssueToken for a token that may also be allowed to use
+// MCP (D-213).
+func IssueTokenWith(ctx context.Context, store auditedAtomic, t *Tokens, actor identity.Actor, name string, ttl time.Duration, mcpAllowed bool) (identity.ScriptToken, string, error) {
 	var (
 		tok    identity.ScriptToken
 		secret string
 	)
 	err := within(ctx, store, func(ctx context.Context) error {
 		var issueErr error
-		if tok, secret, issueErr = t.Issue(ctx, name, ttl); issueErr != nil {
+		if tok, secret, issueErr = t.IssueWith(ctx, name, ttl, mcpAllowed); issueErr != nil {
 			return issueErr
 		}
 		return appendTokenEntry(ctx, store, t, actor, identity.ActionScriptTokenCreated, tok.ID)

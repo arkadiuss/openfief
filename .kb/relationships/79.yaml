@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5f6eb5c75ec
+  - type: implements
+    from: SYM-ui-server-create-token
+    to: REQ-ui-access-script-tokens
+    created_at: 2026-11-13T18:36:31.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d077697404c
+  - type: covered_by
+    from: SYM-ui-server-create-token
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:36:31.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3919ffa7e43b

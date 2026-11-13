@@ -944,3 +944,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e4b6e216d0a
+  - type: implements
+    from: SYM-access-cmd-core-grants-grantdirectory-accessviewplugins
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:10:39.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7ae29232d54
+  - type: covered_by
+    from: SYM-access-cmd-core-grants-grantdirectory-accessviewplugins
+    to: TEST-core-grants
+    created_at: 2026-11-13T18:10:39.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-858283e32706
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-service-check-ask-tiers
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:21:56.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cfbfec06e17
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-service-check-ask-tiers
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:21:56.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11dcad55d733
+  - type: executable_for
+    from: SYM-ask-model-askmodel-page-test-go-test-ask-box-cards-for-amodel-that-cannot-answer
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:28:07.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3518d5fe2f61

@@ -66,6 +66,10 @@ type askBox struct {
 	Question    string
 	Answer      *answerCard
 	Suggestions []string
+	// Model is true when a question beyond the box's commands goes to a
+	// model (D-203): the box says so, since the question then leaves the
+	// UI for the model the owner chose.
+	Model bool
 }
 
 // statusLine is the overview's sentence of status (D-193): the day

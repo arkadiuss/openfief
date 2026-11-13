@@ -66,7 +66,7 @@ func attentionKindOf(kind string) attentionKind {
 		kindBondFeeAssumed:                      {Label: "Bond fee to confirm"},
 		kindBondSeries:                          {Label: "Bond series still without its ISIN or terms"},
 		"model-route-broken":                    {Label: "Model route names a missing provider instance"},
-		kindViewPluginUngranted:                 {Label: "View plugin without access to any account"},
+		kindViewPluginUngranted:                 {Label: "View plugin without access to any account", Page: accessPath + viewPluginsAnchor, Action: "Open Access"},
 		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
 	}
 	if k, ok := kinds[kind]; ok {
