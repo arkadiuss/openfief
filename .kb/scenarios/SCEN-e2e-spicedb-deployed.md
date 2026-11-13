@@ -1,0 +1,10 @@
+---
+title: SpiceDB runs from the install, with its credentials generated and its datastore a database of the core's PostgreSQL cluster
+status: active
+origin:
+  kind: agent
+  recorded_at: '2026-11-13T04:07:16.569Z'
+id: SCEN-e2e-spicedb-deployed
+type: scenario
+---
+Given the demo's application layer applied on kind or k3d, when the install settles, then the Deployment openfief-spicedb is available (its migration ran against the database spicedb of the openfief-db cluster, in the role spicedb that CloudNativePG reconciled); the Job openfief-spicedb-secrets completed and made a preshared key and a role password of 32 bytes or more; the pod is non-root with a read-only root filesystem, no capabilities and no ServiceAccount token, its images pinned by tag and digest, and its key and password read from Secrets; and neither SpiceDB's log nor the core's holds either value. Runs on both kind and k3d.

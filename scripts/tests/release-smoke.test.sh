@@ -164,7 +164,7 @@ release "$op $eg $co"
 check "a release that verifies installs" "$(passes)"
 # The steps in the guide's order: download, CLI, images, CloudNativePG, CRDs, database, install, UI, enrol.
 order="$(grep -oE '^(gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f [^ ]+|kubectl -n openfief wait [^ ]+|kubectl -n openfief rollout status [^ ]+|openfief plugin install ui --yes|openfief enroll|node passkey.mjs|egress-proxy audit)' "$work/log" | uniq | tr '\n' '|')"
-want="gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f cnpg-1.30.1.yaml|kubectl apply --server-side -f openfief-crds-$version.yaml|kubectl apply --server-side -f openfief-db-$version.yaml|kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db|kubectl apply --server-side -f openfief-install-$version.yaml|kubectl -n openfief rollout status deployment/openfief-operator|kubectl -n openfief rollout status deployment/egress-proxy|kubectl -n openfief rollout status deployment/openfief-core|openfief plugin install ui --yes|kubectl -n openfief wait plugin.openfief.io/ui|openfief enroll|node passkey.mjs|egress-proxy audit|"
+want="gh release download|cosign verify-blob|cosign verify |kubectl apply --server-side -f cnpg-1.30.1.yaml|kubectl apply --server-side -f openfief-crds-$version.yaml|kubectl apply --server-side -f openfief-db-$version.yaml|kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db|kubectl apply --server-side -f openfief-install-$version.yaml|kubectl -n openfief rollout status deployment/openfief-operator|kubectl -n openfief rollout status deployment/egress-proxy|kubectl -n openfief rollout status deployment/openfief-core|kubectl -n openfief rollout status deployment/openfief-spicedb|openfief plugin install ui --yes|kubectl -n openfief wait plugin.openfief.io/ui|openfief enroll|node passkey.mjs|egress-proxy audit|"
 check "the steps run in the guide's order, then the egress audit" "$(yes_if test "$order" = "$want")"
 check "it verifies the CLI, the checksums and the SBOM" "$(yes_if test "$(grep -c "^cosign verify-blob .*--certificate-identity $cli_id " "$work/log")" -eq 3)"
 check "it tries the CLI under a wrong identity" "$(yes_if grep -q "^cosign verify-blob .*--certificate-identity $images_id .*openfief-$version-linux-amd64\$" "$work/log")"
@@ -198,6 +198,14 @@ check "an image by tag fails" "$(fails_with 'not an image by digest')"
 release "$op $eg $co"
 echo tampered >>"$work/release/openfief-$version.cdx.json"
 check "a tampered SBOM fails" "$(fails_with "signature doesn't verify")"
+third="quay.io/authzed/spicedb:v1.57.1@sha256:$(printf 'a%.0s' {1..64})"
+release "$op $eg $co $third"
+check "a third party's image pinned by tag and digest is checked as pinned, not as signed" "$(passes)"
+check "it never asks cosign about a third party's image" "$(yes_if test "$(grep -c '^cosign verify quay.io' "$work/log")" -eq 0)"
+release "$op $eg $co quay.io/authzed/spicedb:v1.57.1"
+check "a third party's image without its digest fails" "$(fails_with "isn't pinned by tag and digest")"
+release "$op $eg $co quay.io/authzed/spicedb@sha256:$(printf 'a%.0s' {1..64})"
+check "a third party's image without its tag fails" "$(fails_with "isn't pinned by tag and digest")"
 release "$op $eg"
 check "an unsigned image fails" "$(fails_with "verify as $images_id" FAKE_SIGNED="$op")"
 
@@ -210,7 +218,7 @@ for line in \
   'kubectl apply --server-side -f' \
   'kubectl -n cnpg-system rollout status deployment/cnpg-controller-manager --timeout=5m' \
   'kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db --for=condition=Ready --timeout=10m' \
-  'for d in openfief-operator egress-proxy openfief-core; do' \
+  'for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do' \
   'kubectl -n openfief rollout status "deployment/$d" --timeout=5m' \
   'openfief plugin install ui' \
   'kubectl -n openfief wait plugin.openfief.io/ui --for=condition=Ready --timeout=5m' \

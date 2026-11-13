@@ -80,7 +80,7 @@ diagnose() {
   kubectl -n openfief get events --sort-by=.lastTimestamp >&2 || true
   kubectl -n openfief get plugins.openfief.io,plugingrants.openfief.io,clusters.postgresql.cnpg.io -o yaml >&2 || true
   kubectl -n openfief describe pods >&2 || true
-  for d in openfief-operator egress-proxy openfief-core; do
+  for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do
     kubectl -n openfief logs "deployment/$d" --all-containers --tail=200 >&2 || true
   done
   kubectl -n cnpg-system logs deployment/cnpg-controller-manager --tail=100 >&2 || true
@@ -160,15 +160,26 @@ mapfile -t images < <(sed -n 's/^ *image: *//p' "$install_file" | sort -u)
 [ "${#images[@]}" -gt 0 ] || fail "$install_file runs no image"
 [ "$(grep -c 'image:' "$install_file")" -eq "$(sed -n 's/^ *image: *//p' "$install_file" | wc -l)" ] ||
   fail "$install_file names an image the guide's command doesn't read"
+# Ours are named by digest and signed; a third party's (SpiceDB and the Job that generates its credentials, D-164) keep
+# the tag and digest the base pins them to, and nothing of ours signed them, so they are only checked to be pinned.
+ours=()
 for image in "${images[@]}"; do
-  [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*@sha256:[0-9a-f]{64}$ ]] || fail "$install_file runs $image, not an image by digest"
-  verify_image "$image" "$images_id" || fail "$image: its signature doesn't verify as $images_id"
-  say "verified $image"
+  if [[ "$image" == "ghcr.io/$REPO/"* ]]; then
+    [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*@sha256:[0-9a-f]{64}$ ]] || fail "$install_file runs $image, not an image by digest"
+    verify_image "$image" "$images_id" || fail "$image: its signature doesn't verify as $images_id"
+    say "verified $image"
+    ours+=("$image")
+  else
+    [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*:[A-Za-z0-9_][A-Za-z0-9_.-]*@sha256:[0-9a-f]{64}$ ]] ||
+      fail "$install_file runs $image, a third party's image that isn't pinned by tag and digest"
+    say "pinned $image, a third party's"
+  fi
 done
-if verify_image "${images[0]}" "$cli_id" 2>/dev/null; then
-  fail "cosign accepted ${images[0]} as signed by $cli_id, a wrong identity"
+[ "${#ours[@]}" -gt 0 ] || fail "$install_file runs no image of $REPO's"
+if verify_image "${ours[0]}" "$cli_id" 2>/dev/null; then
+  fail "cosign accepted ${ours[0]} as signed by $cli_id, a wrong identity"
 fi
-say "cosign refused ${images[0]} under a wrong identity"
+say "cosign refused ${ours[0]} under a wrong identity"
 
 # 4. Install CloudNativePG.
 say "4. installing CloudNativePG $CNPG_VERSION"
@@ -183,7 +194,7 @@ kubectl apply --server-side -f "openfief-crds-$VERSION.yaml"
 kubectl apply --server-side -f "openfief-db-$VERSION.yaml"
 kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db --for=condition=Ready --timeout=10m
 kubectl apply --server-side -f "$install_file"
-for d in openfief-operator egress-proxy openfief-core; do
+for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do
   kubectl -n openfief rollout status "deployment/$d" --timeout=5m
 done
 

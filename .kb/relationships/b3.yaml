@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c7cd44e92a5
+  - type: executable_for
+    from: SYM-e2e-spicedb-pod-logs
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:43.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4102cd1575e

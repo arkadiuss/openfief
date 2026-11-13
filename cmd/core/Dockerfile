@@ -9,6 +9,7 @@ WORKDIR /src
 COPY go.mod go.sum go.work go.work.sum ./
 RUN GOWORK=off go mod download
 COPY sdk/go/ sdk/go/
+COPY authz/ authz/
 COPY cmd/ cmd/
 COPY internal/ internal/
 ARG TARGETOS

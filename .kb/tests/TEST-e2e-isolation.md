@@ -1,11 +1,11 @@
 ---
-title: 'On k3d and kind, plugins are isolated: the XTB parser has no egress, the proxy refuses hosts outside a grant and logs no request data, bypasses fail, and both sides of the core calls refuse bad tokens'
+title: 'On k3d and kind, plugins are isolated: the XTB parser has no egress, the proxy refuses hosts outside a grant and logs no request data, bypasses fail, both sides of the core calls refuse bad tokens, and nothing but the core reaches SpiceDB'
 status: active
 sourceFile: test/e2e/isolation_test.go
 verification_scope: end_to_end
 origin:
   kind: agent
-  recorded_at: '2026-11-06T20:29:57.965Z'
+  recorded_at: '2026-11-13T04:07:16.527Z'
 id: TEST-e2e-isolation
 type: test
 proof_contract:

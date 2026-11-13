@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dbce968bf07
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-schema
+    to: SCEN-identity-spicedb-schema-written-at-start
+    created_at: 2026-11-13T04:07:17.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16503d18bea7

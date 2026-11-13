@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a1fc8b9b553
+  - type: implements
+    from: SYM-identity-spicedb-options
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T04:28:02.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87d377ac95db
+  - type: covered_by
+    from: SYM-identity-spicedb-options
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:28:02.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5c7103633c

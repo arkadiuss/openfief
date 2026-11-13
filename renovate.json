@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Exact pins everywhere (docs/dev/sdlc.md#dependencies-p): Go modules, the kibi npm packages, GitHub Actions by commit SHA, and the tool versions in Taskfile.yml and the workflows marked with a `# renovate:` comment.",
+  "description": "Exact pins everywhere (docs/dev/sdlc.md#dependencies-p): Go modules, the kibi npm packages, GitHub Actions by commit SHA, the tool versions in Taskfile.yml and the workflows marked with a `# renovate:` comment, and the third-party images deploy/ pins by tag and digest.",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigestsToSemver"],
   "enabledManagers": ["gomod", "npm", "github-actions", "custom.regex"],
   "rangeStrategy": "pin",
@@ -31,6 +31,11 @@
       "groupName": "Taskfile tools"
     },
     {
+      "description": "SpiceDB: the image deploy/spicedb runs and the version the Taskfile builds for the contract test move together (scripts/tests/release-bundle.test.sh fails if they differ)",
+      "matchPackageNames": ["quay.io/authzed/spicedb", "github.com/authzed/spicedb"],
+      "groupName": "SpiceDB"
+    },
+    {
       "description": "Toolchains and local clusters used by CI",
       "matchManagers": ["custom.regex"],
       "matchFileNames": [".github/**"],
@@ -44,6 +49,15 @@
     }
   ],
   "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Third-party images that deploy/ pins by tag and digest, e.g. quay.io/authzed/spicedb:v1.57.1@sha256:...: Renovate updates tag and digest together",
+      "managerFilePatterns": ["/^deploy/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "image: (?<depName>[a-z0-9][a-z0-9._/-]*):(?<currentValue>[A-Za-z0-9_][A-Za-z0-9_.-]*)@(?<currentDigest>sha256:[a-f0-9]{64})"
+      ],
+      "datasourceTemplate": "docker"
+    },
     {
       "customType": "regex",
       "description": "Versions preceded by `# renovate: datasource=... depName=...` in Taskfile.yml and .github/",

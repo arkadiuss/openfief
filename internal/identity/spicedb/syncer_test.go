@@ -281,6 +281,59 @@ func TestSyncerReportsAFailedLoad(t *testing.T) {
 	}
 }
 
+// schemaLog is a spicedb.Schemas that records the schemas written, and fails
+// them all with err.
+type schemaLog struct {
+	written []string
+	err     error
+}
+
+func (l *schemaLog) WriteSchema(_ context.Context, in *v1.WriteSchemaRequest, _ ...grpc.CallOption) (*v1.WriteSchemaResponse, error) {
+	if l.err != nil {
+		return nil, l.err
+	}
+	l.written = append(l.written, in.GetSchema())
+	return &v1.WriteSchemaResponse{}, nil
+}
+
+// TestSyncerWritesTheSchemaFirst checks that every Reconcile writes the
+// schema it was given before it reads or writes a relationship, and that a
+// schema SpiceDB refuses stops it with nothing written.
+func TestSyncerWritesTheSchemaFirst(t *testing.T) {
+	t.Parallel()
+	d := spicedb.Desired{Accounts: []string{"a"}}
+	t.Run("written once per reconcile", func(t *testing.T) {
+		t.Parallel()
+		f, l := &fake{}, &schemaLog{}
+		s := spicedb.NewSyncer(f, spicedb.WithSchema(l, "definition person {}"))
+		for range 2 {
+			if err := s.Reconcile(t.Context(), fixed(d)); err != nil {
+				t.Fatalf("Reconcile: %v", err)
+			}
+		}
+		if len(l.written) != 2 || l.written[0] != "definition person {}" {
+			t.Errorf("schemas written = %q, want the given schema twice", l.written)
+		}
+		if len(f.writes) != 1 {
+			t.Errorf("relationship writes = %d, want 1: the second reconcile changes nothing", len(f.writes))
+		}
+	})
+	t.Run("refused", func(t *testing.T) {
+		t.Parallel()
+		f := &fake{}
+		err := spicedb.NewSyncer(f, spicedb.WithSchema(&schemaLog{err: errSpiceDB}, "x")).Reconcile(t.Context(), fixed(d))
+		if !errors.Is(err, errSpiceDB) || f.reads != 0 || len(f.writes) != 0 {
+			t.Errorf("Reconcile = %v after %d reads and %d writes, want the schema's error and nothing else", err, f.reads, len(f.writes))
+		}
+	})
+	t.Run("not asked for", func(t *testing.T) {
+		t.Parallel()
+		if err := spicedb.NewSyncer(&fake{}).Reconcile(t.Context(), fixed(d)); err != nil {
+			t.Errorf("Reconcile without a schema = %v", err)
+		}
+	})
+}
+
 // writeFails reads as the fake does and fails every write.
 type writeFails struct{ fake }
 

@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ee4f681d255
+  - type: executable_for
+    from: SYM-e2e-spicedb-test-spicedb-deployed
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:20.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e7b422feb4

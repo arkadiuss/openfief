@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d4307ae70a5
+  - type: executable_for
+    from: SYM-tooling-release-bundle-test-ours
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T04:28:20.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46e2c86dfbaa

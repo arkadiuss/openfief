@@ -14,8 +14,8 @@ An alpha is a GitHub pre-release, so the releases page lists it, but `latest` ne
 | Asset | What it is |
 |---|---|
 | `openfief-crds-<version>.yaml` | The `openfief` namespace with its default compute resources (a LimitRange) and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
-| `openfief-install-<version>.yaml` | The operator, the egress proxy and the core, each image pinned to the digest the release signed (D-17) |
-| `openfief-db-<version>.yaml` | The database: a minimal [CloudNativePG](https://cloudnative-pg.io) cluster `openfief-db`, for you to edit (D-14) |
+| `openfief-install-<version>.yaml` | The operator, the egress proxy, the core and [SpiceDB](../concepts/identity.md#authorization), each of ours pinned to the digest the release signed (D-17), and SpiceDB's third-party image to the tag and digest this release was built with |
+| `openfief-db-<version>.yaml` | The database: a minimal [CloudNativePG](https://cloudnative-pg.io) cluster `openfief-db`, for you to edit (D-14), with SpiceDB's database and role in it (D-164) |
 | `cnpg-1.30.1.yaml` | CloudNativePG's own release manifest, byte for byte, at the version the end-to-end tests run |
 | `openfief-<version>-<os>-<arch>` | The `openfief` CLI for `linux` and `darwin` (macOS) on `amd64` and `arm64` |
 | `openfief-<version>.cdx.json` | The CLI's software bill of materials, in CycloneDX |
@@ -86,7 +86,7 @@ openfief version
 The install file names each image by the digest the release signed, so what you verify is exactly what the cluster will run. The images are signed by a different workflow from the CLI: `images.yml`, which the release workflow calls to build them, and the certificate names the workflow that signed, so this identity is `images.yml` on `main`. Because `images.yml` is a reusable workflow, any other repository could call it and get a certificate with that same identity for its own build; the last two flags pin the repository and ref of the run that signed, which only OpenFief's own run on `main` has. It is the same identity the operator trusts for first-party plugins:
 
 ```bash
-sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | sort -u |
+sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | sort -u | grep '^ghcr.io/arkadiuss/openfief/' |
   while read -r image; do
     cosign verify "$image" \
       --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main \
@@ -97,7 +97,7 @@ sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | sort -u |
   done
 ```
 
-It takes every image the file runs and prints `verified` for three of them, the operator, the egress proxy and the core, each as `ghcr.io/arkadiuss/openfief/<name>@sha256:<digest>`. An image it doesn't print, or one named by a tag rather than a digest, means the file isn't the one the release signed.
+It takes every image of OpenFief's the file runs and prints `verified` for three of them, the operator, the egress proxy and the core, each as `ghcr.io/arkadiuss/openfief/<name>@sha256:<digest>`. An image it doesn't print, or one named by a tag rather than a digest, means the file isn't the one the release signed. The file runs two images that aren't OpenFief's, which no OpenFief signature covers, so the command leaves them out: SpiceDB (`quay.io/authzed/spicedb`) and the small image of the Job that generates its credentials (`docker.io/curlimages/curl`). Each is named by its version and its digest in the file (`sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | grep -v '^ghcr.io/'`); compare the digest with the registry's for that version if you want to check what it is. SpiceDB is the authorization database the core can use to decide which accounts a token or a plugin views ([Identity](../concepts/identity.md#authorization)); the core starts on its own rules by default and leaves it idle until you switch the core to it.
 
 ## 4. Install CloudNativePG
 
@@ -115,7 +115,7 @@ The checksum prints `OK`; anything else, stop. The manifest is the same file as 
 
 ## 5. Apply the CRDs, the database and the install
 
-`openfief-db-$VERSION.yaml` is the smallest database that works: a CloudNativePG cluster `openfief-db` with one instance on the cluster's default storage class and 10 GiB, requesting 100m CPU and 256 MiB of memory and limited to 1 GiB of memory (D-182). Edit it before you apply it: you size it, so set the storage and the resources for your machine and your history, set a `storageClass`, add CloudNativePG's backups. The memory limit is the most PostgreSQL may use before Kubernetes restarts it; there is no CPU limit, since CPU is only throttled. Keep its name, its namespace, `openfief`, and its database and owner, both `openfief`: the install reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for that cluster.
+`openfief-db-$VERSION.yaml` is the smallest database that works: a CloudNativePG cluster `openfief-db` with one instance on the cluster's default storage class and 10 GiB, requesting 100m CPU and 256 MiB of memory and limited to 1 GiB of memory (D-182). Edit it before you apply it: you size it, so set the storage and the resources for your machine and your history, set a `storageClass`, add CloudNativePG's backups. The memory limit is the most PostgreSQL may use before Kubernetes restarts it; there is no CPU limit, since CPU is only throttled. Keep its name, its namespace, `openfief`, and its database and owner, both `openfief`: the install reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for that cluster. Keep the second object too, the `Database` `spicedb`, and the `managed` role `spicedb` in the Cluster: they are SpiceDB's own database and role in it (D-164), so SpiceDB's tables and password stay apart from OpenFief's. If you run a Cluster of your own instead, add that role, `name: spicedb`, `ensure: present`, `login: true` and `passwordSecret: {name: openfief-db-spicedb}`, and the `Database` object, to it. The install's Job generates the Secret `openfief-db-spicedb` with the role's password, and `openfief-spicedb-key` with the key SpiceDB and the core share, once, from random bytes in the cluster; nothing of them is in the files, and CloudNativePG reports the role as not yet reconciled until the Job has made the Secret, which it keeps trying.
 
 Then apply, in this order: the CRDs file creates the namespace the database and the install go into, and the core waits for its database.
 
@@ -124,7 +124,7 @@ kubectl apply --server-side -f "openfief-crds-$VERSION.yaml"
 kubectl apply --server-side -f "openfief-db-$VERSION.yaml"
 kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db --for=condition=Ready --timeout=10m
 kubectl apply --server-side -f "openfief-install-$VERSION.yaml"
-for d in openfief-operator egress-proxy openfief-core; do
+for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do
   kubectl -n openfief rollout status "deployment/$d" --timeout=5m
 done
 ```

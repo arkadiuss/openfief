@@ -300,8 +300,8 @@ func (k *kube) exposedServices(t *testing.T) []string {
 
 // foreignWorkloads names every DaemonSet and StatefulSet in the openfief
 // namespace, and every pod there that runs on the host's network or ports,
-// or that belongs to neither the bundle's Deployments, a Deployment a Plugin
-// owns, nor the openfief-db cluster.
+// or that belongs to neither the bundle's Deployments and Jobs, a Deployment
+// a Plugin owns, nor the openfief-db cluster.
 func (k *kube) foreignWorkloads(t *testing.T) []string {
 	t.Helper()
 	ctx := t.Context()
@@ -325,12 +325,13 @@ func (k *kube) foreignWorkloads(t *testing.T) []string {
 		found = append(found, "StatefulSet "+statefulSets.Items[i].Name)
 	}
 	allowed := k.installDeployments(t)
+	jobs := bundleJobs(t)
 	for i := range pods.Items {
 		p := &pods.Items[i]
 		if p.Spec.HostNetwork || usesHostPort(p) {
 			found = append(found, "pod "+p.Name+" on the host's network or ports")
 		}
-		if !k.ownedByInstall(t, p, allowed) {
+		if !k.ownedByInstall(t, p, allowed, jobs) {
 			found = append(found, "pod "+p.Name+" of no workload the install runs")
 		}
 	}
@@ -359,6 +360,24 @@ func (k *kube) installDeployments(t *testing.T) map[string]bool {
 	return allowed
 }
 
+// bundleJobs returns the names of the Jobs the bundle's install runs: the one
+// that generates SpiceDB's credentials (deploy/spicedb).
+func bundleJobs(t *testing.T) map[string]bool {
+	t.Helper()
+	b, err := readBundle(os.Getenv(bundleEnv))
+	if err != nil {
+		t.Fatal(err)
+	}
+	jobs := map[string]bool{}
+	objs := bundleObjects(t, b.install)
+	for i := range objs {
+		if objs[i].Kind == "Job" {
+			jobs[objs[i].Metadata.Name] = true
+		}
+	}
+	return jobs
+}
+
 // usesHostPort reports whether a container of p binds a port of its node.
 func usesHostPort(p *corev1.Pod) bool {
 	containers := slices.Concat(p.Spec.InitContainers, p.Spec.Containers)
@@ -373,9 +392,9 @@ func usesHostPort(p *corev1.Pod) bool {
 }
 
 // ownedByInstall reports whether pod p belongs to an allowed Deployment,
-// through its ReplicaSet, or to the openfief-db cluster, directly or
-// through one of its Jobs.
-func (k *kube) ownedByInstall(t *testing.T, p *corev1.Pod, allowed map[string]bool) bool {
+// through its ReplicaSet, to one of the bundle's Jobs, or to the openfief-db
+// cluster, directly or through one of its Jobs.
+func (k *kube) ownedByInstall(t *testing.T, p *corev1.Pod, allowed, jobs map[string]bool) bool {
 	t.Helper()
 	owner := metav1.GetControllerOf(p)
 	if owner == nil {
@@ -385,7 +404,7 @@ func (k *kube) ownedByInstall(t *testing.T, p *corev1.Pod, allowed map[string]bo
 	case "Cluster":
 		return owner.Name == databaseCluster
 	case "Job":
-		return k.jobOfDatabase(t, owner.Name)
+		return jobs[owner.Name] || k.jobOfDatabase(t, owner.Name)
 	case "ReplicaSet":
 		return allowed[k.deploymentOf(t, owner.Name)]
 	}

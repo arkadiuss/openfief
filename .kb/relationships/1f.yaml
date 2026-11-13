@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecda97504e59
+  - type: executable_for
+    from: SYM-e2e-spicedb-secret-value
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:33.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70354e406ac2
+  - type: implements
+    from: SYM-identity-spicedb-with-schema
+    to: REQ-identity-authz-spicedb-schema
+    created_at: 2026-11-13T04:08:24.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1992c775764a
+  - type: covered_by
+    from: SYM-identity-spicedb-with-schema
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:08:24.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-691968657b5b

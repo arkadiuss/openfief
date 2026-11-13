@@ -846,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fb814d89722
+  - type: executable_for
+    from: SYM-e2e-spicedb-scale-deployment
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:52.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3baca1cf5f
+  - type: executable_for
+    from: SYM-identity-spicedb-syncer-test-schema-log-write-schema
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:28:14.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c9342f36d06

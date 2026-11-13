@@ -27,8 +27,9 @@ vars:
   # renovate: datasource=go depName=github.com/authzed/zed
   ZED_VERSION: v1.2.1
   # SpiceDB itself, which `task test:authz` runs in testing mode for the authorization contract test
-  # (internal/identity/spicedb). Not installed by `task tools`: it compiles for minutes. Keep it at or near the
-  # SpiceDB the cluster runs (deploy/spicedb, when it lands) and at a release authzed-go in go.mod speaks to.
+  # (internal/identity/spicedb). Not installed by `task tools`: it compiles for minutes. Keep it at the SpiceDB
+  # the cluster runs (the image deploy/spicedb pins by digest; scripts/tests/release-bundle.test.sh checks the
+  # version) and at a release authzed-go in go.mod speaks to.
   # renovate: datasource=go depName=github.com/authzed/spicedb
   SPICEDB_VERSION: v1.57.1
   # renovate: datasource=go depName=github.com/bufbuild/buf

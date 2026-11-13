@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-115be78e8d84
+  - type: executable_for
+    from: SYM-e2e-spicedb-check-credentials-from-secrets
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:14:29.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e6dc19334c4

@@ -163,6 +163,7 @@ func TestPluginIsolation(t *testing.T) {
 	waitPluginReady(t, k, isoPrivate)
 	waitPluginReady(t, k, uiPlugin)
 	waitCoreAvailable(t, k)
+	waitSpiceDBAvailable(t, k)
 	env := newIsolation(t, k)
 	checkOwnPods(t, k, map[string]plugins.ImageRef{isoXTB: xtb.cluster, isoEgress: fx.cluster})
 	checkXTBObjects(t, k, env)
@@ -173,6 +174,7 @@ func TestPluginIsolation(t *testing.T) {
 	checkProxyLog(t, k, env)
 	checkProbes(t, k, connectorTokens(env))
 	checkProbes(t, k, corePortTokens(env))
+	checkProbes(t, k, spicedbProbes(env))
 	removeInstance(t, k, isoXTB)
 	removeInstance(t, k, isoEgress)
 	removeInstance(t, k, isoPrivate)
@@ -230,6 +232,8 @@ type isolation struct {
 	// core's two ports; connector the XTB instance's Service and
 	// otherPlugin the granted instance's.
 	proxy, coreBrowser, corePlugin, connector, otherPlugin string
+	// spicedb is SpiceDB's gRPC address, host and port (D-164).
+	spicedb string
 	// apiServer is the Kubernetes API server's own address, outside the
 	// pod network: a destination a pod without a policy reaches.
 	apiServer string
@@ -300,6 +304,7 @@ func (env *isolation) readAddresses(t *testing.T, k *kube) {
 	env.proxy = "http://" + serviceAddress(t, proxy, "proxy")
 	env.connector = "http://" + serviceAddress(t, connector, operator.PortName)
 	env.otherPlugin = "http://" + serviceAddress(t, other, operator.PortName)
+	env.spicedb = "http://" + serviceAddress(t, k.getService(t, spicedbService), "grpc")
 	env.coreSelector, env.proxySelector = core.Spec.Selector, proxy.Spec.Selector
 	env.corePort, env.proxyPort = podTargetPort(t, core, "connect"), podTargetPort(t, proxy, "proxy")
 	addr, err := k.apiServerAddress(t.Context())

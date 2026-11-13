@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f10b677f9ae
+  - type: executable_for
+    from: SYM-e2e-spicedb-rolled-out
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:08:03.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e50cd32bfa64

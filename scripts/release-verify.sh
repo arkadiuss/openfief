@@ -78,6 +78,14 @@ verify_images() {
   [ -f "$file" ] || fail "$file is not a file"
   [ -z "$tag" ] || [[ "$tag" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]] || fail "'$tag' is not an image tag"
   while IFS= read -r image; do
+    # A third party's image (SpiceDB and the Job that generates its credentials, D-164) is named by tag and digest and
+    # signed by nobody of ours: it must be pinned, and is left out of the signature check.
+    if [[ "$image" != "ghcr.io/$repo/"* && "$image" != "ghcr.io/${repo,,}/"* ]]; then
+      [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*:[A-Za-z0-9_][A-Za-z0-9_.-]*@sha256:[0-9a-f]{64}$ ]] ||
+        fail "the install runs $image, a third party's image that isn't pinned by tag and digest"
+      echo "release-verify: $image is a third party's, pinned" >&2
+      continue
+    fi
     [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*@sha256:[0-9a-f]{64}$ ]] || fail "the install runs $image, not an image by digest"
     if [ -n "$tag" ]; then ref="${image%@*}:$tag"; else ref="$image"; fi
     digest="$(bash "$root/scripts/verified-digest.sh" "$ref" "$repo")" ||

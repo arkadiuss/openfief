@@ -23,6 +23,7 @@ const (
 	podCore     = "app:openfief-core"
 	podSeedJob  = "app:demo-seed"
 	podDatabase = "cnpg"
+	podSpiceDB  = "app:openfief-spicedb"
 	// minSecretValue is the shortest Secret value the audit looks for
 	// elsewhere: a shorter one would match by chance.
 	minSecretValue = 8
@@ -50,10 +51,10 @@ type secretRule struct {
 	inDatabase bool
 }
 
-// fixedSecretRules are the Secrets the install makes itself, by name. All
-// of them are CloudNativePG's, for the openfief-db cluster: the operator,
-// the egress proxy, the built-in UI and every plugin use none of them
-// (D-200 criterion 14).
+// fixedSecretRules are the Secrets the install makes itself, by name:
+// CloudNativePG's for the openfief-db cluster, and SpiceDB's two, which
+// deploy/spicedb's Job generates. The operator, the egress proxy, the
+// built-in UI and every plugin use none of them (D-200 criterion 14).
 func fixedSecretRules() map[string]secretRule {
 	return map[string]secretRule{
 		// The application's credentials: the core's connection string (deploy/core)
@@ -66,6 +67,15 @@ func fixedSecretRules() map[string]secretRule {
 		},
 		// The cluster's certificate authority, and the server's and the
 		// replication client's certificates it signed: only its own pods.
+		// SpiceDB's (D-164): the preshared key, which only SpiceDB and the core, its one caller, read, and
+		// the password of SpiceDB's role in the cluster, which only SpiceDB reads; the audit also finds
+		// neither in a ConfigMap, a pod spec or a Plugin. The Job that made them uses no Secret.
+		"openfief-spicedb-key": {
+			sensitive: []string{"key"}, may: []string{podSpiceDB, podCore}, must: []string{podSpiceDB, podCore},
+		},
+		"openfief-db-spicedb": {
+			sensitive: []string{"password"}, public: []string{"username"}, may: []string{podSpiceDB}, must: []string{podSpiceDB},
+		},
 		databaseCluster + "-ca": {
 			sensitive: []string{"ca.key"}, public: []string{"ca.crt"}, may: []string{podDatabase},
 		},

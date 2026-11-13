@@ -14,6 +14,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/arkadiuss/openfief/authz"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/identity/spicedb"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -156,8 +157,11 @@ func newAuthorization(cfg *authzConfig) (authorization, error) {
 	}
 	return authorization{
 		authorizer: spicedb.NewAuthorizer(client.PermissionsServiceClient, spicedb.WithTimeout(cfg.Timeout)),
-		syncer:     spicedb.NewSyncer(client.PermissionsServiceClient, spicedb.WithTimeout(cfg.Timeout)),
-		closer:     client,
+		// The syncer also writes the model this build was written against at every start, so a new
+		// SpiceDB, or an upgraded core, needs no step of its own.
+		syncer: spicedb.NewSyncer(client.PermissionsServiceClient, spicedb.WithTimeout(cfg.Timeout),
+			spicedb.WithSchema(client.SchemaServiceClient, authz.Schema)),
+		closer: client,
 	}, nil
 }
 

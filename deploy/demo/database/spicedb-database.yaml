@@ -1,0 +1,20 @@
+# SpiceDB's database (D-164, D-14): a database `spicedb` in the openfief-db cluster, owned by the role `spicedb` that
+# the Cluster's managed roles make (openfief-db.yaml). CloudNativePG creates it once the cluster runs. It is its own
+# database and role, so SpiceDB's tables and credentials stay apart from OpenFief's: the core's role can't read them,
+# nor SpiceDB's the ledger. Without SpiceDB (../spicedb) the database stays empty. `retain` keeps the database if
+# this object is ever deleted; delete the database by hand, by the owner, to drop it.
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: openfief-db-spicedb
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-db
+    app.kubernetes.io/part-of: openfief
+spec:
+  name: spicedb
+  owner: spicedb
+  cluster:
+    name: openfief-db
+  ensure: present
+  databaseReclaimPolicy: retain

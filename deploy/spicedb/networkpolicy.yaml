@@ -1,0 +1,97 @@
+# SpiceDB's own NetworkPolicy (D-184, D-164). Ingress: the core's pods on gRPC 50051, and nothing else, so no plugin,
+# no other pod in the cluster and no route from outside can ask SpiceDB anything, whatever key they might hold.
+# Probes use the container's own loopback (grpc_health_probe), so they need no rule. Egress: the CloudNativePG cluster
+# openfief-db on PostgreSQL's port, and DNS, and nothing else: SpiceDB can't call out. The core's and the
+# database's own policies (../core) don't name SpiceDB, so the two other policies in this file add its side of each
+# connection to them: the core may dial SpiceDB, and the database admits SpiceDB's pods. The policies of the core and
+# the database stay as they are, so an install without SpiceDB is unchanged.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-spicedb
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-spicedb
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-spicedb
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-core
+      ports:
+        - protocol: TCP
+          port: 50051
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              cnpg.io/cluster: openfief-db
+      ports:
+        - protocol: TCP
+          port: 5432
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+---
+# The core may reach SpiceDB (D-164): its own policy (../core/networkpolicy.yaml) lists DNS, the database, plugins and
+# the API server, and NetworkPolicies add up, so this one adds SpiceDB's pods on gRPC 50051. A plugin's policy is the
+# operator's and names the core and the egress proxy only, so no plugin reaches SpiceDB either way.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-core-to-spicedb
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-spicedb
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-spicedb
+      ports:
+        - protocol: TCP
+          port: 50051
+---
+# SpiceDB may open connections to the database (D-184): the database's own policy (../core/networkpolicy-database.yaml)
+# admits the core and CloudNativePG, so this one adds SpiceDB's pods on PostgreSQL's port.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-db-from-spicedb
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-spicedb
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: openfief-db
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-spicedb
+      ports:
+        - protocol: TCP
+          port: 5432

@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f82ba440d88
+  - type: executable_for
+    from: SYM-e2e-isolation-spicedb-probes
+    to: TEST-e2e-isolation
+    created_at: 2026-11-13T04:08:15.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91701968a3f4

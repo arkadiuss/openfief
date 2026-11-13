@@ -66,6 +66,10 @@ type Desired struct {
 type Syncer struct {
 	perms   Permissions
 	timeout time.Duration
+	// schemas and schema are what Reconcile writes first; schemas is nil
+	// without WithSchema.
+	schemas Schemas
+	schema  string
 	// mu serializes the Syncer's read-then-write sequences, so a placement
 	// can't land between Reconcile's read and its write and be undone.
 	mu sync.Mutex
@@ -74,7 +78,7 @@ type Syncer struct {
 // NewSyncer returns the Syncer over perms.
 func NewSyncer(perms Permissions, opts ...Option) *Syncer {
 	o := newOptions(opts)
-	return &Syncer{perms: perms, timeout: o.timeout}
+	return &Syncer{perms: perms, timeout: o.timeout, schemas: o.schemas, schema: o.schema}
 }
 
 // accountTuples returns the relationships account has: its household, and
@@ -210,6 +214,9 @@ func (s *Syncer) AccountUnplaced(ctx context.Context, account string) error {
 func (s *Syncer) Reconcile(ctx context.Context, load func(context.Context) (Desired, error)) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	if err := s.writeSchema(ctx); err != nil {
+		return fmt.Errorf("reconciling SpiceDB: %w", err)
+	}
 	d, err := load(ctx)
 	if err != nil {
 		return fmt.Errorf("reconciling SpiceDB: loading what the core holds: %w", err)
@@ -229,6 +236,20 @@ func (s *Syncer) Reconcile(ctx context.Context, load func(context.Context) (Desi
 	c := Plan(have, want)
 	if err := s.write(ctx, c.Touch, c.Delete); err != nil {
 		return fmt.Errorf("reconciling SpiceDB: %w", err)
+	}
+	return nil
+}
+
+// writeSchema writes the schema WithSchema gave, if any, before anything is
+// read or written against it.
+func (s *Syncer) writeSchema(ctx context.Context) error {
+	if s.schemas == nil {
+		return nil
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	if _, err := s.schemas.WriteSchema(ctx, &v1.WriteSchemaRequest{Schema: s.schema}); err != nil {
+		return fmt.Errorf("writing the schema: %w", err)
 	}
 	return nil
 }

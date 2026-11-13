@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bc14ba24282
+  - type: verified_by
+    from: SCEN-identity-spicedb-schema-written-at-start
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:07:16.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-138cbe974528
+  - type: verified_by
+    from: SCEN-identity-spicedb-schema-written-at-start
+    to: TEST-authz-schema-embedded
+    created_at: 2026-11-13T04:07:16.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77342dc71c18

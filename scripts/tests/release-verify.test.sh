@@ -179,6 +179,17 @@ check "a tag nothing signed fails" "$(fails "ghcr.io/example/openfief/operator:m
 sed "s/@$op/:2026.11.0-alpha.1/" "$work/install.yaml" >"$work/tagged.yaml"
 check "an image by tag in the install fails" "$(fails "$signed" images "$work/tagged.yaml" "$repo")"
 check "a malformed tag is refused" "$(fails "" images "$work/dry.yaml" "$repo" 'main;x')"
+# A third party's image is checked to be pinned by tag and digest, and left out of the signature check.
+{
+  cat "$work/install.yaml"
+  printf -- '---\napiVersion: apps/v1\nkind: Deployment\nmetadata: {name: openfief-spicedb}\nspec:\n  template:\n    spec:\n      containers:\n        - name: spicedb\n          image: quay.io/authzed/spicedb:v1.57.1@%s\n' "$op"
+} >"$work/third.yaml"
+check "an install with a third party's image pinned by tag and digest verifies" "$(passes "$signed" images "$work/third.yaml" "$repo")"
+check "the third party's image is never asked of cosign" "$(yes_if test "$(grep -c 'quay.io' "$work/log")" -eq 0)"
+sed "s|spicedb:v1.57.1@$op|spicedb@$op|" "$work/third.yaml" >"$work/third-notag.yaml"
+check "a third party's image without its tag fails" "$(fails "$signed" images "$work/third-notag.yaml" "$repo")"
+sed "s|spicedb:v1.57.1@$op|spicedb:v1.57.1|" "$work/third.yaml" >"$work/third-nodigest.yaml"
+check "a third party's image without its digest fails" "$(fails "$signed" images "$work/third-nodigest.yaml" "$repo")"
 printf 'apiVersion: v1\nkind: Namespace\nmetadata: {name: openfief}\n' >"$work/empty.yaml"
 check "an install that runs no image fails" "$(fails "" images "$work/empty.yaml" "$repo")"
 check "bad arguments are refused" "$(fails "" images "$work/install.yaml")"

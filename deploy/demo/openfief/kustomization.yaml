@@ -1,4 +1,4 @@
-# OpenFief on the demo machine: the plugin operator, the egress proxy, the core, the demo dataset loader and the demo's
+# OpenFief on the demo machine: the plugin operator, the egress proxy, the core, SpiceDB, the demo dataset loader and the demo's
 # plugin instances (../plugins), images pinned by digest (D-17). image-fields.yaml makes a Plugin's spec.image an image
 # field, so `images:` pins plugin images too.
 # This is the template CI deploys from: after every push to main (and every alpha or beta), `task deploy:demo` sets
@@ -14,6 +14,9 @@
 #   - both migrate under advisory locks, River's migrations under one of their own (valuation/postgres migrateRiver),
 #     so neither fails on a version the other is applying; both run River workers on the same queue, which River allows;
 #   - the Job waits for PostgreSQL to accept connections (--db-wait, with backoff) before it counts an attempt.
+# SpiceDB runs next to the core (D-164) and the core keeps --authz=policy, its default: the demo has one owner and
+# demo sessions that view everything, which the policy answers the same way. SpiceDB is idle there, deployed and
+# kept current as the installs get it (docs/dev/demo.md); the demo switches when the cutover to SpiceDB lands.
 # Each deploy that changes the Job's image re-creates it (Flux's force annotation; a Job's template is immutable).
 # A new image is a new build of the loader, which reseeds the demo for today on its own, so the demo's data matches
 # the code deployed: nothing stored before the first release is migrated (D-161, docs/dev/demo.md#demo-data).
@@ -23,6 +26,7 @@ resources:
   - ../../operator
   - ../../egress-proxy
   - ../../core
+  - ../../spicedb
   - ../../demo-data
   - ../plugins
   - core-from-traefik.yaml
@@ -48,6 +52,14 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --demo-sessions
+  - target:
+      kind: Job
+      name: openfief-spicedb-secrets
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          kustomize.toolkit.fluxcd.io/force: enabled
   - target:
       kind: Job
       name: demo-seed

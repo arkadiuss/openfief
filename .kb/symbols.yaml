@@ -175372,3 +175372,383 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-kibi-staged
+  - id: SYM-e2e-spicedb-test-spicedb-deployed
+    title: TestSpiceDBDeployed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:18.267Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-test-spicedb-fails-closed
+    title: TestSpiceDBFailsClosed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:21.614Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-spicedb-available
+    title: waitSpiceDBAvailable
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:24.769Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-job-complete
+    title: waitJobComplete
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:27.941Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-secret-value
+    title: secretValue
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:31.340Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-spicedb-database
+    title: waitSpiceDBDatabase
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:34.722Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-check-spicedb-pod
+    title: checkSpiceDBPod
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:38.204Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-pod-logs
+    title: podLogs
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:41.489Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-accounts
+    title: waitAccounts
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:44.561Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-log-line
+    title: waitLogLine
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:47.749Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-scale-deployment
+    title: scaleDeployment
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:50.770Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-set-core-authz
+    title: setCoreAuthz
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:53.928Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-rolled-out
+    title: waitRolledOut
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:57.596Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-rolled-out
+    title: rolledOut
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:01.512Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-rollout-state
+    title: rolloutState
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:05.264Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-cnpg-database
+    title: cnpgDatabase
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:08.921Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-isolation-spicedb-probes
+    title: spicedbProbes
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:12.715Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-isolation-connected
+    title: connected
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:16.431Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-exposure-bundle-jobs
+    title: bundleJobs
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:19.567Z
+    sourceFile: test/e2e/exposure_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-identity-spicedb-with-schema
+    title: WithSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:22.754Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-identity-spicedb-syncer-write-schema
+    title: Syncer.writeSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:25.896Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-e2e-spicedb-check-credentials-from-secrets
+    title: checkCredentialsFromSecrets
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:27.274Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-hardened
+    title: hardened
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:30.712Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-check-spicedb-container
+    title: checkSpiceDBContainer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:33.874Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-stop-spicedb-and-expect-refusal
+    title: stopSpiceDBAndExpectRefusal
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:36.993Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-bundle-check-pinned-images
+    title: checkPinnedImages
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:40.231Z
+    sourceFile: test/e2e/bundle_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-authz-test-schema-is-the-file
+    title: TestSchemaIsTheFile
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:27:53.955Z
+    sourceFile: authz/authz_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-authz-schema-embedded
+  - id: SYM-identity-spicedb-schemas
+    title: Schemas
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:27:57.623Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-identity-spicedb-options
+    title: options
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:00.664Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer
+    title: Syncer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:03.710Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-new-syncer
+    title: NewSyncer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:06.747Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-test-schema-log
+    title: schemaLog
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:09.732Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-identity-spicedb-syncer-test-schema-log-write-schema
+    title: schemaLog.WriteSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:12.800Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-identity-spicedb-syncer-test-writes-the-schema-first
+    title: TestSyncerWritesTheSchemaFirst
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:15.792Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-tooling-release-bundle-test-ours
+    title: ours
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:18.715Z
+    sourceFile: scripts/tests/release-bundle.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-tooling-release-bundle-test-third-kept
+    title: third_kept
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:21.756Z
+    sourceFile: scripts/tests/release-bundle.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle

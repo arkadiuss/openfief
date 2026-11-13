@@ -30,6 +30,12 @@ type Permissions interface {
 	WriteRelationships(ctx context.Context, in *v1.WriteRelationshipsRequest, opts ...grpc.CallOption) (*v1.WriteRelationshipsResponse, error)
 }
 
+// Schemas is the part of SpiceDB's schema service the Syncer needs; authzed-go's
+// SchemaServiceClient implements it.
+type Schemas interface {
+	WriteSchema(ctx context.Context, in *v1.WriteSchemaRequest, opts ...grpc.CallOption) (*v1.WriteSchemaResponse, error)
+}
+
 // fullyConsistent has SpiceDB answer from its newest data, not a cached
 // snapshot: a grant just written, or revoked, counts at once. The household
 // is small, so the cost is too.
@@ -42,11 +48,23 @@ type Option func(*options)
 
 type options struct {
 	timeout time.Duration
+	// schemas and schema, when set, make a Syncer write the schema before
+	// it reconciles.
+	schemas Schemas
+	schema  string
 }
 
 // WithTimeout bounds each call to SpiceDB by d instead of DefaultTimeout.
 func WithTimeout(d time.Duration) Option {
 	return func(o *options) { o.timeout = d }
+}
+
+// WithSchema makes a Syncer write schema through schemas at the start of every
+// Reconcile, so SpiceDB always holds the model this build of the core was
+// written against (D-164). Writing the schema it already holds changes
+// nothing.
+func WithSchema(schemas Schemas, schema string) Option {
+	return func(o *options) { o.schemas, o.schema = schemas, schema }
 }
 
 func newOptions(opts []Option) options {
