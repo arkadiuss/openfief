@@ -51,6 +51,11 @@ const (
 	// connectorPackage is the connector contract's package, which plugins
 	// serve and the core calls (D-49): the core serves none of it.
 	connectorPackage = "openfief.connector.v1"
+	// modelProviderService is the model-provider contract, which
+	// model-provider plugins serve and the core's model router calls (D-205):
+	// the core doesn't serve it, though its package also holds the core's
+	// own model settings service.
+	modelProviderService = "openfief.models.v1.ModelProviderService"
 	// corePluginPort is the core's plugin port in its pod (D-115).
 	corePluginPort = 8081
 	// readAPIAttempts is how often one call over Connect and REST is made
@@ -151,7 +156,7 @@ type restReply struct {
 //     Allow: GET, and every method of every other service under proto/,
 //     the owner services (D-79) among them, refuses the script token: 404
 //     on the browser port, permission_denied on the plugin port, 404 for
-//     the connector contract the core doesn't serve;
+//     the connector and model-provider contracts the core doesn't serve;
 //   - Connect equals REST (SCEN-e2e-read-api-connect-equals-rest): each
 //     call through the SDK's generated Connect client decodes to the same
 //     message as the same call over REST.
@@ -561,7 +566,8 @@ func (a *readAPI) checkNotAllowed(t *testing.T, method, target string) {
 // browser port serves none of them (404); the plugin port refuses the
 // script token with permission_denied, since only a view plugin acting
 // for an owner session calls the owner services (D-79, D-115); the
-// connector contract, which plugins serve, is 404 on both.
+// connector and model-provider contracts, which plugins serve, are 404 on
+// both.
 func (a *readAPI) checkOtherServices(t *testing.T, plugin string) {
 	t.Helper()
 	probed := 0
@@ -570,7 +576,7 @@ func (a *readAPI) checkOtherServices(t *testing.T, plugin string) {
 			continue
 		}
 		want := permissionDenied
-		if sd.ParentFile().Package() == connectorPackage {
+		if sd.ParentFile().Package() == connectorPackage || sd.FullName() == modelProviderService {
 			want = ""
 		}
 		for i := range sd.Methods().Len() {
