@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"slices"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -184,13 +185,18 @@ func TestReadAPIWithScriptToken(t *testing.T) {
 	if err := protojson.Unmarshal(r.body, &accounts); err != nil {
 		t.Fatalf("decoding the accounts: %v", err)
 	}
+	// TestDataPath runs alongside and may already have created its own accounts
+	// (named "E2E …", so their IDs begin e2e-): those are left out, every other account
+	// must be the demo's, and every demo account must be listed.
 	got := make([]string, 0, len(accounts.GetAccounts()))
 	for _, a := range accounts.GetAccounts() {
-		got = append(got, a.GetId())
+		if !strings.HasPrefix(a.GetId(), suiteAccountPrefix) {
+			got = append(got, a.GetId())
+		}
 	}
 	want := demoAccountIDs()
 	if diff := cmp.Diff(want, got); diff != "" {
-		t.Fatalf("GET /v1/accounts: account IDs (-want +got):\n%s", diff)
+		t.Fatalf("GET /v1/accounts: account IDs besides the suite's own (-want +got):\n%s", diff)
 	}
 
 	err := waitFor(t.Context(), valuedTimeout, func(ctx context.Context) (string, bool, error) {
@@ -368,6 +374,10 @@ func issueToken(t *testing.T, k *kube) string {
 	t.Helper()
 	return issueTokenWith(t, k, append([]string{"--grant-household"}, coreAuthzFlags(t, k)...)...).secret
 }
+
+// suiteAccountPrefix begins the ID of every account the suite's own tests
+// create: their names begin "E2E ", such as the data path's (datapath_test.go).
+const suiteAccountPrefix = "e2e-"
 
 // demoAccountIDs returns the demo dataset's account IDs in ID order, the
 // order the read API lists them in.
