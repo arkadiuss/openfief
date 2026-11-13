@@ -153,7 +153,7 @@ func mayImport(from, to string) bool {
 // starts with one of the repository's top-level Go directories.
 func isRepo(path string) bool {
 	top, _, _ := strings.Cut(path, "/")
-	return slices.Contains([]string{"internal", "cmd", "plugins", "sdk", "tools", "design", "gen", "test"}, top)
+	return slices.Contains([]string{"internal", "cmd", "plugins", "sdk", "tools", "design", "authz", "gen", "test"}, top)
 }
 
 // under says whether path is dir or lies below it.

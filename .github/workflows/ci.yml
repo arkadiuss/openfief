@@ -152,7 +152,8 @@ jobs:
 
   dco:
     name: DCO sign-off
-    if: github.event_name == 'pull_request'
+    # Pull requests, and pushes to main, so a commit that skipped the commit-msg hook still shows red.
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -166,10 +167,13 @@ jobs:
         with:
           tools: 'false'
       - name: task dco
-        run: task dco BASE="$BASE_SHA" HEAD="$HEAD_SHA"
+        # A push that creates the branch has no "before": check its last commit alone.
+        run: |
+          if [ -z "${BASE_SHA//0/}" ]; then BASE_SHA="$HEAD_SHA~1"; fi
+          task dco BASE="$BASE_SHA" HEAD="$HEAD_SHA"
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 
   e2e:
     # D-12: tested on kind and k3d. Both give a kubeconfig on 127.0.0.1, which task e2e accepts. The k3d cluster

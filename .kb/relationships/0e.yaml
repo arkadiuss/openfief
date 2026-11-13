@@ -783,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49f669394ff6
+  - type: implements
+    from: SYM-plugins-egress-sorted-unique
+    to: REQ-plugins-egress-test-exemption-one-host
+    created_at: 2026-11-12T23:48:33.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5235547a7b94
+  - type: covered_by
+    from: SYM-plugins-egress-sorted-unique
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:48:33.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cd45e53ba95
+  - type: implements
+    from: SYM-identity-spicedb-syncer-write-schema
+    to: REQ-identity-authz-spicedb-schema
+    created_at: 2026-11-13T04:08:28.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c6b9fede96
+  - type: covered_by
+    from: SYM-identity-spicedb-syncer-write-schema
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:08:28.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee8315213a2c

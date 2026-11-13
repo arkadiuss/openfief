@@ -145,6 +145,8 @@ type serveConfig struct {
 	Sync       syncConfig
 	// Auth is the AuthService's configuration.
 	Auth authConfig
+	// Authz is who answers authorization (D-163, D-164).
+	Authz authzConfig
 }
 
 // syncConfig is the connector scheduler's configuration.
@@ -242,18 +244,16 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	fs.BoolVar(&c.EnsureDefaults, "ensure-defaults", true, "store the built-in sleeve kinds and sleeves that are missing")
 	fs.DurationVar(&c.ShutdownTimeout, "shutdown-timeout", defaultShutdownTimeout, "how long requests and revaluations may drain on shutdown")
 	fs.BoolVar(&c.Connectors, "connectors", inCluster, "sync the cluster's connector instances (D-49); on by default in a cluster")
-	fs.DurationVar(&c.Sync.Policy.Interval, "sync-every", defaultSyncEvery, "how often each connector instance syncs")
-	fs.DurationVar(&c.Sync.Policy.Jitter, "sync-jitter", defaultSyncJitter, "up to how much later than --sync-every a sync may start")
-	fs.DurationVar(&c.Sync.Policy.RetryFirst, "sync-retry-first", defaultRetryFirst, "the first retry delay after a failed sync; it doubles per failure")
-	fs.DurationVar(&c.Sync.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
-	fs.DurationVar(&c.Sync.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
-	fs.IntVar(&c.Sync.Workers, "sync-workers", defaultSyncWorkers, "connector syncs that run at once (D-189); raise it only together with the core's memory limit")
-	fs.StringVar(&c.Sync.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
+	syncFlags(fs, &c.Sync)
 	authFlags(fs, &c.Auth)
+	authzFlags(fs, &c.Authz)
 	if err := fs.Parse(args); err != nil {
 		return serveConfig{}, fmt.Errorf("serve: %w", err)
 	}
 	if err := parseAuth(&c.Auth, getenv); err != nil {
+		return serveConfig{}, err
+	}
+	if err := parseAuthz(&c.Authz, getenv); err != nil {
 		return serveConfig{}, err
 	}
 	if fs.NArg() > 0 {
@@ -277,6 +277,17 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 		return serveConfig{}, fmt.Errorf("--end-of-day: %w", err)
 	}
 	return c, nil
+}
+
+// syncFlags defines serve's connector sync flags on fs, into c.
+func syncFlags(fs *flag.FlagSet, c *syncConfig) {
+	fs.DurationVar(&c.Policy.Interval, "sync-every", defaultSyncEvery, "how often each connector instance syncs")
+	fs.DurationVar(&c.Policy.Jitter, "sync-jitter", defaultSyncJitter, "up to how much later than --sync-every a sync may start")
+	fs.DurationVar(&c.Policy.RetryFirst, "sync-retry-first", defaultRetryFirst, "the first retry delay after a failed sync; it doubles per failure")
+	fs.DurationVar(&c.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
+	fs.DurationVar(&c.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
+	fs.IntVar(&c.Workers, "sync-workers", defaultSyncWorkers, "connector syncs that run at once (D-189); raise it only together with the core's memory limit")
+	fs.StringVar(&c.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
 }
 
 // authFlags defines serve's authentication flags on fs, into a. The

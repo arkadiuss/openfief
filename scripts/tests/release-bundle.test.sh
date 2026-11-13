@@ -43,6 +43,21 @@ images() {
   gojq -r --yaml-input -s '[.[] | .. | objects | (.containers?, .initContainers?) // empty | .[] | .image] | unique | .[]' "$1"
 }
 
+# SpiceDB and the Job that generates its credentials are a third party's images, pinned by digest in deploy/spicedb: the
+# bundle leaves them as they are, and ours are the rest.
+kustomize build "$root/deploy/spicedb" >spicedb.yaml
+third="$(images spicedb.yaml)"
+[ "$(wc -l <<<"$third")" -eq 2 ] || fail_case "deploy/spicedb runs $(wc -l <<<"$third") images, want SpiceDB and the credentials Job's"
+[ "$(grep -cE '^[a-z0-9./-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$' <<<"$third")" -eq 2 ] || fail_case "deploy/spicedb's images aren't tag and digest: $third"
+# The image the cluster runs is the SpiceDB the Taskfile builds for the contract test.
+spicedb_pinned="$(sed -n 's/^  SPICEDB_VERSION: *//p' "$root/Taskfile.yml")"
+[ -n "$spicedb_pinned" ] && grep -q "^quay.io/authzed/spicedb:$spicedb_pinned@sha256:" <<<"$third" ||
+  fail_case "deploy/spicedb doesn't run SpiceDB $spicedb_pinned, the Taskfile's SPICEDB_VERSION: $third"
+# ours prints the images in file $1 that aren't a third party's.
+ours() { images "$1" | grep -vxF -f <(printf '%s\n' "$third") || true; }
+# third_kept fails unless file $1 runs the third party's images, as the base names them.
+third_kept() { [ "$(images "$1" | grep -xF -f <(printf '%s\n' "$third") || true)" = "$third" ]; }
+
 refs=(registry.example.org:5000/e2e/core@"$da" ghcr.io/example/openfief/operator@"$db" ghcr.io/example/openfief/egress-proxy@"$dc")
 if ! out="$(run "$version" a "${refs[@]}")"; then
   fail_case "pinning the real install: $out"
@@ -50,8 +65,11 @@ else
   want="ghcr.io/example/openfief/egress-proxy@$dc
 ghcr.io/example/openfief/operator@$db
 registry.example.org:5000/e2e/core@$da"
-  got="$(images "a/openfief-install-$version.yaml")"
+  got="$(ours "a/openfief-install-$version.yaml")"
   [ "$got" = "$want" ] || fail_case "the install's images: want $want, got $got"
+  third_kept "a/openfief-install-$version.yaml" || fail_case "the install doesn't keep SpiceDB's images as the base pins them"
+  gojq -e --yaml-input -s 'any(.[]; .kind == "Deployment" and .metadata.name == "openfief-spicedb")' \
+    "a/openfief-install-$version.yaml" >/dev/null || fail_case "the install has no SpiceDB Deployment"
   kinds="$(gojq -r --yaml-input -s '[.[] | .kind] | unique | join(" ")' "a/openfief-crds-$version.yaml")"
   [ "$kinds" = "CustomResourceDefinition LimitRange Namespace" ] || fail_case "the CRDs file holds $kinds"
   [ -z "$(images "a/openfief-crds-$version.yaml")" ] || fail_case "the CRDs file runs an image"
@@ -60,9 +78,15 @@ registry.example.org:5000/e2e/core@$da"
   # The database the install brings by default (D-14): exactly the cluster the install reads, and nothing it runs.
   database="$(gojq -r --yaml-input -s '[.[] | select(. != null) | "\(.apiVersion) \(.kind) \(.metadata.namespace)/\(.metadata.name) \(.spec.bootstrap.initdb.database)/\(.spec.bootstrap.initdb.owner)"] | join(",")' \
     "a/openfief-db-$version.yaml")"
-  [ "$database" = "postgresql.cnpg.io/v1 Cluster openfief/openfief-db openfief/openfief" ] || fail_case "the database file holds $database"
+  [ "$database" = "postgresql.cnpg.io/v1 Cluster openfief/openfief-db openfief/openfief,postgresql.cnpg.io/v1 Database openfief/openfief-db-spicedb null/null" ] ||
+    fail_case "the database file holds $database"
+  # SpiceDB's role and database (D-164): the managed role spicedb, with the Secret the install generates, and the
+  # database it owns.
+  spicedb_db="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Cluster") | .spec.managed.roles[] | "\(.name) \(.login) \(.passwordSecret.name)"] + [.[] | select(.kind == "Database") | "\(.spec.name) \(.spec.owner) \(.spec.cluster.name)"] | join(",")' \
+    "a/openfief-db-$version.yaml")"
+  [ "$spicedb_db" = "spicedb true openfief-db-spicedb,spicedb spicedb openfief-db" ] || fail_case "SpiceDB's role and database: $spicedb_db"
   # Its own requests and memory limit (D-182), so the namespace's LimitRange defaults don't size it.
-  sized="$(gojq -r --yaml-input -s '[.[] | select(. != null) | .spec.resources | "\(.requests.cpu) \(.requests.memory) \(.limits.memory)"] | join(",")' \
+  sized="$(gojq -r --yaml-input -s '[.[] | select(. != null) | select(.kind == "Cluster") | .spec.resources | "\(.requests.cpu) \(.requests.memory) \(.limits.memory)"] | join(",")' \
     "a/openfief-db-$version.yaml")"
   [ "$sized" = "100m 256Mi 1Gi" ] || fail_case "the database's requests and memory limit are $sized, want 100m 256Mi 1Gi"
   grep -q "^#   kubectl apply --server-side -f openfief-db-$version.yaml" "a/openfief-db-$version.yaml" ||
@@ -90,7 +114,7 @@ else
   want="ghcr.io/example/openfief/core@$da
 ghcr.io/example/openfief/egress-proxy@$dc
 ghcr.io/example/openfief/operator@$db"
-  got="$(images "c/openfief-install-$version.yaml")"
+  got="$(ours "c/openfief-install-$version.yaml")"
   [ "$got" = "$want" ] || fail_case "the install's images from digest files: want $want, got $got"
 fi
 
@@ -102,7 +126,7 @@ else
   want="ghcr.io/example/openfief/core@$zeros
 ghcr.io/example/openfief/egress-proxy@$zeros
 ghcr.io/example/openfief/operator@$zeros"
-  got="$(images "e/openfief-install-$version.yaml")"
+  got="$(ours "e/openfief-install-$version.yaml")"
   [ "$got" = "$want" ] || fail_case "the install's placeholder images: want $want, got $got"
 fi
 PLACEHOLDER=1 PREFIX=ghcr.io/example/openfief VERIFY=1 REPO=example/openfief expect_fail \
@@ -139,10 +163,10 @@ CNPG="$work/cnpg-9.9.9.yaml" expect_fail "a CloudNativePG manifest that doesn't 
 [ ! -e d ] || fail_case "a failed run wrote files"
 
 # A base that names its image by tag can't be pinned without hiding the tag.
-mkdir -p fake/crds fake/operator fake/egress-proxy fake/core fake/database
+mkdir -p fake/crds fake/operator fake/egress-proxy fake/core fake/spicedb fake/database
 cp "$root/deploy/crds/"* fake/crds/
 cp "$root/deploy/database/"* fake/database/
-for base in operator egress-proxy core; do
+for base in operator egress-proxy core spicedb; do
   printf 'resources:\n  - deployment.yaml\n' >"fake/$base/kustomization.yaml"
   printf 'apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: %s\nspec:\n  template:\n    spec:\n      containers:\n        - name: %s\n          image: ghcr.io/arkadiuss/openfief/%s\n' \
     "$base" "$base" "$base" >"fake/$base/deployment.yaml"
@@ -150,6 +174,29 @@ done
 sed -i 's|openfief/core$|openfief/core:latest|' fake/core/deployment.yaml
 deploy="$work/fake" expect_fail "a base image with a tag" "with a tag or digest" "$version" d "${refs[@]}"
 sed -i 's|openfief/core:latest$|openfief/core|' fake/core/deployment.yaml
+# SpiceDB's stand-in is a third party's image with tag and digest, which the bundle leaves as it is; by tag alone it
+# can't be pinned without hiding the tag.
+sed -i "s|image: ghcr.io/arkadiuss/openfief/spicedb$|image: quay.io/example/x:1.0.0@$da|" fake/spicedb/deployment.yaml
+deploy="$work/fake" run "$version" f "${refs[@]}" >/dev/null || fail_case "a third-party image with tag and digest wasn't left as it is"
+grep -qF "quay.io/example/x:1.0.0@$da" "f/openfief-install-$version.yaml" || fail_case "the third-party image wasn't kept as the base pins it"
+sed -i "s|image: quay.io/example/x:1.0.0@.*$|image: quay.io/example/x:1.0.0|" fake/spicedb/deployment.yaml
+deploy="$work/fake" expect_fail "a third-party image by tag alone" "with a tag or digest" "$version" d "${refs[@]}"
+sed -i "s|image: quay.io/example/x:1.0.0$|image: quay.io/example/x:1.0.0@$da|" fake/spicedb/deployment.yaml
+# The real install sets no exemption from the proxy's refused ranges (D-215); one that does, as a flag or as an
+# environment variable, fails the bundle.
+if grep -qiE 'refused-range-exempt-host|REFUSED_RANGE_EXEMPT_HOST' "a/openfief-install-$version.yaml"; then
+  fail_case "the real install sets the egress proxy's test-only exemption"
+fi
+printf '          args: ["-listen=:4750", "-refused-range-exempt-host=fixture.example.test=10.0.0.1"]\n' >>fake/egress-proxy/deployment.yaml
+deploy="$work/fake" expect_fail "an exemption set by a flag" "test-only exemption from its refused ranges (D-215)" \
+  "$version" d "${refs[@]}"
+[ ! -e d ] || fail_case "a bundle with an exemption wrote files"
+sed -i '$d' fake/egress-proxy/deployment.yaml
+printf '          env:\n            - name: OPENFIEF_REFUSED_RANGE_EXEMPT_HOST\n              value: fixture.example.test=10.0.0.1\n' >>fake/egress-proxy/deployment.yaml
+deploy="$work/fake" expect_fail "an exemption set by an environment variable" "OPENFIEF_REFUSED_RANGE_EXEMPT_HOST" \
+  "$version" d "${refs[@]}"
+[ ! -e d ] || fail_case "a bundle with an exemption wrote files"
+sed -i '$d;$d;$d' fake/egress-proxy/deployment.yaml
 sed -i 's|name: openfief-db$|name: other-db|' fake/database/openfief-db.yaml
 deploy="$work/fake" expect_fail "a database the install doesn't read" "exactly the Cluster openfief/openfief-db" \
   "$version" d "${refs[@]}"
@@ -166,4 +213,4 @@ grep -qF "$pinned_sum" "$root/docs/guides/install.md" || fail_case "the install 
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-bundle: 26 cases passed"
+echo "release-bundle: 33 cases passed"

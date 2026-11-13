@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae13bd1060a8
+  - type: implements
+    from: SYM-core-new-authorization
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:53:45.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee1015612ff8
+  - type: covered_by
+    from: SYM-core-new-authorization
+    to: TEST-core-authz-flags
+    created_at: 2026-11-12T22:53:45.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5593d5a3b2a6

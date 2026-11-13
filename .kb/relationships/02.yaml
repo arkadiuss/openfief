@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a15bf49c7c7
+  - type: implements
+    from: SYM-core-reconcile-access
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:54:42.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ca7edc5a048
+  - type: covered_by
+    from: SYM-core-reconcile-access
+    to: TEST-core-authz-sync
+    created_at: 2026-11-12T22:54:42.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bbc2299ccf2
+  - type: specified_by
+    from: REQ-m0-exit-16-egress
+    to: SCEN-e2e-egress-allowed-connection
+    created_at: 2026-11-12T23:20:37.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-376022937042

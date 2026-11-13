@@ -15,6 +15,15 @@ type Authorizer interface {
 	MayAct(ctx context.Context, c identity.Caller, a identity.Action, account string) (bool, error)
 }
 
+// AccountLister is what an Authorizer may offer besides MayAct: the accounts
+// a caller may act on, all in one call, for a list or a total over every
+// account (D-163). Its answer is exactly what MayAct would give for each
+// account; on an error it returns none, and the caller is refused.
+type AccountLister interface {
+	// ActableAccounts returns the IDs of the accounts c may do a on.
+	ActableAccounts(ctx context.Context, c identity.Caller, a identity.Action) (map[string]struct{}, error)
+}
+
 // Policy is the Authorizer until SpiceDB answers (D-163): the owner may act
 // on every account, and every other holder of read access may view every
 // account (identity.MayAct).

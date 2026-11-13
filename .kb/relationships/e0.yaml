@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f0a7fe9cfce
+  - type: implements
+    from: SYM-identity-spicedb-new-syncer
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T04:28:08.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb441c127e80
+  - type: covered_by
+    from: SYM-identity-spicedb-new-syncer
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:28:08.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d2ca3b24891

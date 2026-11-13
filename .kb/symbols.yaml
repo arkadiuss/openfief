@@ -1199,6 +1199,16 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-dco
+  - id: SYM-dco-check-test-message
+    title: message
+    status: active
+    sourceFile: scripts/tests/dco-check.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-dco
   - id: SYM-ci-images-images
     title: images
     status: active
@@ -125161,6 +125171,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-authz
+      - type: covered_by
+        target: TEST-views-app-authz-list
       - type: implements
         target: REQ-identity-read-access-viewable-accounts-only
       - type: implements
@@ -133023,6 +133035,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-app-registry
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
       - type: implements
         target: REQ-portfolio-account-in-one-sleeve
   - id: SYM-portfolio-app-registry-account-sleeves
@@ -133049,6 +133065,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-app-registry
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
       - type: implements
         target: REQ-portfolio-account-in-one-sleeve
   - id: SYM-portfolio-app-registry-ensure-defaults
@@ -174792,3 +174812,943 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-audit-postgres
+  - id: SYM-identity-spicedb-authorizer-may-act
+    title: Authorizer.MayAct
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:30.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: implements
+        target: REQ-identity-authz-one-interface
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-authorizer-actable-accounts
+    title: Authorizer.ActableAccounts
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:40.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-identity-spicedb-object-id
+    title: ObjectID
+    status: active
+    sourceFile: internal/identity/spicedb/ids.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:49.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-account-placed
+    title: Syncer.AccountPlaced
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:52:58.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-account-unplaced
+    title: Syncer.AccountUnplaced
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:08.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-reconcile
+    title: Syncer.Reconcile
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:17.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-contract
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-plan
+    title: Plan
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:25.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-parse-authz
+    title: parseAuthz
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:34.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-new-authorization
+    title: newAuthorization
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:53:42.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-reconcile-access
+    title: reconcileAccess
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:39.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-placement-sync-account-placed
+    title: placementSync.AccountPlaced
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:48.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-core-placement-sync-account-removed
+    title: placementSync.AccountRemoved
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T22:54:56.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-plugins-egress-exemption
+    title: Exemption
+    granularity_reason: module-level-behavior
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:20.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-parse-exemption
+    title: ParseExemption
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:31.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-is-set
+    title: Exemption.IsSet
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:46.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-host
+    title: Exemption.Host
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:51.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-addrs
+    title: Exemption.Addrs
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:55.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-string
+    title: Exemption.String
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:59.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-covers
+    title: Exemption.Covers
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:17.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-check-resolved
+    title: CheckResolved
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:22.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-normalize-host
+    title: normalizeHost
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:26.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-sorted-unique
+    title: sortedUnique
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:30.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-test-parse-exemption
+    title: TestParseExemption
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:35.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-test-addrs
+    title: addrs
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:39.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-test-check-resolved
+    title: TestCheckResolved
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:44.297Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-smokescreen-test-must-exempt
+    title: mustExempt
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:05.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-proxy-exempts-one-host
+    title: TestProxyExemptsOneHost
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:10.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-exemption-ip-literal
+    title: TestProxyExemptionIsRefusedForAnIPLiteral
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:14.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-warns-of-exemption
+    title: TestProxyWarnsOfAnExemption
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:19.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-logs-exemption-decisions
+    title: TestProxyLogsExemptionDecisions
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:24.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-start-proxy-options
+    title: startProxyOptions
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:28.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-fn-address-list
+    title: addressList
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:32.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-warns-at-start
+  - id: SYM-tooling-release-bundle-check-no-exemption
+    title: check_no_exemption
+    status: active
+    sourceFile: scripts/release-bundle.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:36.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-never-shipped
+  - id: SYM-e2e-egressallowed-skips-egress-fixture
+    title: skipsEgressFixture
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:59.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-install-egress-fixture
+    title: installEgressFixture
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:04.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-egress-fixture-objects
+    title: egressFixtureObjects
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:08.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exempt-proxy
+    title: exemptProxy
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:12.984Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-install-fx-at
+    title: installFXAt
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:17.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-connect-allowed
+    title: connectAllowed
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:21.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-connect-bad-gateway
+    title: connectBadGateway
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:25.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exemption-probes
+    title: exemptionProbes
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:30.212Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exemption-log-problems
+    title: exemptionLogProblems
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:34.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-check-allowed-audit
+    title: checkAllowedAudit
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:38.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-plugins-smokescreen-fn-exempt-host
+    title: exemptHost
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:54:17.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-warns-at-start
+  - id: SYM-e2e-egressallowed-exemption-warned
+    title: exemptionWarned
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:54:22.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-tooling-kibi-staged-test-expect
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T02:54:50.515Z
+    title: expect
+    sourceFile: scripts/tests/kibi-staged.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-staged
+  - id: SYM-tooling-kibi-staged-test-run
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T02:54:55.614Z
+    title: run
+    sourceFile: scripts/tests/kibi-staged.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-staged
+  - id: SYM-e2e-spicedb-test-spicedb-deployed
+    title: TestSpiceDBDeployed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:18.267Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-test-spicedb-fails-closed
+    title: TestSpiceDBFailsClosed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:21.614Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-spicedb-available
+    title: waitSpiceDBAvailable
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:24.769Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-job-complete
+    title: waitJobComplete
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:27.941Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-secret-value
+    title: secretValue
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:31.340Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-spicedb-database
+    title: waitSpiceDBDatabase
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:34.722Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-check-spicedb-pod
+    title: checkSpiceDBPod
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:38.204Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-pod-logs
+    title: podLogs
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:41.489Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-accounts
+    title: waitAccounts
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:44.561Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-log-line
+    title: waitLogLine
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:47.749Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-scale-deployment
+    title: scaleDeployment
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:50.770Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-set-core-authz
+    title: setCoreAuthz
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:53.928Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-wait-rolled-out
+    title: waitRolledOut
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:07:57.596Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-rolled-out
+    title: rolledOut
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:01.512Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-rollout-state
+    title: rolloutState
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:05.264Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-cnpg-database
+    title: cnpgDatabase
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:08.921Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-isolation-spicedb-probes
+    title: spicedbProbes
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:12.715Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-isolation-connected
+    title: connected
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:16.431Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-exposure-bundle-jobs
+    title: bundleJobs
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:19.567Z
+    sourceFile: test/e2e/exposure_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-identity-spicedb-with-schema
+    title: WithSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:22.754Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-identity-spicedb-syncer-write-schema
+    title: Syncer.writeSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:08:25.896Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-e2e-spicedb-check-credentials-from-secrets
+    title: checkCredentialsFromSecrets
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:27.274Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-hardened
+    title: hardened
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:30.712Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-check-spicedb-container
+    title: checkSpiceDBContainer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:33.874Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-stop-spicedb-and-expect-refusal
+    title: stopSpiceDBAndExpectRefusal
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:36.993Z
+    sourceFile: test/e2e/spicedb_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-bundle-check-pinned-images
+    title: checkPinnedImages
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:14:40.231Z
+    sourceFile: test/e2e/bundle_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-authz-test-schema-is-the-file
+    title: TestSchemaIsTheFile
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:27:53.955Z
+    sourceFile: authz/authz_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-authz-schema-embedded
+  - id: SYM-identity-spicedb-schemas
+    title: Schemas
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:27:57.623Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-schema
+  - id: SYM-identity-spicedb-options
+    title: options
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:00.664Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer
+    title: Syncer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:03.710Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-new-syncer
+    title: NewSyncer
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:06.747Z
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-identity-spicedb-syncer-test-schema-log
+    title: schemaLog
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:09.732Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-identity-spicedb-syncer-test-schema-log-write-schema
+    title: schemaLog.WriteSchema
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:12.800Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-identity-spicedb-syncer-test-writes-the-schema-first
+    title: TestSyncerWritesTheSchemaFirst
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:15.792Z
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-tooling-release-bundle-test-ours
+    title: ours
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:18.715Z
+    sourceFile: scripts/tests/release-bundle.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-tooling-release-bundle-test-third-kept
+    title: third_kept
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T04:28:21.756Z
+    sourceFile: scripts/tests/release-bundle.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle

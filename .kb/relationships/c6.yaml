@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6b260c41c41
+  - type: executable_for
+    from: SYM-e2e-spicedb-wait-spicedb-available
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:26.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b47ae7461ca6

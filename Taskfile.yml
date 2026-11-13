@@ -26,6 +26,12 @@ vars:
   # zed checks the authorization model's SpiceDB schema against its assertions (authz/, D-164).
   # renovate: datasource=go depName=github.com/authzed/zed
   ZED_VERSION: v1.2.1
+  # SpiceDB itself, which `task test:authz` runs in testing mode for the authorization contract test
+  # (internal/identity/spicedb). Not installed by `task tools`: it compiles for minutes. Keep it at the SpiceDB
+  # the cluster runs (the image deploy/spicedb pins by digest; scripts/tests/release-bundle.test.sh checks the
+  # version) and at a release authzed-go in go.mod speaks to.
+  # renovate: datasource=go depName=github.com/authzed/spicedb
+  SPICEDB_VERSION: v1.57.1
   # renovate: datasource=go depName=github.com/bufbuild/buf
   BUF_VERSION: v1.75.0
   # The code generators must match the runtime versions in sdk/go/go.mod (google.golang.org/protobuf, connectrpc.com/connect).
@@ -223,6 +229,14 @@ tasks:
       - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
     status:
       - '{{.BIN}}/zed version 2>&1 | grep -qx "client: zed {{.ZED_VERSION}}"'
+
+  tool:spicedb:
+    internal: true
+    cmds:
+      # Built from the pinned module like zed above, so Go's checksum database vouches for the source.
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' bash scripts/retry.sh go install github.com/authzed/spicedb/cmd/spicedb@{{.SPICEDB_VERSION}}
+    status:
+      - '{{.BIN}}/spicedb version 2>&1 | grep -q "{{.SPICEDB_VERSION}}"'
 
   tool:proto:
     internal: true
@@ -503,6 +517,12 @@ tasks:
     cmds:
       - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
 
+  test:authz:
+    desc: 'The authorization contract test against a real SpiceDB in testing mode (pinned, built into .bin/ on first use): SpiceDB must answer as identity.MayAct does, e.g. task test:authz -- -run TestContract -v'
+    deps: [tool:spicedb]
+    cmds:
+      - '{{.GO_GUARD}} SPICEDB="{{.BIN}}/spicedb" bash scripts/test-authz.sh {{.CLI_ARGS}}'
+
   e2e:
     desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images: first an install from the release bundle of this checkout''s images, then the demo''s stack; refuses non-local clusters'
     # kibi:install brings playwright-core, with which the passkey test drives Chromium (test/e2e/passkey.mjs).
@@ -623,6 +643,13 @@ tasks:
       vars: [BASE, HEAD]
     cmds:
       - bash scripts/dco-check.sh '{{.BASE}}' '{{.HEAD}}'
+
+  dco:message:
+    desc: 'DCO sign-off check (D-5) of the message of the commit being made, as the commit-msg hook runs it, e.g. task dco:message MSG=.git/COMMIT_EDITMSG'
+    requires:
+      vars: [MSG]
+    cmds:
+      - bash scripts/dco-check.sh --message '{{.MSG}}'
 
   ci:images:
     desc: 'JSON list of the images CI builds (cmd/*/Dockerfile, plugins/*/Dockerfile; KIND=plugins or commands for one kind), e.g. task ci:images PREFIX=ghcr.io/owner/openfief'
@@ -1028,10 +1055,9 @@ tasks:
       - bash scripts/kibi-check.sh '{{.KIBI}}'
 
   kibi:staged:
-    desc: kibi checks on staged changes (what the pre-commit hook runs)
+    desc: kibi checks on staged changes (what the pre-commit hook runs), after removing the throwaway stores killed runs left in the temporary directory (scripts/kibi-staged.sh)
     cmds:
-      - '{{.KIBI}} check-generated --staged --changed-only'
-      - '{{.KIBI}} check --staged'
+      - bash scripts/kibi-staged.sh '{{.KIBI}}'
 
   kibi:sync:
     desc: Compile this branch's knowledge base (hooks run it after checkout, merge and rebase; CI sets KIBI_BRANCH)

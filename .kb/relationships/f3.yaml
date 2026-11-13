@@ -741,3 +741,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdae729c12a2
+  - type: implements
+    from: SYM-identity-spicedb-authorizer-may-act
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:52:33.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1b074ad66a
+  - type: implements
+    from: SYM-identity-spicedb-authorizer-may-act
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-12T22:52:33.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f9ed7f8b346
+  - type: covered_by
+    from: SYM-identity-spicedb-authorizer-may-act
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-12T22:52:33.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56c99992bd86
+  - type: covered_by
+    from: SYM-identity-spicedb-authorizer-may-act
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-12T22:52:33.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbc06242343f

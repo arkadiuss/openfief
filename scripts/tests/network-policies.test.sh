@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Builds the install's bases and checks the NetworkPolicies D-184 asks for: the database, the egress proxy and the
-# operator each admit only their callers, and the egress proxy's own way out leaves every private, shared, link-local
+# Builds the install's bases and checks the NetworkPolicies D-184 asks for: the database, the egress proxy, the
+# operator and SpiceDB (D-164) each admit only their callers, and the egress proxy's own way out leaves every private, shared, link-local
 # and loopback range out (kibi: TEST-deploy-network-policies).
 # Needs kustomize and gojq on PATH (task test adds .bin); fully offline.
 set -euo pipefail
@@ -22,7 +22,7 @@ check() {
   fi
 }
 
-for base in core egress-proxy operator demo-data; do
+for base in core egress-proxy operator demo-data spicedb; do
   kustomize build "$root/deploy/$base" >"$work/$base.yaml"
 done
 
@@ -54,6 +54,28 @@ check "the egress proxy is told its node's address" \
 
 check "the operator admits no ingress" \
   "$(policy openfief-operator) | .spec.podSelector == {matchLabels: {\"app.kubernetes.io/name\": \"openfief-operator\"}} and .spec.policyTypes == [\"Ingress\"] and (.spec.ingress // []) == []" "$work/operator.yaml"
+
+# SpiceDB (D-164): only the core reaches it, on gRPC; it reaches the database and DNS and nothing else; and the
+# database and the core each admit it through a policy of the spicedb base, so an install without SpiceDB is unchanged.
+sdb="$(policy openfief-spicedb)"
+check "SpiceDB's policy selects its pods, ingress and egress" \
+  "$sdb | .metadata.namespace == \"openfief\" and .spec.podSelector == {matchLabels: {\"app.kubernetes.io/name\": \"openfief-spicedb\"}} and .spec.policyTypes == [\"Ingress\", \"Egress\"]" "$work/spicedb.yaml"
+check "SpiceDB admits the core on 50051 and nothing else, plugins included" \
+  "$sdb | .spec.ingress == [{from: [{podSelector: {matchLabels: {\"app.kubernetes.io/name\": \"openfief-core\"}}}], ports: [{protocol: \"TCP\", port: 50051}]}]" "$work/spicedb.yaml"
+check "SpiceDB reaches the database on 5432 and DNS, and nothing else" \
+  "$sdb | (.spec.egress | length == 2) and .spec.egress[0] == {to: [{podSelector: {matchLabels: {\"cnpg.io/cluster\": \"openfief-db\"}}}], ports: [{protocol: \"TCP\", port: 5432}]} and (.spec.egress[1].to[0].podSelector.matchLabels[\"k8s-app\"] == \"kube-dns\")" "$work/spicedb.yaml"
+check "the core's egress admits SpiceDB's pods on 50051" \
+  "$(policy openfief-core-to-spicedb) | .spec.podSelector == {matchLabels: {\"app.kubernetes.io/name\": \"openfief-core\"}} and .spec.policyTypes == [\"Egress\"] and .spec.egress == [{to: [{podSelector: {matchLabels: {\"app.kubernetes.io/name\": \"openfief-spicedb\"}}}], ports: [{protocol: \"TCP\", port: 50051}]}]" "$work/spicedb.yaml"
+check "the database admits SpiceDB's pods on 5432 alone" \
+  "$(policy openfief-db-from-spicedb) | .spec.podSelector == {matchLabels: {\"cnpg.io/cluster\": \"openfief-db\"}} and .spec.ingress == [{from: [{podSelector: {matchLabels: {\"app.kubernetes.io/name\": \"openfief-spicedb\"}}}], ports: [{protocol: \"TCP\", port: 5432}]}]" "$work/spicedb.yaml"
+check "no policy of the spicedb base names a plugin" \
+  "[.[] | select(.kind == \"NetworkPolicy\") | ((.spec.ingress // [])[].from[]?, (.spec.egress // [])[].to[]?) | .podSelector.matchLabels[\"app.kubernetes.io/name\"]?] | all(. != \"openfief-plugin\")" "$work/spicedb.yaml"
+check "the core's own policy names SpiceDB nowhere, so the base without it is unchanged" \
+  "$(policy openfief-core) | [.spec.egress[].to[]?.podSelector.matchLabels[\"app.kubernetes.io/name\"]?] | all(. != \"openfief-spicedb\")" "$work/core.yaml"
+check "the credentials Job reaches the API server and DNS only, and nothing reaches it" \
+  "$(policy openfief-spicedb-secrets) | .spec.policyTypes == [\"Ingress\", \"Egress\"] and (.spec.ingress // []) == [] and (.spec.egress | length == 2) and .spec.egress[0].ports == [{protocol: \"TCP\", port: 6443}] and (.spec.egress[1].to[0].podSelector.matchLabels[\"k8s-app\"] == \"kube-dns\")" "$work/spicedb.yaml"
+check "SpiceDB's ServiceAccount has no API rights and no token; only the credentials Job may create Secrets" \
+  "([.[] | select(.kind == \"ServiceAccount\" and .metadata.name == \"openfief-spicedb\") | .automountServiceAccountToken] == [false]) and ([.[] | select(.kind == \"RoleBinding\" or .kind == \"ClusterRoleBinding\") | .subjects[].name] == [\"openfief-spicedb-secrets\"]) and ([.[] | select(.kind == \"Role\") | .rules[]] == [{apiGroups: [\"\"], resources: [\"secrets\"], verbs: [\"create\"]}])" "$work/spicedb.yaml"
 
 if [ "$failures" -ne 0 ]; then
   echo "network-policies: $failures of $cases cases failed" >&2

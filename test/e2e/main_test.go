@@ -42,6 +42,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+
+	"github.com/arkadiuss/openfief/internal/plugins/egress"
 )
 
 const (
@@ -125,6 +127,7 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	var (
 		signers string
 		ui      registryImage
+		exempt  egress.Exemption
 	)
 	steps := []func() error{
 		func() error { return installCNPG(ctx, k, logf) },
@@ -147,7 +150,13 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 			// bundle run's first run does (connector_test.go).
 			return buildCLI(ctx, reg, signer, logf)
 		},
-		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster)) },
+		// The proxy's exemption names the fixture's ClusterIP, so the fixture comes first (D-215).
+		func() error {
+			var fixtureErr error
+			exempt, fixtureErr = installEgressFixture(ctx, k, logf)
+			return fixtureErr
+		},
+		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster, exempt)) },
 		func() error { return installClients(ctx, k, logf) },
 	}
 	for _, step := range steps {

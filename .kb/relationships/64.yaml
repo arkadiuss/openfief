@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aec89b2a39bd
+  - type: verified_by
+    from: SCEN-plugins-egress-exemption-one-host
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:20:24.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59b182eadf0d
+  - type: verified_by
+    from: SCEN-plugins-egress-exemption-one-host
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:20:24.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7257aa5d8875

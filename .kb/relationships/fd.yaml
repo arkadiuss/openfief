@@ -839,3 +839,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea16d60e5001
+  - type: executable_for
+    from: SYM-identity-spicedb-syncer-test-writes-the-schema-first
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T04:28:17.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97c7d023ebf2

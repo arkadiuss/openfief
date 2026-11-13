@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2193aec39509
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-checking-resolver-lookup-ip
+    to: REQ-plugins-egress-test-exemption-one-host
+    created_at: 2026-11-12T23:54:30.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6991ac277ba4
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-checking-resolver-lookup-ip
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:54:30.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71cc06edf62c

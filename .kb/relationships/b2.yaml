@@ -825,3 +825,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56addd27b1d3
+  - type: covered_by
+    from: SYM-views-app-views-viewable
+    to: TEST-views-app-authz-list
+    created_at: 2026-11-12T22:55:29.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3e131192039
+  - type: constrains
+    from: REQ-plugins-egress-test-exemption-never-shipped
+    to: FACT-SUBJECT-07E0E01FE8CEB822
+    created_at: 2026-11-12T23:19:36.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8511fe118af0
+  - type: requires_property
+    from: REQ-plugins-egress-test-exemption-never-shipped
+    to: FACT-PROP-76798A60B126D890
+    created_at: 2026-11-12T23:19:36.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e68c99d39a7
+  - type: specified_by
+    from: REQ-plugins-egress-test-exemption-never-shipped
+    to: SCEN-tooling-release-bundle-no-exemption
+    created_at: 2026-11-12T23:20:37.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d17b6a48169

@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05ce6e33c63d
+  - type: validates
+    from: TEST-views-app-authz-list
+    to: REQ-views-authz-totals-over-viewable
+    created_at: 2026-11-12T22:52:16.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a9062526d8c
+  - type: validates
+    from: TEST-views-app-authz-list
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:52:16.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41f9faae96a5

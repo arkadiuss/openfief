@@ -42,7 +42,35 @@ elif ! grep -q 'docs: not signed' <<<"$out"; then
   failures=$((failures + 1))
 fi
 
+# --message, as the commit-msg hook calls it, reads the author from git (GIT_AUTHOR_NAME and _EMAIL above).
+message() { printf '%s\n' "$@" >"$work/msg"; bash "$root/scripts/dco-check.sh" --message "$work/msg" 2>&1; }
+if ! out="$(message "feat: x" "" "Signed-off-by: Alice <alice@example.invalid>")"; then
+  echo "FAIL: a message signed off by the author should pass, got: $out" >&2
+  failures=$((failures + 1))
+fi
+if out="$(message "feat: x" "" "Signed-off-by: Bob <bob@example.invalid>")"; then
+  echo "FAIL: a message signed off by someone else should fail" >&2
+  failures=$((failures + 1))
+elif ! grep -q 'Alice <alice@example.invalid>' <<<"$out"; then
+  echo "FAIL: the refusal should name the author, got: $out" >&2
+  failures=$((failures + 1))
+fi
+if out="$(message "feat: x" "" "Co-Authored-By: Alice <alice@example.invalid>")"; then
+  echo "FAIL: a message without a sign-off should fail" >&2
+  failures=$((failures + 1))
+fi
+if out="$(message "feat: x" "Signed-off-by: Alice <alice@example.invalid> in the body, not a trailer" "" "Other: y")"; then
+  echo "FAIL: a sign-off outside the trailers should not count" >&2
+  failures=$((failures + 1))
+fi
+git rev-parse HEAD >"$(git rev-parse --git-path MERGE_HEAD)"
+if ! out="$(message "Merge branch x")"; then
+  echo "FAIL: a merge being committed should pass without a sign-off, got: $out" >&2
+  failures=$((failures + 1))
+fi
+rm -f "$(git rev-parse --git-path MERGE_HEAD)"
+
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "dco-check: 3 cases passed"
+echo "dco-check: 8 cases passed"

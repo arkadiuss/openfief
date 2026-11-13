@@ -825,3 +825,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f807674270e2
+  - type: constrains
+    from: REQ-plugins-egress-test-exemption-warns-at-start
+    to: FACT-SUBJECT-4F2EEF738C32E61A
+    created_at: 2026-11-12T23:19:17.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d177176065a
+  - type: requires_property
+    from: REQ-plugins-egress-test-exemption-warns-at-start
+    to: FACT-PROP-4182B673B3FAD8BA
+    created_at: 2026-11-12T23:19:17.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ab45588134
+  - type: specified_by
+    from: REQ-plugins-egress-test-exemption-warns-at-start
+    to: SCEN-e2e-egress-allowed-connection
+    created_at: 2026-11-12T23:20:36.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ca54a232c7
+  - type: specified_by
+    from: REQ-plugins-egress-test-exemption-warns-at-start
+    to: SCEN-plugins-egress-exemption-warns-at-start
+    created_at: 2026-11-12T23:20:36.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04035b21ccdb
+  - type: executable_for
+    from: SYM-e2e-egressallowed-check-allowed-audit
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:41.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c572a07ca342

@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f6e6bb9c07a
+  - type: verified_by
+    from: SCEN-e2e-egress-allowed-connection
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:20:03.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e56d2b1d3bc4

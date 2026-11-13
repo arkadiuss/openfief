@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f59f3a70055
+  - type: executable_for
+    from: SYM-e2e-egressallowed-install-egress-fixture
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:06.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91c5b3b1fb7c
+  - type: executable_for
+    from: SYM-tooling-release-bundle-test-third-kept
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T04:28:23.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f79a46fb81

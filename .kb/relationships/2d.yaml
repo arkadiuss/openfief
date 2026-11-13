@@ -874,3 +874,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcbf9d9fec84
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-fails-closed
+    created_at: 2026-11-12T22:52:00.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ab1b95fd00
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-matches-policy
+    created_at: 2026-11-12T22:52:00.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f274293307
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-identity-spicedb-relationships-follow-accounts
+    created_at: 2026-11-12T22:52:00.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7812822ead61
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-authz-flag-default-policy
+    created_at: 2026-11-12T22:52:00.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e94121ca461
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-e2e-spicedb-deployed
+    created_at: 2026-11-13T04:07:16.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74b08101a064
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-e2e-spicedb-down-fails-closed
+    created_at: 2026-11-13T04:07:17.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc0bce91ccc5
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-e2e-spicedb-unreachable-from-plugins
+    created_at: 2026-11-13T04:07:17.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b571ccd6881
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-deploy-spicedb-policies-admit-only-core
+    created_at: 2026-11-13T04:07:17.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c11345e76e0
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-deploy-spicedb-bundle-keeps-third-party-images
+    created_at: 2026-11-13T04:07:17.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0241ed04c051

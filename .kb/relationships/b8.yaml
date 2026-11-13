@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e9b31141e9e
+  - type: executable_for
+    from: SYM-e2e-egressallowed-egress-fixture-objects
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:11.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f00b8cc55186

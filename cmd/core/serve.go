@@ -339,6 +339,17 @@ func startCluster(ctx context.Context, c *core, cfg *serveConfig, cl *cluster, l
 	}
 }
 
+// closeAuthz closes the connection to SpiceDB, when there is one.
+func (c *core) closeAuthz() error {
+	if c.authz == nil {
+		return nil
+	}
+	if err := c.authz.Close(); err != nil {
+		return fmt.Errorf("closing the connection to SpiceDB: %w", err)
+	}
+	return nil
+}
+
 // shutdown marks s as draining, then stops the HTTP servers and c's
 // workers, each letting in-flight work finish until timeout; workers still
 // running then are cancelled, and River retries their jobs on the next start.
@@ -366,5 +377,6 @@ func shutdown(ctx context.Context, s *server, c *core, timeout time.Duration, se
 			errs = append(errs, fmt.Errorf("stopping the revaluation workers: %w", cancelErr))
 		}
 	}
+	errs = append(errs, c.closeAuthz())
 	return errors.Join(errs...)
 }

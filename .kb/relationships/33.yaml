@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3eeb2e099498
+  - type: executable_for
+    from: SYM-plugins-egress-test-check-resolved
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:48:47.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ba04147e24f

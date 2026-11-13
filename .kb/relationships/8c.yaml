@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe3707c2ab69
+  - type: specified_by
+    from: REQ-identity-authz-tokens-plugins-granted-accounts
+    to: SCEN-identity-spicedb-grants-cover-later-accounts
+    created_at: 2026-11-12T22:52:00.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0837df4628c8

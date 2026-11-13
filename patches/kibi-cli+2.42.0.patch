@@ -1,5 +1,5 @@
 diff --git a/node_modules/kibi-cli/dist/commands/sync.js b/node_modules/kibi-cli/dist/commands/sync.js
-index 79ba5f7..00cffd6 100644
+index 79ba5f7..dc51ba4 100644
 --- a/node_modules/kibi-cli/dist/commands/sync.js
 +++ b/node_modules/kibi-cli/dist/commands/sync.js
 @@ -41,6 +41,9 @@ import { persistEntities, persistRelationships, queryStoreTotals, retractEntitie
@@ -38,7 +38,7 @@ index 79ba5f7..00cffd6 100644
              if (recoveryBackupPath !== undefined) {
                  if (!existsSync(livePath)) {
 diff --git a/node_modules/kibi-cli/dist/engine.js b/node_modules/kibi-cli/dist/engine.js
-index 0b5590e..7e68ee5 100644
+index 0b5590e..e475065 100644
 --- a/node_modules/kibi-cli/dist/engine.js
 +++ b/node_modules/kibi-cli/dist/engine.js
 @@ -815,6 +815,7 @@ export class EngineClient {
@@ -88,10 +88,36 @@ index 0b5590e..7e68ee5 100644
          if (this.socket !== null && !this.socket.destroyed)
              return;
 diff --git a/node_modules/kibi-cli/dist/prolog.js b/node_modules/kibi-cli/dist/prolog.js
-index abcabac..4bc388a 100644
+index abcabac..b076d3b 100644
 --- a/node_modules/kibi-cli/dist/prolog.js
 +++ b/node_modules/kibi-cli/dist/prolog.js
-@@ -356,7 +356,19 @@ export class PrologProcess {
+@@ -140,6 +140,9 @@ export class PrologProcess {
+         this.explicitSwiplPath = options.swiplPath || undefined;
+         this.swiplResolver = options.swiplResolver ?? (() => resolveSwipl());
+         this.timeout = options.timeout || 30000;
++        // Local patch (OpenFief, patches/kibi-cli+2.42.0.patch): false leaves a
++        // mutating query's saving to the caller. See persistMutations below.
++        this.persistMutations = options.persistMutations !== false;
+         this.maxOutputBytes =
+             options.maxOutputBytes !== undefined &&
+                 Number.isInteger(options.maxOutputBytes) &&
+@@ -325,7 +328,14 @@ export class PrologProcess {
+             const debug = isPrologDebugEnabled();
+             const normalizedGoal = this.normalizeGoal(goal);
+             const goalLabel = this.goalLabel(normalizedGoal);
+-            const shouldPersist = this.isMutatingGoal(normalizedGoal) &&
++            // Local patch (OpenFief): kb_save rewrites the whole store. The
++            // staged check's throwaway KB projects the branch's every entity
++            // and relationship in batches of 128, one save per batch, so the
++            // cost grew with the square of the KB (a one-file commit took over
++            // 15 minutes at 20 MB). That KB lives and dies in this process and
++            // is never read back from disk, so it asks for no saving.
++            const shouldPersist = this.persistMutations &&
++                this.isMutatingGoal(normalizedGoal) &&
+                 !normalizedGoal.includes("kb_save") &&
+                 !normalizedGoal.includes("kb_commit_upsert");
+             const goalWithPersistence = shouldPersist
+@@ -356,7 +366,19 @@ export class PrologProcess {
                  };
                  const timeoutId = setTimeout(() => {
                      const stage = this.lastDiagnosticStage(this.errorBuffer) ?? "unknown";
@@ -112,7 +138,7 @@ index abcabac..4bc388a 100644
                      if (debug) {
                          console.error(`[prolog debug] timeout: ${msg}`);
                          const runtime = this.errorBuffer
-@@ -367,7 +379,7 @@ export class PrologProcess {
+@@ -367,7 +389,7 @@ export class PrologProcess {
                      settle();
                      this.terminationReason = `query timeout: ${goalLabel}`;
                      void this.terminate().finally(() => {
@@ -121,3 +147,16 @@ index abcabac..4bc388a 100644
                      });
                  }, this.timeout);
                  const checkResult = () => {
+diff --git a/node_modules/kibi-cli/dist/traceability/temp-kb.js b/node_modules/kibi-cli/dist/traceability/temp-kb.js
+index 2e6a919..6037e45 100644
+--- a/node_modules/kibi-cli/dist/traceability/temp-kb.js
++++ b/node_modules/kibi-cli/dist/traceability/temp-kb.js
+@@ -364,7 +364,7 @@ export async function createTempKb(baseKbPath) {
+     else
+         await mkdir(kbPath, { recursive: true });
+     await writeFile(overlayPath, "", "utf8");
+-    const prolog = _createProlog({ timeout: 120000, oneShot: false });
++    const prolog = _createProlog({ timeout: 120000, oneShot: false, persistMutations: false });
+     await prolog.start();
+     prologByTempDir.set(tempDir, prolog);
+     // ctx includes prolog so callers can use it directly

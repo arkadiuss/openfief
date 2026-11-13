@@ -265,18 +265,31 @@ func TestBundlePinsImageDigests(t *testing.T) {
 			t.Fatalf("getting Deployment %s: %v", d.Name, getErr)
 		}
 		want := containerImages(d)
-		for _, image := range want {
-			if !strings.HasPrefix(image, reg.cluster+"/") || !strings.Contains(image, "@sha256:") {
-				t.Errorf("Deployment %s: %v: %s, want %s/<name>@sha256:<digest>", d.Name, errNotPinned, image, reg.cluster)
-			}
-		}
+		checkPinnedImages(t, d.Name, want, reg.cluster)
 		if got := containerImages(live); !slices.Equal(got, want) {
 			t.Errorf("Deployment %s runs %v, the bundle names %v", d.Name, got, want)
 		}
 	}
 	slices.Sort(names)
-	if want := []string{"egress-proxy", "openfief-core", "openfief-operator"}; !slices.Equal(names, want) {
+	if want := []string{"egress-proxy", "openfief-core", "openfief-operator", "openfief-spicedb"}; !slices.Equal(names, want) {
 		t.Errorf("the bundle's Deployments are %v, want %v", names, want)
+	}
+}
+
+// checkPinnedImages checks the images of Deployment name: ours are the suite
+// registry's, by digest; SpiceDB's is a third party's, which the bundle leaves
+// as deploy/spicedb pins it, by tag and digest.
+func checkPinnedImages(t *testing.T, name string, images []string, registry string) {
+	t.Helper()
+	for _, image := range images {
+		switch {
+		case name == spicedbDeployment:
+			if !strings.HasPrefix(image, "quay.io/authzed/spicedb:v") || !strings.Contains(image, "@sha256:") {
+				t.Errorf("Deployment %s: %v: %s, want quay.io/authzed/spicedb:<tag>@sha256:<digest>", name, errNotPinned, image)
+			}
+		case !strings.HasPrefix(image, registry+"/") || !strings.Contains(image, "@sha256:"):
+			t.Errorf("Deployment %s: %v: %s, want %s/<name>@sha256:<digest>", name, errNotPinned, image, registry)
+		}
 	}
 }
 
@@ -295,7 +308,7 @@ func containerImages(d *appsv1.Deployment) []string {
 }
 
 // TestBundleBecomesReady checks that each Deployment of the bundle's install
-// becomes available: the operator, the egress proxy and the core
+// becomes available: the operator, the egress proxy, the core and SpiceDB
 // (SCEN-e2e-bundle-ready).
 func TestBundleBecomesReady(t *testing.T) {
 	holdsCore(t)

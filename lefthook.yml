@@ -7,6 +7,8 @@ pre-commit:
 
 commit-msg:
   commands:
+    dco:
+      run: PATH="$PWD/.bin:$PATH" task dco:message MSG={1}
     docs-fresh:
       run: PATH="$PWD/.bin:$PATH" task docs:fresh:commit MSG={1}
     proto-breaking:

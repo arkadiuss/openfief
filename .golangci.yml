@@ -3,8 +3,9 @@
 version: "2"
 
 run:
-  # Also lint the end-to-end suite (test/e2e), which builds only with this tag.
-  build-tags: [e2e]
+  # Also lint what builds only with these tags: the end-to-end suite (test/e2e) and the SpiceDB contract test
+  # (internal/identity/spicedb, task test:authz).
+  build-tags: [e2e, spicedb]
 
 linters:
   default: all

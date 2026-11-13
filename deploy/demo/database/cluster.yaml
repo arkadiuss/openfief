@@ -13,6 +13,15 @@ spec:
     initdb:
       database: openfief
       owner: openfief
+  # SpiceDB's role (D-164), whose password is the Secret openfief-db-spicedb that deploy/spicedb generates; its
+  # database is spicedb-database.yaml.
+  managed:
+    roles:
+      - name: spicedb
+        ensure: present
+        login: true
+        passwordSecret:
+          name: openfief-db-spicedb
   postgresql:
     parameters:
       shared_buffers: 64MB

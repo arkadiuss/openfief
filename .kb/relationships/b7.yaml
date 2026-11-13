@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-487df0ab7cb6
+  - type: implements
+    from: SYM-plugins-egress-exemption
+    to: REQ-plugins-egress-test-exemption-one-host
+    created_at: 2026-11-12T23:47:23.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41d92725a9d9
+  - type: covered_by
+    from: SYM-plugins-egress-exemption
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:47:23.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-483f9219466f

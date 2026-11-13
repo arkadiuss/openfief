@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -49,6 +50,24 @@ type AccountReader interface {
 	Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error)
 }
 
+// PlacementObserver is told, after the database committed it, which account
+// is in which sleeve, for whoever keeps a copy of it: the authorization
+// model's account and sleeve relationships (D-164, D-209). A failure is the
+// observer's to repair, so the Registry returns its error wrapped in
+// ErrPlacementNotObserved after the change is stored, and a retry, or the
+// observer's own reconcile at start, brings it up to date. Both calls are
+// idempotent. *identity/spicedb.Syncer, through cmd/core, implements it.
+type PlacementObserver interface {
+	// AccountPlaced reports that account is now in sleeve.
+	AccountPlaced(ctx context.Context, account ledger.AccountID, sleeve portfolio.SleeveID) error
+	// AccountRemoved reports that account is in no sleeve.
+	AccountRemoved(ctx context.Context, account ledger.AccountID) error
+}
+
+// ErrPlacementNotObserved reports a placement or removal that is stored but
+// that the PlacementObserver could not take: the change itself succeeded.
+var ErrPlacementNotObserved = errors.New("stored, but not passed on to the authorization model")
+
 // Registry keeps the sleeve kinds, the sleeves and which account is in
 // which sleeve, each checked against the portfolio rules
 // (portfolio.CheckKind, portfolio.CheckSleeve) before it is stored. It
@@ -57,12 +76,26 @@ type AccountReader interface {
 type Registry struct {
 	store    RegistryStore
 	accounts AccountReader
+	observer PlacementObserver
+}
+
+// RegistryOption configures a Registry.
+type RegistryOption func(*Registry)
+
+// WithPlacementObserver has the registry tell o of every placement and
+// removal of an account, after it is stored.
+func WithPlacementObserver(o PlacementObserver) RegistryOption {
+	return func(r *Registry) { r.observer = o }
 }
 
 // NewRegistry returns the registry over store, reading accounts through
 // accounts.
-func NewRegistry(store RegistryStore, accounts AccountReader) *Registry {
-	return &Registry{store: store, accounts: accounts}
+func NewRegistry(store RegistryStore, accounts AccountReader, opts ...RegistryOption) *Registry {
+	r := &Registry{store: store, accounts: accounts}
+	for _, o := range opts {
+		o(r)
+	}
+	return r
 }
 
 // SaveKind checks k against the stored sleeve kinds and stores it: a new
@@ -155,6 +188,11 @@ func (r *Registry) PlaceAccount(ctx context.Context, account ledger.AccountID, s
 	if err := r.store.PlaceAccount(ctx, account, sleeve); err != nil {
 		return fmt.Errorf("placing account %s: %w", account, err)
 	}
+	if r.observer != nil {
+		if err := r.observer.AccountPlaced(ctx, account, sleeve); err != nil {
+			return fmt.Errorf("placing account %s: %w: %w", account, ErrPlacementNotObserved, err)
+		}
+	}
 	return nil
 }
 
@@ -174,6 +212,11 @@ func (r *Registry) AccountSleeves(ctx context.Context) (map[ledger.AccountID]por
 func (r *Registry) RemoveAccount(ctx context.Context, account ledger.AccountID) error {
 	if err := r.store.RemoveAccount(ctx, account); err != nil {
 		return fmt.Errorf("removing account %s from its sleeve: %w", account, err)
+	}
+	if r.observer != nil {
+		if err := r.observer.AccountRemoved(ctx, account); err != nil {
+			return fmt.Errorf("removing account %s from its sleeve: %w: %w", account, ErrPlacementNotObserved, err)
+		}
 	}
 	return nil
 }

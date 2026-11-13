@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openfief-spicedb
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-spicedb
+    app.kubernetes.io/part-of: openfief
+spec:
+  replicas: 1
+  # One pod at a time, as the core: a rolling update would briefly need two on a small machine, and the core
+  # refuses every request while SpiceDB is away (D-164), so a restart is a short outage of the read API either way.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-spicedb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openfief-spicedb
+        app.kubernetes.io/part-of: openfief
+    spec:
+      serviceAccountName: openfief-spicedb
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        # Brings the datastore to SpiceDB's current schema before it serves, and again after each upgrade: a
+        # migration that has nothing to do changes nothing. The same image and settings as serve.
+        - name: migrate
+          image: quay.io/authzed/spicedb:v1.57.1@sha256:9ea6df2d3cca23ed63aa7205639cf6babaaf1dc9a264ffb1f50c6455658fd6ba
+          args: [migrate, head]
+          env:
+            - name: SPICEDB_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openfief-db-spicedb
+                  key: password
+            - name: SPICEDB_DATASTORE_ENGINE
+              value: postgres
+            # The role spicedb of the openfief-db cluster, in its own database spicedb (../database): through the
+            # read-write Service, with TLS that is not verified (CloudNativePG's own CA signs the server certificate,
+            # and the NetworkPolicy admits SpiceDB's pods alone). The password is hex, so it needs no escaping.
+            - name: SPICEDB_DATASTORE_CONN_URI
+              value: postgres://spicedb:$(SPICEDB_DB_PASSWORD)@openfief-db-rw:5432/spicedb?sslmode=require
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+      containers:
+        - name: spicedb
+          # Pinned by digest (the manifest list of the version the Taskfile's SPICEDB_VERSION pins, which the
+          # contract test runs): Renovate updates tag and digest together (renovate.json).
+          image: quay.io/authzed/spicedb:v1.57.1@sha256:9ea6df2d3cca23ed63aa7205639cf6babaaf1dc9a264ffb1f50c6455658fd6ba
+          args:
+            - serve
+            - --grpc-addr=:50051
+            # Nothing leaves the pod: no usage report to Authzed, no check for new releases, no metrics or HTTP
+            # listener. Clients speak gRPC on 50051 and only the core is admitted to it (networkpolicy.yaml).
+            - --telemetry-endpoint=
+            - --skip-release-check=true
+            - --metrics-enabled=false
+            - --log-format=json
+            # The household is small: a few connections, so SpiceDB leaves room for the core's in PostgreSQL's
+            # default limit of 100.
+            - --datastore-conn-pool-read-min-open=1
+            - --datastore-conn-pool-read-max-open=5
+            - --datastore-conn-pool-write-min-open=1
+            - --datastore-conn-pool-write-max-open=3
+          env:
+            # The key clients present as a bearer token: the Secret openfief-spicedb-key, which the core reads too
+            # (OPENFIEF_SPICEDB_PRESHARED_KEY). It is an environment variable, never an argument, so it shows in no
+            # process listing and no log.
+            - name: SPICEDB_GRPC_PRESHARED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openfief-spicedb-key
+                  key: key
+            - name: SPICEDB_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openfief-db-spicedb
+                  key: password
+            - name: SPICEDB_DATASTORE_ENGINE
+              value: postgres
+            - name: SPICEDB_DATASTORE_CONN_URI
+              value: postgres://spicedb:$(SPICEDB_DB_PASSWORD)@openfief-db-rw:5432/spicedb?sslmode=require
+            # Go's GC aims below this, about 80% of limits.memory.
+            - name: GOMEMLIMIT
+              value: 200MiB
+          ports:
+            - name: grpc
+              containerPort: 50051
+          # The image's grpc_health_probe asks SpiceDB's standard health service, which needs no key.
+          livenessProbe:
+            exec:
+              command: [/usr/local/bin/grpc_health_probe, -addr=localhost:50051]
+            periodSeconds: 20
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command: [/usr/local/bin/grpc_health_probe, -addr=localhost:50051]
+            periodSeconds: 10
+            timeoutSeconds: 5
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 256Mi

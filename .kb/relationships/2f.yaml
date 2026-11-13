@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-928e5f40d5f8
+  - type: implements
+    from: SYM-core-placement-sync-account-removed
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-12T22:55:00.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5a3315a98ac
+  - type: covered_by
+    from: SYM-core-placement-sync-account-removed
+    to: TEST-core-authz-sync
+    created_at: 2026-11-12T22:55:00.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d4307ae70a5
+  - type: executable_for
+    from: SYM-tooling-release-bundle-test-ours
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T04:28:20.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46e2c86dfbaa

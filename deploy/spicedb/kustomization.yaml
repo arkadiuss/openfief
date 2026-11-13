@@ -1,0 +1,35 @@
+# SpiceDB, the authorization database (D-164, D-163): one pod that answers the core's per-account permission checks
+# (--authz=spicedb), with its datastore a database `spicedb` of the openfief-db cluster, in a role of its own (D-14).
+# A self-contained kustomize base next to ../core; the install bundle ships it with the core, and an install that
+# leaves the core at its default --authz=policy runs it idle. Services only (D-28): Service openfief-spicedb is a
+# ClusterIP with gRPC on 50051, which only the core reaches (networkpolicy.yaml).
+#
+# What it needs and where it comes from:
+#   - the database and the role: ../database holds the Database `spicedb` and the managed role `spicedb` of the
+#     openfief-db cluster. An install whose Cluster you edited by hand adds the role and the Database there too
+#     (docs/guides/install.md); without them the migration waits for a database that doesn't exist.
+#   - the credentials: the Job in secrets.yaml generates the Secrets openfief-spicedb-key (the preshared key, shared
+#     by SpiceDB and the core) and openfief-db-spicedb (the role's password) once. The pods wait for them, and start
+#     by themselves as soon as they exist.
+#   - the schema: the core writes authz/schema.zed to SpiceDB at every start, before it reconciles (D-164), so
+#     nothing here loads one.
+# The core opts in with its flags, which this base doesn't touch; its Deployment already reads the endpoint and the key
+# from the environment (../core/deployment.yaml). An overlay sets them like this:
+#   - op: add
+#     path: /spec/template/spec/containers/0/args/-
+#     value: --authz=spicedb
+#   - op: add
+#     path: /spec/template/spec/containers/0/args/-
+#     value: --spicedb-insecure     # plaintext gRPC on the in-cluster Service, behind its NetworkPolicy
+#
+# The image is pinned by digest here, as a third party's (D-17 pins our own with `images:` in an overlay): the release
+# bundle leaves an image that already names its digest as it is.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openfief
+resources:
+  - serviceaccount.yaml
+  - secrets.yaml
+  - deployment.yaml
+  - service.yaml
+  - networkpolicy.yaml

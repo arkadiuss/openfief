@@ -47,7 +47,7 @@ for deployment in openfief-core openfief-operator; do
     "[.[] | select(.kind == \"Deployment\" and .metadata.name == \"$deployment\") | $container.env[] | select(.name == \"OTEL_EXPORTER_OTLP_HEADERS\") | .valueFrom.secretKeyRef] == [{name: \"openfief-tracing\", key: \"headers\", optional: true}]" "$work/fief.yaml"
 done
 check "the core keeps its own settings" \
-  "[.[] | select(.kind == \"Deployment\" and .metadata.name == \"openfief-core\") | $container.env[] | .name] == [\"OPENFIEF_DSN\", \"OPENFIEF_AUTH_ORIGINS\", \"GOMEMLIMIT\", \"OTEL_EXPORTER_OTLP_HEADERS\"]" "$work/fief.yaml"
+  "[.[] | select(.kind == \"Deployment\" and .metadata.name == \"openfief-core\") | $container.env[] | .name] == [\"OPENFIEF_DSN\", \"OPENFIEF_AUTH_ORIGINS\", \"GOMEMLIMIT\", \"OPENFIEF_SPICEDB_ENDPOINT\", \"OPENFIEF_SPICEDB_PRESHARED_KEY\", \"OTEL_EXPORTER_OTLP_HEADERS\"]" "$work/fief.yaml"
 check "the core reaches the owner's collector pods on the OTLP ports alone" \
   '[.[] | select(.kind == "NetworkPolicy" and .metadata.name == "openfief-core-to-collector") | .spec | {policyTypes, egress}] == [{policyTypes: ["Egress"], egress: [{to: [{namespaceSelector: {matchLabels: {"kubernetes.io/metadata.name": "monitoring"}}, podSelector: {matchLabels: {"app.kubernetes.io/name": "otel-collector"}}}], ports: [{protocol: "TCP", port: 4317}, {protocol: "TCP", port: 4318}]}]}]' "$work/fief.yaml"
 check "the core base sets no tracing variable" \

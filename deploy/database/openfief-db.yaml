@@ -24,3 +24,15 @@ spec:
     initdb:
       database: openfief
       owner: openfief
+  # SpiceDB's role (D-164): the login role spicedb, whose password is the Secret openfief-db-spicedb that
+  # ../spicedb generates, and spicedb-database.yaml's database of its own. Keep it, also in a Cluster of your own;
+  # until that Secret exists CloudNativePG reports the role as not reconciled and keeps trying, which doesn't
+  # affect the cluster. It owns nothing of OpenFief's: the core's role is another, and neither can read the other's
+  # database.
+  managed:
+    roles:
+      - name: spicedb
+        ensure: present
+        login: true
+        passwordSecret:
+          name: openfief-db-spicedb

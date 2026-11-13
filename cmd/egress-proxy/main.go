@@ -41,6 +41,10 @@ import (
 // pod's status.hostIP.
 const nodeIPEnv = "OPENFIEF_NODE_IP"
 
+// exemptHostEnv names the variable that holds the test-only exemption when
+// -refused-range-exempt-host is not given (D-215).
+const exemptHostEnv = "OPENFIEF_REFUSED_RANGE_EXEMPT_HOST"
+
 func main() {
 	if len(os.Args) > 1 && os.Args[1] == auditCommand {
 		if err := runAudit(context.Background(), os.Args[2:], os.Stdout); err != nil {
@@ -54,6 +58,9 @@ func main() {
 	addr := flag.String("listen", ":4750", "address plugins connect to")
 	denyCIDRs := flag.String("deny-cidr", "", "comma-separated ranges to refuse beyond the private and internal ones, "+
 		"such as a cluster's public or global IPv6 pod, Service and node ranges")
+	exemptHost := flag.String("refused-range-exempt-host", "", "TEST ONLY (D-215): host=address[,address...], exempting that one host, "+
+		"resolving to exactly those addresses, from the refused address ranges; "+exemptHostEnv+" is the same setting. "+
+		"The proxy warns at start when it is set, and a release never sets it")
 	flag.Parse()
 	log := logrus.New()
 	log.SetFormatter(&logrus.JSONFormatter{})
@@ -62,13 +69,22 @@ func main() {
 		log.WithError(err).Error("egress proxy stopped")
 		os.Exit(1)
 	}
-	if err := run(*addr, deny, log); err != nil {
+	exemptText := *exemptHost
+	if exemptText == "" {
+		exemptText = os.Getenv(exemptHostEnv)
+	}
+	exempt, err := egress.ParseExemption(exemptText)
+	if err != nil {
+		log.WithError(err).Error("egress proxy stopped")
+		os.Exit(1)
+	}
+	if err := run(*addr, deny, exempt, log); err != nil {
 		log.WithError(err).Error("egress proxy stopped")
 		os.Exit(1)
 	}
 }
 
-func run(addr string, deny []netip.Prefix, log *logrus.Logger) error {
+func run(addr string, deny []netip.Prefix, exempt egress.Exemption, log *logrus.Logger) error {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	defer stop()
 
@@ -97,6 +113,7 @@ func run(addr string, deny []netip.Prefix, log *logrus.Logger) error {
 	proxy, err := smokescreen.New(app.NewEgress(tokens, lists), &smokescreen.Options{
 		Listener:    listener,
 		Deny:        deny,
+		Exempt:      exempt,
 		Healthcheck: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }),
 		Log:         log,
 	})

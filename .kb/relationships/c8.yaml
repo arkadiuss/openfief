@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cb76a0a55e1
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-start-proxy-options
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:49:31.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f156d7b2f7b0
+  - type: executable_for
+    from: SYM-e2e-spicedb-wait-log-line
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:07:49.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85e9f215d269

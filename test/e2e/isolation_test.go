@@ -154,22 +154,30 @@ func TestPluginIsolation(t *testing.T) {
 		t.Fatal(err)
 	}
 	installXTB(t, k, xtb.cluster)
-	installFX(t, k, isoEgress, fx.cluster)
+	// isoEgress asks for the exempt host as its baseUrl's host, and isoPrivate
+	// for another Service's, in the same private range (egressallowed_test.go).
+	installFXAt(t, k, isoEgress, fx.cluster, egressFixtureHost)
+	installFXAt(t, k, isoPrivate, fx.cluster, egressOtherHost)
 	waitPluginReady(t, k, isoXTB)
 	waitPluginReady(t, k, isoEgress)
+	waitPluginReady(t, k, isoPrivate)
 	waitPluginReady(t, k, uiPlugin)
 	waitCoreAvailable(t, k)
+	waitSpiceDBAvailable(t, k)
 	env := newIsolation(t, k)
 	checkOwnPods(t, k, map[string]plugins.ImageRef{isoXTB: xtb.cluster, isoEgress: fx.cluster})
 	checkXTBObjects(t, k, env)
 	checkProbes(t, k, xtbNoEgress(env))
 	checkProbes(t, k, outsideGrant(env))
 	checkProbes(t, k, bypasses(env))
+	checkProbes(t, k, exemptionProbes(env))
 	checkProxyLog(t, k, env)
 	checkProbes(t, k, connectorTokens(env))
 	checkProbes(t, k, corePortTokens(env))
+	checkProbes(t, k, spicedbProbes(env))
 	removeInstance(t, k, isoXTB)
 	removeInstance(t, k, isoEgress)
+	removeInstance(t, k, isoPrivate)
 }
 
 // installXTB applies the PluginGrant and Plugin of XTB connector instance
@@ -219,11 +227,13 @@ type probeAt struct {
 // containers, the addresses (plugins have no DNS, so ClusterIPs), and the
 // tokens it requested from the API server, which it never logs.
 type isolation struct {
-	xtb, egress, core, outsider, client probeAt
+	xtb, egress, private, core, outsider, client probeAt
 	// proxy is the egress proxy's URL; coreBrowser and corePlugin the
 	// core's two ports; connector the XTB instance's Service and
 	// otherPlugin the granted instance's.
 	proxy, coreBrowser, corePlugin, connector, otherPlugin string
+	// spicedb is SpiceDB's gRPC address, host and port (D-164).
+	spicedb string
 	// apiServer is the Kubernetes API server's own address, outside the
 	// pod network: a destination a pod without a policy reaches.
 	apiServer string
@@ -238,8 +248,8 @@ type isolation struct {
 // isoTokens are ServiceAccount tokens the test requests through
 // TokenRequest, as the kubelet would project them.
 type isoTokens struct {
-	// egress is isoEgress's token for the egress proxy.
-	egress string
+	// egress is isoEgress's token for the egress proxy, private isoPrivate's.
+	egress, private string
 	// coreForXTB and coreForEgress are the core's tokens for each instance
 	// (D-59).
 	coreForXTB, coreForEgress string
@@ -264,7 +274,7 @@ func newIsolation(t *testing.T, k *kube) *isolation {
 	for _, p := range []struct {
 		to       *probeAt
 		instance string
-	}{{&env.xtb, isoXTB}, {&env.egress, isoEgress}} {
+	}{{&env.xtb, isoXTB}, {&env.egress, isoEgress}, {&env.private, isoPrivate}} {
 		pod, err := k.runningPluginPod(ctx, p.instance)
 		if err != nil {
 			t.Fatal(err)
@@ -294,6 +304,7 @@ func (env *isolation) readAddresses(t *testing.T, k *kube) {
 	env.proxy = "http://" + serviceAddress(t, proxy, "proxy")
 	env.connector = "http://" + serviceAddress(t, connector, operator.PortName)
 	env.otherPlugin = "http://" + serviceAddress(t, other, operator.PortName)
+	env.spicedb = "http://" + serviceAddress(t, k.getService(t, spicedbService), "grpc")
 	env.coreSelector, env.proxySelector = core.Spec.Selector, proxy.Spec.Selector
 	env.corePort, env.proxyPort = podTargetPort(t, core, "connect"), podTargetPort(t, proxy, "proxy")
 	addr, err := k.apiServerAddress(t.Context())
@@ -314,6 +325,7 @@ func requestTokens(t *testing.T, k *kube) isoTokens {
 	xtbSA, uiSA := plugins.ServiceAccountName(isoXTB), plugins.ServiceAccountName(uiPlugin)
 	return isoTokens{
 		egress:        k.token(t, plugins.ServiceAccountName(isoEgress), plugins.EgressAudience),
+		private:       k.token(t, plugins.ServiceAccountName(isoPrivate), plugins.EgressAudience),
 		coreForXTB:    k.token(t, coreSA, openfief.InstanceAudience(isoXTB)),
 		coreForEgress: k.token(t, coreSA, openfief.InstanceAudience(isoEgress)),
 		xtbForXTB:     k.token(t, xtbSA, openfief.InstanceAudience(isoXTB)),
@@ -537,7 +549,10 @@ func checkXTBObjects(t *testing.T, k *kube, env *isolation) {
 			Egress: []string{core, proxy}, EgressPolicy: true,
 			Env:            []string{plugins.EnvHTTPSProxy, plugins.EnvNoProxy, operator.EnvEgressIdentityFile},
 			TokenAudiences: []string{plugins.CoreAudience, plugins.EgressAudience},
-			Listed:         true, AllowList: fxAllowList, Effective: []string{fxEgress + ":443"},
+			// installFXAt grants it the exempt host besides NBP (egressallowed_test.go).
+			Listed:    true,
+			AllowList: fxAllowList + egressFixtureHost + ":443\n",
+			Effective: []string{fxEgress + ":443", egressFixtureHost + ":443"},
 		},
 	}
 	for instance, w := range want {
@@ -1002,7 +1017,8 @@ func checkProxyLog(t *testing.T, k *kube, env *isolation) {
 			return "", false, fmt.Errorf("%w: %w", errRetry, err)
 		}
 		missing := missingLines(smokescreen.DecisionLines(log), wanted)
-		return fmt.Sprintf("no refusal logged for %v", missing), len(missing) == 0, nil
+		lacking := exemptionLogProblems(log)
+		return fmt.Sprintf("no refusal logged for %v; %v", missing, lacking), len(missing) == 0 && len(lacking) == 0, nil
 	})
 	if err != nil {
 		t.Fatalf("waiting for the egress proxy's decision lines: %v", err)
@@ -1011,10 +1027,11 @@ func checkProxyLog(t *testing.T, k *kube, env *isolation) {
 	for _, p := range audit.Problems {
 		t.Errorf("the egress proxy's log: %s", p)
 	}
+	checkAllowedAudit(t, audit)
 	tk := env.tokens
 	for name, secret := range map[string]string{
 		"the canary": canary, "the egress token": tk.egress, "its Proxy-Authorization header": proxyAuth(tk.egress),
-		"the UI's egress token": tk.uiForEgress,
+		"the UI's egress token": tk.uiForEgress, "the second instance's egress token": tk.private,
 	} {
 		if bytes.Contains(log, []byte(secret)) {
 			t.Errorf("the egress proxy's log holds %s (GR-12)", name)

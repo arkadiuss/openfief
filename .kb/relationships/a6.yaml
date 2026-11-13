@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d26a9be39c86
+  - type: executable_for
+    from: SYM-e2e-spicedb-stop-spicedb-and-expect-refusal
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T04:14:38.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c471ae49ec2

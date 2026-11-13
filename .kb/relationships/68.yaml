@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e38661745087
+  - type: verified_by
+    from: SCEN-plugins-egress-exemption-warns-at-start
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:20:24.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c42fa487c0
+  - type: verified_by
+    from: SCEN-plugins-egress-exemption-warns-at-start
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:20:24.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3e11f39444b

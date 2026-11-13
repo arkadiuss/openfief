@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"time"
@@ -102,6 +103,9 @@ type core struct {
 	// attention runs the checks that raise attention items and publishes
 	// the outbox's events (D-130).
 	attention *attention
+	// authz is the connection to SpiceDB, closed on shutdown; nil with the
+	// authorization policy.
+	authz io.Closer
 }
 
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and
@@ -169,10 +173,13 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
 	l, recorder := ingestDeps(pool, vstore)
-	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l)
-	if defErr := ensureDefaults(ctx, sleeves, cfg); defErr != nil {
-		return nil, defErr
+	// az.authorizer is the one authorizer every read path and owner service
+	// asks (D-163): identityapp.Policy, or SpiceDB with --authz=spicedb.
+	az, sleeves, err := newAccess(ctx, pool, cfg, l, log)
+	if err != nil {
+		return nil, err
 	}
+	authz := az.authorizer
 	auth, err := newAuth(pool, &cfg.Auth, now)
 	if err != nil {
 		return nil, err
@@ -190,9 +197,6 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	// authz is the one authorizer every read path and owner service asks
-	// (D-163), until SpiceDB answers (D-164).
-	authz := identityapp.Policy{}
 	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
@@ -223,7 +227,24 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
-	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
+	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: az.closer}, nil
+}
+
+// newAccess returns the authorizer cfg chooses (D-163, D-164) and the sleeve
+// registry, which tells SpiceDB, when it answers, of every placement of an
+// account. It stores the default sleeves when cfg asks and, with SpiceDB,
+// reconciles its relationships with the accounts and sleeves stored.
+func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *ledgerapp.Ledger, log *slog.Logger) (authorization, *portfolioapp.Registry, error) {
+	az, err := newAuthorization(&cfg.Authz)
+	if err != nil {
+		return authorization{}, nil, err
+	}
+	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l, az.registryOptions()...)
+	if defErr := ensureDefaults(ctx, sleeves, cfg); defErr != nil {
+		return authorization{}, nil, defErr
+	}
+	reconcileAccess(ctx, az.syncer, desiredAccess(l, sleeves, cfg.Auth.DemoSessions), log)
+	return az, sleeves, nil
 }
 
 // ensureDefaults stores the built-in sleeve kinds and sleeves when cfg

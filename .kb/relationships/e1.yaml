@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f0d5482d5bb
+  - type: verified_by
+    from: SCEN-tooling-kibi-staged-store-unsaved
+    to: TEST-tooling-kibi-temp-kb
+    created_at: 2026-11-13T02:55:10.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeac128ca122
+  - type: verified_by
+    from: SCEN-tooling-kibi-staged-store-unsaved
+    to: TEST-tooling-kibi-staged
+    created_at: 2026-11-13T02:55:10.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f694bbb87cc
