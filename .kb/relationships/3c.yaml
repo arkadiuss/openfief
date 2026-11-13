@@ -832,3 +832,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8ab1825998f
+  - type: implements
+    from: SYM-viewers-cmd-core-grants-targetcover-targetaccounts
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:07:47.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499edeaebcb2
+  - type: covered_by
+    from: SYM-viewers-cmd-core-grants-targetcover-targetaccounts
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:07:47.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-442e6ef2f644
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protoreflect
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:20:56.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2a6271e620
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:20:56.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b10b5bf802fe

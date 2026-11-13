@@ -1322,3 +1322,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b5e3648fd9a
+  - type: verified_by
+    from: SCEN-views-ask-box-viewer-granted-only
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T19:58:03.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c29a4c29897d
+  - type: implements
+    from: SYM-viewers-cmd-core-grants-sleeveplacements
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:07:33.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fa0f2bada41
+  - type: covered_by
+    from: SYM-viewers-cmd-core-grants-sleeveplacements
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:07:33.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09d1de81660
+  - type: implements
+    from: SYM-viewers-internal-identity-person-viewerinvite
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T21:14:19.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61a51013330d
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-viewerinvite
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T21:14:19.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7f2effde254

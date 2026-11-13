@@ -5,6 +5,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
+	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/identity"
@@ -16,6 +18,9 @@ type Started struct {
 	CeremonyID string
 	Options    []byte
 	ExpiresAt  time.Time
+	// InvitedName is the name the owner gave the viewer a viewer's
+	// enrollment code invites; empty for any other ceremony.
+	InvitedName string
 }
 
 // RegistrationGrant is what allows creating a passkey: exactly one of a
@@ -34,7 +39,7 @@ func (a *Auth) BeginRegistration(ctx context.Context, origin string, grant Regis
 	if err != nil {
 		return Started{}, err
 	}
-	code, session, err := a.checkGrant(ctx, o, grant)
+	code, session, invite, err := a.checkGrant(ctx, o, grant)
 	if err != nil {
 		return Started{}, err
 	}
@@ -42,19 +47,50 @@ func (a *Auth) BeginRegistration(ctx context.Context, origin string, grant Regis
 	if err != nil {
 		return Started{}, err
 	}
+	person := identity.OwnerPerson(&owner)
+	var viewer *identity.Person
+	if invite != nil {
+		v, newErr := a.newViewer(invite.Name)
+		if newErr != nil {
+			return Started{}, newErr
+		}
+		person, viewer = v, &v
+	}
 	keys, err := a.hostPasskeys(ctx, o)
 	if err != nil {
 		return Started{}, err
 	}
-	begun, err := a.ceremonies.BeginRegistration(o, &owner, keys)
+	begun, err := a.ceremonies.BeginRegistration(o, &person, keys)
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a registration: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyRegistration, o, begun.State, code, session)
+	c, err := a.saveCeremony(ctx, identity.CeremonyRegistration, o, begun.State, code, session, viewer)
 	if err != nil {
 		return Started{}, err
 	}
-	return Started{CeremonyID: c.ID, Options: begun.Options, ExpiresAt: c.ExpiresAt}, nil
+	st := Started{CeremonyID: c.ID, Options: begun.Options, ExpiresAt: c.ExpiresAt}
+	if viewer != nil {
+		st.InvitedName = viewer.Name
+	}
+	return st, nil
+}
+
+// newViewer returns a viewer called name with a random ID and user handle,
+// created now: the person a viewer's enrollment link will create.
+func (a *Auth) newViewer(name string) (identity.Person, error) {
+	id, err := a.randomHex(identity.IDBytes)
+	if err != nil {
+		return identity.Person{}, fmt.Errorf("creating a viewer: %w", err)
+	}
+	handle := make([]byte, identity.OwnerHandleBytes)
+	if _, readErr := io.ReadFull(a.random, handle); readErr != nil {
+		return identity.Person{}, fmt.Errorf("creating a viewer: random handle: %w", readErr)
+	}
+	p, err := identity.NewViewer(id, name, handle, a.nowSecond())
+	if err != nil {
+		return identity.Person{}, fmt.Errorf("creating a viewer: %w", err)
+	}
+	return p, nil
 }
 
 // Registered is a passkey just created, and, when an enrollment code
@@ -63,6 +99,10 @@ type Registered struct {
 	Passkey identity.Passkey
 	// Session is set only for a registration begun with an enrollment code.
 	Session *NewSession
+	// NotProjected is set when a viewer's grants are stored and audited but
+	// could not be passed on to the authorization model: the registration
+	// stands, and the next start's reconcile, or granting again, repairs it.
+	NotProjected error
 }
 
 // FinishRegistration verifies credential for the registration ceremony
@@ -74,11 +114,9 @@ func (a *Auth) FinishRegistration(ctx context.Context, origin, ceremonyID string
 	if err != nil {
 		return Registered{}, err
 	}
-	if name == "" {
-		name = o.RPID()
-	}
-	if nameErr := identity.CheckPasskeyName(name); nameErr != nil {
-		return Registered{}, fmt.Errorf("%w: %w", ErrInvalidRequest, nameErr)
+	name, err = passkeyName(name, o)
+	if err != nil {
+		return Registered{}, err
 	}
 	c, err := a.takeCeremony(ctx, ceremonyID, identity.CeremonyRegistration, o)
 	if err != nil {
@@ -92,16 +130,62 @@ func (a *Auth) FinishRegistration(ctx context.Context, origin, ceremonyID string
 		// Begun before the audit log named who begins a registration: begin again.
 		return Registered{}, fmt.Errorf("%w: the registration names neither a code nor a session", ErrCeremony)
 	}
-	p, err := a.ceremonies.FinishRegistration(o, &owner, c.State, credential)
+	person, invite, err := a.registrationPerson(ctx, &c, &owner)
 	if err != nil {
-		return Registered{}, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
+		return Registered{}, err
 	}
-	now := a.nowSecond()
-	p.Name, p.RPID, p.CreatedAt = name, o.RPID(), now
-	if err := p.Validate(); err != nil {
-		return Registered{}, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
+	p, err := a.verifiedPasskey(o, &person, c.State, credential, name)
+	if err != nil {
+		return Registered{}, err
+	}
+	if invite != nil {
+		p.PersonID = person.ID
+		return a.storeViewerRegistration(ctx, &c, &person, invite, &p)
 	}
 	return a.storeRegistration(ctx, &c, &owner, &p)
+}
+
+// verifiedPasskey verifies credential against state for person on o and
+// returns the passkey it creates, named name and made now.
+func (a *Auth) verifiedPasskey(o identity.Origin, person *identity.Person, state, credential []byte, name string) (identity.Passkey, error) {
+	p, err := a.ceremonies.FinishRegistration(o, person, state, credential)
+	if err != nil {
+		return identity.Passkey{}, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
+	}
+	p.Name, p.RPID, p.CreatedAt = name, o.RPID(), a.nowSecond()
+	if err := p.Validate(); err != nil {
+		return identity.Passkey{}, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
+	}
+	return p, nil
+}
+
+// passkeyName returns name, or the host of o when it is empty, checked.
+func passkeyName(name string, o identity.Origin) (string, error) {
+	if name == "" {
+		name = o.RPID()
+	}
+	if err := identity.CheckPasskeyName(name); err != nil {
+		return "", fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+	}
+	return name, nil
+}
+
+// registrationPerson returns the person the registration of c creates a
+// passkey for: the owner, or the viewer the ceremony was begun for, with the
+// invitation of the link it began with.
+func (a *Auth) registrationPerson(ctx context.Context, c *identity.Ceremony, owner *identity.Owner) (identity.Person, *identity.ViewerInvite, error) {
+	if c.PersonID == "" {
+		return identity.OwnerPerson(owner), nil, nil
+	}
+	code, _, err := a.store.EnrollmentCode(ctx, c.EnrollmentCode)
+	if err != nil || code.Viewer == nil {
+		return identity.Person{}, nil, fmt.Errorf("%w: the viewer's link is gone", ErrCeremony)
+	}
+	person, err := identity.NewViewer(c.PersonID, code.Viewer.Name, c.PersonHandle, a.nowSecond())
+	if err != nil {
+		return identity.Person{}, nil, fmt.Errorf("%w: %w", ErrRegistrationFailed, err)
+	}
+	return person, code.Viewer, nil
 }
 
 // BeginLogin starts a passkey login on the allowed origin text.
@@ -114,7 +198,7 @@ func (a *Auth) BeginLogin(ctx context.Context, origin string) (Started, error) {
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a login: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyLogin, o, begun.State, "", "")
+	c, err := a.saveCeremony(ctx, identity.CeremonyLogin, o, begun.State, "", "", nil)
 	if err != nil {
 		return Started{}, err
 	}
@@ -134,47 +218,87 @@ type PasskeyAuthenticator struct {
 // against the passkeys of origin's host only (D-60), refuses a signature
 // counter that went backwards, and records the passkey's use.
 func (p PasskeyAuthenticator) Authenticate(ctx context.Context, origin identity.Origin, proof Proof) (Authenticated, error) {
-	owner, used, err := p.auth.assertPasskey(ctx, origin, identity.CeremonyLogin, proof)
+	owner, person, used, err := p.auth.assertPasskey(ctx, origin, identity.CeremonyLogin, proof)
 	if err != nil {
 		return Authenticated{}, err
 	}
+	scope := identity.SessionScopeOwner
+	if person.IsViewer() {
+		// A viewer only reads: every call that changes something needs an owner session.
+		scope = identity.SessionScopeRead
+	}
 	return Authenticated{
-		Owner: owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey, Passkey: used.CredentialID,
+		Owner: owner, Person: person.ID, Scope: scope, Authenticator: identity.AuthenticatorPasskey, Passkey: used.CredentialID,
 	}, nil
 }
 
 // assertPasskey finishes the ceremony of proof, of kind, on origin: it
 // verifies the assertion against the passkeys of origin's host only (D-60),
 // refuses a signature counter that went backwards, and records the
-// passkey's use. It returns the owner and the passkey used.
-func (a *Auth) assertPasskey(ctx context.Context, origin identity.Origin, kind identity.CeremonyKind, proof Proof) (identity.Owner, identity.Passkey, error) {
+// passkey's use. It returns the owner, the person the passkey belongs to and
+// the passkey used. A viewer who was revoked can't sign in: their passkeys are
+// disabled, and are refused here too.
+func (a *Auth) assertPasskey(ctx context.Context, origin identity.Origin, kind identity.CeremonyKind, proof Proof) (identity.Owner, identity.Person, identity.Passkey, error) {
 	c, err := a.takeCeremony(ctx, proof.CeremonyID, kind, origin)
 	if err != nil {
-		return identity.Owner{}, identity.Passkey{}, err
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, err
 	}
-	owner, err := a.store.Owner(ctx)
-	if errors.Is(err, ErrNoOwner) {
-		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("%w: no passkey exists", ErrAuthenticationFailed)
-	}
+	owner, err := a.loginOwner(ctx)
 	if err != nil {
-		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("loading the owner: %w", err)
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, err
+	}
+	people, err := a.loginPeople(ctx, &owner)
+	if err != nil {
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, err
 	}
 	keys, err := a.hostPasskeys(ctx, origin)
 	if err != nil {
-		return identity.Owner{}, identity.Passkey{}, err
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, err
 	}
-	got, err := a.ceremonies.FinishLogin(origin, &owner, keys, c.State, proof.Credential)
+	got, err := a.ceremonies.FinishLogin(origin, people, keys, c.State, proof.Credential)
 	if err != nil {
-		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("%w: %w", ErrAuthenticationFailed, err)
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, fmt.Errorf("%w: %w", ErrAuthenticationFailed, err)
 	}
 	used, err := usedPasskey(keys, origin, &got, a.nowSecond())
 	if err != nil {
-		return identity.Owner{}, identity.Passkey{}, err
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, err
+	}
+	i := slices.IndexFunc(people, func(p identity.Person) bool { return p.ID == used.Person() && p.Active() })
+	if i < 0 {
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, fmt.Errorf("%w: the passkey's person is revoked", ErrAuthenticationFailed)
 	}
 	if err := a.store.UpdatePasskeyUse(ctx, &used); err != nil {
-		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("recording a passkey's use: %w", err)
+		return identity.Owner{}, identity.Person{}, identity.Passkey{}, fmt.Errorf("recording a passkey's use: %w", err)
 	}
-	return owner, used, nil
+	return owner, people[i], used, nil
+}
+
+// loginOwner returns the owner a login is for; with no passkey made yet it
+// fails with an error wrapping ErrAuthenticationFailed.
+func (a *Auth) loginOwner(ctx context.Context) (identity.Owner, error) {
+	owner, err := a.store.Owner(ctx)
+	if errors.Is(err, ErrNoOwner) {
+		return identity.Owner{}, fmt.Errorf("%w: no passkey exists", ErrAuthenticationFailed)
+	}
+	if err != nil {
+		return identity.Owner{}, fmt.Errorf("loading the owner: %w", err)
+	}
+	return owner, nil
+}
+
+// loginPeople returns the people a login may name by their user handle, the
+// owner with theirs.
+func (a *Auth) loginPeople(ctx context.Context, owner *identity.Owner) ([]identity.Person, error) {
+	people, err := a.store.People(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("listing people: %w", err)
+	}
+	for i := range people {
+		if people[i].Kind == identity.PersonOwner {
+			people[i] = identity.OwnerPerson(owner)
+		}
+	}
+	return people, nil
 }
 
 // BeginPasskeyCheck starts a passkey check in the owner session of token on
@@ -190,7 +314,7 @@ func (a *Auth) BeginPasskeyCheck(ctx context.Context, origin, token string) (Sta
 	if err != nil {
 		return Started{}, fmt.Errorf("beginning a passkey check: %w", err)
 	}
-	c, err := a.saveCeremony(ctx, identity.CeremonyPasskeyCheck, o, begun.State, "", "")
+	c, err := a.saveCeremony(ctx, identity.CeremonyPasskeyCheck, o, begun.State, "", "", nil)
 	if err != nil {
 		return Started{}, err
 	}
@@ -207,8 +331,12 @@ func (a *Auth) FinishPasskeyCheck(ctx context.Context, origin, token, ceremonyID
 	if err != nil {
 		return identity.Session{}, err
 	}
-	if _, _, assertErr := a.assertPasskey(ctx, o, identity.CeremonyPasskeyCheck, Proof{CeremonyID: ceremonyID, Credential: credential}); assertErr != nil {
+	_, person, _, assertErr := a.assertPasskey(ctx, o, identity.CeremonyPasskeyCheck, Proof{CeremonyID: ceremonyID, Credential: credential})
+	if assertErr != nil {
 		return identity.Session{}, assertErr
+	}
+	if person.ID != s.Person() {
+		return identity.Session{}, fmt.Errorf("%w: the passkey is another person's", ErrAuthenticationFailed)
 	}
 	checked, err := s.PasskeyChecked(a.nowSecond())
 	if err != nil {
@@ -239,7 +367,8 @@ func usedPasskey(keys []identity.Passkey, origin identity.Origin, got *Assertion
 	return identity.Passkey{}, fmt.Errorf("%w: unknown passkey", ErrAuthenticationFailed)
 }
 
-// Passkeys returns every passkey, on every host, for an owner session.
+// Passkeys returns the owner's passkeys, on every host, for an owner session:
+// a viewer's are shown as a count with the viewer, never listed here.
 func (a *Auth) Passkeys(ctx context.Context, origin, token string) ([]identity.Passkey, error) {
 	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
 		return nil, err
@@ -248,7 +377,7 @@ func (a *Auth) Passkeys(ctx context.Context, origin, token string) ([]identity.P
 	if err != nil {
 		return nil, fmt.Errorf("listing passkeys: %w", err)
 	}
-	return keys, nil
+	return slices.DeleteFunc(keys, func(k identity.Passkey) bool { return k.Person() != identity.OwnerPersonID }), nil
 }
 
 // RemovePasskey removes the passkey id (Passkey.ID) for an owner session
@@ -283,27 +412,27 @@ func (a *Auth) RemovePasskey(ctx context.Context, origin, token, id string) (boo
 // checkGrant checks that grant allows creating a passkey on o, and returns
 // the enrollment code's ID when it is a code, or the owner session's ID when
 // it is a session.
-func (a *Auth) checkGrant(ctx context.Context, o identity.Origin, grant RegistrationGrant) (identity.EnrollmentCodeID, identity.SessionID, error) {
+func (a *Auth) checkGrant(ctx context.Context, o identity.Origin, grant RegistrationGrant) (identity.EnrollmentCodeID, identity.SessionID, *identity.ViewerInvite, error) {
 	switch {
 	case grant.EnrollmentCode != "" && grant.SessionToken != "":
-		return "", "", fmt.Errorf("%w: an enrollment code or a session, not both", ErrInvalidRequest)
+		return "", "", nil, fmt.Errorf("%w: an enrollment code or a session, not both", ErrInvalidRequest)
 	case grant.EnrollmentCode != "":
 		c, err := a.enrollmentCode(ctx, o, grant.EnrollmentCode)
 		if err != nil {
-			return "", "", err
+			return "", "", nil, err
 		}
-		return c.ID, "", nil
+		return c.ID, "", c.Viewer, nil
 	case grant.SessionToken != "":
 		s, err := a.Session(ctx, o, grant.SessionToken, identity.SessionScopeOwner)
 		if err != nil {
-			return "", "", err
+			return "", "", nil, err
 		}
 		if err := s.CheckRecentPasskey(a.now().UTC()); err != nil {
-			return "", "", fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
+			return "", "", nil, fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
 		}
-		return "", s.ID, nil
+		return "", s.ID, nil, nil
 	}
-	return "", "", fmt.Errorf("%w: creating a passkey needs an enrollment code or an owner session", ErrForbidden)
+	return "", "", nil, fmt.Errorf("%w: creating a passkey needs an enrollment code or an owner session", ErrForbidden)
 }
 
 // enrollmentCode returns the stored code text stands for when it may be
@@ -324,7 +453,14 @@ func (a *Auth) enrollmentCode(ctx context.Context, o identity.Origin, text strin
 		return identity.EnrollmentCode{}, fmt.Errorf("%w: enrollment code does not match", ErrForbidden)
 	}
 	if err := c.Check(a.now().UTC(), o); err != nil {
-		return identity.EnrollmentCode{}, fmt.Errorf("%w: %w", ErrForbidden, err)
+		// A link that was spent, has expired or is used on another origin is refused and recorded,
+		// by its ID: only someone who holds its key gets this far (D-211).
+		refusal := fmt.Errorf("%w: %w", ErrForbidden, err)
+		actor := identity.Actor{Kind: identity.ActorEnrollmentCode, ID: string(c.ID)}
+		if auditErr := a.record(ctx, actor, identity.ActionEnrollmentLinkUsed, identity.OutcomeRefused, identity.Ref{Kind: identity.RefEnrollmentCode, ID: string(c.ID)}); auditErr != nil {
+			return identity.EnrollmentCode{}, fmt.Errorf("%w (the refusal could not be audited: %w)", refusal, auditErr)
+		}
+		return identity.EnrollmentCode{}, refusal
 	}
 	return c, nil
 }
@@ -402,13 +538,16 @@ func (a *Auth) hostPasskeys(ctx context.Context, o identity.Origin) ([]identity.
 
 // saveCeremony stores a new ceremony of kind on o with state, begun with
 // the enrollment code or the owner session, for a registration.
-func (a *Auth) saveCeremony(ctx context.Context, kind identity.CeremonyKind, o identity.Origin, state []byte, code identity.EnrollmentCodeID, session identity.SessionID) (identity.Ceremony, error) {
+func (a *Auth) saveCeremony(ctx context.Context, kind identity.CeremonyKind, o identity.Origin, state []byte, code identity.EnrollmentCodeID, session identity.SessionID, viewer *identity.Person) (identity.Ceremony, error) {
 	id, err := a.randomHex(identity.CeremonyIDBytes)
 	if err != nil {
 		return identity.Ceremony{}, fmt.Errorf("beginning a %s: %w", kind, err)
 	}
 	c := identity.NewCeremony(id, kind, o, state, a.now().UTC())
 	c.EnrollmentCode, c.Session = code, session
+	if viewer != nil {
+		c.PersonID, c.PersonHandle = viewer.ID, viewer.Handle
+	}
 	if err := a.store.SaveCeremony(ctx, &c); err != nil {
 		return identity.Ceremony{}, fmt.Errorf("beginning a %s: %w", kind, err)
 	}

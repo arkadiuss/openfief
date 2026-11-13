@@ -1231,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f871cca0ed0f
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-checkviewerreads
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:08:23.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3e639d1c74c

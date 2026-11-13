@@ -25,6 +25,9 @@ var (
 	ErrUnknownEnrollmentCode = errors.New("unknown enrollment code")
 	// ErrUnknownSession reports a session ID that is not stored.
 	ErrUnknownSession = errors.New("unknown session")
+	// ErrUnknownPerson reports a person ID that is not stored, or a viewer
+	// that is revoked already, when revoking.
+	ErrUnknownPerson = errors.New("unknown person")
 )
 
 // AuthStore keeps the owner, passkeys, ceremonies, enrollment codes and
@@ -38,6 +41,7 @@ type AuthStore interface {
 	Auditor
 	GrantStore
 	OwnerStore
+	PersonStore
 	PasskeyStore
 	CeremonyStore
 	EnrollmentStore
@@ -53,11 +57,36 @@ type OwnerStore interface {
 	EnsureOwner(ctx context.Context, candidate identity.Owner) (identity.Owner, error)
 }
 
+// PersonStore keeps the viewers: the people besides the owner (D-65). The
+// owner is a person too, a row the store keeps from the start, whose WebAuthn
+// handle is the OwnerStore's.
+type PersonStore interface {
+	// Person returns the person id, or an error wrapping ErrUnknownPerson.
+	Person(ctx context.Context, id string) (identity.Person, error)
+	// People returns every person, the owner first, then the viewers in
+	// creation order.
+	People(ctx context.Context) ([]identity.Person, error)
+	// SavePerson stores a new viewer.
+	SavePerson(ctx context.Context, p *identity.Person) error
+	// RevokePerson revokes the active viewer id as of at, atomically: the
+	// person, their sessions and their passkeys. It returns the passkeys it
+	// disabled and how many sessions it ended, or an error wrapping
+	// ErrUnknownPerson for an unknown or revoked viewer or the owner.
+	RevokePerson(ctx context.Context, id string, at time.Time) ([]identity.Passkey, int, error)
+	// PasskeyCounts returns how many passkeys that work each person has, by
+	// person ID; a person with none is absent.
+	PasskeyCounts(ctx context.Context) (map[string]int, error)
+	// ActiveSessionCounts returns how many sessions each person has that are
+	// valid at at, by person ID.
+	ActiveSessionCounts(ctx context.Context, at time.Time) (map[string]int, error)
+}
+
 // PasskeyStore keeps passkeys.
 type PasskeyStore interface {
 	// SavePasskey stores a new passkey.
 	SavePasskey(ctx context.Context, p *identity.Passkey) error
-	// Passkeys returns every passkey, in creation then ID order.
+	// Passkeys returns every passkey that works, of every person, in creation
+	// then ID order; one disabled by its person's revocation is not listed.
 	Passkeys(ctx context.Context) ([]identity.Passkey, error)
 	// UpdatePasskeyUse stores p's sign count, backup state and last use.
 	UpdatePasskeyUse(ctx context.Context, p *identity.Passkey) error
@@ -116,18 +145,19 @@ type SessionStore interface {
 // method that a bad credential causes wraps ErrCredentialRefused.
 type Ceremonies interface {
 	// BeginRegistration returns the creation options for the browser and
-	// the state to keep, for owner on origin's host, excluding the passkeys
-	// the owner has there already.
-	BeginRegistration(origin identity.Origin, owner *identity.Owner, existing []identity.Passkey) (Begun, error)
+	// the state to keep, for person on origin's host, excluding the passkeys
+	// the person has there already.
+	BeginRegistration(origin identity.Origin, person *identity.Person, existing []identity.Passkey) (Begun, error)
 	// FinishRegistration verifies credential against state and returns the
 	// new passkey, without a name or creation time.
-	FinishRegistration(origin identity.Origin, owner *identity.Owner, state, credential []byte) (identity.Passkey, error)
+	FinishRegistration(origin identity.Origin, person *identity.Person, state, credential []byte) (identity.Passkey, error)
 	// BeginLogin returns the request options for a discoverable-credential
 	// login on origin's host and the state to keep.
 	BeginLogin(origin identity.Origin) (Begun, error)
 	// FinishLogin verifies the assertion credential against state, the
-	// owner's handle and passkeys, and returns what it proved.
-	FinishLogin(origin identity.Origin, owner *identity.Owner, passkeys []identity.Passkey, state, credential []byte) (Assertion, error)
+	// handles of people and the passkeys of each (those whose PersonID is
+	// theirs), and returns what it proved.
+	FinishLogin(origin identity.Origin, people []identity.Person, passkeys []identity.Passkey, state, credential []byte) (Assertion, error)
 }
 
 // Begun is a ceremony's begin step: the options for the browser, and the

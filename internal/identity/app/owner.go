@@ -189,6 +189,12 @@ func (a *Auth) CreateEnrollmentLink(ctx context.Context, origin, token, target s
 // identity.ErrOriginNotAllowed, and nothing is stored, since a passkey made
 // there could never sign in.
 func IssueEnrollmentLink(ctx context.Context, store AuthStore, random io.Reader, now time.Time, allowed identity.Origins, origin identity.Origin, ttl time.Duration, actor identity.Actor) (EnrollmentLink, error) {
+	return issueLink(ctx, store, random, now, allowed, origin, ttl, actor, nil)
+}
+
+// issueLink is IssueEnrollmentLink, and, with invite, the link that invites
+// that viewer (D-65, D-210).
+func issueLink(ctx context.Context, store AuthStore, random io.Reader, now time.Time, allowed identity.Origins, origin identity.Origin, ttl time.Duration, actor identity.Actor, invite *identity.ViewerInvite) (EnrollmentLink, error) {
 	if !slices.Contains(allowed.List(), origin) {
 		return EnrollmentLink{}, fmt.Errorf("%w: %w: %s; the core accepts %s", ErrForbidden, identity.ErrOriginNotAllowed, origin, allowed)
 	}
@@ -210,6 +216,11 @@ func IssueEnrollmentLink(ctx context.Context, store AuthStore, random io.Reader,
 	c, err := identity.NewEnrollmentCode(identity.EnrollmentCodeID(hex.EncodeToString(idBytes)), origin, now, ttl)
 	if err != nil {
 		return EnrollmentLink{}, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+	}
+	if invite != nil {
+		if err = c.WithViewer(invite); err != nil {
+			return EnrollmentLink{}, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+		}
 	}
 	if err := storeLink(ctx, store, &c, identity.HashKey(key), actor, now); err != nil {
 		return EnrollmentLink{}, fmt.Errorf("issuing an enrollment link: %w", err)

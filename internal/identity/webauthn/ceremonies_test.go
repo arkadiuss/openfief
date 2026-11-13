@@ -42,7 +42,8 @@ func register(t *testing.T, c *webauthn.Ceremonies, owner *identity.Owner, origi
 	if err != nil {
 		t.Fatalf("virtual.New: %v", err)
 	}
-	begun, err := c.BeginRegistration(origin, owner, nil)
+	person := identity.OwnerPerson(owner)
+	begun, err := c.BeginRegistration(origin, &person, nil)
 	if err != nil {
 		t.Fatalf("BeginRegistration: %v", err)
 	}
@@ -50,7 +51,7 @@ func register(t *testing.T, c *webauthn.Ceremonies, owner *identity.Owner, origi
 	if err != nil {
 		t.Fatalf("Create: %v", err)
 	}
-	p, err := c.FinishRegistration(origin, owner, begun.State, cred)
+	p, err := c.FinishRegistration(origin, &person, begun.State, cred)
 	if err != nil {
 		t.Fatalf("FinishRegistration: %v", err)
 	}
@@ -69,7 +70,7 @@ func login(t *testing.T, c *webauthn.Ceremonies, dev *virtual.Authenticator, ori
 	if err != nil {
 		t.Fatalf("Get: %v", err)
 	}
-	got, err := c.FinishLogin(origin, owner, keys, begun.State, assertion)
+	got, err := c.FinishLogin(origin, []identity.Person{identity.OwnerPerson(owner)}, keys, begun.State, assertion)
 	if err != nil {
 		return app.Assertion{}, fmt.Errorf("FinishLogin: %w", err)
 	}
@@ -80,7 +81,8 @@ func TestRegistrationOptions(t *testing.T) {
 	t.Parallel()
 	c := webauthn.New("OpenFief")
 	owner := testOwner(t)
-	begun, err := c.BeginRegistration(testOrigin(t, "http://localhost:8080"), &owner, nil)
+	person := identity.OwnerPerson(&owner)
+	begun, err := c.BeginRegistration(testOrigin(t, "http://localhost:8080"), &person, nil)
 	if err != nil {
 		t.Fatalf("BeginRegistration: %v", err)
 	}
@@ -167,7 +169,8 @@ func TestRegistrationRefused(t *testing.T) {
 	if err != nil {
 		t.Fatalf("virtual.New: %v", err)
 	}
-	begun, err := c.BeginRegistration(origin, &owner, nil)
+	person := identity.OwnerPerson(&owner)
+	begun, err := c.BeginRegistration(origin, &person, nil)
 	if err != nil {
 		t.Fatalf("BeginRegistration: %v", err)
 	}
@@ -175,10 +178,10 @@ func TestRegistrationRefused(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Create: %v", err)
 	}
-	if _, err := c.FinishRegistration(origin, &owner, begun.State, cred); !errors.Is(err, app.ErrCredentialRefused) {
+	if _, err := c.FinishRegistration(origin, &person, begun.State, cred); !errors.Is(err, app.ErrCredentialRefused) {
 		t.Errorf("FinishRegistration from another origin = %v, want %v", err, app.ErrCredentialRefused)
 	}
-	if _, err := c.FinishRegistration(origin, &owner, begun.State, []byte(`{"id":"x"}`)); !errors.Is(err, app.ErrCredentialRefused) {
+	if _, err := c.FinishRegistration(origin, &person, begun.State, []byte(`{"id":"x"}`)); !errors.Is(err, app.ErrCredentialRefused) {
 		t.Errorf("FinishRegistration of junk = %v, want %v", err, app.ErrCredentialRefused)
 	}
 }

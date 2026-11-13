@@ -916,3 +916,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-431773604c08
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T19:57:55.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e1850b851fc
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:00:49.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de2b7372f689
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:00:49.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31215818d63d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protomessage
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:11.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5163c2682fdc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:11.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8edff64a2e0

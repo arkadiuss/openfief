@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fa315fdc242
+  - type: specified_by
+    from: REQ-identity-people-listed-with-access
+    to: SCEN-identity-people-listed
+    created_at: 2026-11-13T19:59:26.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af35543265c4

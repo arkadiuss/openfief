@@ -1014,3 +1014,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ee62d5c4800
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getsessiontoken
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:57.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-535cc3e3f302
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getsessiontoken
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:57.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1eed082d0f4
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-descriptor
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:07.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7221fb6ee0b3
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:07.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c273ce661d43

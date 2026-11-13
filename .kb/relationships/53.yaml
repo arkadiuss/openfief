@@ -860,3 +860,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a12d217d3fb1
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-protoreflect
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:28.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c074d488d50d
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:28.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d44056a42319
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getid
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:39.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd0b066cbf6d
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getid
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:39.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f178f82d59e

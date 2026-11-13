@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d7a1eb8b0c0
+  - type: implements
+    from: SYM-viewers-internal-views-ui-session-session-personname
+    to: REQ-ui-viewer-changes-nothing
+    created_at: 2026-11-13T20:16:51.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-143272433567
+  - type: covered_by
+    from: SYM-viewers-internal-views-ui-session-session-personname
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T20:16:51.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1dddf305880

@@ -302,6 +302,10 @@ func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *led
 	opts := append(az.registryOptions(), portfolioapp.WithPlacementObserver(grantCleanup{grants}))
 	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l, opts...)
 	dir.sleeves = sleeves
+	if az.syncer == nil {
+		// Under the policy a viewer views what their grants cover (D-65, D-209); SpiceDB decides that when it answers.
+		az.authorizer = identityapp.NewGrantPolicy(store, targetCover{accounts: l, sleeves: sleeves})
+	}
 	if defErr := ensureDefaults(ctx, sleeves, cfg); defErr != nil {
 		return access{}, defErr
 	}

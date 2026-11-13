@@ -776,3 +776,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-337dc5e4984d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-getpersonid
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:25.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f32138a991ad
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-getpersonid
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:25.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6f2d25db32a

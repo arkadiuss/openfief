@@ -42,6 +42,10 @@ const (
 	// HolderDemoSession is a read-scoped session from the demo
 	// authenticator.
 	HolderDemoSession
+	// HolderViewer is a viewer (D-65) in their read-scoped session; the
+	// caller's ID is the viewer's person ID, whose grants say what they
+	// view (D-209).
+	HolderViewer
 )
 
 // String returns the holder's name: "owner", or the subject type
@@ -57,6 +61,8 @@ func (h Holder) String() string {
 		return "view_plugin"
 	case HolderDemoSession:
 		return "demo_session"
+	case HolderViewer:
+		return "viewer"
 	}
 	return fmt.Sprintf("Holder(%d)", int(h))
 }
@@ -72,13 +78,18 @@ type Caller struct {
 // MayAct reports whether c may do a on an account under the rule that holds
 // until SpiceDB answers (D-163, D-164): the owner may view and change every
 // account; every other holder of read access (D-137) may view every account
-// and change none; nobody else may do anything.
+// and change none; nobody else may do anything. A viewer (D-65) holds only
+// what their grants name, which this rule doesn't know, so it refuses them
+// everything: their views are decided by their grants, in SpiceDB or, under
+// the policy, in app.GrantPolicy.
 func MayAct(c Caller, a Action) bool {
 	switch c.Holder {
 	case HolderOwner:
 		return a == ActionView || a == ActionChange
 	case HolderScriptToken, HolderViewPlugin, HolderDemoSession:
 		return a == ActionView
+	case HolderViewer:
+		return false
 	}
 	return false
 }

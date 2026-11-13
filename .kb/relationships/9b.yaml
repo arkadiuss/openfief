@@ -1056,3 +1056,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f751948a49c9
+  - type: specified_by
+    from: REQ-identity-people-migration-owner
+    to: SCEN-identity-people-migration
+    created_at: 2026-11-13T19:59:28.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11995e126d2f
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-string
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:29.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74b101e450e1
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:29.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0709fa47f507

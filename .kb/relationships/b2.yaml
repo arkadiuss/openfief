@@ -923,3 +923,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b600cc81ed85
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-reset
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:20:39.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49004f06f6ed
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:20:39.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb734f7d8df8
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:48.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fdf9f04e82b
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:49.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b523a590793

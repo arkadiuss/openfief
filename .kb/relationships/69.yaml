@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b629de0a7ea8
+  - type: implements
+    from: SYM-viewers-internal-identity-postgres-people-store-activesessioncounts
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:15:23.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-237aec2f2c83
+  - type: covered_by
+    from: SYM-viewers-internal-identity-postgres-people-store-activesessioncounts
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:15:23.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-686dcb7b1527
+  - type: executable_for
+    from: SYM-viewers-internal-views-ui-viewer-test-testaskboxofaviewerseesonlytheirgrantedaccounts
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T20:17:08.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fddd19987c9
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-beginwithspentlink
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:34:32.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d43714b25b

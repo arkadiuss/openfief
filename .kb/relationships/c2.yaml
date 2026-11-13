@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e27f37c730a
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T21:14:44.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af455a910b8d
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:44.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffada55977a

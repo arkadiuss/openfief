@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60b636d963f4
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enumdescriptor
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:53.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad9641bcc315
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enumdescriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:53.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9e0d8a97a92

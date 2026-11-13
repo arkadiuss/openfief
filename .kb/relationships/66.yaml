@@ -937,3 +937,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f47b95f6492
+  - type: implements
+    from: SYM-viewers-internal-identity-person-personkind
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:13:04.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d79bf3a0a61
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-personkind
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:13:04.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-506148a6a0ab
+  - type: implements
+    from: SYM-viewers-internal-views-app-sleeves-views-sleevesofviewable
+    to: REQ-views-viewer-sleeves-and-kinds-of-granted-accounts
+    created_at: 2026-11-13T20:16:39.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03a931161057
+  - type: covered_by
+    from: SYM-viewers-internal-views-app-sleeves-views-sleevesofviewable
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:16:39.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fecb524132d

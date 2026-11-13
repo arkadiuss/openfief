@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-117471f573b0
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-string
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:16.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-190cb6046bee
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:16.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3335a0aee131

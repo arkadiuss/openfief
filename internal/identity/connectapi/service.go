@@ -42,7 +42,7 @@ func (s *authService) BeginRegistration(ctx context.Context, req *connect.Reques
 		return nil, s.fail(ctx, err)
 	}
 	return connect.NewResponse(&identityv1.BeginRegistrationResponse{
-		CeremonyId: st.CeremonyID, OptionsJson: string(st.Options), ExpiresAt: timestamppb.New(st.ExpiresAt),
+		CeremonyId: st.CeremonyID, OptionsJson: string(st.Options), ExpiresAt: timestamppb.New(st.ExpiresAt), InvitedName: st.InvitedName,
 	}), nil
 }
 
@@ -53,6 +53,7 @@ func (s *authService) FinishRegistration(ctx context.Context, req *connect.Reque
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
+	s.logNotProjected(ctx, r.NotProjected)
 	out := &identityv1.FinishRegistrationResponse{Passkey: pbPasskey(&r.Passkey)}
 	if r.Session != nil {
 		out.SessionToken, out.Session = r.Session.Token, pbSession(&r.Session.Session)
@@ -100,12 +101,12 @@ func (s *authService) Logout(ctx context.Context, req *connect.Request[identityv
 
 // WhoAmI returns the owner and the session.
 func (s *authService) WhoAmI(ctx context.Context, req *connect.Request[identityv1.WhoAmIRequest]) (*connect.Response[identityv1.WhoAmIResponse], error) {
-	owner, ss, err := s.auth.WhoAmI(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	owner, ss, person, err := s.auth.Identify(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
 	return connect.NewResponse(&identityv1.WhoAmIResponse{
-		Owner: &identityv1.Owner{CreatedAt: timestamppb.New(owner.CreatedAt)}, Session: pbSession(&ss),
+		Owner: &identityv1.Owner{CreatedAt: timestamppb.New(owner.CreatedAt)}, Session: pbSession(&ss), Person: pbPerson(&person),
 	}), nil
 }
 
@@ -281,6 +282,7 @@ func auditFilter(m *identityv1.ListAuditEntriesRequest) (identity.AuditFilter, e
 func pbActorKinds() map[identity.ActorKind]identityv1.AuditActorKind {
 	return map[identity.ActorKind]identityv1.AuditActorKind{
 		identity.ActorOwner:          identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER,
+		identity.ActorViewer:         identityv1.AuditActorKind_AUDIT_ACTOR_KIND_VIEWER,
 		identity.ActorEnrollmentCode: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ENROLLMENT_CODE,
 		identity.ActorSystem:         identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM,
 		identity.ActorAnonymous:      identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS,
@@ -303,6 +305,8 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionGrantRevoked:         identityv1.AuditAction_AUDIT_ACTION_GRANT_REVOKED,
 		identity.ActionModelCall:            identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL,
 		identity.ActionModelCallResult:      identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT,
+		identity.ActionPersonCreated:        identityv1.AuditAction_AUDIT_ACTION_PERSON_CREATED,
+		identity.ActionPersonRevoked:        identityv1.AuditAction_AUDIT_ACTION_PERSON_REVOKED,
 	}
 }
 
@@ -384,7 +388,7 @@ func pbSession(s *identity.Session) *identityv1.Session {
 	out := &identityv1.Session{
 		Id: string(s.ID), Scope: scope, Authenticator: auth, RpId: s.RPID,
 		CreatedAt: timestamppb.New(s.CreatedAt), LastSeenAt: timestamppb.New(s.LastSeenAt),
-		IdleExpiresAt: timestamppb.New(s.IdleExpiresAt()), ExpiresAt: timestamppb.New(s.ExpiresAt),
+		IdleExpiresAt: timestamppb.New(s.IdleExpiresAt()), ExpiresAt: timestamppb.New(s.ExpiresAt), PersonId: s.Person(),
 	}
 	if !s.PasskeyCheckedAt.IsZero() {
 		out.PasskeyCheckedAt = timestamppb.New(s.PasskeyCheckedAt)

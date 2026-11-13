@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16885ae3c98d
+  - type: verified_by
+    from: SCEN-ui-reads-as-signed-in-person
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T19:57:59.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0eddb49b202
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-viewerperson
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:15:35.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b8b61953b7

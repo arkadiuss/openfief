@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8846745ee527
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protoreflect
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:01.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c2c26e64cc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:02.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f53647bd19c6

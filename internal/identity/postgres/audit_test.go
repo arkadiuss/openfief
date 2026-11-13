@@ -146,7 +146,7 @@ func TestAuditLogRefusesFreeText(t *testing.T) {
 		{name: "free-text action", kind: "owner", id: auditSession, action: "transfer 100 PLN", outcome: "ok", refs: `[]`, wantErr: true},
 		{name: "free-text outcome", kind: "owner", id: auditSession, action: "sign_in", outcome: "ok, mostly", refs: `[]`, wantErr: true},
 		{name: "owner named by a name", kind: "owner", id: "Jan Kowalski", action: "sign_in", outcome: "ok", refs: `[]`, wantErr: true},
-		{name: "unknown actor kind", kind: "viewer", id: auditSession, action: "sign_in", outcome: "ok", refs: `[]`, wantErr: true},
+		{name: "unknown actor kind", kind: "guest", id: auditSession, action: "sign_in", outcome: "ok", refs: `[]`, wantErr: true},
 		{name: "anonymous with an ID", kind: "anonymous", id: auditSession, action: "sign_in", outcome: "refused", refs: `[]`, wantErr: true},
 		{name: "refs not an array", kind: "owner", id: auditSession, action: "sign_in", outcome: "ok", refs: `{"note": "my question"}`, wantErr: true},
 		{

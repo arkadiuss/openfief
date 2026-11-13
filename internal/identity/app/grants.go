@@ -100,6 +100,7 @@ type Grants struct {
 	tokens *Tokens
 	dir    Directory
 	proj   GrantProjector
+	people PersonReader
 	now    func() time.Time
 	// ping asks the authorization model whether it answers; nil with the
 	// policy, which has nothing to ask.
@@ -111,6 +112,19 @@ type Grants struct {
 // proj (nil with the policy) and reading the time from now.
 func NewGrants(store GrantStore, tokens *Tokens, dir Directory, proj GrantProjector, now func() time.Time) *Grants {
 	return &Grants{store: store, tokens: tokens, dir: dir, proj: proj, now: now}
+}
+
+// PersonReader is what the grant use cases ask of the people: whether a viewer
+// exists and is active. *identity/postgres.Store implements it.
+type PersonReader interface {
+	Person(ctx context.Context, id string) (identity.Person, error)
+}
+
+// WithPeople returns g granting to the viewers people knows: a grant names a
+// viewer only while they are active. Without it, no viewer exists to grant.
+func (g *Grants) WithPeople(people PersonReader) *Grants {
+	g.people = people
+	return g
 }
 
 // Enforced reports whether the grants limit what holders view now: they do
@@ -138,9 +152,6 @@ func (g *Grants) Create(ctx context.Context, actor identity.Actor, holder identi
 	grant, err := identity.NewGrant(holder, target, g.now().UTC().Truncate(time.Microsecond))
 	if err != nil {
 		return identity.Grant{}, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
-	}
-	if holder.Kind == identity.GrantHolderPerson {
-		return identity.Grant{}, fmt.Errorf("%w: viewers don't exist yet", ErrInvalidRequest)
 	}
 	if requireErr := g.require(ctx, holder, target); requireErr != nil {
 		return identity.Grant{}, requireErr
@@ -553,8 +564,24 @@ func (g *Grants) holderExists(ctx context.Context, holder identity.GrantHolder) 
 		}
 		return ok, nil
 	case identity.GrantHolderPerson:
+		return g.viewerActive(ctx, holder.ID)
 	}
 	return false, nil
+}
+
+// viewerActive reports whether id is a viewer the owner has not revoked.
+func (g *Grants) viewerActive(ctx context.Context, id string) (bool, error) {
+	if g.people == nil {
+		return false, nil
+	}
+	p, err := g.people.Person(ctx, id)
+	if errors.Is(err, ErrUnknownPerson) {
+		return false, nil
+	}
+	if err != nil {
+		return false, fmt.Errorf("looking for the person: %w", err)
+	}
+	return p.IsViewer() && p.Active(), nil
 }
 
 // record appends the entry that actor did action to grant, naming its holder
@@ -747,9 +774,6 @@ func (g *Grants) checkTargets(ctx context.Context, targets []identity.GrantTarge
 func (g *Grants) checkUpdate(ctx context.Context, holder identity.GrantHolder, add, remove []identity.GrantTarget) ([]identity.GrantTarget, error) {
 	if err := holder.Validate(); err != nil {
 		return nil, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
-	}
-	if holder.Kind == identity.GrantHolderPerson {
-		return nil, fmt.Errorf("%w: viewers don't exist yet", ErrInvalidRequest)
 	}
 	ok, err := g.holderExists(ctx, holder)
 	if err != nil {

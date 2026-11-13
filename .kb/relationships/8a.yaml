@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79aa183ef22d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-type
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:42.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b95237d89951
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-type
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:42.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b638a7ab1bb9

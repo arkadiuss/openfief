@@ -1028,3 +1028,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b2f2642d2a8
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-accountids
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:08:00.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df0ce3ab0ef1
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-getexpiresat
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:21:13.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-026dfe82cc40
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-getexpiresat
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:13.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8daf24aedfd7
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-reset
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:24.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f367ee7251c
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:24.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e2fa656ae4
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-inviteviewer
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:25:19.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aa533c535bc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-inviteviewer
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:25:19.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df0c2ff46567

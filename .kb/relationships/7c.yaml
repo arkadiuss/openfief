@@ -965,3 +965,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46174f84a91d
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-actableaccounts
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:09:13.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b5d6cfc1db2
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-actableaccounts
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T20:09:13.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90e7a8a8ee15
+  - type: implements
+    from: SYM-viewers-internal-views-ui-session-session-viewer
+    to: REQ-ui-viewer-changes-nothing
+    created_at: 2026-11-13T20:16:45.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f0c85f2bf8c
+  - type: covered_by
+    from: SYM-viewers-internal-views-ui-session-session-viewer
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T20:16:45.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fc61f8c648d
+  - type: executable_for
+    from: SYM-viewers-plugins-ui-main-test-testreadclientkeepsthepersonssession
+    to: TEST-ui-plugin
+    created_at: 2026-11-13T20:17:13.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c5fba438579

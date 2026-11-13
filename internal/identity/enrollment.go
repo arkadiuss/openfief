@@ -58,6 +58,10 @@ type EnrollmentCode struct {
 	ExpiresAt time.Time
 	// UsedAt is when a passkey was created with it; zero while unused.
 	UsedAt time.Time
+	// Viewer is set on a link that invites a viewer: using it creates that
+	// viewer with those grants and their first passkey, and signs them in
+	// with a read session. Nil on a link for the owner's own passkey.
+	Viewer *ViewerInvite
 }
 
 // NewEnrollmentCode returns a code with id for origin, created at now and
@@ -73,6 +77,17 @@ func NewEnrollmentCode(id EnrollmentCodeID, origin Origin, now time.Time, ttl ti
 		return EnrollmentCode{}, fmt.Errorf("%w: %s, want more than 0 and at most %s", ErrInvalidEnrollmentTTL, ttl, MaxEnrollmentTTL)
 	}
 	return EnrollmentCode{ID: id, Origin: origin, CreatedAt: now, ExpiresAt: now.Add(ttl)}, nil
+}
+
+// WithViewer makes c the invitation of invite's viewer, which must be valid.
+func (c *EnrollmentCode) WithViewer(invite *ViewerInvite) error {
+	if err := invite.Validate(); err != nil {
+		return err
+	}
+	v := *invite
+	v.Targets = append([]GrantTarget(nil), invite.Targets...)
+	c.Viewer = &v
+	return nil
 }
 
 // Check returns nil when c may be used at now on origin. Otherwise, in this
@@ -164,9 +179,14 @@ type Ceremony struct {
 	EnrollmentCode EnrollmentCodeID
 	// Session is the owner session that began a registration without a
 	// code, for the audit log (D-211); empty otherwise.
-	Session   SessionID
-	CreatedAt time.Time
-	ExpiresAt time.Time
+	Session SessionID
+	// PersonID and PersonHandle name the viewer a registration begun with a
+	// viewer's enrollment code creates, and the user handle the browser was
+	// told to give their passkey; empty for the owner's.
+	PersonID     string
+	PersonHandle []byte
+	CreatedAt    time.Time
+	ExpiresAt    time.Time
 }
 
 // NewCeremony returns a ceremony of kind on origin with state, begun at now

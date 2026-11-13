@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a6713d7ce0a
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protomessage
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:35.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15f5b3a9f272
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:35.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a6456bb7d47

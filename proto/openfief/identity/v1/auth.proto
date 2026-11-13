@@ -177,6 +177,29 @@ service AuthService {
   // which reads with the signed-in person's session. UNAVAILABLE when the core
   // can't read the installed plugins now. Owner scope only.
   rpc ListViewPlugins(ListViewPluginsRequest) returns (ListViewPluginsResponse);
+
+  // InviteViewer issues a one-time, expiring link for a new viewer (D-65,
+  // D-210): the name the owner calls them and the grants they start with are
+  // chosen here and kept with the link. Whoever opens it enrolls their own
+  // passkey through BeginRegistration and FinishRegistration, which creates
+  // the person, binds the passkey, makes the grants and signs them in with a
+  // read session; the link is then spent. Every grant target must exist
+  // (NOT_FOUND). The link is audited when issued, when used (with the person
+  // and the passkey created) and when an expired or spent one is refused.
+  // Owner scope, with a recent passkey check (D-183).
+  rpc InviteViewer(InviteViewerRequest) returns (InviteViewerResponse);
+
+  // ListPeople returns the owner and every viewer, revoked ones included,
+  // each with the grants in force, the passkeys that work and the sessions
+  // not ended (D-210). Owner scope only.
+  rpc ListPeople(ListPeopleRequest) returns (ListPeopleResponse);
+
+  // RevokePerson revokes a viewer: their sessions end, their passkeys stop
+  // working and their grants end, each with an audit entry. The person record
+  // stays, with their ID and the history that names them. Revoking a viewer
+  // already revoked is NOT_FOUND; the owner can't be revoked (INVALID_ARGUMENT).
+  // Owner scope only; it only takes access away, so it needs no passkey check.
+  rpc RevokePerson(RevokePersonRequest) returns (RevokePersonResponse);
 }
 
 // SessionScope is what a session may do.
@@ -217,6 +240,9 @@ message Session {
   // FinishPasskeyCheck. Unset when it has none, as a demo session never
   // does (D-183).
   google.protobuf.Timestamp passkey_checked_at = 9;
+  // The ID of the person the session is of: "owner", or a viewer's ID. A
+  // viewer's session has read scope.
+  string person_id = 10;
 }
 
 // PasskeyCheckRequired is the error detail of a FAILED_PRECONDITION from an
@@ -228,9 +254,30 @@ message PasskeyCheckRequired {
   google.protobuf.Duration window = 1;
 }
 
-// Owner is the one person an installation has (GR-2).
+// Owner is the owner of the installation (D-65): the person who holds every
+// account.
 message Owner {
   google.protobuf.Timestamp created_at = 1;
+}
+
+// PersonKind says whether a person is the owner or a viewer.
+enum PersonKind {
+  PERSON_KIND_UNSPECIFIED = 0;
+  PERSON_KIND_OWNER = 1;
+  PERSON_KIND_VIEWER = 2;
+}
+
+// Person is someone with passkeys of their own: the owner, or a viewer the
+// owner enrolled (D-65). A person is never deleted.
+message Person {
+  // "owner", or a viewer's ID.
+  string id = 1;
+  PersonKind kind = 2;
+  // What the owner calls them; the owner's is "Owner".
+  string name = 3;
+  google.protobuf.Timestamp created_at = 4;
+  // Unset while the person is active; set when the owner revoked a viewer.
+  google.protobuf.Timestamp revoked_at = 5;
 }
 
 // Passkey is a WebAuthn credential of the owner, valid on one host only.
@@ -314,6 +361,9 @@ message BeginRegistrationResponse {
   string options_json = 2;
   // When the ceremony expires.
   google.protobuf.Timestamp expires_at = 3;
+  // The name the owner gave the viewer a viewer's enrollment link invites, so
+  // the page can greet them; empty for any other registration.
+  string invited_name = 4;
 }
 
 message FinishRegistrationRequest {
@@ -386,6 +436,8 @@ message WhoAmIRequest {
 message WhoAmIResponse {
   Owner owner = 1;
   Session session = 2;
+  // The person the session is of.
+  Person person = 3;
 }
 
 message ListPasskeysRequest {
@@ -520,6 +572,8 @@ enum AuditActorKind {
   AUDIT_ACTOR_KIND_SYSTEM = 3;
   // A caller that proved nothing, such as a refused sign-in; no id.
   AUDIT_ACTOR_KIND_ANONYMOUS = 4;
+  // A viewer in a session; the actor's id is the session's id.
+  AUDIT_ACTOR_KIND_VIEWER = 5;
 }
 
 // AuditAction is what an audit entry records, a closed set: it carries no
@@ -548,6 +602,12 @@ enum AuditAction {
   // the AUDIT_ACTION_MODEL_CALL entry, the model unless the router refused
   // before choosing one, and an error class when the call failed.
   AUDIT_ACTION_MODEL_CALL_RESULT = 13;
+  // A viewer created by enrolling their first passkey with an enrollment
+  // link; the entry names the person and the link.
+  AUDIT_ACTION_PERSON_CREATED = 14;
+  // A viewer revoked: sessions ended, passkeys disabled, grants ended; the
+  // entry names the person.
+  AUDIT_ACTION_PERSON_REVOKED = 15;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -645,8 +705,7 @@ message ListAuditEntriesResponse {
 // GrantHolderKind is what kind of party holds a grant.
 enum GrantHolderKind {
   GRANT_HOLDER_KIND_UNSPECIFIED = 0;
-  // A viewer, by their id. Viewers come with the second alpha (D-65), so
-  // CreateGrant refuses this kind until they exist.
+  // A viewer, by their id (D-65): an active viewer, as ListPeople shows.
   GRANT_HOLDER_KIND_PERSON = 1;
   // A script token, by its id (D-27).
   GRANT_HOLDER_KIND_SCRIPT_TOKEN = 2;
@@ -730,7 +789,7 @@ message ListGrantsResponse {
 message UpdateGrantsRequest {
   string origin = 1;
   string session_token = 2;
-  // A script token or a view plugin; viewers (person) have none to change yet.
+  // A script token, a view plugin or a viewer (person).
   GrantHolderKind holder_kind = 3;
   string holder_id = 4;
   // Targets to grant.
@@ -762,4 +821,68 @@ message ListViewPluginsResponse {
   repeated ViewPlugin plugins = 1;
   // As ListScriptTokensResponse.grants_enforced.
   bool grants_enforced = 2;
+}
+
+message InviteViewerRequest {
+  string origin = 1;
+  string session_token = 2;
+  // What the owner calls the viewer: 1 to 64 printable characters.
+  string name = 3;
+  // The grants the viewer starts with, made when they enroll: accounts,
+  // sleeves or the household. None leaves a viewer who sees nothing until the
+  // owner grants them something.
+  repeated GrantTarget grants = 4;
+  // The origin the viewer enrolls on, as CreateEnrollmentLinkRequest's;
+  // empty is origin itself.
+  string target_origin = 5;
+  // How long the link is valid, at most 24 hours; unset is 15 minutes.
+  google.protobuf.Duration ttl = 6;
+}
+
+message InviteViewerResponse {
+  // <target_origin>/enroll#code=<code>, shown once: the code is in the
+  // fragment, as CreateEnrollmentLinkResponse.url says.
+  string url = 1;
+  google.protobuf.Timestamp expires_at = 2;
+}
+
+message ListPeopleRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// PersonAccess is a person with what they may view and how they sign in
+// (D-210).
+message PersonAccess {
+  Person person = 1;
+  // The grants in force, oldest first; none for the owner, who holds every
+  // account without one.
+  repeated Grant grants = 2;
+  // How many of the person's passkeys work.
+  int32 passkeys = 3;
+  // How many of the person's sessions are still valid.
+  int32 active_sessions = 4;
+}
+
+message ListPeopleResponse {
+  // The owner first, then the viewers in the order they were created.
+  repeated PersonAccess people = 1;
+  // As ListScriptTokensResponse.grants_enforced.
+  bool grants_enforced = 2;
+}
+
+message RevokePersonRequest {
+  string origin = 1;
+  string session_token = 2;
+  // A viewer's Person.id.
+  string person_id = 3;
+}
+
+message RevokePersonResponse {
+  // How many of the viewer's sessions the revocation ended.
+  int32 sessions_ended = 1;
+  // How many of their passkeys it disabled.
+  int32 passkeys_disabled = 2;
+  // How many of their grants it ended.
+  int32 grants_ended = 3;
 }

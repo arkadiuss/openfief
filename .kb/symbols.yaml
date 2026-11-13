@@ -196038,3 +196038,3038 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-image-carry
+  - id: SYM-viewers-cmd-core-grants-accountlister
+    title: accountLister
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-viewers
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-cmd-core-grants-sleeveplacements
+    title: sleevePlacements
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-viewers
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-cmd-core-grants-targetcover-targetaccounts
+    title: targetCover.TargetAccounts
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-viewers
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-cmd-core-viewers-test-viewerenroll
+    title: viewerEnroll
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-accountids
+    title: accountIDs
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-testviewerseesonlywhattheyaregranted
+    title: TestViewerSeesOnlyWhatTheyAreGranted
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-checkviewerreads
+    title: checkViewerReads
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-checkviewerrefusedeverywhere
+    title: checkViewerRefusedEverywhere
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-callertoken
+    title: callerToken
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-internal-identity-app-auth-auth-identify
+    title: Auth.Identify
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-session-reads-only
+  - id: SYM-viewers-internal-identity-app-grantpolicy-grantreader
+    title: GrantReader
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-targetcover
+    title: TargetCover
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-newgrantpolicy
+    title: NewGrantPolicy
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-mayact
+    title: GrantPolicy.MayAct
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-actableaccounts
+    title: GrantPolicy.ActableAccounts
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
+    title: GrantPolicy.viewerAccounts
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-toset
+    title: toSet
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-fakegrantreader-grants
+    title: fakeGrantReader.Grants
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-fakecover-targetaccounts
+    title: fakeCover.TargetAccounts
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-testgrantpolicy
+    title: TestGrantPolicy
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-testgrantpolicyfailsclosed
+    title: TestGrantPolicyFailsClosed
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grants-personreader
+    title: PersonReader
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-app-grants-grants-withpeople
+    title: Grants.WithPeople
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-app-grants-grants-vieweractive
+    title: Grants.viewerActive
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-app-owner-issuelink
+    title: issueLink
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-app-passkeys-auth-newviewer
+    title: Auth.newViewer
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-auth-inviteviewer
+    title: Auth.InviteViewer
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-app-people-personaccess
+    title: PersonAccess
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-app-people-auth-people
+    title: Auth.People
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-app-people-revocation
+    title: Revocation
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-app-people-auth-revokeperson
+    title: Auth.RevokePerson
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-app-people-auth-storeviewerregistration
+    title: Auth.storeViewerRegistration
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-grants-stillthere
+    title: Grants.stillThere
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-test-grantfixture-invite
+    title: grantFixture.invite
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-grantfixture-enrollviewer
+    title: grantFixture.enrollViewer
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testviewerenrolls
+    title: TestViewerEnrolls
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testexpiredviewerlinkrefused
+    title: TestExpiredViewerLinkRefused
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testinviteviewerrefusals
+    title: TestInviteViewerRefusals
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testviewersessionchangesnothing
+    title: TestViewerSessionChangesNothing
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testownerpasskeycheckrefusesaviewerspasskey
+    title: TestOwnerPasskeyCheckRefusesAViewersPasskey
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testupdateviewergrants
+    title: TestUpdateViewerGrants
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-person
+    title: memAuthStore.Person
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-people
+    title: memAuthStore.People
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-saveperson
+    title: memAuthStore.SavePerson
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-revokeperson
+    title: memAuthStore.RevokePerson
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-passkeycounts
+    title: memAuthStore.PasskeyCounts
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-activesessioncounts
+    title: memAuthStore.ActiveSessionCounts
+    status: active
+    sourceFile: internal/identity/app/peoplestore_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-ports-personstore
+    title: PersonStore
+    status: active
+    sourceFile: internal/identity/app/ports.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-connectapi-people-authservice-inviteviewer
+    title: authService.InviteViewer
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-connectapi-people-authservice-listpeople
+    title: authService.ListPeople
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-connectapi-people-authservice-revokeperson
+    title: authService.RevokePerson
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-connectapi-people-pbperson
+    title: pbPerson
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-connectapi-people-authservice-lognotprojected
+    title: authService.logNotProjected
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-enrollment-enrollmentcode-withviewer
+    title: EnrollmentCode.WithViewer
+    status: active
+    sourceFile: internal/identity/enrollment.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-passkey-passkey-person
+    title: Passkey.Person
+    status: active
+    sourceFile: internal/identity/passkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-migration-owner
+  - id: SYM-viewers-internal-identity-person-personkind
+    title: PersonKind
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-ownerperson
+    title: OwnerPerson
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-newviewer
+    title: NewViewer
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-person-validate
+    title: Person.Validate
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-checkpersonname
+    title: CheckPersonName
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-person-isviewer
+    title: Person.IsViewer
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-person-active
+    title: Person.Active
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-person-revoked
+    title: Person.Revoked
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-person-person-grantholder
+    title: Person.GrantHolder
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-person-ref
+    title: Person.Ref
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-viewerinvite-validate
+    title: ViewerInvite.Validate
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-person-test-testnewviewer
+    title: TestNewViewer
+    status: active
+    sourceFile: internal/identity/person_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-domain
+  - id: SYM-viewers-internal-identity-person-test-testpersonrevoked
+    title: TestPersonRevoked
+    status: active
+    sourceFile: internal/identity/person_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-domain
+  - id: SYM-viewers-internal-identity-person-test-testviewersessionreadsonly
+    title: TestViewerSessionReadsOnly
+    status: active
+    sourceFile: internal/identity/person_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-domain
+  - id: SYM-viewers-internal-identity-person-test-testmayactviewerholdsnothingbyitself
+    title: TestMayActViewerHoldsNothingByItself
+    status: active
+    sourceFile: internal/identity/person_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-domain
+  - id: SYM-viewers-internal-identity-postgres-export-test-migratethrough
+    title: MigrateThrough
+    status: active
+    sourceFile: internal/identity/postgres/export_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-invitetarget
+    title: inviteTarget
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-scanperson
+    title: scanPerson
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-person
+    title: Store.Person
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-people
+    title: Store.People
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-saveperson
+    title: Store.SavePerson
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-revokeperson
+    title: Store.RevokePerson
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-postgres-people-store-passkeycounts
+    title: Store.PasskeyCounts
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-activesessioncounts
+    title: Store.ActiveSessionCounts
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-store-counts
+    title: Store.counts
+    status: active
+    sourceFile: internal/identity/postgres/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-postgres
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerperson
+    title: viewerPerson
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testmigrationgivesexistingpasskeysandsessionstotheowner
+    title: TestMigrationGivesExistingPasskeysAndSessionsToTheOwner
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testmigrationonanemptyinstallationhastheownerrow
+    title: TestMigrationOnAnEmptyInstallationHasTheOwnerRow
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testviewerrowsrefusewhataviewermaynothave
+    title: TestViewerRowsRefuseWhatAViewerMayNotHave
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-store-test-emptypool
+    title: emptyPool
+    status: active
+    sourceFile: internal/identity/postgres/store_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-session-session-person
+    title: Session.Person
+    status: active
+    sourceFile: internal/identity/session.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-session-reads-only
+  - id: SYM-viewers-internal-identity-session-session-ofviewer
+    title: Session.OfViewer
+    status: active
+    sourceFile: internal/identity/session.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-session-reads-only
+  - id: SYM-viewers-internal-identity-session-session-forviewer
+    title: Session.ForViewer
+    status: active
+    sourceFile: internal/identity/session.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-session-reads-only
+  - id: SYM-viewers-internal-identity-spicedb-authorizer-subject
+    title: subject
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-spicedb-authorizer-test-testauthorizeraskstheaccountpermission
+    title: TestAuthorizerAsksTheAccountPermission
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-authorizer
+  - id: SYM-viewers-internal-views-app-sleeves-views-sleevesofviewable
+    title: Views.sleevesOfViewable
+    status: active
+    sourceFile: internal/views/app/sleeves.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-viewers
+      - type: implements
+        target: REQ-views-viewer-sleeves-and-kinds-of-granted-accounts
+  - id: SYM-viewers-internal-views-ui-session-session-viewer
+    title: session.Viewer
+    status: active
+    sourceFile: internal/views/ui/session.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-viewer
+      - type: implements
+        target: REQ-ui-viewer-changes-nothing
+  - id: SYM-viewers-internal-views-ui-session-session-personname
+    title: session.PersonName
+    status: active
+    sourceFile: internal/views/ui/session.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-viewer
+      - type: implements
+        target: REQ-ui-viewer-changes-nothing
+  - id: SYM-viewers-internal-views-ui-viewer-test-testuireadsasthesignedinperson
+    title: TestUIReadsAsTheSignedInPerson
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-viewers-internal-views-ui-viewer-test-testviewerisrefusedeverychange
+    title: TestViewerIsRefusedEveryChange
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-viewers-internal-views-ui-viewer-test-testaskboxofaviewerseesonlytheirgrantedaccounts
+    title: TestAskBoxOfAViewerSeesOnlyTheirGrantedAccounts
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-viewers-plugins-ui-main-test-testreadclientkeepsthepersonssession
+    title: TestReadClientKeepsThePersonsSession
+    status: active
+    sourceFile: plugins/ui/main_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugin
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enum
+    title: PersonKind.Enum
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-string
+    title: PersonKind.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-descriptor
+    title: PersonKind.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-type
+    title: PersonKind.Type
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-number
+    title: PersonKind.Number
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enumdescriptor
+    title: PersonKind.EnumDescriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-session-getpersonid
+    title: Session.GetPersonId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-reset
+    title: Person.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-string
+    title: Person.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-protomessage
+    title: Person.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-protoreflect
+    title: Person.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-descriptor
+    title: Person.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getid
+    title: Person.GetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getkind
+    title: Person.GetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getname
+    title: Person.GetName
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getcreatedat
+    title: Person.GetCreatedAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getrevokedat
+    title: Person.GetRevokedAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-beginregistrationresponse-getinvitedname
+    title: BeginRegistrationResponse.GetInvitedName
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-whoamiresponse-getperson
+    title: WhoAmIResponse.GetPerson
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-reset
+    title: InviteViewerRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-string
+    title: InviteViewerRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-protomessage
+    title: InviteViewerRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-protoreflect
+    title: InviteViewerRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-descriptor
+    title: InviteViewerRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getorigin
+    title: InviteViewerRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getsessiontoken
+    title: InviteViewerRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getname
+    title: InviteViewerRequest.GetName
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getgrants
+    title: InviteViewerRequest.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-gettargetorigin
+    title: InviteViewerRequest.GetTargetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getttl
+    title: InviteViewerRequest.GetTtl
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-reset
+    title: InviteViewerResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-string
+    title: InviteViewerResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protomessage
+    title: InviteViewerResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protoreflect
+    title: InviteViewerResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-descriptor
+    title: InviteViewerResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-geturl
+    title: InviteViewerResponse.GetUrl
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-getexpiresat
+    title: InviteViewerResponse.GetExpiresAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-reset
+    title: ListPeopleRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-string
+    title: ListPeopleRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protomessage
+    title: ListPeopleRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protoreflect
+    title: ListPeopleRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-descriptor
+    title: ListPeopleRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getorigin
+    title: ListPeopleRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getsessiontoken
+    title: ListPeopleRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-reset
+    title: PersonAccess.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-string
+    title: PersonAccess.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-protomessage
+    title: PersonAccess.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-protoreflect
+    title: PersonAccess.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-descriptor
+    title: PersonAccess.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getperson
+    title: PersonAccess.GetPerson
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getgrants
+    title: PersonAccess.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getpasskeys
+    title: PersonAccess.GetPasskeys
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getactivesessions
+    title: PersonAccess.GetActiveSessions
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-reset
+    title: ListPeopleResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-string
+    title: ListPeopleResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protomessage
+    title: ListPeopleResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protoreflect
+    title: ListPeopleResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-descriptor
+    title: ListPeopleResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-getpeople
+    title: ListPeopleResponse.GetPeople
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-getgrantsenforced
+    title: ListPeopleResponse.GetGrantsEnforced
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-reset
+    title: RevokePersonRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-string
+    title: RevokePersonRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protomessage
+    title: RevokePersonRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protoreflect
+    title: RevokePersonRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-descriptor
+    title: RevokePersonRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-getorigin
+    title: RevokePersonRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-getsessiontoken
+    title: RevokePersonRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-getpersonid
+    title: RevokePersonRequest.GetPersonId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-reset
+    title: RevokePersonResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-string
+    title: RevokePersonResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-protomessage
+    title: RevokePersonResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-protoreflect
+    title: RevokePersonResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-descriptor
+    title: RevokePersonResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getsessionsended
+    title: RevokePersonResponse.GetSessionsEnded
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getpasskeysdisabled
+    title: RevokePersonResponse.GetPasskeysDisabled
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getgrantsended
+    title: RevokePersonResponse.GetGrantsEnded
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-inviteviewer
+    title: authServiceClient.InviteViewer
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-listpeople
+    title: authServiceClient.ListPeople
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-revokeperson
+    title: authServiceClient.RevokePerson
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-inviteviewer
+    title: UnimplementedAuthServiceHandler.InviteViewer
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-listpeople
+    title: UnimplementedAuthServiceHandler.ListPeople
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-revokeperson
+    title: UnimplementedAuthServiceHandler.RevokePerson
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-cmd-core-viewers-test-invitealice
+    title: inviteAlice
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-revokealice
+    title: revokeAlice
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-cmd-core-viewers-test-beginwithspentlink
+    title: beginWithSpentLink
+    status: active
+    sourceFile: cmd/core/viewers_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-viewers
+  - id: SYM-viewers-internal-identity-app-auth-signedin
+    title: signedIn
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-session-reads-only
+  - id: SYM-viewers-internal-identity-app-passkeys-auth-registrationperson
+    title: Auth.registrationPerson
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-passkeys-auth-loginpeople
+    title: Auth.loginPeople
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-auth-activeviewer
+    title: Auth.activeViewer
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-app-people-auth-revokestored
+    title: Auth.revokeStored
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-internal-identity-app-people-auth-enrollviewerrows
+    title: Auth.enrollViewerRows
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-auth-grantviewer
+    title: Auth.grantViewer
+    status: active
+    sourceFile: internal/identity/app/people.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-test-passerr
+    title: passErr
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-grantfixture-trail
+    title: grantFixture.trail
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testviewerlinkisspentandtheviewersignsinagain
+    title: TestViewerLinkIsSpentAndTheViewerSignsInAgain
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testpeoplelistedwiththeiraccess
+    title: TestPeopleListedWithTheirAccess
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testrevokeviewer
+    title: TestRevokeViewer
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-testrevokepersonrefusals
+    title: TestRevokePersonRefusals
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-postgres-people-test-storeolderdata
+    title: storeOlderData
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-newviewerworld
+    title: newViewerWorld
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testviewerpasskeysdonotcountfortheowner
+    title: TestViewerPasskeysDoNotCountForTheOwner
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testrevokepersondisablespasskeysandendssessions
+    title: TestRevokePersonDisablesPasskeysAndEndsSessions
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testviewerenrollmentcoderoundtrip
+    title: TestViewerEnrollmentCodeRoundTrip
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-testviewerceremonyroundtrip
+    title: TestViewerCeremonyRoundTrip
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-views-ui-viewer-test-ownerfreeposts
+    title: ownerFreePosts
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-viewers-internal-views-ui-viewer-test-ownerpostroutes
+    title: ownerPostRoutes
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-viewers-internal-identity-app-passkeys-auth-verifiedpasskey
+    title: Auth.verifiedPasskey
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-passkeys-passkeyname
+    title: passkeyName
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-passkeys-auth-loginowner
+    title: Auth.loginOwner
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-app
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-app-people-test-grantfixture-checkalice
+    title: grantFixture.checkAlice
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-app-people-test-grantfixture-checkrevocationentries
+    title: grantFixture.checkRevocationEntries
+    status: active
+    sourceFile: internal/identity/app/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-app
+  - id: SYM-viewers-internal-identity-postgres-people-test-checkonlytheownerisaperson
+    title: checkOnlyTheOwnerIsAPerson
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-checkolderdataistheowners
+    title: checkOlderDataIsTheOwners
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerworld-checkcounts
+    title: viewerWorld.checkCounts
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerworld-checksessionsafterrevocation
+    title: viewerWorld.checkSessionsAfterRevocation
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerworld-checkafterrevocation
+    title: viewerWorld.checkAfterRevocation
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerworld-checkviewerkept
+    title: viewerWorld.checkViewerKept
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-cmd-core-grants-targetcover
+    title: targetCover
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-viewers
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy
+    title: GrantPolicy
+    status: active
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-viewer-views-granted-accounts
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-fakegrantreader
+    title: fakeGrantReader
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-app-grantpolicy-test-fakecover
+    title: fakeCover
+    status: active
+    sourceFile: internal/identity/app/grantpolicy_test.go
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-policy
+  - id: SYM-viewers-internal-identity-person-person
+    title: Person
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-enrolls-own-passkey
+  - id: SYM-viewers-internal-identity-person-viewerinvite
+    title: ViewerInvite
+    status: active
+    sourceFile: internal/identity/person.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-people-domain
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-internal-identity-postgres-people-test-viewerworld
+    title: viewerWorld
+    status: active
+    sourceFile: internal/identity/postgres/people_test.go
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-people-postgres
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind
+    title: PersonKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person
+    title: Person
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest
+    title: InviteViewerRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse
+    title: InviteViewerResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-viewer-invite-link
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest
+    title: ListPeopleRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess
+    title: PersonAccess
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse
+    title: ListPeopleResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-people-listed-with-access
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest
+    title: RevokePersonRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer
+  - id: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse
+    title: RevokePersonResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    origin:
+      kind: agent
+      ref: 'S6 task brief: viewers, people, enrollment links, viewer reads, revoke (D-65, D-209, D-210, D-165, D-199), 2026-11-13'
+      recorded_at: 2026-11-13T20:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-revoke-viewer

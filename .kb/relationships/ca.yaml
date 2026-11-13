@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00ff52fac3e8
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getgrants
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:22:40.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8021aa4095b6
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-getgrants
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:22:40.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5ae4c44443f

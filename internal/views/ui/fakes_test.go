@@ -38,11 +38,14 @@ const (
 	ownerSession = "session-owner"
 	readSession  = "session-read"
 	demoSession  = "session-demo"
-	newSession   = "session-new"
-	accountID    = "acc-synthetic-1"
-	testHost     = "ui.example.com"
-	testOrigin   = "https://" + testHost
-	localOrigin  = "http://localhost:8080"
+	// viewerSession is a viewer's read session (D-65); grantedAccount is the one account they were granted.
+	viewerSession  = "session-viewer"
+	grantedAccount = "acc-granted-1"
+	newSession     = "session-new"
+	accountID      = "acc-synthetic-1"
+	testHost       = "ui.example.com"
+	testOrigin     = "https://" + testHost
+	localOrigin    = "http://localhost:8080"
 )
 
 // codeErr is a Connect error with code, as the fake core returns it.
@@ -188,7 +191,11 @@ func (f *fakeAuth) WhoAmI(_ context.Context, r *connect.Request[identityv1.WhoAm
 	if err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}), nil
+	out := &identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}
+	if r.Msg.GetSessionToken() == viewerSession {
+		out.Person = &identityv1.Person{Id: "0123456789abcdef", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Alice"}
+	}
+	return connect.NewResponse(out), nil
 }
 
 func (f *fakeAuth) ListPasskeys(_ context.Context, r *connect.Request[identityv1.ListPasskeysRequest]) (*connect.Response[identityv1.ListPasskeysResponse], error) {
@@ -394,7 +401,7 @@ func scopeOf(token string) (identityv1.SessionScope, error) {
 	switch token {
 	case ownerSession, newSession:
 		return identityv1.SessionScope_SESSION_SCOPE_OWNER, nil
-	case readSession, demoSession:
+	case readSession, demoSession, viewerSession:
 		return identityv1.SessionScope_SESSION_SCOPE_READ, nil
 	}
 	return identityv1.SessionScope_SESSION_SCOPE_UNSPECIFIED, codeErr(connect.CodeUnauthenticated, nil)
@@ -494,6 +501,10 @@ func syntheticInstrument() *viewsv1.Instrument {
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
+	}
+	if r.Header().Get("Authorization") == "Bearer "+viewerSession {
+		// The core lists a viewer the accounts they were granted, and no other.
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{{Id: grantedAccount, Institution: "synthetic-broker", Name: "Granted brokerage"}}}), nil
 	}
 	f.mu.Lock()
 	none, institution, ike := f.noAccounts, f.institution, f.ike
@@ -740,7 +751,7 @@ func (f *fakeRead) check(h http.Header) error {
 	f.mu.Lock()
 	f.bearers = append(f.bearers, h.Get("Authorization"))
 	f.mu.Unlock()
-	for _, s := range []string{ownerSession, readSession, demoSession, newSession} {
+	for _, s := range []string{ownerSession, readSession, demoSession, newSession, viewerSession} {
 		if h.Get("Authorization") == "Bearer "+s {
 			return nil
 		}

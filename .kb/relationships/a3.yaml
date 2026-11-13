@@ -1294,3 +1294,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-555c422f98c3
+  - type: implements
+    from: SYM-viewers-internal-identity-app-ports-personstore
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:12:26.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-409e8356b648
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-ports-personstore
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:12:26.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eee2227f6c0

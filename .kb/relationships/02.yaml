@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7de28c4af43d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-protoreflect
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:22:24.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74903bb670f
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:22:24.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad07e44925ee

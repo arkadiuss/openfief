@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df8a5b449a64
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-string
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:31.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88ce19c8a3dd
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:31.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0dac04c971
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getsessionsended
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:25:04.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c3fdb6f428
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getsessionsended
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:25:04.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d752977e435

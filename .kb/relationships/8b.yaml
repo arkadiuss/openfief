@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da3611aacbdf
+  - type: specified_by
+    from: REQ-identity-owner-enrolls-viewers
+    to: SCEN-identity-viewer-invite-link
+    created_at: 2026-11-13T20:00:31.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21af1c204b0b
+  - type: specified_by
+    from: REQ-identity-owner-enrolls-viewers
+    to: SCEN-identity-viewer-enrolls
+    created_at: 2026-11-13T20:00:31.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41ca8ec207d
+  - type: implements
+    from: SYM-viewers-internal-identity-person-viewerinvite-validate
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:14:06.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a130760d7d1
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-viewerinvite-validate
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:14:06.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0874926406d3

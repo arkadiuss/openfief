@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c15922890bc
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-testrevokepersondisablespasskeysandendssessions
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:36:04.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de02481d221b

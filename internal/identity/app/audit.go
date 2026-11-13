@@ -58,8 +58,11 @@ func within(ctx context.Context, store Atomic, fn func(ctx context.Context) erro
 	return nil
 }
 
-// ownerActor is the owner in session s.
+// ownerActor is whoever session s is of: the owner, or a viewer.
 func ownerActor(s *identity.Session) identity.Actor {
+	if s.OfViewer() {
+		return identity.Actor{Kind: identity.ActorViewer, ID: string(s.ID)}
+	}
 	return identity.Actor{Kind: identity.ActorOwner, ID: string(s.ID)}
 }
 

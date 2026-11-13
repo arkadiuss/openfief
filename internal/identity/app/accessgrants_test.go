@@ -212,7 +212,7 @@ func TestUpdateGrantsChecksFirst(t *testing.T) {
 		{"an unknown holder", owner.Token, absent, []identity.GrantTarget{identity.Household()}, nil, app.ErrNotFound},
 		{"a plugin not installed", owner.Token, plugin("gone"), []identity.GrantTarget{identity.Household()}, nil, app.ErrNotFound},
 		{"a malformed target to remove", owner.Token, tok, nil, []identity.GrantTarget{{Kind: identity.GrantTargetHousehold, ID: "away"}}, app.ErrInvalidRequest},
-		{"a viewer", owner.Token, person, []identity.GrantTarget{identity.Household()}, nil, app.ErrInvalidRequest},
+		{"a viewer that does not exist", owner.Token, person, []identity.GrantTarget{identity.Household()}, nil, app.ErrNotFound},
 		{"a demo session", demo.Token, tok, []identity.GrantTarget{identity.Household()}, nil, app.ErrForbidden},
 		{"no session", "", tok, []identity.GrantTarget{identity.Household()}, nil, app.ErrInvalidSession},
 	} {

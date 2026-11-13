@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d80444dd307
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-reset
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:10.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe91470e38e
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:10.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e8a71045dd3

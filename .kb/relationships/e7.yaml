@@ -1287,3 +1287,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b633e081444f
+  - type: verified_by
+    from: SCEN-identity-viewer-link-refused
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T19:57:48.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5181fa1c15

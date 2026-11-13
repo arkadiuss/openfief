@@ -29,6 +29,10 @@ const (
 	// ActorOwner is the owner in a session; the actor's ID is the session's
 	// ID, which says which sign-in acted.
 	ActorOwner ActorKind = "owner"
+	// ActorViewer is a viewer in a session; the actor's ID is the session's
+	// ID. The person is the session's: the audit entry of its sign-in names
+	// them.
+	ActorViewer ActorKind = "viewer"
 	// ActorEnrollmentCode is the holder of a one-time enrollment code, who
 	// is not signed in yet; the actor's ID is the code's ID.
 	ActorEnrollmentCode ActorKind = "enrollment_code"
@@ -53,9 +57,9 @@ type Actor struct {
 // has, or none for an anonymous caller.
 func (a Actor) Validate() error {
 	switch a.Kind {
-	case ActorOwner:
+	case ActorOwner, ActorViewer:
 		if !isHexID(a.ID) {
-			return fmt.Errorf("%w: an owner actor is named by its session ID", ErrInvalidAuditEntry)
+			return fmt.Errorf("%w: an owner or viewer actor is named by its session ID", ErrInvalidAuditEntry)
 		}
 	case ActorEnrollmentCode:
 		if !isHexID(a.ID) {
@@ -111,6 +115,14 @@ const (
 	// ActionGrantRevoked is a grant of access ended, by the owner or
 	// because its holder or its target is gone.
 	ActionGrantRevoked AuditAction = "grant_revoked"
+	// ActionPersonCreated is a viewer created, when they enroll their first
+	// passkey with the link the owner issued: the person by ID, the link by
+	// ID.
+	ActionPersonCreated AuditAction = "person_created"
+	// ActionPersonRevoked is a viewer revoked by the owner: their sessions
+	// end, their passkeys stop working and their grants end, each of the
+	// last two with an entry of its own. The person and their history stay.
+	ActionPersonRevoked AuditAction = "person_revoked"
 	// ActionModelCall is a call to a model about to be sent (D-205, D-211):
 	// who asked, for which role and which model, under a call ID, with the
 	// outcome "sent". It is written before the call, and the call is not
@@ -127,13 +139,15 @@ const (
 // A function, not a variable: the domain holds no package-level state.
 func actionKinds() map[AuditAction][]RefKind {
 	return map[AuditAction][]RefKind{
-		ActionSignIn:               {RefSession},
+		ActionSignIn:               {RefSession, RefPerson},
 		ActionSignOut:              {RefSession},
 		ActionSignOutEverywhere:    nil,
-		ActionPasskeyAdded:         {RefPasskey},
-		ActionPasskeyRemoved:       {RefPasskey},
+		ActionPasskeyAdded:         {RefPasskey, RefPerson},
+		ActionPasskeyRemoved:       {RefPasskey, RefPerson},
 		ActionEnrollmentLinkIssued: {RefEnrollmentCode},
-		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey},
+		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey, RefPerson},
+		ActionPersonCreated:        {RefPerson, RefEnrollmentCode},
+		ActionPersonRevoked:        {RefPerson},
 		ActionScriptTokenCreated:   {RefScriptToken},
 		ActionScriptTokenRevoked:   {RefScriptToken},
 		ActionGrantCreated:         grantRefKinds(),
@@ -617,7 +631,7 @@ func (f *AuditFilter) inRange(at time.Time) bool {
 // knownActorKind reports whether k is one of the actor kinds.
 func knownActorKind(k ActorKind) bool {
 	switch k {
-	case ActorOwner, ActorEnrollmentCode, ActorSystem, ActorAnonymous:
+	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorAnonymous:
 		return true
 	}
 	return false

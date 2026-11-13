@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59236be36f3e
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:59.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7d118e826cc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:59.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc15d1d61aaa

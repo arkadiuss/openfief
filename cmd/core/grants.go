@@ -283,10 +283,69 @@ func grantsStep(ctx context.Context, grants *identityapp.Grants, spicedbOn bool,
 // newGrants returns the grant use cases over store, passing each change to
 // SpiceDB through az's syncer, and to nothing with the policy.
 func newGrants(store identityapp.GrantStore, tokens *identityapp.Tokens, dir identityapp.Directory, az authorization, now func() time.Time) *identityapp.Grants {
+	var g *identityapp.Grants
 	if az.syncer == nil {
-		return identityapp.NewGrants(store, tokens, dir, nil, now)
+		g = identityapp.NewGrants(store, tokens, dir, nil, now)
+	} else {
+		g = identityapp.NewGrants(store, tokens, dir, az.syncer, now).WithPing(az.ping)
 	}
-	return identityapp.NewGrants(store, tokens, dir, az.syncer, now).WithPing(az.ping)
+	// A grant names a viewer only while they are active (D-65): the store that keeps the grants keeps the people.
+	if people, ok := store.(identityapp.PersonReader); ok {
+		g.WithPeople(people)
+	}
+	return g
+}
+
+// accountLister lists every account; *ledgerapp.Ledger implements it.
+type accountLister interface {
+	Accounts(ctx context.Context) ([]ledger.Account, error)
+}
+
+// sleevePlacements says which sleeve each account is in; *portfolioapp.Registry
+// implements it.
+type sleevePlacements interface {
+	AccountSleeves(ctx context.Context) (map[ledger.AccountID]portfolio.SleeveID, error)
+}
+
+// targetCover is identityapp.TargetCover over the ledger's accounts and the
+// portfolio's placements: what a viewer's grants cover under the policy.
+type targetCover struct {
+	accounts accountLister
+	sleeves  sleevePlacements
+}
+
+var _ identityapp.TargetCover = targetCover{}
+
+// TargetAccounts implements identityapp.TargetCover.
+func (c targetCover) TargetAccounts(ctx context.Context, t identity.GrantTarget) ([]string, error) {
+	switch t.Kind {
+	case identity.GrantTargetAccount:
+		return []string{t.ID}, nil
+	case identity.GrantTargetHousehold:
+		all, err := c.accounts.Accounts(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("listing the accounts: %w", err)
+		}
+		out := make([]string, 0, len(all))
+		for i := range all {
+			out = append(out, string(all[i].ID))
+		}
+		return out, nil
+	case identity.GrantTargetSleeve:
+		placed, err := c.sleeves.AccountSleeves(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("listing the accounts of a sleeve: %w", err)
+		}
+		var out []string
+		for account, sleeve := range placed {
+			if string(sleeve) == t.ID {
+				out = append(out, string(account))
+			}
+		}
+		slices.Sort(out)
+		return out, nil
+	}
+	return nil, nil
 }
 
 var _ accessSyncer = (*spicedb.Syncer)(nil)

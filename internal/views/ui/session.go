@@ -48,6 +48,23 @@ type session struct {
 	// (sessionEnd), when the overview kept for offline reading is wiped
 	// (D-151).
 	Described *identityv1.Session
+	// Person is the person the session is of, from WhoAmI: the owner, or a
+	// viewer (D-65).
+	Person *identityv1.Person
+}
+
+// Viewer reports whether the session is a viewer's: a person the owner
+// invited, who views what the owner granted them and changes nothing but
+// signing out. Its pages are a read session's, and the core refuses every
+// change, as it does a demo session's.
+func (s session) Viewer() bool { return s.Person.GetKind() == identityv1.PersonKind_PERSON_KIND_VIEWER }
+
+// PersonName is the name the owner gave the viewer; empty for the owner.
+func (s session) PersonName() string {
+	if !s.Viewer() {
+		return ""
+	}
+	return s.Person.GetName()
 }
 
 // Owner reports whether the session may do what only the owner may: manage
@@ -56,7 +73,12 @@ type session struct {
 func (s session) Owner() bool { return s.Scope == identityv1.SessionScope_SESSION_SCOPE_OWNER }
 
 // ScopeLabel names the session's scope for the page header.
-func (s session) ScopeLabel() string { return scopeLabel(s.Scope) }
+func (s session) ScopeLabel() string {
+	if s.Viewer() {
+		return "Viewer"
+	}
+	return scopeLabel(s.Scope)
+}
 
 // requestOrigin returns the origin the browser uses for the UI: the scheme
 // Traefik or another proxy reports in X-Forwarded-Proto (http without
@@ -174,7 +196,7 @@ func (s *server) withSession(h sessionHandler) http.HandlerFunc {
 			s.coreFailed(w, r, "WhoAmI", err)
 			return
 		}
-		sess := session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin, Described: who.Msg.GetSession()}
+		sess := session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin, Described: who.Msg.GetSession(), Person: who.Msg.GetPerson()}
 		settings, err := s.read.GetSettings(r.Context(), bearer(&viewsv1.GetSettingsRequest{}, sess))
 		if err != nil {
 			s.coreFailed(w, r, "GetSettings", err)

@@ -161,7 +161,7 @@ func TestNewAuditEntry(t *testing.T) {
 		{name: "unknown outcome", actor: owner, action: identity.ActionSignOut, outcome: "ok, with a note", wantErr: true},
 		{name: "no outcome", actor: owner, action: identity.ActionSignOut, wantErr: true},
 		{
-			name: "unknown actor kind", actor: identity.Actor{Kind: "viewer", ID: auditSession},
+			name: "unknown actor kind", actor: identity.Actor{Kind: "guest", ID: auditSession},
 			action: identity.ActionSignOut, outcome: identity.OutcomeOK, wantErr: true,
 		},
 		{
@@ -307,7 +307,7 @@ func TestAuditFilterValidate(t *testing.T) {
 		{name: "largest page", f: identity.AuditFilter{Limit: identity.MaxAuditPage, Before: 10}},
 		{name: "actor ID without kind", f: identity.AuditFilter{ActorID: auditSession}, wantErr: true},
 		{name: "bad actor ID", f: identity.AuditFilter{ActorKind: identity.ActorOwner, ActorID: "Jan"}, wantErr: true},
-		{name: "unknown actor kind", f: identity.AuditFilter{ActorKind: "viewer"}, wantErr: true},
+		{name: "unknown actor kind", f: identity.AuditFilter{ActorKind: "guest"}, wantErr: true},
 		{name: "unknown action", f: identity.AuditFilter{Action: "other"}, wantErr: true},
 		{name: "empty range", f: identity.AuditFilter{From: from, To: from}, wantErr: true},
 		{name: "reversed range", f: identity.AuditFilter{From: from, To: from.Add(-time.Hour)}, wantErr: true},

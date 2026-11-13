@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7caac1a7ba1
+  - type: executable_for
+    from: SYM-viewers-internal-identity-spicedb-authorizer-test-testauthorizeraskstheaccountpermission
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-13T20:16:33.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e759993c5c
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:28.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df45c5cb5d6
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:29.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1560bf9ab2e

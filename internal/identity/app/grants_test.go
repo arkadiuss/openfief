@@ -215,7 +215,7 @@ func newGrantFixture(t *testing.T, demo demoConfig) *grantFixture {
 	store := newMemAuthStore()
 	tokens := app.NewTokens(newMemStore(), clk.now, nil)
 	dir, model := newFakeDirectory(), &fakeModel{}
-	grants := app.NewGrants(store, tokens, dir, model, clk.now)
+	grants := app.NewGrants(store, tokens, dir, model, clk.now).WithPeople(store)
 	cfg := app.AuthConfig{Origins: origins, Sessions: identity.DefaultSessionPolicy(), DemoSessions: demo.on}
 	auth, err := app.NewAuth(store, webauthn.New("OpenFief"), tokens, demoMarker(demo.marked), cfg, clk.now, nil, app.WithGrants(grants))
 	if err != nil {
@@ -309,7 +309,7 @@ func TestCreateGrant(t *testing.T) {
 		{"a secret as a target", tok, account(identity.SecretPrefix + "abc"), app.ErrInvalidRequest},
 		{"a household that is not home", tok, identity.GrantTarget{Kind: identity.GrantTargetHousehold, ID: "away"}, app.ErrInvalidRequest},
 		{"no holder kind", identity.GrantHolder{ID: "x"}, identity.Household(), app.ErrInvalidRequest},
-		{"a person, who can't exist yet", person, identity.Household(), app.ErrInvalidRequest},
+		{"a viewer that does not exist", person, identity.Household(), app.ErrNotFound},
 	}
 	for _, tt := range tests {
 		g, err := f.auth.CreateGrant(t.Context(), local, owner.Token, tt.holder, tt.target)

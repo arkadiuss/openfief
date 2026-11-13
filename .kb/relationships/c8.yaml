@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd82556edf31
+  - type: implements
+    from: SYM-viewers-internal-identity-app-passkeys-auth-newviewer
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:10:24.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9b9218cb31
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-passkeys-auth-newviewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:10:24.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5a5780918d

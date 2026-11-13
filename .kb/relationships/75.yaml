@@ -937,3 +937,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55382f7cb8a5
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protoreflect
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:16.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-897b0c565ce0
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:16.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0a0e4942479
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-revokealice
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:34:26.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f38f779b69

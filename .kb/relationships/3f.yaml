@@ -1091,3 +1091,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0633af8ac6ac
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-number
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:47.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c401e0b2d68b
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-number
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:47.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ece5cb137673
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-string
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:19:32.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf7cd78e084
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:19:32.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cb944de08af

@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56c04ba27614
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grants-personreader
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:10:03.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-829da4fb13cd
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-grants-personreader
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:10:03.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e46fc19ad27

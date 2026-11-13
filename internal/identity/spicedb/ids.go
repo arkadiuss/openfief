@@ -32,8 +32,8 @@ const (
 
 	// householdID is the one household an installation serves (D-65).
 	householdID = "home"
-	// ownerID is the owner as a person: until viewers have passkeys of their
-	// own (D-65), the one person there is.
+	// ownerID is the owner as a person (identity.OwnerPersonID). A viewer's
+	// ID is hex, so no viewer is the owner.
 	ownerID = "owner"
 	// wildcardID is SpiceDB's wildcard object ID: every object of a type.
 	wildcardID = "*"
