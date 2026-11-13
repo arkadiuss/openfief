@@ -1084,3 +1084,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef37aa68daa6
+  - type: implements
+    from: SYM-release-bundle-init-job-name
+    to: REQ-identity-credentials-job-core-image
+    created_at: 2026-11-13T08:30:31.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63bf5666a1f
+  - type: covered_by
+    from: SYM-release-bundle-init-job-name
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T08:30:31.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5f82caa8262
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-scriptedauthorizer-set
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:08.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee89e678636
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-collect
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:43.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70523e8ba206
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler-describe
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:42.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6705f943647e
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler-describe
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:42.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9aaeaa47569

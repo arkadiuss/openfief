@@ -60,10 +60,25 @@ type server struct {
 	// and the owner services.
 	plugin   atomic.Pointer[http.Handler]
 	draining atomic.Bool
+	// authzWaiting says what the authorizer still lacks before the core is
+	// ready, "" when nothing, once the core is wired: nil when it always can
+	// answer, with the policy. With SpiceDB it is its key, if still to come,
+	// then an answer with the schema written (D-164), so the Service sends no
+	// read to a core that refuses them all. It gates the start only: once
+	// "" it stays "", and a SpiceDB outage later never makes the core not
+	// ready; checks fail closed and the requests that need one answer 503.
+	authzWaiting atomic.Pointer[func() string]
+	// dbPing asks the database whether it answers; nil is the pool's Ping,
+	// which a test replaces.
+	dbPing func(context.Context) error
 }
 
 // ready stores the handlers c serves on each port; s then reports ready.
 func (s *server) ready(c *core) {
+	if c.access.syncer != nil {
+		waiting := c.access.waiting
+		s.authzWaiting.Store(&waiting)
+	}
 	s.plugin.Store(&c.pluginPort)
 	s.browser.Store(&c.browserPort)
 }
@@ -131,7 +146,9 @@ func (*server) healthz(w http.ResponseWriter, _ *http.Request) {
 }
 
 // readyz reports whether the core is ready: migrated and wired, not shutting
-// down, and with the database reachable now.
+// down, with SpiceDB's key there when it is to be waited for and SpiceDB
+// answered once with its schema written (the start's alone: a later outage of
+// SpiceDB does not flip it), and with the database reachable now.
 func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case s.draining.Load():
@@ -141,9 +158,19 @@ func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 		plain(w, http.StatusServiceUnavailable, "starting")
 		return
 	}
+	if waiting := s.authzWaiting.Load(); waiting != nil {
+		if what := (*waiting)(); what != "" {
+			plain(w, http.StatusServiceUnavailable, what)
+			return
+		}
+	}
 	ctx, cancel := context.WithTimeout(r.Context(), pingTimeout)
 	defer cancel()
-	if err := s.pool.Ping(ctx); err != nil {
+	ping := s.dbPing
+	if ping == nil {
+		ping = s.pool.Ping
+	}
+	if err := ping(ctx); err != nil {
 		plain(w, http.StatusServiceUnavailable, "database unreachable")
 		return
 	}
@@ -301,8 +328,21 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 		return nil, fmt.Errorf("starting the revaluation workers: %w", err)
 	}
 	go c.attention.run(ctx, attentionEvery, log)
+	// The cutover waits for the installed plugins to be read, so it runs in the background: until it has,
+	// a holder that is to be given the household grant views nothing under SpiceDB.
+	go c.settleGrants(ctx, cfg.Authz.Mode == authzSpiceDB, log)
 	startCluster(ctx, c, cfg, cl, log)
 	return c, nil
+}
+
+// settleGrants runs grantsStartup, once SpiceDB has its key when that is still
+// to come: until then every change is refused, and the cutover would only
+// retry.
+func (c *core) settleGrants(ctx context.Context, spicedbOn bool, log *slog.Logger) {
+	if g := c.access.gate; g != nil && !g.wait(ctx) {
+		return // stopped while waiting for SpiceDB's key
+	}
+	grantsStartup(ctx, c.access.grants, spicedbOn, c.access.reconcile, log)
 }
 
 // startCluster starts, when the core runs in cluster cl, the watch of the

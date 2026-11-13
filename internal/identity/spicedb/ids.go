@@ -26,6 +26,7 @@ const (
 
 	relOwner     = "owner"
 	relReader    = "reader"
+	relViewer    = "viewer"
 	relHousehold = "household"
 	relSleeve    = "sleeve"
 

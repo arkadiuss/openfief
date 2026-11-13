@@ -11,17 +11,20 @@ import (
 // Capability is what a plugin may act as (D-11).
 type Capability string
 
-// The M0 capabilities.
+// The capabilities.
 const (
 	// CapabilityConnector brings data in through an ingest path.
 	CapabilityConnector Capability = "connector"
 	// CapabilityView presents the canonical record elsewhere, read-only.
 	CapabilityView Capability = "view"
+	// CapabilityModelProvider serves a model provider to the core's model
+	// router: it lists models and generates with them (D-205).
+	CapabilityModelProvider Capability = "model-provider"
 )
 
 func (c Capability) known() bool {
 	switch c {
-	case CapabilityConnector, CapabilityView:
+	case CapabilityConnector, CapabilityView, CapabilityModelProvider:
 		return true
 	}
 	return false

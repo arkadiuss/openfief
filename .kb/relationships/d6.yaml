@@ -1336,3 +1336,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1636e00fe006
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-testreadkeyfile
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:11:43.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2d86c5c7637
+  - type: executable_for
+    from: SYM-models-modelrouter-postgres-store-test-admin-exec
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:40:32.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae5db45ae21
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-object-get
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:11.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31671c92198
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-object-get
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:11.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed72688e814

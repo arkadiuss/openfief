@@ -867,3 +867,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9714b003e57
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantstoreselects
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:44.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f108a749234e
+  - type: covered_by
+    from: SYM-models-modelrouter-request-entry-serves
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:16.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e941cbb59367
+  - type: implements
+    from: SYM-models-modelrouter-request-entry-serves
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:43:16.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c167c7ca3188
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:15.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-377c451e5031
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:15.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26b635d0bfae

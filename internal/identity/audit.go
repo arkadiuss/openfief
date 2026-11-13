@@ -105,6 +105,22 @@ const (
 	ActionScriptTokenCreated AuditAction = "script_" + "token_created"
 	// ActionScriptTokenRevoked is a script token revoked.
 	ActionScriptTokenRevoked AuditAction = "script_token_revoked"
+	// ActionGrantCreated is a grant of access made (D-209): to a holder,
+	// of a target, both named by ID.
+	ActionGrantCreated AuditAction = "grant_created"
+	// ActionGrantRevoked is a grant of access ended, by the owner or
+	// because its holder or its target is gone.
+	ActionGrantRevoked AuditAction = "grant_revoked"
+	// ActionModelCall is a call to a model about to be sent (D-205, D-211):
+	// who asked, for which role and which model, under a call ID, with the
+	// outcome "sent". It is written before the call, and the call is not
+	// made when it can't be. Never the request, the answer or what it cost.
+	ActionModelCall AuditAction = "model_call"
+	// ActionModelCallResult is how a call to a model ended, under the call
+	// ID of its ActionModelCall entry: ok, failed with an error class, or
+	// refused. A call the router refused before choosing a model (the
+	// switch, the data tiers) has only this entry, with no model.
+	ActionModelCallResult AuditAction = "model_call_result"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -120,8 +136,22 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey},
 		ActionScriptTokenCreated:   {RefScriptToken},
 		ActionScriptTokenRevoked:   {RefScriptToken},
+		ActionGrantCreated:         grantRefKinds(),
+		ActionGrantRevoked:         grantRefKinds(),
+		ActionModelCall:            {RefModelRole, RefModel, RefModelCall},
+		ActionModelCallResult:      {RefModelRole, RefModel, RefModelCall, RefModelError},
 	}
 }
+
+// grantRefKinds are the kinds of record a grant entry names: its holder and
+// its target.
+func grantRefKinds() []RefKind {
+	return []RefKind{RefPerson, RefScriptToken, RefViewPlugin, RefAccount, RefSleeve, RefHousehold}
+}
+
+// isGrantAction reports whether a is one of the two actions whose entries
+// name a grant: exactly its holder, then its target.
+func isGrantAction(a AuditAction) bool { return a == ActionGrantCreated || a == ActionGrantRevoked }
 
 // AuditActions returns every audit action, sorted.
 func AuditActions() []AuditAction {
@@ -155,12 +185,15 @@ const (
 	OutcomeRefused AuditOutcome = "refused"
 	// OutcomeFailed is a change that broke on the way.
 	OutcomeFailed AuditOutcome = "failed"
+	// OutcomeSent is a call about to be sent, which another entry, under the
+	// same call ID, will say the result of (ActionModelCall).
+	OutcomeSent AuditOutcome = "sent"
 )
 
 // ParseAuditOutcome parses an outcome as its constant spells it.
 func ParseAuditOutcome(s string) (AuditOutcome, error) {
 	switch o := AuditOutcome(s); o {
-	case OutcomeOK, OutcomeRefused, OutcomeFailed:
+	case OutcomeOK, OutcomeRefused, OutcomeFailed, OutcomeSent:
 		return o, nil
 	}
 	return "", fmt.Errorf("%w: unknown outcome", ErrInvalidAuditEntry)
@@ -179,6 +212,28 @@ const (
 	RefEnrollmentCode RefKind = "enrollment_code"
 	// RefScriptToken is a script token, by its ID, never its secret.
 	RefScriptToken RefKind = "script_token"
+	// RefPerson is a person, by their ID.
+	RefPerson RefKind = "person"
+	// RefViewPlugin is a view plugin, by its instance name.
+	RefViewPlugin RefKind = "view_plugin"
+	// RefAccount is an account, by its ID.
+	RefAccount RefKind = "account"
+	// RefSleeve is a sleeve, by its ID.
+	RefSleeve RefKind = "sleeve"
+	// RefHousehold is the household, by its ID ("home").
+	RefHousehold RefKind = "household"
+	// RefModelRole is the role a model call was made for, by its name: "ask"
+	// or "maintainer" (D-205).
+	RefModelRole RefKind = "model_role"
+	// RefModel is a model entry called, as "provider/model" (D-205): names
+	// the owner configured, never text a model was sent.
+	RefModel RefKind = "model"
+	// RefModelCall is the ID that links the entry written before a call to
+	// a model to the entry that says how it ended.
+	RefModelCall RefKind = "model_call"
+	// RefModelError is the class a failed call to a model ended in, one of
+	// ModelErrorClasses; never the provider's message.
+	RefModelError RefKind = "model_error"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -198,19 +253,159 @@ func (r Ref) Validate() error {
 		if !isHexID(r.ID) {
 			return fmt.Errorf("%w: a %s reference is its ID", ErrInvalidAuditEntry, r.Kind)
 		}
+	case RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
+		return r.validateGrantRef()
 	case RefPasskey:
-		if len(r.ID) > maxPasskeyRefLen {
-			return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
-		}
-		b, err := ParsePasskeyID(r.ID)
-		if err != nil || looksLikeSecret(r.ID) || base64.RawURLEncoding.EncodeToString(b) != r.ID {
-			return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
-		}
+		return r.validatePasskeyRef()
+	case RefModelRole, RefModel, RefModelCall, RefModelError:
+		return r.validateModel()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
 	}
 	return nil
 }
+
+// validatePasskeyRef checks that r's ID is a passkey's credential ID, in the
+// one encoding it is written in.
+func (r Ref) validatePasskeyRef() error {
+	if len(r.ID) > maxPasskeyRefLen {
+		return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
+	}
+	b, err := ParsePasskeyID(r.ID)
+	if err != nil || looksLikeSecret(r.ID) || base64.RawURLEncoding.EncodeToString(b) != r.ID {
+		return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validateGrantRef checks r's ID when r names what a grant names besides a
+// script token: a person, a view plugin, an account, a sleeve or the
+// household.
+func (r Ref) validateGrantRef() error {
+	var ok bool
+	switch r.Kind {
+	case RefPerson:
+		ok = isHexID(r.ID)
+	case RefViewPlugin:
+		ok = isPluginInstanceName(r.ID)
+	case RefAccount, RefSleeve:
+		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
+	case RefHousehold:
+		ok = r.ID == HouseholdID
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError:
+	}
+	if !ok {
+		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
+	}
+	return nil
+}
+
+// validateModel returns nil when r, of kind RefModelRole, RefModel,
+// RefModelCall or RefModelError, names a role, a model entry, a call or an
+// error class: names the owner configured, an ID or a class of a closed
+// set, never text.
+func (r Ref) validateModel() error {
+	var ok bool
+	switch r.Kind {
+	case RefModelRole:
+		ok = r.ID == "ask" || r.ID == "maintainer"
+	case RefModel:
+		ok = validModelRef(r.ID)
+	case RefModelCall:
+		ok = isHexID(r.ID)
+	case RefModelError:
+		ok = slices.Contains(ModelErrorClasses(), r.ID)
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
+	}
+	if !ok {
+		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
+	}
+	return nil
+}
+
+// ModelErrorClasses are the classes a failed call to a model ends in, a
+// closed set: the provider could not be reached, was too slow or refused the
+// plugin's key ("unavailable"); the provider or its plugin rejected the
+// request ("rejected"); the caller gave up ("canceled"); the route names a
+// provider instance that is missing or is not a model provider
+// ("misconfigured"); anything else ("internal").
+func ModelErrorClasses() []string {
+	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal"}
+}
+
+// validateModelEntry checks the references of a model call's entries
+// (D-211): every entry names its role and its call ID once. The entry written
+// before a call, outcome sent, names the model it is about to send to; the
+// entry that ends one names the model unless the call was refused before any
+// was chosen, and an error class exactly when the call failed.
+func validateModelEntry(e *AuditEntry) error {
+	count := map[RefKind]int{}
+	for _, r := range e.Refs {
+		count[r.Kind]++
+	}
+	ok := count[RefModelRole] == 1 && count[RefModelCall] == 1 && count[RefModel] <= 1 && count[RefModelError] <= 1
+	if e.Action == ActionModelCall {
+		ok = ok && sentEntryShape(e.Outcome, count)
+	} else {
+		ok = ok && resultEntryShape(e.Outcome, count)
+	}
+	if !ok {
+		return fmt.Errorf("%w: a %s entry names its role and its call, and the model and error class its outcome needs", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
+}
+
+// sentEntryShape reports whether an ActionModelCall entry of outcome that
+// names count of each kind of record is as D-211 asks: sent, with its model.
+func sentEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
+	return outcome == OutcomeSent && count[RefModel] == 1 && count[RefModelError] == 0
+}
+
+// resultEntryShape reports whether an ActionModelCallResult entry of outcome
+// that names count of each kind of record is as D-211 asks: not sent; with a
+// model unless refused; with an error class if and only if failed.
+func resultEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
+	if outcome == OutcomeSent {
+		return false
+	}
+	modelOK := outcome == OutcomeRefused || count[RefModel] == 1
+	return modelOK && (count[RefModelError] == 1) == (outcome == OutcomeFailed)
+}
+
+// validModelRef reports whether id is a model reference: a provider
+// instance's name, a slash and the model's id (the models context's Ref).
+func validModelRef(id string) bool {
+	provider, model, ok := strings.Cut(id, "/")
+	return ok && validProviderRef(provider) && validModelID(model)
+}
+
+// validProviderRef reports whether name is a lower-case DNS label of at most
+// maxProviderRefID characters, without "--".
+func validProviderRef(name string) bool {
+	if name == "" || len(name) > maxProviderRefID || strings.Contains(name, "--") || name[0] == '-' || name[len(name)-1] == '-' {
+		return false
+	}
+	return !strings.ContainsFunc(name, func(c rune) bool {
+		return (c < 'a' || c > 'z') && (c < '0' || c > '9') && c != '-'
+	})
+}
+
+// validModelID reports whether id is one to maxModelRefID characters of
+// those ids and tags contain: letters, digits and "._:/@+-".
+func validModelID(id string) bool {
+	if id == "" || len(id) > maxModelRefID {
+		return false
+	}
+	return !strings.ContainsFunc(id, func(c rune) bool {
+		return (c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') && !strings.ContainsRune("._:/@+-", c)
+	})
+}
+
+// The longest provider instance name and model id of a model reference.
+const (
+	maxProviderRefID = 63
+	maxModelRefID    = 128
+)
 
 // looksLikeSecret reports whether s starts as a script token secret, a
 // session token or an enrollment code does. Their alphabet is base64url's,
@@ -223,6 +418,10 @@ func looksLikeSecret(s string) bool {
 
 // maxRefs is the most records one entry names.
 const maxRefs = 8
+
+// grantRefs is how many records a grant entry names: its holder and its
+// target.
+const grantRefs = 2
 
 // AuditEntry is one record of the append-only audit log (D-211): who, what,
 // which records by ID, when and the outcome. It never carries an amount, a
@@ -267,7 +466,31 @@ func (e *AuditEntry) Validate() error {
 	if _, err := ParseAuditOutcome(string(e.Outcome)); err != nil {
 		return err
 	}
-	return validateRefs(e.Action, kinds, e.Refs)
+	if err := validateRefs(e.Action, kinds, e.Refs); err != nil {
+		return err
+	}
+	switch {
+	case isGrantAction(e.Action):
+		return validateGrantRefs(e.Refs)
+	case e.Action == ActionModelCall || e.Action == ActionModelCallResult:
+		return validateModelEntry(e)
+	}
+	return nil
+}
+
+// validateGrantRefs checks that refs are what a grant entry names: its holder,
+// then its target, and nothing else (D-209, D-211).
+func validateGrantRefs(refs []Ref) error {
+	if len(refs) != grantRefs {
+		return fmt.Errorf("%w: a grant entry names its holder and its target", ErrInvalidAuditEntry)
+	}
+	if !slices.Contains([]RefKind{RefPerson, RefScriptToken, RefViewPlugin}, refs[0].Kind) {
+		return fmt.Errorf("%w: a grant entry names its holder first", ErrInvalidAuditEntry)
+	}
+	if !slices.Contains([]RefKind{RefAccount, RefSleeve, RefHousehold}, refs[1].Kind) {
+		return fmt.Errorf("%w: a grant entry names its target second", ErrInvalidAuditEntry)
+	}
+	return nil
 }
 
 // validateRefs checks refs: few enough, each an ID of its kind, of a kind the

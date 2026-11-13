@@ -1028,3 +1028,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73c26b344bd7
+  - type: implements
+    from: SYM-core-init-credentials-in-cluster
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:56:21.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b212c0f944b2
+  - type: implements
+    from: SYM-core-init-credentials-in-cluster
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:56:21.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33fd4a547c87
+  - type: covered_by
+    from: SYM-core-init-credentials-in-cluster
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T07:56:21.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608cabb28fd8
+  - type: covered_by
+    from: SYM-core-init-credentials-in-cluster
+    to: TEST-core-init-credentials
+    created_at: 2026-11-13T07:56:21.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df95fb833eea
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getorigin
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:08.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe517be20872
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getorigin
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:08.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de32f7a26dd
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:31:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e0f217a0c3
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:31:51.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e678466b0d8
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-mem-store-save-enabled
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:54.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b33f0b90bf8
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-switch-changes
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:37.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50c03943d7b7
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-role-enum-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:53.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94169c26a82
+  - type: implements
+    from: SYM-models-models-provider-pb-message-role-enum-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:53.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34520fc0cae5

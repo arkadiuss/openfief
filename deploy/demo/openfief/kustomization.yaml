@@ -52,14 +52,16 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --demo-sessions
+  # The Job that generates SpiceDB's credentials is named for the core's image, since a Job's pod template can't change:
+  # scripts/demo/pin-images.sh sets the suffix to the first 12 hex digits of the core's pinned digest (placeholder 12
+  # zeros here), so a deploy that changes the image makes a new Job and Flux prunes the old one.
   - target:
       kind: Job
-      name: openfief-spicedb-secrets
+      name: openfief-init-credentials
     patch: |-
-      - op: add
-        path: /metadata/annotations
-        value:
-          kustomize.toolkit.fluxcd.io/force: enabled
+      - op: replace
+        path: /metadata/name
+        value: openfief-init-credentials-000000000000
   - target:
       kind: Job
       name: demo-seed

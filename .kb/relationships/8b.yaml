@@ -1049,3 +1049,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b272b791b23
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-memauthstore-savegrant
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:40.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8a575f46ea9
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-grantfixture-listed
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:18.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-345e8167a9a7
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-testgrantauditentries
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:47.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a68a7d2da96
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:47.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3f7b79878b9
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:47.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad95c134f84
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-new-router
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:21.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75c774a4c5ef
+  - type: implements
+    from: SYM-models-modelrouter-app-router-new-router
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:21.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a913160eb23a
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:07.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e08a4a118941
+  - type: implements
+    from: SYM-models-models-provider-pb-tool
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:07.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da3611aacbdf

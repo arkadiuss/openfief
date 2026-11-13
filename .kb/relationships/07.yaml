@@ -727,3 +727,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53c663fc646a
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakemodel-lines
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:37.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5298acf0848d
+  - type: executable_for
+    from: SYM-models-modelrouter-app-settings-test-test-settings-defaults-are-off
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:35.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63c6075d2cf6
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-message-body
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:21.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-992af3be35bb
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-message-body
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:21.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21cb6cb5c7b0
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models-proto-message
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:13.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87914c8eab62
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models-proto-message
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:13.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dc3c5a97825
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-origin
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:11.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02acfc939bd3
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-origin
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:11.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffcc5f24d0e4
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-response
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:31.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-921cd13a5f86
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-response
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:31.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c250ae7bbcd1

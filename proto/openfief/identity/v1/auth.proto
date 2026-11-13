@@ -134,6 +134,29 @@ service AuthService {
   // records by ID, when and the outcome, never an amount, a secret or a
   // question's text (GR-12).
   rpc ListAuditEntries(ListAuditEntriesRequest) returns (ListAuditEntriesResponse);
+
+  // CreateGrant lets a script token or a view plugin view an account, a
+  // sleeve or the whole household (D-209). A sleeve's grant covers the
+  // accounts placed in it later, and the household's every account, present
+  // and future. A grant only ever lets its holder view. The holder and the
+  // target must exist: an unknown one is NOT_FOUND. Granting what is granted
+  // already changes nothing and returns the grant in force. Each new grant is
+  // an audit entry (D-211), written in the same transaction. Owner scope
+  // only: a read-scoped (demo) session is refused with PERMISSION_DENIED,
+  // and it is not on the read API, so no script token reads or changes it.
+  // While the core runs with --authz=policy a grant is stored and has no
+  // effect, since every holder of read access views every account then.
+  rpc CreateGrant(CreateGrantRequest) returns (CreateGrantResponse);
+
+  // RevokeGrant ends a grant: from the next call its holder no longer views
+  // what only that grant gave it. The grant stays in ListGrants, with its end,
+  // as history. Revoking a grant already ended changes nothing; one that never
+  // existed is NOT_FOUND. Each revocation is an audit entry. Owner scope.
+  rpc RevokeGrant(RevokeGrantRequest) returns (RevokeGrantResponse);
+
+  // ListGrants returns the grants, oldest first, optionally of one holder
+  // and optionally only those in force. Owner scope.
+  rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse);
 }
 
 // SessionScope is what a session may do.
@@ -475,6 +498,19 @@ enum AuditAction {
   AUDIT_ACTION_ENROLLMENT_LINK_USED = 7;
   AUDIT_ACTION_SCRIPT_TOKEN_CREATED = 8;
   AUDIT_ACTION_SCRIPT_TOKEN_REVOKED = 9;
+  // A grant of access made (D-209); the entry names its holder, then its
+  // target.
+  AUDIT_ACTION_GRANT_CREATED = 10;
+  // A grant of access ended; the entry names its holder, then its target.
+  AUDIT_ACTION_GRANT_REVOKED = 11;
+  // A call to a model about to be sent (D-205, D-211), written before it:
+  // the entry names the role, the model and a call ID, never a question or
+  // an answer.
+  AUDIT_ACTION_MODEL_CALL = 12;
+  // How a call to a model ended: the entry names the role, the call ID of
+  // the AUDIT_ACTION_MODEL_CALL entry, the model unless the router refused
+  // before choosing one, and an error class when the call failed.
+  AUDIT_ACTION_MODEL_CALL_RESULT = 13;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -484,6 +520,9 @@ enum AuditOutcome {
   // Understood and not made, such as a sign-in whose credential did not verify.
   AUDIT_OUTCOME_REFUSED = 2;
   AUDIT_OUTCOME_FAILED = 3;
+  // A call to a model about to be sent; its result is a later entry under
+  // the same call ID.
+  AUDIT_OUTCOME_SENT = 4;
 }
 
 // AuditRefKind is the kind of record an audit entry names.
@@ -493,6 +532,25 @@ enum AuditRefKind {
   AUDIT_REF_KIND_PASSKEY = 2;
   AUDIT_REF_KIND_ENROLLMENT_CODE = 3;
   AUDIT_REF_KIND_SCRIPT_TOKEN = 4;
+  // A person, by their id.
+  AUDIT_REF_KIND_PERSON = 5;
+  // A view plugin, by its instance name.
+  AUDIT_REF_KIND_VIEW_PLUGIN = 6;
+  // An account, by its id.
+  AUDIT_REF_KIND_ACCOUNT = 7;
+  // A sleeve, by its id.
+  AUDIT_REF_KIND_SLEEVE = 8;
+  // The household, by its id, "home".
+  AUDIT_REF_KIND_HOUSEHOLD = 9;
+  // A role of the model router, by its name: "ask" or "maintainer".
+  AUDIT_REF_KIND_MODEL_ROLE = 10;
+  // A model entry, as "provider/model", the names the owner configured.
+  AUDIT_REF_KIND_MODEL = 11;
+  // The ID that links a call to a model to its result, a 16-digit hex ID.
+  AUDIT_REF_KIND_MODEL_CALL = 12;
+  // The class a failed call to a model ended in: unavailable, rejected,
+  // canceled, misconfigured or internal.
+  AUDIT_REF_KIND_MODEL_ERROR = 13;
 }
 
 // AuditActor is who made the change.
@@ -545,4 +603,82 @@ message ListAuditEntriesResponse {
   repeated AuditEntry entries = 1;
   // Empty on the last page.
   string next_page_token = 2;
+}
+
+// GrantHolderKind is what kind of party holds a grant.
+enum GrantHolderKind {
+  GRANT_HOLDER_KIND_UNSPECIFIED = 0;
+  // A viewer, by their id. Viewers come with the second alpha (D-65), so
+  // CreateGrant refuses this kind until they exist.
+  GRANT_HOLDER_KIND_PERSON = 1;
+  // A script token, by its id (D-27).
+  GRANT_HOLDER_KIND_SCRIPT_TOKEN = 2;
+  // A view plugin, by its instance name. This grant is separate from the
+  // plugin's PluginGrant, which approves what the plugin may do in the
+  // cluster; this one says which accounts it may view.
+  GRANT_HOLDER_KIND_VIEW_PLUGIN = 3;
+}
+
+// GrantTargetKind is what a grant lets its holder view.
+enum GrantTargetKind {
+  GRANT_TARGET_KIND_UNSPECIFIED = 0;
+  // One account, by its id.
+  GRANT_TARGET_KIND_ACCOUNT = 1;
+  // One sleeve, by its id: every account in it, those placed there later too.
+  GRANT_TARGET_KIND_SLEEVE = 2;
+  // The whole household: every account, present and future. Its id is "home".
+  GRANT_TARGET_KIND_HOUSEHOLD = 3;
+}
+
+// Grant is the owner's permission for a holder to view a target (D-209).
+message Grant {
+  GrantHolderKind holder_kind = 1;
+  string holder_id = 2;
+  GrantTargetKind target_kind = 3;
+  // For the household, "home".
+  string target_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  // Unset while the grant is in force.
+  google.protobuf.Timestamp revoked_at = 6;
+}
+
+message CreateGrantRequest {
+  string origin = 1;
+  string session_token = 2;
+  GrantHolderKind holder_kind = 3;
+  string holder_id = 4;
+  GrantTargetKind target_kind = 5;
+  // For the household, "home" or empty.
+  string target_id = 6;
+}
+
+message CreateGrantResponse {
+  Grant grant = 1;
+}
+
+message RevokeGrantRequest {
+  string origin = 1;
+  string session_token = 2;
+  GrantHolderKind holder_kind = 3;
+  string holder_id = 4;
+  GrantTargetKind target_kind = 5;
+  // For the household, "home" or empty.
+  string target_id = 6;
+}
+
+message RevokeGrantResponse {}
+
+message ListGrantsRequest {
+  string origin = 1;
+  string session_token = 2;
+  // Only the grants of this holder; unspecified lists every holder's, and
+  // holder_id then stays empty.
+  GrantHolderKind holder_kind = 3;
+  string holder_id = 4;
+  // Leave out the ended grants, which are the history.
+  bool in_force_only = 5;
+}
+
+message ListGrantsResponse {
+  repeated Grant grants = 1;
 }

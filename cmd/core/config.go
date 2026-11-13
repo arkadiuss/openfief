@@ -44,6 +44,9 @@ const (
 	cmdEnrollLink  = "enroll-link"
 	cmdCheck       = "check balances"
 	cmdCheckLedger = "check ledger"
+	// cmdInitCredentials creates the platform's credentials (D-216). It
+	// needs no database, so it reads no DSN.
+	cmdInitCredentials = "init-credentials"
 )
 
 // Defaults of the serve flags.
@@ -55,6 +58,7 @@ const (
 	defaultWorkers         = 2
 	defaultShutdownTimeout = 25 * time.Second
 	defaultTokenTTL        = 720 * time.Hour
+	defaultSpiceDBWait     = time.Minute
 	defaultSyncEvery       = 6 * time.Hour
 	defaultSyncJitter      = 30 * time.Minute
 	defaultSyncTimeout     = 5 * time.Minute
@@ -68,7 +72,7 @@ const (
 
 var (
 	// errUsage reports a command line the core does not understand.
-	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances|check ledger] [flags]")
+	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances|check ledger|init-credentials] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errSyncWorkers reports --sync-workers below one.
@@ -79,6 +83,8 @@ var (
 	errNoAccount = errors.New("--account is required")
 	// errBadMode reports a --mode that is not an ingest mode.
 	errBadMode = errors.New("--mode must be opening or transactions")
+	// errBadSpiceDBWait reports a --spicedb-wait below zero.
+	errBadSpiceDBWait = errors.New("--spicedb-wait must not be negative")
 	// errBadEndOfDay reports an end-of-day time that is not HH:MM.
 	errBadEndOfDay = errors.New("end of day must be HH:MM, 00:00 to 23:59")
 )
@@ -90,10 +96,19 @@ type command struct {
 	DSN  string
 	// Serve is what serve needs.
 	Serve serveConfig
-	// TokenName and TTL are token issue's; TokenID is token revoke's.
-	TokenName string
-	TTL       time.Duration
-	TokenID   string
+	// TokenName, TTL and GrantHousehold are token issue's; TokenID is token
+	// revoke's.
+	TokenName      string
+	TTL            time.Duration
+	GrantHousehold bool
+	// SpiceDBWait is how long token issue waits for SpiceDB to answer before
+	// it issues a token whose grant it must write there.
+	SpiceDBWait time.Duration
+	TokenID     string
+	// Authz is how token issue and token revoke reach SpiceDB, to pass on a
+	// grant they make or end (D-209); with the policy, which is the default,
+	// they change the database alone.
+	Authz authzConfig
 	// Connector is what connector bind and connector sync need.
 	Connector connectorArgs
 	// Enroll is what enroll-link needs.
@@ -169,6 +184,9 @@ func parseArgs(args []string, getenv func(string) string) (command, error) {
 	if err != nil {
 		return command{}, err
 	}
+	if cmd.Name == cmdInitCredentials {
+		return cmd, nil
+	}
 	if cmd.DSN = getenv(dsnEnv); cmd.DSN == "" {
 		return command{}, errNoDSN
 	}
@@ -183,12 +201,14 @@ func parseCommand(name string, rest []string, getenv func(string) string) (comma
 	switch name {
 	case cmdServe:
 		cmd.Serve, err = parseServe(rest, getenv)
-	case cmdMigrate, cmdTokenList:
+	case cmdMigrate, cmdTokenList, cmdInitCredentials:
 		err = parseNone(name, rest)
 	case cmdTokenIssue:
-		cmd.TokenName, cmd.TTL, err = parseIssue(rest)
+		var issue issueArgs
+		issue, err = parseIssue(rest, getenv)
+		cmd.TokenName, cmd.TTL, cmd.GrantHousehold, cmd.Authz, cmd.SpiceDBWait = issue.Name, issue.TTL, issue.Household, issue.Authz, issue.Wait
 	case cmdTokenRevoke:
-		cmd.TokenID, err = parseRevoke(rest)
+		cmd.TokenID, cmd.Authz, err = parseRevoke(rest, getenv)
 	case cmdBind, cmdSync:
 		cmd.Connector, err = parseConnector(name, rest)
 	case cmdEnrollLink:
@@ -354,30 +374,62 @@ func parseEndOfDay(s string, loc *time.Location) (valuationpg.DailyAt, error) {
 	return valuationpg.DailyAt{Hour: h, Minute: m, Location: loc}, nil
 }
 
-// parseIssue parses token issue's flags.
-func parseIssue(args []string) (string, time.Duration, error) {
-	fs := newFlags(cmdTokenIssue)
-	name := fs.String("name", "", "the token's name, such as the script that uses it")
-	ttl := fs.Duration("ttl", defaultTokenTTL, "how long the token is valid, at most 8760h")
-	if err := fs.Parse(args); err != nil {
-		return "", 0, fmt.Errorf("token issue: %w", err)
-	}
-	if fs.NArg() > 0 {
-		return "", 0, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
-	}
-	return *name, *ttl, nil
+// issueArgs are token issue's flags.
+type issueArgs struct {
+	Name      string
+	TTL       time.Duration
+	Household bool
+	Wait      time.Duration
+	Authz     authzConfig
 }
 
-// parseRevoke parses token revoke's one argument, the token ID.
-func parseRevoke(args []string) (string, error) {
-	fs := newFlags(cmdTokenRevoke)
+// parseIssue parses token issue's flags, reading SpiceDB's endpoint and key
+// through getenv when --authz asks for it.
+func parseIssue(args []string, getenv func(string) string) (issueArgs, error) {
+	fs := newFlags(cmdTokenIssue)
+	var a issueArgs
+	fs.StringVar(&a.Name, "name", "", "the token's name, such as the script that uses it")
+	fs.DurationVar(&a.TTL, "ttl", defaultTokenTTL, "how long the token is valid, at most 8760h")
+	fs.BoolVar(&a.Household, "grant-household", false, "also give the token the household grant, so under --authz=spicedb it views every account, present and future; without it a token views nothing there until the owner grants it (D-209)")
+	fs.DurationVar(&a.Wait, "spicedb-wait", defaultSpiceDBWait, "how long to wait for SpiceDB to answer before issuing a token with --grant-household under --authz=spicedb; if it doesn't, nothing is issued")
+	authzFlags(fs, &a.Authz)
 	if err := fs.Parse(args); err != nil {
-		return "", fmt.Errorf("token revoke: %w", err)
+		return issueArgs{}, fmt.Errorf("token issue: %w", err)
+	}
+	if a.Wait < 0 {
+		return issueArgs{}, errBadSpiceDBWait
+	}
+	if err := parseAuthz(&a.Authz, getenv); err != nil {
+		return issueArgs{}, err
+	}
+	if err := a.Authz.requireKey(); err != nil {
+		return issueArgs{}, err
+	}
+	if fs.NArg() > 0 {
+		return issueArgs{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
+	}
+	return a, nil
+}
+
+// parseRevoke parses token revoke's one argument, the token ID, and its
+// authorization flags.
+func parseRevoke(args []string, getenv func(string) string) (string, authzConfig, error) {
+	fs := newFlags(cmdTokenRevoke)
+	var authz authzConfig
+	authzFlags(fs, &authz)
+	if err := fs.Parse(args); err != nil {
+		return "", authzConfig{}, fmt.Errorf("token revoke: %w", err)
+	}
+	if err := parseAuthz(&authz, getenv); err != nil {
+		return "", authzConfig{}, err
+	}
+	if err := authz.requireKey(); err != nil {
+		return "", authzConfig{}, err
 	}
 	if fs.NArg() != 1 {
-		return "", fmt.Errorf("%w: token revoke takes one token ID", errUsage)
+		return "", authzConfig{}, fmt.Errorf("%w: token revoke takes one token ID", errUsage)
 	}
-	return fs.Arg(0), nil
+	return fs.Arg(0), authz, nil
 }
 
 // parseConnector parses connector bind's and connector sync's flags.

@@ -783,3 +783,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f694bbb87cc
+  - type: executable_for
+    from: SYM-identity-app-test-helper-secret-shelf-create
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:46:24.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe7f642337e7
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-granthousehold
+    to: REQ-identity-grants-cutover-keeps-access
+    created_at: 2026-11-13T10:06:22.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e23b3f47fe
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-granthousehold
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:06:22.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0440541c7e14
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-granthousehold
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:22.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c70cce597aa4
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-test-generate-refusals
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:48.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c19ae52c65b6
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-role-enum
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:29.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe6bc7994347
+  - type: implements
+    from: SYM-models-models-provider-pb-message-role-enum
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:29.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb0fcdc2bdf8

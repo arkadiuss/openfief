@@ -1,5 +1,5 @@
 ---
-title: The registry tells the placement observer of each stored placement and removal
+title: The registry tells its observers of each stored placement, removal and deleted sleeve, and reports one that could not pass it on
 status: active
 sourceFile: internal/portfolio/app/registry_observer_test.go
 verification_scope: unit
@@ -9,4 +9,4 @@ origin:
 id: TEST-portfolio-app-registry-observer
 type: test
 ---
-Over the in-memory registry store: the observer hears of a stored placement and removal and of no refused one; when it fails, the change stays stored and the error wraps ErrPlacementNotObserved and the observer's own. A false pass would be an observer called before the store, which the refused-change rows would catch.
+Runs the Registry over an in-memory store and recording observers. An account placed, moved or removed, and a sleeve deleted, are told to every observer after the store has stored them, in the order the observers were added and whether or not an earlier one failed; a change that was refused (an unknown account or sleeve, a sleeve that still has accounts) is told to none. A sleeve already gone is told again, so a retry after an observer failed finishes the clean-up. An observer that fails leaves the change stored and makes the Registry report ErrPlacementNotObserved wrapping the observer's error.

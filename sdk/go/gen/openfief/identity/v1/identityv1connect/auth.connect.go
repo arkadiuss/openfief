@@ -129,6 +129,12 @@ const (
 	// AuthServiceListAuditEntriesProcedure is the fully-qualified name of the AuthService's
 	// ListAuditEntries RPC.
 	AuthServiceListAuditEntriesProcedure = "/openfief.identity.v1.AuthService/ListAuditEntries"
+	// AuthServiceCreateGrantProcedure is the fully-qualified name of the AuthService's CreateGrant RPC.
+	AuthServiceCreateGrantProcedure = "/openfief.identity.v1.AuthService/CreateGrant"
+	// AuthServiceRevokeGrantProcedure is the fully-qualified name of the AuthService's RevokeGrant RPC.
+	AuthServiceRevokeGrantProcedure = "/openfief.identity.v1.AuthService/RevokeGrant"
+	// AuthServiceListGrantsProcedure is the fully-qualified name of the AuthService's ListGrants RPC.
+	AuthServiceListGrantsProcedure = "/openfief.identity.v1.AuthService/ListGrants"
 )
 
 // AuthServiceClient is a client for the openfief.identity.v1.AuthService service.
@@ -197,6 +203,26 @@ type AuthServiceClient interface {
 	// records by ID, when and the outcome, never an amount, a secret or a
 	// question's text (GR-12).
 	ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error)
+	// CreateGrant lets a script token or a view plugin view an account, a
+	// sleeve or the whole household (D-209). A sleeve's grant covers the
+	// accounts placed in it later, and the household's every account, present
+	// and future. A grant only ever lets its holder view. The holder and the
+	// target must exist: an unknown one is NOT_FOUND. Granting what is granted
+	// already changes nothing and returns the grant in force. Each new grant is
+	// an audit entry (D-211), written in the same transaction. Owner scope
+	// only: a read-scoped (demo) session is refused with PERMISSION_DENIED,
+	// and it is not on the read API, so no script token reads or changes it.
+	// While the core runs with --authz=policy a grant is stored and has no
+	// effect, since every holder of read access views every account then.
+	CreateGrant(context.Context, *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error)
+	// RevokeGrant ends a grant: from the next call its holder no longer views
+	// what only that grant gave it. The grant stays in ListGrants, with its end,
+	// as history. Revoking a grant already ended changes nothing; one that never
+	// existed is NOT_FOUND. Each revocation is an audit entry. Owner scope.
+	RevokeGrant(context.Context, *connect.Request[v1.RevokeGrantRequest]) (*connect.Response[v1.RevokeGrantResponse], error)
+	// ListGrants returns the grants, oldest first, optionally of one holder
+	// and optionally only those in force. Owner scope.
+	ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the openfief.identity.v1.AuthService service. By
@@ -318,6 +344,24 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("ListAuditEntries")),
 			connect.WithClientOptions(opts...),
 		),
+		createGrant: connect.NewClient[v1.CreateGrantRequest, v1.CreateGrantResponse](
+			httpClient,
+			baseURL+AuthServiceCreateGrantProcedure,
+			connect.WithSchema(authServiceMethods.ByName("CreateGrant")),
+			connect.WithClientOptions(opts...),
+		),
+		revokeGrant: connect.NewClient[v1.RevokeGrantRequest, v1.RevokeGrantResponse](
+			httpClient,
+			baseURL+AuthServiceRevokeGrantProcedure,
+			connect.WithSchema(authServiceMethods.ByName("RevokeGrant")),
+			connect.WithClientOptions(opts...),
+		),
+		listGrants: connect.NewClient[v1.ListGrantsRequest, v1.ListGrantsResponse](
+			httpClient,
+			baseURL+AuthServiceListGrantsProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ListGrants")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -341,6 +385,9 @@ type authServiceClient struct {
 	finishPasskeyCheck   *connect.Client[v1.FinishPasskeyCheckRequest, v1.FinishPasskeyCheckResponse]
 	signOutEverywhere    *connect.Client[v1.SignOutEverywhereRequest, v1.SignOutEverywhereResponse]
 	listAuditEntries     *connect.Client[v1.ListAuditEntriesRequest, v1.ListAuditEntriesResponse]
+	createGrant          *connect.Client[v1.CreateGrantRequest, v1.CreateGrantResponse]
+	revokeGrant          *connect.Client[v1.RevokeGrantRequest, v1.RevokeGrantResponse]
+	listGrants           *connect.Client[v1.ListGrantsRequest, v1.ListGrantsResponse]
 }
 
 // GetLoginMethods calls openfief.identity.v1.AuthService.GetLoginMethods.
@@ -433,6 +480,21 @@ func (c *authServiceClient) ListAuditEntries(ctx context.Context, req *connect.R
 	return c.listAuditEntries.CallUnary(ctx, req)
 }
 
+// CreateGrant calls openfief.identity.v1.AuthService.CreateGrant.
+func (c *authServiceClient) CreateGrant(ctx context.Context, req *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error) {
+	return c.createGrant.CallUnary(ctx, req)
+}
+
+// RevokeGrant calls openfief.identity.v1.AuthService.RevokeGrant.
+func (c *authServiceClient) RevokeGrant(ctx context.Context, req *connect.Request[v1.RevokeGrantRequest]) (*connect.Response[v1.RevokeGrantResponse], error) {
+	return c.revokeGrant.CallUnary(ctx, req)
+}
+
+// ListGrants calls openfief.identity.v1.AuthService.ListGrants.
+func (c *authServiceClient) ListGrants(ctx context.Context, req *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error) {
+	return c.listGrants.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the openfief.identity.v1.AuthService service.
 type AuthServiceHandler interface {
 	// GetLoginMethods says which ways in the login page can offer at origin.
@@ -499,6 +561,26 @@ type AuthServiceHandler interface {
 	// records by ID, when and the outcome, never an amount, a secret or a
 	// question's text (GR-12).
 	ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error)
+	// CreateGrant lets a script token or a view plugin view an account, a
+	// sleeve or the whole household (D-209). A sleeve's grant covers the
+	// accounts placed in it later, and the household's every account, present
+	// and future. A grant only ever lets its holder view. The holder and the
+	// target must exist: an unknown one is NOT_FOUND. Granting what is granted
+	// already changes nothing and returns the grant in force. Each new grant is
+	// an audit entry (D-211), written in the same transaction. Owner scope
+	// only: a read-scoped (demo) session is refused with PERMISSION_DENIED,
+	// and it is not on the read API, so no script token reads or changes it.
+	// While the core runs with --authz=policy a grant is stored and has no
+	// effect, since every holder of read access views every account then.
+	CreateGrant(context.Context, *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error)
+	// RevokeGrant ends a grant: from the next call its holder no longer views
+	// what only that grant gave it. The grant stays in ListGrants, with its end,
+	// as history. Revoking a grant already ended changes nothing; one that never
+	// existed is NOT_FOUND. Each revocation is an audit entry. Owner scope.
+	RevokeGrant(context.Context, *connect.Request[v1.RevokeGrantRequest]) (*connect.Response[v1.RevokeGrantResponse], error)
+	// ListGrants returns the grants, oldest first, optionally of one holder
+	// and optionally only those in force. Owner scope.
+	ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -616,6 +698,24 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("ListAuditEntries")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceCreateGrantHandler := connect.NewUnaryHandler(
+		AuthServiceCreateGrantProcedure,
+		svc.CreateGrant,
+		connect.WithSchema(authServiceMethods.ByName("CreateGrant")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceRevokeGrantHandler := connect.NewUnaryHandler(
+		AuthServiceRevokeGrantProcedure,
+		svc.RevokeGrant,
+		connect.WithSchema(authServiceMethods.ByName("RevokeGrant")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceListGrantsHandler := connect.NewUnaryHandler(
+		AuthServiceListGrantsProcedure,
+		svc.ListGrants,
+		connect.WithSchema(authServiceMethods.ByName("ListGrants")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.identity.v1.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceGetLoginMethodsProcedure:
@@ -654,6 +754,12 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceSignOutEverywhereHandler.ServeHTTP(w, r)
 		case AuthServiceListAuditEntriesProcedure:
 			authServiceListAuditEntriesHandler.ServeHTTP(w, r)
+		case AuthServiceCreateGrantProcedure:
+			authServiceCreateGrantHandler.ServeHTTP(w, r)
+		case AuthServiceRevokeGrantProcedure:
+			authServiceRevokeGrantHandler.ServeHTTP(w, r)
+		case AuthServiceListGrantsProcedure:
+			authServiceListGrantsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -733,4 +839,16 @@ func (UnimplementedAuthServiceHandler) SignOutEverywhere(context.Context, *conne
 
 func (UnimplementedAuthServiceHandler) ListAuditEntries(context.Context, *connect.Request[v1.ListAuditEntriesRequest]) (*connect.Response[v1.ListAuditEntriesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListAuditEntries is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) CreateGrant(context.Context, *connect.Request[v1.CreateGrantRequest]) (*connect.Response[v1.CreateGrantResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.CreateGrant is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) RevokeGrant(context.Context, *connect.Request[v1.RevokeGrantRequest]) (*connect.Response[v1.RevokeGrantResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.RevokeGrant is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ListGrants(context.Context, *connect.Request[v1.ListGrantsRequest]) (*connect.Response[v1.ListGrantsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListGrants is not implemented"))
 }

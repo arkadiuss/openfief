@@ -930,3 +930,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0503e80541c9
+  - type: implements
+    from: SYM-grants-internal-views-kube-plugins-plugins-onremoved
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:18:00.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b12c848b79
+  - type: covered_by
+    from: SYM-grants-internal-views-kube-plugins-plugins-onremoved
+    to: TEST-views-kube
+    created_at: 2026-11-13T10:18:00.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98aea1e33b07
+  - type: executable_for
+    from: SYM-models-modelrouter-connectrpc-client-test-new-client
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:56.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d02dab3d8b9
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-get-tool-calls
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:58.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-737d7573914b
+  - type: implements
+    from: SYM-models-models-provider-pb-message-get-tool-calls
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:58.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2b9be4ed79d
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-newcallid
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:49:11.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7163149916e2
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-newcallid
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:49:11.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f3f5974aab
+  - type: implements
+    from: SYM-models-followup-ports-go-callresult
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:49:47.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e879aefd10b6
+  - type: covered_by
+    from: SYM-models-followup-ports-go-callresult
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:49:47.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61c50fcedcea

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -13,15 +14,34 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/grpc"
 
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/identity/spicedb"
 )
 
-// grants are the owner's grants (D-209), which the Syncer never touches.
-func grants() []spicedb.Tuple {
+// The IDs of the grants' holders.
+const (
+	tokenID  = "0011223344556677"
+	personID = "8899aabbccddeeff"
+)
+
+// grants are the owner's grants (D-209) in force, as the identity context's
+// table holds them: the Syncer writes each as a relationship.
+func grants() []identity.Grant {
+	at := time.Date(2026, 11, 13, 8, 0, 0, 0, time.UTC)
+	return []identity.Grant{
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: tokenID}, Target: identity.Household(), CreatedAt: at},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderPerson, ID: personID}, Target: identity.Household(), CreatedAt: at},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderPerson, ID: personID}, Target: identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: "bonds"}, CreatedAt: at},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderViewPlugin, ID: "ui"}, Target: identity.GrantTarget{Kind: identity.GrantTargetSleeve, ID: "core"}, CreatedAt: at},
+	}
+}
+
+// grantTuples are the relationships of grants().
+func grantTuples() []spicedb.Tuple {
 	return []spicedb.Tuple{
-		{Resource: "household:home", Relation: "reader", Subject: "script_token:nightly"},
-		{Resource: "household:home", Relation: "reader", Subject: "person:family"},
-		{Resource: "account:bonds", Relation: "viewer", Subject: "person:viewer"},
+		{Resource: "household:home", Relation: "reader", Subject: "script_token:" + tokenID},
+		{Resource: "household:home", Relation: "reader", Subject: "person:" + personID},
+		{Resource: "account:bonds", Relation: "viewer", Subject: "person:" + personID},
 		{Resource: "sleeve:core", Relation: "viewer", Subject: "view_plugin:ui"},
 	}
 }
@@ -65,7 +85,7 @@ func TestPlan(t *testing.T) {
 // household and sleeve, moves it in one atomic write, and leaves grants.
 func TestSyncerPlacesAnAccount(t *testing.T) {
 	t.Parallel()
-	f := &fake{tuples: grants()}
+	f := &fake{tuples: grantTuples()}
 	s := spicedb.NewSyncer(f)
 	ctx := t.Context()
 
@@ -93,7 +113,7 @@ func TestSyncerPlacesAnAccount(t *testing.T) {
 	if f.has(spicedb.Tuple{Resource: "account:brokerage", Relation: "sleeve", Subject: "sleeve:core"}) {
 		t.Error("the old sleeve's relationship is still held")
 	}
-	for _, g := range grants() {
+	for _, g := range grantTuples() {
 		if !f.has(g) {
 			t.Errorf("grant %s was removed", g)
 		}
@@ -102,7 +122,7 @@ func TestSyncerPlacesAnAccount(t *testing.T) {
 
 func TestSyncerUnplacesAnAccount(t *testing.T) {
 	t.Parallel()
-	f := &fake{tuples: grants()}
+	f := &fake{tuples: grantTuples()}
 	s := spicedb.NewSyncer(f)
 	ctx := t.Context()
 	if err := s.AccountPlaced(ctx, "brokerage", "core"); err != nil {
@@ -120,7 +140,7 @@ func TestSyncerUnplacesAnAccount(t *testing.T) {
 	if !f.has(spicedb.Tuple{Resource: "account:brokerage", Relation: "household", Subject: "household:home"}) {
 		t.Error("the account lost its household")
 	}
-	for _, g := range grants() {
+	for _, g := range grantTuples() {
 		if !f.has(g) {
 			t.Errorf("grant %s was removed", g)
 		}
@@ -129,8 +149,9 @@ func TestSyncerUnplacesAnAccount(t *testing.T) {
 
 // TestSyncerReconciles checks the repair at start: missing relationships
 // are written, those of a deleted account or a sleeve left are removed,
-// demo sessions' grant follows the flag, grants stay, and a second run
-// writes nothing.
+// demo sessions' grant follows the flag, the grants in force are written
+// and a relationship of a grant that is not, or was never, in force is
+// removed, and a second run writes nothing.
 func TestSyncerReconciles(t *testing.T) {
 	t.Parallel()
 	stale := []spicedb.Tuple{
@@ -139,13 +160,19 @@ func TestSyncerReconciles(t *testing.T) {
 		{Resource: "account:bonds", Relation: "sleeve", Subject: "sleeve:old"},
 		{Resource: "household:home", Relation: "owner", Subject: "person:previous"},
 		{Resource: "household:home", Relation: "reader", Subject: "demo_session:*"},
+		// A grant that ended, one written by hand and one of a person's viewer relation: none is in the table.
+		{Resource: "account:bonds", Relation: "viewer", Subject: "script_token:ended"},
+		{Resource: "household:home", Relation: "reader", Subject: "view_plugin:by-hand"},
+		{Resource: "sleeve:core", Relation: "viewer", Subject: "person:ended"},
 	}
-	f := &fake{tuples: append(grants(), stale...)}
+	// SpiceDB holds all the grants but one, which the table has: drift in both directions.
+	f := &fake{tuples: append(grantTuples()[:3:3], stale...)}
 	s := spicedb.NewSyncer(f)
 	ctx := t.Context()
 	d := spicedb.Desired{
 		Accounts: []string{"bonds", "brokerage", "IKE (PL)"},
 		Sleeves:  map[string]string{"bonds": "bonds", "brokerage": "core"},
+		Grants:   grants(),
 	}
 	if err := s.Reconcile(ctx, fixed(d)); err != nil {
 		t.Fatalf("Reconcile: %v", err)
@@ -154,12 +181,12 @@ func TestSyncerReconciles(t *testing.T) {
 		"account:IKE=20=28PL=29#household@household:home",
 		"account:bonds#household@household:home",
 		"account:bonds#sleeve@sleeve:bonds",
-		"account:bonds#viewer@person:viewer",
+		"account:bonds#viewer@person:" + personID,
 		"account:brokerage#household@household:home",
 		"account:brokerage#sleeve@sleeve:core",
 		"household:home#owner@person:owner",
-		"household:home#reader@person:family",
-		"household:home#reader@script_token:nightly",
+		"household:home#reader@person:" + personID,
+		"household:home#reader@script_token:" + tokenID,
 		"sleeve:core#viewer@view_plugin:ui",
 	}
 	if diff := cmp.Diff(want, f.held()); diff != "" {
@@ -190,6 +217,66 @@ func TestSyncerReconciles(t *testing.T) {
 		t.Error("demo sessions keep their household grant")
 	}
 }
+
+// TestSyncerProjectsGrants checks that a grant is the relationship of its
+// target and holder (D-209): a household grant makes the holder a reader of
+// the household, an account's or a sleeve's a viewer of it; that an ID
+// SpiceDB can't take is escaped as every other; and that projecting and
+// unprojecting are idempotent and touch nothing else.
+func TestSyncerProjectsGrants(t *testing.T) {
+	t.Parallel()
+	f := &fake{tuples: []spicedb.Tuple{{Resource: "household:home", Relation: "owner", Subject: "person:owner"}}}
+	s := spicedb.NewSyncer(f)
+	ctx := t.Context()
+	at := time.Date(2026, 11, 13, 8, 0, 0, 0, time.UTC)
+	odd := identity.Grant{
+		Holder:    identity.GrantHolder{Kind: identity.GrantHolderViewPlugin, ID: "ui"},
+		Target:    identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: "IKE (PL)"},
+		CreatedAt: at,
+	}
+	all := append(grants(), odd)
+	for range 2 {
+		if err := s.ProjectGrants(ctx, all); err != nil {
+			t.Fatalf("ProjectGrants: %v", err)
+		}
+	}
+	want := append([]string{"household:home#owner@person:owner", "account:IKE=20=28PL=29#viewer@view_plugin:ui"}, tupleLines(grantTuples())...)
+	sortStrings(want)
+	if diff := cmp.Diff(want, f.held()); diff != "" {
+		t.Errorf("held after ProjectGrants (-want +got):\n%s", diff)
+	}
+	for range 2 {
+		if err := s.UnprojectGrants(ctx, all); err != nil {
+			t.Fatalf("UnprojectGrants: %v", err)
+		}
+	}
+	if diff := cmp.Diff([]string{"household:home#owner@person:owner"}, f.held()); diff != "" {
+		t.Errorf("held after UnprojectGrants (-want +got):\n%s", diff)
+	}
+	for _, bad := range []identity.Grant{
+		{Holder: identity.GrantHolder{Kind: "agent", ID: "x"}, Target: identity.Household()},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: tokenID}, Target: identity.GrantTarget{Kind: "fief", ID: "x"}},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: tokenID}, Target: identity.GrantTarget{Kind: identity.GrantTargetAccount}},
+	} {
+		if err := s.ProjectGrants(ctx, []identity.Grant{bad}); err == nil {
+			t.Errorf("ProjectGrants(%+v) succeeded", bad)
+		}
+	}
+	if len(f.writes) != 4 {
+		t.Errorf("%d writes, want only the four of the two good calls each: a bad grant writes nothing", len(f.writes))
+	}
+}
+
+// tupleLines returns ts in zed's notation.
+func tupleLines(ts []spicedb.Tuple) []string {
+	out := make([]string, 0, len(ts))
+	for _, t := range ts {
+		out = append(out, t.String())
+	}
+	return out
+}
+
+func sortStrings(s []string) { slices.Sort(s) }
 
 func TestSyncerWritesInBatches(t *testing.T) {
 	t.Parallel()
@@ -272,11 +359,11 @@ func TestSyncerReportsAFailedWrite(t *testing.T) {
 // writes nothing.
 func TestSyncerReportsAFailedLoad(t *testing.T) {
 	t.Parallel()
-	f := &fake{tuples: grants()}
+	f := &fake{tuples: grantTuples()}
 	err := spicedb.NewSyncer(f).Reconcile(t.Context(), func(context.Context) (spicedb.Desired, error) {
 		return spicedb.Desired{}, errSpiceDB
 	})
-	if !errors.Is(err, errSpiceDB) || len(f.writes) != 0 || len(f.held()) != len(grants()) {
+	if !errors.Is(err, errSpiceDB) || len(f.writes) != 0 || len(f.held()) != len(grantTuples()) {
 		t.Errorf("Reconcile = %v after %d writes holding %v, want the error and no change", err, len(f.writes), f.held())
 	}
 }

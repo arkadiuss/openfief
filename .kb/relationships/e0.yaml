@@ -1084,3 +1084,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d2ca3b24891
+  - type: implements
+    from: SYM-identity-kube-secret-creator
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:45:42.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2a4205a1264
+  - type: implements
+    from: SYM-identity-kube-secret-creator
+    to: REQ-identity-credentials-role-create-secrets-only
+    created_at: 2026-11-13T07:45:42.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c2a8639fa5
+  - type: covered_by
+    from: SYM-identity-kube-secret-creator
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:45:42.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b69c988e5a
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantsstartup
+    to: REQ-identity-grants-cutover-keeps-access
+    created_at: 2026-11-13T10:03:05.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bde130dee644
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantsstartup
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:05.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41488599a9b9
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider-describe
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:37.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f855c92d64
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider-describe
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:37.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87acffe6c2f6
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:32.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d95f326ab4f
+  - type: implements
+    from: SYM-models-models-provider-pb-message-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:32.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9c77d5c5416
+  - type: implements
+    from: SYM-identity-view-grants-ungranted-view-plugins
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:07:10.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b98e01fda367
+  - type: covered_by
+    from: SYM-identity-view-grants-ungranted-view-plugins
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:07:10.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6271c2fa87b9
+  - type: covered_by
+    from: SYM-identity-view-grants-ungranted-view-plugins
+    to: TEST-core-grants
+    created_at: 2026-11-13T17:07:10.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6f3061512dc

@@ -727,3 +727,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c989c56712e4
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-grantsfixture-issuer
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:00.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b0691cbda5
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-response-from
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:11.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b44a3ac0805
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-response-from
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:50:11.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20fbb8a33987
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-testnewcallid
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:50:53.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-289263b5eb20
+  - type: executable_for
+    from: SYM-models-followup-modelprovider-test-go-unreconciled
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T14:51:42.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958454e34b6d

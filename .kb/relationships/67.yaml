@@ -1098,3 +1098,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c599619dee56
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:49.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da60cca910fa
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:49.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcea15a9aac7
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tier-set
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:46.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4dfa6b93796
+  - type: implements
+    from: SYM-models-modelrouter-tier-tier-set
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:44:46.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d38a354e3c
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-manifest-test-test-manifest-asks-for-nothing-fixed
+    to: TEST-plugins-model-openai-manifest
+    created_at: 2026-11-13T12:49:23.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6fcd46117d4
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:08.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be073267a5c8
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:08.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7835fa454bc2
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-tiers
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:19.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dcbaef61108
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-tiers
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:19.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a763b95cab
+  - type: implements
+    from: SYM-identity-view-grants-plugins-with-grants
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:13:37.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f107d90a58
+  - type: covered_by
+    from: SYM-identity-view-grants-plugins-with-grants
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:13:37.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b27d00e18fdb

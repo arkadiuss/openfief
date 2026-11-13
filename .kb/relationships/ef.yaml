@@ -839,3 +839,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7eea8363ad0b
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-checkcreated
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:25.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39c43603a780
+  - type: implements
+    from: SYM-grants-internal-identity-app-tokens-auditedatomic
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:09:46.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dcd9ef30db1
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-tokens-auditedatomic
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:46.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c76956d99e1b
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-viewplugins
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:20.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9be75fadb7b
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-test-owner-changes-the-switch-and-the-toggles
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:53.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42a8ee64d4d1
+  - type: covered_by
+    from: SYM-models-models-provider-pb-wire-protocol-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:25.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fd4eb5883d5
+  - type: implements
+    from: SYM-models-models-provider-pb-wire-protocol-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:25.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67626ffcb105
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-testprovideraddressnamesthediscoveryserrors
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:50:58.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf28c9ec0d2a

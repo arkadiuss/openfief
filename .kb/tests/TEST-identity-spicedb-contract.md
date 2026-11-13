@@ -1,5 +1,5 @@
 ---
-title: A real SpiceDB answers every holder's actions as identity.MayAct does
+title: A real SpiceDB answers every holder's actions as identity.MayAct does, and a grant projected through the adapters covers what D-209 says and only lets its holder view
 status: active
 sourceFile: internal/identity/spicedb/contract_test.go
 verification_scope: integration
@@ -9,4 +9,4 @@ origin:
 id: TEST-identity-spicedb-contract
 type: test
 ---
-Under task test:authz, which starts the pinned SpiceDB in testing mode (build tag spicedb), with authz/schema.zed written and the syncer's relationships plus the household grants of today's readers: every holder kind and action on every account, and the lists, equal identity.MayAct; a sleeve grant covers an account placed later and ends when its sleeve relationship is removed or it moves, a household grant covers a later account, a viewer grant never changes, a deleted account is nobody's; reconcile is idempotent and leaves grants. Not part of task check, because building SpiceDB takes minutes. A false pass would be a schema loaded without the sleeve relation, which the sleeve rows would catch.
+Under task test:authz, against a real SpiceDB in testing mode with authz/schema.zed written. With the household grants the cutover writes for the holders of read access, every holder's every action on every account is answered as identity.MayAct does, and the lists agree. A sleeve grant covers an account placed in the sleeve later and stops when the account's sleeve relationship is removed or the account moves; a household grant covers an account added later; an account grant covers that account only; no grant ever lets its holder change. Revoking a grant, by removing its relationship, ends what only it gave. Reconcile writes the grants of the table and removes one the table does not hold, and a second Reconcile writes nothing.

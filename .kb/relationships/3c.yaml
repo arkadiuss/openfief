@@ -783,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b86425bf21f5
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testtokenissuewaitsuntilspicedbanswers
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:21.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32375ee1712e
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-test-generate-maps-provider-failures
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:53.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68bfb3d2529c
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-generate
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:23.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811de8133e14
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-generate
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:23.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a01d29ff22d

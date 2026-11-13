@@ -78,7 +78,7 @@ verify_images() {
   [ -f "$file" ] || fail "$file is not a file"
   [ -z "$tag" ] || [[ "$tag" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]] || fail "'$tag' is not an image tag"
   while IFS= read -r image; do
-    # A third party's image (SpiceDB and the Job that generates its credentials, D-164) is named by tag and digest and
+    # A third party's image (SpiceDB, D-164) is named by tag and digest and
     # signed by nobody of ours: it must be pinned, and is left out of the signature check.
     if [[ "$image" != "ghcr.io/$repo/"* && "$image" != "ghcr.io/${repo,,}/"* ]]; then
       [[ "$image" =~ ^[a-z0-9][a-z0-9._/-]*:[A-Za-z0-9_][A-Za-z0-9_.-]*@sha256:[0-9a-f]{64}$ ]] ||

@@ -937,3 +937,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0241ed04c051
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-spicedb-waits-for-key
+    created_at: 2026-11-13T13:03:12.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d958cd6c09ea
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-token-issue-atomic-under-spicedb
+    created_at: 2026-11-13T15:35:54.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bfafd5c5739
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-authz-outage-fails-closed-ready-at-start
+    created_at: 2026-11-13T15:35:54.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85565b81b59f
+  - type: covered_by
+    from: SYM-models-cmd-core-modelrouter-model-providers-generate
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:25:32.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0965aac99c13
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-model-providers-generate
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:25:32.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d526a588b8e
+  - type: covered_by
+    from: SYM-models-models-provider-pb-finish-reason-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:55:11.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff528673416
+  - type: implements
+    from: SYM-models-models-provider-pb-finish-reason-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:55:11.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45ad120d37c4
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:04.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfe0974c8074
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:04.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b09b55b4106
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:45:42.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab429467ba74
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:45:54.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f56261f55844
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:45:54.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db091298119
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T14:45:55.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0115b959adcf
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T14:45:55.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd54d2fa1fe
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-attention-scope
+    created_at: 2026-11-13T14:45:55.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ffa4987f7e
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-ui-attention
+    created_at: 2026-11-13T14:45:55.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259555995d29

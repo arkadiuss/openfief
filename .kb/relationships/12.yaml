@@ -888,3 +888,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21bd9da4ab7e
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-mem-store-save-route
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:03.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5327cd353e69
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:06.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9820be0386c2
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:06.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be424dc85bb4
+  - type: implements
+    from: SYM-models-followup-problem-go-routeproblem
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:50:37.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf76ae6db948
+  - type: covered_by
+    from: SYM-models-followup-problem-go-routeproblem
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:50:37.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b466457cc551
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeattention-clear
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:52:11.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b494f621b5

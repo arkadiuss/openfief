@@ -1,0 +1,119 @@
+// The owner's agents-and-models settings contract (docs/DESIGN.md D-212,
+// D-205, D-206).
+//
+// Agents and models are off by default, behind one switch with a toggle for
+// each feature: the Ask box's model (D-203), the maintainer (D-204) and the
+// MCP server (D-213). The owner also names, per role, the primary model and
+// its fallbacks as "provider/model" references (D-205), and per data tier
+// the models allowed to receive it (D-206). Only the owner changes them.
+//
+// The core serves ModelSettingsService to VIEW plugins only, next to the
+// SettingsService. Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails with
+//   PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - An unknown feature, role or tier, or a reference that is not
+//   "provider/model", fails with INVALID_ARGUMENT and nothing changes.
+syntax = "proto3";
+
+package openfief.models.v1;
+
+// ModelSettingsService reads and changes the owner's agents-and-models
+// settings.
+service ModelSettingsService {
+  // GetModelSettings returns the switch, the toggles, the routes and the
+  // tiers' allowed models to the owner.
+  rpc GetModelSettings(GetModelSettingsRequest) returns (GetModelSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SetAgentsEnabled turns the one switch on or off (D-212). Off, nothing
+  // calls a model and no MCP endpoint answers, whatever the toggles say.
+  rpc SetAgentsEnabled(SetAgentsEnabledRequest) returns (SetAgentsEnabledResponse);
+
+  // SetFeatureEnabled turns one feature's toggle on or off.
+  rpc SetFeatureEnabled(SetFeatureEnabledRequest) returns (SetFeatureEnabledResponse);
+
+  // SetRoute sets a role's primary model and ordered fallbacks (D-205); no
+  // references clear the route.
+  rpc SetRoute(SetRouteRequest) returns (SetRouteResponse);
+
+  // SetTierModels sets the models allowed to receive a data tier (D-206);
+  // no references clear the list, which denies the tier to every model.
+  rpc SetTierModels(SetTierModelsRequest) returns (SetTierModelsResponse);
+}
+
+message GetModelSettingsRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// FeatureToggle is one feature's toggle.
+message FeatureToggle {
+  // "ask", "maintainer" or "mcp".
+  string feature = 1;
+  bool enabled = 2;
+}
+
+// Route is a role's models, primary first.
+message Route {
+  // "ask" or "maintainer".
+  string role = 1;
+  // "provider/model" references: the primary, then the fallbacks in order.
+  repeated string models = 2;
+}
+
+// TierModels is a data tier's allowed models.
+message TierModels {
+  // "T0", "TF", "T1" or "T2".
+  string tier = 1;
+  repeated string models = 2;
+}
+
+message GetModelSettingsResponse {
+  bool agents_enabled = 1;
+  repeated FeatureToggle features = 2;
+  repeated Route routes = 3;
+  repeated TierModels tiers = 4;
+}
+
+message SetAgentsEnabledRequest {
+  string origin = 1;
+  string session_token = 2;
+  bool enabled = 3;
+}
+
+message SetAgentsEnabledResponse {}
+
+message SetFeatureEnabledRequest {
+  string origin = 1;
+  string session_token = 2;
+  string feature = 3;
+  bool enabled = 4;
+}
+
+message SetFeatureEnabledResponse {}
+
+message SetRouteRequest {
+  string origin = 1;
+  string session_token = 2;
+  string role = 3;
+  repeated string models = 4;
+}
+
+message SetRouteResponse {}
+
+message SetTierModelsRequest {
+  string origin = 1;
+  string session_token = 2;
+  string tier = 3;
+  repeated string models = 4;
+}
+
+message SetTierModelsResponse {}

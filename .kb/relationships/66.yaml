@@ -748,3 +748,178 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04e617ad2036
+  - type: constrains
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: FACT-SUBJECT-94F3EA422220D5E6
+    created_at: 2026-11-13T10:00:30.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2a739de974
+  - type: requires_property
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: FACT-PROP-589AD7AB64BA95F2
+    created_at: 2026-11-13T10:00:30.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0db4f66324
+  - type: specified_by
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: SCEN-identity-spicedb-grants-cover-later-accounts
+    created_at: 2026-11-13T10:00:30.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84281f98eb7e
+  - type: specified_by
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:30.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f648df088a7d
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-newgrantcases
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:28.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f02dd581bcd5
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-string
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:07.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed89a84b4f1c
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-string
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:07.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-843f63b7f43e
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:05.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d8c5d042bcc
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:05.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce25906eca9
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-catalog
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:15.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4544b58ad174
+  - type: implements
+    from: SYM-models-modelrouter-app-router-catalog
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:15.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a02b8ec2c4d
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:25.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-784ece39ba18
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:26.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a63aae2881aa
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-switch-gates-calls
+    created_at: 2026-11-13T12:29:26.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e56ac6d38d8
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:29:26.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71fb0bba4632
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:29:26.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39da429666d
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-features
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:56.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6759850e7bd
+  - type: implements
+    from: SYM-models-modelrouter-switch-features
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:43:56.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec71b0d7b84
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-validate-tier-models
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:45:05.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6b3ecb046d2
+  - type: implements
+    from: SYM-models-modelrouter-tier-validate-tier-models
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:45:05.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbbbc59a32c
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-client
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:45:36.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ebe20318ae
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-client
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:45:37.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5abb2306aef8
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-describe
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:13.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a9197ec473b
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-describe
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:13.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2e93bfad53a
+  - type: specified_by
+    from: REQ-identity-view-plugin-ungranted-attention
+    to: SCEN-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:07:01.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99e32fc1a1e2

@@ -881,3 +881,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba8f4bbe46a4
+  - type: implements
+    from: SYM-spicedb-key-authz-placementsync
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:23.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3d2e37db79
+  - type: covered_by
+    from: SYM-spicedb-key-authz-placementsync
+    to: TEST-core-authz-sync
+    created_at: 2026-11-13T13:09:23.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fd118c8dd4c
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-clock-now
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:33.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc596f227fe0
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-client-models
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:35:30.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-702ee3f175eb
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-client-models
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:35:30.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc17f8c1750c
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-migrate-migrate
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:02.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd8614e8d87
+  - type: implements
+    from: SYM-models-modelrouter-postgres-migrate-migrate
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:02.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a2953aca215
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:41.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5475bb395b
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:41.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beac5f618ef7

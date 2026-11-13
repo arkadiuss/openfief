@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3c98ac3e00f
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-count
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:39.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-885de0a7a245
+  - type: implements
+    from: SYM-identity-view-grants-ungranted-view-plugins-in
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:13:32.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fae0f4fe21d
+  - type: covered_by
+    from: SYM-identity-view-grants-ungranted-view-plugins-in
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:13:32.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9d35c5a416f

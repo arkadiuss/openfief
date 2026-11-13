@@ -881,3 +881,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c6865527458
+  - type: executable_for
+    from: SYM-e2e-spicedb-credentials-job-name
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T08:30:50.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-467f1bdc5bc3
+  - type: executable_for
+    from: SYM-models-cmd-core-modelrouter-test-recording-log
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:14.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-223b01b6f0ca
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-client
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:35:15.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7379492a3bb5
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-client
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:35:15.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6889f00c017b

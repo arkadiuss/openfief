@@ -15,6 +15,7 @@
 //	OPENFIEF_DSN=postgres://... core connector sync --instance NAME [--mode opening|transactions]
 //	OPENFIEF_DSN=postgres://... core enroll-link [--host localhost:8080] [--ttl 15m]
 //	OPENFIEF_DSN=postgres://... core check balances [--all]
+//	core init-credentials
 //
 // `token issue` prints the new token's secret once, on stdout, and nowhere
 // else; it is the break-glass way to a script token, which the owner
@@ -24,6 +25,12 @@
 // owner's balance check (D-200, criterion 1) as JSON on stdout, for
 // `openfief check balances`, which runs it through Kubernetes exec with
 // the owner's kubeconfig; it logs only that the check ran, with counts.
+//
+// `init-credentials` is the install's one-shot Job (D-216), run from this
+// image with its own ServiceAccount, which may only create Secrets: it makes
+// SpiceDB's preshared key and its database role's password, each only if its
+// Secret is missing, and never reads, changes or rotates one. It needs no
+// database and logs Secret names and "created" or "kept", never a value.
 //
 // Next to the read API, serve offers view plugins the AuthService
 // (proto/openfief/identity/v1): passkey login and registration, sessions,
@@ -57,6 +64,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 const (
@@ -89,6 +98,33 @@ func runCheck(ctx context.Context, d *deps, cmd *command, out io.Writer, log *sl
 	return checkBalances(ctx, d.pool, cmd.AllChecks, out, log)
 }
 
+// withMigratedPool connects to dsn, migrates, and runs fn with the pool.
+func withMigratedPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
+	return withPool(ctx, dsn, func(d *deps) error {
+		if err := migrate(ctx, d.pool); err != nil {
+			return err
+		}
+		return fn(d)
+	})
+}
+
+// runTokenCommand runs a token command over a migrated database, with the
+// connection to SpiceDB it asked for, if any, which it closes at the end.
+func runTokenCommand(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
+	return withMigratedPool(ctx, cmd.DSN, func(d *deps) error {
+		tokens, closer, err := newTokens(d.pool, &cmd.Authz, cmd.SpiceDBWait, time.Now)
+		if err != nil {
+			return err
+		}
+		defer func() {
+			if closeErr := closer.Close(); closeErr != nil {
+				log.Warn("closing the connection to SpiceDB failed", "error", kernel.LogSafe(closeErr))
+			}
+		}()
+		return tokenCommand(ctx, cmd, tokens, out, time.Now())
+	})
+}
+
 // run runs cmd, writing what a token command shows to out.
 func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
 	switch cmd.Name {
@@ -103,17 +139,11 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 			return nil
 		})
 	case cmdTokenIssue, cmdTokenList, cmdTokenRevoke:
-		return withPool(ctx, cmd.DSN, func(d *deps) error {
-			if err := migrate(ctx, d.pool); err != nil {
-				return err
-			}
-			return tokenCommand(ctx, cmd, newTokens(d.pool, time.Now), out, time.Now())
-		})
+		return runTokenCommand(ctx, cmd, out, log)
+	case cmdInitCredentials:
+		return initCredentialsInCluster(ctx, log)
 	case cmdEnrollLink:
-		return withPool(ctx, cmd.DSN, func(d *deps) error {
-			if err := migrate(ctx, d.pool); err != nil {
-				return err
-			}
+		return withMigratedPool(ctx, cmd.DSN, func(d *deps) error {
 			return enrollLink(ctx, d.pool, &cmd.Enroll, out, time.Now())
 		})
 	case cmdCheck, cmdCheckLedger:

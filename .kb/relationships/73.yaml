@@ -720,3 +720,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-291463dd21af
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:33.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5645ae2f6c2
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetkind
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:33.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6dd9e5fd5cf
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-test-parse-config-local-model
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:44.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59afab113402
+  - type: covered_by
+    from: SYM-models-identity-audit-valid-provider-ref
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T13:27:57.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c463e95f33a
+  - type: implements
+    from: SYM-models-identity-audit-valid-provider-ref
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T13:27:57.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d7d8b647f6b
+  - type: implements
+    from: SYM-models-identity-audit-valid-provider-ref
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T13:27:57.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d944df0bcf8

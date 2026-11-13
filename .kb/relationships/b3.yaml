@@ -825,3 +825,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4102cd1575e
+  - type: constrains
+    from: REQ-identity-credentials-create-only-if-missing
+    to: FACT-SUBJECT-63554A924326367D
+    created_at: 2026-11-13T07:42:53.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf1635203f3
+  - type: requires_property
+    from: REQ-identity-credentials-create-only-if-missing
+    to: FACT-PROP-0A35B73A4B2FF07C
+    created_at: 2026-11-13T07:42:54.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a41ab387cba1
+  - type: specified_by
+    from: REQ-identity-credentials-create-only-if-missing
+    to: SCEN-identity-credentials-created-when-missing
+    created_at: 2026-11-13T07:42:54.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e4c478523ee
+  - type: specified_by
+    from: REQ-identity-credentials-create-only-if-missing
+    to: SCEN-identity-credentials-owner-fed-kept
+    created_at: 2026-11-13T07:42:54.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5951b2c85489
+  - type: specified_by
+    from: REQ-identity-credentials-create-only-if-missing
+    to: SCEN-e2e-spicedb-deployed
+    created_at: 2026-11-13T07:42:54.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54196ab8c686
+  - type: implements
+    from: SYM-grants-internal-portfolio-app-registry-registry-observed
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:17:45.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2891ba85f26a
+  - type: covered_by
+    from: SYM-grants-internal-portfolio-app-registry-registry-observed
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:45.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e92b847ba0
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-clock
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:28.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6fc4112bff
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:50.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75c570c5c0fd
+  - type: implements
+    from: SYM-models-modelrouter-switch-feature
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:43:50.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2d9e4575cd7
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-test-parse-config-refusals
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:53.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e810e9a5291

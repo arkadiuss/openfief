@@ -902,3 +902,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62f317039f19
+  - type: implements
+    from: SYM-grants-internal-identity-audit-validategrantrefs
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T10:10:02.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-981de8bc3052
+  - type: implements
+    from: SYM-grants-internal-identity-audit-validategrantrefs
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-13T10:10:02.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d33fd0d1829e
+  - type: covered_by
+    from: SYM-grants-internal-identity-audit-validategrantrefs
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T10:10:02.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f106855e03a
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-pluginholder
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:29.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-408965fca79c
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-grantcases-issue
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:32.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab92a7ca6ae
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderid
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:29.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c49eeec9ae98
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderid
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:29.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4832149490c
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getholderid
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:17.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef827794600
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getholderid
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:17.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c5b1dff89df
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedauthorization
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:14.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-258b002c3d78
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedauthorization
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:14.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2adb1b093ece
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider-list-models
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:42.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1beba8ae0e36
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider-list-models
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:42.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd393b2f0770

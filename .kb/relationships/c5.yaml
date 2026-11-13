@@ -769,3 +769,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38f5f2edfbdb
+  - type: implements
+    from: SYM-release-bundle-check-init-job
+    to: REQ-identity-credentials-job-core-image
+    created_at: 2026-11-13T08:30:36.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59fcb2efccd
+  - type: covered_by
+    from: SYM-release-bundle-check-init-job
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T08:30:36.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69152e2cbe13
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-savegrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:13:51.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d582a2848ac
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-savegrant
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:13:51.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5a5ac83aa7a
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-store-savegrant
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:13:51.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fa8d4ce6d51
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-protoreflect
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:39.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6ed73fd75cc
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-protoreflect
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:39.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4713dea0bcac
+  - type: executable_for
+    from: SYM-models-cmd-core-modelrouter-test-recording-log-append-audit
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:19.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470e45071606
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-caches-entries-until-they-expire
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:38.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8214f51bba7
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-role-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:51.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec4239845798
+  - type: implements
+    from: SYM-ui-inbox-evidence-item
+    to: REQ-ui-inbox-grant-ungranted-view-plugin
+    created_at: 2026-11-13T17:13:51.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a026b4d8de
+  - type: covered_by
+    from: SYM-ui-inbox-evidence-item
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:13:51.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-263365d92a8c

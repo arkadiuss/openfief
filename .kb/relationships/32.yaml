@@ -790,3 +790,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcf20134ea4d
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testrevokefailsclosedwithoutitsentry
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:36.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-604d7fc85a97
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testwaitforspicedb
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:49.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abb67e8facfe
+  - type: executable_for
+    from: SYM-models-followup-router-test-go-routerfixture-wantpairs
+    to: TEST-models-app-router
+    created_at: 2026-11-13T15:02:43.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d7e9e0df318
+  - type: executable_for
+    from: SYM-ui-test-inbox-ungranted-view-plugin
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:25:51.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-923b445e19d6

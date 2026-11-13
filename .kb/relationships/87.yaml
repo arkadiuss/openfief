@@ -951,3 +951,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f303a482ee0
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-contract-project
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:08.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e1fdf8fd46
+  - type: executable_for
+    from: SYM-grants-internal-portfolio-app-registry-observer-test-testregistrytellstheobserverofadeletedsleeve
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:56.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ad00c91fcf2
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedauthorizer-mayact
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:24.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ee852ed0aa
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedauthorizer-mayact
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:24.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7013ad10b070
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-ref-is-zero
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:24.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9715d2d9c8
+  - type: implements
+    from: SYM-models-modelrouter-ref-ref-is-zero
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:24.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5334ee6ec931
+  - type: executable_for
+    from: SYM-models-plugins-operator-model-provider-test-read-model-open-ai-manifest
+    to: TEST-operator-model-provider-manifest
+    created_at: 2026-11-13T12:45:26.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9609d14c646
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeattention
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:52:01.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59d9edc22850

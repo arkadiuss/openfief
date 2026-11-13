@@ -916,3 +916,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e65fecb6ac90
+  - type: constrains
+    from: REQ-identity-credentials-role-create-secrets-only
+    to: FACT-SUBJECT-E7231E72A52166AA
+    created_at: 2026-11-13T07:43:01.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75d49ae8e268
+  - type: requires_property
+    from: REQ-identity-credentials-role-create-secrets-only
+    to: FACT-PROP-5E1D9152F7F559C9
+    created_at: 2026-11-13T07:43:01.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5705d6bcd1af
+  - type: specified_by
+    from: REQ-identity-credentials-role-create-secrets-only
+    to: SCEN-deploy-credentials-job-core-image-create-only
+    created_at: 2026-11-13T07:43:01.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117c41c9a01a
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-grantsfixture-trail
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:20.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd016d3806cb
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-request-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:55:48.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3f174308dda
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-request-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:55:48.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef7c33b9d158

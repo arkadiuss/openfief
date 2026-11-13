@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f36cfe8986e1
+  - type: executable_for
+    from: SYM-identity-app-test-needs-random-bytes
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:57:00.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a42dc9ada7a2
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-record
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:08.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89e2e01a6cf8
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-record
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:08.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3b01e8b14a0

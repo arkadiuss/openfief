@@ -895,3 +895,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d70ac028a7e
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-savegrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:33.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0503a978c5f3
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-savegrant
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:33.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64744a7707dd
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-string
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:15.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61092c774eb6
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-string
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:15.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d81953625a97
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-scriptedauthorizer
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:39:58.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c6721b7f16e
+  - type: covered_by
+    from: SYM-models-modelrouter-request-request
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:44.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66de6bff44f7
+  - type: implements
+    from: SYM-models-modelrouter-request-request
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:44.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-637487a1648f
+  - type: covered_by
+    from: SYM-models-models-provider-pb-location-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:04.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f438ec77ed
+  - type: implements
+    from: SYM-models-models-provider-pb-location-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:04.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-631a2a0a6549

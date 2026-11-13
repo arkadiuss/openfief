@@ -1000,3 +1000,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d0f0065e053
+  - type: constrains
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: FACT-SUBJECT-4DE1DF10A2333CEF
+    created_at: 2026-11-13T10:00:26.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-941b0db161ab
+  - type: requires_property
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: FACT-PROP-43B432BC94138751
+    created_at: 2026-11-13T10:00:26.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c551008ebbaf
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-per-target
+    created_at: 2026-11-13T10:00:26.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce718819dd94
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-owner-only
+    created_at: 2026-11-13T10:00:26.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d0744567eae
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-end-with-their-records
+    created_at: 2026-11-13T10:00:26.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa5d4ec00382
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:26.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5382545b741e
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-price-currency
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:31.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba7ae7f9bbc0
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-price-currency
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:31.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b0d6fe5a35
+  - type: covered_by
+    from: SYM-models-models-provider-pb-x
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:04:32.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3953dc0f0436
+  - type: implements
+    from: SYM-models-models-provider-pb-x
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:04:32.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a7000360ae4
+  - type: covered_by
+    from: SYM-models-models-settings-pb-route-get-role
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:06:47.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a840bf2a8640
+  - type: implements
+    from: SYM-models-models-settings-pb-route-get-role
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:06:47.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01655ff5f4d4
+  - type: covered_by
+    from: SYM-models-logsafe-log-safe
+    to: TEST-sdk-logsafe
+    created_at: 2026-11-13T13:14:12.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4465f3c15158
+  - type: implements
+    from: SYM-models-logsafe-log-safe
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T13:14:12.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1abf4a84e5e

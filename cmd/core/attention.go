@@ -4,6 +4,7 @@ import (
 	"context"
 	"log/slog"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -45,14 +46,15 @@ func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // mismatched cash checkpoints (D-158), instruments to classify for a
 // yearly tax (D-148), held bonds whose early-redemption fee is assumed
 // (D-97) and held bond series still without their ISIN or terms after a
-// week (D-214), and hands the items to l, which raises a mismatched
+// week (D-214), the extra checks other contexts bring, such as the model
+// routes in use (D-196), and hands the items to l, which raises a mismatched
 // cash checkpoint's at once. Its events go to a log publisher.
 func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, checks *valuationapp.CrossChecks,
-	owners attentionapp.Owners, now func() time.Time, log *slog.Logger,
+	owners attentionapp.Owners, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
 ) *attention {
 	store := attentionpg.New(pool)
 	imports := ingestpg.New(pool)
-	items := attentionapp.New(store, owners, now,
+	all := []attentionapp.Check{
 		attentionapp.FlaggedAssertions(l),
 		attentionapp.FlaggedPriceChecks(checks),
 		attentionapp.ImportProblems(imports),
@@ -68,7 +70,8 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 		// Seven days are counted in UTC: a day either way changes nothing
 		// that matters to a wait of a week (D-214).
 		attentionapp.IncompleteBondSeries(l, vstore, valuationpg.TodayIn(time.UTC, now)),
-	)
+	}
+	items := attentionapp.New(store, owners, now, slices.Concat(all, extra)...)
 	l.WithAttention(ledgerAttention{items: items})
 	return &attention{items: items, relay: &attentionapp.Relay{Outbox: store, Publisher: attentionapp.LogPublisher{Log: log}, Now: now}}
 }

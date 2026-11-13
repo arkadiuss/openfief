@@ -118,9 +118,34 @@ func checkLedgerLogged(t *testing.T, logged string) {
 	if !strings.Contains(logged, `"msg":"ledger check ran"`) || !strings.Contains(logged, `"versions":3`) || !strings.Contains(logged, `"superseded":1`) {
 		t.Errorf("log %q does not say the check ran with its counts", logged)
 	}
+	// The timestamp is left out: its nanoseconds can hold any digits, "1100" among them.
+	fields := withoutTime(t, logged)
 	for _, value := range []string{"acc-xtb", "dep-1", "1100", "PLN"} {
-		if strings.Contains(logged, value) {
+		if strings.Contains(fields, value) {
 			t.Errorf("log %q names %q", logged, value)
 		}
 	}
+}
+
+// withoutTime returns the JSON log lines in logged with their time field removed.
+func withoutTime(t *testing.T, logged string) string {
+	t.Helper()
+	var b strings.Builder
+	for line := range strings.Lines(logged) {
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		var entry map[string]any
+		if err := json.Unmarshal([]byte(line), &entry); err != nil {
+			t.Fatalf("decoding log line %q: %v", line, err)
+		}
+		delete(entry, "time")
+		out, err := json.Marshal(entry)
+		if err != nil {
+			t.Fatal(err)
+		}
+		b.Write(out)
+		b.WriteByte('\n')
+	}
+	return b.String()
 }

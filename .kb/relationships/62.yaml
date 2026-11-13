@@ -1196,3 +1196,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8de5ed9c788a
+  - type: implements
+    from: SYM-grants-cmd-core-grants-accountlookup
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:17.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c73b8578a0b
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-accountlookup
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:17.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0365f6e42aa
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakedirectory-targetexists
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:09.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e88c95394e05
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantstoreendsbyholderandtarget
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:56.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8459c875b43
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:20.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f959d94d368e
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:20.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6e1ea710f41
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-response-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:03:34.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a7758d6b79
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-response-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:03:34.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac24cf36619a
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-response-get-usage
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:04:11.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac44646a5a3
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-response-get-usage
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:04:11.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75f9e9701199
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-request-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:12:37.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-528db2aabc26
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-request-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:12:37.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d7abdf3f8b

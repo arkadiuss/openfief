@@ -944,3 +944,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e884e87de5be
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerprojectsgrants
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:20.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46aa837b12fb
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-down
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:11.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfdd734b7456
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-client-describe
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:35:24.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ed9c2ab9a9
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-client-describe
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:35:24.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a58d4a32492
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-response-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:11.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d4b6bfb5e70
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-response-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:11.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e7f42e14dd6
+  - type: covered_by
+    from: SYM-models-models-provider-pb-usage
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:44.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46706831fc31
+  - type: implements
+    from: SYM-models-models-provider-pb-usage
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:44.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4646eac5404d

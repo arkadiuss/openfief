@@ -909,3 +909,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-240cb984b602
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-counter
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:47:04.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6694b1a83b96
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantsstartupsweepswhatwentwhilethecorewasdown
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:41.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f55c39597e95
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testtokenrevokeendsitsgrants
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:48.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ed1f24fa58
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testcreategranttwice
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:29.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03fe88ef0b4c
+  - type: executable_for
+    from: SYM-models-identity-postgres-audit-test-test-audit-log-keeps-model-calls
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-13T12:26:48.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7d939267b7
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-request
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:22.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da9745e8c9c8
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-chat-test-new-fake
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:47:02.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bf513798ec4
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-context-tokens
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:36.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bdb83277df6
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-context-tokens
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:36.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dd591339b2c
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-agents-enabled
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:05.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-285521104ee0
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-agents-enabled
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:05.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebe6972c902

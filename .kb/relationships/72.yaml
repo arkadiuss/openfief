@@ -713,3 +713,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8107a93c7a6d
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-string
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:33.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b31406e66df
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-string
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:33.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b98248b988d5
+  - type: specified_by
+    from: REQ-models-openai-compatible-plugin
+    to: SCEN-models-openai-compatible-plugin
+    created_at: 2026-11-13T11:28:52.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a014067fd4f
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-entry-serves
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:23.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86cae8f3c0b3
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-request-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:55:52.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01d308e596de
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-request-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:55:52.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b7233b1a3d9
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-get-id
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:03.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c4f01e6fa0
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-get-id
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:03.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd6392576475

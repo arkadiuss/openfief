@@ -67,6 +67,7 @@ check "egress-proxy digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$e
 check "core digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$co" '.images[] | select(.name | endswith("/core")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "demo-seed digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$ds" '.images[] | select(.name | endswith("/demo-seed")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "nbp-fx digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$nf" '.images[] | select(.name | endswith("/nbp-fx")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
+check "the credentials Job's name carries the first 12 hex digits of the core's digest" "$(yes_if grep -q '^ *value: openfief-init-credentials-333333333333$' "$work/demo/openfief/kustomization.yaml")"
 # Render the pinned kustomization with the rest of deploy/, which it builds on.
 rm -rf "$work/deploy"
 cp -r "$root/deploy" "$work/deploy"
@@ -74,8 +75,9 @@ cp "$work/demo/openfief/kustomization.yaml" "$work/deploy/demo/openfief/kustomiz
 kustomize build "$work/deploy/demo/openfief" >"$work/rendered.yaml" 2>"$work/out" || true
 check "the nbp Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/nbp-fx@$nf" 'select(.kind == "Plugin" and .metadata.name == "nbp") | .spec.image == $i' "$work/rendered.yaml")"
 check "the ui Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/ui@$ui" 'select(.kind == "Plugin" and .metadata.name == "ui") | .spec.image == $i' "$work/rendered.yaml")"
+check "the rendered credentials Job is named for the core's digest, keeps its label and has no force annotation" "$(yes_if gojq --yaml-input -e 'select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .metadata.name == "openfief-init-credentials-333333333333" and (.metadata.annotations // {} | has("kustomize.toolkit.fluxcd.io/force") | not)' "$work/rendered.yaml")"
 check "comments survive" "$(yes_if grep -q '^# OpenFief on the demo machine' "$work/demo/openfief/kustomization.yaml")"
-check "no placeholder is left" "$(yes_if bash -c "! grep -q sha256:0000 '$work/demo/openfief/kustomization.yaml'")"
+check "no placeholder is left" "$(yes_if bash -c "! grep -q 'sha256:0000\|credentials-000000000000' '$work/demo/openfief/kustomization.yaml'")"
 check "only the images workflow on main is trusted" "$(yes_if grep -q -- '--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main --certificate-oidc-issuer https://token.actions.githubusercontent.com' "$work/log")"
 check "only a run of the repository on main is trusted (D-181)" "$(yes_if grep -q -- '--certificate-github-workflow-repository example/openfief --certificate-github-workflow-ref refs/heads/main' "$work/log")"
 check "the tag is what gets verified" "$(yes_if grep -q '^verify ghcr.io/arkadiuss/openfief/operator:sha-1a2b3c4 ' "$work/log")"

@@ -395,6 +395,11 @@ func installView(t *testing.T, k *kube, reg suiteRegistry, securityToken string)
 		t.Fatalf("openfief plugin install %s: %v\n%s\nwant it installed", gfInstance, err, out)
 	}
 	waitPluginReady(t, k, gfInstance)
+	// The view was installed after the core started, so under SpiceDB it holds no grant: the owner grants it the
+	// household, as the Access page does, and it reads the record as it did under the policy (D-209). Its pod's
+	// pass at start may have run before the grant and seen nothing, so a new pod's pass is the first the test reads.
+	grantHousehold(t, k, gfInstance)
+	restartView(t, k)
 }
 
 // viewInstallArgs are the arguments of `openfief plugin install` for the

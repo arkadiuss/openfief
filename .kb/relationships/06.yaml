@@ -951,3 +951,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fc7916f201c
+  - type: implements
+    from: SYM-identity-app-init-platform-credentials
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:45:36.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b7556a35a4b
+  - type: implements
+    from: SYM-identity-app-init-platform-credentials
+    to: REQ-identity-credentials-create-only-if-missing
+    created_at: 2026-11-13T07:45:36.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eaa0dc92a3c
+  - type: implements
+    from: SYM-identity-app-init-platform-credentials
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:45:36.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6524320db4f1
+  - type: covered_by
+    from: SYM-identity-app-init-platform-credentials
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:45:36.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d236db93f7da
+  - type: covered_by
+    from: SYM-identity-app-init-platform-credentials
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:45:36.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28347cec8a9
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testgaterefusesasunavailable
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:54.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2198959a8fe9
+  - type: covered_by
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-route
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:26.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4c81bc257fd
+  - type: implements
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-route
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:33:26.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead75359601c
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:19.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee15e06093ca
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:19.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71bcc0d68d98
+  - type: implements
+    from: SYM-models-followup-audit-go-validatemodelentry
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:49:34.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72c29959133
+  - type: implements
+    from: SYM-models-followup-audit-go-validatemodelentry
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T14:49:34.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-528a0b5f5d6e
+  - type: covered_by
+    from: SYM-models-followup-audit-go-validatemodelentry
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T14:49:34.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e3648825c5

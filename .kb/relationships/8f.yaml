@@ -804,3 +804,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03a2cfb8fb3e
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-result-from
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:21.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2879c36a76c1
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-result-from
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:36:21.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c84fb63d4e50
+  - type: executable_for
+    from: SYM-models-modelrouter-connectrpc-client-test-plugin-list-models
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:34.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a53a57b1e4b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request-get-origin
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:36.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3acd3e54ee5
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request-get-origin
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:36.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aa209f6b539

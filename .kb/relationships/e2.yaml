@@ -1133,3 +1133,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2fa29f8861d
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-grantrows
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e9cf747eece
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testsweep
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:27.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17fc682c450e
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedsyncer
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:34.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c61077377cff
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedsyncer
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:34.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d3b39a4c4c8
+  - type: implements
+    from: SYM-cmd-core-authzmonitor-monitored-mayact
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:39:03.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da1e390f3c9
+  - type: covered_by
+    from: SYM-cmd-core-authzmonitor-monitored-mayact
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:39:03.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96369f701849

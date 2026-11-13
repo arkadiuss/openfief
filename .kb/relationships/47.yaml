@@ -881,3 +881,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32c8830e7908
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-pass-through-wrap-streaming-handler
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:36.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8671acb0dc6
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:28.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d88bd3d88c3
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:28.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5d53664f2a0
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-response-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:12:01.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-869e99201a6d
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-response-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:12:01.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bacb3dff5a84

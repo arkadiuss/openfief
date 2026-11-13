@@ -302,21 +302,38 @@ const (
 	AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_USED   AuditAction = 7
 	AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_CREATED   AuditAction = 8
 	AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_REVOKED   AuditAction = 9
+	// A grant of access made (D-209); the entry names its holder, then its
+	// target.
+	AuditAction_AUDIT_ACTION_GRANT_CREATED AuditAction = 10
+	// A grant of access ended; the entry names its holder, then its target.
+	AuditAction_AUDIT_ACTION_GRANT_REVOKED AuditAction = 11
+	// A call to a model about to be sent (D-205, D-211), written before it:
+	// the entry names the role, the model and a call ID, never a question or
+	// an answer.
+	AuditAction_AUDIT_ACTION_MODEL_CALL AuditAction = 12
+	// How a call to a model ended: the entry names the role, the call ID of
+	// the AUDIT_ACTION_MODEL_CALL entry, the model unless the router refused
+	// before choosing one, and an error class when the call failed.
+	AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT AuditAction = 13
 )
 
 // Enum value maps for AuditAction.
 var (
 	AuditAction_name = map[int32]string{
-		0: "AUDIT_ACTION_UNSPECIFIED",
-		1: "AUDIT_ACTION_SIGN_IN",
-		2: "AUDIT_ACTION_SIGN_OUT",
-		3: "AUDIT_ACTION_SIGN_OUT_EVERYWHERE",
-		4: "AUDIT_ACTION_PASSKEY_ADDED",
-		5: "AUDIT_ACTION_PASSKEY_REMOVED",
-		6: "AUDIT_ACTION_ENROLLMENT_LINK_ISSUED",
-		7: "AUDIT_ACTION_ENROLLMENT_LINK_USED",
-		8: "AUDIT_ACTION_SCRIPT_TOKEN_CREATED",
-		9: "AUDIT_ACTION_SCRIPT_TOKEN_REVOKED",
+		0:  "AUDIT_ACTION_UNSPECIFIED",
+		1:  "AUDIT_ACTION_SIGN_IN",
+		2:  "AUDIT_ACTION_SIGN_OUT",
+		3:  "AUDIT_ACTION_SIGN_OUT_EVERYWHERE",
+		4:  "AUDIT_ACTION_PASSKEY_ADDED",
+		5:  "AUDIT_ACTION_PASSKEY_REMOVED",
+		6:  "AUDIT_ACTION_ENROLLMENT_LINK_ISSUED",
+		7:  "AUDIT_ACTION_ENROLLMENT_LINK_USED",
+		8:  "AUDIT_ACTION_SCRIPT_TOKEN_CREATED",
+		9:  "AUDIT_ACTION_SCRIPT_TOKEN_REVOKED",
+		10: "AUDIT_ACTION_GRANT_CREATED",
+		11: "AUDIT_ACTION_GRANT_REVOKED",
+		12: "AUDIT_ACTION_MODEL_CALL",
+		13: "AUDIT_ACTION_MODEL_CALL_RESULT",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":            0,
@@ -329,6 +346,10 @@ var (
 		"AUDIT_ACTION_ENROLLMENT_LINK_USED":   7,
 		"AUDIT_ACTION_SCRIPT_TOKEN_CREATED":   8,
 		"AUDIT_ACTION_SCRIPT_TOKEN_REVOKED":   9,
+		"AUDIT_ACTION_GRANT_CREATED":          10,
+		"AUDIT_ACTION_GRANT_REVOKED":          11,
+		"AUDIT_ACTION_MODEL_CALL":             12,
+		"AUDIT_ACTION_MODEL_CALL_RESULT":      13,
 	}
 )
 
@@ -368,6 +389,9 @@ const (
 	// Understood and not made, such as a sign-in whose credential did not verify.
 	AuditOutcome_AUDIT_OUTCOME_REFUSED AuditOutcome = 2
 	AuditOutcome_AUDIT_OUTCOME_FAILED  AuditOutcome = 3
+	// A call to a model about to be sent; its result is a later entry under
+	// the same call ID.
+	AuditOutcome_AUDIT_OUTCOME_SENT AuditOutcome = 4
 )
 
 // Enum value maps for AuditOutcome.
@@ -377,12 +401,14 @@ var (
 		1: "AUDIT_OUTCOME_OK",
 		2: "AUDIT_OUTCOME_REFUSED",
 		3: "AUDIT_OUTCOME_FAILED",
+		4: "AUDIT_OUTCOME_SENT",
 	}
 	AuditOutcome_value = map[string]int32{
 		"AUDIT_OUTCOME_UNSPECIFIED": 0,
 		"AUDIT_OUTCOME_OK":          1,
 		"AUDIT_OUTCOME_REFUSED":     2,
 		"AUDIT_OUTCOME_FAILED":      3,
+		"AUDIT_OUTCOME_SENT":        4,
 	}
 )
 
@@ -422,16 +448,44 @@ const (
 	AuditRefKind_AUDIT_REF_KIND_PASSKEY         AuditRefKind = 2
 	AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE AuditRefKind = 3
 	AuditRefKind_AUDIT_REF_KIND_SCRIPT_TOKEN    AuditRefKind = 4
+	// A person, by their id.
+	AuditRefKind_AUDIT_REF_KIND_PERSON AuditRefKind = 5
+	// A view plugin, by its instance name.
+	AuditRefKind_AUDIT_REF_KIND_VIEW_PLUGIN AuditRefKind = 6
+	// An account, by its id.
+	AuditRefKind_AUDIT_REF_KIND_ACCOUNT AuditRefKind = 7
+	// A sleeve, by its id.
+	AuditRefKind_AUDIT_REF_KIND_SLEEVE AuditRefKind = 8
+	// The household, by its id, "home".
+	AuditRefKind_AUDIT_REF_KIND_HOUSEHOLD AuditRefKind = 9
+	// A role of the model router, by its name: "ask" or "maintainer".
+	AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE AuditRefKind = 10
+	// A model entry, as "provider/model", the names the owner configured.
+	AuditRefKind_AUDIT_REF_KIND_MODEL AuditRefKind = 11
+	// The ID that links a call to a model to its result, a 16-digit hex ID.
+	AuditRefKind_AUDIT_REF_KIND_MODEL_CALL AuditRefKind = 12
+	// The class a failed call to a model ended in: unavailable, rejected,
+	// canceled, misconfigured or internal.
+	AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR AuditRefKind = 13
 )
 
 // Enum value maps for AuditRefKind.
 var (
 	AuditRefKind_name = map[int32]string{
-		0: "AUDIT_REF_KIND_UNSPECIFIED",
-		1: "AUDIT_REF_KIND_SESSION",
-		2: "AUDIT_REF_KIND_PASSKEY",
-		3: "AUDIT_REF_KIND_ENROLLMENT_CODE",
-		4: "AUDIT_REF_KIND_SCRIPT_TOKEN",
+		0:  "AUDIT_REF_KIND_UNSPECIFIED",
+		1:  "AUDIT_REF_KIND_SESSION",
+		2:  "AUDIT_REF_KIND_PASSKEY",
+		3:  "AUDIT_REF_KIND_ENROLLMENT_CODE",
+		4:  "AUDIT_REF_KIND_SCRIPT_TOKEN",
+		5:  "AUDIT_REF_KIND_PERSON",
+		6:  "AUDIT_REF_KIND_VIEW_PLUGIN",
+		7:  "AUDIT_REF_KIND_ACCOUNT",
+		8:  "AUDIT_REF_KIND_SLEEVE",
+		9:  "AUDIT_REF_KIND_HOUSEHOLD",
+		10: "AUDIT_REF_KIND_MODEL_ROLE",
+		11: "AUDIT_REF_KIND_MODEL",
+		12: "AUDIT_REF_KIND_MODEL_CALL",
+		13: "AUDIT_REF_KIND_MODEL_ERROR",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":     0,
@@ -439,6 +493,15 @@ var (
 		"AUDIT_REF_KIND_PASSKEY":         2,
 		"AUDIT_REF_KIND_ENROLLMENT_CODE": 3,
 		"AUDIT_REF_KIND_SCRIPT_TOKEN":    4,
+		"AUDIT_REF_KIND_PERSON":          5,
+		"AUDIT_REF_KIND_VIEW_PLUGIN":     6,
+		"AUDIT_REF_KIND_ACCOUNT":         7,
+		"AUDIT_REF_KIND_SLEEVE":          8,
+		"AUDIT_REF_KIND_HOUSEHOLD":       9,
+		"AUDIT_REF_KIND_MODEL_ROLE":      10,
+		"AUDIT_REF_KIND_MODEL":           11,
+		"AUDIT_REF_KIND_MODEL_CALL":      12,
+		"AUDIT_REF_KIND_MODEL_ERROR":     13,
 	}
 )
 
@@ -467,6 +530,121 @@ func (x AuditRefKind) Number() protoreflect.EnumNumber {
 // Deprecated: Use AuditRefKind.Descriptor instead.
 func (AuditRefKind) EnumDescriptor() ([]byte, []int) {
 	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{6}
+}
+
+// GrantHolderKind is what kind of party holds a grant.
+type GrantHolderKind int32
+
+const (
+	GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED GrantHolderKind = 0
+	// A viewer, by their id. Viewers come with the second alpha (D-65), so
+	// CreateGrant refuses this kind until they exist.
+	GrantHolderKind_GRANT_HOLDER_KIND_PERSON GrantHolderKind = 1
+	// A script token, by its id (D-27).
+	GrantHolderKind_GRANT_HOLDER_KIND_SCRIPT_TOKEN GrantHolderKind = 2
+	// A view plugin, by its instance name. This grant is separate from the
+	// plugin's PluginGrant, which approves what the plugin may do in the
+	// cluster; this one says which accounts it may view.
+	GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN GrantHolderKind = 3
+)
+
+// Enum value maps for GrantHolderKind.
+var (
+	GrantHolderKind_name = map[int32]string{
+		0: "GRANT_HOLDER_KIND_UNSPECIFIED",
+		1: "GRANT_HOLDER_KIND_PERSON",
+		2: "GRANT_HOLDER_KIND_SCRIPT_TOKEN",
+		3: "GRANT_HOLDER_KIND_VIEW_PLUGIN",
+	}
+	GrantHolderKind_value = map[string]int32{
+		"GRANT_HOLDER_KIND_UNSPECIFIED":  0,
+		"GRANT_HOLDER_KIND_PERSON":       1,
+		"GRANT_HOLDER_KIND_SCRIPT_TOKEN": 2,
+		"GRANT_HOLDER_KIND_VIEW_PLUGIN":  3,
+	}
+)
+
+func (x GrantHolderKind) Enum() *GrantHolderKind {
+	p := new(GrantHolderKind)
+	*p = x
+	return p
+}
+
+func (x GrantHolderKind) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GrantHolderKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_identity_v1_auth_proto_enumTypes[7].Descriptor()
+}
+
+func (GrantHolderKind) Type() protoreflect.EnumType {
+	return &file_openfief_identity_v1_auth_proto_enumTypes[7]
+}
+
+func (x GrantHolderKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GrantHolderKind.Descriptor instead.
+func (GrantHolderKind) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{7}
+}
+
+// GrantTargetKind is what a grant lets its holder view.
+type GrantTargetKind int32
+
+const (
+	GrantTargetKind_GRANT_TARGET_KIND_UNSPECIFIED GrantTargetKind = 0
+	// One account, by its id.
+	GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT GrantTargetKind = 1
+	// One sleeve, by its id: every account in it, those placed there later too.
+	GrantTargetKind_GRANT_TARGET_KIND_SLEEVE GrantTargetKind = 2
+	// The whole household: every account, present and future. Its id is "home".
+	GrantTargetKind_GRANT_TARGET_KIND_HOUSEHOLD GrantTargetKind = 3
+)
+
+// Enum value maps for GrantTargetKind.
+var (
+	GrantTargetKind_name = map[int32]string{
+		0: "GRANT_TARGET_KIND_UNSPECIFIED",
+		1: "GRANT_TARGET_KIND_ACCOUNT",
+		2: "GRANT_TARGET_KIND_SLEEVE",
+		3: "GRANT_TARGET_KIND_HOUSEHOLD",
+	}
+	GrantTargetKind_value = map[string]int32{
+		"GRANT_TARGET_KIND_UNSPECIFIED": 0,
+		"GRANT_TARGET_KIND_ACCOUNT":     1,
+		"GRANT_TARGET_KIND_SLEEVE":      2,
+		"GRANT_TARGET_KIND_HOUSEHOLD":   3,
+	}
+)
+
+func (x GrantTargetKind) Enum() *GrantTargetKind {
+	p := new(GrantTargetKind)
+	*p = x
+	return p
+}
+
+func (x GrantTargetKind) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GrantTargetKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_identity_v1_auth_proto_enumTypes[8].Descriptor()
+}
+
+func (GrantTargetKind) Type() protoreflect.EnumType {
+	return &file_openfief_identity_v1_auth_proto_enumTypes[8]
+}
+
+func (x GrantTargetKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GrantTargetKind.Descriptor instead.
+func (GrantTargetKind) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{8}
 }
 
 // Session describes a session. It never holds the session token.
@@ -3123,6 +3301,466 @@ func (x *ListAuditEntriesResponse) GetNextPageToken() string {
 	return ""
 }
 
+// Grant is the owner's permission for a holder to view a target (D-209).
+type Grant struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	HolderKind GrantHolderKind        `protobuf:"varint,1,opt,name=holder_kind,json=holderKind,proto3,enum=openfief.identity.v1.GrantHolderKind" json:"holder_kind,omitempty"`
+	HolderId   string                 `protobuf:"bytes,2,opt,name=holder_id,json=holderId,proto3" json:"holder_id,omitempty"`
+	TargetKind GrantTargetKind        `protobuf:"varint,3,opt,name=target_kind,json=targetKind,proto3,enum=openfief.identity.v1.GrantTargetKind" json:"target_kind,omitempty"`
+	// For the household, "home".
+	TargetId  string                 `protobuf:"bytes,4,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// Unset while the grant is in force.
+	RevokedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Grant) Reset() {
+	*x = Grant{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Grant) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Grant) ProtoMessage() {}
+
+func (x *Grant) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Grant.ProtoReflect.Descriptor instead.
+func (*Grant) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *Grant) GetHolderKind() GrantHolderKind {
+	if x != nil {
+		return x.HolderKind
+	}
+	return GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED
+}
+
+func (x *Grant) GetHolderId() string {
+	if x != nil {
+		return x.HolderId
+	}
+	return ""
+}
+
+func (x *Grant) GetTargetKind() GrantTargetKind {
+	if x != nil {
+		return x.TargetKind
+	}
+	return GrantTargetKind_GRANT_TARGET_KIND_UNSPECIFIED
+}
+
+func (x *Grant) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *Grant) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Grant) GetRevokedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RevokedAt
+	}
+	return nil
+}
+
+type CreateGrantRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	HolderKind   GrantHolderKind        `protobuf:"varint,3,opt,name=holder_kind,json=holderKind,proto3,enum=openfief.identity.v1.GrantHolderKind" json:"holder_kind,omitempty"`
+	HolderId     string                 `protobuf:"bytes,4,opt,name=holder_id,json=holderId,proto3" json:"holder_id,omitempty"`
+	TargetKind   GrantTargetKind        `protobuf:"varint,5,opt,name=target_kind,json=targetKind,proto3,enum=openfief.identity.v1.GrantTargetKind" json:"target_kind,omitempty"`
+	// For the household, "home" or empty.
+	TargetId      string `protobuf:"bytes,6,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGrantRequest) Reset() {
+	*x = CreateGrantRequest{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGrantRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGrantRequest) ProtoMessage() {}
+
+func (x *CreateGrantRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGrantRequest.ProtoReflect.Descriptor instead.
+func (*CreateGrantRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *CreateGrantRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *CreateGrantRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *CreateGrantRequest) GetHolderKind() GrantHolderKind {
+	if x != nil {
+		return x.HolderKind
+	}
+	return GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED
+}
+
+func (x *CreateGrantRequest) GetHolderId() string {
+	if x != nil {
+		return x.HolderId
+	}
+	return ""
+}
+
+func (x *CreateGrantRequest) GetTargetKind() GrantTargetKind {
+	if x != nil {
+		return x.TargetKind
+	}
+	return GrantTargetKind_GRANT_TARGET_KIND_UNSPECIFIED
+}
+
+func (x *CreateGrantRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+type CreateGrantResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Grant         *Grant                 `protobuf:"bytes,1,opt,name=grant,proto3" json:"grant,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGrantResponse) Reset() {
+	*x = CreateGrantResponse{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGrantResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGrantResponse) ProtoMessage() {}
+
+func (x *CreateGrantResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGrantResponse.ProtoReflect.Descriptor instead.
+func (*CreateGrantResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *CreateGrantResponse) GetGrant() *Grant {
+	if x != nil {
+		return x.Grant
+	}
+	return nil
+}
+
+type RevokeGrantRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	HolderKind   GrantHolderKind        `protobuf:"varint,3,opt,name=holder_kind,json=holderKind,proto3,enum=openfief.identity.v1.GrantHolderKind" json:"holder_kind,omitempty"`
+	HolderId     string                 `protobuf:"bytes,4,opt,name=holder_id,json=holderId,proto3" json:"holder_id,omitempty"`
+	TargetKind   GrantTargetKind        `protobuf:"varint,5,opt,name=target_kind,json=targetKind,proto3,enum=openfief.identity.v1.GrantTargetKind" json:"target_kind,omitempty"`
+	// For the household, "home" or empty.
+	TargetId      string `protobuf:"bytes,6,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeGrantRequest) Reset() {
+	*x = RevokeGrantRequest{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeGrantRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeGrantRequest) ProtoMessage() {}
+
+func (x *RevokeGrantRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeGrantRequest.ProtoReflect.Descriptor instead.
+func (*RevokeGrantRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *RevokeGrantRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *RevokeGrantRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *RevokeGrantRequest) GetHolderKind() GrantHolderKind {
+	if x != nil {
+		return x.HolderKind
+	}
+	return GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED
+}
+
+func (x *RevokeGrantRequest) GetHolderId() string {
+	if x != nil {
+		return x.HolderId
+	}
+	return ""
+}
+
+func (x *RevokeGrantRequest) GetTargetKind() GrantTargetKind {
+	if x != nil {
+		return x.TargetKind
+	}
+	return GrantTargetKind_GRANT_TARGET_KIND_UNSPECIFIED
+}
+
+func (x *RevokeGrantRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+type RevokeGrantResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeGrantResponse) Reset() {
+	*x = RevokeGrantResponse{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeGrantResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeGrantResponse) ProtoMessage() {}
+
+func (x *RevokeGrantResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeGrantResponse.ProtoReflect.Descriptor instead.
+func (*RevokeGrantResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{48}
+}
+
+type ListGrantsRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// Only the grants of this holder; unspecified lists every holder's, and
+	// holder_id then stays empty.
+	HolderKind GrantHolderKind `protobuf:"varint,3,opt,name=holder_kind,json=holderKind,proto3,enum=openfief.identity.v1.GrantHolderKind" json:"holder_kind,omitempty"`
+	HolderId   string          `protobuf:"bytes,4,opt,name=holder_id,json=holderId,proto3" json:"holder_id,omitempty"`
+	// Leave out the ended grants, which are the history.
+	InForceOnly   bool `protobuf:"varint,5,opt,name=in_force_only,json=inForceOnly,proto3" json:"in_force_only,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGrantsRequest) Reset() {
+	*x = ListGrantsRequest{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGrantsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGrantsRequest) ProtoMessage() {}
+
+func (x *ListGrantsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGrantsRequest.ProtoReflect.Descriptor instead.
+func (*ListGrantsRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *ListGrantsRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *ListGrantsRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *ListGrantsRequest) GetHolderKind() GrantHolderKind {
+	if x != nil {
+		return x.HolderKind
+	}
+	return GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED
+}
+
+func (x *ListGrantsRequest) GetHolderId() string {
+	if x != nil {
+		return x.HolderId
+	}
+	return ""
+}
+
+func (x *ListGrantsRequest) GetInForceOnly() bool {
+	if x != nil {
+		return x.InForceOnly
+	}
+	return false
+}
+
+type ListGrantsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Grants        []*Grant               `protobuf:"bytes,1,rep,name=grants,proto3" json:"grants,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGrantsResponse) Reset() {
+	*x = ListGrantsResponse{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGrantsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGrantsResponse) ProtoMessage() {}
+
+func (x *ListGrantsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGrantsResponse.ProtoReflect.Descriptor instead.
+func (*ListGrantsResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *ListGrantsResponse) GetGrants() []*Grant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
+}
+
 var File_openfief_identity_v1_auth_proto protoreflect.FileDescriptor
 
 const file_openfief_identity_v1_auth_proto_rawDesc = "" +
@@ -3318,7 +3956,48 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"page_token\x18\t \x01(\tR\tpageToken\"~\n" +
 	"\x18ListAuditEntriesResponse\x12:\n" +
 	"\aentries\x18\x01 \x03(\v2 .openfief.identity.v1.AuditEntryR\aentries\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken*^\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xc7\x02\n" +
+	"\x05Grant\x12F\n" +
+	"\vholder_kind\x18\x01 \x01(\x0e2%.openfief.identity.v1.GrantHolderKindR\n" +
+	"holderKind\x12\x1b\n" +
+	"\tholder_id\x18\x02 \x01(\tR\bholderId\x12F\n" +
+	"\vtarget_kind\x18\x03 \x01(\x0e2%.openfief.identity.v1.GrantTargetKindR\n" +
+	"targetKind\x12\x1b\n" +
+	"\ttarget_id\x18\x04 \x01(\tR\btargetId\x129\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"\x9b\x02\n" +
+	"\x12CreateGrantRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12F\n" +
+	"\vholder_kind\x18\x03 \x01(\x0e2%.openfief.identity.v1.GrantHolderKindR\n" +
+	"holderKind\x12\x1b\n" +
+	"\tholder_id\x18\x04 \x01(\tR\bholderId\x12F\n" +
+	"\vtarget_kind\x18\x05 \x01(\x0e2%.openfief.identity.v1.GrantTargetKindR\n" +
+	"targetKind\x12\x1b\n" +
+	"\ttarget_id\x18\x06 \x01(\tR\btargetId\"H\n" +
+	"\x13CreateGrantResponse\x121\n" +
+	"\x05grant\x18\x01 \x01(\v2\x1b.openfief.identity.v1.GrantR\x05grant\"\x9b\x02\n" +
+	"\x12RevokeGrantRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12F\n" +
+	"\vholder_kind\x18\x03 \x01(\x0e2%.openfief.identity.v1.GrantHolderKindR\n" +
+	"holderKind\x12\x1b\n" +
+	"\tholder_id\x18\x04 \x01(\tR\bholderId\x12F\n" +
+	"\vtarget_kind\x18\x05 \x01(\x0e2%.openfief.identity.v1.GrantTargetKindR\n" +
+	"targetKind\x12\x1b\n" +
+	"\ttarget_id\x18\x06 \x01(\tR\btargetId\"\x15\n" +
+	"\x13RevokeGrantResponse\"\xd9\x01\n" +
+	"\x11ListGrantsRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12F\n" +
+	"\vholder_kind\x18\x03 \x01(\x0e2%.openfief.identity.v1.GrantHolderKindR\n" +
+	"holderKind\x12\x1b\n" +
+	"\tholder_id\x18\x04 \x01(\tR\bholderId\x12\"\n" +
+	"\rin_force_only\x18\x05 \x01(\bR\vinForceOnly\"I\n" +
+	"\x12ListGrantsResponse\x123\n" +
+	"\x06grants\x18\x01 \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants*^\n" +
 	"\fSessionScope\x12\x1d\n" +
 	"\x19SESSION_SCOPE_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12SESSION_SCOPE_READ\x10\x01\x12\x17\n" +
@@ -3337,7 +4016,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
-	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xe6\x02\n" +
+	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xe7\x03\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -3348,18 +4027,44 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"#AUDIT_ACTION_ENROLLMENT_LINK_ISSUED\x10\x06\x12%\n" +
 	"!AUDIT_ACTION_ENROLLMENT_LINK_USED\x10\a\x12%\n" +
 	"!AUDIT_ACTION_SCRIPT_TOKEN_CREATED\x10\b\x12%\n" +
-	"!AUDIT_ACTION_SCRIPT_TOKEN_REVOKED\x10\t*x\n" +
+	"!AUDIT_ACTION_SCRIPT_TOKEN_REVOKED\x10\t\x12\x1e\n" +
+	"\x1aAUDIT_ACTION_GRANT_CREATED\x10\n" +
+	"\x12\x1e\n" +
+	"\x1aAUDIT_ACTION_GRANT_REVOKED\x10\v\x12\x1b\n" +
+	"\x17AUDIT_ACTION_MODEL_CALL\x10\f\x12\"\n" +
+	"\x1eAUDIT_ACTION_MODEL_CALL_RESULT\x10\r*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
-	"\x14AUDIT_OUTCOME_FAILED\x10\x03*\xab\x01\n" +
+	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xb3\x03\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_PASSKEY\x10\x02\x12\"\n" +
 	"\x1eAUDIT_REF_KIND_ENROLLMENT_CODE\x10\x03\x12\x1f\n" +
-	"\x1bAUDIT_REF_KIND_SCRIPT_TOKEN\x10\x042\xd8\x0f\n" +
+	"\x1bAUDIT_REF_KIND_SCRIPT_TOKEN\x10\x04\x12\x19\n" +
+	"\x15AUDIT_REF_KIND_PERSON\x10\x05\x12\x1e\n" +
+	"\x1aAUDIT_REF_KIND_VIEW_PLUGIN\x10\x06\x12\x1a\n" +
+	"\x16AUDIT_REF_KIND_ACCOUNT\x10\a\x12\x19\n" +
+	"\x15AUDIT_REF_KIND_SLEEVE\x10\b\x12\x1c\n" +
+	"\x18AUDIT_REF_KIND_HOUSEHOLD\x10\t\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_MODEL_ROLE\x10\n" +
+	"\x12\x18\n" +
+	"\x14AUDIT_REF_KIND_MODEL\x10\v\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_MODEL_CALL\x10\f\x12\x1e\n" +
+	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r*\x99\x01\n" +
+	"\x0fGrantHolderKind\x12!\n" +
+	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +
+	"\x1eGRANT_HOLDER_KIND_SCRIPT_TOKEN\x10\x02\x12!\n" +
+	"\x1dGRANT_HOLDER_KIND_VIEW_PLUGIN\x10\x03*\x92\x01\n" +
+	"\x0fGrantTargetKind\x12!\n" +
+	"\x1dGRANT_TARGET_KIND_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19GRANT_TARGET_KIND_ACCOUNT\x10\x01\x12\x1c\n" +
+	"\x18GRANT_TARGET_KIND_SLEEVE\x10\x02\x12\x1f\n" +
+	"\x1bGRANT_TARGET_KIND_HOUSEHOLD\x10\x032\x81\x12\n" +
 	"\vAuthService\x12n\n" +
 	"\x0fGetLoginMethods\x12,.openfief.identity.v1.GetLoginMethodsRequest\x1a-.openfief.identity.v1.GetLoginMethodsResponse\x12t\n" +
 	"\x11BeginRegistration\x12..openfief.identity.v1.BeginRegistrationRequest\x1a/.openfief.identity.v1.BeginRegistrationResponse\x12w\n" +
@@ -3379,7 +4084,11 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x11BeginPasskeyCheck\x12..openfief.identity.v1.BeginPasskeyCheckRequest\x1a/.openfief.identity.v1.BeginPasskeyCheckResponse\x12w\n" +
 	"\x12FinishPasskeyCheck\x12/.openfief.identity.v1.FinishPasskeyCheckRequest\x1a0.openfief.identity.v1.FinishPasskeyCheckResponse\x12t\n" +
 	"\x11SignOutEverywhere\x12..openfief.identity.v1.SignOutEverywhereRequest\x1a/.openfief.identity.v1.SignOutEverywhereResponse\x12q\n" +
-	"\x10ListAuditEntries\x12-.openfief.identity.v1.ListAuditEntriesRequest\x1a..openfief.identity.v1.ListAuditEntriesResponseB\xe1\x01\n" +
+	"\x10ListAuditEntries\x12-.openfief.identity.v1.ListAuditEntriesRequest\x1a..openfief.identity.v1.ListAuditEntriesResponse\x12b\n" +
+	"\vCreateGrant\x12(.openfief.identity.v1.CreateGrantRequest\x1a).openfief.identity.v1.CreateGrantResponse\x12b\n" +
+	"\vRevokeGrant\x12(.openfief.identity.v1.RevokeGrantRequest\x1a).openfief.identity.v1.RevokeGrantResponse\x12_\n" +
+	"\n" +
+	"ListGrants\x12'.openfief.identity.v1.ListGrantsRequest\x1a(.openfief.identity.v1.ListGrantsResponseB\xe1\x01\n" +
 	"\x18com.openfief.identity.v1B\tAuthProtoP\x01ZHgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1;identityv1\xa2\x02\x03OIX\xaa\x02\x14Openfief.Identity.V1\xca\x02\x14Openfief\\Identity\\V1\xe2\x02 Openfief\\Identity\\V1\\GPBMetadata\xea\x02\x16Openfief::Identity::V1b\x06proto3"
 
 var (
@@ -3394,8 +4103,8 @@ func file_openfief_identity_v1_auth_proto_rawDescGZIP() []byte {
 	return file_openfief_identity_v1_auth_proto_rawDescData
 }
 
-var file_openfief_identity_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_openfief_identity_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
+var file_openfief_identity_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
+var file_openfief_identity_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
 var file_openfief_identity_v1_auth_proto_goTypes = []any{
 	(SessionScope)(0),                    // 0: openfief.identity.v1.SessionScope
 	(Authenticator)(0),                   // 1: openfief.identity.v1.Authenticator
@@ -3404,138 +4113,164 @@ var file_openfief_identity_v1_auth_proto_goTypes = []any{
 	(AuditAction)(0),                     // 4: openfief.identity.v1.AuditAction
 	(AuditOutcome)(0),                    // 5: openfief.identity.v1.AuditOutcome
 	(AuditRefKind)(0),                    // 6: openfief.identity.v1.AuditRefKind
-	(*Session)(nil),                      // 7: openfief.identity.v1.Session
-	(*PasskeyCheckRequired)(nil),         // 8: openfief.identity.v1.PasskeyCheckRequired
-	(*Owner)(nil),                        // 9: openfief.identity.v1.Owner
-	(*Passkey)(nil),                      // 10: openfief.identity.v1.Passkey
-	(*ScriptToken)(nil),                  // 11: openfief.identity.v1.ScriptToken
-	(*GetLoginMethodsRequest)(nil),       // 12: openfief.identity.v1.GetLoginMethodsRequest
-	(*GetLoginMethodsResponse)(nil),      // 13: openfief.identity.v1.GetLoginMethodsResponse
-	(*BeginRegistrationRequest)(nil),     // 14: openfief.identity.v1.BeginRegistrationRequest
-	(*BeginRegistrationResponse)(nil),    // 15: openfief.identity.v1.BeginRegistrationResponse
-	(*FinishRegistrationRequest)(nil),    // 16: openfief.identity.v1.FinishRegistrationRequest
-	(*FinishRegistrationResponse)(nil),   // 17: openfief.identity.v1.FinishRegistrationResponse
-	(*BeginLoginRequest)(nil),            // 18: openfief.identity.v1.BeginLoginRequest
-	(*BeginLoginResponse)(nil),           // 19: openfief.identity.v1.BeginLoginResponse
-	(*FinishLoginRequest)(nil),           // 20: openfief.identity.v1.FinishLoginRequest
-	(*FinishLoginResponse)(nil),          // 21: openfief.identity.v1.FinishLoginResponse
-	(*CreateDemoSessionRequest)(nil),     // 22: openfief.identity.v1.CreateDemoSessionRequest
-	(*CreateDemoSessionResponse)(nil),    // 23: openfief.identity.v1.CreateDemoSessionResponse
-	(*LogoutRequest)(nil),                // 24: openfief.identity.v1.LogoutRequest
-	(*LogoutResponse)(nil),               // 25: openfief.identity.v1.LogoutResponse
-	(*WhoAmIRequest)(nil),                // 26: openfief.identity.v1.WhoAmIRequest
-	(*WhoAmIResponse)(nil),               // 27: openfief.identity.v1.WhoAmIResponse
-	(*ListPasskeysRequest)(nil),          // 28: openfief.identity.v1.ListPasskeysRequest
-	(*ListPasskeysResponse)(nil),         // 29: openfief.identity.v1.ListPasskeysResponse
-	(*RemovePasskeyRequest)(nil),         // 30: openfief.identity.v1.RemovePasskeyRequest
-	(*RemovePasskeyResponse)(nil),        // 31: openfief.identity.v1.RemovePasskeyResponse
-	(*CreateScriptTokenRequest)(nil),     // 32: openfief.identity.v1.CreateScriptTokenRequest
-	(*CreateScriptTokenResponse)(nil),    // 33: openfief.identity.v1.CreateScriptTokenResponse
-	(*ListScriptTokensRequest)(nil),      // 34: openfief.identity.v1.ListScriptTokensRequest
-	(*ListScriptTokensResponse)(nil),     // 35: openfief.identity.v1.ListScriptTokensResponse
-	(*RevokeScriptTokenRequest)(nil),     // 36: openfief.identity.v1.RevokeScriptTokenRequest
-	(*RevokeScriptTokenResponse)(nil),    // 37: openfief.identity.v1.RevokeScriptTokenResponse
-	(*CreateEnrollmentLinkRequest)(nil),  // 38: openfief.identity.v1.CreateEnrollmentLinkRequest
-	(*CreateEnrollmentLinkResponse)(nil), // 39: openfief.identity.v1.CreateEnrollmentLinkResponse
-	(*BeginPasskeyCheckRequest)(nil),     // 40: openfief.identity.v1.BeginPasskeyCheckRequest
-	(*BeginPasskeyCheckResponse)(nil),    // 41: openfief.identity.v1.BeginPasskeyCheckResponse
-	(*FinishPasskeyCheckRequest)(nil),    // 42: openfief.identity.v1.FinishPasskeyCheckRequest
-	(*FinishPasskeyCheckResponse)(nil),   // 43: openfief.identity.v1.FinishPasskeyCheckResponse
-	(*SignOutEverywhereRequest)(nil),     // 44: openfief.identity.v1.SignOutEverywhereRequest
-	(*SignOutEverywhereResponse)(nil),    // 45: openfief.identity.v1.SignOutEverywhereResponse
-	(*AuditActor)(nil),                   // 46: openfief.identity.v1.AuditActor
-	(*AuditRef)(nil),                     // 47: openfief.identity.v1.AuditRef
-	(*AuditEntry)(nil),                   // 48: openfief.identity.v1.AuditEntry
-	(*ListAuditEntriesRequest)(nil),      // 49: openfief.identity.v1.ListAuditEntriesRequest
-	(*ListAuditEntriesResponse)(nil),     // 50: openfief.identity.v1.ListAuditEntriesResponse
-	(*timestamppb.Timestamp)(nil),        // 51: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),          // 52: google.protobuf.Duration
+	(GrantHolderKind)(0),                 // 7: openfief.identity.v1.GrantHolderKind
+	(GrantTargetKind)(0),                 // 8: openfief.identity.v1.GrantTargetKind
+	(*Session)(nil),                      // 9: openfief.identity.v1.Session
+	(*PasskeyCheckRequired)(nil),         // 10: openfief.identity.v1.PasskeyCheckRequired
+	(*Owner)(nil),                        // 11: openfief.identity.v1.Owner
+	(*Passkey)(nil),                      // 12: openfief.identity.v1.Passkey
+	(*ScriptToken)(nil),                  // 13: openfief.identity.v1.ScriptToken
+	(*GetLoginMethodsRequest)(nil),       // 14: openfief.identity.v1.GetLoginMethodsRequest
+	(*GetLoginMethodsResponse)(nil),      // 15: openfief.identity.v1.GetLoginMethodsResponse
+	(*BeginRegistrationRequest)(nil),     // 16: openfief.identity.v1.BeginRegistrationRequest
+	(*BeginRegistrationResponse)(nil),    // 17: openfief.identity.v1.BeginRegistrationResponse
+	(*FinishRegistrationRequest)(nil),    // 18: openfief.identity.v1.FinishRegistrationRequest
+	(*FinishRegistrationResponse)(nil),   // 19: openfief.identity.v1.FinishRegistrationResponse
+	(*BeginLoginRequest)(nil),            // 20: openfief.identity.v1.BeginLoginRequest
+	(*BeginLoginResponse)(nil),           // 21: openfief.identity.v1.BeginLoginResponse
+	(*FinishLoginRequest)(nil),           // 22: openfief.identity.v1.FinishLoginRequest
+	(*FinishLoginResponse)(nil),          // 23: openfief.identity.v1.FinishLoginResponse
+	(*CreateDemoSessionRequest)(nil),     // 24: openfief.identity.v1.CreateDemoSessionRequest
+	(*CreateDemoSessionResponse)(nil),    // 25: openfief.identity.v1.CreateDemoSessionResponse
+	(*LogoutRequest)(nil),                // 26: openfief.identity.v1.LogoutRequest
+	(*LogoutResponse)(nil),               // 27: openfief.identity.v1.LogoutResponse
+	(*WhoAmIRequest)(nil),                // 28: openfief.identity.v1.WhoAmIRequest
+	(*WhoAmIResponse)(nil),               // 29: openfief.identity.v1.WhoAmIResponse
+	(*ListPasskeysRequest)(nil),          // 30: openfief.identity.v1.ListPasskeysRequest
+	(*ListPasskeysResponse)(nil),         // 31: openfief.identity.v1.ListPasskeysResponse
+	(*RemovePasskeyRequest)(nil),         // 32: openfief.identity.v1.RemovePasskeyRequest
+	(*RemovePasskeyResponse)(nil),        // 33: openfief.identity.v1.RemovePasskeyResponse
+	(*CreateScriptTokenRequest)(nil),     // 34: openfief.identity.v1.CreateScriptTokenRequest
+	(*CreateScriptTokenResponse)(nil),    // 35: openfief.identity.v1.CreateScriptTokenResponse
+	(*ListScriptTokensRequest)(nil),      // 36: openfief.identity.v1.ListScriptTokensRequest
+	(*ListScriptTokensResponse)(nil),     // 37: openfief.identity.v1.ListScriptTokensResponse
+	(*RevokeScriptTokenRequest)(nil),     // 38: openfief.identity.v1.RevokeScriptTokenRequest
+	(*RevokeScriptTokenResponse)(nil),    // 39: openfief.identity.v1.RevokeScriptTokenResponse
+	(*CreateEnrollmentLinkRequest)(nil),  // 40: openfief.identity.v1.CreateEnrollmentLinkRequest
+	(*CreateEnrollmentLinkResponse)(nil), // 41: openfief.identity.v1.CreateEnrollmentLinkResponse
+	(*BeginPasskeyCheckRequest)(nil),     // 42: openfief.identity.v1.BeginPasskeyCheckRequest
+	(*BeginPasskeyCheckResponse)(nil),    // 43: openfief.identity.v1.BeginPasskeyCheckResponse
+	(*FinishPasskeyCheckRequest)(nil),    // 44: openfief.identity.v1.FinishPasskeyCheckRequest
+	(*FinishPasskeyCheckResponse)(nil),   // 45: openfief.identity.v1.FinishPasskeyCheckResponse
+	(*SignOutEverywhereRequest)(nil),     // 46: openfief.identity.v1.SignOutEverywhereRequest
+	(*SignOutEverywhereResponse)(nil),    // 47: openfief.identity.v1.SignOutEverywhereResponse
+	(*AuditActor)(nil),                   // 48: openfief.identity.v1.AuditActor
+	(*AuditRef)(nil),                     // 49: openfief.identity.v1.AuditRef
+	(*AuditEntry)(nil),                   // 50: openfief.identity.v1.AuditEntry
+	(*ListAuditEntriesRequest)(nil),      // 51: openfief.identity.v1.ListAuditEntriesRequest
+	(*ListAuditEntriesResponse)(nil),     // 52: openfief.identity.v1.ListAuditEntriesResponse
+	(*Grant)(nil),                        // 53: openfief.identity.v1.Grant
+	(*CreateGrantRequest)(nil),           // 54: openfief.identity.v1.CreateGrantRequest
+	(*CreateGrantResponse)(nil),          // 55: openfief.identity.v1.CreateGrantResponse
+	(*RevokeGrantRequest)(nil),           // 56: openfief.identity.v1.RevokeGrantRequest
+	(*RevokeGrantResponse)(nil),          // 57: openfief.identity.v1.RevokeGrantResponse
+	(*ListGrantsRequest)(nil),            // 58: openfief.identity.v1.ListGrantsRequest
+	(*ListGrantsResponse)(nil),           // 59: openfief.identity.v1.ListGrantsResponse
+	(*timestamppb.Timestamp)(nil),        // 60: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),          // 61: google.protobuf.Duration
 }
 var file_openfief_identity_v1_auth_proto_depIdxs = []int32{
 	0,  // 0: openfief.identity.v1.Session.scope:type_name -> openfief.identity.v1.SessionScope
 	1,  // 1: openfief.identity.v1.Session.authenticator:type_name -> openfief.identity.v1.Authenticator
-	51, // 2: openfief.identity.v1.Session.created_at:type_name -> google.protobuf.Timestamp
-	51, // 3: openfief.identity.v1.Session.last_seen_at:type_name -> google.protobuf.Timestamp
-	51, // 4: openfief.identity.v1.Session.idle_expires_at:type_name -> google.protobuf.Timestamp
-	51, // 5: openfief.identity.v1.Session.expires_at:type_name -> google.protobuf.Timestamp
-	51, // 6: openfief.identity.v1.Session.passkey_checked_at:type_name -> google.protobuf.Timestamp
-	52, // 7: openfief.identity.v1.PasskeyCheckRequired.window:type_name -> google.protobuf.Duration
-	51, // 8: openfief.identity.v1.Owner.created_at:type_name -> google.protobuf.Timestamp
-	51, // 9: openfief.identity.v1.Passkey.created_at:type_name -> google.protobuf.Timestamp
-	51, // 10: openfief.identity.v1.Passkey.last_used_at:type_name -> google.protobuf.Timestamp
-	51, // 11: openfief.identity.v1.ScriptToken.created_at:type_name -> google.protobuf.Timestamp
-	51, // 12: openfief.identity.v1.ScriptToken.expires_at:type_name -> google.protobuf.Timestamp
-	51, // 13: openfief.identity.v1.ScriptToken.revoked_at:type_name -> google.protobuf.Timestamp
+	60, // 2: openfief.identity.v1.Session.created_at:type_name -> google.protobuf.Timestamp
+	60, // 3: openfief.identity.v1.Session.last_seen_at:type_name -> google.protobuf.Timestamp
+	60, // 4: openfief.identity.v1.Session.idle_expires_at:type_name -> google.protobuf.Timestamp
+	60, // 5: openfief.identity.v1.Session.expires_at:type_name -> google.protobuf.Timestamp
+	60, // 6: openfief.identity.v1.Session.passkey_checked_at:type_name -> google.protobuf.Timestamp
+	61, // 7: openfief.identity.v1.PasskeyCheckRequired.window:type_name -> google.protobuf.Duration
+	60, // 8: openfief.identity.v1.Owner.created_at:type_name -> google.protobuf.Timestamp
+	60, // 9: openfief.identity.v1.Passkey.created_at:type_name -> google.protobuf.Timestamp
+	60, // 10: openfief.identity.v1.Passkey.last_used_at:type_name -> google.protobuf.Timestamp
+	60, // 11: openfief.identity.v1.ScriptToken.created_at:type_name -> google.protobuf.Timestamp
+	60, // 12: openfief.identity.v1.ScriptToken.expires_at:type_name -> google.protobuf.Timestamp
+	60, // 13: openfief.identity.v1.ScriptToken.revoked_at:type_name -> google.protobuf.Timestamp
 	2,  // 14: openfief.identity.v1.ScriptToken.status:type_name -> openfief.identity.v1.ScriptTokenStatus
-	51, // 15: openfief.identity.v1.BeginRegistrationResponse.expires_at:type_name -> google.protobuf.Timestamp
-	10, // 16: openfief.identity.v1.FinishRegistrationResponse.passkey:type_name -> openfief.identity.v1.Passkey
-	7,  // 17: openfief.identity.v1.FinishRegistrationResponse.session:type_name -> openfief.identity.v1.Session
-	51, // 18: openfief.identity.v1.BeginLoginResponse.expires_at:type_name -> google.protobuf.Timestamp
-	7,  // 19: openfief.identity.v1.FinishLoginResponse.session:type_name -> openfief.identity.v1.Session
-	7,  // 20: openfief.identity.v1.CreateDemoSessionResponse.session:type_name -> openfief.identity.v1.Session
-	9,  // 21: openfief.identity.v1.WhoAmIResponse.owner:type_name -> openfief.identity.v1.Owner
-	7,  // 22: openfief.identity.v1.WhoAmIResponse.session:type_name -> openfief.identity.v1.Session
-	10, // 23: openfief.identity.v1.ListPasskeysResponse.passkeys:type_name -> openfief.identity.v1.Passkey
-	52, // 24: openfief.identity.v1.CreateScriptTokenRequest.ttl:type_name -> google.protobuf.Duration
-	11, // 25: openfief.identity.v1.CreateScriptTokenResponse.token:type_name -> openfief.identity.v1.ScriptToken
-	11, // 26: openfief.identity.v1.ListScriptTokensResponse.tokens:type_name -> openfief.identity.v1.ScriptToken
-	52, // 27: openfief.identity.v1.CreateEnrollmentLinkRequest.ttl:type_name -> google.protobuf.Duration
-	51, // 28: openfief.identity.v1.CreateEnrollmentLinkResponse.expires_at:type_name -> google.protobuf.Timestamp
-	51, // 29: openfief.identity.v1.BeginPasskeyCheckResponse.expires_at:type_name -> google.protobuf.Timestamp
-	7,  // 30: openfief.identity.v1.FinishPasskeyCheckResponse.session:type_name -> openfief.identity.v1.Session
+	60, // 15: openfief.identity.v1.BeginRegistrationResponse.expires_at:type_name -> google.protobuf.Timestamp
+	12, // 16: openfief.identity.v1.FinishRegistrationResponse.passkey:type_name -> openfief.identity.v1.Passkey
+	9,  // 17: openfief.identity.v1.FinishRegistrationResponse.session:type_name -> openfief.identity.v1.Session
+	60, // 18: openfief.identity.v1.BeginLoginResponse.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 19: openfief.identity.v1.FinishLoginResponse.session:type_name -> openfief.identity.v1.Session
+	9,  // 20: openfief.identity.v1.CreateDemoSessionResponse.session:type_name -> openfief.identity.v1.Session
+	11, // 21: openfief.identity.v1.WhoAmIResponse.owner:type_name -> openfief.identity.v1.Owner
+	9,  // 22: openfief.identity.v1.WhoAmIResponse.session:type_name -> openfief.identity.v1.Session
+	12, // 23: openfief.identity.v1.ListPasskeysResponse.passkeys:type_name -> openfief.identity.v1.Passkey
+	61, // 24: openfief.identity.v1.CreateScriptTokenRequest.ttl:type_name -> google.protobuf.Duration
+	13, // 25: openfief.identity.v1.CreateScriptTokenResponse.token:type_name -> openfief.identity.v1.ScriptToken
+	13, // 26: openfief.identity.v1.ListScriptTokensResponse.tokens:type_name -> openfief.identity.v1.ScriptToken
+	61, // 27: openfief.identity.v1.CreateEnrollmentLinkRequest.ttl:type_name -> google.protobuf.Duration
+	60, // 28: openfief.identity.v1.CreateEnrollmentLinkResponse.expires_at:type_name -> google.protobuf.Timestamp
+	60, // 29: openfief.identity.v1.BeginPasskeyCheckResponse.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 30: openfief.identity.v1.FinishPasskeyCheckResponse.session:type_name -> openfief.identity.v1.Session
 	3,  // 31: openfief.identity.v1.AuditActor.kind:type_name -> openfief.identity.v1.AuditActorKind
 	6,  // 32: openfief.identity.v1.AuditRef.kind:type_name -> openfief.identity.v1.AuditRefKind
-	51, // 33: openfief.identity.v1.AuditEntry.at:type_name -> google.protobuf.Timestamp
-	46, // 34: openfief.identity.v1.AuditEntry.actor:type_name -> openfief.identity.v1.AuditActor
+	60, // 33: openfief.identity.v1.AuditEntry.at:type_name -> google.protobuf.Timestamp
+	48, // 34: openfief.identity.v1.AuditEntry.actor:type_name -> openfief.identity.v1.AuditActor
 	4,  // 35: openfief.identity.v1.AuditEntry.action:type_name -> openfief.identity.v1.AuditAction
 	5,  // 36: openfief.identity.v1.AuditEntry.outcome:type_name -> openfief.identity.v1.AuditOutcome
-	47, // 37: openfief.identity.v1.AuditEntry.refs:type_name -> openfief.identity.v1.AuditRef
+	49, // 37: openfief.identity.v1.AuditEntry.refs:type_name -> openfief.identity.v1.AuditRef
 	3,  // 38: openfief.identity.v1.ListAuditEntriesRequest.actor_kind:type_name -> openfief.identity.v1.AuditActorKind
 	4,  // 39: openfief.identity.v1.ListAuditEntriesRequest.action:type_name -> openfief.identity.v1.AuditAction
-	51, // 40: openfief.identity.v1.ListAuditEntriesRequest.from:type_name -> google.protobuf.Timestamp
-	51, // 41: openfief.identity.v1.ListAuditEntriesRequest.to:type_name -> google.protobuf.Timestamp
-	48, // 42: openfief.identity.v1.ListAuditEntriesResponse.entries:type_name -> openfief.identity.v1.AuditEntry
-	12, // 43: openfief.identity.v1.AuthService.GetLoginMethods:input_type -> openfief.identity.v1.GetLoginMethodsRequest
-	14, // 44: openfief.identity.v1.AuthService.BeginRegistration:input_type -> openfief.identity.v1.BeginRegistrationRequest
-	16, // 45: openfief.identity.v1.AuthService.FinishRegistration:input_type -> openfief.identity.v1.FinishRegistrationRequest
-	18, // 46: openfief.identity.v1.AuthService.BeginLogin:input_type -> openfief.identity.v1.BeginLoginRequest
-	20, // 47: openfief.identity.v1.AuthService.FinishLogin:input_type -> openfief.identity.v1.FinishLoginRequest
-	22, // 48: openfief.identity.v1.AuthService.CreateDemoSession:input_type -> openfief.identity.v1.CreateDemoSessionRequest
-	24, // 49: openfief.identity.v1.AuthService.Logout:input_type -> openfief.identity.v1.LogoutRequest
-	26, // 50: openfief.identity.v1.AuthService.WhoAmI:input_type -> openfief.identity.v1.WhoAmIRequest
-	28, // 51: openfief.identity.v1.AuthService.ListPasskeys:input_type -> openfief.identity.v1.ListPasskeysRequest
-	30, // 52: openfief.identity.v1.AuthService.RemovePasskey:input_type -> openfief.identity.v1.RemovePasskeyRequest
-	32, // 53: openfief.identity.v1.AuthService.CreateScriptToken:input_type -> openfief.identity.v1.CreateScriptTokenRequest
-	34, // 54: openfief.identity.v1.AuthService.ListScriptTokens:input_type -> openfief.identity.v1.ListScriptTokensRequest
-	36, // 55: openfief.identity.v1.AuthService.RevokeScriptToken:input_type -> openfief.identity.v1.RevokeScriptTokenRequest
-	38, // 56: openfief.identity.v1.AuthService.CreateEnrollmentLink:input_type -> openfief.identity.v1.CreateEnrollmentLinkRequest
-	40, // 57: openfief.identity.v1.AuthService.BeginPasskeyCheck:input_type -> openfief.identity.v1.BeginPasskeyCheckRequest
-	42, // 58: openfief.identity.v1.AuthService.FinishPasskeyCheck:input_type -> openfief.identity.v1.FinishPasskeyCheckRequest
-	44, // 59: openfief.identity.v1.AuthService.SignOutEverywhere:input_type -> openfief.identity.v1.SignOutEverywhereRequest
-	49, // 60: openfief.identity.v1.AuthService.ListAuditEntries:input_type -> openfief.identity.v1.ListAuditEntriesRequest
-	13, // 61: openfief.identity.v1.AuthService.GetLoginMethods:output_type -> openfief.identity.v1.GetLoginMethodsResponse
-	15, // 62: openfief.identity.v1.AuthService.BeginRegistration:output_type -> openfief.identity.v1.BeginRegistrationResponse
-	17, // 63: openfief.identity.v1.AuthService.FinishRegistration:output_type -> openfief.identity.v1.FinishRegistrationResponse
-	19, // 64: openfief.identity.v1.AuthService.BeginLogin:output_type -> openfief.identity.v1.BeginLoginResponse
-	21, // 65: openfief.identity.v1.AuthService.FinishLogin:output_type -> openfief.identity.v1.FinishLoginResponse
-	23, // 66: openfief.identity.v1.AuthService.CreateDemoSession:output_type -> openfief.identity.v1.CreateDemoSessionResponse
-	25, // 67: openfief.identity.v1.AuthService.Logout:output_type -> openfief.identity.v1.LogoutResponse
-	27, // 68: openfief.identity.v1.AuthService.WhoAmI:output_type -> openfief.identity.v1.WhoAmIResponse
-	29, // 69: openfief.identity.v1.AuthService.ListPasskeys:output_type -> openfief.identity.v1.ListPasskeysResponse
-	31, // 70: openfief.identity.v1.AuthService.RemovePasskey:output_type -> openfief.identity.v1.RemovePasskeyResponse
-	33, // 71: openfief.identity.v1.AuthService.CreateScriptToken:output_type -> openfief.identity.v1.CreateScriptTokenResponse
-	35, // 72: openfief.identity.v1.AuthService.ListScriptTokens:output_type -> openfief.identity.v1.ListScriptTokensResponse
-	37, // 73: openfief.identity.v1.AuthService.RevokeScriptToken:output_type -> openfief.identity.v1.RevokeScriptTokenResponse
-	39, // 74: openfief.identity.v1.AuthService.CreateEnrollmentLink:output_type -> openfief.identity.v1.CreateEnrollmentLinkResponse
-	41, // 75: openfief.identity.v1.AuthService.BeginPasskeyCheck:output_type -> openfief.identity.v1.BeginPasskeyCheckResponse
-	43, // 76: openfief.identity.v1.AuthService.FinishPasskeyCheck:output_type -> openfief.identity.v1.FinishPasskeyCheckResponse
-	45, // 77: openfief.identity.v1.AuthService.SignOutEverywhere:output_type -> openfief.identity.v1.SignOutEverywhereResponse
-	50, // 78: openfief.identity.v1.AuthService.ListAuditEntries:output_type -> openfief.identity.v1.ListAuditEntriesResponse
-	61, // [61:79] is the sub-list for method output_type
-	43, // [43:61] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	60, // 40: openfief.identity.v1.ListAuditEntriesRequest.from:type_name -> google.protobuf.Timestamp
+	60, // 41: openfief.identity.v1.ListAuditEntriesRequest.to:type_name -> google.protobuf.Timestamp
+	50, // 42: openfief.identity.v1.ListAuditEntriesResponse.entries:type_name -> openfief.identity.v1.AuditEntry
+	7,  // 43: openfief.identity.v1.Grant.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 44: openfief.identity.v1.Grant.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	60, // 45: openfief.identity.v1.Grant.created_at:type_name -> google.protobuf.Timestamp
+	60, // 46: openfief.identity.v1.Grant.revoked_at:type_name -> google.protobuf.Timestamp
+	7,  // 47: openfief.identity.v1.CreateGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 48: openfief.identity.v1.CreateGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	53, // 49: openfief.identity.v1.CreateGrantResponse.grant:type_name -> openfief.identity.v1.Grant
+	7,  // 50: openfief.identity.v1.RevokeGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 51: openfief.identity.v1.RevokeGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	7,  // 52: openfief.identity.v1.ListGrantsRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	53, // 53: openfief.identity.v1.ListGrantsResponse.grants:type_name -> openfief.identity.v1.Grant
+	14, // 54: openfief.identity.v1.AuthService.GetLoginMethods:input_type -> openfief.identity.v1.GetLoginMethodsRequest
+	16, // 55: openfief.identity.v1.AuthService.BeginRegistration:input_type -> openfief.identity.v1.BeginRegistrationRequest
+	18, // 56: openfief.identity.v1.AuthService.FinishRegistration:input_type -> openfief.identity.v1.FinishRegistrationRequest
+	20, // 57: openfief.identity.v1.AuthService.BeginLogin:input_type -> openfief.identity.v1.BeginLoginRequest
+	22, // 58: openfief.identity.v1.AuthService.FinishLogin:input_type -> openfief.identity.v1.FinishLoginRequest
+	24, // 59: openfief.identity.v1.AuthService.CreateDemoSession:input_type -> openfief.identity.v1.CreateDemoSessionRequest
+	26, // 60: openfief.identity.v1.AuthService.Logout:input_type -> openfief.identity.v1.LogoutRequest
+	28, // 61: openfief.identity.v1.AuthService.WhoAmI:input_type -> openfief.identity.v1.WhoAmIRequest
+	30, // 62: openfief.identity.v1.AuthService.ListPasskeys:input_type -> openfief.identity.v1.ListPasskeysRequest
+	32, // 63: openfief.identity.v1.AuthService.RemovePasskey:input_type -> openfief.identity.v1.RemovePasskeyRequest
+	34, // 64: openfief.identity.v1.AuthService.CreateScriptToken:input_type -> openfief.identity.v1.CreateScriptTokenRequest
+	36, // 65: openfief.identity.v1.AuthService.ListScriptTokens:input_type -> openfief.identity.v1.ListScriptTokensRequest
+	38, // 66: openfief.identity.v1.AuthService.RevokeScriptToken:input_type -> openfief.identity.v1.RevokeScriptTokenRequest
+	40, // 67: openfief.identity.v1.AuthService.CreateEnrollmentLink:input_type -> openfief.identity.v1.CreateEnrollmentLinkRequest
+	42, // 68: openfief.identity.v1.AuthService.BeginPasskeyCheck:input_type -> openfief.identity.v1.BeginPasskeyCheckRequest
+	44, // 69: openfief.identity.v1.AuthService.FinishPasskeyCheck:input_type -> openfief.identity.v1.FinishPasskeyCheckRequest
+	46, // 70: openfief.identity.v1.AuthService.SignOutEverywhere:input_type -> openfief.identity.v1.SignOutEverywhereRequest
+	51, // 71: openfief.identity.v1.AuthService.ListAuditEntries:input_type -> openfief.identity.v1.ListAuditEntriesRequest
+	54, // 72: openfief.identity.v1.AuthService.CreateGrant:input_type -> openfief.identity.v1.CreateGrantRequest
+	56, // 73: openfief.identity.v1.AuthService.RevokeGrant:input_type -> openfief.identity.v1.RevokeGrantRequest
+	58, // 74: openfief.identity.v1.AuthService.ListGrants:input_type -> openfief.identity.v1.ListGrantsRequest
+	15, // 75: openfief.identity.v1.AuthService.GetLoginMethods:output_type -> openfief.identity.v1.GetLoginMethodsResponse
+	17, // 76: openfief.identity.v1.AuthService.BeginRegistration:output_type -> openfief.identity.v1.BeginRegistrationResponse
+	19, // 77: openfief.identity.v1.AuthService.FinishRegistration:output_type -> openfief.identity.v1.FinishRegistrationResponse
+	21, // 78: openfief.identity.v1.AuthService.BeginLogin:output_type -> openfief.identity.v1.BeginLoginResponse
+	23, // 79: openfief.identity.v1.AuthService.FinishLogin:output_type -> openfief.identity.v1.FinishLoginResponse
+	25, // 80: openfief.identity.v1.AuthService.CreateDemoSession:output_type -> openfief.identity.v1.CreateDemoSessionResponse
+	27, // 81: openfief.identity.v1.AuthService.Logout:output_type -> openfief.identity.v1.LogoutResponse
+	29, // 82: openfief.identity.v1.AuthService.WhoAmI:output_type -> openfief.identity.v1.WhoAmIResponse
+	31, // 83: openfief.identity.v1.AuthService.ListPasskeys:output_type -> openfief.identity.v1.ListPasskeysResponse
+	33, // 84: openfief.identity.v1.AuthService.RemovePasskey:output_type -> openfief.identity.v1.RemovePasskeyResponse
+	35, // 85: openfief.identity.v1.AuthService.CreateScriptToken:output_type -> openfief.identity.v1.CreateScriptTokenResponse
+	37, // 86: openfief.identity.v1.AuthService.ListScriptTokens:output_type -> openfief.identity.v1.ListScriptTokensResponse
+	39, // 87: openfief.identity.v1.AuthService.RevokeScriptToken:output_type -> openfief.identity.v1.RevokeScriptTokenResponse
+	41, // 88: openfief.identity.v1.AuthService.CreateEnrollmentLink:output_type -> openfief.identity.v1.CreateEnrollmentLinkResponse
+	43, // 89: openfief.identity.v1.AuthService.BeginPasskeyCheck:output_type -> openfief.identity.v1.BeginPasskeyCheckResponse
+	45, // 90: openfief.identity.v1.AuthService.FinishPasskeyCheck:output_type -> openfief.identity.v1.FinishPasskeyCheckResponse
+	47, // 91: openfief.identity.v1.AuthService.SignOutEverywhere:output_type -> openfief.identity.v1.SignOutEverywhereResponse
+	52, // 92: openfief.identity.v1.AuthService.ListAuditEntries:output_type -> openfief.identity.v1.ListAuditEntriesResponse
+	55, // 93: openfief.identity.v1.AuthService.CreateGrant:output_type -> openfief.identity.v1.CreateGrantResponse
+	57, // 94: openfief.identity.v1.AuthService.RevokeGrant:output_type -> openfief.identity.v1.RevokeGrantResponse
+	59, // 95: openfief.identity.v1.AuthService.ListGrants:output_type -> openfief.identity.v1.ListGrantsResponse
+	75, // [75:96] is the sub-list for method output_type
+	54, // [54:75] is the sub-list for method input_type
+	54, // [54:54] is the sub-list for extension type_name
+	54, // [54:54] is the sub-list for extension extendee
+	0,  // [0:54] is the sub-list for field type_name
 }
 
 func init() { file_openfief_identity_v1_auth_proto_init() }
@@ -3552,8 +4287,8 @@ func file_openfief_identity_v1_auth_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_identity_v1_auth_proto_rawDesc), len(file_openfief_identity_v1_auth_proto_rawDesc)),
-			NumEnums:      7,
-			NumMessages:   44,
+			NumEnums:      9,
+			NumMessages:   51,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

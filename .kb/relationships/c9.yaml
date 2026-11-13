@@ -993,3 +993,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-456d1511fe65
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-grantat
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:21.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b821b6d860e4
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enum
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:37.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec1a654df2ef
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enum
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:37.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-713487c5e554
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-new-route
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:46.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-082f66df9384
+  - type: covered_by
+    from: SYM-models-models-provider-pb-retention-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:11.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab641cebd52
+  - type: implements
+    from: SYM-models-models-provider-pb-retention-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:11.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-770ff58a1cff
+  - type: implements
+    from: SYM-identity-view-grants-ungranted-conditions
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:13:41.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8d0f78134ec
+  - type: covered_by
+    from: SYM-identity-view-grants-ungranted-conditions
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:13:41.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24cdbbd70d51

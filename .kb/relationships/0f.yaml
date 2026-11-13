@@ -1035,3 +1035,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d583278d5a5d
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-newgrantfixture
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:53.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d4cfc0c8f68
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-testgrantmatch
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:43.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e67383dac9f4
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerunplacesanaccount
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:12.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b47467d2d9
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings-set-tier-models
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:22.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ba97bf75eb5
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings-set-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:32:22.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786b755f0309
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:35.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b61649030576
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:35.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce019becf7e4
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelproviderinstances-instance
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:48:46.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59098b28a17b
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-modelproviderinstances-instance
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:46.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-953dc436d1f3

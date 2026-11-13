@@ -650,3 +650,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a95a565a5311
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-counter-read
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:47:09.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eebcb7f2fa84
+  - type: implements
+    from: SYM-demo-name-init-job
+    to: REQ-identity-credentials-job-core-image
+    created_at: 2026-11-13T08:30:40.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2c69c59ad7b
+  - type: covered_by
+    from: SYM-demo-name-init-job
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-11-13T08:30:40.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd30a3573ebc
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-testnotreadywithoutthekey
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:11:38.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13df7ba31767
+  - type: covered_by
+    from: SYM-models-models-provider-pb-init
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:04:22.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b96c50fe914
+  - type: implements
+    from: SYM-models-models-provider-pb-init
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:04:22.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32176a4ab743
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:23.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a568820ac7
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:23.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b0bb90d65d2

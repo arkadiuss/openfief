@@ -958,3 +958,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2e2e1cc0c0f
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:00:17.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de165c20111c
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:00:17.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc506c305439
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:00:17.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2dbed96245c
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:00:17.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b804d4cb868
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:00:17.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b4f66deace2
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:00:17.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-545aa6d67729
+  - type: verified_by
+    from: SCEN-identity-grants-per-target
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:00:17.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff66e9792836
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-store-save-enabled
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:27:32.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2834023a4188
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-main-run
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:08.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ed7775fbf86
+  - type: implements
+    from: SYM-models-plugins-model-openai-main-run
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:08.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39113cc9297d

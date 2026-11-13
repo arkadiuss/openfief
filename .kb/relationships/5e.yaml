@@ -965,3 +965,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e73a5ec4425
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-require
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:01.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f5c9cdb6419
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-require
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:01.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d114717e851e
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-testcontractgrantsfollowtheschema
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:19.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b627acf19dc6
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-refusal-stands-when-its-entry-cannot-be-written
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:57.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca1c59ced7a5
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:22.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc467e3df11d
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:22.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38267b4120cf
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeproviders-instance
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:51:47.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-980e83f01e8d

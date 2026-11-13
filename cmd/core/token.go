@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"text/tabwriter"
@@ -17,25 +18,76 @@ import (
 type tokenAdmin struct {
 	store  identityapp.AuthStore
 	tokens *identityapp.Tokens
+	// grants ends a revoked token's grants, and gives a new token the
+	// household grant when asked (D-209).
+	grants *identityapp.Grants
+	// ping asks SpiceDB whether it answers; nil with the policy, which has
+	// nothing to wait for. wait is how long Issue waits for it, asking every
+	// pollEvery.
+	ping      func(context.Context) error
+	wait      time.Duration
+	pollEvery time.Duration
 }
+
+// errSpiceDBSilent reports a SpiceDB that did not answer in time, so token
+// issue made nothing.
+var errSpiceDBSilent = errors.New("SpiceDB did not answer, so no token was issued")
+
+// spicedbPollEvery is how often token issue asks a SpiceDB that has not
+// answered yet.
+const spicedbPollEvery = 2 * time.Second
 
 // systemActor is the core, as the audit log names it.
 func systemActor() identity.Actor {
 	return identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
 }
 
-// Issue creates a token and its audit entry.
-func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
-	tok, secret, err := identityapp.IssueToken(ctx, a.store, a.tokens, systemActor(), name, ttl)
+// Issue creates a token and, when household is set, the token's household
+// grant (D-209), atomically as far as the owner can tell. A token is given no
+// grant otherwise: under SpiceDB it then views nothing until the owner grants
+// it something, and nothing of SpiceDB is needed. With the grant under
+// SpiceDB, Issue first waits, up to the wait it was given, for SpiceDB to
+// answer, and issues nothing if it doesn't. Then the token, its grant and
+// their audit entries are stored in one transaction and the grant is written
+// to SpiceDB; if that write still fails, the token is revoked, with an audit
+// entry, no secret is returned and the error says so
+// (identityapp.Grants.IssueToken).
+func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration, household bool) (identity.ScriptToken, string, error) {
+	if household && a.ping != nil {
+		if err := waitForSpiceDB(ctx, a.ping, a.wait, a.pollEvery); err != nil {
+			return identity.ScriptToken{}, "", err
+		}
+	}
+	tok, secret, err := a.grants.IssueToken(ctx, systemActor(), name, ttl, household)
 	if err != nil {
 		return identity.ScriptToken{}, "", fmt.Errorf("issuing as the core: %w", err)
 	}
 	return tok, secret, nil
 }
 
-// Revoke revokes a token and writes its audit entry.
+// waitForSpiceDB asks ping until it answers, every poll, for up to wait, and
+// returns an error wrapping errSpiceDBSilent, with the last answer, when it
+// never does. A wait of zero asks once.
+func waitForSpiceDB(ctx context.Context, ping func(context.Context) error, wait, poll time.Duration) error {
+	expired := time.After(wait)
+	for {
+		err := ping(ctx)
+		if err == nil {
+			return nil
+		}
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("%w: %w", errSpiceDBSilent, ctx.Err())
+		case <-expired:
+			return fmt.Errorf("%w (waited %s): %w", errSpiceDBSilent, wait, err)
+		case <-time.After(poll):
+		}
+	}
+}
+
+// Revoke revokes a token, ends its grants and writes the audit entries.
 func (a tokenAdmin) Revoke(ctx context.Context, id identity.ScriptTokenID) error {
-	if err := identityapp.RevokeToken(ctx, a.store, a.tokens, systemActor(), id); err != nil {
+	if err := a.grants.RevokeToken(ctx, systemActor(), id); err != nil {
 		return fmt.Errorf("revoking as the core: %w", err)
 	}
 	return nil
@@ -56,7 +108,7 @@ func (a tokenAdmin) List(ctx context.Context) ([]identity.ScriptToken, error) {
 func tokenCommand(ctx context.Context, cmd *command, tokens tokenAdmin, out io.Writer, now time.Time) error {
 	switch cmd.Name {
 	case cmdTokenIssue:
-		tok, secret, err := tokens.Issue(ctx, cmd.TokenName, cmd.TTL)
+		tok, secret, err := tokens.Issue(ctx, cmd.TokenName, cmd.TTL, cmd.GrantHousehold)
 		if err != nil {
 			return fmt.Errorf("token issue: %w", err)
 		}

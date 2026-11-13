@@ -790,3 +790,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e43c36c7d77c
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:45.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c136c0d76944
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:45.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5575d74a3a96
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-type
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:49.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a7a4dd5051b
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-type
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:49.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b8c1eaf6c9
+  - type: implements
+    from: SYM-cmd-core-authzmonitor-authzmonitor-startprobe
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:38:53.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0be291a3adf1
+  - type: covered_by
+    from: SYM-cmd-core-authzmonitor-authzmonitor-startprobe
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:38:53.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1508374bdc4
+  - type: executable_for
+    from: SYM-cmd-core-authzsync-test-testreconcileaccesswritestheowner
+    to: TEST-core-authz-sync
+    created_at: 2026-11-13T15:41:39.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95135263648c
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-test-routes-and-tiers-round-trip
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:58.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0183236a0da4
+  - type: executable_for
+    from: SYM-models-modelrouter-connectrpc-client-test-tokens
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:47.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-663637c163a1
+  - type: covered_by
+    from: SYM-models-modelrouter-plan-plan-input-may-run
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:52.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242f666972ab
+  - type: implements
+    from: SYM-models-modelrouter-plan-plan-input-may-run
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:38:52.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e09cb5b3f250
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-request-body
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:16.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-763a7397c250
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-request-body
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:16.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6363c6796548
+  - type: implements
+    from: SYM-models-followup-client-go-client-instance
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:50:23.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-512f1c09f73a
+  - type: implements
+    from: SYM-models-followup-client-go-client-instance
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T14:50:23.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-050147d653e9
+  - type: covered_by
+    from: SYM-models-followup-client-go-client-instance
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T14:50:23.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ea16b4cf379
+  - type: executable_for
+    from: SYM-models-followup-client-test-go-testinstancetellsabrokenroutefromadownprovider
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T14:53:08.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbbe6b2402cf

@@ -692,3 +692,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bd5d83a5606
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantstore-revokegrants
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:43.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d5b519d34ed
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:14:02.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aaebdcebdd3
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grants
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:14:02.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35aa5a1e76fe
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-store-grants
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:02.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19347d8ec080
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-unprojectgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:16:48.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5ca17fdf7d7
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-unprojectgrants
+    to: REQ-identity-grants-only-view
+    created_at: 2026-11-13T10:16:48.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e3327f50d2a
+  - type: covered_by
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-unprojectgrants
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:16:48.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90b484a30f51
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getorigin
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:08.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79bfa037d91c
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getorigin
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:08.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1492865412
+  - type: covered_by
+    from: SYM-models-ingest-kube-discovery-running-as
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T12:26:58.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-370ff04d62bb
+  - type: implements
+    from: SYM-models-ingest-kube-discovery-running-as
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:26:58.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf3eef2685c8
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-unsafe-model-char
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:41.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a431315880d
+  - type: implements
+    from: SYM-models-modelrouter-ref-unsafe-model-char
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:41.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9277a9eac5f7

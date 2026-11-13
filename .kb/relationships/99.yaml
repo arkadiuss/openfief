@@ -1035,3 +1035,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47b5156b25cd
+  - type: implements
+    from: SYM-spicedb-key-authzkey-keygate-wait
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:59.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4115cf809934
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-keygate-wait
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:09:59.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8133f71cf95d
+  - type: executable_for
+    from: SYM-models-models-test-test-model-provider-server-is-for-the-core-only
+    to: TEST-sdk-model-provider-server
+    created_at: 2026-11-13T13:14:46.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30069267d4d3
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:48:56.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ad74857a0d
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T14:48:56.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ea7b7eebe75
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:56.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f764b1f33cef

@@ -1147,3 +1147,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17f173a7ef59
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-revoketarget
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:33.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5fab47cc0e
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-revoketarget
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:33.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c041bc64b5c
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantmatch
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:13:09.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7125ffb759f
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantmatch
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:13:09.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28be7745bc32
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grantmatch
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:09.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a11d9a1c812b
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerplacesanaccount
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:09.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4829de9f90d1
+  - type: covered_by
+    from: SYM-models-modelrouter-app-ports-auditor
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:07.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5390ef6aed1
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-auditor
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:07.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe055c7ca32
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-auditor
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:29:07.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe87d20214eb
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-client-set-tier-models
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:52:30.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab9796a55c8f
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-client-set-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:52:30.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-913264d53fed
+  - type: covered_by
+    from: SYM-models-models-provider-pb-location-enum-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:20.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62abf7187163
+  - type: implements
+    from: SYM-models-models-provider-pb-location-enum-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:20.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4018c190283
+  - type: covered_by
+    from: SYM-models-models-provider-pb-retention-get-days
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:25.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8b06d2d32f8
+  - type: implements
+    from: SYM-models-models-provider-pb-retention-get-days
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:25.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-602e90876a06
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-tool-calling
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:46.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-203a41cdb4a4
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-tool-calling
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:46.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a08094dbfc0
+  - type: covered_by
+    from: SYM-models-identity-audit-valid-model-id
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T13:28:03.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6f4703e25b7
+  - type: implements
+    from: SYM-models-identity-audit-valid-model-id
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T13:28:03.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e9c7e74eee
+  - type: implements
+    from: SYM-models-identity-audit-valid-model-id
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T13:28:03.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac3b0adace55

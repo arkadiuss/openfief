@@ -720,3 +720,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4279ee455b2
+  - type: implements
+    from: SYM-grants-cmd-core-authz-desiredaccess
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:01:43.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8656a8ff4b9
+  - type: covered_by
+    from: SYM-grants-cmd-core-authz-desiredaccess
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:01:43.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a691953cfafa
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-inforce
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:40.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2531923956
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-inforce
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:40.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e882d8288f2
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-inforceof
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:36.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a5246fa302
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-inforceof
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:36.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0f731e36769
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-grantfixture-token
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:56.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e61a3f9d5021
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-projectgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:16:44.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-607531bf301c
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-projectgrants
+    to: REQ-identity-grants-only-view
+    created_at: 2026-11-13T10:16:44.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6701bda0efec
+  - type: covered_by
+    from: SYM-grants-internal-identity-spicedb-syncer-syncer-projectgrants
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:16:44.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a55eab7031b0
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tier-policy-denied
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:45:15.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-034fcd50fd4c
+  - type: implements
+    from: SYM-models-modelrouter-tier-tier-policy-denied
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:45:15.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ea303e61bef
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:12.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19abf62e5a26
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:12.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a71343cbe65

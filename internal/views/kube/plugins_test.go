@@ -146,6 +146,18 @@ func TestRecordOf(t *testing.T) {
 			Signature:        views.Condition{Status: "False", Reason: "UntrustedSigner"},
 			UntrustedSigners: []string{"public key sha256:0a0a"},
 		}},
+		{"the view the core proxies browsers to (D-81)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			u := operatorPlugin(t, "ui")
+			if err := unstructured.SetNestedStringSlice(u.Object, []string{"/"}, "status", "effective", "browserPaths"); err != nil {
+				t.Fatal(err)
+			}
+			return u
+		}, func() views.PluginRecord {
+			r := signedRecord("ui")
+			r.BrowserPath = "/"
+			return r
+		}()},
 		{"not reconciled yet", func(t *testing.T) *unstructured.Unstructured {
 			t.Helper()
 			u := operatorPlugin(t, "fresh")
@@ -204,6 +216,48 @@ func TestPlugins(t *testing.T) {
 	})
 	if err != nil {
 		t.Errorf("a Plugin added after Start was not listed: %v", err)
+	}
+}
+
+// TestPluginsOnRemoved checks that the handler hears of the instance of every
+// Plugin the watch sees deleted, and of none that is only added: the core ends
+// a view plugin's grants when it is uninstalled (D-209).
+func TestPluginsOnRemoved(t *testing.T) {
+	t.Parallel()
+	dyn := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(runtime.NewScheme(),
+		map[schema.GroupVersionResource]string{kube.PluginResource(): "PluginList"}, operatorPlugin(t, "ui"), operatorPlugin(t, "ibkr-main"))
+	p := kube.NewPlugins(dyn, "openfief", 0)
+	removed := make(chan string, 4)
+	if err := p.OnRemoved(func(instance string) { removed <- instance }); err != nil {
+		t.Fatalf("OnRemoved: %v", err)
+	}
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	if err := p.Start(ctx); err != nil {
+		t.Fatalf("Start: %v", err)
+	}
+	plugins := dyn.Resource(kube.PluginResource()).Namespace("openfief")
+	if _, err := plugins.Create(ctx, operatorPlugin(t, "ghostfolio"), metav1.CreateOptions{}); err != nil {
+		t.Fatalf("create: %v", err)
+	}
+	if err := plugins.Delete(ctx, "ui", metav1.DeleteOptions{}); err != nil {
+		t.Fatalf("delete: %v", err)
+	}
+	if err := plugins.Delete(ctx, "ghostfolio", metav1.DeleteOptions{}); err != nil {
+		t.Fatalf("delete: %v", err)
+	}
+	var got []string
+	for len(got) < 2 {
+		select {
+		case instance := <-removed:
+			got = append(got, instance)
+		case <-time.After(10 * time.Second):
+			t.Fatalf("the handler heard of %v, want ui and ghostfolio, the two deleted", got)
+		}
+	}
+	slices.Sort(got)
+	if diff := cmp.Diff([]string{"ghostfolio", "ui"}, got); diff != "" {
+		t.Errorf("the instances the handler heard of (-want +got):\n%s", diff)
 	}
 }
 

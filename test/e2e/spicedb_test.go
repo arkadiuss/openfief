@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"maps"
 	"net/http"
 	"slices"
 	"strings"
@@ -15,7 +16,9 @@ import (
 
 	"google.golang.org/protobuf/encoding/protojson"
 	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -31,7 +34,9 @@ const (
 	// spicedbRoleName the Secret of the password of SpiceDB's role in the openfief-db cluster.
 	spicedbPresharedName = "openfief-spicedb-key"
 	spicedbRoleName      = "openfief-db-spicedb"
-	spicedbJob           = "openfief-spicedb-secrets"
+	// spicedbJobApp is the stable label of the Job that generates them, on the Job and its pod: the Job's name carries
+	// the release, or the core image's digest on a dev build, so it is found by this label (deploy/spicedb).
+	spicedbJobApp = "openfief-init-credentials"
 	// spicedbDatabase is the CloudNativePG Database SpiceDB's datastore is.
 	spicedbDatabase = "openfief-db-spicedb"
 	// authzSpiceDBFlag and authzInsecureFlag switch the core to SpiceDB, plaintext on the Service behind its policy.
@@ -48,9 +53,6 @@ const (
 // errNoRoleStatus reports a cluster whose status doesn't list SpiceDB's role as reconciled.
 var errNoRoleStatus = errors.New("CloudNativePG hasn't reconciled the role spicedb")
 
-// errNoCoreContainer reports a core Deployment without the container the test changes.
-var errNoCoreContainer = errors.New("the core Deployment has no container")
-
 // cnpgDatabase is CloudNativePG's Database resource.
 func cnpgDatabase() schema.GroupVersionResource {
 	return schema.GroupVersionResource{Group: "postgresql.cnpg.io", Version: "v1", Resource: "databases"}
@@ -66,7 +68,7 @@ func TestSpiceDBDeployed(t *testing.T) {
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
 	waitSpiceDBAvailable(t, k)
-	waitJobComplete(t, k, spicedbJob)
+	waitJobComplete(t, k, credentialsJobName(t, k))
 
 	key := secretValue(t, k, spicedbPresharedName, "key")
 	password := secretValue(t, k, spicedbRoleName, "password")
@@ -89,7 +91,7 @@ func TestSpiceDBDeployed(t *testing.T) {
 	}
 	checkSpiceDBPod(t, &d.Spec.Template.Spec)
 
-	for _, app := range []string{spicedbDeployment, coreDeployment} {
+	for _, app := range []string{spicedbDeployment, coreDeployment, spicedbJobApp} {
 		logs := podLogs(t.Context(), t, k, app)
 		for name, value := range map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password} {
 			if bytes.Contains(logs, value) {
@@ -97,6 +99,124 @@ func TestSpiceDBDeployed(t *testing.T) {
 			}
 		}
 	}
+	job := checkCredentialsJob(t, k)
+	checkCredentialsKept(t, k, job, map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password})
+}
+
+// credentialsJob returns the one Job that generates the credentials, found by its stable label: its name is
+// per release (deploy/spicedb), so the test can't know it.
+func credentialsJob(t *testing.T, k *kube) *batchv1.Job {
+	t.Helper()
+	jobs, err := k.clients.BatchV1().Jobs(namespace).List(t.Context(), metav1.ListOptions{LabelSelector: appLabel + "=" + spicedbJobApp})
+	if err != nil {
+		t.Fatalf("listing the credentials Jobs: %v", err)
+	}
+	if len(jobs.Items) != 1 {
+		t.Fatalf("%d Jobs are labelled %s=%s, want 1", len(jobs.Items), appLabel, spicedbJobApp)
+	}
+	if want := spicedbJobApp + "-"; !strings.HasPrefix(jobs.Items[0].Name, want) {
+		t.Errorf("the credentials Job is named %s, want a name per release, %s<suffix>", jobs.Items[0].Name, want)
+	}
+	return &jobs.Items[0]
+}
+
+// credentialsJobName returns the name of the credentials Job.
+func credentialsJobName(t *testing.T, k *kube) string {
+	t.Helper()
+	return credentialsJob(t, k).Name
+}
+
+// checkCredentialsJob checks that the Job that generated the credentials runs the
+// core's own image, as the Deployment of the core does, with `init-credentials`
+// and a hardened container (D-216), and returns it.
+func checkCredentialsJob(t *testing.T, k *kube) *batchv1.Job {
+	t.Helper()
+	job := credentialsJob(t, k)
+	core, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	if len(job.Spec.Template.Spec.Containers) != 1 || len(core.Spec.Template.Spec.Containers) == 0 {
+		t.Fatalf("Job %s has %d containers, want 1", job.Name, len(job.Spec.Template.Spec.Containers))
+	}
+	c := &job.Spec.Template.Spec.Containers[0]
+	// The same reference as the core's: by digest wherever the core is pinned by
+	// digest (the release bundle, whose test checks the pin), by the e2e tag here.
+	if want := core.Spec.Template.Spec.Containers[0].Image; c.Image != want {
+		t.Errorf("the credentials Job runs %s, want the core's image %s", c.Image, want)
+	}
+	if !slices.Equal(c.Args, []string{"init-credentials"}) || len(c.Command) != 0 {
+		t.Errorf("the credentials Job runs %v %v, want the core's entrypoint with init-credentials", c.Command, c.Args)
+	}
+	if !hardened(c.SecurityContext) {
+		t.Errorf("the credentials Job's container isn't read-only without privilege escalation and capabilities")
+	}
+	return job
+}
+
+// checkCredentialsKept runs the credentials Job's pod once more, as a Job of its own
+// name, and checks that it kept both Secrets as they were (D-216, D-29): it logs "kept"
+// for each, and every value is the one the first run, or an owner who fed it first, left.
+func checkCredentialsKept(t *testing.T, k *kube, job *batchv1.Job, values map[string][]byte) {
+	t.Helper()
+	logs := rerunCredentialsJob(t, k, job)
+	for secret, value := range values {
+		if !bytes.Contains(logs, []byte(`"secret":"`+secret+`","result":"kept"`)) {
+			t.Errorf("the second run's log doesn't say it kept Secret %s", secret)
+		}
+		if bytes.Contains(logs, value) {
+			t.Errorf("the second run's log holds the value of Secret %s", secret)
+		}
+		field := map[string]string{spicedbPresharedName: "key", spicedbRoleName: "password"}[secret]
+		if got := secretValue(t, k, secret, field); !bytes.Equal(got, value) {
+			t.Errorf("Secret %s changed when the Job ran again", secret)
+		}
+	}
+}
+
+// rerunCredentialsJob creates a Job of its own name from job's pod spec, waits until it
+// completes, deletes it when t ends, and returns its pod's log.
+func rerunCredentialsJob(t *testing.T, k *kube, job *batchv1.Job) []byte {
+	t.Helper()
+	name := job.Name + "-again"
+	// The Job's own label differs from the stable one, so the credentials Job stays the only one found by it; the pod
+	// keeps the label the Job's NetworkPolicy selects.
+	jobLabels := maps.Clone(job.Labels)
+	jobLabels[appLabel] = spicedbJobApp + "-again"
+	again := &batchv1.Job{
+		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace, Labels: jobLabels},
+		Spec: batchv1.JobSpec{
+			BackoffLimit:          job.Spec.BackoffLimit,
+			ActiveDeadlineSeconds: job.Spec.ActiveDeadlineSeconds,
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{appLabel: spicedbJobApp, "app.kubernetes.io/part-of": "openfief"}},
+				Spec:       job.Spec.Template.Spec,
+			},
+		},
+	}
+	if _, err := k.clients.BatchV1().Jobs(namespace).Create(t.Context(), again, metav1.CreateOptions{}); err != nil {
+		t.Fatalf("creating Job %s: %v", name, err)
+	}
+	t.Cleanup(func() {
+		ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), spicedbTimeout)
+		defer cancel()
+		background := metav1.DeletePropagationBackground
+		err := k.clients.BatchV1().Jobs(namespace).Delete(ctx, name, metav1.DeleteOptions{PropagationPolicy: &background})
+		if err != nil && !apierrors.IsNotFound(err) {
+			t.Logf("deleting Job %s: %v", name, err)
+		}
+	})
+	waitJobComplete(t, k, name)
+
+	pods, err := k.clients.CoreV1().Pods(namespace).List(t.Context(), metav1.ListOptions{LabelSelector: "job-name=" + name})
+	if err != nil || len(pods.Items) == 0 {
+		t.Fatalf("listing the pods of Job %s: %d pods, %v", name, len(pods.Items), err)
+	}
+	logs, err := k.clients.CoreV1().Pods(namespace).GetLogs(pods.Items[0].Name, &corev1.PodLogOptions{}).DoRaw(t.Context())
+	if err != nil {
+		t.Fatalf("reading the log of Job %s: %v", name, err)
+	}
+	return logs
 }
 
 // waitSpiceDBAvailable waits until SpiceDB's Deployment is available: its
@@ -198,6 +318,54 @@ func checkSpiceDBPod(t *testing.T, spec *corev1.PodSpec) {
 	checkCredentialsFromSecrets(t, spec.Containers[0].Env)
 }
 
+// checkCoreKeyIsMounted checks that the core takes SpiceDB's preshared key from
+// the optional volume of its Secret, mounted read-only, and from no
+// environment variable: the volume lets it start before the credentials Job
+// has made the Secret and wait for it (SCEN-core-spicedb-waits-for-key).
+func checkCoreKeyIsMounted(t *testing.T, d *appsv1.Deployment) {
+	t.Helper()
+	spec := &d.Spec.Template.Spec
+	var volume string
+	for i := range spec.Volumes {
+		if s := spec.Volumes[i].Secret; s != nil && s.SecretName == spicedbPresharedName {
+			if s.Optional == nil || !*s.Optional {
+				t.Errorf("the core's volume of Secret %s isn't optional, so the pod can't start before the Secret exists", spicedbPresharedName)
+			}
+			volume = spec.Volumes[i].Name
+		}
+	}
+	if volume == "" {
+		t.Fatalf("the core mounts no volume of Secret %s", spicedbPresharedName)
+	}
+	for i := range spec.Containers {
+		checkKeyMount(t, &spec.Containers[i], volume)
+	}
+}
+
+// checkKeyMount checks that c mounts volume read-only, when it is the core,
+// and takes the preshared key from no environment variable.
+func checkKeyMount(t *testing.T, c *corev1.Container, volume string) {
+	t.Helper()
+	for _, e := range c.Env {
+		if e.Name == "OPENFIEF_SPICEDB_PRESHARED_KEY" {
+			t.Errorf("container %s takes the preshared key from the environment, which is fixed when it starts", c.Name)
+		}
+	}
+	mounted := false
+	for _, m := range c.VolumeMounts {
+		if m.Name != volume {
+			continue
+		}
+		mounted = true
+		if !m.ReadOnly {
+			t.Errorf("container %s mounts the preshared key's volume writable", c.Name)
+		}
+	}
+	if c.Name == "core" && !mounted {
+		t.Errorf("container core doesn't mount the preshared key's volume")
+	}
+}
+
 // checkCredentialsFromSecrets checks that the preshared key and the role's
 // password in env come from Secrets, never as literals.
 func checkCredentialsFromSecrets(t *testing.T, env []corev1.EnvVar) {
@@ -259,97 +427,100 @@ func podLogs(ctx context.Context, t *testing.T, k *kube, app string) []byte {
 	return all
 }
 
-// TestSpiceDBFailsClosed switches the core to SpiceDB and checks, with a
-// script token that has no grant, that SpiceDB is what answers; then stops
-// SpiceDB, and checks that the core refuses instead of answering from anywhere
-// else; then starts it and checks that the core answers again; and finally
-// returns the core to the demo's policy (SCEN-e2e-spicedb-down-fails-closed,
-// D-164).
+// TestSpiceDBFailsClosed checks, on the core that runs from SpiceDB (the suite's
+// overlay adds --authz=spicedb to the demo's core, so the whole suite runs under
+// it), that SpiceDB is what answers: a script token with no grant views nothing
+// while one with the household grant views every account, both from SpiceDB's
+// relationships; then stops SpiceDB, and checks that the core refuses instead of
+// answering from anywhere else; and then starts it and checks that the core
+// answers again, from what SpiceDB's database kept
+// (SCEN-e2e-spicedb-down-fails-closed, D-164).
 //
-// It is not parallel, on purpose: it restarts the core, so Go runs it before
-// any parallel test starts and it leaves the demo's configuration as it
-// found it. The owner's own refusal and view of every account are the
-// contract test's (task test:authz): a script token is the caller the suite
-// has without a browser, and SpiceDB grants none until the owner's grants
-// exist (D-209), which is the point: the token that the policy lets view every
-// account views none under SpiceDB.
+// It is not parallel, on purpose: it stops SpiceDB for the others, so Go runs it
+// before any parallel test starts and it leaves SpiceDB running. The owner's own
+// refusal and view of every account are the contract test's (task test:authz).
 //
-//nolint:paralleltest // see above: the test restarts the core, so it is the one that must run alone
+//nolint:paralleltest // see above: the test stops SpiceDB, so it is the one that must run alone
 func TestSpiceDBFailsClosed(t *testing.T) {
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
 	waitCoreAvailable(t, k)
 	waitSeedComplete(t, k)
 	waitSpiceDBAvailable(t, k)
-	token := issueToken(t, k)
+	core, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	if !coreRunsSpiceDB(core) {
+		t.Fatalf("the core runs without %s: the suite's overlay (test/e2e/overlays/openfief) must switch it to SpiceDB", authzSpiceDBFlag)
+	}
+	checkCoreKeyIsMounted(t, core)
+	waitLogLine(t, k, coreDeployment, reconciledLine)
+	ungranted := issueTokenWith(t, k).secret
+	granted := issueToken(t, k)
 
-	// Whatever happens, leave SpiceDB running and the core on the policy.
+	// Whatever happens, leave SpiceDB running.
 	t.Cleanup(func() {
 		ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), spicedbTimeout)
 		defer cancel()
 		if err := scaleDeployment(ctx, k, spicedbDeployment, 1); err != nil {
 			t.Logf("restoring SpiceDB: %v", err)
 		}
-		if err := setCoreAuthz(ctx, k, false); err != nil {
-			t.Logf("returning the core to the policy: %v", err)
-		}
 	})
 
 	anyAccounts := func([]string) bool { return true }
 	someAccounts := func(ids []string) bool { return len(ids) > 0 }
 	want := demoAccountIDs()
-	if got := waitAccounts(t, k, token, someAccounts); !slices.Equal(got, want) {
-		t.Fatalf("with the policy the token lists %v, want the demo accounts %v", got, want)
+	checkAnswers := func(step string) {
+		t.Helper()
+		if got := waitAccounts(t, k, granted, someAccounts); !slices.Equal(got, want) {
+			t.Fatalf("%s: the token with the household grant lists %v, want the demo accounts %v", step, got, want)
+		}
+		if got := waitAccounts(t, k, ungranted, anyAccounts); len(got) != 0 {
+			t.Fatalf("%s: the token with no grant lists %v, want nothing: SpiceDB holds no grant for it", step, got)
+		}
 	}
+	checkAnswers("with SpiceDB up")
 
-	if err := setCoreAuthz(t.Context(), k, true); err != nil {
-		t.Fatalf("switching the core to SpiceDB: %v", err)
-	}
-	waitLogLine(t, k, coreDeployment, reconciledLine)
-	// SpiceDB holds no grant for the token, so it views nothing; under the policy it viewed every account.
-	if got := waitAccounts(t, k, token, anyAccounts); len(got) != 0 {
-		t.Fatalf("with SpiceDB and no grant the token lists %v, want nothing", got)
-	}
-
-	stopSpiceDBAndExpectRefusal(t, k, token)
+	stopSpiceDBAndExpectRefusal(t, k, granted)
 
 	if err := scaleDeployment(t.Context(), k, spicedbDeployment, 1); err != nil {
 		t.Fatalf("starting SpiceDB: %v", err)
 	}
 	waitSpiceDBAvailable(t, k)
 	// SpiceDB's relationships are in PostgreSQL, so nothing is lost: the core answers again, from them.
-	if got := waitAccounts(t, k, token, anyAccounts); len(got) != 0 {
-		t.Fatalf("after SpiceDB came back the token lists %v, want nothing", got)
-	}
-
-	if err := setCoreAuthz(t.Context(), k, false); err != nil {
-		t.Fatalf("returning the core to the policy: %v", err)
-	}
-	if got := waitAccounts(t, k, token, someAccounts); !slices.Equal(got, want) {
-		t.Fatalf("with the policy again the token lists %v, want the demo accounts %v", got, want)
-	}
+	checkAnswers("after SpiceDB came back")
 }
 
 // stopSpiceDBAndExpectRefusal stops SpiceDB and waits for the core to refuse
-// the read API with a server error, never an answer, while the core itself
-// still runs.
+// the read API with 503 and the plain text "authorization is unavailable",
+// never an answer, a 500 or a 403, while the core itself still runs: /healthz
+// and /readyz stay 200, because readiness is the start's alone and an outage
+// later fails the checks closed instead of taking the core out of its Service.
 func stopSpiceDBAndExpectRefusal(t *testing.T, k *kube, token string) {
 	t.Helper()
 	if err := scaleDeployment(t.Context(), k, spicedbDeployment, 0); err != nil {
 		t.Fatalf("stopping SpiceDB: %v", err)
 	}
+	var refused reply
 	err := waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
 		r, callErr := call(ctx, k, clientPod, "/v1/accounts", token)
 		if callErr != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
 		}
+		refused = r
 		return fmt.Sprintf("HTTP %d", r.status), r.status >= http.StatusInternalServerError, nil
 	})
 	if err != nil {
 		t.Fatalf("waiting for the core to refuse the read API with SpiceDB stopped: %v", err)
 	}
-	if r := answerFrom(t, k, clientPod, "/healthz"); r.status != http.StatusOK {
-		t.Errorf("GET /healthz with SpiceDB stopped: status %d, want 200: the core runs, it only refuses to answer for accounts", r.status)
+	if refused.status != http.StatusServiceUnavailable || !bytes.Contains(refused.body, []byte("authorization is unavailable")) {
+		t.Errorf("GET /v1/accounts with SpiceDB stopped: status %d, body %q, want 503 with %q", refused.status, refused.body, "authorization is unavailable")
+	}
+	for _, path := range []string{"/healthz", "/readyz"} {
+		if r := answerFrom(t, k, clientPod, path); r.status != http.StatusOK {
+			t.Errorf("GET %s with SpiceDB stopped: status %d, want 200: the core runs and stays ready, it only refuses to answer for accounts", path, r.status)
+		}
 	}
 }
 
@@ -407,30 +578,6 @@ func scaleDeployment(ctx context.Context, k *kube, name string, replicas int32) 
 		return fmt.Errorf("scaling Deployment %s: %w", name, err)
 	}
 	return waitRolledOut(ctx, k, name)
-}
-
-// setCoreAuthz adds or removes --authz=spicedb and --spicedb-insecure in the
-// core's arguments, and waits for the core to roll out. Without them the core
-// runs on the policy, the demo's default.
-func setCoreAuthz(ctx context.Context, k *kube, spicedb bool) error {
-	deployments := k.clients.AppsV1().Deployments(namespace)
-	d, err := deployments.Get(ctx, coreDeployment, metav1.GetOptions{})
-	if err != nil {
-		return fmt.Errorf("getting Deployment %s: %w", coreDeployment, err)
-	}
-	i := slices.IndexFunc(d.Spec.Template.Spec.Containers, func(c corev1.Container) bool { return c.Name == "core" })
-	if i < 0 {
-		return fmt.Errorf("%w: core", errNoCoreContainer)
-	}
-	c := &d.Spec.Template.Spec.Containers[i]
-	c.Args = slices.DeleteFunc(c.Args, func(a string) bool { return strings.HasPrefix(a, "--authz=") || a == authzInsecureFlag })
-	if spicedb {
-		c.Args = append(c.Args, authzSpiceDBFlag, authzInsecureFlag)
-	}
-	if _, err := deployments.Update(ctx, d, metav1.UpdateOptions{FieldManager: fieldManager}); err != nil {
-		return fmt.Errorf("changing Deployment %s: %w", coreDeployment, err)
-	}
-	return waitRolledOut(ctx, k, coreDeployment)
 }
 
 // waitRolledOut waits until Deployment name has rolled out its latest

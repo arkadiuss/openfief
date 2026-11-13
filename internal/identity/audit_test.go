@@ -16,6 +16,7 @@ const (
 	auditSession = "0123456789abcdef"
 	auditTarget  = "fedcba9876543210"
 	auditCode    = "00112233445566ff"
+	callID       = "00112233445566aa"
 	auditHandle  = "dGVzdC1jcmVkZW50aWFs" // base64url of "test-credential"
 )
 
@@ -53,6 +54,101 @@ func TestNewAuditEntry(t *testing.T) {
 			name: "link issued by the core", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
 			action: identity.ActionEnrollmentLinkIssued, outcome: identity.OutcomeOK,
 			refs: []identity.Ref{{Kind: identity.RefEnrollmentCode, ID: auditCode}},
+		},
+		{
+			name: "the entry before a model call", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"},
+				{Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"},
+				{Kind: identity.RefModelCall, ID: callID},
+			},
+		},
+		{
+			name: "the result of a call that was answered", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"},
+				{Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"},
+				{Kind: identity.RefModelCall, ID: callID},
+			},
+		},
+		{
+			name: "the result of a call of the system that failed", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "maintainer"},
+				{Kind: identity.RefModel, ID: "ollama/qwen3:8b"},
+				{Kind: identity.RefModelCall, ID: callID},
+				{Kind: identity.RefModelError, ID: "unavailable"},
+			},
+		},
+		{
+			name: "a refusal before a model was chosen names the role and the call", actor: owner,
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefModelCall, ID: callID}},
+		},
+		{
+			name: "model reference that is a sentence", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "what is my net worth/x"}, {Kind: identity.RefModelCall, ID: callID},
+			}, wantErr: true,
+		},
+		{
+			name: "model reference without a provider", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "gpt-oss"}, {Kind: identity.RefModelCall, ID: callID},
+			}, wantErr: true,
+		},
+		{
+			name: "model role that is not a role", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "my question"}, {Kind: identity.RefModelCall, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a call ID that is a sentence", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: "what is my net worth"}}, wantErr: true,
+		},
+		{
+			name: "an error class that is the provider's message", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"},
+				{Kind: identity.RefModel, ID: "ollama/qwen3:8b"},
+				{Kind: identity.RefModelCall, ID: callID},
+				{Kind: identity.RefModelError, ID: "rate limited: key sk-123"},
+			}, wantErr: true,
+		},
+		{
+			name: "the entry before a call without its call ID", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "ollama/qwen3:8b"}}, wantErr: true,
+		},
+		{
+			name: "the entry before a call that is not sent", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "ollama/qwen3:8b"}, {Kind: identity.RefModelCall, ID: callID},
+			}, wantErr: true,
+		},
+		{
+			name: "the entry before a call without a model", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a result that is sent", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "ollama/qwen3:8b"}, {Kind: identity.RefModelCall, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "an answered result without its model", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a failure without its error class", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "ollama/qwen3:8b"}, {Kind: identity.RefModelCall, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "an error class on an answered call", actor: owner, action: identity.ActionModelCallResult, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"},
+				{Kind: identity.RefModel, ID: "ollama/qwen3:8b"},
+				{Kind: identity.RefModelCall, ID: callID},
+				{Kind: identity.RefModelError, ID: "internal"},
+			}, wantErr: true,
 		},
 		{name: "sign out everywhere names no record", actor: owner, action: identity.ActionSignOutEverywhere, outcome: identity.OutcomeOK},
 		{
@@ -164,7 +260,7 @@ func checkRefRejected(t *testing.T, kind identity.RefKind, name, v string) {
 // in and the error does not quote it.
 func TestAuditEntryRejectsSecretsAndFreeText(t *testing.T) {
 	t.Parallel()
-	kinds := []identity.RefKind{identity.RefSession, identity.RefPasskey, identity.RefEnrollmentCode, identity.RefScriptToken}
+	kinds := []identity.RefKind{identity.RefSession, identity.RefPasskey, identity.RefEnrollmentCode, identity.RefScriptToken, identity.RefModelRole, identity.RefModel, identity.RefModelCall, identity.RefModelError}
 	for name, v := range rejectedValues() {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -187,7 +283,7 @@ func TestAuditActionsAreClosed(t *testing.T) {
 			t.Errorf("ParseAuditAction(%q) = %q, %v, want it back", a, got, err)
 		}
 	}
-	for _, s := range []string{"", "SIGN_IN", "sign_in ", "grant_created"} {
+	for _, s := range []string{"", "SIGN_IN", "sign_in ", "grant_changed"} {
 		if _, err := identity.ParseAuditAction(s); !errors.Is(err, identity.ErrInvalidAuditEntry) {
 			t.Errorf("ParseAuditAction(%q) error = %v, want %v", s, err, identity.ErrInvalidAuditEntry)
 		}

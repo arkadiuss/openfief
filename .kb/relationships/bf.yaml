@@ -1252,3 +1252,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-136955935397
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:14:07.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e1202fcb03
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:14:07.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c112086630
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:07.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e97dc7d73ac
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:26.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f06b8a50c36
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:26.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-373df00f9956
+  - type: covered_by
+    from: SYM-models-modelrouter-request-tool
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:39.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c858de145efc
+  - type: implements
+    from: SYM-models-modelrouter-request-tool
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:39.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-581b43f25de4
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-parse-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:01.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b6fa3845b4
+  - type: implements
+    from: SYM-models-modelrouter-switch-parse-feature
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:44:01.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f414fa488879
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:17.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f70ad2e267ed
+  - type: implements
+    from: SYM-models-models-provider-pb-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:17.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d68e0a84fb45

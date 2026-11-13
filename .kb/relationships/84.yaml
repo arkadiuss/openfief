@@ -930,3 +930,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d76f233704a
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grant-active
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:12:41.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b8232d18cde
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grant-active
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:12:41.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94cd334cedfe
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grant-active
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:12:41.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a8b9e6525b1
+  - type: implements
+    from: SYM-grants-internal-identity-grant-granttarget-validate
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:12:53.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6745f422f518
+  - type: implements
+    from: SYM-grants-internal-identity-grant-granttarget-validate
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:12:53.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6968a437eb60
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-granttarget-validate
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:12:53.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b114ab23af52
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-request-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:11.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a9b3063220a
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-request-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:11.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fabbec935ec7
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-auth-create-grant
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:25:37.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f832ab640c14

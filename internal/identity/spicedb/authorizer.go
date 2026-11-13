@@ -12,6 +12,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // DefaultTimeout bounds one call to SpiceDB: a check that takes longer is
@@ -141,6 +142,7 @@ func (z *Authorizer) MayAct(ctx context.Context, c identity.Caller, a identity.A
 	if err != nil {
 		return false, fmt.Errorf("authorizing %s of an account: %w", a, err)
 	}
+	parent := ctx
 	ctx, cancel := context.WithTimeout(ctx, z.timeout)
 	defer cancel()
 	resp, err := z.perms.CheckPermission(ctx, &v1.CheckPermissionRequest{
@@ -150,7 +152,7 @@ func (z *Authorizer) MayAct(ctx context.Context, c identity.Caller, a identity.A
 		Subject:     subj,
 	})
 	if err != nil {
-		return false, fmt.Errorf("checking %s of an account in SpiceDB: %w", a, err)
+		return false, unavailable(parent, fmt.Errorf("checking %s of an account in SpiceDB: %w", a, err))
 	}
 	return resp.GetPermissionship() == v1.CheckPermissionResponse_PERMISSIONSHIP_HAS_PERMISSION, nil
 }
@@ -170,6 +172,7 @@ func (z *Authorizer) ActableAccounts(ctx context.Context, c identity.Caller, a i
 	if err != nil {
 		return nil, fmt.Errorf("listing accounts to %s: %w", a, err)
 	}
+	parent := ctx
 	ctx, cancel := context.WithTimeout(ctx, z.timeout)
 	defer cancel()
 	stream, err := z.perms.LookupResources(ctx, &v1.LookupResourcesRequest{
@@ -179,9 +182,47 @@ func (z *Authorizer) ActableAccounts(ctx context.Context, c identity.Caller, a i
 		Subject:            subj,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("looking up accounts to %s in SpiceDB: %w", a, err)
+		return nil, unavailable(parent, fmt.Errorf("looking up accounts to %s in SpiceDB: %w", a, err))
 	}
-	return collectAccounts(stream, a)
+	accounts, err := collectAccounts(stream, a)
+	if err != nil {
+		return nil, unavailable(parent, err)
+	}
+	return accounts, nil
+}
+
+// pingAccount is the account Ping asks about; no account has this ID.
+const pingAccount = "ping"
+
+// Ping reports whether SpiceDB answers a check, which it does only with the
+// schema in place: nil when it does, else an error wrapping
+// kernel.ErrAuthzUnavailable. It is the cheap call that tells the core, or a
+// command that is about to write to SpiceDB, that SpiceDB is there.
+func (z *Authorizer) Ping(ctx context.Context) error {
+	parent := ctx
+	ctx, cancel := context.WithTimeout(ctx, z.timeout)
+	defer cancel()
+	_, err := z.perms.CheckPermission(ctx, &v1.CheckPermissionRequest{
+		Consistency: fullyConsistent(),
+		Resource:    &v1.ObjectReference{ObjectType: typeAccount, ObjectId: pingAccount},
+		Permission:  identity.ActionView.String(),
+		Subject:     &v1.SubjectReference{Object: &v1.ObjectReference{ObjectType: typePerson, ObjectId: ownerID}},
+	})
+	if err != nil {
+		return unavailable(parent, fmt.Errorf("asking SpiceDB: %w", err))
+	}
+	return nil
+}
+
+// unavailable marks err, a failure of a call to SpiceDB, as
+// kernel.ErrAuthzUnavailable: whatever went wrong, the answer is that the
+// model can't tell now. An error of the caller's own ctx, such as a client
+// that went away, is returned as it is: SpiceDB was not at fault.
+func unavailable(parent context.Context, err error) error {
+	if parent.Err() != nil {
+		return err
+	}
+	return fmt.Errorf("%w: %w", kernel.ErrAuthzUnavailable, err)
 }
 
 // collectAccounts reads the accounts a LookupResources stream holds, those

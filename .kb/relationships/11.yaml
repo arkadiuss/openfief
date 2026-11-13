@@ -965,3 +965,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95e6852d5c21
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getsessiontoken
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:11.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b9160d53e5
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getsessiontoken
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:11.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78ff8d3aa493
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-router-fixture
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:03.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f62b73a270
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-request-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:55:38.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fa7596e2557
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-request-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:55:38.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf47ab9f4ad
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:40.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27129a6526ea
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:40.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81c70dd3eb8a

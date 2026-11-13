@@ -27,5 +27,7 @@ dist/
 /core
 /demo-seed
 /egress-proxy
+/model-openai
 /openfief
 /operator
+.kb/.symbol-compiler.lock/

@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/google/go-cmp/cmp"
 
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -226,4 +227,58 @@ func TestInboxEmpty(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Nothing needs you.", "kasztan-asleep")
+}
+
+// ungrantedItem adds the open item of a view plugin instance that holds no
+// grant.
+func ungrantedItem(h *harness, id int64, instance string) {
+	h.attention.add(&viewsv1.AttentionItem{
+		Id: id, Kind: "view-plugin-ungranted", Subject: instance, Detail: instance + " can't read anything until you grant it accounts",
+		State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DECISIONS,
+	})
+}
+
+// grantPost posts the owner's "Grant the whole household" to instance.
+func grantPost(instance string) *http.Request {
+	return form("/inbox/grant-household", url.Values{"instance": {instance}}.Encode())
+}
+
+// TestInboxUngrantedViewPlugin checks D-196's item for a view plugin that
+// can't read anything: it is a decision that says so, the owner has the one
+// button, which hands the core the household grant of that plugin instance
+// (CreateGrant, D-209) and comes back saying so; the core's refusal, such as a
+// plugin uninstalled meanwhile, shows its reason; a read session sees the item
+// without the button and can't post it.
+func TestInboxUngrantedViewPlugin(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	ungrantedItem(h, 60, "ghostfolio")
+	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, "Grant ghostfolio access to your accounts", "ghostfolio can&#39;t read anything until you grant it accounts",
+		`action="/inbox/grant-household"`, `name="instance" value="ghostfolio"`, "Grant the whole household")
+	read := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), readSession))
+	wantBody(t, read, "ghostfolio can&#39;t read anything until you grant it accounts")
+	wantNoBody(t, read, `action="/inbox/grant-household"`)
+
+	rec = h.serve(t, withSession(grantPost("ghostfolio"), ownerSession))
+	wantStatus(t, rec, http.StatusSeeOther)
+	if got := rec.Header().Get("Location"); got != "/inbox?granted=ghostfolio" {
+		t.Errorf("Location = %q, want /inbox?granted=ghostfolio", got)
+	}
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox?granted=ghostfolio", ""), ownerSession))
+	wantBody(t, rec, "ghostfolio can now read the whole household.")
+	rec = h.serve(t, withSession(grantPost("gone"), ownerSession))
+	wantStatus(t, rec, http.StatusNotFound)
+	wantBody(t, rec, "The core refused this: "+errNoSuchPlugin.Error())
+	rec = h.serve(t, withSession(grantPost(""), ownerSession))
+	wantStatus(t, rec, http.StatusBadRequest)
+	rec = h.serve(t, withSession(grantPost("ghostfolio"), readSession))
+	wantStatus(t, rec, http.StatusForbidden)
+	h.auth.mu.Lock()
+	defer h.auth.mu.Unlock()
+	want := []string{"GRANT_HOLDER_KIND_VIEW_PLUGIN/ghostfolio -> GRANT_TARGET_KIND_HOUSEHOLD/"}
+	if diff := cmp.Diff(want, h.auth.granted); diff != "" {
+		t.Errorf("grants made (-want +got):\n%s", diff)
+	}
 }

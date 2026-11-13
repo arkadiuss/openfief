@@ -1182,3 +1182,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f75cdc501e4b
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testrevokegrantkeepsitwhenthemodelfails
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:44.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d7a5cbdf1fb
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-recorded-all
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:39:53.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d3f09511db
+  - type: covered_by
+    from: SYM-models-cmd-core-modelrouter-model-providers
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:20:58.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-694b0c3cd6df
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-model-providers
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:20:58.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec36f92e9192
+  - type: executable_for
+    from: SYM-models-modelrouter-app-settings-test-test-settings-only-the-owner-changes-them
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:40.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b37a3e69b6cf

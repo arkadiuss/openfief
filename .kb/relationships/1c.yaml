@@ -965,3 +965,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-def76535c272
+  - type: executable_for
+    from: SYM-e2e-spicedb-check-credentials-job
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T07:47:23.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55af7f436efe
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-testserveauthorization
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:11:53.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c9f3565b950
+  - type: covered_by
+    from: SYM-models-models-settings-pb-file-openfief-models-v1-settings-proto-init
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:14:02.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3a2754e4298
+  - type: implements
+    from: SYM-models-models-settings-pb-file-openfief-models-v1-settings-proto-init
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:14:02.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c84b1220eecb
+  - type: executable_for
+    from: SYM-models-followup-router-test-go-testrouterraisesnoitemforatransientfailure
+    to: TEST-models-app-router
+    created_at: 2026-11-13T15:02:49.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee5f8e0884e

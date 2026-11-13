@@ -993,3 +993,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b47ae7461ca6
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantdirectorytargets
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:58.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2f2015359d7
+  - type: implements
+    from: SYM-spicedb-key-authz-readkeyfile
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:08:49.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e933d65e5f3
+  - type: covered_by
+    from: SYM-spicedb-key-authz-readkeyfile
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:08:49.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eebee1bb097c
+  - type: covered_by
+    from: SYM-models-cmd-core-modelrouter-model-audit
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:25:47.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30c4297030ac
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-model-audit
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:25:47.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9290ef805fd
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-model-audit
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:25:47.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5118f06c417d

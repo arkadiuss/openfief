@@ -958,3 +958,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1f0b4415e12
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-missing
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:26.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16a140feaff1
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-missing
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:26.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0435e0a10052
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-holdergone
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:29.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65dbaf24c60d
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-holdergone
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:29.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e6a1afde0f7
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testgrantsareowneronly
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:51.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14863fb08877
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-directory-viewplugininstalled
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:11:07.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-345a2216098e
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testcutoveroverpostgres
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:47.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9f8c39a57d3
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-list-models
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:18.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559bb87b3fc1
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-list-models
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:18.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4110e79e8043
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-instancesfunc-instance
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:51:08.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7d5ce977fea

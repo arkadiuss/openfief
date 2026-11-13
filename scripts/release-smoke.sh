@@ -160,7 +160,7 @@ mapfile -t images < <(sed -n 's/^ *image: *//p' "$install_file" | sort -u)
 [ "${#images[@]}" -gt 0 ] || fail "$install_file runs no image"
 [ "$(grep -c 'image:' "$install_file")" -eq "$(sed -n 's/^ *image: *//p' "$install_file" | wc -l)" ] ||
   fail "$install_file names an image the guide's command doesn't read"
-# Ours are named by digest and signed; a third party's (SpiceDB and the Job that generates its credentials, D-164) keep
+# Ours are named by digest and signed; a third party's (SpiceDB, D-164) keeps
 # the tag and digest the base pins them to, and nothing of ours signed them, so they are only checked to be pinned.
 ours=()
 for image in "${images[@]}"; do

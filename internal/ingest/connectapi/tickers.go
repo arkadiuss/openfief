@@ -10,6 +10,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -113,6 +114,8 @@ func (s *tickers) fail(ctx context.Context, err error) *connect.Error {
 	switch {
 	case errors.Is(err, app.ErrNoSession):
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
+	case errors.Is(err, kernel.ErrAuthzUnavailable):
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuthzUnavailable)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
 	case errors.Is(err, ledger.ErrInvalidISIN):

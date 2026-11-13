@@ -832,3 +832,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80b027315c9e
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-response-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:38.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f50b3bf67aa
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-response-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:39.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37caa0c27525
+  - type: implements
+    from: SYM-models-followup-router-go-router-result
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:50:14.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b88fa85391cb
+  - type: implements
+    from: SYM-models-followup-router-go-router-result
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T14:50:14.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3f07b28fd97
+  - type: covered_by
+    from: SYM-models-followup-router-go-router-result
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:50:14.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a344686e50c
+  - type: executable_for
+    from: SYM-models-followup-router-test-go-testrouterlinkseachattemptsentries
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:52:23.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b7f2c5801fc

@@ -97,6 +97,7 @@
     {{if .Decide}}<form method="post" action="/inbox/transfers/confirm" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="primary">Confirm</button></form>
       <form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="danger">Not a transfer</button></form>{{else if .Waiting}}<span class="muted">Waiting for the owner.</span>{{end}}
     {{if and .Transfer .Acknowledge}}<form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Transfer}}<button type="submit" class="danger">Reject the pair</button></form>{{end}}
+    {{if .GrantHousehold}}<form method="post" action="/inbox/grant-household" class="inline"><input type="hidden" name="instance" value="{{.Item.Subject}}"><button type="submit" class="primary">Grant the whole household</button></form>{{end}}
     {{if .Acknowledge}}<form method="post" action="/inbox/acknowledge" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Acknowledge</button></form>{{end}}
     {{if .Resolve}}<form method="post" action="/inbox/resolve" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Resolve</button></form>{{end}}
   </div>

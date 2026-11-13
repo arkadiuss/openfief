@@ -1014,3 +1014,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb8f4d1f5dfb
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-memauthstore-grants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:48.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-583f774f7275
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-reset
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:04.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef41ef684875
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-reset
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:04.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a906cee0f89d
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testtokenissuewithoutagrantneedsnothingofspicedb
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:27.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b2320382bed
+  - type: specified_by
+    from: REQ-models-switch-gates-calls
+    to: SCEN-models-switch-gates-calls
+    created_at: 2026-11-13T11:28:47.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf9d8dd769c0
+  - type: executable_for
+    from: SYM-models-modelrouter-connectrpc-client-test-plugin-generate
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:38.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87b4a30759fd
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-request-get-session-token
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:05:19.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4109b05b3e7
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-request-get-session-token
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:05:19.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d80bbd28aa89
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:41.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b795e653e53f
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:41.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-725f56cf8452

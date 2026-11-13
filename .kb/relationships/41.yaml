@@ -923,3 +923,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b257a43165d
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:24.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92ad8771d49b
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderkind
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:24.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69e1fbeb51f3
+  - type: specified_by
+    from: REQ-models-calls-audited-fail-closed
+    to: SCEN-models-calls-audited-fail-closed
+    created_at: 2026-11-13T11:28:55.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b45cf34252b
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-switch-off-calls-nothing
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:31.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f55a3f558c23
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-tiers
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:02.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6204f79f3b44
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-response
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:03:24.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-314e675a9e06
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-response
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:03:24.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26b28b84591f
+  - type: implements
+    from: SYM-models-followup-audit-go-modelerrorclasses
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:49:29.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2dcc0c2ca43
+  - type: implements
+    from: SYM-models-followup-audit-go-modelerrorclasses
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T14:49:29.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a0ee32d18d4
+  - type: covered_by
+    from: SYM-models-followup-audit-go-modelerrorclasses
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T14:49:29.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8da73c4e7f8

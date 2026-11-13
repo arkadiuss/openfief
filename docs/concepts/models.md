@@ -1,0 +1,106 @@
+---
+title: Models
+description: How the core decides whether and to which model a request may go, with one switch, model-provider plugins, data tiers and an audit entry for every call.
+covers:
+  - internal/modelrouter/**
+  - proto/openfief/models/**
+  - sdk/go/gen/openfief/models/**
+  - plugins/model-openai/**
+  - cmd/core/modelrouter.go
+  - sdk/go/openfief/models.go
+  - sdk/go/openfief/logsafe.go
+---
+
+OpenFief can ask a language model questions, and it never does so unless the owner says it may. This page explains the plumbing that makes that safe: the one switch that is off by default, the model-provider plugins that are the only way to a model, the data tiers that decide which model may see which data, and the audit entry written before every call. No feature calls a model yet: the Ask box's answers (D-203) and the maintainer (D-204) are built on top of this, and the [Plugins](plugins.md) page covers what a plugin is.
+
+## Concepts
+
+**One switch.** [Agents and models](../glossary.md) are off by default, behind one switch in Settings, with a toggle under it for each feature: the Ask box's model, the maintainer and the MCP server (D-212). The switch and the toggles are stored with the owner's other settings in the `modelrouter` schema and only the owner changes them. With the switch off nothing calls a model, whatever the toggles say; with it on, a feature still runs only if its own toggle is on.
+
+**Model-provider plugin.** A [model provider](../glossary.md) is a plugin with the `model-provider` capability (D-205). It holds its provider's key, reaches only its provider's host through the [egress proxy](egress.md) like any network plugin, says where its models run and what the provider keeps of what it receives, lists its models, and generates. It never sees a role, a data tier or who asked: it sends what the core hands it.
+
+**Three layers.** Configuration follows OpenClaw's: a *wire protocol* (OpenAI-compatible chat first; Anthropic's and Gemini's later), a *provider instance* (base URL, the Secret with its key, a timeout, and where its models run) and *model entries* (id, price per million tokens, context and output limits, and flags for tool calling and structured output). A plugin image speaks one protocol; installing it once per provider gives one instance each, so OpenAI, OpenRouter, Ollama, vLLM and LM Studio are instances of the same `model-openai` image, each with its own grant.
+
+**Model router and roles.** The core holds the [model router](../glossary.md). Each *role*, the Ask box (`ask`) or the maintainer (`maintainer`), has a route: a primary model and ordered fallbacks, written `provider/model` where the provider is an instance name and the model is the entry's id at it, which may itself hold slashes (`openrouter/openai/gpt-oss-120b`). A model that is down, slow or refuses its key passes the request to the next one; a model that rejects the request itself ends the call, since the next would reject it too.
+
+**Data tiers.** Every message of a request carries a [data tier](../glossary.md): T0 for whole-portfolio holdings, amounts, transactions and tax data; TF for one fief's own lease, cash, positions and working orders; T1 for a thesis; T2 for public data (D-206). The owner lists, per tier, the models allowed to receive it. The router sends a request only to a model allowed for every tier in it, and denies by default: a tier with no models listed allows none, and a message nobody tagged is not sent. A fallback never widens the tiers: it is checked like the primary.
+
+**Fail closed.** Each call is two entries of the audit log (D-211) linked by a call ID: `model_call`, outcome `sent`, written before the call is sent, and `model_call_result` after it. If the first can't be written the call isn't made. A call the router refuses before it chooses a model, by the switch or the data tiers, has only the result entry, `refused`. The entries name who asked, the role, the provider instance and model by name, and an error class for a failure, and nothing else: no question, no answer, no amount and no token count, which the budget keeps (D-208).
+
+```mermaid
+flowchart LR
+  role@{ icon: "fief:agent", form: "square", label: "Role<br/>ask, maintainer", pos: "b", h: 40 }
+  router@{ icon: "fief:route", form: "square", label: "Core<br/>model router", pos: "b", h: 40 }
+  log@{ icon: "fief:seal", form: "square", label: "Audit log<br/>model_call, model_call_result", pos: "b", h: 40 }
+  plugin@{ icon: "fief:connector", form: "square", label: "model-openai<br/>instance", pos: "b", h: 40 }
+  proxy@{ icon: "fief:egress", form: "square", label: "Egress proxy", pos: "b", h: 40 }
+  llm@{ icon: "fief:globe", form: "square", label: "Provider host", pos: "b", h: 40 }
+  role -->|"messages with tiers"| router
+  router -->|"sent before the call, result after"| log
+  router -->|"Generate, core token"| plugin
+  plugin -->|"CONNECT, granted host"| proxy
+  proxy --> llm
+```
+
+## How it works
+
+The context is called `modelrouter`, since no package may be named `models` ([Code organization](../dev/code-organization.md#architecture-tests)); its schema has the same name. Its root package ([internal/modelrouter](../../internal/modelrouter/doc.go)) is pure. `Switch` holds the switch and its toggles; its zero value is off, and `Switch.Allows` is true only with the switch and the feature's toggle on. `Ref` parses `provider/model`, `Route` is a role's models in order, `DataTier`, `DataTierSet` and `DataTierPolicy` are the data tiers, a request's distinct tiers and the owner's lists (`DataTierPolicy.Denied` names the tiers a model may not receive), `ProviderInstance` is what a provider instance declares about itself and `ModelEntry` is one model it offers, and `MakePlan` decides, for one request, which models of a route are candidates and why the others are skipped.
+
+```mermaid
+flowchart TD
+  start(["Router.Generate(role, request)"]) --> sw{"switch on, and the<br/>role's feature on?"}
+  sw -- no --> refused["record a refusal,<br/>return ErrSwitchOff or ErrFeatureOff"]
+  sw -- yes --> tag{"every message<br/>has a tier?"}
+  tag -- no --> refused2["record a refusal,<br/>return ErrUntagged"]
+  tag -- yes --> plan["MakePlan: models of the route<br/>allowed for every tier,<br/>able to serve tools and schema"]
+  plan -- none --> refused3["record a refusal,<br/>return ErrDataTierDenied or ErrNoCapableModel"]
+  plan -- candidates --> rec{"entry for the candidate<br/>written to the audit log?"}
+  rec -- no --> failed["no call:<br/>ErrAuditUnavailable"]
+  rec -- yes --> gen["provider plugin Generate"]
+  gen -- answer --> result(["result"])
+  gen -- unavailable --> next{"another candidate?"}
+  next -- yes --> rec
+  next -- no --> noanswer["ErrNoAnswer"]
+  gen -- rejected --> rejected["return the rejection"]
+```
+
+The router ([app/router.go](../../internal/modelrouter/app/router.go)) reads the settings first and fails closed when it can't: without them it can't know the switch is on. A refusal is checked before the request is validated or any provider is reached, and it is recorded, but a refusal that can't be recorded still stands. It keeps each provider's listed entries for five minutes, to skip models whose entry lacks tools or structured output; a provider that can't list its entries contributes none, and its models then answer for themselves.
+
+**The settings** ([app/settings.go](../../internal/modelrouter/app/settings.go), [postgres](../../internal/modelrouter/postgres/store.go), [connectapi](../../internal/modelrouter/connectapi/settings.go)). The owner's session, of owner scope on an allowed origin, is checked by the same port the other owner services use; `ModelSettingsService` ([settings.proto](../../proto/openfief/models/v1/settings.proto)) is served on the plugin port to view plugins only, like the other settings, and nothing stores its answers. The tables are in the `modelrouter` schema; the switch has no row until it is saved, which reads as off.
+
+**The provider contract** ([provider.proto](../../proto/openfief/models/v1/provider.proto)). `ModelProviderService` has `Describe` (protocol, where the models run, retention), `ListModels` and `Generate`, which doesn't stream in M1. Prices are exact decimal strings, never floating point. The core calls it with a short-lived ServiceAccount token whose audience is the instance, and the SDK's `ServeModelProvider` accepts only the core ([serve.go](../../sdk/go/openfief/serve.go), [models.go](../../sdk/go/openfief/models.go)). The core's client ([connectrpc](../../internal/modelrouter/connectrpc/client.go)) classifies a failed call by its Connect code, never its text: a rejected request is not retried elsewhere, and everything else, a provider that is down, slow or refusing the key, is unavailable. In the cluster, `cmd/core` finds an instance only while it runs with the `model-provider` capability (`Discovery.ModelProviderBaseURL`, [discovery.go](../../internal/ingest/kube/discovery.go)), so a route that names a connector sends it nothing.
+
+**The `model-openai` plugin** ([plugins/model-openai](../../plugins/model-openai/main.go)) speaks the OpenAI-compatible chat completions API at its configured base URL, with tools as `tools`, structured output as a strict `json_schema` response format and the entry's output limit as `max_tokens`. Its manifest asks for the capability, the host of its `baseUrl` config field (D-75) and two optional Secrets, the instance's `api-key` and the usual `ca-bundle`; there is no fixed egress host, since every provider differs. A local provider such as Ollama is reached through an approved in-cluster service (D-74) and needs no key. It refuses a request that names a model it has no entry for, tools or a schema for an entry without those flags, or a limit above the entry's, before it calls the provider. It reads its key on every call, keeps no request or answer, logs none, and its errors name an HTTP status, never the provider's reply; when it stops, it logs the rule that failed through the SDK's `LogSafe` ([logsafe.go](../../sdk/go/openfief/logsafe.go)), never the error's text.
+
+**The audit entries.** `cmd/core` writes each call as two entries ([modelrouter.go](../../cmd/core/modelrouter.go)), the two audit actions the models slice adds to the identity context's log. `model_call` has the outcome `sent` and names the role (`model_role`), the model (`model`, as `provider/model`) and a call ID (`model_call`, 16 hex digits the core makes); `model_call_result` names the same, with the outcome `ok`, `failed` or `refused`. A failure also names its class (`model_error`): `unavailable` (the provider can't be reached, is slow or refused the plugin's key), `rejected` (the provider or its plugin rejected the request), `canceled`, `misconfigured` (the route names a provider instance that is missing or is no model provider) or `internal`. A refusal before a model was chosen names no model. Each model the router tries has its own pair under its own call ID, so a fallback shows as a failed pair and then the pair that answered; a `sent` entry with no result is a call that never came back. If the result of an answered call can't be written, the router withholds the answer: the log fails closed on both sides.
+
+**Broken routes.** A route entry can name a provider instance no plugin has, or a plugin that is not a model provider, such as a connector. The core tells these apart from a provider that is only down: `Discovery.ModelProviderBaseURL` answers `ErrNoSuchInstance` and `ErrNotModelProvider` for the two mistakes and `ErrNotRunning` for a model provider that doesn't run now, and `cmd/core` names them `ErrProviderMissing`, `ErrNotModelProvider` and `ErrProviderUnavailable` for the router. A call that meets a mistake records a failed result of class `misconfigured`, tries the route's next model and raises one attention item for the entry, of the kind `model-route-broken` in the Inbox's decisions (D-196); a timeout or a 5xx falls through and raises none. The attention check `RouteProblems` ([app/routes.go](../../internal/modelrouter/app/routes.go)) runs every minute with the other checks over the routes in use, which are those of a role whose toggle is on under the switch: it raises the same items, one per broken entry, subject `<role>/<provider>/<model>` and a detail that names the route and the instance, and it resolves them when the owner fixes or removes the entry. Before the core has found the plugins it can't tell, so the check fails that round and clears nothing.
+
+## Decisions
+
+D-205 (model-provider plugins in three layers, the router), D-206 (data tiers), D-211 (every model call is an audit event) and D-212 (the switch). D-203 and D-204, the features that use this, are not built.
+
+## Verification
+
+| Behavior | Tests | kibi |
+|---|---|---|
+| The switch and every toggle are off until the owner turns them on, and the store keeps them | `TestSwitchAllows`, `TestSwitchChanges` ([modelrouter_test.go](../../internal/modelrouter/modelrouter_test.go)), `TestSettingsDefaultsAreOff` ([app/settings_test.go](../../internal/modelrouter/app/settings_test.go)), [postgres/store_test.go](../../internal/modelrouter/postgres/store_test.go) (`task test:pg`) | REQ-models-switch-default-off |
+| With the switch or the toggle off the router calls no provider, and refuses even an invalid request | `TestRouterSwitchOffCallsNothing`, `TestRouterSwitchOffRefusesEvenAnInvalidRequest`, `TestRouterFailsClosedWithoutSettings` ([app/router_test.go](../../internal/modelrouter/app/router_test.go)) | REQ-models-switch-gates-calls |
+| Only the owner changes the settings | `TestSettingsOnlyTheOwnerChangesThem` ([app/settings_test.go](../../internal/modelrouter/app/settings_test.go)), `TestOnlyTheOwnerMayCall` ([connectapi/settings_test.go](../../internal/modelrouter/connectapi/settings_test.go)) | REQ-models-settings-owner-only |
+| Routes: primary, fallbacks, unavailable and rejected providers | `TestRouterFallsBackOnUnavailable`, `TestRouterNoAnswerWhenEveryModelIsDown`, `TestRouterRejectionEndsTheCall` ([app/router_test.go](../../internal/modelrouter/app/router_test.go)), `TestRoutesAndTiersRoundTrip` | REQ-models-router-roles-fallbacks |
+| A request goes only to models allowed for every tier it holds, denying by default | `TestDataTierPolicyDenied`, `TestMakePlan` ([modelrouter_test.go](../../internal/modelrouter/modelrouter_test.go)), `TestRouterTiers`, `TestRouterDeniesByDefault`, `TestRouterFallbackStaysWithinTheTiers` | REQ-models-data-tiers-deny-by-default |
+| A call is recorded before it is sent, refused when it can't be, and the records hold no text | `TestRouterAuditsBeforeCalling`, `TestRouterRefusesWhenTheEntryCannotBeWritten`, `TestRouterKeepsTextOutOfRecordsAndErrors`, `TestModelAuditRecordsCallsAsAuditEntries` ([cmd/core](../../cmd/core/modelrouter_test.go)), `TestNewAuditEntry` ([identity](../../internal/identity/audit_test.go)) | REQ-models-calls-audited-fail-closed |
+| A call is two audit entries under one call ID, `sent` before it and its result after, a refusal before a model was chosen only the result, and an answer whose result can't be recorded is withheld | `TestRouterLinksEachAttemptsEntries`, `TestRouterRefusalHasOnlyTheResultEntry`, `TestRouterWithholdsAnAnswerItCannotRecord`, `TestRouterRecordsTheResultOfACanceledCall` ([app/router_test.go](../../internal/modelrouter/app/router_test.go)), `TestModelAuditRecordsCallsAsAuditEntries` ([cmd/core](../../cmd/core/modelrouter_test.go)), `TestNewAuditEntry` ([identity](../../internal/identity/audit_test.go)), `TestAuditLogKeepsModelCalls` ([identity/postgres](../../internal/identity/postgres/audit_test.go), `task test:pg`) | REQ-models-calls-two-entries-linked |
+| A route entry naming a missing provider instance, or a plugin that is no model provider, falls through and raises one attention item that clears when fixed; a provider that is only down raises none | `TestRouterRaisesAnItemForABrokenRouteEntry`, `TestRouterFallsThroughWhenTheItemCannotBeRaised` ([app/router_test.go](../../internal/modelrouter/app/router_test.go)), `TestRouteProblems` ([app/routes_test.go](../../internal/modelrouter/app/routes_test.go)), `TestRouteCheckFindsBrokenEntries`, `TestProviderAddressNamesTheDiscoverysErrors` ([cmd/core](../../cmd/core/modelrouter_test.go)), `TestInstanceTellsABrokenRouteFromADownProvider` ([connectrpc](../../internal/modelrouter/connectrpc/client_test.go)), `TestModelProviderBaseURL` ([ingest/kube](../../internal/ingest/kube/modelprovider_test.go)) | REQ-models-route-broken-attention |
+| The contract is served to the core only, translated both ways, and an instance is reached only as a model provider | [connectrpc/client_test.go](../../internal/modelrouter/connectrpc/client_test.go), `TestModelProviderServerIsForTheCoreOnly` ([sdk](../../sdk/go/openfief/models_test.go)), `TestModelProviderBaseURL` ([ingest/kube](../../internal/ingest/kube/modelprovider_test.go)) | REQ-models-provider-plugin-contract |
+| The plugin speaks the OpenAI-compatible protocol to its configured host only | [chat_test.go](../../plugins/model-openai/chat_test.go), [provider_test.go](../../plugins/model-openai/provider_test.go), [config_test.go](../../plugins/model-openai/config_test.go), `TestModelProviderManifest` ([operator](../../internal/plugins/operator/model_provider_test.go)) | REQ-models-openai-compatible-plugin |
+
+## Not built yet
+
+- The Settings page does not show a broken route's provider instance next to its tier lists, and the item has no link to a page that fixes it, since no page edits routes yet.
+- Nothing asks the router for an answer: the Ask box's model (D-203) and the maintainer (D-204), and so no Settings page for the switch, the routes and the tier lists. The settings are served over `ModelSettingsService` for the built-in UI to use.
+- The MCP server (D-213) and its toggle's effect: the toggle is stored, and no endpoint exists to answer.
+- A demo configuration that allows its cloud model for every tier (D-206).
+- Spend and token budgets (D-208): the router keeps no usage, and the provider plugin only reports it.
+- Streaming, the Anthropic and Gemini wire protocols, and the model entries' prices in any decision.
+- An end-to-end test of a role's request through a provider plugin on a cluster; the pieces are tested against fakes.

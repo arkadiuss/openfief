@@ -68,6 +68,29 @@ func (p *Plugins) Start(ctx context.Context) error {
 	return nil
 }
 
+// OnRemoved has fn called with the instance name of every Plugin resource
+// that the watch sees deleted, once the operator's finalizer let it go: the
+// plugin is uninstalled (D-58). A removal while the core was down is no
+// event of a fresh process; the core's start sweeps what it left. Call it
+// before Start; fn runs on the informer's goroutine, so it must not block
+// for long.
+func (p *Plugins) OnRemoved(fn func(instance string)) error {
+	_, err := p.informer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+		DeleteFunc: func(obj any) {
+			if tomb, ok := obj.(cache.DeletedFinalStateUnknown); ok {
+				obj = tomb.Obj
+			}
+			if u, ok := obj.(*unstructured.Unstructured); ok {
+				fn(u.GetName())
+			}
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("watching for removed plugins: %w", err)
+	}
+	return nil
+}
+
 // InstalledPlugins returns every Plugin resource in the namespace, those
 // being deleted included, or an error wrapping app.ErrPluginsUnknown before
 // Start synced the cache.
@@ -94,7 +117,7 @@ func (p *Plugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error
 // spec.manifest.institutions (D-182), the same of bondTerms and
 // indexLevels (D-179) and of indexReadings (D-186), its
 // Ready and SignatureVerified conditions, status.signature and
-// status.untrustedSigners (D-169). A field
+// status.untrustedSigners (D-169) and status.effective.browserPaths (D-81). A field
 // that is missing or of another type reads as empty.
 func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 	r := views.PluginRecord{
@@ -108,6 +131,8 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		Signer:     nestedString(u, "status", "signature", "signer"),
 
 		UntrustedSigners: nestedStrings(u, "status", "untrustedSigners"),
+
+		BrowserPath: firstOf(nestedStrings(u, "status", "effective", "browserPaths")),
 
 		RequestsMarketData: nestedBool(u, "spec", "manifest", "marketData"),
 		MarketData:         nestedBool(u, "status", "effective", "marketData"),
@@ -141,6 +166,14 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		}
 	}
 	return r
+}
+
+// firstOf returns the first of xs, or "" when there is none.
+func firstOf(xs []string) string {
+	if len(xs) == 0 {
+		return ""
+	}
+	return xs[0]
 }
 
 // nestedString returns the string at fields of u, or "" when there is

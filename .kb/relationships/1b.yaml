@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dacb1f0f9d7f
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testcutoverreportsamodelthatfails
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:24.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9974054458f0

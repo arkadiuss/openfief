@@ -15,6 +15,7 @@ stable-tests | internal/attention/postgres/store_test.go newPool Skip | needs Po
 stable-tests | internal/identity/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
 stable-tests | internal/ingest/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
 stable-tests | internal/ledger/postgres/db_test.go newDatabase Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/modelrouter/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
 stable-tests | internal/portfolio/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
 stable-tests | internal/valuation/postgres/db_test.go newDatabase Skip | needs PostgreSQL (task test:pg), which a contributor may lack
 

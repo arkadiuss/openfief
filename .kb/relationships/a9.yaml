@@ -832,3 +832,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec4c27108ba9
+  - type: executable_for
+    from: SYM-grants-cmd-core-main-test-policyauthz
+    to: TEST-core-unit
+    created_at: 2026-11-13T10:04:55.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-810895f17c25
+  - type: executable_for
+    from: SYM-internal-views-connectapi-authz-test-downauthorizer
+    to: TEST-views-connectapi-authz
+    created_at: 2026-11-13T15:43:19.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c9d26056ef8
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-response-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:00.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0cdd4d0a71
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-response-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:00.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-817adc38c48b

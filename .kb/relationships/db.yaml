@@ -783,3 +783,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4352e34c866e
+  - type: implements
+    from: SYM-grants-internal-identity-connectapi-grants-pbtargetkinds
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:10:19.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7deff648c05
+  - type: covered_by
+    from: SYM-grants-internal-identity-connectapi-grants-pbtargetkinds
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:19.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d111190ad51f
+  - type: implements
+    from: SYM-grants-internal-portfolio-app-registry-withplacementobserver
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:17:41.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5c1b352fd01
+  - type: covered_by
+    from: SYM-grants-internal-portfolio-app-registry-withplacementobserver
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:41.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0016e3a66ea8
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedsyncer-accountplaced
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:45.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7ef5c46ec5e
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedsyncer-accountplaced
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:45.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-062f7ecbb182
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-skips-models-without-what-the-request-needs
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:34.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb261b945445
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-save-route
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:52.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68cd9f2ce1d8
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-save-route
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:52.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-275b0d4ca5b9
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:31.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c149afbc2d0f
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:31.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd9317a1da6d
+  - type: covered_by
+    from: SYM-models-models-settings-pb-route-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:06:35.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba6b8b9d1c8
+  - type: implements
+    from: SYM-models-models-settings-pb-route-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:06:35.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca5b3e54108

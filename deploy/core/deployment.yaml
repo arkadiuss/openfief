@@ -73,18 +73,12 @@ spec:
             # collected before the container's 256Mi limit kills it. Keep it about 80% of limits.memory.
             - name: GOMEMLIMIT
               value: 200MiB
-            # SpiceDB (../spicedb, D-164), read only with --authz=spicedb: the default, --authz=policy, ignores both.
-            # The key is optional, so an install without ../spicedb starts as before; with --authz=spicedb and no key
-            # the core refuses to start. An overlay that opts in adds --authz=spicedb and --spicedb-insecure (plaintext
-            # gRPC on the Service behind its NetworkPolicy) to the args. Overlays add to this list, after env/2.
+            # SpiceDB's address (../spicedb, D-164), read only with --authz=spicedb: the default, --authz=policy, ignores
+            # it. An overlay that opts in adds --authz=spicedb and --spicedb-insecure (plaintext gRPC on the Service
+            # behind its NetworkPolicy) to the args. The preshared key is not here: it is the file mounted below.
+            # Overlays add to this list, after env/2.
             - name: OPENFIEF_SPICEDB_ENDPOINT
               value: openfief-spicedb:50051
-            - name: OPENFIEF_SPICEDB_PRESHARED_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: openfief-spicedb-key
-                  key: key
-                  optional: true
             # Tracing is off: nothing is recorded or sent without an OTLP endpoint. The standard OpenTelemetry
             # variables turn it on, best through the optional component ../tracing, which also lets the core reach
             # the collector through its NetworkPolicy (docs/guides/tracing.md). For example:
@@ -107,7 +101,9 @@ spec:
             - name: connect
               containerPort: 8081
           # /healthz answers as soon as the process listens, also while it waits for the database and migrates;
-          # /readyz only once it is migrated and the database answers. Neither needs a token or returns data.
+          # /readyz only once it is migrated and the database answers and, with --authz=spicedb, SpiceDB has answered
+          # once with its schema written: the start's alone, so a SpiceDB outage later makes the APIs answer 503 for
+          # what needs a check and does not take the core out of its Service. Neither needs a token or returns data.
           livenessProbe:
             httpGet:
               path: /healthz
@@ -118,6 +114,15 @@ spec:
               path: /readyz
               port: http
             periodSeconds: 10
+          # SpiceDB's preshared key, the file /var/run/openfief/spicedb/key (--spicedb-key-file's default), read only
+          # with --authz=spicedb. The volume is optional: the core starts before the credentials Job (../spicedb,
+          # D-216) has created the Secret, serves its health endpoints, refuses every check and reports not ready, and
+          # the kubelet puts the file there, within about a minute of the Secret, which the core then picks up. A
+          # key in OPENFIEF_SPICEDB_PRESHARED_KEY, which an owner may add, wins over the file (D-29).
+          volumeMounts:
+            - name: spicedb-key
+              mountPath: /var/run/openfief/spicedb
+              readOnly: true
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -129,3 +134,11 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+      volumes:
+        - name: spicedb-key
+          secret:
+            secretName: openfief-spicedb-key
+            optional: true
+            items:
+              - key: key
+                path: key

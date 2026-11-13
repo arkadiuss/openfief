@@ -699,3 +699,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7788fa6e98c
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantsfollowtheirrecords
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:37.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-859bdde8802a
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-testcontractreconcilewritesgrantsandisidempotent
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:23.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8af44652a4d
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-events-add
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:27:12.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0c5078efd5f
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-ref-rows
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:40:11.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5802d620e07
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-ref-rows
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:40:12.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6be65c76f91d

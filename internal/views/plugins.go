@@ -67,16 +67,21 @@ type Condition struct {
 // (spec.manifest.marketData) and the grant approves it
 // (status.effective.marketData) (D-123).
 type PluginRecord struct {
-	Instance   string
-	Image      string
-	Deleting   bool
-	Requested  []string
-	Effective  []string
-	Ready      Condition
-	Signature  Condition
-	Trust      string
-	SignerKind string
-	Signer     string
+	Instance  string
+	Image     string
+	Deleting  bool
+	Requested []string
+	Effective []string
+	Ready     Condition
+	Signature Condition
+	// BrowserPath is the browser path prefix the grant approves
+	// (status.effective.browserPaths, D-81): set for the view plugin the
+	// core proxies browsers to, which reads with the signed-in person's
+	// session, and empty for every other plugin.
+	BrowserPath string
+	Trust       string
+	SignerKind  string
+	Signer      string
 	// UntrustedSigners is status.untrustedSigners: who signed an image the
 	// operator refused as signed by no trusted signer (D-169).
 	UntrustedSigners []string

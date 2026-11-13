@@ -685,3 +685,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-177da32664ae
+  - type: implements
+    from: SYM-grants-cmd-core-main-runtokencommand
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:04:52.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcc6ea79cba5
+  - type: covered_by
+    from: SYM-grants-cmd-core-main-runtokencommand
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:52.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d1cb69980a5
+  - type: implements
+    from: SYM-spicedb-key-authz-authorization-startreconcile
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:48:13.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfa64f3608b8
+  - type: covered_by
+    from: SYM-spicedb-key-authz-authorization-startreconcile
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:48:13.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33798bcb687f
+  - type: specified_by
+    from: REQ-models-switch-default-off
+    to: SCEN-models-switch-default-off
+    created_at: 2026-11-13T11:28:45.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9259ed0e265b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-session-token
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:58.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9557107083da
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-session-token
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:58.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14b1f15199ff

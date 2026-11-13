@@ -930,3 +930,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84b8cff9798c
+  - type: implements
+    from: SYM-cmd-core-authzmonitor-monitoredlister-actableaccounts
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:39:13.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4999016ffc8f
+  - type: covered_by
+    from: SYM-cmd-core-authzmonitor-monitoredlister-actableaccounts
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:39:13.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebbb05f1b9f1
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testtokenissuewithspicedbup
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:43.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adbc2f122885
+  - type: executable_for
+    from: SYM-models-modelrouter-connectrpc-client-test-tokens-token-for
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:51.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84c106595175
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-object
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:06.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08ac063f9cf9
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-object
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:06.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87c16561a9d2
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-chat-test-test-key-from-mount
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:47:45.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3511e5eb6dc
+  - type: covered_by
+    from: SYM-models-models-provider-pb-usage-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:03:04.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8fa4f9276e
+  - type: implements
+    from: SYM-models-models-provider-pb-usage-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:03:04.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-962c4a668afc
+  - type: executable_for
+    from: SYM-models-logsafe-test-test-log-safe
+    to: TEST-sdk-logsafe
+    created_at: 2026-11-13T13:14:22.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5896e66b9780

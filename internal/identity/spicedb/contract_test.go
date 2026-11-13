@@ -10,6 +10,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	v1 "github.com/authzed/authzed-go/proto/authzed/api/v1"
 	"github.com/authzed/authzed-go/v1"
@@ -82,21 +83,36 @@ func (c *contract) reconcile(d spicedb.Desired) {
 	}
 }
 
-// grant writes the relationship resource#relation@subject, each "type:id",
-// as the owner's grants are.
-func (c *contract) grant(resource, relation, subject string) {
+// contractAt is when the contract's grants are made.
+func contractAt() time.Time { return time.Date(2026, 11, 13, 8, 0, 0, 0, time.UTC) }
+
+// viewerGrant is the grant of target to the holder of kind and id.
+func viewerGrant(kind identity.GrantHolderKind, id string, target identity.GrantTarget) identity.Grant {
+	return identity.Grant{Holder: identity.GrantHolder{Kind: kind, ID: id}, Target: target, CreatedAt: contractAt()}
+}
+
+func accountTarget(id string) identity.GrantTarget {
+	return identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: id}
+}
+
+func sleeveTarget(id string) identity.GrantTarget {
+	return identity.GrantTarget{Kind: identity.GrantTargetSleeve, ID: id}
+}
+
+// project passes grants to SpiceDB, as the grants use cases do after they
+// commit.
+func (c *contract) project(grants ...identity.Grant) {
 	c.t.Helper()
-	res, sub := splitRef(resource), splitRef(subject)
-	_, err := c.client.WriteRelationships(c.t.Context(), &v1.WriteRelationshipsRequest{Updates: []*v1.RelationshipUpdate{{
-		Operation: v1.RelationshipUpdate_OPERATION_TOUCH,
-		Relationship: &v1.Relationship{
-			Resource: &v1.ObjectReference{ObjectType: res[0], ObjectId: res[1]},
-			Relation: relation,
-			Subject:  ref(sub[0], sub[1]),
-		},
-	}}})
-	if err != nil {
-		c.t.Fatalf("writing %s#%s@%s: %v", resource, relation, subject, err)
+	if err := c.syncer.ProjectGrants(c.t.Context(), grants); err != nil {
+		c.t.Fatalf("ProjectGrants: %v", err)
+	}
+}
+
+// unproject removes grants from SpiceDB, as a revocation does.
+func (c *contract) unproject(grants ...identity.Grant) {
+	c.t.Helper()
+	if err := c.syncer.UnprojectGrants(c.t.Context(), grants); err != nil {
+		c.t.Fatalf("UnprojectGrants: %v", err)
 	}
 }
 
@@ -173,15 +189,17 @@ func TestContractSpiceDBMatchesIdentityMayAct(t *testing.T) {
 	t.Parallel()
 	c := newContract(t)
 	accounts := []string{"brokerage", "bonds", "IKE (PL)", "ikze/2"}
+	// The household grant (D-209) of the script token and the view plugin that
+	// read today, which the cutover writes to the grants table.
 	c.reconcile(spicedb.Desired{
 		Accounts:     accounts,
 		Sleeves:      map[string]string{"brokerage": "core", "bonds": "bonds"}, // two accounts are in no sleeve
 		DemoSessions: true,
+		Grants: []identity.Grant{
+			viewerGrant(identity.GrantHolderScriptToken, "0123456789abcdef", identity.Household()),
+			viewerGrant(identity.GrantHolderViewPlugin, "ui", identity.Household()),
+		},
 	})
-	// The household grant (D-209) of the script token and the view plugin that
-	// read today.
-	c.grant("household:home", "reader", "script_token:0123456789abcdef")
-	c.grant("household:home", "reader", "view_plugin:ui")
 
 	for _, h := range contractHolders() {
 		c.compareAnswers(h, accounts)
@@ -215,9 +233,10 @@ func TestContractGrantsFollowTheSchema(t *testing.T) {
 
 	d := spicedb.Desired{Accounts: []string{"brokerage", "bonds"}, Sleeves: map[string]string{"brokerage": "core"}}
 	c.reconcile(d)
-	c.grant("sleeve:core", "viewer", "script_token:00000000000000aa")
-	c.grant("household:home", "reader", "script_token:00000000000000bb")
-	c.grant("account:bonds", "viewer", "view_plugin:one-account")
+	sleeveGrant := viewerGrant(identity.GrantHolderScriptToken, "00000000000000aa", sleeveTarget("core"))
+	householdGrant := viewerGrant(identity.GrantHolderScriptToken, "00000000000000bb", identity.Household())
+	accountGrant := viewerGrant(identity.GrantHolderViewPlugin, "one-account", accountTarget("bonds"))
+	c.project(sleeveGrant, householdGrant, accountGrant)
 
 	check := func(step string, who identity.Caller, a identity.Action, account string, want bool) {
 		t.Helper()
@@ -262,7 +281,8 @@ func TestContractGrantsFollowTheSchema(t *testing.T) {
 	check("the owner keeps the account", owner, change, "later", true)
 
 	// Moved to another sleeve, the first sleeve's grant ends with it.
-	c.grant("sleeve:play", "viewer", "view_plugin:one-account")
+	playGrant := viewerGrant(identity.GrantHolderViewPlugin, "one-account", sleeveTarget("play"))
+	c.project(playGrant)
 	if err := c.syncer.AccountPlaced(t.Context(), "brokerage", "play"); err != nil {
 		t.Fatalf("AccountPlaced move: %v", err)
 	}
@@ -270,27 +290,41 @@ func TestContractGrantsFollowTheSchema(t *testing.T) {
 	check("a move starts the new sleeve's grant", accountPlugin, view, "brokerage", true)
 	check("a sleeve grant never changes", accountPlugin, change, "brokerage", false)
 
+	// A revoked grant: the relationship is removed, and the holder views no more
+	// of what only that grant gave it. The other grants stay.
+	c.unproject(householdGrant)
+	check("a revoked household grant ends", householdPerson, view, "bonds", false)
+	check("a revoked household grant ends for a later account too", householdPerson, view, "later", false)
+	check("another holder's grant stays", accountPlugin, view, "bonds", true)
+	c.project(householdGrant) // granted again
+	check("a grant made again", householdPerson, view, "bonds", true)
+
 	// A deleted account: reconcile removes its household, so nobody views it.
-	c.reconcile(spicedb.Desired{Accounts: []string{"bonds"}})
+	d = spicedb.Desired{Accounts: []string{"bonds"}, Grants: []identity.Grant{householdGrant, accountGrant}}
+	c.reconcile(d)
 	check("a deleted account is nobody's", owner, view, "brokerage", false)
 	check("the household grant of another account stays", householdPerson, view, "bonds", true)
+	check("a grant not in the table is removed by the reconcile", sleeveToken, view, "bonds", false)
 }
 
-// TestContractReconcileLeavesGrantsAndIsIdempotent checks that reconciling
-// twice writes nothing the second time and removes no grant, against the
-// real SpiceDB's reads.
-func TestContractReconcileLeavesGrantsAndIsIdempotent(t *testing.T) {
+// TestContractReconcileWritesGrantsAndIsIdempotent checks that reconciling
+// writes the grants of the table, removes one SpiceDB holds that the table
+// does not, and writes nothing the second time, against the real SpiceDB's
+// reads.
+func TestContractReconcileWritesGrantsAndIsIdempotent(t *testing.T) {
 	t.Parallel()
 	c := newContract(t)
-	d := spicedb.Desired{Accounts: []string{"a", "b"}, Sleeves: map[string]string{"a": "core"}, DemoSessions: true}
+	tokenGrant := viewerGrant(identity.GrantHolderScriptToken, "00000000000000aa", identity.Household())
+	personGrant := viewerGrant(identity.GrantHolderPerson, "00000000000000cc", accountTarget("a"))
+	ended := viewerGrant(identity.GrantHolderViewPlugin, "ui", sleeveTarget("core"))
+	c.project(ended) // SpiceDB still holds a grant the table ended
+	d := spicedb.Desired{Accounts: []string{"a", "b"}, Sleeves: map[string]string{"a": "core"}, DemoSessions: true, Grants: []identity.Grant{tokenGrant, personGrant}}
 	c.reconcile(d)
-	c.grant("household:home", "reader", "script_token:00000000000000aa")
-	c.grant("account:a", "viewer", "person:viewer")
 	c.reconcile(d)
 	c.reconcile(d)
 
 	var got []string
-	for _, f := range []*v1.RelationshipFilter{{ResourceType: "household"}, {ResourceType: "account"}} {
+	for _, f := range []*v1.RelationshipFilter{{ResourceType: "household"}, {ResourceType: "account"}, {ResourceType: "sleeve"}} {
 		stream, err := c.client.ReadRelationships(context.Background(), &v1.ReadRelationshipsRequest{
 			Consistency: &v1.Consistency{Requirement: &v1.Consistency_FullyConsistent{FullyConsistent: true}}, RelationshipFilter: f,
 		})
@@ -308,7 +342,7 @@ func TestContractReconcileLeavesGrantsAndIsIdempotent(t *testing.T) {
 		}
 	}
 	want := []string{
-		"account:a#household@household:home", "account:a#sleeve@sleeve:core", "account:a#viewer@person:viewer",
+		"account:a#household@household:home", "account:a#sleeve@sleeve:core", "account:a#viewer@person:00000000000000cc",
 		"account:b#household@household:home",
 		"household:home#owner@person:owner", "household:home#reader@demo_session:*", "household:home#reader@script_token:00000000000000aa",
 	}

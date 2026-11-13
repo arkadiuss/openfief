@@ -895,3 +895,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48689f90d07b
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-newgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:18.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e39c4604c35
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-newgrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:19.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ac520c4fe1f
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enumdescriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:56.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49c54cc132c0
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enumdescriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:56.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bef7e0a45cb
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testtokenissuewaitsforspicedbandissuesnothingwithoutit
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:16.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d242007fe8c
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-status
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:33.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8580e305457e
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-status
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:33.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb1f744ca85
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:48.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499472cf373c
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:48.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-840c450bf0be
+  - type: implements
+    from: SYM-identity-views-kube-first-of
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:07:30.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0767a73157ff
+  - type: covered_by
+    from: SYM-identity-views-kube-first-of
+    to: TEST-views-kube
+    created_at: 2026-11-13T17:07:30.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb6922066b08

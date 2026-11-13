@@ -818,3 +818,150 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6017b55c236d
+  - type: constrains
+    from: REQ-identity-grants-household-covers-every-account
+    to: FACT-SUBJECT-2DB680818210C4BC
+    created_at: 2026-11-13T10:00:34.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5b4a2f5c98b
+  - type: requires_property
+    from: REQ-identity-grants-household-covers-every-account
+    to: FACT-PROP-F16F76D9B0EA059D
+    created_at: 2026-11-13T10:00:34.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2718bbb80645
+  - type: specified_by
+    from: REQ-identity-grants-household-covers-every-account
+    to: SCEN-identity-spicedb-grants-cover-later-accounts
+    created_at: 2026-11-13T10:00:34.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5823dbe48832
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-cutover
+    to: REQ-identity-grants-cutover-keeps-access
+    created_at: 2026-11-13T10:05:47.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3a9883bcde
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-cutover
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:05:47.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf1883b12ed
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-cutover
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:47.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccec9211df6d
+  - type: implements
+    from: SYM-grants-internal-identity-app-tokens-tokens-get
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:09:42.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26399e92dcde
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-tokens-tokens-get
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:42.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c34379eba15b
+  - type: implements
+    from: SYM-grants-internal-identity-connectapi-grants-pbholderkinds
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:10:16.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86886dcce73a
+  - type: covered_by
+    from: SYM-grants-internal-identity-connectapi-grants-pbholderkinds
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:16.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-918920906484
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-mainaccount
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:28.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f9c2821ac52
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testauditlogtakesgrantactions
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:03.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad55a413f29
+  - type: specified_by
+    from: REQ-identity-grants-household-covers-every-account
+    to: SCEN-core-token-issue-atomic-under-spicedb
+    created_at: 2026-11-13T15:35:52.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80376fd1fb6b
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-settings
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:36.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96372369a64c
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-settings
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:36.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57765c65b391
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider-wire-request
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:52.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a931e27e82d5
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider-wire-request
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:52.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7ab0118268f
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-role
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:24.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4804dc554a75
+  - type: implements
+    from: SYM-models-models-provider-pb-message-role
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:24.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07cafa60c475
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:35.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53d719b46b0
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:35.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5f62409cc7c

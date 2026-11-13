@@ -1063,3 +1063,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f8ae3dd1cbc
+  - type: executable_for
+    from: SYM-identity-kube-test-secret-creator-creates-only
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:46:44.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a34515b7a71
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantholder-ref
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:13:01.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1881ab4845df
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantholder-ref
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:13:01.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-998ee99eafed
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grantholder-ref
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:01.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cad1986634d6
+  - type: executable_for
+    from: SYM-models-modelrouter-app-settings-test-test-settings-set-by-the-owner
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:44.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b4341b056a
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-response-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:13:29.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a292a4b56f6f
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-response-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:13:29.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995319c15bb8

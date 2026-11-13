@@ -804,3 +804,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b5f9efce9b8
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantdirectoryoutsideacluster
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:07.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22b5ecd84d2
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-newgrantsfixture
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:16.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f748ec6bad95
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-testauthzmonitorlogseachchangeonce
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:28.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ca130c1665e
+  - type: covered_by
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-tier-models
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:31.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd4150c2a181
+  - type: implements
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:33:31.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd96b5cfbb20
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-new-tier-set
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:51.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757571c578f9
+  - type: implements
+    from: SYM-models-modelrouter-tier-new-tier-set
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:44:51.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80e731db0202
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-response-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:13:43.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3754199c8f1e
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-response-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:13:43.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af7ed0aa8aa3
+  - type: specified_by
+    from: REQ-plugins-cli-install-view-grant-hint
+    to: SCEN-plugins-cli-install-view-grant-hint
+    created_at: 2026-11-13T17:07:05.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55fd20adbd34

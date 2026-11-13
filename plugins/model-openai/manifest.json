@@ -1,0 +1,46 @@
+{
+  "capabilities": ["model-provider"],
+  "egressFromConfig": ["baseUrl"],
+  "clusterService": {"description": "an in-cluster HTTPS service to call instead of an internet provider, such as Ollama or vLLM, at the baseUrl path, its certificate issued for the baseUrl host"},
+  "secrets": [{"role": "api-key", "mountPath": "/etc/openfief/model-provider", "optional": true}, {"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "baseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
+        "description": "The OpenAI-compatible API root of the provider, such as https://api.openai.com/v1: an https URL; the install shows its host and the grant approves it"},
+      "timeout": {"type": "string", "pattern": "^([0-9]+([.][0-9]+)?(s|m))+$", "default": "60s",
+        "description": "The longest one call to the provider may take, at most 2m"},
+      "location": {"enum": ["owner_hardware", "third_party_cloud"],
+        "description": "Where the models of the provider run: on hardware the owner runs, or in the cloud of a third party"},
+      "retention": {
+        "type": "object",
+        "properties": {
+          "days": {"type": "integer", "minimum": 0, "maximum": 3650, "description": "Days the provider keeps requests and answers; 0 for none"},
+          "mayTrain": {"type": "boolean", "description": "Whether the provider may train on what it receives"}
+        },
+        "required": ["days", "mayTrain"],
+        "additionalProperties": false
+      },
+      "models": {
+        "type": "array", "minItems": 1, "maxItems": 64,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "string", "minLength": 1, "maxLength": 128},
+            "inputPrice": {"type": "string", "pattern": "^[0-9]{1,12}([.][0-9]{1,12})?$", "description": "Price per million input tokens, a decimal string"},
+            "outputPrice": {"type": "string", "pattern": "^[0-9]{1,12}([.][0-9]{1,12})?$", "description": "Price per million output tokens, a decimal string"},
+            "priceCurrency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+            "contextTokens": {"type": "integer", "minimum": 0},
+            "maxOutputTokens": {"type": "integer", "minimum": 0},
+            "toolCalling": {"type": "boolean"},
+            "structuredOutput": {"type": "boolean"}
+          },
+          "required": ["id"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": ["baseUrl", "location", "retention", "models"],
+    "additionalProperties": false
+  }
+}

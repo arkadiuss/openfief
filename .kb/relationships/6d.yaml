@@ -1210,3 +1210,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ac818972226
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-revokeholder
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:29.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b63f714302
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-revokeholder
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:29.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12e458f5885f
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-grantfixture-granttrail
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:11.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-036c215a5cd7
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-enumdescriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:30.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c89f72ae7820
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-enumdescriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:30.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa48d230e079
+  - type: verified_by
+    from: SCEN-models-switch-gates-calls
+    to: TEST-models-app-router
+    created_at: 2026-11-13T11:28:14.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ae94774ceae
+  - type: verified_by
+    from: SCEN-models-switch-gates-calls
+    to: TEST-models-domain
+    created_at: 2026-11-13T11:28:15.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63d5746bdf34
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-response
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:56.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7162ff5f08e2
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-response
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:56.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b34c86ed14eb
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-response-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:13:34.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab624c1e9298
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-response-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:13:34.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a7e96c0176

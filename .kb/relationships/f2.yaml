@@ -783,3 +783,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-575c1376df2b
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-owner
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:17.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bc03cd721e0
+  - type: executable_for
+    from: SYM-models-modelrouter-app-settings-test-new-settings
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:31.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2290ec66e666
+  - type: covered_by
+    from: SYM-models-models-provider-pb-wire-protocol-type
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:35.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4baec5565c64
+  - type: implements
+    from: SYM-models-models-provider-pb-wire-protocol-type
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:35.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06b892fb5b3a
+  - type: specified_by
+    from: REQ-models-route-broken-attention
+    to: SCEN-models-route-broken-attention
+    created_at: 2026-11-13T14:45:45.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03ba8cf2702a

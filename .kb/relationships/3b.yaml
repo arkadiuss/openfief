@@ -776,3 +776,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1554be55241b
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grantstore
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:05.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae9ac707899
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grantstore
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:05.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d34dcc14c6
+  - type: implements
+    from: SYM-grants-internal-identity-app-ownergrants-auth-creategrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:09:31.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087efe73db1b
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-ownergrants-auth-creategrant
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:31.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada25e930c80
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:42.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc716425927
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:42.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22e9eba54dee
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-save-toggle
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:47.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9afc3d6a54c8
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-save-toggle
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:47.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f53d4807e87
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-new-model-settings-service-handler
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:52:40.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e0b0888c700
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-new-model-settings-service-handler
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:52:40.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-140ab168e7e0
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:35.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa405791bb6
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:35.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7efe44ae99a3
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-get-description
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:42.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5739286e2c18
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-get-description
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:42.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c52a62ddc59
+  - type: implements
+    from: SYM-ui-instrument-titles
+    to: REQ-ui-inbox-grant-ungranted-view-plugin
+    created_at: 2026-11-13T17:13:46.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-839e105694f9
+  - type: covered_by
+    from: SYM-ui-instrument-titles
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:13:46.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b21c4d3d74

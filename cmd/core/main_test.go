@@ -51,8 +51,14 @@ func defaultServe(t *testing.T) serveConfig {
 			ServiceAccount: "openfief-core",
 		},
 		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
-		Authz: authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout},
+		Authz: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
 	}
+}
+
+// policyAuthz is the authorization the token commands have when no flag asks
+// for SpiceDB.
+func policyAuthz() authzConfig {
+	return authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout}
 }
 
 // mustOrigins returns the allow-list of texts.
@@ -178,10 +184,19 @@ func TestParseArgs(t *testing.T) {
 		{name: "connector sync in an unknown mode", args: []string{"connector", "sync", "--instance=x", "--mode=full"}, dsn: testDSN, wantErr: errBadMode},
 		{name: "connector sync with an argument", args: []string{"connector", "sync", "--instance=x", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "migrate", args: []string{"migrate"}, dsn: testDSN, want: command{Name: cmdMigrate, DSN: testDSN}},
-		{name: "token issue", args: []string{"token", "issue", "--name", "demo", "--ttl", "168h"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "demo", TTL: 168 * time.Hour}},
-		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour}},
+		{name: "token issue", args: []string{"token", "issue", "--name", "demo", "--ttl", "168h"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "demo", TTL: 168 * time.Hour, SpiceDBWait: time.Minute, Authz: policyAuthz()}},
+		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, SpiceDBWait: time.Minute, Authz: policyAuthz()}},
+		{
+			name: "token issue with the household grant", args: []string{"token", "issue", "--name=x", "--grant-household"}, dsn: testDSN,
+			want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour, GrantHousehold: true, SpiceDBWait: time.Minute, Authz: policyAuthz()},
+		},
 		{name: "token list", args: []string{"token", "list"}, dsn: testDSN, want: command{Name: cmdTokenList, DSN: testDSN}},
-		{name: "token revoke", args: []string{"token", "revoke", "0123456789abcdef"}, dsn: testDSN, want: command{Name: cmdTokenRevoke, DSN: testDSN, TokenID: "0123456789abcdef"}},
+		{name: "token revoke", args: []string{"token", "revoke", "0123456789abcdef"}, dsn: testDSN, want: command{Name: cmdTokenRevoke, DSN: testDSN, TokenID: "0123456789abcdef", Authz: policyAuthz()}},
+		// The credentials Job has no database: it needs no DSN, and takes no argument (D-216).
+		{name: "init-credentials needs no DSN", args: []string{"init-credentials"}, want: command{Name: cmdInitCredentials}},
+		{name: "init-credentials ignores a DSN", args: []string{"init-credentials"}, dsn: testDSN, want: command{Name: cmdInitCredentials}},
+		{name: "init-credentials with an argument", args: []string{"init-credentials", "now"}, wantErr: errUsage},
+		{name: "init-credentials with a flag", args: []string{"init-credentials", "--rotate"}, fail: true},
 		{name: "no DSN", args: []string{"migrate"}, wantErr: errNoDSN},
 		{name: "unknown command", args: []string{"frobnicate"}, dsn: testDSN, wantErr: errUsage},
 		{name: "token without subcommand", args: []string{"token"}, dsn: testDSN, wantErr: errUsage},

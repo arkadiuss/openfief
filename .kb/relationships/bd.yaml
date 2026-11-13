@@ -888,3 +888,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51ddbcd8665c
+  - type: implements
+    from: SYM-spicedb-key-authz-authorization
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:08:59.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb79d3250e13
+  - type: covered_by
+    from: SYM-spicedb-key-authz-authorization
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:08:59.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4acd41a6d557
+  - type: covered_by
+    from: SYM-models-modelrouter-plan-plan
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:42.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a96363cca2
+  - type: implements
+    from: SYM-models-modelrouter-plan-plan
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:38:42.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31fe32d0fa6e
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-check-against-entry
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:57.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d955d340aa27
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-check-against-entry
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:57.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6a9685159c
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-request-get-messages
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:25.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58c2356ad973
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-request-get-messages
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:25.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8f2fb3d5c60

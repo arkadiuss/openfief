@@ -1063,3 +1063,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38cafd427d7a
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:26.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a0e1588523
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:26.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bb75ee9248d
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-parse-ref
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:13.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-969ef32d03c5
+  - type: implements
+    from: SYM-models-modelrouter-ref-parse-ref
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:13.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab741256ca47
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-response-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:05.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665c99ca9f31
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-response-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:05.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75d6ba2c0853

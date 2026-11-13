@@ -95,9 +95,16 @@ func bearerToken(value string) (string, bool) {
 // may take to arrive. Each call runs in a server span that continues the
 // core's trace (telemetry.ServerHandler).
 func NewConnectorServer(addr string, svc connectorv1connect.ConnectorServiceHandler, v CoreVerifier, opts ...connect.HandlerOption) *http.Server {
-	mux := http.NewServeMux()
 	opts = append([]connect.HandlerOption{connect.WithReadMaxBytes(MaxMessageBytes)}, opts...)
 	path, h := connectorv1connect.NewConnectorServiceHandler(svc, opts...)
+	return newCoreServer(addr, path, h, v)
+}
+
+// newCoreServer returns a server on addr that serves h at path to the core
+// only (RequireCore), over HTTP/1.1 and unencrypted HTTP/2, with the
+// limits above and a server span per call.
+func newCoreServer(addr, path string, h http.Handler, v CoreVerifier) *http.Server {
+	mux := http.NewServeMux()
 	mux.Handle(path, RequireCore(v, h))
 	var p http.Protocols
 	p.SetHTTP1(true)

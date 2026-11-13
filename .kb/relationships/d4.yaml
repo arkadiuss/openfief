@@ -860,3 +860,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c9342f36d06
+  - type: implements
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T10:09:55.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f384d9d2c6d
+  - type: implements
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-13T10:09:55.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4811f7eb6e33
+  - type: covered_by
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T10:09:55.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82915491674a
+  - type: implements
+    from: SYM-spicedb-key-authz-dialspicedb
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:18.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96e817bde9a3
+  - type: covered_by
+    from: SYM-spicedb-key-authz-dialspicedb
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:09:18.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bf6c760515b
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-providers-models
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:00.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f59cfeeff68
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-new-route
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:20.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1badc1a5c721
+  - type: implements
+    from: SYM-models-modelrouter-ref-new-route
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:20.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac36a7f6e6f9
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-instancesfunc-generate
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:51:23.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19d45e4d9893

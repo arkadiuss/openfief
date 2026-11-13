@@ -1014,3 +1014,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-736a0c7b3f79
+  - type: implements
+    from: SYM-spicedb-key-authzkey-keygate-isconnected
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:04.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76acdd69036
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-keygate-isconnected
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:04.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b70dc278e648
+  - type: covered_by
+    from: SYM-models-modelrouter-request-finish-reason
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:25.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07ec5cb8b2cd
+  - type: implements
+    from: SYM-models-modelrouter-request-finish-reason
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:43:25.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d56770043a2

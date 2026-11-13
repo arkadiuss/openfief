@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bff8990fd13
+  - type: covered_by
+    from: SYM-models-serve-new-core-server
+    to: TEST-sdk-model-provider-server
+    created_at: 2026-11-13T13:14:51.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fced579560b7
+  - type: implements
+    from: SYM-models-serve-new-core-server
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:14:51.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e23b49f33b3f

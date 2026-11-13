@@ -622,3 +622,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcd65b1b8f8c
+  - type: implements
+    from: SYM-identity-platform-secret
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:45:59.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281694be4324
+  - type: covered_by
+    from: SYM-identity-platform-secret
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:45:59.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-addd28e564cb
+  - type: constrains
+    from: REQ-identity-grants-cutover-keeps-access
+    to: FACT-SUBJECT-569878765413087D
+    created_at: 2026-11-13T10:00:44.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b3e9091ff39
+  - type: requires_property
+    from: REQ-identity-grants-cutover-keeps-access
+    to: FACT-PROP-0E572FFF10849656
+    created_at: 2026-11-13T10:00:44.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5da17e6b99
+  - type: specified_by
+    from: REQ-identity-grants-cutover-keeps-access
+    to: SCEN-identity-grants-cutover
+    created_at: 2026-11-13T10:00:44.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e1f5de03651
+  - type: specified_by
+    from: REQ-identity-grants-cutover-keeps-access
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:44.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a73c3c16bf
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:20.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e41f7cda8702
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetkind
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:20.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e50c7926d036
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-denies-by-default
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:07.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b2a7b17c70
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-falls-back-on-unavailable
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:16.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf2502e29a15
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-mem-store
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:44.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d2925202cfa
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-roles
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:00.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b83b6cf2a6f9
+  - type: implements
+    from: SYM-models-modelrouter-ref-roles
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:00.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31522c89bc8b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-origin
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:53.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-934c81e871d5
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-origin
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:53.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa1f5933498e
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-response-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:12:23.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a70f37e177f
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-response-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:12:23.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09955ce04d30
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-fakeroutestore-settings
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:51:32.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f6bd4b40125

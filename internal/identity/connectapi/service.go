@@ -283,6 +283,10 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionEnrollmentLinkUsed:   identityv1.AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_USED,
 		identity.ActionScriptTokenCreated:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_CREATED,
 		identity.ActionScriptTokenRevoked:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_REVOKED,
+		identity.ActionGrantCreated:         identityv1.AuditAction_AUDIT_ACTION_GRANT_CREATED,
+		identity.ActionGrantRevoked:         identityv1.AuditAction_AUDIT_ACTION_GRANT_REVOKED,
+		identity.ActionModelCall:            identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL,
+		identity.ActionModelCallResult:      identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT,
 	}
 }
 
@@ -292,6 +296,7 @@ func pbOutcomes() map[identity.AuditOutcome]identityv1.AuditOutcome {
 		identity.OutcomeOK:      identityv1.AuditOutcome_AUDIT_OUTCOME_OK,
 		identity.OutcomeRefused: identityv1.AuditOutcome_AUDIT_OUTCOME_REFUSED,
 		identity.OutcomeFailed:  identityv1.AuditOutcome_AUDIT_OUTCOME_FAILED,
+		identity.OutcomeSent:    identityv1.AuditOutcome_AUDIT_OUTCOME_SENT,
 	}
 }
 
@@ -302,6 +307,15 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefPasskey:        identityv1.AuditRefKind_AUDIT_REF_KIND_PASSKEY,
 		identity.RefEnrollmentCode: identityv1.AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE,
 		identity.RefScriptToken:    identityv1.AuditRefKind_AUDIT_REF_KIND_SCRIPT_TOKEN,
+		identity.RefPerson:         identityv1.AuditRefKind_AUDIT_REF_KIND_PERSON,
+		identity.RefViewPlugin:     identityv1.AuditRefKind_AUDIT_REF_KIND_VIEW_PLUGIN,
+		identity.RefAccount:        identityv1.AuditRefKind_AUDIT_REF_KIND_ACCOUNT,
+		identity.RefSleeve:         identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE,
+		identity.RefHousehold:      identityv1.AuditRefKind_AUDIT_REF_KIND_HOUSEHOLD,
+		identity.RefModelRole:      identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE,
+		identity.RefModel:          identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
+		identity.RefModelCall:      identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL,
+		identity.RefModelError:     identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
 	}
 }
 

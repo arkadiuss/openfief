@@ -8,6 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
@@ -56,9 +57,10 @@ func invalidMessage(err error) error {
 // toConnectError returns the Connect error err stands for: not found for an
 // unknown account, instrument or connector instance, invalid argument for
 // an invalid request, unavailable while the installed plugins can't be
-// read, failed precondition while a yearly tax lacks an FX rate (D-127),
-// and internal, logged under the request ID only, for anything else.
-// Vanguard maps these codes to HTTP statuses for REST (404, 400, 500).
+// read or the authorization model can't answer (fail closed, D-164),
+// failed precondition while a yearly tax lacks an FX rate (D-127), and
+// internal, logged under the request ID only, for anything else. Vanguard
+// maps these codes to HTTP statuses for REST (404, 400, 503, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
 	if errors.Is(err, app.ErrUnknownAccount) {
 		return connect.NewError(connect.CodeNotFound, errNoSuchAccount)
@@ -71,6 +73,9 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	if errors.Is(err, app.ErrModelOff) {
 		return connect.NewError(connect.CodeNotFound, errModelOff)
+	}
+	if errors.Is(err, kernel.ErrAuthzUnavailable) {
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuthzUnavailable)
 	}
 	if errors.Is(err, app.ErrPluginsUnknown) {
 		return connect.NewError(connect.CodeUnavailable, errNoPlugins)

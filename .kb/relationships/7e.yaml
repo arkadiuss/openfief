@@ -860,3 +860,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-797d715b409e
+  - type: implements
+    from: SYM-identity-platform-secrets
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:46:10.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a3478d2cfcc
+  - type: implements
+    from: SYM-identity-platform-secrets
+    to: REQ-identity-credentials-create-only-if-missing
+    created_at: 2026-11-13T07:46:10.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95210a74ea2c
+  - type: covered_by
+    from: SYM-identity-platform-secrets
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:46:10.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e365dd15f9
+  - type: implements
+    from: SYM-grants-cmd-core-core-nothingtoclose
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:01:59.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b1de7da71a
+  - type: covered_by
+    from: SYM-grants-cmd-core-core-nothingtoclose
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:01:59.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d0530be900
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-mustinforce
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:16.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255b72b6dce4
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedsyncer-syncer
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:39.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45e63ed6ca50
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedsyncer-syncer
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:39.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94a27e922492
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tier
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:31.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a64c2de353f9
+  - type: implements
+    from: SYM-models-modelrouter-tier-tier
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:44:31.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc7eb74c2788
+  - type: covered_by
+    from: SYM-models-models-provider-pb-location-enum
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:54.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6181cf3f42a4
+  - type: implements
+    from: SYM-models-models-provider-pb-location-enum
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:54.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-631a4a1db3aa

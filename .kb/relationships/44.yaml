@@ -1160,5 +1160,104 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-717affe76411
+      },
+    {
+        type: executable_for,
+        from: SYM-grants-internal-identity-app-grants-test-memauthstore-markgrantcutover,
+        to: TEST-identity-grants-app,
+        created_at: 2026-11-13T10:06:56.468Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-9e140577663f
+      },
+    {
+        type: executable_for,
+        from: SYM-grants-internal-identity-connectapi-grants-test-testgrantauditoverconnect,
+        to: TEST-identity-grants-connectapi,
+        created_at: 2026-11-13T10:11:55.041Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c99ea388acab
+      },
+    {
+        type: covered_by,
+        from: SYM-models-modelrouter-app-settings-settings-set-feature,
+        to: TEST-models-app-settings,
+        created_at: 2026-11-13T12:32:13.686Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3aea5b072aee
+      },
+    {
+        type: implements,
+        from: SYM-models-modelrouter-app-settings-settings-set-feature,
+        to: REQ-models-settings-owner-only,
+        created_at: 2026-11-13T12:32:13.723Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-93a086fb02c5
+      },
+    {
+        type: executable_for,
+        from: SYM-models-modelrouter-connectapi-settings-test-pass-through,
+        to: TEST-models-connectapi-settings,
+        created_at: 2026-11-13T12:34:22.557Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-f58b4a6f7cf9
+      },
+    {
+        type: executable_for,
+        from: SYM-models-modelrouter-modelrouter-test-test-make-plan,
+        to: TEST-models-domain,
+        created_at: 2026-11-13T12:38:09.540Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-21c30c9605fa
+      },
+    {
+        type: covered_by,
+        from: SYM-models-models-settings-pb-route-descriptor,
+        to: TEST-models-connectapi-settings,
+        created_at: 2026-11-13T13:06:41.903Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-1940fea063ea
+      },
+    {
+        type: implements,
+        from: SYM-models-models-settings-pb-route-descriptor,
+        to: REQ-models-settings-owner-only,
+        created_at: 2026-11-13T13:06:41.953Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-87ef2459dcd9
+      },
+    {
+        type: covered_by,
+        from: SYM-models-models-settings-pb-tier-models-reset,
+        to: TEST-models-connectapi-settings,
+        created_at: 2026-11-13T13:07:03.673Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-59f3d9916c9d
+      },
+    {
+        type: implements,
+        from: SYM-models-models-settings-pb-tier-models-reset,
+        to: REQ-models-settings-owner-only,
+        created_at: 2026-11-13T13:07:03.716Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c07df806d466
+      },
+    {
+        type: executable_for,
+        from: SYM-models-followup-router-test-go-testrouterwithholdsanansweritcannotrecord,
+        to: TEST-models-app-router,
+        created_at: 2026-11-13T14:52:33.950Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-5145e5f0c702
       }
   ]

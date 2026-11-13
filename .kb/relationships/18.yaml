@@ -832,3 +832,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03cc2c0dd699
+  - type: constrains
+    from: REQ-identity-credentials-generated-by-install
+    to: FACT-SUBJECT-EF7CDBAB8E6DE7FA
+    created_at: 2026-11-13T07:42:45.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab5de1782dcb
+  - type: requires_property
+    from: REQ-identity-credentials-generated-by-install
+    to: FACT-PROP-F6BADC238D76F797
+    created_at: 2026-11-13T07:42:45.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9caf74ea5c6
+  - type: specified_by
+    from: REQ-identity-credentials-generated-by-install
+    to: SCEN-identity-credentials-created-when-missing
+    created_at: 2026-11-13T07:42:46.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5560743ab00f
+  - type: specified_by
+    from: REQ-identity-credentials-generated-by-install
+    to: SCEN-e2e-spicedb-deployed
+    created_at: 2026-11-13T07:42:46.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae7d3f443620
+  - type: constrains
+    from: REQ-identity-grants-viewers-tokens-plugins
+    to: FACT-SUBJECT-9B7B06271034D1BA
+    created_at: 2026-11-13T10:00:37.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1181b5cb5a6
+  - type: requires_property
+    from: REQ-identity-grants-viewers-tokens-plugins
+    to: FACT-PROP-7F64018770AD488D
+    created_at: 2026-11-13T10:00:37.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-226fbc9e196b
+  - type: specified_by
+    from: REQ-identity-grants-viewers-tokens-plugins
+    to: SCEN-identity-grants-per-target
+    created_at: 2026-11-13T10:00:37.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c4313aaceda
+  - type: specified_by
+    from: REQ-identity-grants-viewers-tokens-plugins
+    to: SCEN-identity-grants-end-with-their-records
+    created_at: 2026-11-13T10:00:37.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd3884f1103
+  - type: covered_by
+    from: SYM-models-models-new-model-provider-server
+    to: TEST-sdk-model-provider-server
+    created_at: 2026-11-13T13:14:26.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5e31f26e43f
+  - type: implements
+    from: SYM-models-models-new-model-provider-server
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:14:26.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c14bf61e612

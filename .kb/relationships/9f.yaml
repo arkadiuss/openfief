@@ -692,3 +692,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4108e9945e76
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-newfakedirectory
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:04.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1edbbdb1aad
+  - type: implements
+    from: SYM-spicedb-key-authz-authzconfig
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:08:39.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aea9695e44f
+  - type: covered_by
+    from: SYM-spicedb-key-authz-authzconfig
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:08:39.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc87b317b40c
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-scriptedauthorizer-mayact
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:03.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e91115e1761c

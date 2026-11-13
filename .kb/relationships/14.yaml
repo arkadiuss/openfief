@@ -916,3 +916,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b14a9799cd6
+  - type: implements
+    from: SYM-grants-cmd-core-grants-householdonly
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:03:17.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-877dfc289920
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-householdonly
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:17.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da499cb8b99
+  - type: implements
+    from: SYM-grants-internal-identity-app-ownergrants-auth-listgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:09:39.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d8aa6fd8d4
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-ownergrants-auth-listgrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:39.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0acb0c1d8608
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-chat-test-test-complete-errors
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:47:29.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92e9cf467acf
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:25.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66a1b2db9278
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:25.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e077c5320355

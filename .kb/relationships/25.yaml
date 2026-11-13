@@ -965,3 +965,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ee83903e88
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugininstalled
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:31.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1730d17c85a
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugininstalled
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:31.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5870e9de8683
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantaudittrailoverpostgres
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:43.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cc3627c1aa7
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-handler
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:52:35.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83e41a2de39f
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-handler
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:52:35.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0522e6bd071b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request-get-session-token
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:41.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6b7fd2e2fb6
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request-get-session-token
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:41.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1b7af7239e2

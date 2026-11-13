@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"slices"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -184,13 +185,18 @@ func TestReadAPIWithScriptToken(t *testing.T) {
 	if err := protojson.Unmarshal(r.body, &accounts); err != nil {
 		t.Fatalf("decoding the accounts: %v", err)
 	}
+	// TestDataPath runs alongside and may already have created its own accounts
+	// (named "E2E …", so their IDs begin e2e-): those are left out, every other account
+	// must be the demo's, and every demo account must be listed.
 	got := make([]string, 0, len(accounts.GetAccounts()))
 	for _, a := range accounts.GetAccounts() {
-		got = append(got, a.GetId())
+		if !strings.HasPrefix(a.GetId(), suiteAccountPrefix) {
+			got = append(got, a.GetId())
+		}
 	}
 	want := demoAccountIDs()
 	if diff := cmp.Diff(want, got); diff != "" {
-		t.Fatalf("GET /v1/accounts: account IDs (-want +got):\n%s", diff)
+		t.Fatalf("GET /v1/accounts: account IDs besides the suite's own (-want +got):\n%s", diff)
 	}
 
 	err := waitFor(t.Context(), valuedTimeout, func(ctx context.Context) (string, bool, error) {
@@ -229,6 +235,13 @@ func TestReadAPIRefusesWithoutToken(t *testing.T) {
 // at once if its pod can't start.
 func waitCoreAvailable(t *testing.T, k *kube) {
 	t.Helper()
+	// The core is ready once it holds SpiceDB's key, not once SpiceDB answers:
+	// `core token issue --grant-household` waits for SpiceDB to answer, up to
+	// --spicedb-wait, and issues nothing if it doesn't; waiting for SpiceDB
+	// here first keeps that wait short.
+	waitSpiceDBAvailable(t, k)
+	// Under --authz=spicedb a core that starts before the credentials Job has made SpiceDB's key waits for it,
+	// serving and not ready (D-164, D-216); a core that crashes instead is still taken for one that can't start.
 	available := k.deploymentAvailable(namespace, "openfief-core")
 	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
 		if state, done, err := available(ctx); done || (err != nil && !errors.Is(err, errRetry)) {
@@ -355,23 +368,16 @@ func parseReply(out []byte) (reply, error) {
 
 // issueToken issues a script token with the core's own CLI inside its pod,
 // as an owner would with kubectl exec, and returns its secret, the first
-// line of the output. The output is never logged.
+// line of the output. The token holds the household grant, so it views every
+// account whichever authorizer answers (D-209); the output is never logged.
 func issueToken(t *testing.T, k *kube) string {
 	t.Helper()
-	pod, err := k.runningPod(t.Context(), namespace, "openfief-core")
-	if err != nil {
-		t.Fatal(err)
-	}
-	out, err := k.exec(t.Context(), namespace, pod, "core", nil, "/core", "token", "issue", "--name", "e2e", "--ttl", "1h")
-	if err != nil {
-		t.Fatalf("issuing a script token: %v", err)
-	}
-	line, _, _ := bytes.Cut(out, []byte("\n"))
-	if len(line) == 0 {
-		t.Fatal(errNoSecret)
-	}
-	return string(line)
+	return issueTokenWith(t, k, append([]string{"--grant-household"}, coreAuthzFlags(t, k)...)...).secret
 }
+
+// suiteAccountPrefix begins the ID of every account the suite's own tests
+// create: their names begin "E2E ", such as the data path's (datapath_test.go).
+const suiteAccountPrefix = "e2e-"
 
 // demoAccountIDs returns the demo dataset's account IDs in ID order, the
 // order the read API lists them in.

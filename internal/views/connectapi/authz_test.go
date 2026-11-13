@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"testing"
@@ -11,6 +12,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/identity"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/views/app"
 	"github.com/arkadiuss/openfief/internal/views/connectapi"
@@ -71,5 +73,39 @@ func checkHidden(t *testing.T, a api, path string) {
 	}
 	if diff := cmp.Diff(missing.Body.String(), hidden.Body.String()); diff != "" {
 		t.Errorf("GET acc-2%s tells a hidden account from a missing one (-missing +hidden):\n%s", path, diff)
+	}
+}
+
+// downAuthorizer is an authorizer whose model can't answer: SpiceDB is down.
+type downAuthorizer struct{}
+
+func (downAuthorizer) MayAct(context.Context, identity.Caller, identity.Action, string) (bool, error) {
+	return false, fmt.Errorf("checking in SpiceDB: %w", kernel.ErrAuthzUnavailable)
+}
+
+// TestRESTAuthorizationUnavailableIs503 checks, through the REST transcoding,
+// that an authorizer that can't answer fails the request closed as 503 with
+// the fixed text "authorization is unavailable", on a list and on an account's
+// path alike, and not as 500 or as a refusal; the text names no account.
+func TestRESTAuthorizationUnavailableIs503(t *testing.T) {
+	t.Parallel()
+	h, err := connectapi.New(newViews(t, newLedger(t), app.WithAuthorizer(downAuthorizer{})), fakeVerifier{},
+		connectapi.WithLogger(slog.New(slog.NewJSONHandler(&bytes.Buffer{}, nil))))
+	if err != nil {
+		t.Fatalf("connectapi.New: %v", err)
+	}
+	a := api{handler: h, log: &bytes.Buffer{}}
+	for _, path := range []string{"/v1/accounts", "/v1/accounts/acc-1", "/v1/accounts/acc-1/transactions"} {
+		_, rec := a.serve(t, http.MethodGet, path, goodToken)
+		if rec.Code != http.StatusServiceUnavailable {
+			t.Errorf("GET %s with the authorizer down = %d, want 503\n%s", path, rec.Code, rec.Body)
+		}
+		var body struct {
+			Code    int    `json:"code"`
+			Message string `json:"message"`
+		}
+		if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil || body.Message != "authorization is unavailable" {
+			t.Errorf("GET %s body = %s (%v), want the text %q", path, rec.Body, err, "authorization is unavailable")
+		}
 	}
 }

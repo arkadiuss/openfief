@@ -916,3 +916,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c30f8ceae93f
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testcutoverwaitsfortheplugins
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:20.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a1fd8f21299
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-granttuples
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:05.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce368e978063
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-flakywrites
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:41:50.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1bb905da940
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-tier-policy-denied
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:00.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca4544e6e56d
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-raw-config-timeout
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:14.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65c22443f6ab
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-raw-config-timeout
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:48:15.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aaac7511c27
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-raw-model-priced-wrongly
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:30.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00f0b9a0225a
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-raw-model-priced-wrongly
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:48:30.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8cfa82cec72
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-new-model-provider-service-client
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:03.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c69c7883601
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-new-model-provider-service-client
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:03.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-380c62aa13dd
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:10.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4aeb784c6a9
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:10.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bf9277a9d2
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:48:51.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad4959fc1396
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T14:48:51.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7afb3878f47
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:51.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58a047869e0c

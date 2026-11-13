@@ -67,7 +67,8 @@ func fixedSecretRules() map[string]secretRule {
 		},
 		// The cluster's certificate authority, and the server's and the
 		// replication client's certificates it signed: only its own pods.
-		// SpiceDB's (D-164): the preshared key, which only SpiceDB and the core, its one caller, read, and
+		// SpiceDB's (D-164): the preshared key, which only SpiceDB (from an environment variable) and the core, its one
+		// caller (from an optional volume, so it may start before the Secret exists), read, and
 		// the password of SpiceDB's role in the cluster, which only SpiceDB reads; the audit also finds
 		// neither in a ConfigMap, a pod spec or a Plugin. The Job that made them uses no Secret.
 		"openfief-spicedb-key": {

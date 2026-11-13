@@ -1007,3 +1007,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c2ee3b2bcef
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-directory
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:12.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19620f38e8de
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-directory
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:12.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db88628da6ae
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-testgrantrevoked
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:39.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dc884aefce0
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeaudit-recordsent
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:51:52.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-784c9a33e43c
+  - type: executable_for
+    from: SYM-view-grants-test-helper-grants-held-in-force
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:24:55.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de876666477

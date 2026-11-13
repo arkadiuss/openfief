@@ -923,3 +923,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bf1e788f0cb
+  - type: implements
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T10:09:59.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2492e0967247
+  - type: implements
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-13T10:09:59.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a97af9d234c
+  - type: covered_by
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T10:09:59.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62978e555ea5
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-message
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:45:41.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75f601eb8f09
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-message
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:45:41.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed04c54d32ba
