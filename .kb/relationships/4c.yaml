@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53bf9277a9d2
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:48:51.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad4959fc1396
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T14:48:51.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7afb3878f47
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-provideraddress
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:51.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58a047869e0c

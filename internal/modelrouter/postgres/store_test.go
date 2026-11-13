@@ -105,8 +105,8 @@ func TestSettingsRoundTrip(t *testing.T) {
 		store.SaveToggle(ctx, modelrouter.FeatureMCP, false),
 		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b")),
 		store.SaveRoute(ctx, modelrouter.RoleMaintainer, refs(t, "ollama/qwen3:8b")),
-		store.SaveTierModels(ctx, modelrouter.TierT2, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b")),
-		store.SaveTierModels(ctx, modelrouter.TierT0, refs(t, "ollama/qwen3:8b")),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b")),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT0, refs(t, "ollama/qwen3:8b")),
 	}
 	checkSteps(t, steps)
 	got, err := store.Settings(ctx)
@@ -121,9 +121,9 @@ func TestSettingsRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	policy, err := modelrouter.NewTierPolicy(map[modelrouter.Tier][]modelrouter.Ref{
-		modelrouter.TierT2: refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b"),
-		modelrouter.TierT0: refs(t, "ollama/qwen3:8b"),
+	policy, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{
+		modelrouter.DataTierT2: refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b"),
+		modelrouter.DataTierT0: refs(t, "ollama/qwen3:8b"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -156,8 +156,8 @@ func TestSettingsReplaceAndClear(t *testing.T) {
 	}
 	steps = []error{
 		store.SaveRoute(ctx, modelrouter.RoleAsk, nil),
-		store.SaveTierModels(ctx, modelrouter.TierT2, refs(t, "a/one")),
-		store.SaveTierModels(ctx, modelrouter.TierT2, nil),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "a/one")),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, nil),
 	}
 	checkSteps(t, steps)
 	cleared, err := store.Settings(ctx)

@@ -25,8 +25,10 @@ const catalogTTL = 5 * time.Minute
 // no text in an error (GR-12).
 type Router struct {
 	settings  SettingsStore
-	providers Providers
+	providers ProviderInstances
 	audit     Auditor
+	attention AttentionRaiser
+	callIDs   CallIDs
 	now       func() time.Time
 
 	mu       sync.Mutex
@@ -35,14 +37,32 @@ type Router struct {
 
 // catalog is one provider's listed entries and when they were listed.
 type catalog struct {
-	entries map[string]modelrouter.Entry
+	entries map[string]modelrouter.ModelEntry
 	listed  time.Time
 }
 
-// NewRouter returns a router over the owner's settings, the model-provider
-// plugins and the audit log, reading the time from now.
-func NewRouter(settings SettingsStore, providers Providers, audit Auditor, now func() time.Time) *Router {
-	return &Router{settings: settings, providers: providers, audit: audit, now: now, catalogs: map[string]catalog{}}
+// RouterPorts is what a Router reads and writes.
+type RouterPorts struct {
+	// Settings are the owner's switch, routes and tier lists.
+	Settings SettingsStore
+	// Providers reaches the provider instances.
+	Providers ProviderInstances
+	// Audit is the append-only log of calls.
+	Audit Auditor
+	// Attention takes the items of broken routes.
+	Attention AttentionRaiser
+	// CallIDs makes the IDs that link a call's two audit entries.
+	CallIDs CallIDs
+	// Now reads the time.
+	Now func() time.Time
+}
+
+// NewRouter returns a router over ports.
+func NewRouter(p *RouterPorts) *Router {
+	return &Router{
+		settings: p.Settings, providers: p.Providers, audit: p.Audit, attention: p.Attention, callIDs: p.CallIDs, now: p.Now,
+		catalogs: map[string]catalog{},
+	}
 }
 
 // Generate asks the models of role's route for an answer to req, on behalf
@@ -53,14 +73,21 @@ func NewRouter(settings SettingsStore, providers Providers, audit Auditor, now f
 // modelrouter.ErrFeatureOff, before it reads the request or reaches any
 // provider. A request with an untagged piece of data, or for which no model
 // of the route is allowed for every tier it holds, is refused the same way
-// (modelrouter.ErrUntagged, modelrouter.ErrTierDenied, modelrouter.ErrNoCapableModel).
+// (modelrouter.ErrUntagged, modelrouter.ErrDataTierDenied, modelrouter.ErrNoCapableModel).
 //
-// Before each call it appends the call to the audit log; if that fails the
-// call is not made and the error wraps ErrAuditUnavailable. A model that
-// is unavailable (ErrProviderUnavailable) passes the request to the next
-// model of the route, each with its own entry; a provider rejecting the
-// request ends the call at once. When every candidate was unavailable the
-// error wraps ErrNoAnswer.
+// A call is two audit entries under one call ID (D-211). Before each call
+// the router writes the entry "sent"; if that fails the call is not made and
+// the error wraps ErrAuditUnavailable. After it, the entry of the result: ok,
+// failed with an error class, or, for a call refused before a model was
+// chosen, only that entry, refused. A model that is unavailable
+// (ErrProviderUnavailable) passes the request to the next model of the
+// route, each with its own pair of entries; a provider rejecting the request
+// ends the call at once. A model whose provider instance is missing or is no
+// model provider (ErrProviderMissing, ErrNotModelProvider) also passes it on,
+// and raises an attention item for the broken route entry (D-196); a
+// provider that is only down raises none. When every candidate failed the
+// error wraps ErrNoAnswer. If the result entry of an answered call can't be
+// written, the answer is withheld and the error wraps ErrAuditUnavailable.
 func (r *Router) Generate(ctx context.Context, role modelrouter.Role, actor Actor, req *modelrouter.Request) (modelrouter.Result, error) {
 	stored, err := r.settings.Settings(ctx)
 	if err != nil {
@@ -74,14 +101,14 @@ func (r *Router) Generate(ctx context.Context, role modelrouter.Role, actor Acto
 	if invalid := req.Validate(); invalid != nil {
 		return modelrouter.Result{}, fmt.Errorf("validating the request: %w", invalid)
 	}
-	tiers, err := req.Tiers()
+	tiers, err := req.DataTiers()
 	if err != nil {
 		return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
 	}
 	route := stored.Routes[role]
 	plan, err := modelrouter.MakePlan(&modelrouter.PlanInput{
 		Switch: stored.Switch, Role: role, Route: route, Policy: stored.Policy,
-		Tiers: tiers, Needs: req.Needs(), Catalog: r.catalogOf(ctx, route),
+		DataTiers: tiers, Needs: req.Needs(), Catalog: r.catalogOf(ctx, route),
 	})
 	if err != nil {
 		return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
@@ -104,19 +131,11 @@ func (r *Router) checkSwitch(sw modelrouter.Switch, role modelrouter.Role) error
 func (r *Router) try(ctx context.Context, role modelrouter.Role, actor Actor, candidates []modelrouter.Ref, req *modelrouter.Request) (modelrouter.Result, error) {
 	var last error
 	for _, m := range candidates {
-		if err := r.record(ctx, role, actor, m, OutcomeCalled); err != nil {
-			return modelrouter.Result{}, fmt.Errorf("%w: %w", ErrAuditUnavailable, err)
-		}
-		res, err := r.providers.Generate(ctx, m.Provider, m.Model, req)
+		res, class, err := r.attempt(ctx, role, actor, m, req)
 		if err == nil {
-			res.Model = m
 			return res, nil
 		}
-		err = fmt.Errorf("model %s: %w", m, err)
-		if auditErr := r.record(ctx, role, actor, m, OutcomeFailed); auditErr != nil {
-			err = fmt.Errorf("%w (the failure could not be audited: %w)", err, auditErr)
-		}
-		if !errors.Is(err, ErrProviderUnavailable) {
+		if class != ClassUnavailable && class != ClassMisconfigured {
 			return modelrouter.Result{}, err
 		}
 		last = err
@@ -124,20 +143,94 @@ func (r *Router) try(ctx context.Context, role modelrouter.Role, actor Actor, ca
 	return modelrouter.Result{}, fmt.Errorf("%w: %w", ErrNoAnswer, last)
 }
 
-// refuse records a refusal and returns err, joined with the failure to
-// record it when that fails: the refusal stands either way.
+// attempt sends req to m: the entry "sent", the call, then the entry of its
+// result. On failure it returns the error and its class; an audit failure,
+// which must end the call, has the class ClassInternal.
+func (r *Router) attempt(ctx context.Context, role modelrouter.Role, actor Actor, m modelrouter.Ref, req *modelrouter.Request) (modelrouter.Result, ErrorClass, error) {
+	id, idErr := r.callIDs()
+	if idErr != nil {
+		return modelrouter.Result{}, ClassInternal, fmt.Errorf("%w: a call ID: %w", ErrAuditUnavailable, idErr)
+	}
+	sent := CallSent{At: r.now(), Actor: actor, Role: role, Model: m, CallID: id}
+	if sentErr := r.audit.RecordSent(ctx, &sent); sentErr != nil {
+		return modelrouter.Result{}, ClassInternal, fmt.Errorf("%w: %w", ErrAuditUnavailable, sentErr)
+	}
+	res, callErr := r.providers.Generate(ctx, m.Instance, m.Model, req)
+	if callErr == nil {
+		res.Model = m
+		if resErr := r.result(ctx, &sent, OutcomeOK, ""); resErr != nil {
+			return modelrouter.Result{}, ClassInternal, fmt.Errorf("%w: %w", ErrAuditUnavailable, resErr)
+		}
+		return res, "", nil
+	}
+	class := classify(callErr)
+	err := fmt.Errorf("model %s: %w", m, callErr)
+	if resErr := r.result(ctx, &sent, OutcomeFailed, class); resErr != nil {
+		err = fmt.Errorf("%w (the failure could not be audited: %w)", err, resErr)
+	}
+	if class == ClassMisconfigured {
+		if raiseErr := r.flag(ctx, role, m, callErr); raiseErr != nil {
+			err = fmt.Errorf("%w (its attention item could not be raised: %w)", err, raiseErr)
+		}
+	}
+	return modelrouter.Result{}, class, err
+}
+
+// classify returns the error class of a failed call, by the error's kind and
+// never its text.
+func classify(err error) ErrorClass {
+	switch {
+	case errors.Is(err, ErrProviderMissing), errors.Is(err, ErrNotModelProvider):
+		return ClassMisconfigured
+	case errors.Is(err, ErrProviderUnavailable):
+		return ClassUnavailable
+	case errors.Is(err, ErrProviderRejected):
+		return ClassRejected
+	case errors.Is(err, context.Canceled):
+		return ClassCanceled
+	}
+	return ClassInternal
+}
+
+// flag raises the attention item of the route entry m of role, when err says
+// its provider instance is missing or not a model provider. A failure to
+// raise it does not end the call: the next model still answers, and the
+// periodic check (RouteProblems) raises the item again.
+func (r *Router) flag(ctx context.Context, role modelrouter.Role, m modelrouter.Ref, err error) error {
+	reason := modelrouter.ProblemMissing
+	if errors.Is(err, ErrNotModelProvider) {
+		reason = modelrouter.ProblemNotModelProvider
+	}
+	p := modelrouter.RouteProblem{Role: role, Model: m, Reason: reason}
+	if raiseErr := r.attention.Raise(ctx, modelrouter.AttentionKind, p.Subject(), p.Detail()); raiseErr != nil {
+		return fmt.Errorf("raising the item of a broken route: %w", raiseErr)
+	}
+	return nil
+}
+
+// refuse records a refusal, as a result entry alone: no call was sent. It
+// returns err, joined with the failure to record it when that fails: the
+// refusal stands either way.
 func (r *Router) refuse(ctx context.Context, role modelrouter.Role, actor Actor, err error) error {
-	if auditErr := r.record(ctx, role, actor, modelrouter.Ref{}, OutcomeRefused); auditErr != nil {
+	id, idErr := r.callIDs()
+	if idErr != nil {
+		return fmt.Errorf("%w (the refusal could not be audited: %w)", err, idErr)
+	}
+	res := CallResult{At: r.now(), Actor: actor, Role: role, CallID: id, Outcome: OutcomeRefused}
+	if auditErr := r.audit.RecordResult(ctx, &res); auditErr != nil {
 		return fmt.Errorf("%w (the refusal could not be audited: %w)", err, auditErr)
 	}
 	return err
 }
 
-// record appends one call to the audit log.
-func (r *Router) record(ctx context.Context, role modelrouter.Role, actor Actor, m modelrouter.Ref, outcome Outcome) error {
-	rec := CallRecord{At: r.now(), Actor: actor, Role: role, Model: m, Outcome: outcome}
-	if err := r.audit.RecordCall(ctx, &rec); err != nil {
-		return fmt.Errorf("recording a model call: %w", err)
+// result appends the entry that says how the call sent ended.
+func (r *Router) result(ctx context.Context, sent *CallSent, outcome Outcome, class ErrorClass) error {
+	res := CallResult{
+		At: r.now(), Actor: sent.Actor, Role: sent.Role, Model: sent.Model, CallID: sent.CallID, Outcome: outcome, Class: class,
+	}
+	// The result is recorded even when the caller gave up: the call was sent.
+	if err := r.audit.RecordResult(context.WithoutCancel(ctx), &res); err != nil {
+		return fmt.Errorf("recording the result of a model call: %w", err)
 	}
 	return nil
 }
@@ -146,16 +239,16 @@ func (r *Router) record(ctx context.Context, role modelrouter.Role, actor Actor,
 // the cache or the providers. A provider that can't list its entries
 // contributes none: the router then leaves its models to answer for
 // themselves.
-func (r *Router) catalogOf(ctx context.Context, route modelrouter.Route) map[modelrouter.Ref]modelrouter.Entry {
-	out := map[modelrouter.Ref]modelrouter.Entry{}
+func (r *Router) catalogOf(ctx context.Context, route modelrouter.Route) map[modelrouter.Ref]modelrouter.ModelEntry {
+	out := map[modelrouter.Ref]modelrouter.ModelEntry{}
 	seen := map[string]bool{}
 	for _, m := range route.Models {
-		if seen[m.Provider] {
+		if seen[m.Instance] {
 			continue
 		}
-		seen[m.Provider] = true
-		for id, e := range r.entriesOf(ctx, m.Provider) {
-			out[modelrouter.Ref{Provider: m.Provider, Model: id}] = e
+		seen[m.Instance] = true
+		for id, e := range r.entriesOf(ctx, m.Instance) {
+			out[modelrouter.Ref{Instance: m.Instance, Model: id}] = e
 		}
 	}
 	return out
@@ -163,7 +256,7 @@ func (r *Router) catalogOf(ctx context.Context, route modelrouter.Route) map[mod
 
 // entriesOf returns provider's entries by id, listing them again when the
 // cache is older than catalogTTL.
-func (r *Router) entriesOf(ctx context.Context, provider string) map[string]modelrouter.Entry {
+func (r *Router) entriesOf(ctx context.Context, provider string) map[string]modelrouter.ModelEntry {
 	now := r.now()
 	r.mu.Lock()
 	c, ok := r.catalogs[provider]
@@ -175,7 +268,7 @@ func (r *Router) entriesOf(ctx context.Context, provider string) map[string]mode
 	if err != nil {
 		return c.entries // the stale entries, or none
 	}
-	c = catalog{entries: make(map[string]modelrouter.Entry, len(listed)), listed: now}
+	c = catalog{entries: make(map[string]modelrouter.ModelEntry, len(listed)), listed: now}
 	for _, e := range listed {
 		c.entries[e.ID] = e
 	}

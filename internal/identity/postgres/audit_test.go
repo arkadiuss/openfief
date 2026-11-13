@@ -85,27 +85,46 @@ func TestAuditLogIsAppendOnly(t *testing.T) {
 	}
 }
 
-// TestAuditLogKeepsModelCalls checks that the model router's entries (D-205)
-// go in and come back: the role and the model by name, an outcome, and the
-// system actor, with no text of a request.
+// TestAuditLogKeepsModelCalls checks that the model router's two entries per
+// call (D-205, D-211) go in and come back: the role, the model and the call
+// ID by name, the outcome sent and then the result, an error class for a
+// failure, and the system actor, with no text of a request. A refusal before a
+// model was chosen is a result entry alone.
 func TestAuditLogKeepsModelCalls(t *testing.T) {
 	t.Parallel()
 	store := postgres.New(newPool(t, true))
 	ctx := t.Context()
-	e := identity.AuditEntry{
-		At: issuedAt(), Actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}, Action: identity.ActionModelCall,
-		Outcome: identity.OutcomeOK,
-		Refs:    []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"}},
+	system := identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
+	role := identity.Ref{Kind: identity.RefModelRole, ID: "ask"}
+	model := identity.Ref{Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"}
+	call := identity.Ref{Kind: identity.RefModelCall, ID: "00112233445566aa"}
+	entries := []identity.AuditEntry{
+		{At: issuedAt(), Actor: system, Action: identity.ActionModelCall, Outcome: identity.OutcomeSent, Refs: []identity.Ref{role, model, call}},
+		{
+			At: issuedAt(), Actor: system, Action: identity.ActionModelCallResult, Outcome: identity.OutcomeFailed,
+			Refs: []identity.Ref{role, model, call, {Kind: identity.RefModelError, ID: "unavailable"}},
+		},
+		{At: issuedAt(), Actor: system, Action: identity.ActionModelCallResult, Outcome: identity.OutcomeRefused, Refs: []identity.Ref{role, {Kind: identity.RefModelCall, ID: "00112233445566bb"}}},
 	}
-	if err := store.AppendAudit(ctx, &e); err != nil {
-		t.Fatalf("AppendAudit: %v", err)
+	for i := range entries {
+		if err := store.AppendAudit(ctx, &entries[i]); err != nil {
+			t.Fatalf("AppendAudit(%s): %v", entries[i].Action, err)
+		}
 	}
-	page, err := store.AuditEntries(ctx, &identity.AuditFilter{Action: identity.ActionModelCall})
-	if err != nil || len(page.Entries) != 1 {
-		t.Fatalf("AuditEntries = %+v, %v; want the entry", page, err)
-	}
-	if diff := cmp.Diff(e, page.Entries[0]); diff != "" {
-		t.Errorf("entry (-want +got):\n%s", diff)
+	for _, action := range []identity.AuditAction{identity.ActionModelCall, identity.ActionModelCallResult} {
+		page, err := store.AuditEntries(ctx, &identity.AuditFilter{Action: action})
+		if err != nil {
+			t.Fatalf("AuditEntries(%s): %v", action, err)
+		}
+		var want []identity.AuditEntry
+		for _, e := range slices.Backward(entries) { // newest first
+			if e.Action == action {
+				want = append(want, e)
+			}
+		}
+		if diff := cmp.Diff(want, page.Entries); diff != "" {
+			t.Errorf("%s entries (-want +got):\n%s", action, diff)
+		}
 	}
 }
 
@@ -122,6 +141,8 @@ func TestAuditLogRefusesFreeText(t *testing.T) {
 		wantErr                         bool
 	}{
 		{name: "valid control", kind: "owner", id: auditSession, action: "sign_in", outcome: "ok", refs: `[]`},
+		{name: "a model call before it is sent", kind: "owner", id: auditSession, action: "model_call", outcome: "sent", refs: `[]`},
+		{name: "a model call's result", kind: "owner", id: auditSession, action: "model_call_result", outcome: "failed", refs: `[]`},
 		{name: "free-text action", kind: "owner", id: auditSession, action: "transfer 100 PLN", outcome: "ok", refs: `[]`, wantErr: true},
 		{name: "free-text outcome", kind: "owner", id: auditSession, action: "sign_in", outcome: "ok, mostly", refs: `[]`, wantErr: true},
 		{name: "owner named by a name", kind: "owner", id: "Jan Kowalski", action: "sign_in", outcome: "ok", refs: `[]`, wantErr: true},

@@ -41,7 +41,7 @@ type Message struct {
 	Content    string
 	ToolCalls  []ToolCall
 	ToolCallID string
-	Tier       Tier
+	DataTier   DataTier
 }
 
 // Tool is a function the model may call. A tool's name, description and
@@ -92,14 +92,14 @@ func (r *Request) Validate() error {
 	return nil
 }
 
-// Tiers returns the distinct data tiers of r's messages, or an error
+// DataTiers returns the distinct data tiers of r's messages, or an error
 // wrapping ErrUntagged when a message carries none (D-206).
-func (r *Request) Tiers() (TierSet, error) {
-	tags := make([]Tier, 0, len(r.Messages))
+func (r *Request) DataTiers() (DataTierSet, error) {
+	tags := make([]DataTier, 0, len(r.Messages))
 	for _, m := range r.Messages {
-		tags = append(tags, m.Tier)
+		tags = append(tags, m.DataTier)
 	}
-	return NewTierSet(tags)
+	return NewDataTierSet(tags)
 }
 
 // Needs returns what a model must support to serve r.
@@ -113,9 +113,9 @@ type Needs struct {
 	StructuredOutput bool
 }
 
-// Entry is a model entry of a provider instance (D-205): what the plugin
+// ModelEntry is a model entry of a provider instance (D-205): what the plugin
 // lists for one model.
-type Entry struct {
+type ModelEntry struct {
 	// ID is the model's id at its provider.
 	ID string
 	// HasPrice is false for an entry with no price, such as a local model;
@@ -134,7 +134,7 @@ type Entry struct {
 }
 
 // Serves reports whether e supports everything n asks.
-func (e *Entry) Serves(n Needs) bool {
+func (e *ModelEntry) Serves(n Needs) bool {
 	return (!n.Tools || e.ToolCalling) && (!n.StructuredOutput || e.StructuredOut)
 }
 
@@ -175,9 +175,9 @@ const (
 	LocationThirdPartyCloud Location = "third_party_cloud"
 )
 
-// Provider is what a model-provider plugin declares about itself (D-205):
+// ProviderInstance is what a provider instance, a configured model-provider plugin, declares about itself (D-205):
 // where its models run and its provider's retention terms.
-type Provider struct {
+type ProviderInstance struct {
 	Location Location
 	// RetentionDays is how long the provider keeps requests and answers;
 	// zero for none.

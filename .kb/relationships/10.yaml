@@ -958,3 +958,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69d7328d9ecd
+  - type: implements
+    from: SYM-models-followup-router-go-router-attempt
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T15:02:38.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9766d0e0cf60
+  - type: implements
+    from: SYM-models-followup-router-go-router-attempt
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T15:02:38.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-326ac04a28e4
+  - type: implements
+    from: SYM-models-followup-router-go-router-attempt
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T15:02:38.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3284a7511998
+  - type: covered_by
+    from: SYM-models-followup-router-go-router-attempt
+    to: TEST-models-app-router
+    created_at: 2026-11-13T15:02:38.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dea8ab09d7bf

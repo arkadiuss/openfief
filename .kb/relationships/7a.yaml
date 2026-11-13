@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f49de7c36b65
+  - type: executable_for
+    from: SYM-models-followup-router-test-go-testrouterrecordstheresultofacanceledcall
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:52:38.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee031f1244d6

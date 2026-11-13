@@ -83,7 +83,7 @@ func (s *Store) SaveRoute(ctx context.Context, role modelrouter.Role, route []mo
 		}
 		for i, m := range route {
 			_, err := tx.Exec(ctx, "INSERT INTO modelrouter.routes (role, position, provider, model) VALUES ($1, $2, $3, $4)",
-				string(role), i, m.Provider, m.Model)
+				string(role), i, m.Instance, m.Model)
 			if err != nil {
 				return fmt.Errorf("writing the route: %w", err)
 			}
@@ -96,16 +96,16 @@ func (s *Store) SaveRoute(ctx context.Context, role modelrouter.Role, route []mo
 	return nil
 }
 
-// SaveTierModels replaces tier's allowed models with allowed in one
+// SaveDataTierModels replaces tier's allowed models with allowed in one
 // transaction; none clear the list.
-func (s *Store) SaveTierModels(ctx context.Context, tier modelrouter.Tier, allowed []modelrouter.Ref) error {
+func (s *Store) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, "DELETE FROM modelrouter.tier_models WHERE tier = $1", string(tier)); err != nil {
 			return fmt.Errorf("clearing the list: %w", err)
 		}
 		for i, m := range allowed {
 			_, err := tx.Exec(ctx, "INSERT INTO modelrouter.tier_models (tier, position, provider, model) VALUES ($1, $2, $3, $4)",
-				string(tier), i, m.Provider, m.Model)
+				string(tier), i, m.Instance, m.Model)
 			if err != nil {
 				return fmt.Errorf("writing the list: %w", err)
 			}
@@ -179,7 +179,7 @@ func (s *Store) routes(ctx context.Context) (map[modelrouter.Role]modelrouter.Ro
 		if parseErr != nil {
 			return nil, fmt.Errorf("%w: a route: %w", ErrCorrupt, parseErr)
 		}
-		byRole[role] = append(byRole[role], modelrouter.Ref{Provider: r.provider, Model: r.model})
+		byRole[role] = append(byRole[role], modelrouter.Ref{Instance: r.provider, Model: r.model})
 	}
 	var out map[modelrouter.Role]modelrouter.Route
 	for role, refs := range byRole {
@@ -196,23 +196,23 @@ func (s *Store) routes(ctx context.Context) (map[modelrouter.Role]modelrouter.Ro
 }
 
 // policy returns the models allowed per tier.
-func (s *Store) policy(ctx context.Context) (modelrouter.TierPolicy, error) {
+func (s *Store) policy(ctx context.Context) (modelrouter.DataTierPolicy, error) {
 	rows, err := s.refRows(ctx, "SELECT tier, provider, model FROM modelrouter.tier_models ORDER BY tier, position")
 	if err != nil {
 		return nil, fmt.Errorf("loading the tiers' models: %w", err)
 	}
-	lists := map[modelrouter.Tier][]modelrouter.Ref{}
+	lists := map[modelrouter.DataTier][]modelrouter.Ref{}
 	for _, r := range rows {
-		tier, parseErr := modelrouter.ParseTier(r.list)
+		tier, parseErr := modelrouter.ParseDataTier(r.list)
 		if parseErr != nil {
 			return nil, fmt.Errorf("%w: a tier's models: %w", ErrCorrupt, parseErr)
 		}
-		lists[tier] = append(lists[tier], modelrouter.Ref{Provider: r.provider, Model: r.model})
+		lists[tier] = append(lists[tier], modelrouter.Ref{Instance: r.provider, Model: r.model})
 	}
 	if len(lists) == 0 {
-		return modelrouter.TierPolicy{}, nil
+		return modelrouter.DataTierPolicy{}, nil
 	}
-	p, err := modelrouter.NewTierPolicy(lists)
+	p, err := modelrouter.NewDataTierPolicy(lists)
 	if err != nil {
 		return nil, fmt.Errorf("%w: a tier's models: %w", ErrCorrupt, err)
 	}

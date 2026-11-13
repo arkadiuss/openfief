@@ -100,16 +100,16 @@ func (s *Settings) SetRoute(ctx context.Context, origin, sessionToken, role stri
 	return nil
 }
 
-// SetTierModels sets the models allowed to receive a data tier from
+// SetDataTierModels sets the models allowed to receive a data tier from
 // "provider/model" references, for the owner; none clear the list, which
 // denies the tier to every model (D-206). An unknown tier, a bad reference
-// or a list breaking modelrouter.NewTierPolicy is an error wrapping
+// or a list breaking modelrouter.NewDataTierPolicy is an error wrapping
 // ErrInvalidInput.
-func (s *Settings) SetTierModels(ctx context.Context, origin, sessionToken, tier string, refs []string) error {
+func (s *Settings) SetDataTierModels(ctx context.Context, origin, sessionToken, tier string, refs []string) error {
 	if err := s.checkOwner(ctx, origin, sessionToken); err != nil {
 		return err
 	}
-	t, err := modelrouter.ParseTier(tier)
+	t, err := modelrouter.ParseDataTier(tier)
 	if err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
@@ -117,10 +117,10 @@ func (s *Settings) SetTierModels(ctx context.Context, origin, sessionToken, tier
 	if err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	if _, err := modelrouter.NewTierPolicy(map[modelrouter.Tier][]modelrouter.Ref{t: parsed}); err != nil {
+	if _, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{t: parsed}); err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	if err := s.store.SaveTierModels(ctx, t, parsed); err != nil {
+	if err := s.store.SaveDataTierModels(ctx, t, parsed); err != nil {
 		return fmt.Errorf("setting a tier's models: %w", err)
 	}
 	return nil

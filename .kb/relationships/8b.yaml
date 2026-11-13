@@ -1085,27 +1085,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3ad95c134f84
   - type: covered_by
-    from: SYM-models-cmd-core-modelrouter-model-audit-record-call
-    to: TEST-core-model-router
-    created_at: 2026-11-13T12:25:56.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4227ef674ea5
-  - type: implements
-    from: SYM-models-cmd-core-modelrouter-model-audit-record-call
-    to: REQ-models-provider-plugin-contract
-    created_at: 2026-11-13T12:25:56.502Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-59346857c32c
-  - type: implements
-    from: SYM-models-cmd-core-modelrouter-model-audit-record-call
-    to: REQ-models-calls-audited-fail-closed
-    created_at: 2026-11-13T12:25:56.539Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-899580c3eebc
-  - type: covered_by
     from: SYM-models-modelrouter-app-router-new-router
     to: TEST-models-app-router
     created_at: 2026-11-13T12:29:21.045Z

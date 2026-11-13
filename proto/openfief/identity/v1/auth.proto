@@ -503,9 +503,14 @@ enum AuditAction {
   AUDIT_ACTION_GRANT_CREATED = 10;
   // A grant of access ended; the entry names its holder, then its target.
   AUDIT_ACTION_GRANT_REVOKED = 11;
-  // A call to a model, or one the model router refused (D-205, D-211): the
-  // entry names the role and the model, never a question or an answer.
+  // A call to a model about to be sent (D-205, D-211), written before it:
+  // the entry names the role, the model and a call ID, never a question or
+  // an answer.
   AUDIT_ACTION_MODEL_CALL = 12;
+  // How a call to a model ended: the entry names the role, the call ID of
+  // the AUDIT_ACTION_MODEL_CALL entry, the model unless the router refused
+  // before choosing one, and an error class when the call failed.
+  AUDIT_ACTION_MODEL_CALL_RESULT = 13;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -515,6 +520,9 @@ enum AuditOutcome {
   // Understood and not made, such as a sign-in whose credential did not verify.
   AUDIT_OUTCOME_REFUSED = 2;
   AUDIT_OUTCOME_FAILED = 3;
+  // A call to a model about to be sent; its result is a later entry under
+  // the same call ID.
+  AUDIT_OUTCOME_SENT = 4;
 }
 
 // AuditRefKind is the kind of record an audit entry names.
@@ -538,6 +546,11 @@ enum AuditRefKind {
   AUDIT_REF_KIND_MODEL_ROLE = 10;
   // A model entry, as "provider/model", the names the owner configured.
   AUDIT_REF_KIND_MODEL = 11;
+  // The ID that links a call to a model to its result, a 16-digit hex ID.
+  AUDIT_REF_KIND_MODEL_CALL = 12;
+  // The class a failed call to a model ended in: unavailable, rejected,
+  // canceled, misconfigured or internal.
+  AUDIT_REF_KIND_MODEL_ERROR = 13;
 }
 
 // AuditActor is who made the change.

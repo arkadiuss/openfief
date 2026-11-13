@@ -181939,7 +181939,7 @@ symbols:
       - type: implements
         target: REQ-core-serves-read-api
   - id: SYM-models-cmd-core-modelrouter-model-providers
-    title: modelProviders
+    title: modelProviderInstances
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: type-shape
@@ -181953,7 +181953,7 @@ symbols:
       - type: implements
         target: REQ-models-provider-plugin-contract
   - id: SYM-models-cmd-core-modelrouter-model-providers-describe
-    title: modelProviders.Describe
+    title: modelProviderInstances.Describe
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: behavioral
@@ -181966,7 +181966,7 @@ symbols:
       - type: implements
         target: REQ-models-provider-plugin-contract
   - id: SYM-models-cmd-core-modelrouter-model-providers-models
-    title: modelProviders.Models
+    title: modelProviderInstances.Models
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: behavioral
@@ -181979,7 +181979,7 @@ symbols:
       - type: implements
         target: REQ-models-provider-plugin-contract
   - id: SYM-models-cmd-core-modelrouter-model-providers-generate
-    title: modelProviders.Generate
+    title: modelProviderInstances.Generate
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: behavioral
@@ -181992,7 +181992,7 @@ symbols:
       - type: implements
         target: REQ-models-provider-plugin-contract
   - id: SYM-models-cmd-core-modelrouter-model-providers-set
-    title: modelProviders.set
+    title: modelProviderInstances.set
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: behavioral
@@ -182005,7 +182005,7 @@ symbols:
       - type: implements
         target: REQ-models-provider-plugin-contract
   - id: SYM-models-cmd-core-modelrouter-model-providers-current
-    title: modelProviders.current
+    title: modelProviderInstances.current
     status: active
     sourceFile: cmd/core/modelrouter.go
     symbol_role: behavioral
@@ -182042,21 +182042,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:25:49.402Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-model-router
-      - type: implements
-        target: REQ-models-calls-audited-fail-closed
-      - type: implements
-        target: REQ-models-provider-plugin-contract
-  - id: SYM-models-cmd-core-modelrouter-model-audit-record-call
-    title: modelAudit.RecordCall
-    status: active
-    sourceFile: cmd/core/modelrouter.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T12:25:54.226Z
     relationships:
       - type: covered_by
         target: TEST-core-model-router
@@ -182324,7 +182309,7 @@ symbols:
       - type: executable_for
         target: TEST-models-app-router
   - id: SYM-models-modelrouter-app-fakes-test-fake-store-save-tier-models
-    title: fakeStore.SaveTierModels
+    title: fakeStore.SaveDataTierModels
     status: active
     sourceFile: internal/modelrouter/app/fakes_test.go
     origin:
@@ -182382,16 +182367,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:28:07.143Z
-    relationships:
-      - type: executable_for
-        target: TEST-models-app-router
-  - id: SYM-models-modelrouter-app-fakes-test-fake-audit-record-call
-    title: fakeAudit.RecordCall
-    status: active
-    sourceFile: internal/modelrouter/app/fakes_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T12:28:12.300Z
     relationships:
       - type: executable_for
         target: TEST-models-app-router
@@ -182466,7 +182441,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-app-ports-providers
-    title: Providers
+    title: ProviderInstances
     status: active
     sourceFile: internal/modelrouter/app/ports.go
     symbol_role: type-shape
@@ -182516,22 +182491,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:28:56.683Z
-    relationships:
-      - type: covered_by
-        target: TEST-models-app-router
-      - type: implements
-        target: REQ-models-calls-audited-fail-closed
-      - type: implements
-        target: REQ-models-router-roles-fallbacks
-  - id: SYM-models-modelrouter-app-ports-call-record
-    title: CallRecord
-    status: active
-    sourceFile: internal/modelrouter/app/ports.go
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T12:29:00.736Z
     relationships:
       - type: covered_by
         target: TEST-models-app-router
@@ -182653,21 +182612,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:29:38.046Z
-    relationships:
-      - type: covered_by
-        target: TEST-models-app-router
-      - type: implements
-        target: REQ-models-calls-audited-fail-closed
-      - type: implements
-        target: REQ-models-router-roles-fallbacks
-  - id: SYM-models-modelrouter-app-router-router-record
-    title: Router.record
-    status: active
-    sourceFile: internal/modelrouter/app/router.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T12:29:43.096Z
     relationships:
       - type: covered_by
         target: TEST-models-app-router
@@ -183035,7 +182979,7 @@ symbols:
       - type: implements
         target: REQ-models-settings-owner-only
   - id: SYM-models-modelrouter-app-settings-settings-set-tier-models
-    title: Settings.SetTierModels
+    title: Settings.SetDataTierModels
     status: active
     sourceFile: internal/modelrouter/app/settings.go
     symbol_role: behavioral
@@ -183300,7 +183244,7 @@ symbols:
       - type: executable_for
         target: TEST-models-connectapi-settings
   - id: SYM-models-modelrouter-connectapi-settings-test-mem-store-save-tier-models
-    title: memStore.SaveTierModels
+    title: memStore.SaveDataTierModels
     status: active
     sourceFile: internal/modelrouter/connectapi/settings_test.go
     origin:
@@ -183843,7 +183787,7 @@ symbols:
       - type: executable_for
         target: TEST-models-domain
   - id: SYM-models-modelrouter-modelrouter-test-test-new-tier-set
-    title: TestNewTierSet
+    title: TestNewDataTierSet
     status: active
     sourceFile: internal/modelrouter/modelrouter_test.go
     origin:
@@ -183853,7 +183797,7 @@ symbols:
       - type: executable_for
         target: TEST-models-domain
   - id: SYM-models-modelrouter-modelrouter-test-test-tier-policy-denied
-    title: TestTierPolicyDenied
+    title: TestDataTierPolicyDenied
     status: active
     sourceFile: internal/modelrouter/modelrouter_test.go
     origin:
@@ -183863,7 +183807,7 @@ symbols:
       - type: executable_for
         target: TEST-models-domain
   - id: SYM-models-modelrouter-modelrouter-test-test-new-tier-policy-errors
-    title: TestNewTierPolicyErrors
+    title: TestNewDataTierPolicyErrors
     status: active
     sourceFile: internal/modelrouter/modelrouter_test.go
     origin:
@@ -184152,7 +184096,7 @@ symbols:
       - type: implements
         target: REQ-models-switch-default-off
   - id: SYM-models-modelrouter-postgres-store-store-save-tier-models
-    title: Store.SaveTierModels
+    title: Store.SaveDataTierModels
     status: active
     sourceFile: internal/modelrouter/postgres/store.go
     symbol_role: behavioral
@@ -184377,7 +184321,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-ref-valid-provider
-    title: validProvider
+    title: validInstanceName
     status: active
     sourceFile: internal/modelrouter/ref.go
     symbol_role: behavioral
@@ -184592,7 +184536,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-request-request-tiers
-    title: Request.Tiers
+    title: Request.DataTiers
     status: active
     sourceFile: internal/modelrouter/request.go
     symbol_role: behavioral
@@ -184632,7 +184576,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-request-entry
-    title: Entry
+    title: ModelEntry
     status: active
     sourceFile: internal/modelrouter/request.go
     symbol_role: type-shape
@@ -184646,7 +184590,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-request-entry-serves
-    title: Entry.Serves
+    title: ModelEntry.Serves
     status: active
     sourceFile: internal/modelrouter/request.go
     symbol_role: behavioral
@@ -184715,7 +184659,7 @@ symbols:
       - type: implements
         target: REQ-models-router-roles-fallbacks
   - id: SYM-models-modelrouter-request-provider
-    title: Provider
+    title: ProviderInstance
     status: active
     sourceFile: internal/modelrouter/request.go
     symbol_role: type-shape
@@ -184851,7 +184795,7 @@ symbols:
       - type: implements
         target: REQ-models-switch-default-off
   - id: SYM-models-modelrouter-tier-tier
-    title: Tier
+    title: DataTier
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: type-shape
@@ -184865,7 +184809,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-tiers
-    title: Tiers
+    title: DataTiers
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184878,7 +184822,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-parse-tier
-    title: ParseTier
+    title: ParseDataTier
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184891,7 +184835,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-tier-set
-    title: TierSet
+    title: DataTierSet
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: type-shape
@@ -184905,7 +184849,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-new-tier-set
-    title: NewTierSet
+    title: NewDataTierSet
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184918,7 +184862,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-tier-policy
-    title: TierPolicy
+    title: DataTierPolicy
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: type-shape
@@ -184932,7 +184876,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-new-tier-policy
-    title: NewTierPolicy
+    title: NewDataTierPolicy
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184945,7 +184889,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-validate-tier-models
-    title: validateTierModels
+    title: validateDataTierModels
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184958,7 +184902,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-tier-policy-allows
-    title: TierPolicy.Allows
+    title: DataTierPolicy.Allows
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -184971,7 +184915,7 @@ symbols:
       - type: implements
         target: REQ-models-data-tiers-deny-by-default
   - id: SYM-models-modelrouter-tier-tier-policy-denied
-    title: TierPolicy.Denied
+    title: DataTierPolicy.Denied
     status: active
     sourceFile: internal/modelrouter/tier.go
     symbol_role: behavioral
@@ -189572,3 +189516,762 @@ symbols:
         target: REQ-identity-audit-entry-content
       - type: implements
         target: REQ-identity-audit-no-amount-secret-text
+  - id: SYM-models-followup-modelrouter-go-modelproviderinstances-instance
+    title: modelProviderInstances.Instance
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:48:44.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-modelrouter-go-provideraddress
+    title: providerAddress
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:48:49.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-provider-plugin-contract
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    title: modelAudit.RecordSent
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:48:54.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-calls-audited-fail-closed
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-modelrouter-go-modelaudit-recordresult
+    title: modelAudit.RecordResult
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:48:59.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-calls-audited-fail-closed
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-modelrouter-go-modelaudit-append
+    title: modelAudit.append
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:04.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-calls-audited-fail-closed
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-modelrouter-go-newcallid
+    title: newCallID
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:08.877Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-modelrouter-go-agentmodels-routecheck
+    title: agentModels.routeCheck
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:13.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-modelrouter-go-routecheckover
+    title: routeCheckOver
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:18.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-modelrouter-go-agentmodels-attend
+    title: agentModels.attend
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:22.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+      - type: implements
+        target: REQ-models-router-roles-fallbacks
+  - id: SYM-models-followup-audit-go-modelerrorclasses
+    title: ModelErrorClasses
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:27.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-audit-go-validatemodelentry
+    title: validateModelEntry
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:32.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-ports-go-errorclass
+    title: ErrorClass
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:36.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-ports-go-callsent
+    title: CallSent
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:40.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-ports-go-callresult
+    title: CallResult
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:44.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-ports-go-callids
+    title: CallIDs
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:49.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-ports-go-attentionraiser
+    title: AttentionRaiser
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:53.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-router-go-routerports
+    title: RouterPorts
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:49:57.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-router-roles-fallbacks
+  - id: SYM-models-followup-router-go-classify
+    title: classify
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:02.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-router-go-router-flag
+    title: Router.flag
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:07.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-router-go-router-result
+    title: Router.result
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:11.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-audited-fail-closed
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-routes-go-routeproblems
+    title: RouteProblems
+    status: active
+    sourceFile: internal/modelrouter/app/routes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:16.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-client-go-client-instance
+    title: Client.Instance
+    status: active
+    sourceFile: internal/modelrouter/connectrpc/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:21.360Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectrpc-client
+      - type: implements
+        target: REQ-models-provider-plugin-contract
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-client-go-addresserror
+    title: addressError
+    status: active
+    sourceFile: internal/modelrouter/connectrpc/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:26.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectrpc-client
+      - type: implements
+        target: REQ-models-provider-plugin-contract
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-problem-go-problemreason
+    title: ProblemReason
+    status: active
+    sourceFile: internal/modelrouter/problem.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:30.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-problem-go-routeproblem
+    title: RouteProblem
+    status: active
+    sourceFile: internal/modelrouter/problem.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:34.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-problem-go-routeproblem-subject
+    title: RouteProblem.Subject
+    status: active
+    sourceFile: internal/modelrouter/problem.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:40.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-problem-go-routeproblem-detail
+    title: RouteProblem.Detail
+    status: active
+    sourceFile: internal/modelrouter/problem.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:45.561Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-modelrouter-test-go-testnewcallid
+    title: TestNewCallID
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:50.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-testprovideraddressnamesthediscoveryserrors
+    title: TestProviderAddressNamesTheDiscoverysErrors
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:50:56.075Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-instancesfunc
+    title: instancesFunc
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:00.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-instancesfunc-instance
+    title: instancesFunc.Instance
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:06.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-instancesfunc-describe
+    title: instancesFunc.Describe
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:11.047Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-instancesfunc-models
+    title: instancesFunc.Models
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:16.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-instancesfunc-generate
+    title: instancesFunc.Generate
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:21.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-fakeroutestore
+    title: fakeRouteStore
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:25.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-fakeroutestore-settings
+    title: fakeRouteStore.Settings
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:30.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelrouter-test-go-testroutecheckfindsbrokenentries
+    title: TestRouteCheckFindsBrokenEntries
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:35.594Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-router
+  - id: SYM-models-followup-modelprovider-test-go-unreconciled
+    title: unreconciled
+    status: active
+    sourceFile: internal/ingest/kube/modelprovider_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:40.089Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube-model-provider
+  - id: SYM-models-followup-fakes-test-go-fakeproviders-instance
+    title: fakeProviders.Instance
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:45.046Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-fakeaudit-recordsent
+    title: fakeAudit.RecordSent
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:49.946Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-fakeaudit-recordresult
+    title: fakeAudit.RecordResult
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:54.829Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-fakeattention
+    title: fakeAttention
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:51:59.080Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-fakeattention-raise
+    title: fakeAttention.Raise
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:04.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-fakeattention-clear
+    title: fakeAttention.Clear
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:09.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-fakes-test-go-callids
+    title: callIDs
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:14.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterlinkseachattemptsentries
+    title: TestRouterLinksEachAttemptsEntries
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:20.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterrefusalhasonlytheresultentry
+    title: TestRouterRefusalHasOnlyTheResultEntry
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:26.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterwithholdsanansweritcannotrecord
+    title: TestRouterWithholdsAnAnswerItCannotRecord
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:31.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterrecordstheresultofacanceledcall
+    title: TestRouterRecordsTheResultOfACanceledCall
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:36.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterraisesanitemforabrokenrouteentry
+    title: TestRouterRaisesAnItemForABrokenRouteEntry
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:41.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterfallsthroughwhentheitemcannotberaised
+    title: TestRouterFallsThroughWhenTheItemCannotBeRaised
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:46.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-routes-test-go-testrouteproblems
+    title: TestRouteProblems
+    status: active
+    sourceFile: internal/modelrouter/app/routes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:50.671Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-routes
+  - id: SYM-models-followup-routes-test-go-testrouteproblemsfailswithoutsettings
+    title: TestRouteProblemsFailsWithoutSettings
+    status: active
+    sourceFile: internal/modelrouter/app/routes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:55.240Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-routes
+  - id: SYM-models-followup-routes-test-go-testrouteproblemtext
+    title: TestRouteProblemText
+    status: active
+    sourceFile: internal/modelrouter/app/routes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:52:59.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-routes
+  - id: SYM-models-followup-client-test-go-testinstancetellsabrokenroutefromadownprovider
+    title: TestInstanceTellsABrokenRouteFromADownProvider
+    status: active
+    sourceFile: internal/modelrouter/connectrpc/client_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T14:53:05.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectrpc-client
+  - id: SYM-models-followup-routes-go-instanceproblem
+    title: instanceProblem
+    status: active
+    sourceFile: internal/modelrouter/app/routes.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:02:31.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-route-broken-attention
+  - id: SYM-models-followup-router-go-router-attempt
+    title: Router.attempt
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:02:36.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-router
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+      - type: implements
+        target: REQ-models-route-broken-attention
+      - type: implements
+        target: REQ-models-router-roles-fallbacks
+  - id: SYM-models-followup-router-test-go-routerfixture-wantpairs
+    title: routerFixture.wantPairs
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:02:41.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-router-test-go-testrouterraisesnoitemforatransientfailure
+    title: TestRouterRaisesNoItemForATransientFailure
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:02:46.829Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-models-followup-modelrouter-go-newagentsandattention
+    title: newAgentsAndAttention
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:16:54.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-router
+      - type: implements
+        target: REQ-models-route-broken-attention
+      - type: implements
+        target: REQ-models-router-roles-fallbacks
+  - id: SYM-models-followup-audit-go-sententryshape
+    title: sentEntryShape
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:17:01.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-models-calls-two-entries-linked
+  - id: SYM-models-followup-audit-go-resultentryshape
+    title: resultEntryShape
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:17:06.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-models-calls-two-entries-linked

@@ -76,10 +76,10 @@ func (f *fakeStore) SaveRoute(_ context.Context, role modelrouter.Role, route []
 	return f.err
 }
 
-func (f *fakeStore) SaveTierModels(_ context.Context, tier modelrouter.Tier, allowed []modelrouter.Ref) error {
+func (f *fakeStore) SaveDataTierModels(_ context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	policy := modelrouter.TierPolicy{}
+	policy := modelrouter.DataTierPolicy{}
 	maps.Copy(policy, f.settings.Policy)
 	if len(allowed) == 0 {
 		delete(policy, tier)
@@ -93,17 +93,24 @@ func (f *fakeStore) SaveTierModels(_ context.Context, tier modelrouter.Tier, all
 // fakeProviders answers from scripts, by "provider/model".
 type fakeProviders struct {
 	ev      *events
-	entries map[string][]modelrouter.Entry // by provider
-	answers map[string]error               // by "provider/model": the error Generate returns; nil answers
-	listErr error
-	called  []string
+	entries map[string][]modelrouter.ModelEntry // by provider
+	answers map[string]error                    // by "provider/model": the error Generate returns; nil answers
+	// instances holds the error Instance returns for a provider instance;
+	// nil, or none, for an instance that runs.
+	instances map[string]error
+	listErr   error
+	called    []string
 }
 
-func (f *fakeProviders) Describe(context.Context, string) (modelrouter.Provider, error) {
-	return modelrouter.Provider{Location: modelrouter.LocationThirdPartyCloud}, nil
+func (f *fakeProviders) Instance(_ context.Context, instance string) error {
+	return f.instances[instance]
 }
 
-func (f *fakeProviders) Models(_ context.Context, provider string) ([]modelrouter.Entry, error) {
+func (f *fakeProviders) Describe(context.Context, string) (modelrouter.ProviderInstance, error) {
+	return modelrouter.ProviderInstance{Location: modelrouter.LocationThirdPartyCloud}, nil
+}
+
+func (f *fakeProviders) Models(_ context.Context, provider string) ([]modelrouter.ModelEntry, error) {
 	f.ev.add("list " + provider)
 	return f.entries[provider], f.listErr
 }
@@ -118,20 +125,76 @@ func (f *fakeProviders) Generate(_ context.Context, provider, model string, _ *m
 	return modelrouter.Result{Content: "answer from " + key, Finish: modelrouter.FinishStop, Usage: modelrouter.Usage{InputTokens: 3, OutputTokens: 2}}, nil
 }
 
-// fakeAudit records calls, and fails when err is set.
+// fakeAudit records the two entries of calls, and fails when err is set (both
+// entries) or resultErr is (the result entry only).
 type fakeAudit struct {
-	ev   *events
-	err  error
-	recs []app.CallRecord
+	ev        *events
+	err       error
+	resultErr error
+	sent      []app.CallSent
+	results   []app.CallResult
+	// failsOnEndedContext makes RecordResult fail when it is handed a
+	// context that has ended, and not one detached from it.
+	failsOnEndedContext bool
 }
 
-func (f *fakeAudit) RecordCall(_ context.Context, rec *app.CallRecord) error {
+func (f *fakeAudit) RecordSent(_ context.Context, c *app.CallSent) error {
 	if f.err != nil {
 		return f.err
 	}
-	f.ev.add("audit " + string(rec.Outcome) + " " + rec.Model.String())
-	f.recs = append(f.recs, *rec)
+	f.ev.add("audit sent " + c.Model.String())
+	f.sent = append(f.sent, *c)
 	return nil
+}
+
+func (f *fakeAudit) RecordResult(ctx context.Context, c *app.CallResult) error {
+	if f.failsOnEndedContext && ctx.Err() != nil {
+		return fmt.Errorf("the context ended: %w", ctx.Err())
+	}
+	if f.err != nil {
+		return f.err
+	}
+	if f.resultErr != nil {
+		return f.resultErr
+	}
+	f.ev.add("audit " + string(c.Outcome) + " " + c.Model.String())
+	f.results = append(f.results, *c)
+	return nil
+}
+
+// fakeAttention keeps the items the router raised and cleared, by subject.
+type fakeAttention struct {
+	ev      *events
+	err     error
+	raised  map[string]string // subject to detail
+	kinds   map[string]string // subject to kind
+	cleared []string
+}
+
+func (f *fakeAttention) Raise(_ context.Context, kind, subject, detail string) error {
+	if f.err != nil {
+		return f.err
+	}
+	f.ev.add("raise " + subject)
+	if f.raised == nil {
+		f.raised, f.kinds = map[string]string{}, map[string]string{}
+	}
+	f.raised[subject], f.kinds[subject] = detail, kind
+	return nil
+}
+
+func (f *fakeAttention) Clear(_ context.Context, _, subject string) error {
+	f.cleared = append(f.cleared, subject)
+	return nil
+}
+
+// callIDs returns IDs of 16 hex digits that count up from 1.
+func callIDs() app.CallIDs {
+	n := 0
+	return func() (string, error) {
+		n++
+		return fmt.Sprintf("%016x", n), nil
+	}
 }
 
 // fakeOwners accepts one session token as the owner's.

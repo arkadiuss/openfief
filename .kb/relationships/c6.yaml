@@ -1035,24 +1035,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5118f06c417d
-  - type: covered_by
-    from: SYM-models-modelrouter-app-router-router-record
-    to: TEST-models-app-router
-    created_at: 2026-11-13T12:29:45.337Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-141e7a5c7dc5
-  - type: implements
-    from: SYM-models-modelrouter-app-router-router-record
-    to: REQ-models-router-roles-fallbacks
-    created_at: 2026-11-13T12:29:45.380Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0c6d578b8f6a
-  - type: implements
-    from: SYM-models-modelrouter-app-router-router-record
-    to: REQ-models-calls-audited-fail-closed
-    created_at: 2026-11-13T12:29:45.410Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e602eabc9fe8

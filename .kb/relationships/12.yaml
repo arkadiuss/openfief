@@ -909,3 +909,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be424dc85bb4
+  - type: implements
+    from: SYM-models-followup-problem-go-routeproblem
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:50:37.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf76ae6db948
+  - type: covered_by
+    from: SYM-models-followup-problem-go-routeproblem
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:50:37.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b466457cc551
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeattention-clear
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:52:11.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b494f621b5

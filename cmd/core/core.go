@@ -215,7 +215,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, cfg.Auth.Origins), now, log)
+	agents, attn := newAgentsAndAttention(pool, auth, cfg.Auth.Origins, l, vstore, checks, now, log)
 	client, err := revaluationClient(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err
@@ -224,7 +224,6 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	agents := newAgentModels(pool, auth, cfg.Auth.Origins, now)
 	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),

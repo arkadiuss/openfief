@@ -102,7 +102,7 @@ func TestDescribe(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := modelrouter.Provider{Location: modelrouter.LocationOwnerHardware, RetentionDays: 30}
+	want := modelrouter.ProviderInstance{Location: modelrouter.LocationOwnerHardware, RetentionDays: 30}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("provider (-want +got):\n%s", diff)
 	}
@@ -129,7 +129,7 @@ func TestModels(t *testing.T) {
 }
 
 // pricedEntry reports whether e is the plugin's priced entry, translated.
-func pricedEntry(e *modelrouter.Entry) bool {
+func pricedEntry(e *modelrouter.ModelEntry) bool {
 	return e.ID == "openai/gpt-oss-120b" && e.HasPrice && e.InputPrice.String() == "0.15" && e.OutputPrice.String() == "0.6" &&
 		e.PriceCurrency.String() == "USD" && e.ContextTokens == 131072 && e.MaxOutputTokens == 8192 && e.ToolCalling && e.StructuredOut
 }
@@ -139,10 +139,10 @@ func TestGenerateTranslatesBothWays(t *testing.T) {
 	p := &plugin{}
 	req := &modelrouter.Request{
 		Messages: []modelrouter.Message{
-			{Role: modelrouter.MessageSystem, Content: "be brief", Tier: modelrouter.TierT2},
-			{Role: modelrouter.MessageUser, Content: "q", Tier: modelrouter.TierT0},
-			{Role: modelrouter.MessageAssistant, ToolCalls: []modelrouter.ToolCall{{ID: "c0", Name: "x", ArgumentsJSON: "{}"}}, Tier: modelrouter.TierT0},
-			{Role: modelrouter.MessageTool, ToolCallID: "c0", Content: "r", Tier: modelrouter.TierT0},
+			{Role: modelrouter.MessageSystem, Content: "be brief", DataTier: modelrouter.DataTierT2},
+			{Role: modelrouter.MessageUser, Content: "q", DataTier: modelrouter.DataTierT0},
+			{Role: modelrouter.MessageAssistant, ToolCalls: []modelrouter.ToolCall{{ID: "c0", Name: "x", ArgumentsJSON: "{}"}}, DataTier: modelrouter.DataTierT0},
+			{Role: modelrouter.MessageTool, ToolCallID: "c0", Content: "r", DataTier: modelrouter.DataTierT0},
 		},
 		Tools:              []modelrouter.Tool{{Name: "show_account", Description: "d", ParametersSchemaJSON: `{"type":"object"}`}},
 		ResponseSchemaJSON: `{"type":"object"}`, MaxOutputTokens: 800,
@@ -190,7 +190,7 @@ func TestGenerateErrorClasses(t *testing.T) {
 		{"a refused core token falls back", connect.CodeUnauthenticated, false},
 	}
 	secret := errProviderText.Error()
-	req := &modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: "q", Tier: modelrouter.TierT2}}}
+	req := &modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: "q", DataTier: modelrouter.DataTierT2}}}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -214,7 +214,7 @@ func TestGenerateErrorClasses(t *testing.T) {
 
 func TestAnInstanceWithoutAnAddressOrTokenIsUnavailable(t *testing.T) {
 	t.Parallel()
-	req := &modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: "q", Tier: modelrouter.TierT2}}}
+	req := &modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: "q", DataTier: modelrouter.DataTierT2}}}
 	noAddr := connectrpc.NewClient(http.DefaultClient, func(string) (string, error) { return "", errNoService }, tokens{})
 	if _, err := noAddr.Generate(t.Context(), "p", "m", req); !errors.Is(err, app.ErrProviderUnavailable) {
 		t.Errorf("no address: %v", err)
@@ -225,5 +225,43 @@ func TestAnInstanceWithoutAnAddressOrTokenIsUnavailable(t *testing.T) {
 	}
 	if _, err := noToken.Models(t.Context(), "p"); !errors.Is(err, app.ErrProviderUnavailable) {
 		t.Errorf("no token, Models: %v", err)
+	}
+}
+
+// TestInstanceTellsABrokenRouteFromADownProvider checks that an address that
+// says the instance is missing or is no model provider reaches the router as
+// such, from Instance and from the calls alike, while any other reason an
+// instance has no address is unavailable, and an instance with an address
+// is fine without a call to it.
+func TestInstanceTellsABrokenRouteFromADownProvider(t *testing.T) {
+	t.Parallel()
+	req := &modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: "q", DataTier: modelrouter.DataTierT2}}}
+	tests := []struct {
+		name string
+		err  error
+		want error
+	}{
+		{"it runs", nil, nil},
+		{"no plugin has the name", fmt.Errorf("%w: p", app.ErrProviderMissing), app.ErrProviderMissing},
+		{"the plugin is no model provider", fmt.Errorf("%w: p", app.ErrNotModelProvider), app.ErrNotModelProvider},
+		{"it has no address", errNoService, app.ErrProviderUnavailable},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			c := connectrpc.NewClient(http.DefaultClient, func(string) (string, error) { return "http://192.0.2.1:1", tt.err }, tokens{})
+			if err := c.Instance(t.Context(), "p"); !errors.Is(err, tt.want) || (tt.want == nil && err != nil) {
+				t.Errorf("Instance = %v, want %v", err, tt.want)
+			}
+			if tt.want == nil {
+				return
+			}
+			if _, err := c.Generate(t.Context(), "p", "m", req); !errors.Is(err, tt.want) {
+				t.Errorf("Generate = %v, want %v", err, tt.want)
+			}
+			if _, err := c.Models(t.Context(), "p"); !errors.Is(err, tt.want) {
+				t.Errorf("Models = %v, want %v", err, tt.want)
+			}
+		})
 	}
 }

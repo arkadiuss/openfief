@@ -7,5 +7,5 @@ package modelrouter
 type Settings struct {
 	Switch Switch
 	Routes map[Role]Route
-	Policy TierPolicy
+	Policy DataTierPolicy
 }

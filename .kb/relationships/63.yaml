@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15733ded321f
+  - type: implements
+    from: SYM-models-followup-problem-go-routeproblem-subject
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:50:42.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-655430c24e6d
+  - type: covered_by
+    from: SYM-models-followup-problem-go-routeproblem-subject
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:50:42.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d79fac06ece

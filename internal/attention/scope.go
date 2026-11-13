@@ -23,6 +23,12 @@ const (
 	// kindUndeclaredCrossChecks is ingest's cross-check prices dropped as
 	// undeclared (D-141). Subject: the instance.
 	kindUndeclaredCrossChecks Kind = "cross-check-prices-undeclared"
+	// kindModelRouteBroken is a model route's entry naming a provider
+	// instance no plugin has, or a plugin that is no model provider (D-196,
+	// D-205); the modelrouter context's check raises it. Subject:
+	// "<role>/<provider>/<model>", which names the route and the instance. It
+	// clears when the owner fixes the route or installs the plugin.
+	kindModelRouteBroken Kind = "model-route-broken"
 )
 
 // Group is what the owner does about an item, as the Inbox groups items
@@ -67,7 +73,7 @@ func GroupOf(k Kind) Group {
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
 	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified, KindBondFeeAssumed,
-		KindBondSeriesIncomplete:
+		KindBondSeriesIncomplete, kindModelRouteBroken:
 	}
 	return GroupDecisions
 }
@@ -100,7 +106,8 @@ type Scope struct {
 //   - setting-missing "earlier-payments/<account>", an IKE's missing
 //     earlier payments (D-149): the account;
 //   - any other setting-missing, transfer-broken and transfer-suggested (a
-//     pair of transaction keys) and any other kind: nothing.
+//     pair of transaction keys), model-route-broken (a role, a provider
+//     instance and a model, tied to no account) and any other kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
@@ -119,7 +126,7 @@ func ScopeOf(it *Item) Scope {
 		if len(parts) == 2 && parts[0] == earlierPaymentsSetting {
 			return Scope{Account: parts[1]}
 		}
-	case KindTransferBroken, KindTransferSuggested:
+	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken:
 	}
 	return Scope{}
 }

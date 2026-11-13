@@ -286,6 +286,7 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionGrantCreated:         identityv1.AuditAction_AUDIT_ACTION_GRANT_CREATED,
 		identity.ActionGrantRevoked:         identityv1.AuditAction_AUDIT_ACTION_GRANT_REVOKED,
 		identity.ActionModelCall:            identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL,
+		identity.ActionModelCallResult:      identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT,
 	}
 }
 
@@ -295,6 +296,7 @@ func pbOutcomes() map[identity.AuditOutcome]identityv1.AuditOutcome {
 		identity.OutcomeOK:      identityv1.AuditOutcome_AUDIT_OUTCOME_OK,
 		identity.OutcomeRefused: identityv1.AuditOutcome_AUDIT_OUTCOME_REFUSED,
 		identity.OutcomeFailed:  identityv1.AuditOutcome_AUDIT_OUTCOME_FAILED,
+		identity.OutcomeSent:    identityv1.AuditOutcome_AUDIT_OUTCOME_SENT,
 	}
 }
 
@@ -312,6 +314,8 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefHousehold:      identityv1.AuditRefKind_AUDIT_REF_KIND_HOUSEHOLD,
 		identity.RefModelRole:      identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE,
 		identity.RefModel:          identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
+		identity.RefModelCall:      identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL,
+		identity.RefModelError:     identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
 	}
 }
 

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09955ce04d30
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-fakeroutestore-settings
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:51:32.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f6bd4b40125

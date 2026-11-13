@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce019becf7e4
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelproviderinstances-instance
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:48:46.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59098b28a17b
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-modelproviderinstances-instance
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:46.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-953dc436d1f3

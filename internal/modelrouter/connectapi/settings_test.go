@@ -58,10 +58,10 @@ func (m *memStore) SaveRoute(_ context.Context, role modelrouter.Role, refs []mo
 	return nil
 }
 
-func (m *memStore) SaveTierModels(_ context.Context, tier modelrouter.Tier, refs []modelrouter.Ref) error {
+func (m *memStore) SaveDataTierModels(_ context.Context, tier modelrouter.DataTier, refs []modelrouter.Ref) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	m.s.Policy = modelrouter.TierPolicy{tier: refs}
+	m.s.Policy = modelrouter.DataTierPolicy{tier: refs}
 	return nil
 }
 

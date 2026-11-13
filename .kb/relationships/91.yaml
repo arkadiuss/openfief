@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-194bb9bc5cd7
+  - type: implements
+    from: SYM-models-followup-problem-go-problemreason
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:50:32.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dab35a3301cf
+  - type: covered_by
+    from: SYM-models-followup-problem-go-problemreason
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:50:32.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a81dce2b5c8

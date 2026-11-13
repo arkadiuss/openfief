@@ -60,9 +60,16 @@ var (
 	ErrNotStarted = errors.New("connector discovery not started")
 	// ErrNoAddress reports an instance without a Service the core can call.
 	ErrNoAddress = errors.New("connector instance has no address")
-	// ErrNotModelProvider reports an instance that is not a running
-	// model-provider plugin.
-	ErrNotModelProvider = errors.New("not a running model-provider instance")
+	// ErrNoSuchInstance reports a name no Plugin resource has.
+	ErrNoSuchInstance = errors.New("no such plugin instance")
+	// ErrNotModelProvider reports a plugin instance whose effective
+	// capabilities do not include model-provider: a connector, a view, or a
+	// model provider whose grant does not approve the capability.
+	ErrNotModelProvider = errors.New("not a model-provider instance")
+	// ErrNotRunning reports a model-provider instance that is not running
+	// now: being deleted, not Ready, or not yet reconciled. It is transient,
+	// not a mistake of the one who named it.
+	ErrNotRunning = errors.New("model-provider instance not running")
 )
 
 // Discovery follows the cluster's Plugin resources and plugin Services in
@@ -201,19 +208,32 @@ func (d *Discovery) BaseURL(instance string) (string, error) {
 
 // ModelProviderBaseURL returns the URL the core calls the model-provider
 // instance at, as BaseURL does, but only while the instance runs and may act
-// as a model provider (D-205): a route naming any other plugin, or one that
-// is not ready, sends nothing to it.
+// as a model provider (D-205): a route naming any other plugin sends nothing
+// to it. It tells apart a name no plugin has (ErrNoSuchInstance), a plugin
+// that is no model provider (ErrNotModelProvider, which a broken route
+// raises an attention item for, D-196) and a model provider that does not
+// run now (ErrNotRunning, which only falls through to the route's next model).
 func (d *Discovery) ModelProviderBaseURL(instance string) (string, error) {
 	if !d.started {
 		return "", ErrNotStarted
 	}
 	o, err := d.plugins.Lister().ByNamespace(d.ns).Get(instance)
 	if err != nil {
-		return "", fmt.Errorf("%w: %s: no such plugin: %w", ErrNotModelProvider, instance, err)
+		return "", fmt.Errorf("%w: %s: %w", ErrNoSuchInstance, instance, err)
 	}
 	u, ok := o.(*unstructured.Unstructured)
-	if !ok || !runningAs(u, CapabilityModelProvider) {
+	if !ok {
+		return "", fmt.Errorf("%w: %s", ErrNotRunning, instance)
+	}
+	// Capabilities that are not reported yet leave the plugin unreconciled.
+	caps, found, err := unstructured.NestedStringSlice(u.Object, "status", "effective", "capabilities")
+	switch {
+	case err != nil || !found:
+		return "", fmt.Errorf("%w: %s", ErrNotRunning, instance)
+	case !slices.Contains(caps, CapabilityModelProvider):
 		return "", fmt.Errorf("%w: %s", ErrNotModelProvider, instance)
+	case !runningAs(u, CapabilityModelProvider):
+		return "", fmt.Errorf("%w: %s", ErrNotRunning, instance)
 	}
 	return d.BaseURL(instance)
 }

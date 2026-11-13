@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50c4e118e63f
+  - type: executable_for
+    from: SYM-models-followup-routes-test-go-testrouteproblemtext
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:53:02.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1dfb755f84b

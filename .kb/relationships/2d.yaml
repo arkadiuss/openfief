@@ -1000,3 +1000,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b09b55b4106
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:45:42.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab429467ba74
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:45:54.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f56261f55844
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:45:54.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db091298119
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T14:45:55.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0115b959adcf
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T14:45:55.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd54d2fa1fe
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-attention-scope
+    created_at: 2026-11-13T14:45:55.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ffa4987f7e
+  - type: verified_by
+    from: SCEN-models-route-broken-attention
+    to: TEST-ui-attention
+    created_at: 2026-11-13T14:45:55.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259555995d29

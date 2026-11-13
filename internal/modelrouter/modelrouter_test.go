@@ -82,9 +82,9 @@ func TestParseRef(t *testing.T) {
 		want    modelrouter.Ref
 		wantErr bool
 	}{
-		{"openrouter/openai/gpt-oss-120b", modelrouter.Ref{Provider: "openrouter", Model: "openai/gpt-oss-120b"}, false},
-		{"ollama/qwen3:8b", modelrouter.Ref{Provider: "ollama", Model: "qwen3:8b"}, false},
-		{"local-1/m", modelrouter.Ref{Provider: "local-1", Model: "m"}, false},
+		{"openrouter/openai/gpt-oss-120b", modelrouter.Ref{Instance: "openrouter", Model: "openai/gpt-oss-120b"}, false},
+		{"ollama/qwen3:8b", modelrouter.Ref{Instance: "ollama", Model: "qwen3:8b"}, false},
+		{"local-1/m", modelrouter.Ref{Instance: "local-1", Model: "m"}, false},
 		{"", modelrouter.Ref{}, true},
 		{"noslash", modelrouter.Ref{}, true},
 		{"/model", modelrouter.Ref{}, true},
@@ -122,7 +122,7 @@ func TestNewRoute(t *testing.T) {
 	a, b := ref(t, "p/a"), ref(t, "p/b")
 	many := make([]modelrouter.Ref, 0, modelrouter.MaxRouteModels+1)
 	for i := range modelrouter.MaxRouteModels + 1 {
-		many = append(many, modelrouter.Ref{Provider: "p", Model: string(rune('a' + i))})
+		many = append(many, modelrouter.Ref{Instance: "p", Model: string(rune('a' + i))})
 	}
 	tests := []struct {
 		name    string
@@ -136,7 +136,7 @@ func TestNewRoute(t *testing.T) {
 		{"no models", modelrouter.RoleAsk, nil, modelrouter.ErrInvalidRoute},
 		{"one twice", modelrouter.RoleAsk, []modelrouter.Ref{a, b, a}, modelrouter.ErrInvalidRoute},
 		{"too many", modelrouter.RoleAsk, many, modelrouter.ErrInvalidRoute},
-		{"an invalid reference", modelrouter.RoleAsk, []modelrouter.Ref{{Provider: "P", Model: "m"}}, modelrouter.ErrInvalidRef},
+		{"an invalid reference", modelrouter.RoleAsk, []modelrouter.Ref{{Instance: "P", Model: "m"}}, modelrouter.ErrInvalidRef},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -162,24 +162,24 @@ func TestRoleFeature(t *testing.T) {
 	}
 }
 
-func TestNewTierSet(t *testing.T) {
+func TestNewDataTierSet(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name    string
-		tags    []modelrouter.Tier
-		want    modelrouter.TierSet
+		tags    []modelrouter.DataTier
+		want    modelrouter.DataTierSet
 		wantErr error
 	}{
-		{"one", []modelrouter.Tier{modelrouter.TierT2}, modelrouter.TierSet{modelrouter.TierT2}, nil},
-		{"distinct, in tier order", []modelrouter.Tier{modelrouter.TierT2, modelrouter.TierT0, modelrouter.TierT2, modelrouter.TierTF}, modelrouter.TierSet{modelrouter.TierT0, modelrouter.TierTF, modelrouter.TierT2}, nil},
+		{"one", []modelrouter.DataTier{modelrouter.DataTierT2}, modelrouter.DataTierSet{modelrouter.DataTierT2}, nil},
+		{"distinct, in tier order", []modelrouter.DataTier{modelrouter.DataTierT2, modelrouter.DataTierT0, modelrouter.DataTierT2, modelrouter.DataTierTF}, modelrouter.DataTierSet{modelrouter.DataTierT0, modelrouter.DataTierTF, modelrouter.DataTierT2}, nil},
 		{"none", nil, nil, modelrouter.ErrUntagged},
-		{"an untagged piece among tagged", []modelrouter.Tier{modelrouter.TierT2, ""}, nil, modelrouter.ErrUntagged},
-		{"an unknown tier", []modelrouter.Tier{modelrouter.TierT2, "T9"}, nil, modelrouter.ErrUnknownTier},
+		{"an untagged piece among tagged", []modelrouter.DataTier{modelrouter.DataTierT2, ""}, nil, modelrouter.ErrUntagged},
+		{"an unknown tier", []modelrouter.DataTier{modelrouter.DataTierT2, "T9"}, nil, modelrouter.ErrUnknownDataTier},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := modelrouter.NewTierSet(tt.tags)
+			got, err := modelrouter.NewDataTierSet(tt.tags)
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("error = %v, want %v", err, tt.wantErr)
 			}
@@ -190,14 +190,14 @@ func TestNewTierSet(t *testing.T) {
 	}
 }
 
-func TestTierPolicyDenied(t *testing.T) {
+func TestDataTierPolicyDenied(t *testing.T) {
 	t.Parallel()
 	cloud, local := ref(t, "openrouter/qwen"), ref(t, "ollama/qwen3:8b")
-	policy, err := modelrouter.NewTierPolicy(map[modelrouter.Tier][]modelrouter.Ref{
-		modelrouter.TierT0: {local},
-		modelrouter.TierTF: {local},
-		modelrouter.TierT1: {local, cloud},
-		modelrouter.TierT2: {local, cloud},
+	policy, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{
+		modelrouter.DataTierT0: {local},
+		modelrouter.DataTierTF: {local},
+		modelrouter.DataTierT1: {local, cloud},
+		modelrouter.DataTierT2: {local, cloud},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -205,16 +205,16 @@ func TestTierPolicyDenied(t *testing.T) {
 	tests := []struct {
 		name  string
 		model modelrouter.Ref
-		tiers modelrouter.TierSet
-		want  []modelrouter.Tier
+		tiers modelrouter.DataTierSet
+		want  []modelrouter.DataTier
 	}{
-		{"local model, everything", local, modelrouter.Tiers(), nil},
-		{"cloud model, public data", cloud, modelrouter.TierSet{modelrouter.TierT2}, nil},
-		{"cloud model, thesis and public data", cloud, modelrouter.TierSet{modelrouter.TierT1, modelrouter.TierT2}, nil},
-		{"cloud model, portfolio data", cloud, modelrouter.TierSet{modelrouter.TierT0}, []modelrouter.Tier{modelrouter.TierT0}},
-		{"cloud model, one denied tier among allowed ones", cloud, modelrouter.TierSet{modelrouter.TierT0, modelrouter.TierT1, modelrouter.TierT2}, []modelrouter.Tier{modelrouter.TierT0}},
-		{"cloud model, two denied tiers", cloud, modelrouter.TierSet{modelrouter.TierT0, modelrouter.TierTF}, []modelrouter.Tier{modelrouter.TierT0, modelrouter.TierTF}},
-		{"an unlisted model is denied everything", ref(t, "other/m"), modelrouter.TierSet{modelrouter.TierT2}, []modelrouter.Tier{modelrouter.TierT2}},
+		{"local model, everything", local, modelrouter.DataTiers(), nil},
+		{"cloud model, public data", cloud, modelrouter.DataTierSet{modelrouter.DataTierT2}, nil},
+		{"cloud model, thesis and public data", cloud, modelrouter.DataTierSet{modelrouter.DataTierT1, modelrouter.DataTierT2}, nil},
+		{"cloud model, portfolio data", cloud, modelrouter.DataTierSet{modelrouter.DataTierT0}, []modelrouter.DataTier{modelrouter.DataTierT0}},
+		{"cloud model, one denied tier among allowed ones", cloud, modelrouter.DataTierSet{modelrouter.DataTierT0, modelrouter.DataTierT1, modelrouter.DataTierT2}, []modelrouter.DataTier{modelrouter.DataTierT0}},
+		{"cloud model, two denied tiers", cloud, modelrouter.DataTierSet{modelrouter.DataTierT0, modelrouter.DataTierTF}, []modelrouter.DataTier{modelrouter.DataTierT0, modelrouter.DataTierTF}},
+		{"an unlisted model is denied everything", ref(t, "other/m"), modelrouter.DataTierSet{modelrouter.DataTierT2}, []modelrouter.DataTier{modelrouter.DataTierT2}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -226,8 +226,8 @@ func TestTierPolicyDenied(t *testing.T) {
 	}
 	t.Run("the zero policy denies by default", func(t *testing.T) {
 		t.Parallel()
-		var zero modelrouter.TierPolicy
-		for _, tier := range modelrouter.Tiers() {
+		var zero modelrouter.DataTierPolicy
+		for _, tier := range modelrouter.DataTiers() {
 			if zero.Allows(tier, local) {
 				t.Errorf("the zero policy allows %s", tier)
 			}
@@ -235,22 +235,22 @@ func TestTierPolicyDenied(t *testing.T) {
 	})
 }
 
-func TestNewTierPolicyErrors(t *testing.T) {
+func TestNewDataTierPolicyErrors(t *testing.T) {
 	t.Parallel()
 	a := ref(t, "p/a")
 	tests := []struct {
 		name    string
-		lists   map[modelrouter.Tier][]modelrouter.Ref
+		lists   map[modelrouter.DataTier][]modelrouter.Ref
 		wantErr error
 	}{
-		{"unknown tier", map[modelrouter.Tier][]modelrouter.Ref{"T9": {a}}, modelrouter.ErrUnknownTier},
-		{"one twice", map[modelrouter.Tier][]modelrouter.Ref{modelrouter.TierT2: {a, a}}, modelrouter.ErrInvalidTierModels},
-		{"an invalid reference", map[modelrouter.Tier][]modelrouter.Ref{modelrouter.TierT2: {{Provider: "p"}}}, modelrouter.ErrInvalidRef},
+		{"unknown tier", map[modelrouter.DataTier][]modelrouter.Ref{"T9": {a}}, modelrouter.ErrUnknownDataTier},
+		{"one twice", map[modelrouter.DataTier][]modelrouter.Ref{modelrouter.DataTierT2: {a, a}}, modelrouter.ErrInvalidDataTierModels},
+		{"an invalid reference", map[modelrouter.DataTier][]modelrouter.Ref{modelrouter.DataTierT2: {{Instance: "p"}}}, modelrouter.ErrInvalidRef},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := modelrouter.NewTierPolicy(tt.lists); !errors.Is(err, tt.wantErr) {
+			if _, err := modelrouter.NewDataTierPolicy(tt.lists); !errors.Is(err, tt.wantErr) {
 				t.Errorf("error = %v, want %v", err, tt.wantErr)
 			}
 		})
@@ -265,14 +265,14 @@ func TestMakePlan(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	policy, err := modelrouter.NewTierPolicy(map[modelrouter.Tier][]modelrouter.Ref{
-		modelrouter.TierT0: {local, other},
-		modelrouter.TierT2: {cloud, local, other},
+	policy, err := modelrouter.NewDataTierPolicy(map[modelrouter.DataTier][]modelrouter.Ref{
+		modelrouter.DataTierT0: {local, other},
+		modelrouter.DataTierT2: {cloud, local, other},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	catalog := map[modelrouter.Ref]modelrouter.Entry{
+	catalog := map[modelrouter.Ref]modelrouter.ModelEntry{
 		local: {ID: "qwen3:8b", ToolCalling: true},
 		other: {ID: "big", ToolCalling: true, StructuredOut: true},
 	}
@@ -285,21 +285,21 @@ func TestMakePlan(t *testing.T) {
 	}{
 		{
 			name: "public data goes to the whole route in order",
-			mod:  func(in *modelrouter.PlanInput) { in.Tiers = modelrouter.TierSet{modelrouter.TierT2} },
+			mod:  func(in *modelrouter.PlanInput) { in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2} },
 			want: []modelrouter.Ref{cloud, local, other},
 		},
 		{
 			name: "portfolio data skips the cloud model",
 			mod: func(in *modelrouter.PlanInput) {
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT0, modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT0, modelrouter.DataTierT2}
 			},
 			want:      []modelrouter.Ref{local, other},
-			wantSkips: []modelrouter.Skip{{Model: cloud, Reason: modelrouter.SkipTierDenied, Tiers: []modelrouter.Tier{modelrouter.TierT0}}},
+			wantSkips: []modelrouter.Skip{{Model: cloud, Reason: modelrouter.SkipDataTierDenied, DataTiers: []modelrouter.DataTier{modelrouter.DataTierT0}}},
 		},
 		{
 			name: "structured output skips a model whose entry lacks it",
 			mod: func(in *modelrouter.PlanInput) {
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 				in.Needs = modelrouter.Needs{StructuredOutput: true}
 			},
 			want:      []modelrouter.Ref{cloud, other},
@@ -308,7 +308,7 @@ func TestMakePlan(t *testing.T) {
 		{
 			name: "a model the catalog does not list stays a candidate",
 			mod: func(in *modelrouter.PlanInput) {
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 				in.Needs = modelrouter.Needs{Tools: true}
 			},
 			want: []modelrouter.Ref{cloud, local, other},
@@ -317,7 +317,7 @@ func TestMakePlan(t *testing.T) {
 			name: "the switch off refuses everything",
 			mod: func(in *modelrouter.PlanInput) {
 				in.Switch.Enabled = false
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 			},
 			wantErr: modelrouter.ErrSwitchOff,
 		},
@@ -325,7 +325,7 @@ func TestMakePlan(t *testing.T) {
 			name: "the role's toggle off refuses",
 			mod: func(in *modelrouter.PlanInput) {
 				in.Switch.Toggles = map[modelrouter.Feature]bool{modelrouter.FeatureMCP: true}
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 			},
 			wantErr: modelrouter.ErrFeatureOff,
 		},
@@ -333,7 +333,7 @@ func TestMakePlan(t *testing.T) {
 			name: "another role's toggle does not enable the role",
 			mod: func(in *modelrouter.PlanInput) {
 				in.Role = modelrouter.RoleMaintainer
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 			},
 			wantErr: modelrouter.ErrFeatureOff,
 		},
@@ -341,33 +341,36 @@ func TestMakePlan(t *testing.T) {
 			name: "no route",
 			mod: func(in *modelrouter.PlanInput) {
 				in.Route = modelrouter.Route{}
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 			},
 			wantErr: modelrouter.ErrNoRoute,
 		},
 		{
 			name:    "no tiers: untagged data is not sent",
-			mod:     func(in *modelrouter.PlanInput) { in.Tiers = nil },
+			mod:     func(in *modelrouter.PlanInput) { in.DataTiers = nil },
 			wantErr: modelrouter.ErrUntagged,
 		},
 		{
 			name:    "no model of the route is allowed for a tier",
-			mod:     func(in *modelrouter.PlanInput) { in.Tiers = modelrouter.TierSet{modelrouter.TierTF} },
-			wantErr: modelrouter.ErrTierDenied,
+			mod:     func(in *modelrouter.PlanInput) { in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierTF} },
+			wantErr: modelrouter.ErrDataTierDenied,
 		},
 		{
 			name: "no model supports tools and structured output",
 			mod: func(in *modelrouter.PlanInput) {
 				in.Route = modelrouter.Route{Role: modelrouter.RoleAsk, Models: []modelrouter.Ref{local}}
-				in.Tiers = modelrouter.TierSet{modelrouter.TierT2}
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
 				in.Needs = modelrouter.Needs{Tools: true, StructuredOutput: true}
 			},
 			wantErr: modelrouter.ErrNoCapableModel,
 		},
 		{
-			name:    "an empty policy denies by default",
-			mod:     func(in *modelrouter.PlanInput) { in.Policy = nil; in.Tiers = modelrouter.TierSet{modelrouter.TierT2} },
-			wantErr: modelrouter.ErrTierDenied,
+			name: "an empty policy denies by default",
+			mod: func(in *modelrouter.PlanInput) {
+				in.Policy = nil
+				in.DataTiers = modelrouter.DataTierSet{modelrouter.DataTierT2}
+			},
+			wantErr: modelrouter.ErrDataTierDenied,
 		},
 	}
 	for _, tt := range tests {
@@ -394,32 +397,32 @@ func TestMakePlan(t *testing.T) {
 
 func TestRequest(t *testing.T) {
 	t.Parallel()
-	user := modelrouter.Message{Role: modelrouter.MessageUser, Content: "q", Tier: modelrouter.TierT0}
+	user := modelrouter.Message{Role: modelrouter.MessageUser, Content: "q", DataTier: modelrouter.DataTierT0}
 	tests := []struct {
 		name      string
 		req       modelrouter.Request
 		wantValid error
-		wantTiers modelrouter.TierSet
+		wantTiers modelrouter.DataTierSet
 		wantErr   error
 	}{
-		{"one tagged message", modelrouter.Request{Messages: []modelrouter.Message{user}}, nil, modelrouter.TierSet{modelrouter.TierT0}, nil},
+		{"one tagged message", modelrouter.Request{Messages: []modelrouter.Message{user}}, nil, modelrouter.DataTierSet{modelrouter.DataTierT0}, nil},
 		{
 			"system, user and a tool result",
 			modelrouter.Request{Messages: []modelrouter.Message{
-				{Role: modelrouter.MessageSystem, Tier: modelrouter.TierT2},
+				{Role: modelrouter.MessageSystem, DataTier: modelrouter.DataTierT2},
 				user,
-				{Role: modelrouter.MessageAssistant, Tier: modelrouter.TierT0, ToolCalls: []modelrouter.ToolCall{{ID: "1", Name: "x"}}},
-				{Role: modelrouter.MessageTool, ToolCallID: "1", Tier: modelrouter.TierTF},
+				{Role: modelrouter.MessageAssistant, DataTier: modelrouter.DataTierT0, ToolCalls: []modelrouter.ToolCall{{ID: "1", Name: "x"}}},
+				{Role: modelrouter.MessageTool, ToolCallID: "1", DataTier: modelrouter.DataTierTF},
 			}},
 			nil,
-			modelrouter.TierSet{modelrouter.TierT0, modelrouter.TierTF, modelrouter.TierT2},
+			modelrouter.DataTierSet{modelrouter.DataTierT0, modelrouter.DataTierTF, modelrouter.DataTierT2},
 			nil,
 		},
 		{"no messages", modelrouter.Request{}, modelrouter.ErrInvalidRequest, nil, modelrouter.ErrUntagged},
-		{"ends with the assistant", modelrouter.Request{Messages: []modelrouter.Message{user, {Role: modelrouter.MessageAssistant, Tier: modelrouter.TierT0}}}, modelrouter.ErrInvalidRequest, modelrouter.TierSet{modelrouter.TierT0}, nil},
-		{"unknown role", modelrouter.Request{Messages: []modelrouter.Message{{Role: "other", Tier: modelrouter.TierT2}}}, modelrouter.ErrInvalidRequest, modelrouter.TierSet{modelrouter.TierT2}, nil},
-		{"unnamed tool", modelrouter.Request{Messages: []modelrouter.Message{user}, Tools: []modelrouter.Tool{{}}}, modelrouter.ErrInvalidRequest, modelrouter.TierSet{modelrouter.TierT0}, nil},
-		{"negative limit", modelrouter.Request{Messages: []modelrouter.Message{user}, MaxOutputTokens: -1}, modelrouter.ErrInvalidRequest, modelrouter.TierSet{modelrouter.TierT0}, nil},
+		{"ends with the assistant", modelrouter.Request{Messages: []modelrouter.Message{user, {Role: modelrouter.MessageAssistant, DataTier: modelrouter.DataTierT0}}}, modelrouter.ErrInvalidRequest, modelrouter.DataTierSet{modelrouter.DataTierT0}, nil},
+		{"unknown role", modelrouter.Request{Messages: []modelrouter.Message{{Role: "other", DataTier: modelrouter.DataTierT2}}}, modelrouter.ErrInvalidRequest, modelrouter.DataTierSet{modelrouter.DataTierT2}, nil},
+		{"unnamed tool", modelrouter.Request{Messages: []modelrouter.Message{user}, Tools: []modelrouter.Tool{{}}}, modelrouter.ErrInvalidRequest, modelrouter.DataTierSet{modelrouter.DataTierT0}, nil},
+		{"negative limit", modelrouter.Request{Messages: []modelrouter.Message{user}, MaxOutputTokens: -1}, modelrouter.ErrInvalidRequest, modelrouter.DataTierSet{modelrouter.DataTierT0}, nil},
 		{"an untagged message", modelrouter.Request{Messages: []modelrouter.Message{user, {Role: modelrouter.MessageUser}}}, nil, nil, modelrouter.ErrUntagged},
 	}
 	for _, tt := range tests {
@@ -428,9 +431,9 @@ func TestRequest(t *testing.T) {
 			if err := tt.req.Validate(); !errors.Is(err, tt.wantValid) {
 				t.Errorf("Validate error = %v, want %v", err, tt.wantValid)
 			}
-			got, err := tt.req.Tiers()
+			got, err := tt.req.DataTiers()
 			if !errors.Is(err, tt.wantErr) {
-				t.Fatalf("Tiers error = %v, want %v", err, tt.wantErr)
+				t.Fatalf("DataTiers error = %v, want %v", err, tt.wantErr)
 			}
 			if diff := cmp.Diff(tt.wantTiers, got); diff != "" {
 				t.Errorf("tiers (-want +got):\n%s", diff)
@@ -443,13 +446,13 @@ func TestErrorsNeverQuoteTheRequest(t *testing.T) {
 	t.Parallel()
 	const secret = "ACCOUNT-1234-SECRET"
 	req := modelrouter.Request{Messages: []modelrouter.Message{{Role: modelrouter.MessageUser, Content: secret}}}
-	_, tiersErr := req.Tiers()
+	_, tiersErr := req.DataTiers()
 	for _, err := range []error{req.Validate(), tiersErr} {
 		if err != nil && strings.Contains(err.Error(), secret) {
 			t.Errorf("an error quotes the request text: %v", err)
 		}
 	}
-	in := modelrouter.PlanInput{Role: modelrouter.RoleAsk, Tiers: modelrouter.TierSet{modelrouter.TierT0}}
+	in := modelrouter.PlanInput{Role: modelrouter.RoleAsk, DataTiers: modelrouter.DataTierSet{modelrouter.DataTierT0}}
 	if _, err := modelrouter.MakePlan(&in); err == nil || strings.Contains(err.Error(), secret) {
 		t.Errorf("MakePlan error = %v", err)
 	}
@@ -459,15 +462,15 @@ func TestEntryServes(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name  string
-		e     modelrouter.Entry
+		e     modelrouter.ModelEntry
 		needs modelrouter.Needs
 		want  bool
 	}{
-		{"asks nothing", modelrouter.Entry{}, modelrouter.Needs{}, true},
-		{"tools, entry has them", modelrouter.Entry{ToolCalling: true}, modelrouter.Needs{Tools: true}, true},
-		{"tools, entry lacks them", modelrouter.Entry{}, modelrouter.Needs{Tools: true}, false},
-		{"structured output, entry lacks it", modelrouter.Entry{ToolCalling: true}, modelrouter.Needs{StructuredOutput: true}, false},
-		{"both", modelrouter.Entry{ToolCalling: true, StructuredOut: true}, modelrouter.Needs{Tools: true, StructuredOutput: true}, true},
+		{"asks nothing", modelrouter.ModelEntry{}, modelrouter.Needs{}, true},
+		{"tools, entry has them", modelrouter.ModelEntry{ToolCalling: true}, modelrouter.Needs{Tools: true}, true},
+		{"tools, entry lacks them", modelrouter.ModelEntry{}, modelrouter.Needs{Tools: true}, false},
+		{"structured output, entry lacks it", modelrouter.ModelEntry{ToolCalling: true}, modelrouter.Needs{StructuredOutput: true}, false},
+		{"both", modelrouter.ModelEntry{ToolCalling: true, StructuredOut: true}, modelrouter.Needs{Tools: true, StructuredOutput: true}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

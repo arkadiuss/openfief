@@ -15,9 +15,9 @@ var (
 	ErrFeatureOff = errors.New("the feature's toggle is off")
 	// ErrNoRoute reports a role with no models in its route.
 	ErrNoRoute = errors.New("the role has no models")
-	// ErrTierDenied reports that no model of the role's route is allowed to
+	// ErrDataTierDenied reports that no model of the role's route is allowed to
 	// receive every tier of the request's data (D-206).
-	ErrTierDenied = errors.New("no model of the route may receive the request's data tiers")
+	ErrDataTierDenied = errors.New("no model of the route may receive the request's data tiers")
 	// ErrNoCapableModel reports that no model allowed for the data supports
 	// what the request asks, such as tools or structured output.
 	ErrNoCapableModel = errors.New("no allowed model supports what the request asks")
@@ -29,14 +29,14 @@ type PlanInput struct {
 	Role   Role
 	// Route is the role's route; its zero value is no route.
 	Route  Route
-	Policy TierPolicy
-	// Tiers are the data tiers of the request.
-	Tiers TierSet
-	Needs Needs
+	Policy DataTierPolicy
+	// DataTiers are the data tiers of the request.
+	DataTiers DataTierSet
+	Needs     Needs
 	// Catalog holds the entries the providers listed. A model of the route
 	// that is not in it is not skipped for what it can do: the provider
 	// itself answers for a model it does not have.
-	Catalog map[Ref]Entry
+	Catalog map[Ref]ModelEntry
 }
 
 // SkipReason is why a model of a route is not a candidate.
@@ -44,9 +44,9 @@ type SkipReason string
 
 // The reasons a model of a route is skipped.
 const (
-	// SkipTierDenied: the owner has not allowed the model for every tier of
+	// SkipDataTierDenied: the owner has not allowed the model for every tier of
 	// the request's data.
-	SkipTierDenied SkipReason = "tier_denied"
+	SkipDataTierDenied SkipReason = "tier_denied"
 	// SkipIncapable: the model's entry lacks what the request asks.
 	SkipIncapable SkipReason = "incapable"
 )
@@ -56,8 +56,8 @@ const (
 type Skip struct {
 	Model  Ref
 	Reason SkipReason
-	// Tiers are the tiers the model is denied, for SkipTierDenied.
-	Tiers []Tier
+	// DataTiers are the tiers the model is denied, for SkipDataTierDenied.
+	DataTiers []DataTier
 }
 
 // Plan is the models a request may be sent to, in the order they are tried.
@@ -72,7 +72,7 @@ type Plan struct {
 // every tier of the request's data, denying by default (D-206), and its
 // entry supports what the request asks. The candidates keep the route's
 // order: the primary, then the fallbacks. It returns an error wrapping
-// ErrSwitchOff, ErrFeatureOff, ErrNoRoute, ErrTierDenied or
+// ErrSwitchOff, ErrFeatureOff, ErrNoRoute, ErrDataTierDenied or
 // ErrNoCapableModel, and ErrUntagged when the request has no tiers.
 func MakePlan(in *PlanInput) (Plan, error) {
 	if err := in.mayRun(); err != nil {
@@ -81,8 +81,8 @@ func MakePlan(in *PlanInput) (Plan, error) {
 	var plan Plan
 	allowed := 0
 	for _, m := range in.Route.Models {
-		if denied := in.Policy.Denied(m, in.Tiers); len(denied) > 0 {
-			plan.Skipped = append(plan.Skipped, Skip{Model: m, Reason: SkipTierDenied, Tiers: denied})
+		if denied := in.Policy.Denied(m, in.DataTiers); len(denied) > 0 {
+			plan.Skipped = append(plan.Skipped, Skip{Model: m, Reason: SkipDataTierDenied, DataTiers: denied})
 			continue
 		}
 		allowed++
@@ -94,7 +94,7 @@ func MakePlan(in *PlanInput) (Plan, error) {
 	}
 	switch {
 	case allowed == 0:
-		return plan, ErrTierDenied
+		return plan, ErrDataTierDenied
 	case len(plan.Candidates) == 0:
 		return plan, ErrNoCapableModel
 	}
@@ -112,7 +112,7 @@ func (in *PlanInput) mayRun() error {
 		return fmt.Errorf("%w: %s", ErrFeatureOff, in.Role.Feature())
 	case len(in.Route.Models) == 0:
 		return fmt.Errorf("%w: %s", ErrNoRoute, in.Role)
-	case len(in.Tiers) == 0:
+	case len(in.DataTiers) == 0:
 		return ErrUntagged
 	}
 	return nil

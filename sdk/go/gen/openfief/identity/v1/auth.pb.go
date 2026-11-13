@@ -307,9 +307,14 @@ const (
 	AuditAction_AUDIT_ACTION_GRANT_CREATED AuditAction = 10
 	// A grant of access ended; the entry names its holder, then its target.
 	AuditAction_AUDIT_ACTION_GRANT_REVOKED AuditAction = 11
-	// A call to a model, or one the model router refused (D-205, D-211): the
-	// entry names the role and the model, never a question or an answer.
+	// A call to a model about to be sent (D-205, D-211), written before it:
+	// the entry names the role, the model and a call ID, never a question or
+	// an answer.
 	AuditAction_AUDIT_ACTION_MODEL_CALL AuditAction = 12
+	// How a call to a model ended: the entry names the role, the call ID of
+	// the AUDIT_ACTION_MODEL_CALL entry, the model unless the router refused
+	// before choosing one, and an error class when the call failed.
+	AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT AuditAction = 13
 )
 
 // Enum value maps for AuditAction.
@@ -328,6 +333,7 @@ var (
 		10: "AUDIT_ACTION_GRANT_CREATED",
 		11: "AUDIT_ACTION_GRANT_REVOKED",
 		12: "AUDIT_ACTION_MODEL_CALL",
+		13: "AUDIT_ACTION_MODEL_CALL_RESULT",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":            0,
@@ -343,6 +349,7 @@ var (
 		"AUDIT_ACTION_GRANT_CREATED":          10,
 		"AUDIT_ACTION_GRANT_REVOKED":          11,
 		"AUDIT_ACTION_MODEL_CALL":             12,
+		"AUDIT_ACTION_MODEL_CALL_RESULT":      13,
 	}
 )
 
@@ -382,6 +389,9 @@ const (
 	// Understood and not made, such as a sign-in whose credential did not verify.
 	AuditOutcome_AUDIT_OUTCOME_REFUSED AuditOutcome = 2
 	AuditOutcome_AUDIT_OUTCOME_FAILED  AuditOutcome = 3
+	// A call to a model about to be sent; its result is a later entry under
+	// the same call ID.
+	AuditOutcome_AUDIT_OUTCOME_SENT AuditOutcome = 4
 )
 
 // Enum value maps for AuditOutcome.
@@ -391,12 +401,14 @@ var (
 		1: "AUDIT_OUTCOME_OK",
 		2: "AUDIT_OUTCOME_REFUSED",
 		3: "AUDIT_OUTCOME_FAILED",
+		4: "AUDIT_OUTCOME_SENT",
 	}
 	AuditOutcome_value = map[string]int32{
 		"AUDIT_OUTCOME_UNSPECIFIED": 0,
 		"AUDIT_OUTCOME_OK":          1,
 		"AUDIT_OUTCOME_REFUSED":     2,
 		"AUDIT_OUTCOME_FAILED":      3,
+		"AUDIT_OUTCOME_SENT":        4,
 	}
 )
 
@@ -450,6 +462,11 @@ const (
 	AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE AuditRefKind = 10
 	// A model entry, as "provider/model", the names the owner configured.
 	AuditRefKind_AUDIT_REF_KIND_MODEL AuditRefKind = 11
+	// The ID that links a call to a model to its result, a 16-digit hex ID.
+	AuditRefKind_AUDIT_REF_KIND_MODEL_CALL AuditRefKind = 12
+	// The class a failed call to a model ended in: unavailable, rejected,
+	// canceled, misconfigured or internal.
+	AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR AuditRefKind = 13
 )
 
 // Enum value maps for AuditRefKind.
@@ -467,6 +484,8 @@ var (
 		9:  "AUDIT_REF_KIND_HOUSEHOLD",
 		10: "AUDIT_REF_KIND_MODEL_ROLE",
 		11: "AUDIT_REF_KIND_MODEL",
+		12: "AUDIT_REF_KIND_MODEL_CALL",
+		13: "AUDIT_REF_KIND_MODEL_ERROR",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":     0,
@@ -481,6 +500,8 @@ var (
 		"AUDIT_REF_KIND_HOUSEHOLD":       9,
 		"AUDIT_REF_KIND_MODEL_ROLE":      10,
 		"AUDIT_REF_KIND_MODEL":           11,
+		"AUDIT_REF_KIND_MODEL_CALL":      12,
+		"AUDIT_REF_KIND_MODEL_ERROR":     13,
 	}
 )
 
@@ -3995,7 +4016,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
-	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xc3\x03\n" +
+	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xe7\x03\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -4010,12 +4031,14 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1aAUDIT_ACTION_GRANT_CREATED\x10\n" +
 	"\x12\x1e\n" +
 	"\x1aAUDIT_ACTION_GRANT_REVOKED\x10\v\x12\x1b\n" +
-	"\x17AUDIT_ACTION_MODEL_CALL\x10\f*x\n" +
+	"\x17AUDIT_ACTION_MODEL_CALL\x10\f\x12\"\n" +
+	"\x1eAUDIT_ACTION_MODEL_CALL_RESULT\x10\r*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
-	"\x14AUDIT_OUTCOME_FAILED\x10\x03*\xf4\x02\n" +
+	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xb3\x03\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -4029,7 +4052,9 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x18AUDIT_REF_KIND_HOUSEHOLD\x10\t\x12\x1d\n" +
 	"\x19AUDIT_REF_KIND_MODEL_ROLE\x10\n" +
 	"\x12\x18\n" +
-	"\x14AUDIT_REF_KIND_MODEL\x10\v*\x99\x01\n" +
+	"\x14AUDIT_REF_KIND_MODEL\x10\v\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_MODEL_CALL\x10\f\x12\x1e\n" +
+	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0ac81a3e7d6
+  - type: executable_for
+    from: SYM-models-followup-modelrouter-test-go-instancesfunc-models
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:51:18.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf81f0183d9e

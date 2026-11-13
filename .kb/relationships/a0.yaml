@@ -1021,3 +1021,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0bfed743321
+  - type: implements
+    from: SYM-models-followup-audit-go-resultentryshape
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T15:17:09.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fcdf328e5d9
+  - type: implements
+    from: SYM-models-followup-audit-go-resultentryshape
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T15:17:09.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e5aba28063b
+  - type: covered_by
+    from: SYM-models-followup-audit-go-resultentryshape
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T15:17:09.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2acc9345c5c0

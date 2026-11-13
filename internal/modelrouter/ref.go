@@ -26,19 +26,20 @@ const (
 	// MaxRouteModels is the most models a route holds: a primary and its
 	// fallbacks.
 	MaxRouteModels = 8
-	// MaxTierModels is the most models the owner lists for a tier.
-	MaxTierModels = 64
+	// MaxDataTierModels is the most models the owner lists for a tier.
+	MaxDataTierModels = 64
 	// refSeparator joins a provider and a model in a reference.
 	refSeparator = "/"
 )
 
-// Ref names a model entry of a provider instance, "provider/model" (D-205):
-// the provider is the name of a model-provider plugin instance, a lower-case
+// Ref names a model entry of a provider instance, as D-205's "provider/model"
+// reference: the first part is the provider instance, the name of a
+// model-provider plugin instance, a lower-case
 // DNS label without "--" (D-89); the model is the entry's id at that
-// provider, which may itself hold slashes, such as OpenRouter's
+// provider instance, which may itself hold slashes, such as OpenRouter's
 // "openai/gpt-oss-120b".
 type Ref struct {
-	Provider string
+	Instance string
 	Model    string
 }
 
@@ -46,7 +47,7 @@ type Ref struct {
 // ErrInvalidRef. Only the first slash separates the provider.
 func ParseRef(s string) (Ref, error) {
 	provider, model, ok := strings.Cut(s, refSeparator)
-	r := Ref{Provider: provider, Model: model}
+	r := Ref{Instance: provider, Model: model}
 	if !ok || !r.valid() {
 		return Ref{}, fmt.Errorf("%w: %q", ErrInvalidRef, s)
 	}
@@ -54,7 +55,7 @@ func ParseRef(s string) (Ref, error) {
 }
 
 // String returns "provider/model".
-func (r Ref) String() string { return r.Provider + refSeparator + r.Model }
+func (r Ref) String() string { return r.Instance + refSeparator + r.Model }
 
 // IsZero reports whether r names nothing.
 func (r Ref) IsZero() bool { return r == Ref{} }
@@ -62,12 +63,12 @@ func (r Ref) IsZero() bool { return r == Ref{} }
 // valid reports whether r's provider is a DNS label without the Secret
 // separator and its model is a non-empty id of safe characters.
 func (r Ref) valid() bool {
-	return validProvider(r.Provider) && r.Model != "" && len(r.Model) <= maxModelLen && !strings.ContainsFunc(r.Model, unsafeModelChar)
+	return validInstanceName(r.Instance) && r.Model != "" && len(r.Model) <= maxModelLen && !strings.ContainsFunc(r.Model, unsafeModelChar)
 }
 
-// validProvider reports whether name is a lower-case DNS label of at most
+// validInstanceName reports whether name is a lower-case DNS label of at most
 // maxProviderLen characters without "--".
-func validProvider(name string) bool {
+func validInstanceName(name string) bool {
 	if name == "" || len(name) > maxProviderLen || strings.Contains(name, "--") || name[0] == '-' || name[len(name)-1] == '-' {
 		return false
 	}

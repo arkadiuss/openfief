@@ -111,10 +111,16 @@ const (
 	// ActionGrantRevoked is a grant of access ended, by the owner or
 	// because its holder or its target is gone.
 	ActionGrantRevoked AuditAction = "grant_revoked"
-	// ActionModelCall is a call to a model, or one the model router refused
-	// (D-205, D-211): who asked, for which role and which model, and the
-	// outcome. Never the request, the answer or what it cost.
+	// ActionModelCall is a call to a model about to be sent (D-205, D-211):
+	// who asked, for which role and which model, under a call ID, with the
+	// outcome "sent". It is written before the call, and the call is not
+	// made when it can't be. Never the request, the answer or what it cost.
 	ActionModelCall AuditAction = "model_call"
+	// ActionModelCallResult is how a call to a model ended, under the call
+	// ID of its ActionModelCall entry: ok, failed with an error class, or
+	// refused. A call the router refused before choosing a model (the
+	// switch, the data tiers) has only this entry, with no model.
+	ActionModelCallResult AuditAction = "model_call_result"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -132,7 +138,8 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionScriptTokenRevoked:   {RefScriptToken},
 		ActionGrantCreated:         grantRefKinds(),
 		ActionGrantRevoked:         grantRefKinds(),
-		ActionModelCall:            {RefModelRole, RefModel},
+		ActionModelCall:            {RefModelRole, RefModel, RefModelCall},
+		ActionModelCallResult:      {RefModelRole, RefModel, RefModelCall, RefModelError},
 	}
 }
 
@@ -178,12 +185,15 @@ const (
 	OutcomeRefused AuditOutcome = "refused"
 	// OutcomeFailed is a change that broke on the way.
 	OutcomeFailed AuditOutcome = "failed"
+	// OutcomeSent is a call about to be sent, which another entry, under the
+	// same call ID, will say the result of (ActionModelCall).
+	OutcomeSent AuditOutcome = "sent"
 )
 
 // ParseAuditOutcome parses an outcome as its constant spells it.
 func ParseAuditOutcome(s string) (AuditOutcome, error) {
 	switch o := AuditOutcome(s); o {
-	case OutcomeOK, OutcomeRefused, OutcomeFailed:
+	case OutcomeOK, OutcomeRefused, OutcomeFailed, OutcomeSent:
 		return o, nil
 	}
 	return "", fmt.Errorf("%w: unknown outcome", ErrInvalidAuditEntry)
@@ -218,6 +228,12 @@ const (
 	// RefModel is a model entry called, as "provider/model" (D-205): names
 	// the owner configured, never text a model was sent.
 	RefModel RefKind = "model"
+	// RefModelCall is the ID that links the entry written before a call to
+	// a model to the entry that says how it ended.
+	RefModelCall RefKind = "model_call"
+	// RefModelError is the class a failed call to a model ended in, one of
+	// ModelErrorClasses; never the provider's message.
+	RefModelError RefKind = "model_error"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -241,7 +257,7 @@ func (r Ref) Validate() error {
 		return r.validateGrantRef()
 	case RefPasskey:
 		return r.validatePasskeyRef()
-	case RefModelRole, RefModel:
+	case RefModelRole, RefModel, RefModelCall, RefModelError:
 		return r.validateModel()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
@@ -276,7 +292,7 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -284,16 +300,76 @@ func (r Ref) validateGrantRef() error {
 	return nil
 }
 
-// validateModel returns nil when r, of kind RefModelRole or RefModel, names
-// a role or a model entry: names the owner configured, never text.
+// validateModel returns nil when r, of kind RefModelRole, RefModel,
+// RefModelCall or RefModelError, names a role, a model entry, a call or an
+// error class: names the owner configured, an ID or a class of a closed
+// set, never text.
 func (r Ref) validateModel() error {
-	if r.Kind == RefModelRole && r.ID != "ask" && r.ID != "maintainer" {
-		return fmt.Errorf("%w: a model role reference is a role's name", ErrInvalidAuditEntry)
+	var ok bool
+	switch r.Kind {
+	case RefModelRole:
+		ok = r.ID == "ask" || r.ID == "maintainer"
+	case RefModel:
+		ok = validModelRef(r.ID)
+	case RefModelCall:
+		ok = isHexID(r.ID)
+	case RefModelError:
+		ok = slices.Contains(ModelErrorClasses(), r.ID)
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
 	}
-	if r.Kind == RefModel && !validModelRef(r.ID) {
-		return fmt.Errorf("%w: a model reference is provider/model", ErrInvalidAuditEntry)
+	if !ok {
+		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
 	}
 	return nil
+}
+
+// ModelErrorClasses are the classes a failed call to a model ends in, a
+// closed set: the provider could not be reached, was too slow or refused the
+// plugin's key ("unavailable"); the provider or its plugin rejected the
+// request ("rejected"); the caller gave up ("canceled"); the route names a
+// provider instance that is missing or is not a model provider
+// ("misconfigured"); anything else ("internal").
+func ModelErrorClasses() []string {
+	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal"}
+}
+
+// validateModelEntry checks the references of a model call's entries
+// (D-211): every entry names its role and its call ID once. The entry written
+// before a call, outcome sent, names the model it is about to send to; the
+// entry that ends one names the model unless the call was refused before any
+// was chosen, and an error class exactly when the call failed.
+func validateModelEntry(e *AuditEntry) error {
+	count := map[RefKind]int{}
+	for _, r := range e.Refs {
+		count[r.Kind]++
+	}
+	ok := count[RefModelRole] == 1 && count[RefModelCall] == 1 && count[RefModel] <= 1 && count[RefModelError] <= 1
+	if e.Action == ActionModelCall {
+		ok = ok && sentEntryShape(e.Outcome, count)
+	} else {
+		ok = ok && resultEntryShape(e.Outcome, count)
+	}
+	if !ok {
+		return fmt.Errorf("%w: a %s entry names its role and its call, and the model and error class its outcome needs", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
+}
+
+// sentEntryShape reports whether an ActionModelCall entry of outcome that
+// names count of each kind of record is as D-211 asks: sent, with its model.
+func sentEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
+	return outcome == OutcomeSent && count[RefModel] == 1 && count[RefModelError] == 0
+}
+
+// resultEntryShape reports whether an ActionModelCallResult entry of outcome
+// that names count of each kind of record is as D-211 asks: not sent; with a
+// model unless refused; with an error class if and only if failed.
+func resultEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
+	if outcome == OutcomeSent {
+		return false
+	}
+	modelOK := outcome == OutcomeRefused || count[RefModel] == 1
+	return modelOK && (count[RefModelError] == 1) == (outcome == OutcomeFailed)
 }
 
 // validModelRef reports whether id is a model reference: a provider
@@ -393,8 +469,11 @@ func (e *AuditEntry) Validate() error {
 	if err := validateRefs(e.Action, kinds, e.Refs); err != nil {
 		return err
 	}
-	if isGrantAction(e.Action) {
+	switch {
+	case isGrantAction(e.Action):
 		return validateGrantRefs(e.Refs)
+	case e.Action == ActionModelCall || e.Action == ActionModelCallResult:
+		return validateModelEntry(e)
 	}
 	return nil
 }

@@ -1056,3 +1056,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30069267d4d3
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T14:48:56.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ad74857a0d
+  - type: implements
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T14:48:56.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ea7b7eebe75
+  - type: covered_by
+    from: SYM-models-followup-modelrouter-go-modelaudit-recordsent
+    to: TEST-core-model-router
+    created_at: 2026-11-13T14:48:56.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f764b1f33cef

@@ -32,6 +32,7 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindSettingMissing, attention.GroupDecisions},
 		{attention.KindInstrumentUnclassified, attention.GroupDecisions},
 		{attention.KindBondFeeAssumed, attention.GroupDecisions},
+		{"model-route-broken", attention.GroupDecisions},
 		{"some-later-check", attention.GroupDecisions},
 	}
 	for _, tt := range tests {
@@ -97,6 +98,10 @@ func TestScopeOf(t *testing.T) {
 		{
 			name: "an unmapped broker account names its instance only", kind: attention.KindBrokerAccountUnmapped, subject: "ibkr-main/U0000001",
 			want: attention.Scope{Instance: "ibkr-main"},
+		},
+		{
+			name: "a broken model route is tied to no account", kind: "model-route-broken", subject: "ask/llm/vendor/synthetic-8b",
+			want: attention.Scope{},
 		},
 		{
 			name: "a ticker", kind: attention.KindTickerUnconfirmed, subject: "xtb-main/CDR.PL",

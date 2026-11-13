@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38267b4120cf
+  - type: executable_for
+    from: SYM-models-followup-fakes-test-go-fakeproviders-instance
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:51:47.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-980e83f01e8d

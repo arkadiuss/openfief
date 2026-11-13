@@ -53,7 +53,7 @@ func (s *settingsService) GetModelSettings(ctx context.Context, req *connect.Req
 	for _, role := range modelrouter.Roles() {
 		out.Routes = append(out.Routes, &modelsv1.Route{Role: string(role), Models: refStrings(got.Routes[role].Models)})
 	}
-	for _, tier := range modelrouter.Tiers() {
+	for _, tier := range modelrouter.DataTiers() {
 		out.Tiers = append(out.Tiers, &modelsv1.TierModels{Tier: string(tier), Models: refStrings(got.Policy[tier])})
 	}
 	return connect.NewResponse(out), nil
@@ -87,7 +87,7 @@ func (s *settingsService) SetRoute(ctx context.Context, req *connect.Request[mod
 
 // SetTierModels sets the models allowed to receive a data tier.
 func (s *settingsService) SetTierModels(ctx context.Context, req *connect.Request[modelsv1.SetTierModelsRequest]) (*connect.Response[modelsv1.SetTierModelsResponse], error) {
-	err := s.settings.SetTierModels(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetTier(), req.Msg.GetModels())
+	err := s.settings.SetDataTierModels(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetTier(), req.Msg.GetModels())
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}

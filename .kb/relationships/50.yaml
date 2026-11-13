@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57acc3a9fbf8
+  - type: implements
+    from: SYM-models-followup-audit-go-sententryshape
+    to: REQ-models-calls-two-entries-linked
+    created_at: 2026-11-13T15:17:03.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de4e63a8e95e
+  - type: implements
+    from: SYM-models-followup-audit-go-sententryshape
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T15:17:04.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27e019a3c55
+  - type: covered_by
+    from: SYM-models-followup-audit-go-sententryshape
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T15:17:04.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2f475e2ba0

@@ -38,14 +38,14 @@ type Tokens interface {
 	TokenFor(ctx context.Context, instance string) (string, error)
 }
 
-// Client is app.Providers over Connect RPC.
+// Client is app.ProviderInstances over Connect RPC.
 type Client struct {
 	http    connect.HTTPClient
 	baseURL func(instance string) (string, error)
 	tokens  Tokens
 }
 
-var _ app.Providers = (*Client)(nil)
+var _ app.ProviderInstances = (*Client)(nil)
 
 // NewClient returns a client that reaches a provider instance at the URL
 // baseURL returns for it, such as its ClusterIP Service, with httpClient,
@@ -54,11 +54,20 @@ func NewClient(httpClient connect.HTTPClient, baseURL func(instance string) (str
 	return &Client{http: httpClient, baseURL: baseURL, tokens: tokens}
 }
 
+// Instance reports whether instance is a running model-provider instance,
+// without calling it (app.ProviderInstances): baseURL says, and an instance
+// that is missing or is no model provider is reported as such, any other
+// reason it has no address as unavailable.
+func (c *Client) Instance(_ context.Context, instance string) error {
+	_, err := c.baseURL(instance)
+	return addressError(instance, err)
+}
+
 // Describe returns where the provider's models run and its retention terms.
-func (c *Client) Describe(ctx context.Context, provider string) (modelrouter.Provider, error) {
+func (c *Client) Describe(ctx context.Context, provider string) (modelrouter.ProviderInstance, error) {
 	t, err := c.service(ctx, provider)
 	if err != nil {
-		return modelrouter.Provider{}, err
+		return modelrouter.ProviderInstance{}, err
 	}
 	ctx, cancel := context.WithTimeout(ctx, CallTimeout)
 	defer cancel()
@@ -66,13 +75,13 @@ func (c *Client) Describe(ctx context.Context, provider string) (modelrouter.Pro
 	req.Header().Set("Authorization", t.auth)
 	resp, err := t.svc.Describe(ctx, req)
 	if err != nil {
-		return modelrouter.Provider{}, callError(provider, err)
+		return modelrouter.ProviderInstance{}, callError(provider, err)
 	}
 	return providerFrom(resp.Msg)
 }
 
 // Models lists the provider's model entries.
-func (c *Client) Models(ctx context.Context, provider string) ([]modelrouter.Entry, error) {
+func (c *Client) Models(ctx context.Context, provider string) ([]modelrouter.ModelEntry, error) {
 	t, err := c.service(ctx, provider)
 	if err != nil {
 		return nil, err
@@ -85,7 +94,7 @@ func (c *Client) Models(ctx context.Context, provider string) ([]modelrouter.Ent
 	if err != nil {
 		return nil, callError(provider, err)
 	}
-	out := make([]modelrouter.Entry, 0, len(resp.Msg.GetModels()))
+	out := make([]modelrouter.ModelEntry, 0, len(resp.Msg.GetModels()))
 	for _, m := range resp.Msg.GetModels() {
 		e, err := entryFrom(m)
 		if err != nil {
@@ -123,7 +132,7 @@ func (c *Client) Generate(ctx context.Context, provider, model string, req *mode
 func (c *Client) service(ctx context.Context, provider string) (target, error) {
 	url, err := c.baseURL(provider)
 	if err != nil {
-		return target{}, fmt.Errorf("%w: provider %s address: %w", app.ErrProviderUnavailable, provider, err)
+		return target{}, addressError(provider, err)
 	}
 	token, err := c.tokens.TokenFor(ctx, provider)
 	if err != nil {
@@ -133,6 +142,20 @@ func (c *Client) service(ctx context.Context, provider string) (target, error) {
 		svc:  modelsv1connect.NewModelProviderServiceClient(c.http, url, connect.WithReadMaxBytes(MaxResponseBytes)),
 		auth: "Bearer " + token,
 	}, nil
+}
+
+// addressError returns nil for a nil err, err itself, named by instance, when
+// it says the instance is missing or is no model provider (app.ErrProviderMissing,
+// app.ErrNotModelProvider), so the router can tell a broken route from a slow
+// provider, and otherwise an error wrapping app.ErrProviderUnavailable.
+func addressError(instance string, err error) error {
+	switch {
+	case err == nil:
+		return nil
+	case errors.Is(err, app.ErrProviderMissing), errors.Is(err, app.ErrNotModelProvider):
+		return fmt.Errorf("provider %s: %w", instance, err)
+	}
+	return fmt.Errorf("%w: provider %s address: %w", app.ErrProviderUnavailable, instance, err)
 }
 
 // target is a provider instance's generated client and the Authorization
@@ -162,8 +185,8 @@ func callError(provider string, err error) error {
 }
 
 // providerFrom translates a Describe answer.
-func providerFrom(d *modelsv1.DescribeResponse) (modelrouter.Provider, error) {
-	p := modelrouter.Provider{RetentionDays: d.GetRetention().GetDays(), MayTrain: d.GetRetention().GetMayTrain()}
+func providerFrom(d *modelsv1.DescribeResponse) (modelrouter.ProviderInstance, error) {
+	p := modelrouter.ProviderInstance{RetentionDays: d.GetRetention().GetDays(), MayTrain: d.GetRetention().GetMayTrain()}
 	switch d.GetLocation() {
 	case modelsv1.Location_LOCATION_OWNER_HARDWARE:
 		p.Location = modelrouter.LocationOwnerHardware
@@ -180,26 +203,26 @@ func providerFrom(d *modelsv1.DescribeResponse) (modelrouter.Provider, error) {
 var errBadEntry = errors.New("invalid model entry")
 
 // entryFrom translates a model entry, with its prices as exact decimals.
-func entryFrom(m *modelsv1.ModelEntry) (modelrouter.Entry, error) {
-	e := modelrouter.Entry{
+func entryFrom(m *modelsv1.ModelEntry) (modelrouter.ModelEntry, error) {
+	e := modelrouter.ModelEntry{
 		ID: m.GetId(), ContextTokens: m.GetContextTokens(), MaxOutputTokens: m.GetMaxOutputTokens(),
 		ToolCalling: m.GetToolCalling(), StructuredOut: m.GetStructuredOutput(),
 	}
 	if e.ID == "" {
-		return modelrouter.Entry{}, fmt.Errorf("%w: an entry without an id", errBadEntry)
+		return modelrouter.ModelEntry{}, fmt.Errorf("%w: an entry without an id", errBadEntry)
 	}
 	if m.GetInputPrice() == "" && m.GetOutputPrice() == "" {
 		return e, nil
 	}
 	var err error
 	if e.InputPrice, err = kernel.ParseDecimal(m.GetInputPrice()); err != nil {
-		return modelrouter.Entry{}, fmt.Errorf("%w: an input price that is not a decimal", errBadEntry)
+		return modelrouter.ModelEntry{}, fmt.Errorf("%w: an input price that is not a decimal", errBadEntry)
 	}
 	if e.OutputPrice, err = kernel.ParseDecimal(m.GetOutputPrice()); err != nil {
-		return modelrouter.Entry{}, fmt.Errorf("%w: an output price that is not a decimal", errBadEntry)
+		return modelrouter.ModelEntry{}, fmt.Errorf("%w: an output price that is not a decimal", errBadEntry)
 	}
 	if e.PriceCurrency, err = kernel.ParseCurrency(m.GetPriceCurrency()); err != nil {
-		return modelrouter.Entry{}, fmt.Errorf("%w: a price currency that is not an ISO 4217 code", errBadEntry)
+		return modelrouter.ModelEntry{}, fmt.Errorf("%w: a price currency that is not an ISO 4217 code", errBadEntry)
 	}
 	e.HasPrice = true
 	return e, nil

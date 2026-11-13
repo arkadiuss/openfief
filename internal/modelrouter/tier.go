@@ -8,56 +8,56 @@ import (
 
 // Errors about data tiers.
 var (
-	// ErrUnknownTier reports a tier that is none of T0, TF, T1 and T2.
-	ErrUnknownTier = errors.New("unknown data tier")
+	// ErrUnknownDataTier reports a tier that is none of T0, TF, T1 and T2.
+	ErrUnknownDataTier = errors.New("unknown data tier")
 	// ErrUntagged reports a request with a piece of data that carries no
 	// tier, or with no data at all: data nobody classified is not sent.
 	ErrUntagged = errors.New("request data is not tagged with a data tier")
-	// ErrInvalidTierModels reports a tier's list with too many models or
+	// ErrInvalidDataTierModels reports a tier's list with too many models or
 	// one twice.
-	ErrInvalidTierModels = errors.New("invalid models for a tier")
+	ErrInvalidDataTierModels = errors.New("invalid models for a tier")
 )
 
-// Tier is the data tier of a piece of data a role sends a model (D-206).
-// Tiers are not ordered: each has its own list of models the owner allows.
-type Tier string
+// DataTier is the data tier of a piece of data a role sends a model (D-206).
+// DataTiers are not ordered: each has its own list of models the owner allows.
+type DataTier string
 
 // The data tiers (D-206).
 const (
-	// TierT0 is whole-portfolio holdings, amounts, transactions and tax
+	// DataTierT0 is whole-portfolio holdings, amounts, transactions and tax
 	// data.
-	TierT0 Tier = "T0"
-	// TierTF is one fief's own lease, cash, positions and working orders.
-	TierTF Tier = "TF"
-	// TierT1 is a thesis's text and instruments.
-	TierT1 Tier = "T1"
-	// TierT2 is public data such as prices, filings and news.
-	TierT2 Tier = "T2"
+	DataTierT0 DataTier = "T0"
+	// DataTierTF is one fief's own lease, cash, positions and working orders.
+	DataTierTF DataTier = "TF"
+	// DataTierT1 is a thesis's text and instruments.
+	DataTierT1 DataTier = "T1"
+	// DataTierT2 is public data such as prices, filings and news.
+	DataTierT2 DataTier = "T2"
 )
 
-// Tiers returns every tier, most sensitive first.
-func Tiers() []Tier { return []Tier{TierT0, TierTF, TierT1, TierT2} }
+// DataTiers returns every tier, most sensitive first.
+func DataTiers() []DataTier { return []DataTier{DataTierT0, DataTierTF, DataTierT1, DataTierT2} }
 
-// ParseTier parses a tier as its constant spells it.
-func ParseTier(s string) (Tier, error) {
-	t := Tier(s)
-	if !slices.Contains(Tiers(), t) {
-		return "", fmt.Errorf("%w: %q", ErrUnknownTier, s)
+// ParseDataTier parses a tier as its constant spells it.
+func ParseDataTier(s string) (DataTier, error) {
+	t := DataTier(s)
+	if !slices.Contains(DataTiers(), t) {
+		return "", fmt.Errorf("%w: %q", ErrUnknownDataTier, s)
 	}
 	return t, nil
 }
 
-// TierSet is the distinct tiers of a request's data, in Tiers' order.
-type TierSet []Tier
+// DataTierSet is the distinct tiers of a request's data, in DataTiers' order.
+type DataTierSet []DataTier
 
-// NewTierSet returns the set of tags, or an error wrapping ErrUntagged when
-// there are none or one is empty, or ErrUnknownTier when one is no tier.
-func NewTierSet(tags []Tier) (TierSet, error) {
+// NewDataTierSet returns the set of tags, or an error wrapping ErrUntagged when
+// there are none or one is empty, or ErrUnknownDataTier when one is no tier.
+func NewDataTierSet(tags []DataTier) (DataTierSet, error) {
 	if len(tags) == 0 {
 		return nil, ErrUntagged
 	}
-	var set TierSet
-	for _, t := range Tiers() {
+	var set DataTierSet
+	for _, t := range DataTiers() {
 		if slices.Contains(tags, t) {
 			set = append(set, t)
 		}
@@ -67,26 +67,26 @@ func NewTierSet(tags []Tier) (TierSet, error) {
 			return nil, ErrUntagged
 		}
 		if !slices.Contains(set, tag) {
-			return nil, fmt.Errorf("%w: %q", ErrUnknownTier, string(tag))
+			return nil, fmt.Errorf("%w: %q", ErrUnknownDataTier, string(tag))
 		}
 	}
 	return set, nil
 }
 
-// TierPolicy lists, per tier, the models the owner allows to receive it
+// DataTierPolicy lists, per tier, the models the owner allows to receive it
 // (D-206). A tier with no list, or a model not on it, is denied: the policy
 // denies by default.
-type TierPolicy map[Tier][]Ref
+type DataTierPolicy map[DataTier][]Ref
 
-// NewTierPolicy returns the policy over lists, or an error wrapping
-// ErrUnknownTier, ErrInvalidRef or ErrInvalidTierModels.
-func NewTierPolicy(lists map[Tier][]Ref) (TierPolicy, error) {
-	p := make(TierPolicy, len(lists))
+// NewDataTierPolicy returns the policy over lists, or an error wrapping
+// ErrUnknownDataTier, ErrInvalidRef or ErrInvalidDataTierModels.
+func NewDataTierPolicy(lists map[DataTier][]Ref) (DataTierPolicy, error) {
+	p := make(DataTierPolicy, len(lists))
 	for tier, refs := range lists {
-		if !slices.Contains(Tiers(), tier) {
-			return nil, fmt.Errorf("%w: %q", ErrUnknownTier, string(tier))
+		if !slices.Contains(DataTiers(), tier) {
+			return nil, fmt.Errorf("%w: %q", ErrUnknownDataTier, string(tier))
 		}
-		if err := validateTierModels(refs); err != nil {
+		if err := validateDataTierModels(refs); err != nil {
 			return nil, err
 		}
 		if len(refs) > 0 {
@@ -96,31 +96,31 @@ func NewTierPolicy(lists map[Tier][]Ref) (TierPolicy, error) {
 	return p, nil
 }
 
-// validateTierModels checks one tier's list.
-func validateTierModels(refs []Ref) error {
-	if len(refs) > MaxTierModels {
-		return fmt.Errorf("%w: at most %d", ErrInvalidTierModels, MaxTierModels)
+// validateDataTierModels checks one tier's list.
+func validateDataTierModels(refs []Ref) error {
+	if len(refs) > MaxDataTierModels {
+		return fmt.Errorf("%w: at most %d", ErrInvalidDataTierModels, MaxDataTierModels)
 	}
 	for i, r := range refs {
 		if !r.valid() {
 			return fmt.Errorf("%w: %q", ErrInvalidRef, r.String())
 		}
 		if slices.Contains(refs[:i], r) {
-			return fmt.Errorf("%w: %q twice", ErrInvalidTierModels, r.String())
+			return fmt.Errorf("%w: %q twice", ErrInvalidDataTierModels, r.String())
 		}
 	}
 	return nil
 }
 
 // Allows reports whether model may receive data of tier.
-func (p TierPolicy) Allows(tier Tier, model Ref) bool {
+func (p DataTierPolicy) Allows(tier DataTier, model Ref) bool {
 	return slices.Contains(p[tier], model)
 }
 
 // Denied returns the tiers of tiers that model may not receive, in the
 // order of tiers; none when model is allowed for every one of them.
-func (p TierPolicy) Denied(model Ref, tiers TierSet) []Tier {
-	var denied []Tier
+func (p DataTierPolicy) Denied(model Ref, tiers DataTierSet) []DataTier {
+	var denied []DataTier
 	for _, t := range tiers {
 		if !p.Allows(t, model) {
 			denied = append(denied, t)

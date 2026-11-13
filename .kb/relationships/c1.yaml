@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-977733a4e6a9
+  - type: executable_for
+    from: SYM-models-followup-routes-test-go-testrouteproblems
+    to: TEST-models-app-routes
+    created_at: 2026-11-13T14:52:52.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37ac063d990c

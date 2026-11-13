@@ -49,7 +49,7 @@ func TestSettingsOnlyTheOwnerChangesThem(t *testing.T) {
 			return s.SetRoute(t.Context(), origin, token, "ask", []string{"p/m"})
 		},
 		"tier": func(s *app.Settings, token string) error {
-			return s.SetTierModels(t.Context(), origin, token, "T2", []string{"p/m"})
+			return s.SetDataTierModels(t.Context(), origin, token, "T2", []string{"p/m"})
 		},
 		"reading": func(s *app.Settings, token string) error {
 			if _, err := s.Owner(t.Context(), origin, token); err != nil {
@@ -92,7 +92,7 @@ func TestSettingsSetByTheOwner(t *testing.T) {
 		s.SetFeature(ctx, origin, ownerToken, "mcp", true),
 		s.SetFeature(ctx, origin, ownerToken, "mcp", false),
 		s.SetRoute(ctx, origin, ownerToken, "ask", []string{"openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b"}),
-		s.SetTierModels(ctx, origin, ownerToken, "T2", []string{"openrouter/openai/gpt-oss-120b"}),
+		s.SetDataTierModels(ctx, origin, ownerToken, "T2", []string{"openrouter/openai/gpt-oss-120b"}),
 	}
 	for i, err := range steps {
 		if err != nil {
@@ -117,7 +117,7 @@ func checkRouteAndPolicy(t *testing.T, got *modelrouter.Settings) {
 	if len(route.Models) != 2 || route.Models[0].String() != "openrouter/openai/gpt-oss-120b" {
 		t.Fatalf("route = %+v", route)
 	}
-	if !got.Policy.Allows(modelrouter.TierT2, route.Models[0]) || got.Policy.Allows(modelrouter.TierT0, route.Models[0]) {
+	if !got.Policy.Allows(modelrouter.DataTierT2, route.Models[0]) || got.Policy.Allows(modelrouter.DataTierT0, route.Models[0]) {
 		t.Errorf("policy = %+v", got.Policy)
 	}
 }
@@ -156,10 +156,10 @@ func TestSettingsInvalidInput(t *testing.T) {
 			return s.SetRoute(t.Context(), origin, ownerToken, "ask", []string{"p/m", "p/m"})
 		}},
 		{"unknown tier", func(s *app.Settings) error {
-			return s.SetTierModels(t.Context(), origin, ownerToken, "T9", []string{"p/m"})
+			return s.SetDataTierModels(t.Context(), origin, ownerToken, "T9", []string{"p/m"})
 		}},
 		{"a bad reference for a tier", func(s *app.Settings) error {
-			return s.SetTierModels(t.Context(), origin, ownerToken, "T2", []string{"P/m"})
+			return s.SetDataTierModels(t.Context(), origin, ownerToken, "T2", []string{"P/m"})
 		}},
 	}
 	for _, tt := range tests {

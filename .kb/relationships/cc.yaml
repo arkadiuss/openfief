@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3b2f13fb1fe
+  - type: implements
+    from: SYM-models-followup-ports-go-attentionraiser
+    to: REQ-models-route-broken-attention
+    created_at: 2026-11-13T14:49:55.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab1273eda318
+  - type: covered_by
+    from: SYM-models-followup-ports-go-attentionraiser
+    to: TEST-models-app-router
+    created_at: 2026-11-13T14:49:55.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b708a312c6f8
