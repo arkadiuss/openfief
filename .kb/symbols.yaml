@@ -160979,6 +160979,16 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-check-ledger
+  - id: SYM-core-checkledger-test-without-time
+    title: withoutTime
+    sourceFile: cmd/core/checkledger_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T17:50:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-check-ledger
   - id: SYM-e2e-fixture-datapath-test-test-fixture-serves-data-path
     title: TestFixtureServesDataPath
     sourceFile: test/e2e/fixture/datapath_test.go
