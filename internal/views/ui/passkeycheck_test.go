@@ -98,8 +98,11 @@ func TestPasskeyCheckPrompt(t *testing.T) {
 		fields []string
 	}{
 		{
-			name: "script token", post: form("/settings/tokens", "name=nightly&days=7"),
-			fields: []string{`action="/settings/tokens"`, `name="name" value="nightly"`, `name="days" value="7"`, "Creating a script token"},
+			name: "script token", post: form("/access/tokens", "name=nightly&days=7&mcp=on&grant=sleeve%3Acore&grant=account%3A"+accountID),
+			fields: []string{
+				`action="/access/tokens"`, `name="name" value="nightly"`, `name="days" value="7"`, `name="mcp" value="on"`,
+				`name="grant" value="sleeve:core"`, `name="grant" value="account:` + accountID + `"`, "Creating a script token",
+			},
 		},
 		{
 			name: "enrollment link", post: form("/settings/enrollment-links", "target_origin=https%3A%2F%2Fother.example.com"),
@@ -130,7 +133,7 @@ func TestPasskeyCheckPrompt(t *testing.T) {
 		t.Errorf("passkey checks (-want +got):\n%s", diff)
 	}
 
-	rec = h.serve(t, withSession(form("/settings/tokens", "name=nightly&days=7"), ownerSession))
+	rec = h.serve(t, withSession(form("/access/tokens", "name=nightly&days=7"), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Script token nightly created", "ofs_0123456789abcdef_synthetic-secret")
 }

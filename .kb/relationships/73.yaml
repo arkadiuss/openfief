@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d944df0bcf8
+  - type: specified_by
+    from: REQ-identity-script-token-created-with-grants
+    to: SCEN-identity-token-created-with-grants
+    created_at: 2026-11-13T18:10:02.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02ab08c70a2b

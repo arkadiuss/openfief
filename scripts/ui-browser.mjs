@@ -57,7 +57,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', setup: '/setup',
+  settings: '/settings', access: '/access', setup: '/setup',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -262,7 +262,7 @@ async function recordPages(browser) {
 
 // app checks installability, the worker's cache, the offline page and sign-out, in a profile of its own: an
 // incognito context is never installable.
-// passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the settings ask to
+// passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the Access page asks to
 // confirm with a passkey, the button runs an assertion with Chromium's virtual authenticator, which holds a synthetic
 // passkey for localhost, and the token is then created and its secret shown.
 async function passkeyCheck(browser) {
@@ -282,14 +282,14 @@ async function passkeyCheck(browser) {
       userHandle: randomBytes(32).toString('base64'), signCount: 0,
     },
   });
-  await page.goto(base + '/settings', { waitUntil: 'networkidle' });
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
   await page.fill('#token-name', 'nightly');
-  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/settings/tokens"] button[type="submit"]')]);
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/access/tokens"] button[type="submit"]')]);
   const confirm = page.locator('[data-webauthn="check"]');
   check(await confirm.isVisible(), 'passkey check: no "Confirm with your passkey" after a refused action');
   await page.screenshot({ path: path.join(out, 'desktop-light-passkey-check.png'), fullPage: true });
-  // The page is already at /settings/tokens, the refused post's answer, so wait for the post again, not the URL.
-  const posted = page.waitForResponse((r) => r.url() === base + '/settings/tokens' && r.request().method() === 'POST', { timeout: 30_000 });
+  // The page is already at /access/tokens, the refused post's answer, so wait for the post again, not the URL.
+  const posted = page.waitForResponse((r) => r.url() === base + '/access/tokens' && r.request().method() === 'POST', { timeout: 30_000 });
   await confirm.click();
   await posted;
   await page.waitForLoadState('networkidle');

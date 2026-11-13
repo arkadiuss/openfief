@@ -496,7 +496,7 @@ func (a *authed) ownerActions(t *testing.T) []string {
 	must(t, "FinishRegistration", err)
 	_, err = a.auth.RemovePasskey(ctx, localUI, a.session, added.Passkey.ID())
 	must(t, "RemovePasskey", err)
-	tok, secret, err := a.auth.CreateScriptToken(ctx, localUI, a.session, "nightly", 0)
+	tok, secret, err := a.auth.CreateScriptToken(ctx, localUI, a.session, app.NewToken{Name: "nightly"})
 	must(t, "CreateScriptToken", err)
 	must(t, "RevokeScriptToken", a.auth.RevokeScriptToken(ctx, localUI, a.session, string(tok.ID)))
 	_, err = a.auth.SignOutEverywhere(ctx, localUI, a.session)
@@ -572,7 +572,7 @@ func TestAuditFailsClosedOnCreate(t *testing.T) {
 	a := newAuthed(t)
 	ctx := t.Context()
 	tokens, sessions, links := a.count(t, "script_tokens"), a.count(t, "sessions"), a.count(t, "enrollment_codes")
-	_, _, err := a.down.CreateScriptToken(ctx, localUI, a.session, "nightly", 0)
+	_, _, err := a.down.CreateScriptToken(ctx, localUI, a.session, app.NewToken{Name: "nightly"})
 	if !errors.Is(err, errTest) {
 		t.Errorf("CreateScriptToken = %v, want %v", err, errTest)
 	}
@@ -601,7 +601,7 @@ func TestAuditFailsClosedOnRevoke(t *testing.T) {
 	t.Parallel()
 	a := newAuthed(t)
 	ctx := t.Context()
-	tok, _, err := a.auth.CreateScriptToken(ctx, localUI, a.session, "nightly", 0)
+	tok, _, err := a.auth.CreateScriptToken(ctx, localUI, a.session, app.NewToken{Name: "nightly"})
 	must(t, "CreateScriptToken", err)
 	entries := a.count(t, "audit_log")
 	err = a.down.RevokeScriptToken(ctx, localUI, a.session, string(tok.ID))

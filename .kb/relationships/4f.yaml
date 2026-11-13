@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-073538aa0a3c
+  - type: implements
+    from: SYM-access-views-ui-access-parsechoices
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:15:09.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d599a0c44927
+  - type: covered_by
+    from: SYM-access-views-ui-access-parsechoices
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:09.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12482783b3a2

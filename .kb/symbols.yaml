@@ -53107,7 +53107,7 @@ symbols:
         target: REQ-ui-owner-actions
   - id: SYM-ui-server-create-token
     title: server.createToken
-    sourceFile: internal/views/ui/settings.go
+    sourceFile: internal/views/ui/access.go
     status: active
     symbol_role: behavioral
     origin:
@@ -53115,7 +53115,11 @@ symbols:
       recorded_at: 2026-10-28T19:57:36.781Z
     relationships:
       - type: covered_by
+        target: TEST-ui-access
+      - type: covered_by
         target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-access-script-tokens
       - type: implements
         target: REQ-ui-owner-actions
   - id: SYM-ui-token-days
@@ -53133,7 +53137,7 @@ symbols:
         target: REQ-ui-owner-actions
   - id: SYM-ui-server-revoke-token
     title: server.revokeToken
-    sourceFile: internal/views/ui/settings.go
+    sourceFile: internal/views/ui/access.go
     status: active
     symbol_role: behavioral
     origin:
@@ -53141,7 +53145,11 @@ symbols:
       recorded_at: 2026-10-28T19:57:46.085Z
     relationships:
       - type: covered_by
+        target: TEST-ui-access
+      - type: covered_by
         target: TEST-ui-settings
+      - type: implements
+        target: REQ-ui-access-script-tokens
       - type: implements
         target: REQ-ui-owner-actions
   - id: SYM-ui-server-create-enrollment-link
@@ -53750,16 +53758,18 @@ symbols:
         target: TEST-ui-settings
   - id: SYM-ui-test-create-script-token
     title: TestCreateScriptToken
-    sourceFile: internal/views/ui/settings_test.go
+    sourceFile: internal/views/ui/access_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-10-28T20:01:45.138Z
     relationships:
       - type: executable_for
+        target: TEST-ui-access
+      - type: executable_for
         target: TEST-ui-settings
   - id: SYM-ui-test-revoke-and-remove
-    title: TestRevokeAndRemove
+    title: TestRemovePasskey
     sourceFile: internal/views/ui/settings_test.go
     status: active
     origin:
@@ -190613,3 +190623,1847 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-inbox
+  - id: SYM-access-cmd-core-grants-grantdirectory-accessviewplugins
+    title: grantDirectory.AccessViewPlugins
+    status: active
+    sourceFile: cmd/core/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-cmd-core-grants-householdonly-accessviewplugins
+    title: householdOnly.AccessViewPlugins
+    status: active
+    sourceFile: cmd/core/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-cmd-core-grants-test-testgrantdirectoryaccessviewplugins
+    title: TestGrantDirectoryAccessViewPlugins
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-access-identity-app-accessgrants-test-testcreatescripttokenwithgrants
+    title: TestCreateScriptTokenWithGrants
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testcreatescripttokengrantrefusals
+    title: TestCreateScriptTokenGrantRefusals
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testcreatescripttokenasksthemodelfirst
+    title: TestCreateScriptTokenAsksTheModelFirst
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testupdategrants
+    title: TestUpdateGrants
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testupdategrantschecksfirst
+    title: TestUpdateGrantsChecksFirst
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testviewpluginsarelistedfortheowner
+    title: TestViewPluginsAreListedForTheOwner
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-grants-grants-enforced
+    title: Grants.Enforced
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-grants-grants-withping
+    title: Grants.WithPing
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-app-grants-newtoken
+    title: NewToken
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-app-grants-grants-issuetokenwith
+    title: Grants.IssueTokenWith
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-app-grants-grants-checktargets
+    title: Grants.checkTargets
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-app-grants-grants-updategrants
+    title: Grants.UpdateGrants
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-grants-grants-viewpluginaccess
+    title: Grants.ViewPluginAccess
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-grants-test-fakedirectory-accessviewplugins
+    title: fakeDirectory.AccessViewPlugins
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-access-identity-app-owner-tokenaccess
+    title: TokenAccess
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-owner-viewpluginaccess
+    title: ViewPluginAccess
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-owner-auth-viewplugins
+    title: Auth.ViewPlugins
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-owner-auth-updategrants
+    title: Auth.UpdateGrants
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-owner-auth-grantsenforced
+    title: Auth.GrantsEnforced
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-owner-grantsof
+    title: grantsOf
+    status: active
+    sourceFile: internal/identity/app/owner.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-tokens-tokens-issuewith
+    title: Tokens.IssueWith
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-app-tokens-issuetokenwith
+    title: IssueTokenWith
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-connectapi-access-test-testaccesscallsareowneronly
+    title: TestAccessCallsAreOwnerOnly
+    status: active
+    sourceFile: internal/identity/connectapi/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-connectapi
+  - id: SYM-access-identity-connectapi-grants-authservice-updategrants
+    title: authService.UpdateGrants
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-connectapi-grants-authservice-listviewplugins
+    title: authService.ListViewPlugins
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-connectapi-grants-granttargets
+    title: grantTargets
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-connectapi-grants-test-directory-accessviewplugins
+    title: directory.AccessViewPlugins
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-access-identity-postgres-grants-test-grantdirectory-accessviewplugins
+    title: grantDirectory.AccessViewPlugins
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-access-identity-postgres-grants-test-testissuetokenwithgrantsoverpostgres
+    title: TestIssueTokenWithGrantsOverPostgres
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-access-identity-postgres-grants-test-auditfailsafter
+    title: auditFailsAfter
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-access-identity-postgres-grants-test-auditfailsafter-appendaudit
+    title: auditFailsAfter.AppendAudit
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-access-views-ui-access-grantchoice
+    title: grantChoice
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-grantchoices
+    title: grantChoices
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-accessholder
+    title: accessHolder
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-accessdata
+    title: accessData
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-postedtoken
+    title: postedToken
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-script-tokens
+  - id: SYM-access-views-ui-access-server-accessroutes
+    title: server.accessRoutes
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-accesspage
+    title: server.accessPage
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-renderaccess
+    title: server.renderAccess
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-loadaccessinputs
+    title: server.loadAccessInputs
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-choicevalue
+    title: choiceValue
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-targetchoicekinds
+    title: targetChoiceKinds
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-heldvalues
+    title: heldValues
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-newchoices
+    title: newChoices
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-accountlabel
+    title: accountLabel
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-holdsinwords
+    title: holdsInWords
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-tokenholder
+    title: tokenHolder
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-script-tokens
+  - id: SYM-access-views-ui-access-pluginholder
+    title: pluginHolder
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-view-plugins
+  - id: SYM-access-views-ui-access-parsechoices
+    title: parseChoices
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-postedfields
+    title: postedFields
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-createtokenfailed
+    title: server.createTokenFailed
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-script-tokens
+  - id: SYM-access-views-ui-access-server-accessfailed
+    title: server.accessFailed
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-updatetokengrants
+    title: server.updateTokenGrants
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-script-tokens
+  - id: SYM-access-views-ui-access-server-updateplugingrants
+    title: server.updatePluginGrants
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-view-plugins
+  - id: SYM-access-views-ui-access-server-updategrants
+    title: server.updateGrants
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-server-updategrantsfailed
+    title: server.updateGrantsFailed
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-heldby
+    title: heldBy
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-diffgrants
+    title: diffGrants
+    status: active
+    sourceFile: internal/views/ui/access.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page
+  - id: SYM-access-views-ui-access-test-testaccesspage
+    title: TestAccessPage
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testaccesspageviewpluginsunavailable
+    title: TestAccessPageViewPluginsUnavailable
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testaccessisowneronly
+    title: TestAccessIsOwnerOnly
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-longid
+    title: longID
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testcreatescripttokenrefusals
+    title: TestCreateScriptTokenRefusals
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testrevokescripttoken
+    title: TestRevokeScriptToken
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testupdategrants
+    title: TestUpdateGrants
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testupdategrantsrefusals
+    title: TestUpdateGrantsRefusals
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-testungranteditemlinkstoaccess
+    title: TestUngrantedItemLinksToAccess
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-access-test-durationdays
+    title: durationDays
+    status: active
+    sourceFile: internal/views/ui/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-fakes-test-fakeauth-listviewplugins
+    title: fakeAuth.ListViewPlugins
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-views-ui-fakes-test-fakeauth-updategrants
+    title: fakeAuth.UpdateGrants
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-access
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-scripttoken-getmcpallowed
+    title: ScriptToken.GetMcpAllowed
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-scripttoken-getgrants
+    title: ScriptToken.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-createscripttokenrequest-getmcpallowed
+    title: CreateScriptTokenRequest.GetMcpAllowed
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-createscripttokenrequest-getgrants
+    title: CreateScriptTokenRequest.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listscripttokensresponse-getgrantsenforced
+    title: ListScriptTokensResponse.GetGrantsEnforced
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget
+    title: GrantTarget
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-reset
+    title: GrantTarget.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-string
+    title: GrantTarget.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-protomessage
+    title: GrantTarget.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-protoreflect
+    title: GrantTarget.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-descriptor
+    title: GrantTarget.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-getkind
+    title: GrantTarget.GetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-getid
+    title: GrantTarget.GetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest
+    title: UpdateGrantsRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-reset
+    title: UpdateGrantsRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-string
+    title: UpdateGrantsRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-protomessage
+    title: UpdateGrantsRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-protoreflect
+    title: UpdateGrantsRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-descriptor
+    title: UpdateGrantsRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getorigin
+    title: UpdateGrantsRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getsessiontoken
+    title: UpdateGrantsRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getholderkind
+    title: UpdateGrantsRequest.GetHolderKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getholderid
+    title: UpdateGrantsRequest.GetHolderId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getadd
+    title: UpdateGrantsRequest.GetAdd
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getremove
+    title: UpdateGrantsRequest.GetRemove
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse
+    title: UpdateGrantsResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-reset
+    title: UpdateGrantsResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-string
+    title: UpdateGrantsResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-protomessage
+    title: UpdateGrantsResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-protoreflect
+    title: UpdateGrantsResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-descriptor
+    title: UpdateGrantsResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-getgrants
+    title: UpdateGrantsResponse.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest
+    title: ListViewPluginsRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-reset
+    title: ListViewPluginsRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-string
+    title: ListViewPluginsRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-protomessage
+    title: ListViewPluginsRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-protoreflect
+    title: ListViewPluginsRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-descriptor
+    title: ListViewPluginsRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-getorigin
+    title: ListViewPluginsRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-getsessiontoken
+    title: ListViewPluginsRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin
+    title: ViewPlugin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-reset
+    title: ViewPlugin.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-string
+    title: ViewPlugin.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-protomessage
+    title: ViewPlugin.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-protoreflect
+    title: ViewPlugin.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-descriptor
+    title: ViewPlugin.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-getinstance
+    title: ViewPlugin.GetInstance
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-viewplugin-getgrants
+    title: ViewPlugin.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse
+    title: ListViewPluginsResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-reset
+    title: ListViewPluginsResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-string
+    title: ListViewPluginsResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-protomessage
+    title: ListViewPluginsResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-protoreflect
+    title: ListViewPluginsResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-descriptor
+    title: ListViewPluginsResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-getplugins
+    title: ListViewPluginsResponse.GetPlugins
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-getgrantsenforced
+    title: ListViewPluginsResponse.GetGrantsEnforced
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-updategrants
+    title: authServiceClient.UpdateGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-listviewplugins
+    title: authServiceClient.ListViewPlugins
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-accessgrants-test-grantfixture-tokentrail
+    title: grantFixture.tokenTrail
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-accessgrants-test-testcreatescripttokentakenbackwhenthemodelfails
+    title: TestCreateScriptTokenTakenBackWhenTheModelFails
+    status: active
+    sourceFile: internal/identity/app/accessgrants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-grants-app
+  - id: SYM-access-identity-app-grants-grants-checkupdate
+    title: Grants.checkUpdate
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-identity-app-grants-grants-storetoken
+    title: Grants.storeToken
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-grants-app
+      - type: implements
+        target: REQ-identity-script-token-created-with-grants
+  - id: SYM-access-identity-connectapi-access-test-testupdategrantscall
+    title: TestUpdateGrantsCall
+    status: active
+    sourceFile: internal/identity/connectapi/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-connectapi
+  - id: SYM-access-identity-connectapi-access-test-testlistviewpluginscall
+    title: TestListViewPluginsCall
+    status: active
+    sourceFile: internal/identity/connectapi/access_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access-connectapi
+  - id: SYM-access-identity-postgres-grants-test-testissuetokenwithgrantsisatomicoverpostgres
+    title: TestIssueTokenWithGrantsIsAtomicOverPostgres
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-updategrants
+    title: UnimplementedAuthServiceHandler.UpdateGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-listviewplugins
+    title: UnimplementedAuthServiceHandler.ListViewPlugins
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access-connectapi
+      - type: implements
+        target: REQ-identity-owner-updates-grants
+  - id: SYM-access-views-ui-access-grantdiff
+    title: grantDiff
+    status: active
+    sourceFile: internal/views/ui/access.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'S5 task brief: the Access page, script tokens and view plugins (D-209, D-210), 2026-11-13'
+      recorded_at: 2026-11-13T18:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-access
+      - type: implements
+        target: REQ-ui-access-page

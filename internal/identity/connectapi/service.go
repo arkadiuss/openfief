@@ -134,11 +134,23 @@ func (s *authService) RemovePasskey(ctx context.Context, req *connect.Request[id
 // CreateScriptToken issues a script token.
 func (s *authService) CreateScriptToken(ctx context.Context, req *connect.Request[identityv1.CreateScriptTokenRequest]) (*connect.Response[identityv1.CreateScriptTokenResponse], error) {
 	m := req.Msg
-	tok, secret, err := s.auth.CreateScriptToken(ctx, m.GetOrigin(), m.GetSessionToken(), m.GetName(), m.GetTtl().AsDuration())
+	targets, err := grantTargets(m.GetGrants())
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	return connect.NewResponse(&identityv1.CreateScriptTokenResponse{Token: pbScriptToken(&tok, time.Now()), Secret: secret}), nil
+	spec := app.NewToken{Name: m.GetName(), TTL: m.GetTtl().AsDuration(), MCPAllowed: m.GetMcpAllowed(), Targets: targets}
+	tok, secret, err := s.auth.CreateScriptToken(ctx, m.GetOrigin(), m.GetSessionToken(), spec)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := pbScriptToken(&tok, time.Now())
+	for _, t := range targets {
+		out.Grants = append(out.Grants, &identityv1.Grant{
+			HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_SCRIPT_TOKEN, HolderId: string(tok.ID),
+			TargetKind: pbTargetKinds()[t.Kind], TargetId: t.ID, CreatedAt: timestamppb.New(tok.CreatedAt),
+		})
+	}
+	return connect.NewResponse(&identityv1.CreateScriptTokenResponse{Token: out, Secret: secret}), nil
 }
 
 // ListScriptTokens returns every script token.
@@ -148,9 +160,13 @@ func (s *authService) ListScriptTokens(ctx context.Context, req *connect.Request
 		return nil, s.fail(ctx, err)
 	}
 	now := time.Now()
-	out := &identityv1.ListScriptTokensResponse{Tokens: make([]*identityv1.ScriptToken, 0, len(toks))}
+	out := &identityv1.ListScriptTokensResponse{Tokens: make([]*identityv1.ScriptToken, 0, len(toks)), GrantsEnforced: s.auth.GrantsEnforced()}
 	for i := range toks {
-		out.Tokens = append(out.Tokens, pbScriptToken(&toks[i], now))
+		t := pbScriptToken(&toks[i].Token, now)
+		for j := range toks[i].Grants {
+			t.Grants = append(t.Grants, pbGrant(&toks[i].Grants[j]))
+		}
+		out.Tokens = append(out.Tokens, t)
 	}
 	return connect.NewResponse(out), nil
 }
@@ -400,6 +416,7 @@ func pbScriptToken(t *identity.ScriptToken, now time.Time) *identityv1.ScriptTok
 	out := &identityv1.ScriptToken{
 		Id: string(t.ID), Name: t.Name, Scope: t.Scope.String(),
 		CreatedAt: timestamppb.New(t.CreatedAt), ExpiresAt: timestamppb.New(t.ExpiresAt), Status: status,
+		McpAllowed: t.MCPAllowed,
 	}
 	if !t.RevokedAt.IsZero() {
 		out.RevokedAt = timestamppb.New(t.RevokedAt)

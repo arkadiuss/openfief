@@ -99,6 +99,10 @@ type ScriptToken struct {
 	ExpiresAt time.Time
 	// RevokedAt is when the token was revoked; zero while it is not.
 	RevokedAt time.Time
+	// MCPAllowed is whether the owner allowed the token to authenticate to
+	// the MCP server (D-210, D-213). It is stored with the token and fixed
+	// at creation; nothing in M0 serves MCP, so it changes nothing yet.
+	MCPAllowed bool
 }
 
 // NewScriptToken returns a token with id, name and scope, created at

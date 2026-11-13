@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3be39df1b120
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-testaccessisowneronly
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:16:26.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f9ae73159af

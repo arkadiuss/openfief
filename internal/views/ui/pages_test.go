@@ -184,12 +184,15 @@ func TestReadScopeHidesOwnerActions(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), demoSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "read access")
-	wantNoBody(t, rec, `href="/settings"`)
+	wantNoBody(t, rec, `href="/settings"`, `href="/access"`)
 	for _, r := range []*http.Request{
 		request(http.MethodGet, "/settings", ""),
-		form("/settings/tokens", "name=x"),
+		request(http.MethodGet, "/access", ""),
+		form("/access/tokens", "name=x"),
 		form("/settings/passkeys/pk1/remove", ""),
-		form("/settings/tokens/fedcba9876543210/revoke", ""),
+		form("/access/tokens/fedcba9876543210/revoke", ""),
+		form("/access/tokens/fedcba9876543210/grants", "grant=household%3Ahome"),
+		form("/access/plugins/ghostfolio/grants", "grant=household%3Ahome"),
 		form("/settings/enrollment-links", ""),
 	} {
 		rec = h.serve(t, withSession(r, demoSession))

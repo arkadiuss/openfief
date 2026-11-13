@@ -790,3 +790,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-887ac272a0a9
+  - type: verified_by
+    from: SCEN-identity-owner-updates-grants
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:09:53.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d66453b442c8
+  - type: verified_by
+    from: SCEN-identity-owner-updates-grants
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:09:53.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995536f1a9a6
+  - type: verified_by
+    from: SCEN-identity-owner-updates-grants
+    to: TEST-core-grants
+    created_at: 2026-11-13T18:09:53.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cf3d0e6f8ed
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-protomessage
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:25:16.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dddb1c3f52e
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-granttarget-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:25:16.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46312feb0fad

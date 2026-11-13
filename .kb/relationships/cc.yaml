@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b708a312c6f8
+  - type: executable_for
+    from: SYM-access-views-ui-fakes-test-fakeauth-listviewplugins
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:17:14.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-974c363f0898

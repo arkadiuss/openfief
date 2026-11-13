@@ -58,6 +58,69 @@ func (s *authService) ListGrants(ctx context.Context, req *connect.Request[ident
 	return connect.NewResponse(out), nil
 }
 
+// UpdateGrants adds and removes the grants of a script token or a view plugin
+// for an owner session (D-210).
+func (s *authService) UpdateGrants(ctx context.Context, req *connect.Request[identityv1.UpdateGrantsRequest]) (*connect.Response[identityv1.UpdateGrantsResponse], error) {
+	m := req.Msg
+	holder, _, err := grantSides(m.GetHolderKind(), m.GetHolderId(), identityv1.GrantTargetKind_GRANT_TARGET_KIND_HOUSEHOLD, "")
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	add, err := grantTargets(m.GetAdd())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	remove, err := grantTargets(m.GetRemove())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	grants, err := s.auth.UpdateGrants(ctx, m.GetOrigin(), m.GetSessionToken(), holder, add, remove)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &identityv1.UpdateGrantsResponse{Grants: make([]*identityv1.Grant, 0, len(grants))}
+	for i := range grants {
+		out.Grants = append(out.Grants, pbGrant(&grants[i]))
+	}
+	return connect.NewResponse(out), nil
+}
+
+// ListViewPlugins returns the installed view plugins that read with their own
+// identity, with their grants, for an owner session (D-210).
+func (s *authService) ListViewPlugins(ctx context.Context, req *connect.Request[identityv1.ListViewPluginsRequest]) (*connect.Response[identityv1.ListViewPluginsResponse], error) {
+	plugins, err := s.auth.ViewPlugins(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &identityv1.ListViewPluginsResponse{Plugins: make([]*identityv1.ViewPlugin, 0, len(plugins)), GrantsEnforced: s.auth.GrantsEnforced()}
+	for i := range plugins {
+		p := &identityv1.ViewPlugin{Instance: plugins[i].Instance}
+		for j := range plugins[i].Grants {
+			p.Grants = append(p.Grants, pbGrant(&plugins[i].Grants[j]))
+		}
+		out.Plugins = append(out.Plugins, p)
+	}
+	return connect.NewResponse(out), nil
+}
+
+// grantTargets converts the targets of a request. An unspecified or unknown
+// kind wraps app.ErrInvalidRequest; a household's empty ID is "home".
+func grantTargets(in []*identityv1.GrantTarget) ([]identity.GrantTarget, error) {
+	out := make([]identity.GrantTarget, 0, len(in))
+	for _, t := range in {
+		kind, ok := invert(pbTargetKinds())[t.GetKind()]
+		if !ok {
+			return nil, fmt.Errorf("%w: unknown target kind", app.ErrInvalidRequest)
+		}
+		id := t.GetId()
+		if kind == identity.GrantTargetHousehold && id == "" {
+			id = identity.HouseholdID
+		}
+		out = append(out, identity.GrantTarget{Kind: kind, ID: id})
+	}
+	return out, nil
+}
+
 // The grant enums, from the domain to the contract, as functions: the package
 // holds no global state. A value the domain has and a table lacks fails the
 // contract test of this package.

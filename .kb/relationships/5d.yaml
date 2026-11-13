@@ -713,3 +713,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e52d7ff580b7
+  - type: implements
+    from: SYM-access-identity-app-grants-grants-enforced
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:11:24.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce66a8f5671
+  - type: covered_by
+    from: SYM-access-identity-app-grants-grants-enforced
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:24.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-446e00e6c640
+  - type: implements
+    from: SYM-access-identity-app-tokens-tokens-issuewith
+    to: REQ-identity-script-token-created-with-grants
+    created_at: 2026-11-13T18:12:38.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eab8086ac91f
+  - type: covered_by
+    from: SYM-access-identity-app-tokens-tokens-issuewith
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:12:38.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c1bc763dfe

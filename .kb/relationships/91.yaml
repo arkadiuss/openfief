@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f7203f9feb5
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-longid
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:16:37.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f984ea408e4

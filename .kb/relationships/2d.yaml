@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-259555995d29
+  - type: implements
+    from: SYM-access-views-ui-access-heldby
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:16:02.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80b910b56540
+  - type: covered_by
+    from: SYM-access-views-ui-access-heldby
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:16:02.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d675bb00e46

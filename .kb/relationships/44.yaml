@@ -1259,5 +1259,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-5145e5f0c702
+      },
+    {
+        type: implements,
+        from: SYM-access-views-ui-access-grantchoices,
+        to: REQ-ui-access-page,
+        created_at: 2026-11-13T18:13:44.746Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-15dbd956e765
+      },
+    {
+        type: covered_by,
+        from: SYM-access-views-ui-access-grantchoices,
+        to: TEST-ui-access,
+        created_at: 2026-11-13T18:13:44.792Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-2c853093f7f1
       }
   ]

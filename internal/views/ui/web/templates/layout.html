@@ -30,7 +30,7 @@
     <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
     <a href="/accounts"{{if eq $.Title "Accounts"}} aria-current="page"{{end}}>Accounts</a>
     <a href="/inbox"{{if eq $.Title "Inbox"}} aria-current="page"{{end}}>Inbox{{if .Attention}}&nbsp;<span class="pill pill-gold" title="{{.Attention}} open">{{.Attention}}<span class="sr-only"> open</span></span>{{end}}</a>
-    <a href="{{if .Owner}}/settings{{else}}/sleeves{{end}}"{{if or (eq $.Title "Settings") (eq $.Title "Sleeves") (eq $.Title "Plugins")}} aria-current="page"{{end}}>Settings</a>
+    <a href="{{if .Owner}}/settings{{else}}/sleeves{{end}}"{{if or (eq $.Title "Settings") (eq $.Title "Access") (eq $.Title "Sleeves") (eq $.Title "Plugins")}} aria-current="page"{{end}}>Settings</a>
   </nav>
   <div class="session">
     <span class="pill pill-neutral" title="What this session may do">{{.ScopeLabel}} access</span>

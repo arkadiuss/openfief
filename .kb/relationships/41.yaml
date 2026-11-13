@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8da73c4e7f8
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-reset
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:27:38.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35af1496adbf
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:27:39.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-142109e3c045

@@ -200,6 +200,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	s.inboxRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
+	s.accessRoutes(mux)
 	s.onboardingRoutes(mux)
 	s.statementRoutes(mux)
 	return mux
@@ -225,8 +226,6 @@ func (s *server) recordRoutes(mux *http.ServeMux) {
 func (s *server) settingsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))
-	mux.HandleFunc("POST /settings/tokens", s.withOwner(s.createToken))
-	mux.HandleFunc("POST /settings/tokens/{id}/revoke", s.withOwner(s.revokeToken))
 	mux.HandleFunc("POST /settings/enrollment-links", s.withOwner(s.createEnrollmentLink))
 	mux.HandleFunc("POST /settings/model", s.withOwner(s.saveModel))
 	mux.HandleFunc("POST /settings/market-data", s.withOwner(s.rankSources))

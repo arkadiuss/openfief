@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ebe6972c902
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-testungranteditemlinkstoaccess
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:17:03.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f95780b211eb

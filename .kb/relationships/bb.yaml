@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb6922066b08
+  - type: implements
+    from: SYM-access-views-ui-access-newchoices
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:14:41.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da2483bd08ba
+  - type: covered_by
+    from: SYM-access-views-ui-access-newchoices
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:14:41.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2731bc1637f

@@ -459,7 +459,7 @@ func ownerActions() []ownerAction {
 	return []ownerAction{
 		{name: "CreateScriptToken", do: func(t *testing.T, f *authFixture, token string) error {
 			t.Helper()
-			_, _, err := f.auth.CreateScriptToken(t.Context(), local, token, "script", 0)
+			_, _, err := f.auth.CreateScriptToken(t.Context(), local, token, app.NewToken{Name: "script"})
 			return wrap(err)
 		}},
 		{name: "ScriptTokens", do: func(t *testing.T, f *authFixture, token string) error {
@@ -527,7 +527,7 @@ func TestScriptTokensFromSession(t *testing.T) {
 	f := newAuthFixture(t, demoConfig{})
 	_, ns := f.enroll(t)
 	ctx := t.Context()
-	tok, secret, err := f.auth.CreateScriptToken(ctx, local, ns.Token, "nightly", 0)
+	tok, secret, err := f.auth.CreateScriptToken(ctx, local, ns.Token, app.NewToken{Name: "nightly"})
 	if err != nil {
 		t.Fatalf("CreateScriptToken: %v", err)
 	}
@@ -547,7 +547,7 @@ func TestScriptTokensFromSession(t *testing.T) {
 			t.Errorf("Authenticate(%.8s...).Caller() = %+v, want %+v", token, got, want)
 		}
 	}
-	if _, _, err := f.auth.CreateScriptToken(ctx, local, ns.Token, "bad name", 0); !errors.Is(err, app.ErrInvalidRequest) {
+	if _, _, err := f.auth.CreateScriptToken(ctx, local, ns.Token, app.NewToken{Name: "bad name"}); !errors.Is(err, app.ErrInvalidRequest) {
 		t.Errorf("bad name = %v, want %v", err, app.ErrInvalidRequest)
 	}
 	if err := f.auth.RevokeScriptToken(ctx, local, ns.Token, string(tok.ID)); err != nil {

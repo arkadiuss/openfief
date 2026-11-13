@@ -362,7 +362,7 @@ func TestAuthOverPostgres(t *testing.T) {
 	enrolled := enrollOver(t, auth, code)
 	now = now.Add(time.Hour)
 	session := loginOver(t, auth, enrolled.dev)
-	_, secret, err := auth.CreateScriptToken(ctx, localUI, session, "nightly", 0)
+	_, secret, err := auth.CreateScriptToken(ctx, localUI, session, app.NewToken{Name: "nightly"})
 	if err != nil {
 		t.Fatalf("CreateScriptToken: %v", err)
 	}

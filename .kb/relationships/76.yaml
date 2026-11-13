@@ -1014,3 +1014,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0175e50812f5
+  - type: implements
+    from: SYM-access-identity-app-grants-newtoken
+    to: REQ-identity-script-token-created-with-grants
+    created_at: 2026-11-13T18:11:35.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7752bc2d8beb
+  - type: covered_by
+    from: SYM-access-identity-app-grants-newtoken
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:35.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4686701f6dd8
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getsessiontoken
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:26:23.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350ec167f8ed
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getsessiontoken
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:26:23.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a9a3677f582

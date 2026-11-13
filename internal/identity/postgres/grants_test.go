@@ -2,6 +2,7 @@ package postgres_test
 
 import (
 	"context"
+	"fmt"
 	"slices"
 	"strings"
 	"testing"
@@ -256,6 +257,10 @@ func (grantDirectory) ViewPluginInstalled(_ context.Context, name string) (bool,
 
 func (grantDirectory) ViewPlugins(context.Context) ([]string, error) { return []string{"ui"}, nil }
 
+func (grantDirectory) AccessViewPlugins(context.Context) ([]string, error) {
+	return []string{"ui"}, nil
+}
+
 // grantCases is the grant use cases over a real store with a settable clock.
 type grantCases struct {
 	store  *postgres.Store
@@ -371,4 +376,78 @@ func TestCutoverOverPostgres(t *testing.T) {
 	if slices.Contains(holders, string(later.ID)) {
 		t.Error("a token made after the cutover was given a grant")
 	}
+}
+
+// TestIssueTokenWithGrantsOverPostgres checks that a token's MCP flag and its
+// grants are stored with it and read back (the flag defaults to false), and
+// that revoking the token ends its grants.
+func TestIssueTokenWithGrantsOverPostgres(t *testing.T) {
+	t.Parallel()
+	c := newGrantCases(t)
+	ctx := t.Context()
+	plain := c.issue(t, "plain")
+	if plain.MCPAllowed {
+		t.Error("a token issued without the flag is allowed MCP")
+	}
+	tok, secret, err := c.grants.IssueTokenWith(ctx, systemActor(), &app.NewToken{
+		Name: "nightly", TTL: time.Hour, MCPAllowed: true, Targets: []identity.GrantTarget{mainAccount(), slv("main")},
+	})
+	must(t, "IssueTokenWith", err)
+	if secret == "" {
+		t.Error("no secret")
+	}
+	got, err := c.tokens.Get(ctx, tok.ID)
+	must(t, "Get", err)
+	if !got.MCPAllowed {
+		t.Error("the MCP flag was not stored")
+	}
+	held, err := c.grants.List(ctx, identity.GrantMatch{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(tok.ID)}}, true)
+	must(t, "List", err)
+	if len(held) != 2 {
+		t.Errorf("grants = %+v, want two", held)
+	}
+	must(t, "RevokeToken", c.grants.RevokeToken(ctx, systemActor(), tok.ID))
+	if inForce, listErr := c.grants.InForce(ctx); listErr != nil || len(inForce) != 0 {
+		t.Errorf("grants in force after the revocation = %v, %v, want none", inForce, listErr)
+	}
+}
+
+// TestIssueTokenWithGrantsIsAtomicOverPostgres checks that the token, its
+// grants and their entries are one transaction: with an audit log that refuses
+// the second entry there is no token and no grant.
+func TestIssueTokenWithGrantsIsAtomicOverPostgres(t *testing.T) {
+	t.Parallel()
+	c := newGrantCases(t)
+	ctx := t.Context()
+	down := app.NewGrants(&auditFailsAfter{Store: c.store, ok: 1}, c.tokens, grantDirectory{}, nil, func() time.Time { return c.now })
+	if _, _, downErr := down.IssueTokenWith(ctx, systemActor(), &app.NewToken{Name: "late", TTL: time.Hour, Targets: []identity.GrantTarget{mainAccount()}}); downErr == nil {
+		t.Fatal("IssueTokenWith with the audit log failing its second entry succeeded")
+	}
+	if after, listErr := c.tokens.List(ctx); listErr != nil || len(after) != 0 {
+		t.Errorf("tokens = %d, %v, want the failed one rolled back", len(after), listErr)
+	}
+	all, err := c.grants.List(ctx, identity.GrantMatch{}, false)
+	must(t, "List all", err)
+	if len(all) != 0 {
+		t.Errorf("%d grants, want the failed token's not stored", len(all))
+	}
+}
+
+// auditFailsAfter is a store whose audit log takes ok entries and refuses the
+// rest.
+type auditFailsAfter struct {
+	*postgres.Store
+
+	ok int
+}
+
+func (a *auditFailsAfter) AppendAudit(ctx context.Context, e *identity.AuditEntry) error {
+	if a.ok <= 0 {
+		return errTest
+	}
+	a.ok--
+	if err := a.Store.AppendAudit(ctx, e); err != nil {
+		return fmt.Errorf("the real audit log: %w", err)
+	}
+	return nil
 }

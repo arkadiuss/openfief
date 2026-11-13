@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d36699c4e41f
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-durationdays
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:17:09.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce54e9006aa2

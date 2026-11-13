@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71bde90c3567
+  - type: verified_by
+    from: SCEN-ui-access-owner-only
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:09:51.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dada3e7f48dd
+  - type: verified_by
+    from: SCEN-ui-access-owner-only
+    to: TEST-ui-pages
+    created_at: 2026-11-13T18:09:51.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d33a6f5c023

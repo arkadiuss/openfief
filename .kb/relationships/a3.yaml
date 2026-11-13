@@ -1273,3 +1273,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e66c7bcea65
+  - type: executable_for
+    from: SYM-access-cmd-core-grants-test-testgrantdirectoryaccessviewplugins
+    to: TEST-core-grants
+    created_at: 2026-11-13T18:10:49.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ab817de1fa4

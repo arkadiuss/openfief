@@ -1021,3 +1021,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58a047869e0c
+  - type: executable_for
+    from: SYM-access-identity-postgres-grants-test-auditfailsafter-appendaudit
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T18:13:35.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2f8ef9b363
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:27:33.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-409268988502
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:27:33.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1ca066d4e96
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-descriptor
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:29:47.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486482294a37
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:29:47.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e0418fa2b77

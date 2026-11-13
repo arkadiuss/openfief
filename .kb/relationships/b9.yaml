@@ -1273,3 +1273,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33264ab69b35
+  - type: specified_by
+    from: REQ-identity-owner-updates-grants
+    to: SCEN-identity-owner-updates-grants
+    created_at: 2026-11-13T18:10:04.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36031101a6e2

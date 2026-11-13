@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4e27a9e94e3
+  - type: executable_for
+    from: SYM-access-views-ui-access-test-testaccesspageviewpluginsunavailable
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:16:21.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5cfce3e8b9

@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0bdef8ec19a
+  - type: implements
+    from: SYM-access-views-ui-access-server-updatetokengrants
+    to: REQ-ui-access-script-tokens
+    created_at: 2026-11-13T18:15:40.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0abcf3099939
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-updatetokengrants
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:40.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d267549ba3f

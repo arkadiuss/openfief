@@ -139,6 +139,16 @@ func (d *fakeDirectory) ViewPlugins(context.Context) ([]string, error) {
 	return out, nil
 }
 
+// AccessViewPlugins lists the plugins that need grants: every installed one but
+// the built-in UI, which reads as the signed-in person.
+func (d *fakeDirectory) AccessViewPlugins(ctx context.Context) ([]string, error) {
+	names, err := d.ViewPlugins(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return slices.DeleteFunc(names, func(name string) bool { return name == pluginUI }), nil
+}
+
 // fakeModel is an app.GrantProjector that records what it was told, one line
 // per grant as "project|unproject holder target".
 type fakeModel struct {

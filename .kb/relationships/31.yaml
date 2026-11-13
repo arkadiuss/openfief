@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7f123dfe543
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-protoreflect
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:27:17.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36b8a93ff4fb
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsresponse-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:27:17.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6d08e382d92

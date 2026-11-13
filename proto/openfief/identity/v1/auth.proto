@@ -96,12 +96,17 @@ service AuthService {
   rpc RemovePasskey(RemovePasskeyRequest) returns (RemovePasskeyResponse);
 
   // CreateScriptToken issues a read-only script token (D-27) and returns its
-  // secret, the only time it is shown. Owner scope, with a recent passkey
-  // check (D-183).
+  // secret, the only time it is shown. The request may name the token's
+  // grants (D-209) and whether it may use MCP (D-213); the token, its grants
+  // and their audit entries are stored in one transaction, and then the grants
+  // are passed on to the authorization model. If that fails the token is
+  // revoked again and no secret is returned (UNAVAILABLE). Owner scope, with a
+  // recent passkey check (D-183).
   rpc CreateScriptToken(CreateScriptTokenRequest) returns (CreateScriptTokenResponse);
 
   // ListScriptTokens returns every script token, expired and revoked ones
-  // included, in creation order. Owner scope.
+  // included, in creation order, each with the grants in force that say what
+  // it may view (D-210). Owner scope.
   rpc ListScriptTokens(ListScriptTokensRequest) returns (ListScriptTokensResponse);
 
   // RevokeScriptToken revokes a script token. Owner scope.
@@ -157,6 +162,21 @@ service AuthService {
   // ListGrants returns the grants, oldest first, optionally of one holder
   // and optionally only those in force. Owner scope.
   rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse);
+
+  // UpdateGrants adds and removes grants of one script token or view plugin
+  // in a single call (D-210), as the Access page's form does. Everything is
+  // checked before anything changes: the holder must exist, and so must each
+  // target to add (NOT_FOUND). Adding a grant the holder has and removing one
+  // it lacks change nothing. Each change is an audit entry, as CreateGrant and
+  // RevokeGrant make them. The response holds the holder's grants in force
+  // afterwards. Owner scope only.
+  rpc UpdateGrants(UpdateGrantsRequest) returns (UpdateGrantsResponse);
+
+  // ListViewPlugins returns the installed view plugins that read with their
+  // own identity, each with its grants in force (D-210): not the built-in UI,
+  // which reads with the signed-in person's session. UNAVAILABLE when the core
+  // can't read the installed plugins now. Owner scope only.
+  rpc ListViewPlugins(ListViewPluginsRequest) returns (ListViewPluginsResponse);
 }
 
 // SessionScope is what a session may do.
@@ -249,6 +269,13 @@ message ScriptToken {
   // Unset while the token is not revoked.
   google.protobuf.Timestamp revoked_at = 6;
   ScriptTokenStatus status = 7;
+  // Whether the owner allowed the token to use the MCP server (D-213). It is
+  // stored at creation; the core doesn't serve MCP yet.
+  bool mcp_allowed = 8;
+  // The grants in force that say what the token may view (D-209), in
+  // creation order; none while the token is revoked. Set by ListScriptTokens
+  // and CreateScriptToken.
+  repeated Grant grants = 9;
 }
 
 message GetLoginMethodsRequest {
@@ -391,6 +418,12 @@ message CreateScriptTokenRequest {
   string name = 3;
   // How long the token is valid, at most a year; unset is 30 days.
   google.protobuf.Duration ttl = 4;
+  // Whether the token may use the MCP server (D-213). Stored only.
+  bool mcp_allowed = 5;
+  // What the token may view (D-209): accounts, sleeves or the household. Each
+  // must exist (NOT_FOUND). None leaves a token that views nothing while the
+  // core runs with --authz=spicedb.
+  repeated GrantTarget grants = 6;
 }
 
 message CreateScriptTokenResponse {
@@ -406,6 +439,10 @@ message ListScriptTokensRequest {
 
 message ListScriptTokensResponse {
   repeated ScriptToken tokens = 1;
+  // Whether grants limit what holders view now: true while the core answers
+  // from SpiceDB, false under --authz=policy, where every holder of read
+  // access views every account and grants are stored with no effect yet.
+  bool grants_enforced = 2;
 }
 
 message RevokeScriptTokenRequest {
@@ -642,6 +679,13 @@ message Grant {
   google.protobuf.Timestamp revoked_at = 6;
 }
 
+// GrantTarget is what a grant lets its holder view, without the holder.
+message GrantTarget {
+  GrantTargetKind kind = 1;
+  // For the household, "home" or empty.
+  string id = 2;
+}
+
 message CreateGrantRequest {
   string origin = 1;
   string session_token = 2;
@@ -681,4 +725,41 @@ message ListGrantsRequest {
 
 message ListGrantsResponse {
   repeated Grant grants = 1;
+}
+
+message UpdateGrantsRequest {
+  string origin = 1;
+  string session_token = 2;
+  // A script token or a view plugin; viewers (person) have none to change yet.
+  GrantHolderKind holder_kind = 3;
+  string holder_id = 4;
+  // Targets to grant.
+  repeated GrantTarget add = 5;
+  // Targets to end the holder's grant of.
+  repeated GrantTarget remove = 6;
+}
+
+message UpdateGrantsResponse {
+  // The holder's grants in force afterwards, oldest first.
+  repeated Grant grants = 1;
+}
+
+message ListViewPluginsRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// ViewPlugin is an installed view plugin with what it may view (D-210).
+message ViewPlugin {
+  // The instance's name, which is also its holder_id in a grant.
+  string instance = 1;
+  // The grants in force, oldest first; none means the plugin views nothing
+  // while the core runs with --authz=spicedb.
+  repeated Grant grants = 2;
+}
+
+message ListViewPluginsResponse {
+  repeated ViewPlugin plugins = 1;
+  // As ListScriptTokensResponse.grants_enforced.
+  bool grants_enforced = 2;
 }

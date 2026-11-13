@@ -967,8 +967,15 @@ type ScriptToken struct {
 	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	// Unset while the token is not revoked.
-	RevokedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
-	Status        ScriptTokenStatus      `protobuf:"varint,7,opt,name=status,proto3,enum=openfief.identity.v1.ScriptTokenStatus" json:"status,omitempty"`
+	RevokedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
+	Status    ScriptTokenStatus      `protobuf:"varint,7,opt,name=status,proto3,enum=openfief.identity.v1.ScriptTokenStatus" json:"status,omitempty"`
+	// Whether the owner allowed the token to use the MCP server (D-213). It is
+	// stored at creation; the core doesn't serve MCP yet.
+	McpAllowed bool `protobuf:"varint,8,opt,name=mcp_allowed,json=mcpAllowed,proto3" json:"mcp_allowed,omitempty"`
+	// The grants in force that say what the token may view (D-209), in
+	// creation order; none while the token is revoked. Set by ListScriptTokens
+	// and CreateScriptToken.
+	Grants        []*Grant `protobuf:"bytes,9,rep,name=grants,proto3" json:"grants,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1050,6 +1057,20 @@ func (x *ScriptToken) GetStatus() ScriptTokenStatus {
 		return x.Status
 	}
 	return ScriptTokenStatus_SCRIPT_TOKEN_STATUS_UNSPECIFIED
+}
+
+func (x *ScriptToken) GetMcpAllowed() bool {
+	if x != nil {
+		return x.McpAllowed
+	}
+	return false
+}
+
+func (x *ScriptToken) GetGrants() []*Grant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
 }
 
 type GetLoginMethodsRequest struct {
@@ -2176,7 +2197,13 @@ type CreateScriptTokenRequest struct {
 	// 1 to 64 letters, digits, '.', '_' or '-'.
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// How long the token is valid, at most a year; unset is 30 days.
-	Ttl           *durationpb.Duration `protobuf:"bytes,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	Ttl *durationpb.Duration `protobuf:"bytes,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	// Whether the token may use the MCP server (D-213). Stored only.
+	McpAllowed bool `protobuf:"varint,5,opt,name=mcp_allowed,json=mcpAllowed,proto3" json:"mcp_allowed,omitempty"`
+	// What the token may view (D-209): accounts, sleeves or the household. Each
+	// must exist (NOT_FOUND). None leaves a token that views nothing while the
+	// core runs with --authz=spicedb.
+	Grants        []*GrantTarget `protobuf:"bytes,6,rep,name=grants,proto3" json:"grants,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2235,6 +2262,20 @@ func (x *CreateScriptTokenRequest) GetName() string {
 func (x *CreateScriptTokenRequest) GetTtl() *durationpb.Duration {
 	if x != nil {
 		return x.Ttl
+	}
+	return nil
+}
+
+func (x *CreateScriptTokenRequest) GetMcpAllowed() bool {
+	if x != nil {
+		return x.McpAllowed
+	}
+	return false
+}
+
+func (x *CreateScriptTokenRequest) GetGrants() []*GrantTarget {
+	if x != nil {
+		return x.Grants
 	}
 	return nil
 }
@@ -2345,10 +2386,14 @@ func (x *ListScriptTokensRequest) GetSessionToken() string {
 }
 
 type ListScriptTokensResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Tokens        []*ScriptToken         `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Tokens []*ScriptToken         `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
+	// Whether grants limit what holders view now: true while the core answers
+	// from SpiceDB, false under --authz=policy, where every holder of read
+	// access views every account and grants are stored with no effect yet.
+	GrantsEnforced bool `protobuf:"varint,2,opt,name=grants_enforced,json=grantsEnforced,proto3" json:"grants_enforced,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListScriptTokensResponse) Reset() {
@@ -2386,6 +2431,13 @@ func (x *ListScriptTokensResponse) GetTokens() []*ScriptToken {
 		return x.Tokens
 	}
 	return nil
+}
+
+func (x *ListScriptTokensResponse) GetGrantsEnforced() bool {
+	if x != nil {
+		return x.GrantsEnforced
+	}
+	return false
 }
 
 type RevokeScriptTokenRequest struct {
@@ -3388,6 +3440,60 @@ func (x *Grant) GetRevokedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+// GrantTarget is what a grant lets its holder view, without the holder.
+type GrantTarget struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Kind  GrantTargetKind        `protobuf:"varint,1,opt,name=kind,proto3,enum=openfief.identity.v1.GrantTargetKind" json:"kind,omitempty"`
+	// For the household, "home" or empty.
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GrantTarget) Reset() {
+	*x = GrantTarget{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GrantTarget) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GrantTarget) ProtoMessage() {}
+
+func (x *GrantTarget) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GrantTarget.ProtoReflect.Descriptor instead.
+func (*GrantTarget) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *GrantTarget) GetKind() GrantTargetKind {
+	if x != nil {
+		return x.Kind
+	}
+	return GrantTargetKind_GRANT_TARGET_KIND_UNSPECIFIED
+}
+
+func (x *GrantTarget) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type CreateGrantRequest struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -3403,7 +3509,7 @@ type CreateGrantRequest struct {
 
 func (x *CreateGrantRequest) Reset() {
 	*x = CreateGrantRequest{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3415,7 +3521,7 @@ func (x *CreateGrantRequest) String() string {
 func (*CreateGrantRequest) ProtoMessage() {}
 
 func (x *CreateGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[45]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3428,7 +3534,7 @@ func (x *CreateGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGrantRequest.ProtoReflect.Descriptor instead.
 func (*CreateGrantRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{45}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *CreateGrantRequest) GetOrigin() string {
@@ -3482,7 +3588,7 @@ type CreateGrantResponse struct {
 
 func (x *CreateGrantResponse) Reset() {
 	*x = CreateGrantResponse{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3494,7 +3600,7 @@ func (x *CreateGrantResponse) String() string {
 func (*CreateGrantResponse) ProtoMessage() {}
 
 func (x *CreateGrantResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[46]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3507,7 +3613,7 @@ func (x *CreateGrantResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGrantResponse.ProtoReflect.Descriptor instead.
 func (*CreateGrantResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{46}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *CreateGrantResponse) GetGrant() *Grant {
@@ -3532,7 +3638,7 @@ type RevokeGrantRequest struct {
 
 func (x *RevokeGrantRequest) Reset() {
 	*x = RevokeGrantRequest{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3544,7 +3650,7 @@ func (x *RevokeGrantRequest) String() string {
 func (*RevokeGrantRequest) ProtoMessage() {}
 
 func (x *RevokeGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[47]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3557,7 +3663,7 @@ func (x *RevokeGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeGrantRequest.ProtoReflect.Descriptor instead.
 func (*RevokeGrantRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{47}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *RevokeGrantRequest) GetOrigin() string {
@@ -3610,7 +3716,7 @@ type RevokeGrantResponse struct {
 
 func (x *RevokeGrantResponse) Reset() {
 	*x = RevokeGrantResponse{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3622,7 +3728,7 @@ func (x *RevokeGrantResponse) String() string {
 func (*RevokeGrantResponse) ProtoMessage() {}
 
 func (x *RevokeGrantResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[48]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3635,7 +3741,7 @@ func (x *RevokeGrantResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeGrantResponse.ProtoReflect.Descriptor instead.
 func (*RevokeGrantResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{48}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{49}
 }
 
 type ListGrantsRequest struct {
@@ -3654,7 +3760,7 @@ type ListGrantsRequest struct {
 
 func (x *ListGrantsRequest) Reset() {
 	*x = ListGrantsRequest{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3666,7 +3772,7 @@ func (x *ListGrantsRequest) String() string {
 func (*ListGrantsRequest) ProtoMessage() {}
 
 func (x *ListGrantsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[49]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3679,7 +3785,7 @@ func (x *ListGrantsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGrantsRequest.ProtoReflect.Descriptor instead.
 func (*ListGrantsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{49}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *ListGrantsRequest) GetOrigin() string {
@@ -3726,7 +3832,7 @@ type ListGrantsResponse struct {
 
 func (x *ListGrantsResponse) Reset() {
 	*x = ListGrantsResponse{}
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3738,7 +3844,7 @@ func (x *ListGrantsResponse) String() string {
 func (*ListGrantsResponse) ProtoMessage() {}
 
 func (x *ListGrantsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_identity_v1_auth_proto_msgTypes[50]
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3751,7 +3857,7 @@ func (x *ListGrantsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGrantsResponse.ProtoReflect.Descriptor instead.
 func (*ListGrantsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{50}
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *ListGrantsResponse) GetGrants() []*Grant {
@@ -3759,6 +3865,299 @@ func (x *ListGrantsResponse) GetGrants() []*Grant {
 		return x.Grants
 	}
 	return nil
+}
+
+type UpdateGrantsRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// A script token or a view plugin; viewers (person) have none to change yet.
+	HolderKind GrantHolderKind `protobuf:"varint,3,opt,name=holder_kind,json=holderKind,proto3,enum=openfief.identity.v1.GrantHolderKind" json:"holder_kind,omitempty"`
+	HolderId   string          `protobuf:"bytes,4,opt,name=holder_id,json=holderId,proto3" json:"holder_id,omitempty"`
+	// Targets to grant.
+	Add []*GrantTarget `protobuf:"bytes,5,rep,name=add,proto3" json:"add,omitempty"`
+	// Targets to end the holder's grant of.
+	Remove        []*GrantTarget `protobuf:"bytes,6,rep,name=remove,proto3" json:"remove,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGrantsRequest) Reset() {
+	*x = UpdateGrantsRequest{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[52]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGrantsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGrantsRequest) ProtoMessage() {}
+
+func (x *UpdateGrantsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[52]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGrantsRequest.ProtoReflect.Descriptor instead.
+func (*UpdateGrantsRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *UpdateGrantsRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *UpdateGrantsRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *UpdateGrantsRequest) GetHolderKind() GrantHolderKind {
+	if x != nil {
+		return x.HolderKind
+	}
+	return GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED
+}
+
+func (x *UpdateGrantsRequest) GetHolderId() string {
+	if x != nil {
+		return x.HolderId
+	}
+	return ""
+}
+
+func (x *UpdateGrantsRequest) GetAdd() []*GrantTarget {
+	if x != nil {
+		return x.Add
+	}
+	return nil
+}
+
+func (x *UpdateGrantsRequest) GetRemove() []*GrantTarget {
+	if x != nil {
+		return x.Remove
+	}
+	return nil
+}
+
+type UpdateGrantsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The holder's grants in force afterwards, oldest first.
+	Grants        []*Grant `protobuf:"bytes,1,rep,name=grants,proto3" json:"grants,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGrantsResponse) Reset() {
+	*x = UpdateGrantsResponse{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGrantsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGrantsResponse) ProtoMessage() {}
+
+func (x *UpdateGrantsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGrantsResponse.ProtoReflect.Descriptor instead.
+func (*UpdateGrantsResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *UpdateGrantsResponse) GetGrants() []*Grant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
+}
+
+type ListViewPluginsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListViewPluginsRequest) Reset() {
+	*x = ListViewPluginsRequest{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListViewPluginsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListViewPluginsRequest) ProtoMessage() {}
+
+func (x *ListViewPluginsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListViewPluginsRequest.ProtoReflect.Descriptor instead.
+func (*ListViewPluginsRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *ListViewPluginsRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *ListViewPluginsRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+// ViewPlugin is an installed view plugin with what it may view (D-210).
+type ViewPlugin struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The instance's name, which is also its holder_id in a grant.
+	Instance string `protobuf:"bytes,1,opt,name=instance,proto3" json:"instance,omitempty"`
+	// The grants in force, oldest first; none means the plugin views nothing
+	// while the core runs with --authz=spicedb.
+	Grants        []*Grant `protobuf:"bytes,2,rep,name=grants,proto3" json:"grants,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ViewPlugin) Reset() {
+	*x = ViewPlugin{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[55]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ViewPlugin) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ViewPlugin) ProtoMessage() {}
+
+func (x *ViewPlugin) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[55]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ViewPlugin.ProtoReflect.Descriptor instead.
+func (*ViewPlugin) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *ViewPlugin) GetInstance() string {
+	if x != nil {
+		return x.Instance
+	}
+	return ""
+}
+
+func (x *ViewPlugin) GetGrants() []*Grant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
+}
+
+type ListViewPluginsResponse struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Plugins []*ViewPlugin          `protobuf:"bytes,1,rep,name=plugins,proto3" json:"plugins,omitempty"`
+	// As ListScriptTokensResponse.grants_enforced.
+	GrantsEnforced bool `protobuf:"varint,2,opt,name=grants_enforced,json=grantsEnforced,proto3" json:"grants_enforced,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListViewPluginsResponse) Reset() {
+	*x = ListViewPluginsResponse{}
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[56]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListViewPluginsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListViewPluginsResponse) ProtoMessage() {}
+
+func (x *ListViewPluginsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_identity_v1_auth_proto_msgTypes[56]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListViewPluginsResponse.ProtoReflect.Descriptor instead.
+func (*ListViewPluginsResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_identity_v1_auth_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *ListViewPluginsResponse) GetPlugins() []*ViewPlugin {
+	if x != nil {
+		return x.Plugins
+	}
+	return nil
+}
+
+func (x *ListViewPluginsResponse) GetGrantsEnforced() bool {
+	if x != nil {
+		return x.GrantsEnforced
+	}
+	return false
 }
 
 var File_openfief_identity_v1_auth_proto protoreflect.FileDescriptor
@@ -3795,7 +4194,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\n" +
 	"transports\x18\x06 \x03(\tR\n" +
 	"transports\x12\x1b\n" +
-	"\tbacked_up\x18\a \x01(\bR\bbackedUp\"\xb9\x02\n" +
+	"\tbacked_up\x18\a \x01(\bR\bbackedUp\"\x8f\x03\n" +
 	"\vScriptToken\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
@@ -3806,7 +4205,10 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"expires_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x129\n" +
 	"\n" +
 	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\x12?\n" +
-	"\x06status\x18\a \x01(\x0e2'.openfief.identity.v1.ScriptTokenStatusR\x06status\"0\n" +
+	"\x06status\x18\a \x01(\x0e2'.openfief.identity.v1.ScriptTokenStatusR\x06status\x12\x1f\n" +
+	"\vmcp_allowed\x18\b \x01(\bR\n" +
+	"mcpAllowed\x123\n" +
+	"\x06grants\x18\t \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants\"0\n" +
 	"\x16GetLoginMethodsRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\"\x90\x01\n" +
 	"\x17GetLoginMethodsResponse\x12-\n" +
@@ -3877,20 +4279,24 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"passkey_id\x18\x03 \x01(\tR\tpasskeyId\"6\n" +
 	"\x15RemovePasskeyResponse\x12\x1d\n" +
 	"\n" +
-	"signed_out\x18\x01 \x01(\bR\tsignedOut\"\x98\x01\n" +
+	"signed_out\x18\x01 \x01(\bR\tsignedOut\"\xf4\x01\n" +
 	"\x18CreateScriptTokenRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12+\n" +
-	"\x03ttl\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x03ttl\"l\n" +
+	"\x03ttl\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x03ttl\x12\x1f\n" +
+	"\vmcp_allowed\x18\x05 \x01(\bR\n" +
+	"mcpAllowed\x129\n" +
+	"\x06grants\x18\x06 \x03(\v2!.openfief.identity.v1.GrantTargetR\x06grants\"l\n" +
 	"\x19CreateScriptTokenResponse\x127\n" +
 	"\x05token\x18\x01 \x01(\v2!.openfief.identity.v1.ScriptTokenR\x05token\x12\x16\n" +
 	"\x06secret\x18\x02 \x01(\tR\x06secret\"V\n" +
 	"\x17ListScriptTokensRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
-	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"U\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"~\n" +
 	"\x18ListScriptTokensResponse\x129\n" +
-	"\x06tokens\x18\x01 \x03(\v2!.openfief.identity.v1.ScriptTokenR\x06tokens\"r\n" +
+	"\x06tokens\x18\x01 \x03(\v2!.openfief.identity.v1.ScriptTokenR\x06tokens\x12'\n" +
+	"\x0fgrants_enforced\x18\x02 \x01(\bR\x0egrantsEnforced\"r\n" +
 	"\x18RevokeScriptTokenRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x19\n" +
@@ -3967,7 +4373,10 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"\x9b\x02\n" +
+	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"X\n" +
+	"\vGrantTarget\x129\n" +
+	"\x04kind\x18\x01 \x01(\x0e2%.openfief.identity.v1.GrantTargetKindR\x04kind\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"\x9b\x02\n" +
 	"\x12CreateGrantRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12F\n" +
@@ -3997,7 +4406,27 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\tholder_id\x18\x04 \x01(\tR\bholderId\x12\"\n" +
 	"\rin_force_only\x18\x05 \x01(\bR\vinForceOnly\"I\n" +
 	"\x12ListGrantsResponse\x123\n" +
-	"\x06grants\x18\x01 \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants*^\n" +
+	"\x06grants\x18\x01 \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants\"\xa7\x02\n" +
+	"\x13UpdateGrantsRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12F\n" +
+	"\vholder_kind\x18\x03 \x01(\x0e2%.openfief.identity.v1.GrantHolderKindR\n" +
+	"holderKind\x12\x1b\n" +
+	"\tholder_id\x18\x04 \x01(\tR\bholderId\x123\n" +
+	"\x03add\x18\x05 \x03(\v2!.openfief.identity.v1.GrantTargetR\x03add\x129\n" +
+	"\x06remove\x18\x06 \x03(\v2!.openfief.identity.v1.GrantTargetR\x06remove\"K\n" +
+	"\x14UpdateGrantsResponse\x123\n" +
+	"\x06grants\x18\x01 \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants\"U\n" +
+	"\x16ListViewPluginsRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"]\n" +
+	"\n" +
+	"ViewPlugin\x12\x1a\n" +
+	"\binstance\x18\x01 \x01(\tR\binstance\x123\n" +
+	"\x06grants\x18\x02 \x03(\v2\x1b.openfief.identity.v1.GrantR\x06grants\"~\n" +
+	"\x17ListViewPluginsResponse\x12:\n" +
+	"\aplugins\x18\x01 \x03(\v2 .openfief.identity.v1.ViewPluginR\aplugins\x12'\n" +
+	"\x0fgrants_enforced\x18\x02 \x01(\bR\x0egrantsEnforced*^\n" +
 	"\fSessionScope\x12\x1d\n" +
 	"\x19SESSION_SCOPE_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12SESSION_SCOPE_READ\x10\x01\x12\x17\n" +
@@ -4064,7 +4493,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1dGRANT_TARGET_KIND_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19GRANT_TARGET_KIND_ACCOUNT\x10\x01\x12\x1c\n" +
 	"\x18GRANT_TARGET_KIND_SLEEVE\x10\x02\x12\x1f\n" +
-	"\x1bGRANT_TARGET_KIND_HOUSEHOLD\x10\x032\x81\x12\n" +
+	"\x1bGRANT_TARGET_KIND_HOUSEHOLD\x10\x032\xd8\x13\n" +
 	"\vAuthService\x12n\n" +
 	"\x0fGetLoginMethods\x12,.openfief.identity.v1.GetLoginMethodsRequest\x1a-.openfief.identity.v1.GetLoginMethodsResponse\x12t\n" +
 	"\x11BeginRegistration\x12..openfief.identity.v1.BeginRegistrationRequest\x1a/.openfief.identity.v1.BeginRegistrationResponse\x12w\n" +
@@ -4088,7 +4517,9 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\vCreateGrant\x12(.openfief.identity.v1.CreateGrantRequest\x1a).openfief.identity.v1.CreateGrantResponse\x12b\n" +
 	"\vRevokeGrant\x12(.openfief.identity.v1.RevokeGrantRequest\x1a).openfief.identity.v1.RevokeGrantResponse\x12_\n" +
 	"\n" +
-	"ListGrants\x12'.openfief.identity.v1.ListGrantsRequest\x1a(.openfief.identity.v1.ListGrantsResponseB\xe1\x01\n" +
+	"ListGrants\x12'.openfief.identity.v1.ListGrantsRequest\x1a(.openfief.identity.v1.ListGrantsResponse\x12e\n" +
+	"\fUpdateGrants\x12).openfief.identity.v1.UpdateGrantsRequest\x1a*.openfief.identity.v1.UpdateGrantsResponse\x12n\n" +
+	"\x0fListViewPlugins\x12,.openfief.identity.v1.ListViewPluginsRequest\x1a-.openfief.identity.v1.ListViewPluginsResponseB\xe1\x01\n" +
 	"\x18com.openfief.identity.v1B\tAuthProtoP\x01ZHgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1;identityv1\xa2\x02\x03OIX\xaa\x02\x14Openfief.Identity.V1\xca\x02\x14Openfief\\Identity\\V1\xe2\x02 Openfief\\Identity\\V1\\GPBMetadata\xea\x02\x16Openfief::Identity::V1b\x06proto3"
 
 var (
@@ -4104,7 +4535,7 @@ func file_openfief_identity_v1_auth_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_identity_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
-var file_openfief_identity_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
+var file_openfief_identity_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
 var file_openfief_identity_v1_auth_proto_goTypes = []any{
 	(SessionScope)(0),                    // 0: openfief.identity.v1.SessionScope
 	(Authenticator)(0),                   // 1: openfief.identity.v1.Authenticator
@@ -4160,117 +4591,136 @@ var file_openfief_identity_v1_auth_proto_goTypes = []any{
 	(*ListAuditEntriesRequest)(nil),      // 51: openfief.identity.v1.ListAuditEntriesRequest
 	(*ListAuditEntriesResponse)(nil),     // 52: openfief.identity.v1.ListAuditEntriesResponse
 	(*Grant)(nil),                        // 53: openfief.identity.v1.Grant
-	(*CreateGrantRequest)(nil),           // 54: openfief.identity.v1.CreateGrantRequest
-	(*CreateGrantResponse)(nil),          // 55: openfief.identity.v1.CreateGrantResponse
-	(*RevokeGrantRequest)(nil),           // 56: openfief.identity.v1.RevokeGrantRequest
-	(*RevokeGrantResponse)(nil),          // 57: openfief.identity.v1.RevokeGrantResponse
-	(*ListGrantsRequest)(nil),            // 58: openfief.identity.v1.ListGrantsRequest
-	(*ListGrantsResponse)(nil),           // 59: openfief.identity.v1.ListGrantsResponse
-	(*timestamppb.Timestamp)(nil),        // 60: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),          // 61: google.protobuf.Duration
+	(*GrantTarget)(nil),                  // 54: openfief.identity.v1.GrantTarget
+	(*CreateGrantRequest)(nil),           // 55: openfief.identity.v1.CreateGrantRequest
+	(*CreateGrantResponse)(nil),          // 56: openfief.identity.v1.CreateGrantResponse
+	(*RevokeGrantRequest)(nil),           // 57: openfief.identity.v1.RevokeGrantRequest
+	(*RevokeGrantResponse)(nil),          // 58: openfief.identity.v1.RevokeGrantResponse
+	(*ListGrantsRequest)(nil),            // 59: openfief.identity.v1.ListGrantsRequest
+	(*ListGrantsResponse)(nil),           // 60: openfief.identity.v1.ListGrantsResponse
+	(*UpdateGrantsRequest)(nil),          // 61: openfief.identity.v1.UpdateGrantsRequest
+	(*UpdateGrantsResponse)(nil),         // 62: openfief.identity.v1.UpdateGrantsResponse
+	(*ListViewPluginsRequest)(nil),       // 63: openfief.identity.v1.ListViewPluginsRequest
+	(*ViewPlugin)(nil),                   // 64: openfief.identity.v1.ViewPlugin
+	(*ListViewPluginsResponse)(nil),      // 65: openfief.identity.v1.ListViewPluginsResponse
+	(*timestamppb.Timestamp)(nil),        // 66: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),          // 67: google.protobuf.Duration
 }
 var file_openfief_identity_v1_auth_proto_depIdxs = []int32{
 	0,  // 0: openfief.identity.v1.Session.scope:type_name -> openfief.identity.v1.SessionScope
 	1,  // 1: openfief.identity.v1.Session.authenticator:type_name -> openfief.identity.v1.Authenticator
-	60, // 2: openfief.identity.v1.Session.created_at:type_name -> google.protobuf.Timestamp
-	60, // 3: openfief.identity.v1.Session.last_seen_at:type_name -> google.protobuf.Timestamp
-	60, // 4: openfief.identity.v1.Session.idle_expires_at:type_name -> google.protobuf.Timestamp
-	60, // 5: openfief.identity.v1.Session.expires_at:type_name -> google.protobuf.Timestamp
-	60, // 6: openfief.identity.v1.Session.passkey_checked_at:type_name -> google.protobuf.Timestamp
-	61, // 7: openfief.identity.v1.PasskeyCheckRequired.window:type_name -> google.protobuf.Duration
-	60, // 8: openfief.identity.v1.Owner.created_at:type_name -> google.protobuf.Timestamp
-	60, // 9: openfief.identity.v1.Passkey.created_at:type_name -> google.protobuf.Timestamp
-	60, // 10: openfief.identity.v1.Passkey.last_used_at:type_name -> google.protobuf.Timestamp
-	60, // 11: openfief.identity.v1.ScriptToken.created_at:type_name -> google.protobuf.Timestamp
-	60, // 12: openfief.identity.v1.ScriptToken.expires_at:type_name -> google.protobuf.Timestamp
-	60, // 13: openfief.identity.v1.ScriptToken.revoked_at:type_name -> google.protobuf.Timestamp
+	66, // 2: openfief.identity.v1.Session.created_at:type_name -> google.protobuf.Timestamp
+	66, // 3: openfief.identity.v1.Session.last_seen_at:type_name -> google.protobuf.Timestamp
+	66, // 4: openfief.identity.v1.Session.idle_expires_at:type_name -> google.protobuf.Timestamp
+	66, // 5: openfief.identity.v1.Session.expires_at:type_name -> google.protobuf.Timestamp
+	66, // 6: openfief.identity.v1.Session.passkey_checked_at:type_name -> google.protobuf.Timestamp
+	67, // 7: openfief.identity.v1.PasskeyCheckRequired.window:type_name -> google.protobuf.Duration
+	66, // 8: openfief.identity.v1.Owner.created_at:type_name -> google.protobuf.Timestamp
+	66, // 9: openfief.identity.v1.Passkey.created_at:type_name -> google.protobuf.Timestamp
+	66, // 10: openfief.identity.v1.Passkey.last_used_at:type_name -> google.protobuf.Timestamp
+	66, // 11: openfief.identity.v1.ScriptToken.created_at:type_name -> google.protobuf.Timestamp
+	66, // 12: openfief.identity.v1.ScriptToken.expires_at:type_name -> google.protobuf.Timestamp
+	66, // 13: openfief.identity.v1.ScriptToken.revoked_at:type_name -> google.protobuf.Timestamp
 	2,  // 14: openfief.identity.v1.ScriptToken.status:type_name -> openfief.identity.v1.ScriptTokenStatus
-	60, // 15: openfief.identity.v1.BeginRegistrationResponse.expires_at:type_name -> google.protobuf.Timestamp
-	12, // 16: openfief.identity.v1.FinishRegistrationResponse.passkey:type_name -> openfief.identity.v1.Passkey
-	9,  // 17: openfief.identity.v1.FinishRegistrationResponse.session:type_name -> openfief.identity.v1.Session
-	60, // 18: openfief.identity.v1.BeginLoginResponse.expires_at:type_name -> google.protobuf.Timestamp
-	9,  // 19: openfief.identity.v1.FinishLoginResponse.session:type_name -> openfief.identity.v1.Session
-	9,  // 20: openfief.identity.v1.CreateDemoSessionResponse.session:type_name -> openfief.identity.v1.Session
-	11, // 21: openfief.identity.v1.WhoAmIResponse.owner:type_name -> openfief.identity.v1.Owner
-	9,  // 22: openfief.identity.v1.WhoAmIResponse.session:type_name -> openfief.identity.v1.Session
-	12, // 23: openfief.identity.v1.ListPasskeysResponse.passkeys:type_name -> openfief.identity.v1.Passkey
-	61, // 24: openfief.identity.v1.CreateScriptTokenRequest.ttl:type_name -> google.protobuf.Duration
-	13, // 25: openfief.identity.v1.CreateScriptTokenResponse.token:type_name -> openfief.identity.v1.ScriptToken
-	13, // 26: openfief.identity.v1.ListScriptTokensResponse.tokens:type_name -> openfief.identity.v1.ScriptToken
-	61, // 27: openfief.identity.v1.CreateEnrollmentLinkRequest.ttl:type_name -> google.protobuf.Duration
-	60, // 28: openfief.identity.v1.CreateEnrollmentLinkResponse.expires_at:type_name -> google.protobuf.Timestamp
-	60, // 29: openfief.identity.v1.BeginPasskeyCheckResponse.expires_at:type_name -> google.protobuf.Timestamp
-	9,  // 30: openfief.identity.v1.FinishPasskeyCheckResponse.session:type_name -> openfief.identity.v1.Session
-	3,  // 31: openfief.identity.v1.AuditActor.kind:type_name -> openfief.identity.v1.AuditActorKind
-	6,  // 32: openfief.identity.v1.AuditRef.kind:type_name -> openfief.identity.v1.AuditRefKind
-	60, // 33: openfief.identity.v1.AuditEntry.at:type_name -> google.protobuf.Timestamp
-	48, // 34: openfief.identity.v1.AuditEntry.actor:type_name -> openfief.identity.v1.AuditActor
-	4,  // 35: openfief.identity.v1.AuditEntry.action:type_name -> openfief.identity.v1.AuditAction
-	5,  // 36: openfief.identity.v1.AuditEntry.outcome:type_name -> openfief.identity.v1.AuditOutcome
-	49, // 37: openfief.identity.v1.AuditEntry.refs:type_name -> openfief.identity.v1.AuditRef
-	3,  // 38: openfief.identity.v1.ListAuditEntriesRequest.actor_kind:type_name -> openfief.identity.v1.AuditActorKind
-	4,  // 39: openfief.identity.v1.ListAuditEntriesRequest.action:type_name -> openfief.identity.v1.AuditAction
-	60, // 40: openfief.identity.v1.ListAuditEntriesRequest.from:type_name -> google.protobuf.Timestamp
-	60, // 41: openfief.identity.v1.ListAuditEntriesRequest.to:type_name -> google.protobuf.Timestamp
-	50, // 42: openfief.identity.v1.ListAuditEntriesResponse.entries:type_name -> openfief.identity.v1.AuditEntry
-	7,  // 43: openfief.identity.v1.Grant.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
-	8,  // 44: openfief.identity.v1.Grant.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
-	60, // 45: openfief.identity.v1.Grant.created_at:type_name -> google.protobuf.Timestamp
-	60, // 46: openfief.identity.v1.Grant.revoked_at:type_name -> google.protobuf.Timestamp
-	7,  // 47: openfief.identity.v1.CreateGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
-	8,  // 48: openfief.identity.v1.CreateGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
-	53, // 49: openfief.identity.v1.CreateGrantResponse.grant:type_name -> openfief.identity.v1.Grant
-	7,  // 50: openfief.identity.v1.RevokeGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
-	8,  // 51: openfief.identity.v1.RevokeGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
-	7,  // 52: openfief.identity.v1.ListGrantsRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
-	53, // 53: openfief.identity.v1.ListGrantsResponse.grants:type_name -> openfief.identity.v1.Grant
-	14, // 54: openfief.identity.v1.AuthService.GetLoginMethods:input_type -> openfief.identity.v1.GetLoginMethodsRequest
-	16, // 55: openfief.identity.v1.AuthService.BeginRegistration:input_type -> openfief.identity.v1.BeginRegistrationRequest
-	18, // 56: openfief.identity.v1.AuthService.FinishRegistration:input_type -> openfief.identity.v1.FinishRegistrationRequest
-	20, // 57: openfief.identity.v1.AuthService.BeginLogin:input_type -> openfief.identity.v1.BeginLoginRequest
-	22, // 58: openfief.identity.v1.AuthService.FinishLogin:input_type -> openfief.identity.v1.FinishLoginRequest
-	24, // 59: openfief.identity.v1.AuthService.CreateDemoSession:input_type -> openfief.identity.v1.CreateDemoSessionRequest
-	26, // 60: openfief.identity.v1.AuthService.Logout:input_type -> openfief.identity.v1.LogoutRequest
-	28, // 61: openfief.identity.v1.AuthService.WhoAmI:input_type -> openfief.identity.v1.WhoAmIRequest
-	30, // 62: openfief.identity.v1.AuthService.ListPasskeys:input_type -> openfief.identity.v1.ListPasskeysRequest
-	32, // 63: openfief.identity.v1.AuthService.RemovePasskey:input_type -> openfief.identity.v1.RemovePasskeyRequest
-	34, // 64: openfief.identity.v1.AuthService.CreateScriptToken:input_type -> openfief.identity.v1.CreateScriptTokenRequest
-	36, // 65: openfief.identity.v1.AuthService.ListScriptTokens:input_type -> openfief.identity.v1.ListScriptTokensRequest
-	38, // 66: openfief.identity.v1.AuthService.RevokeScriptToken:input_type -> openfief.identity.v1.RevokeScriptTokenRequest
-	40, // 67: openfief.identity.v1.AuthService.CreateEnrollmentLink:input_type -> openfief.identity.v1.CreateEnrollmentLinkRequest
-	42, // 68: openfief.identity.v1.AuthService.BeginPasskeyCheck:input_type -> openfief.identity.v1.BeginPasskeyCheckRequest
-	44, // 69: openfief.identity.v1.AuthService.FinishPasskeyCheck:input_type -> openfief.identity.v1.FinishPasskeyCheckRequest
-	46, // 70: openfief.identity.v1.AuthService.SignOutEverywhere:input_type -> openfief.identity.v1.SignOutEverywhereRequest
-	51, // 71: openfief.identity.v1.AuthService.ListAuditEntries:input_type -> openfief.identity.v1.ListAuditEntriesRequest
-	54, // 72: openfief.identity.v1.AuthService.CreateGrant:input_type -> openfief.identity.v1.CreateGrantRequest
-	56, // 73: openfief.identity.v1.AuthService.RevokeGrant:input_type -> openfief.identity.v1.RevokeGrantRequest
-	58, // 74: openfief.identity.v1.AuthService.ListGrants:input_type -> openfief.identity.v1.ListGrantsRequest
-	15, // 75: openfief.identity.v1.AuthService.GetLoginMethods:output_type -> openfief.identity.v1.GetLoginMethodsResponse
-	17, // 76: openfief.identity.v1.AuthService.BeginRegistration:output_type -> openfief.identity.v1.BeginRegistrationResponse
-	19, // 77: openfief.identity.v1.AuthService.FinishRegistration:output_type -> openfief.identity.v1.FinishRegistrationResponse
-	21, // 78: openfief.identity.v1.AuthService.BeginLogin:output_type -> openfief.identity.v1.BeginLoginResponse
-	23, // 79: openfief.identity.v1.AuthService.FinishLogin:output_type -> openfief.identity.v1.FinishLoginResponse
-	25, // 80: openfief.identity.v1.AuthService.CreateDemoSession:output_type -> openfief.identity.v1.CreateDemoSessionResponse
-	27, // 81: openfief.identity.v1.AuthService.Logout:output_type -> openfief.identity.v1.LogoutResponse
-	29, // 82: openfief.identity.v1.AuthService.WhoAmI:output_type -> openfief.identity.v1.WhoAmIResponse
-	31, // 83: openfief.identity.v1.AuthService.ListPasskeys:output_type -> openfief.identity.v1.ListPasskeysResponse
-	33, // 84: openfief.identity.v1.AuthService.RemovePasskey:output_type -> openfief.identity.v1.RemovePasskeyResponse
-	35, // 85: openfief.identity.v1.AuthService.CreateScriptToken:output_type -> openfief.identity.v1.CreateScriptTokenResponse
-	37, // 86: openfief.identity.v1.AuthService.ListScriptTokens:output_type -> openfief.identity.v1.ListScriptTokensResponse
-	39, // 87: openfief.identity.v1.AuthService.RevokeScriptToken:output_type -> openfief.identity.v1.RevokeScriptTokenResponse
-	41, // 88: openfief.identity.v1.AuthService.CreateEnrollmentLink:output_type -> openfief.identity.v1.CreateEnrollmentLinkResponse
-	43, // 89: openfief.identity.v1.AuthService.BeginPasskeyCheck:output_type -> openfief.identity.v1.BeginPasskeyCheckResponse
-	45, // 90: openfief.identity.v1.AuthService.FinishPasskeyCheck:output_type -> openfief.identity.v1.FinishPasskeyCheckResponse
-	47, // 91: openfief.identity.v1.AuthService.SignOutEverywhere:output_type -> openfief.identity.v1.SignOutEverywhereResponse
-	52, // 92: openfief.identity.v1.AuthService.ListAuditEntries:output_type -> openfief.identity.v1.ListAuditEntriesResponse
-	55, // 93: openfief.identity.v1.AuthService.CreateGrant:output_type -> openfief.identity.v1.CreateGrantResponse
-	57, // 94: openfief.identity.v1.AuthService.RevokeGrant:output_type -> openfief.identity.v1.RevokeGrantResponse
-	59, // 95: openfief.identity.v1.AuthService.ListGrants:output_type -> openfief.identity.v1.ListGrantsResponse
-	75, // [75:96] is the sub-list for method output_type
-	54, // [54:75] is the sub-list for method input_type
-	54, // [54:54] is the sub-list for extension type_name
-	54, // [54:54] is the sub-list for extension extendee
-	0,  // [0:54] is the sub-list for field type_name
+	53, // 15: openfief.identity.v1.ScriptToken.grants:type_name -> openfief.identity.v1.Grant
+	66, // 16: openfief.identity.v1.BeginRegistrationResponse.expires_at:type_name -> google.protobuf.Timestamp
+	12, // 17: openfief.identity.v1.FinishRegistrationResponse.passkey:type_name -> openfief.identity.v1.Passkey
+	9,  // 18: openfief.identity.v1.FinishRegistrationResponse.session:type_name -> openfief.identity.v1.Session
+	66, // 19: openfief.identity.v1.BeginLoginResponse.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 20: openfief.identity.v1.FinishLoginResponse.session:type_name -> openfief.identity.v1.Session
+	9,  // 21: openfief.identity.v1.CreateDemoSessionResponse.session:type_name -> openfief.identity.v1.Session
+	11, // 22: openfief.identity.v1.WhoAmIResponse.owner:type_name -> openfief.identity.v1.Owner
+	9,  // 23: openfief.identity.v1.WhoAmIResponse.session:type_name -> openfief.identity.v1.Session
+	12, // 24: openfief.identity.v1.ListPasskeysResponse.passkeys:type_name -> openfief.identity.v1.Passkey
+	67, // 25: openfief.identity.v1.CreateScriptTokenRequest.ttl:type_name -> google.protobuf.Duration
+	54, // 26: openfief.identity.v1.CreateScriptTokenRequest.grants:type_name -> openfief.identity.v1.GrantTarget
+	13, // 27: openfief.identity.v1.CreateScriptTokenResponse.token:type_name -> openfief.identity.v1.ScriptToken
+	13, // 28: openfief.identity.v1.ListScriptTokensResponse.tokens:type_name -> openfief.identity.v1.ScriptToken
+	67, // 29: openfief.identity.v1.CreateEnrollmentLinkRequest.ttl:type_name -> google.protobuf.Duration
+	66, // 30: openfief.identity.v1.CreateEnrollmentLinkResponse.expires_at:type_name -> google.protobuf.Timestamp
+	66, // 31: openfief.identity.v1.BeginPasskeyCheckResponse.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 32: openfief.identity.v1.FinishPasskeyCheckResponse.session:type_name -> openfief.identity.v1.Session
+	3,  // 33: openfief.identity.v1.AuditActor.kind:type_name -> openfief.identity.v1.AuditActorKind
+	6,  // 34: openfief.identity.v1.AuditRef.kind:type_name -> openfief.identity.v1.AuditRefKind
+	66, // 35: openfief.identity.v1.AuditEntry.at:type_name -> google.protobuf.Timestamp
+	48, // 36: openfief.identity.v1.AuditEntry.actor:type_name -> openfief.identity.v1.AuditActor
+	4,  // 37: openfief.identity.v1.AuditEntry.action:type_name -> openfief.identity.v1.AuditAction
+	5,  // 38: openfief.identity.v1.AuditEntry.outcome:type_name -> openfief.identity.v1.AuditOutcome
+	49, // 39: openfief.identity.v1.AuditEntry.refs:type_name -> openfief.identity.v1.AuditRef
+	3,  // 40: openfief.identity.v1.ListAuditEntriesRequest.actor_kind:type_name -> openfief.identity.v1.AuditActorKind
+	4,  // 41: openfief.identity.v1.ListAuditEntriesRequest.action:type_name -> openfief.identity.v1.AuditAction
+	66, // 42: openfief.identity.v1.ListAuditEntriesRequest.from:type_name -> google.protobuf.Timestamp
+	66, // 43: openfief.identity.v1.ListAuditEntriesRequest.to:type_name -> google.protobuf.Timestamp
+	50, // 44: openfief.identity.v1.ListAuditEntriesResponse.entries:type_name -> openfief.identity.v1.AuditEntry
+	7,  // 45: openfief.identity.v1.Grant.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 46: openfief.identity.v1.Grant.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	66, // 47: openfief.identity.v1.Grant.created_at:type_name -> google.protobuf.Timestamp
+	66, // 48: openfief.identity.v1.Grant.revoked_at:type_name -> google.protobuf.Timestamp
+	8,  // 49: openfief.identity.v1.GrantTarget.kind:type_name -> openfief.identity.v1.GrantTargetKind
+	7,  // 50: openfief.identity.v1.CreateGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 51: openfief.identity.v1.CreateGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	53, // 52: openfief.identity.v1.CreateGrantResponse.grant:type_name -> openfief.identity.v1.Grant
+	7,  // 53: openfief.identity.v1.RevokeGrantRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	8,  // 54: openfief.identity.v1.RevokeGrantRequest.target_kind:type_name -> openfief.identity.v1.GrantTargetKind
+	7,  // 55: openfief.identity.v1.ListGrantsRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	53, // 56: openfief.identity.v1.ListGrantsResponse.grants:type_name -> openfief.identity.v1.Grant
+	7,  // 57: openfief.identity.v1.UpdateGrantsRequest.holder_kind:type_name -> openfief.identity.v1.GrantHolderKind
+	54, // 58: openfief.identity.v1.UpdateGrantsRequest.add:type_name -> openfief.identity.v1.GrantTarget
+	54, // 59: openfief.identity.v1.UpdateGrantsRequest.remove:type_name -> openfief.identity.v1.GrantTarget
+	53, // 60: openfief.identity.v1.UpdateGrantsResponse.grants:type_name -> openfief.identity.v1.Grant
+	53, // 61: openfief.identity.v1.ViewPlugin.grants:type_name -> openfief.identity.v1.Grant
+	64, // 62: openfief.identity.v1.ListViewPluginsResponse.plugins:type_name -> openfief.identity.v1.ViewPlugin
+	14, // 63: openfief.identity.v1.AuthService.GetLoginMethods:input_type -> openfief.identity.v1.GetLoginMethodsRequest
+	16, // 64: openfief.identity.v1.AuthService.BeginRegistration:input_type -> openfief.identity.v1.BeginRegistrationRequest
+	18, // 65: openfief.identity.v1.AuthService.FinishRegistration:input_type -> openfief.identity.v1.FinishRegistrationRequest
+	20, // 66: openfief.identity.v1.AuthService.BeginLogin:input_type -> openfief.identity.v1.BeginLoginRequest
+	22, // 67: openfief.identity.v1.AuthService.FinishLogin:input_type -> openfief.identity.v1.FinishLoginRequest
+	24, // 68: openfief.identity.v1.AuthService.CreateDemoSession:input_type -> openfief.identity.v1.CreateDemoSessionRequest
+	26, // 69: openfief.identity.v1.AuthService.Logout:input_type -> openfief.identity.v1.LogoutRequest
+	28, // 70: openfief.identity.v1.AuthService.WhoAmI:input_type -> openfief.identity.v1.WhoAmIRequest
+	30, // 71: openfief.identity.v1.AuthService.ListPasskeys:input_type -> openfief.identity.v1.ListPasskeysRequest
+	32, // 72: openfief.identity.v1.AuthService.RemovePasskey:input_type -> openfief.identity.v1.RemovePasskeyRequest
+	34, // 73: openfief.identity.v1.AuthService.CreateScriptToken:input_type -> openfief.identity.v1.CreateScriptTokenRequest
+	36, // 74: openfief.identity.v1.AuthService.ListScriptTokens:input_type -> openfief.identity.v1.ListScriptTokensRequest
+	38, // 75: openfief.identity.v1.AuthService.RevokeScriptToken:input_type -> openfief.identity.v1.RevokeScriptTokenRequest
+	40, // 76: openfief.identity.v1.AuthService.CreateEnrollmentLink:input_type -> openfief.identity.v1.CreateEnrollmentLinkRequest
+	42, // 77: openfief.identity.v1.AuthService.BeginPasskeyCheck:input_type -> openfief.identity.v1.BeginPasskeyCheckRequest
+	44, // 78: openfief.identity.v1.AuthService.FinishPasskeyCheck:input_type -> openfief.identity.v1.FinishPasskeyCheckRequest
+	46, // 79: openfief.identity.v1.AuthService.SignOutEverywhere:input_type -> openfief.identity.v1.SignOutEverywhereRequest
+	51, // 80: openfief.identity.v1.AuthService.ListAuditEntries:input_type -> openfief.identity.v1.ListAuditEntriesRequest
+	55, // 81: openfief.identity.v1.AuthService.CreateGrant:input_type -> openfief.identity.v1.CreateGrantRequest
+	57, // 82: openfief.identity.v1.AuthService.RevokeGrant:input_type -> openfief.identity.v1.RevokeGrantRequest
+	59, // 83: openfief.identity.v1.AuthService.ListGrants:input_type -> openfief.identity.v1.ListGrantsRequest
+	61, // 84: openfief.identity.v1.AuthService.UpdateGrants:input_type -> openfief.identity.v1.UpdateGrantsRequest
+	63, // 85: openfief.identity.v1.AuthService.ListViewPlugins:input_type -> openfief.identity.v1.ListViewPluginsRequest
+	15, // 86: openfief.identity.v1.AuthService.GetLoginMethods:output_type -> openfief.identity.v1.GetLoginMethodsResponse
+	17, // 87: openfief.identity.v1.AuthService.BeginRegistration:output_type -> openfief.identity.v1.BeginRegistrationResponse
+	19, // 88: openfief.identity.v1.AuthService.FinishRegistration:output_type -> openfief.identity.v1.FinishRegistrationResponse
+	21, // 89: openfief.identity.v1.AuthService.BeginLogin:output_type -> openfief.identity.v1.BeginLoginResponse
+	23, // 90: openfief.identity.v1.AuthService.FinishLogin:output_type -> openfief.identity.v1.FinishLoginResponse
+	25, // 91: openfief.identity.v1.AuthService.CreateDemoSession:output_type -> openfief.identity.v1.CreateDemoSessionResponse
+	27, // 92: openfief.identity.v1.AuthService.Logout:output_type -> openfief.identity.v1.LogoutResponse
+	29, // 93: openfief.identity.v1.AuthService.WhoAmI:output_type -> openfief.identity.v1.WhoAmIResponse
+	31, // 94: openfief.identity.v1.AuthService.ListPasskeys:output_type -> openfief.identity.v1.ListPasskeysResponse
+	33, // 95: openfief.identity.v1.AuthService.RemovePasskey:output_type -> openfief.identity.v1.RemovePasskeyResponse
+	35, // 96: openfief.identity.v1.AuthService.CreateScriptToken:output_type -> openfief.identity.v1.CreateScriptTokenResponse
+	37, // 97: openfief.identity.v1.AuthService.ListScriptTokens:output_type -> openfief.identity.v1.ListScriptTokensResponse
+	39, // 98: openfief.identity.v1.AuthService.RevokeScriptToken:output_type -> openfief.identity.v1.RevokeScriptTokenResponse
+	41, // 99: openfief.identity.v1.AuthService.CreateEnrollmentLink:output_type -> openfief.identity.v1.CreateEnrollmentLinkResponse
+	43, // 100: openfief.identity.v1.AuthService.BeginPasskeyCheck:output_type -> openfief.identity.v1.BeginPasskeyCheckResponse
+	45, // 101: openfief.identity.v1.AuthService.FinishPasskeyCheck:output_type -> openfief.identity.v1.FinishPasskeyCheckResponse
+	47, // 102: openfief.identity.v1.AuthService.SignOutEverywhere:output_type -> openfief.identity.v1.SignOutEverywhereResponse
+	52, // 103: openfief.identity.v1.AuthService.ListAuditEntries:output_type -> openfief.identity.v1.ListAuditEntriesResponse
+	56, // 104: openfief.identity.v1.AuthService.CreateGrant:output_type -> openfief.identity.v1.CreateGrantResponse
+	58, // 105: openfief.identity.v1.AuthService.RevokeGrant:output_type -> openfief.identity.v1.RevokeGrantResponse
+	60, // 106: openfief.identity.v1.AuthService.ListGrants:output_type -> openfief.identity.v1.ListGrantsResponse
+	62, // 107: openfief.identity.v1.AuthService.UpdateGrants:output_type -> openfief.identity.v1.UpdateGrantsResponse
+	65, // 108: openfief.identity.v1.AuthService.ListViewPlugins:output_type -> openfief.identity.v1.ListViewPluginsResponse
+	86, // [86:109] is the sub-list for method output_type
+	63, // [63:86] is the sub-list for method input_type
+	63, // [63:63] is the sub-list for extension type_name
+	63, // [63:63] is the sub-list for extension extendee
+	0,  // [0:63] is the sub-list for field type_name
 }
 
 func init() { file_openfief_identity_v1_auth_proto_init() }
@@ -4288,7 +4738,7 @@ func file_openfief_identity_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_identity_v1_auth_proto_rawDesc), len(file_openfief_identity_v1_auth_proto_rawDesc)),
 			NumEnums:      9,
-			NumMessages:   51,
+			NumMessages:   57,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d9efb9896c5
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getholderid
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:26:35.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfb255705337
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-updategrantsrequest-getholderid
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:26:35.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d852b5b0d80f

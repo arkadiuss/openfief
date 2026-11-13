@@ -965,3 +965,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5f62409cc7c
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-protomessage
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:27:50.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acae38018b41
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsrequest-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:27:50.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c715ae5ed45c
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-reset
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:29:17.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf402c0e7a51
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-listviewpluginsresponse-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:29:17.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322b0159322d

@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-263365d92a8c
+  - type: executable_for
+    from: SYM-access-identity-app-accessgrants-test-testviewpluginsarelistedfortheowner
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:19.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8e435460b52

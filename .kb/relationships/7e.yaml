@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-631a4a1db3aa
+  - type: implements
+    from: SYM-access-identity-app-grants-grants-issuetokenwith
+    to: REQ-identity-script-token-created-with-grants
+    created_at: 2026-11-13T18:11:41.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfd78ff9b21
+  - type: covered_by
+    from: SYM-access-identity-app-grants-grants-issuetokenwith
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:11:41.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f4417e1d46

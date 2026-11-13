@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15c20d0b59fb
+  - type: implements
+    from: SYM-access-views-ui-access-server-updateplugingrants
+    to: REQ-ui-access-view-plugins
+    created_at: 2026-11-13T18:15:46.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e45a31be66e8
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-updateplugingrants
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:46.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1238d2573b

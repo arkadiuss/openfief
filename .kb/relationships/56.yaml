@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efb1905b0acc
+  - type: implements
+    from: SYM-access-identity-connectapi-grants-authservice-updategrants
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:12:58.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24644029f4f3
+  - type: covered_by
+    from: SYM-access-identity-connectapi-grants-authservice-updategrants
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:12:58.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bd87e50c124

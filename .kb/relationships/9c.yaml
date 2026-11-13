@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75291cafaf25
+  - type: implements
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-scripttoken-getmcpallowed
+    to: REQ-identity-script-token-created-with-grants
+    created_at: 2026-11-13T18:24:31.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88fbc04d18a0
+  - type: covered_by
+    from: SYM-access-sdk-go-gen-openfief-identity-v1-auth-pb-scripttoken-getmcpallowed
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T18:24:31.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ae4fe6a6fbf

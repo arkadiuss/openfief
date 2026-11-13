@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eada961cac11
+  - type: implements
+    from: SYM-access-views-ui-access-server-updategrantsfailed
+    to: REQ-ui-access-page
+    created_at: 2026-11-13T18:15:56.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0ed1308e271
+  - type: covered_by
+    from: SYM-access-views-ui-access-server-updategrantsfailed
+    to: TEST-ui-access
+    created_at: 2026-11-13T18:15:56.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f3dbd075e1

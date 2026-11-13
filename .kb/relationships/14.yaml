@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e077c5320355
+  - type: executable_for
+    from: SYM-access-identity-app-grants-test-fakedirectory-accessviewplugins
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T18:12:02.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7ed649701d0

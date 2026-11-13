@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe25f746dc24
+  - type: implements
+    from: SYM-access-identity-app-owner-auth-viewplugins
+    to: REQ-identity-owner-updates-grants
+    created_at: 2026-11-13T18:12:17.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62c0bc2ab451
+  - type: covered_by
+    from: SYM-access-identity-app-owner-auth-viewplugins
+    to: TEST-identity-access-grants-app
+    created_at: 2026-11-13T18:12:17.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5dea91bd90

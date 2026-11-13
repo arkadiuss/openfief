@@ -47,7 +47,7 @@ func TestAuditTrail(t *testing.T) {
 	f.clock.set(authStart().Add(time.Minute))
 	second, err := f.login(t, dev, local)
 	must(t, "login", err)
-	tok, secret, err := f.auth.CreateScriptToken(ctx, local, second.Token, "nightly", 0)
+	tok, secret, err := f.auth.CreateScriptToken(ctx, local, second.Token, app.NewToken{Name: "nightly"})
 	must(t, "CreateScriptToken", err)
 	must(t, "RevokeScriptToken", f.auth.RevokeScriptToken(ctx, local, second.Token, string(tok.ID)))
 	_, err = f.auth.CreateEnrollmentLink(ctx, local, second.Token, devo, 0)
@@ -190,7 +190,7 @@ func TestAuditFailsClosed(t *testing.T) {
 			return wrap(err)
 		},
 		"script token creation": func() error {
-			_, _, err := f.auth.CreateScriptToken(ctx, local, first.Token, "nightly", 0)
+			_, _, err := f.auth.CreateScriptToken(ctx, local, first.Token, app.NewToken{Name: "nightly"})
 			return wrap(err)
 		},
 		"enrollment link": func() error {
