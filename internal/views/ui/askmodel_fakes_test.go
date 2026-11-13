@@ -50,6 +50,10 @@ type fakeAskModel struct {
 	sessions []string
 	bearers  []string
 	checks   [][]string
+	// denyChecks are tiers CheckAskTiers refuses though GenerateAsk took
+	// them: a tool above what the route allows, as a fief's own data (TF)
+	// would be for a route that may receive T0.
+	denyChecks map[string]bool
 }
 
 func (f *fakeAskModel) GetAskModel(_ context.Context, r *connect.Request[modelsv1.GetAskModelRequest]) (*connect.Response[modelsv1.GetAskModelResponse], error) {
@@ -71,7 +75,11 @@ func (f *fakeAskModel) CheckAskTiers(_ context.Context, r *connect.Request[model
 		return nil, err
 	}
 	f.checks = append(f.checks, slices.Clone(r.Msg.GetTiers()))
-	return connect.NewResponse(&modelsv1.CheckAskTiersResponse{Allowed: f.on && f.mayReceive(r.Msg.GetTiers())}), nil
+	allowed := f.on && f.mayReceive(r.Msg.GetTiers())
+	for _, t := range r.Msg.GetTiers() {
+		allowed = allowed && !f.denyChecks[t]
+	}
+	return connect.NewResponse(&modelsv1.CheckAskTiersResponse{Allowed: allowed}), nil
 }
 
 func (f *fakeAskModel) GenerateAsk(_ context.Context, r *connect.Request[modelsv1.GenerateAskRequest]) (*connect.Response[modelsv1.GenerateAskResponse], error) {

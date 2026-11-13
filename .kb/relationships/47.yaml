@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e99fbe5d262
+  - type: executable_for
+    from: SYM-ask-limits-test-testasklimitsdefaultsandoverrides
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:01:21.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8cbc0de1933

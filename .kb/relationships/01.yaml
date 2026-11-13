@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b866d046a911
+  - type: executable_for
+    from: SYM-ask-limits-test-testrequestbodyrequiresparametersonopenrouterwithtools
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T20:02:07.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9659a6bf85

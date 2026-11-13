@@ -80,7 +80,7 @@ func askRequestFrom(m *modelsv1.GenerateAskRequest) (*modelrouter.Request, error
 	if len(m.GetMessages()) > maxAskMessages || len(m.GetTools()) > maxAskTools {
 		return nil, fmt.Errorf("%w: too many messages or tools", errBadAsk)
 	}
-	out := &modelrouter.Request{}
+	out := &modelrouter.Request{MaxOutputTokens: m.GetMaxOutputTokens()}
 	for _, am := range m.GetMessages() {
 		msg, err := askMessageFrom(am)
 		if err != nil {
@@ -129,10 +129,11 @@ func messageRoleFrom(r modelsv1.MessageRole) (modelrouter.MessageRole, error) {
 	return "", fmt.Errorf("%w: a message role that is none of the four", errBadAsk)
 }
 
-// askResponseTo translates the model's answer. Usage is not passed on: the
-// budget keeps it in the core (D-208).
+// askResponseTo translates the model's answer. Only the output tokens go on,
+// so the Ask box can stop a question at its token limit (D-208); the budget
+// and the cost stay in the core.
 func askResponseTo(r *modelrouter.Result) *modelsv1.GenerateAskResponse {
-	out := &modelsv1.GenerateAskResponse{Content: r.Content, Model: r.Model.String()}
+	out := &modelsv1.GenerateAskResponse{Content: r.Content, Model: r.Model.String(), OutputTokens: r.Usage.OutputTokens}
 	switch r.Finish {
 	case modelrouter.FinishLength:
 		out.FinishReason = modelsv1.FinishReason_FINISH_REASON_LENGTH

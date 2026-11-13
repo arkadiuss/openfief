@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-872729559169
+  - type: verified_by
+    from: SCEN-models-openrouter-require-parameters
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T20:00:50.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d5bcbf3ad70
+  - type: covered_by
+    from: SYM-ask-limits-pb-getmaxoutputtokens
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T20:01:47.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4419d090eb6f
+  - type: implements
+    from: SYM-ask-limits-pb-getmaxoutputtokens
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T20:01:47.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5502d02eb1e

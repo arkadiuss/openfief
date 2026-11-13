@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4866243b5dc2
+  - type: verified_by
+    from: SCEN-ui-ask-question-tagged-t0
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:00:48.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b600cc81ed85

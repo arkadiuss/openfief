@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8339caa1dd5
+  - type: executable_for
+    from: SYM-ask-limits-test-testcompletesendsrequireparameterstoopenrouteronthewire
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T20:02:13.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e628229db5

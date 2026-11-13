@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f94c2722c93
+  - type: executable_for
+    from: SYM-ask-limits-test-testmodellooplimitsareconfigurable
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:01:31.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7caac1a7ba1

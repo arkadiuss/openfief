@@ -16,29 +16,72 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
-// The limits of one question the Ask box sends a model (D-203): a bounded
-// tool loop, each call to the core and each tool under a timeout, and the
-// whole question under a deadline.
+// Fixed limits of the Ask box's model calls: each call to the core and each
+// tool under a timeout, and the length of what is sent and shown.
 const (
-	// askMaxRounds is how many times the model is asked for a message. The
-	// last round offers no tools, so the model has to answer with what it
-	// read.
-	askMaxRounds = 4
-	// askMaxToolCalls is how many tool calls one question runs in all; a
-	// call beyond it gets a refusal and runs nothing.
-	askMaxToolCalls = 6
 	// askCallTimeout bounds one call to the core's router, which may try
 	// several models.
 	askCallTimeout = 45 * time.Second
 	// askToolTimeout bounds one tool, which reads the core a few times.
 	askToolTimeout = 20 * time.Second
-	// askDeadline bounds the whole question.
-	askDeadline = 2 * time.Minute
 	// maxModelQuestionRunes caps a question sent to the model.
 	maxModelQuestionRunes = 300
 	// maxModelAnswerRunes caps the text of a model's answer shown.
 	maxModelAnswerRunes = 4000
 )
+
+// D-208's limits of one question.
+const (
+	defaultToolRounds   = 5
+	defaultToolCalls    = 10
+	defaultOutputTokens = 800
+	defaultDeadline     = 2 * time.Minute
+)
+
+// AskLimits are the limits of one question the Ask box sends a model (D-203,
+// D-208): a bounded tool loop, a token budget and a deadline. A zero field
+// takes its default, DefaultAskLimits'.
+type AskLimits struct {
+	// ToolRounds is how many rounds may call tools. One more round follows
+	// with no tools offered, so the model has to answer with what it read.
+	ToolRounds int
+	// ToolCalls is how many tool calls one question runs in all; a call
+	// beyond it gets a refusal and runs nothing.
+	ToolCalls int
+	// OutputTokens is the most tokens the model may write for one question,
+	// all its calls together: each call is limited to what is left, and no
+	// call is made once it is spent.
+	OutputTokens int64
+	// Deadline bounds the whole question.
+	Deadline time.Duration
+}
+
+// DefaultAskLimits returns the limits D-208 sets: five rounds that may call
+// tools then a final one without, ten tool calls, 800 output tokens and two
+// minutes.
+func DefaultAskLimits() AskLimits {
+	return AskLimits{
+		ToolRounds: defaultToolRounds, ToolCalls: defaultToolCalls, OutputTokens: defaultOutputTokens, Deadline: defaultDeadline,
+	}
+}
+
+// withDefaults returns l with each zero field replaced by its default.
+func (l AskLimits) withDefaults() AskLimits {
+	d := DefaultAskLimits()
+	if l.ToolRounds <= 0 {
+		l.ToolRounds = d.ToolRounds
+	}
+	if l.ToolCalls <= 0 {
+		l.ToolCalls = d.ToolCalls
+	}
+	if l.OutputTokens <= 0 {
+		l.OutputTokens = d.OutputTokens
+	}
+	if l.Deadline <= 0 {
+		l.Deadline = d.Deadline
+	}
+	return l
+}
 
 // askSystemPrompt is the system message of every question. It holds no
 // portfolio data, so it is public (T2): the owner's data comes in only as
@@ -77,6 +120,8 @@ type askReply struct {
 	Calls   []askCall
 	// Model is the model that answered, as "provider/model".
 	Model string
+	// OutputTokens is what the answer used.
+	OutputTokens int64
 }
 
 // askModelPort is the core's router, as the Ask box uses it (D-203): every
@@ -89,8 +134,9 @@ type askModelPort interface {
 	// permits reports whether a model of the route may receive data of every
 	// tier together, with tools.
 	permits(ctx context.Context, sess session, tiers []string) (bool, error)
-	// generate asks the route's models for the next message.
-	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool) (askReply, error)
+	// generate asks the route's models for the next message, of at most
+	// maxTokens output tokens.
+	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error)
 }
 
 // toolRunner runs a command as a tool: the commands' own answerer, reading
@@ -109,32 +155,43 @@ type modelAnswerer struct {
 	run   toolRunner
 	today func() kernel.Date
 	log   *slog.Logger
+	// limits are the limits of one question, with no zero field.
+	limits AskLimits
 }
 
 // ask answers question with the model: the tool loop of at most
-// askMaxRounds rounds, each tool result checked against the data tiers the
-// route's models may receive before it joins the conversation. A card the
-// route's models may not receive is withheld, and the model is told so.
+// limits.ToolRounds rounds that may call tools and a last one that may not,
+// each tool result checked against the data tiers the route's models may
+// receive before it joins the conversation. A card the route's models may not
+// receive is withheld, and the model is told so.
+//
+// The question is the owner's own words, which may carry amounts or holdings,
+// so it is T0 like a tool's result (D-206): a route whose models may not
+// receive T0 is refused by the router before anything is sent.
 func (a *modelAnswerer) ask(r *http.Request, sess session, question string) (answerCard, error) {
-	ctx, cancel := context.WithTimeout(r.Context(), askDeadline)
+	ctx, cancel := context.WithTimeout(r.Context(), a.limits.Deadline)
 	defer cancel()
 	r = r.WithContext(ctx)
 	conv := &askConversation{
-		a: a, r: r, sess: sess, tiers: map[string]bool{tierT2: true},
+		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
 		msgs: []askMessage{
 			{Role: "system", Content: askSystemPrompt + a.today().String() + ".", Tier: tierT2},
-			{Role: "user", Content: question, Tier: tierT2},
+			{Role: "user", Content: question, Tier: tierT0},
 		},
 	}
-	for round := 1; round <= askMaxRounds; round++ {
+	for round := 1; round <= a.limits.ToolRounds+1; round++ {
 		tools := a.tools
-		if round == askMaxRounds {
+		if round > a.limits.ToolRounds {
 			tools = nil
+		}
+		if conv.tokens >= a.limits.OutputTokens {
+			return overBudgetAnswer(question), nil
 		}
 		reply, err := conv.generate(ctx, tools)
 		if err != nil {
 			return a.failure(r, question, err)
 		}
+		conv.tokens += reply.OutputTokens
 		if len(reply.Calls) == 0 {
 			return conv.answer(question, &reply), nil
 		}
@@ -157,17 +214,20 @@ type askConversation struct {
 	sess session
 	msgs []askMessage
 	// tiers are the data tiers the messages hold so far.
-	tiers    map[string]bool
-	calls    int
+	tiers map[string]bool
+	calls int
+	// tokens are the output tokens the model has used so far.
+	tokens   int64
 	used     []answerCard
 	withheld []withheldCard
 }
 
-// generate asks the router for the next message, offering tools.
+// generate asks the router for the next message, offering tools and no more
+// output tokens than the question has left.
 func (c *askConversation) generate(ctx context.Context, tools []askTool) (askReply, error) {
 	ctx, cancel := context.WithTimeout(ctx, askCallTimeout)
 	defer cancel()
-	return c.a.model.generate(ctx, c.sess, c.msgs, tools)
+	return c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens)
 }
 
 // callTool runs one tool call of the model and adds its result to the
@@ -182,7 +242,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		c.addResult(&call, toolFailure("there is no tool called %s", call.Name), tierT2)
 		return nil
 	}
-	if c.calls > askMaxToolCalls {
+	if c.calls > c.a.limits.ToolCalls {
 		c.addResult(&call, toolFailure("too many tool calls for one question; answer with what you have"), tierT2)
 		return nil
 	}
@@ -279,7 +339,7 @@ func (a *modelAnswerer) failure(r *http.Request, question string, err error) (an
 		return unknownAnswer(question), nil
 	case code == connect.CodePermissionDenied:
 		return modelCard(question, "No model may see this question",
-			"The owner has not allowed any model on the Ask box's route to receive questions. The box's commands still answer from your own record."), nil
+			"A question may carry amounts or holdings, so it is T0 data, and the owner has not allowed any model on the Ask box's route to receive T0. Nothing was sent. The box's commands still answer from your own record."), nil
 	case code == connect.CodeUnavailable, code == connect.CodeDeadlineExceeded, errors.Is(err, context.DeadlineExceeded):
 		return modelCard(question, "The model didn't answer",
 			"Every model on the route was down or too slow. Try again in a moment; the commands answer from your own record."), nil
@@ -287,6 +347,13 @@ func (a *modelAnswerer) failure(r *http.Request, question string, err error) (an
 	a.log.WarnContext(r.Context(), "ask model call failed", "code", code.String())
 	return modelCard(question, "The model couldn't answer",
 		"Something went wrong asking it. The commands answer from your own record."), nil
+}
+
+// overBudgetAnswer is the answer of a model that spent the question's output
+// tokens on tool calls.
+func overBudgetAnswer(question string) answerCard {
+	return modelCard(question, "The model didn't finish",
+		"It used up the words one question may take before it answered. Ask something narrower, or use a command.")
 }
 
 // unfinishedAnswer is the answer of a model that kept asking for tools

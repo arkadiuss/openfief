@@ -44,8 +44,8 @@ func (m askModelClient) permits(ctx context.Context, sess session, tiers []strin
 }
 
 // generate asks the route's models for the next message of the conversation.
-func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool) (askReply, error) {
-	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token}
+func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error) {
+	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens}
 	for i := range msgs {
 		am, err := askMessageTo(&msgs[i])
 		if err != nil {
@@ -60,7 +60,7 @@ func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMe
 	if err != nil {
 		return askReply{}, fmt.Errorf("GenerateAsk: %w", err)
 	}
-	out := askReply{Content: resp.Msg.GetContent(), Model: resp.Msg.GetModel()}
+	out := askReply{Content: resp.Msg.GetContent(), Model: resp.Msg.GetModel(), OutputTokens: resp.Msg.GetOutputTokens()}
 	for _, tc := range resp.Msg.GetToolCalls() {
 		out.Calls = append(out.Calls, askCall{ID: tc.GetId(), Name: tc.GetName(), Args: tc.GetArgumentsJson()})
 	}

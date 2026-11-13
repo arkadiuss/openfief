@@ -313,9 +313,12 @@ type GenerateAskRequest struct {
 	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
 	Messages     []*AskMessage          `protobuf:"bytes,3,rep,name=messages,proto3" json:"messages,omitempty"`
 	// The tools the model may call: the Ask box's read-only answerers.
-	Tools         []*Tool `protobuf:"bytes,4,rep,name=tools,proto3" json:"tools,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Tools []*Tool `protobuf:"bytes,4,rep,name=tools,proto3" json:"tools,omitempty"`
+	// The most tokens this call's answer may hold (D-208); zero means the
+	// model entry's own limit.
+	MaxOutputTokens int64 `protobuf:"varint,5,opt,name=max_output_tokens,json=maxOutputTokens,proto3" json:"max_output_tokens,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *GenerateAskRequest) Reset() {
@@ -376,13 +379,24 @@ func (x *GenerateAskRequest) GetTools() []*Tool {
 	return nil
 }
 
+func (x *GenerateAskRequest) GetMaxOutputTokens() int64 {
+	if x != nil {
+		return x.MaxOutputTokens
+	}
+	return 0
+}
+
 type GenerateAskResponse struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Content      string                 `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
 	ToolCalls    []*ToolCall            `protobuf:"bytes,2,rep,name=tool_calls,json=toolCalls,proto3" json:"tool_calls,omitempty"`
 	FinishReason FinishReason           `protobuf:"varint,3,opt,name=finish_reason,json=finishReason,proto3,enum=openfief.models.v1.FinishReason" json:"finish_reason,omitempty"`
 	// The model that answered, as "provider/model".
-	Model         string `protobuf:"bytes,4,opt,name=model,proto3" json:"model,omitempty"`
+	Model string `protobuf:"bytes,4,opt,name=model,proto3" json:"model,omitempty"`
+	// The tokens the answer used, as the provider reports them, so the Ask box
+	// can stop a question at its token limit (D-208). The budget and the cost
+	// stay in the core.
+	OutputTokens  int64 `protobuf:"varint,5,opt,name=output_tokens,json=outputTokens,proto3" json:"output_tokens,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -445,6 +459,13 @@ func (x *GenerateAskResponse) GetModel() string {
 	return ""
 }
 
+func (x *GenerateAskResponse) GetOutputTokens() int64 {
+	if x != nil {
+		return x.OutputTokens
+	}
+	return 0
+}
+
 var File_openfief_models_v1_ask_proto protoreflect.FileDescriptor
 
 const file_openfief_models_v1_ask_proto_rawDesc = "" +
@@ -464,18 +485,20 @@ const file_openfief_models_v1_ask_proto_rawDesc = "" +
 	"\n" +
 	"AskMessage\x125\n" +
 	"\amessage\x18\x01 \x01(\v2\x1b.openfief.models.v1.MessageR\amessage\x12\x1b\n" +
-	"\tdata_tier\x18\x02 \x01(\tR\bdataTier\"\xbd\x01\n" +
+	"\tdata_tier\x18\x02 \x01(\tR\bdataTier\"\xe9\x01\n" +
 	"\x12GenerateAskRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12:\n" +
 	"\bmessages\x18\x03 \x03(\v2\x1e.openfief.models.v1.AskMessageR\bmessages\x12.\n" +
-	"\x05tools\x18\x04 \x03(\v2\x18.openfief.models.v1.ToolR\x05tools\"\xc9\x01\n" +
+	"\x05tools\x18\x04 \x03(\v2\x18.openfief.models.v1.ToolR\x05tools\x12*\n" +
+	"\x11max_output_tokens\x18\x05 \x01(\x03R\x0fmaxOutputTokens\"\xee\x01\n" +
 	"\x13GenerateAskResponse\x12\x18\n" +
 	"\acontent\x18\x01 \x01(\tR\acontent\x12;\n" +
 	"\n" +
 	"tool_calls\x18\x02 \x03(\v2\x1c.openfief.models.v1.ToolCallR\ttoolCalls\x12E\n" +
 	"\rfinish_reason\x18\x03 \x01(\x0e2 .openfief.models.v1.FinishReasonR\ffinishReason\x12\x14\n" +
-	"\x05model\x18\x04 \x01(\tR\x05model2\xc1\x02\n" +
+	"\x05model\x18\x04 \x01(\tR\x05model\x12#\n" +
+	"\routput_tokens\x18\x05 \x01(\x03R\foutputTokens2\xc1\x02\n" +
 	"\x0fAskModelService\x12c\n" +
 	"\vGetAskModel\x12&.openfief.models.v1.GetAskModelRequest\x1a'.openfief.models.v1.GetAskModelResponse\"\x03\x90\x02\x01\x12i\n" +
 	"\rCheckAskTiers\x12(.openfief.models.v1.CheckAskTiersRequest\x1a).openfief.models.v1.CheckAskTiersResponse\"\x03\x90\x02\x01\x12^\n" +

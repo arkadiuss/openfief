@@ -118,13 +118,16 @@ func TestAskBoxCommandsAnswerAtOnceWithAModel(t *testing.T) {
 }
 
 // TestAskBoxWithholdsACardAboveWhatTheRouteAllows checks D-206 through the
-// page: a model allowed public data only is refused the allocation's data,
-// the page names the withheld card without drawing it, and the model's
-// answer is what it could say without it.
+// page: when the router won't let a tool's result join the conversation (the
+// fake refuses the allocation's T0 at the check, as it would a fief's own
+// data for a route that may receive T0 alone), the page names the withheld
+// card without drawing it, and the model's answer is what it could say
+// without it.
 func TestAskBoxWithholdsACardAboveWhatTheRouteAllows(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	h.askModel.turnOn("T2")
+	h.askModel.turnOn("T0", "T2")
+	h.askModel.denyChecks = map[string]bool{"T0": true}
 	h.askModel.say(
 		scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{}`)}},
 		scriptedReply{text: "I am not allowed to see your allocation."},
@@ -140,7 +143,7 @@ func TestAskBoxWithholdsACardAboveWhatTheRouteAllows(t *testing.T) {
 	if len(results) != 1 || !strings.HasPrefix(results[0], "T2 ") || !strings.Contains(results[0], "withheld") || strings.Contains(results[0], "listed") {
 		t.Errorf("what the model got for the card = %v, want a refusal tagged public with none of its data", results)
 	}
-	if want := [][]string{{"T0", "T2"}}; !cmp.Equal(want, h.askModel.checks) {
+	if want := [][]string{{"T0"}}; !cmp.Equal(want, h.askModel.checks) {
 		t.Errorf("tier checks = %v, want %v", h.askModel.checks, want)
 	}
 }

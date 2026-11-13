@@ -137,7 +137,8 @@ func userMessage(tier string) *modelsv1.AskMessage {
 func (f *askFixture) generate(token string, msgs ...*modelsv1.AskMessage) (*modelsv1.GenerateAskResponse, error) {
 	resp, err := f.client.GenerateAsk(context.Background(), connect.NewRequest(&modelsv1.GenerateAskRequest{
 		Origin: "o", SessionToken: token, Messages: msgs,
-		Tools: []*modelsv1.Tool{{Name: "show", Description: "d", ParametersSchemaJson: `{"type":"object"}`}},
+		Tools:           []*modelsv1.Tool{{Name: "show", Description: "d", ParametersSchemaJson: `{"type":"object"}`}},
+		MaxOutputTokens: 800,
 	}))
 	if err != nil {
 		return nil, fmt.Errorf("GenerateAsk: %w", err)
@@ -151,6 +152,7 @@ func TestAskServiceGeneratesThroughTheRouter(t *testing.T) {
 	f.provider.reply = modelrouter.Result{
 		Content: "looking", Finish: modelrouter.FinishToolCalls,
 		ToolCalls: []modelrouter.ToolCall{{ID: "call-1", Name: "show", ArgumentsJSON: `{"name":"x"}`}},
+		Usage:     modelrouter.Usage{InputTokens: 900, OutputTokens: 37},
 	}
 	assistant := &modelsv1.AskMessage{DataTier: "T2", Message: &modelsv1.Message{
 		Role: modelsv1.MessageRole_MESSAGE_ROLE_ASSISTANT, ToolCalls: []*modelsv1.ToolCall{{Id: "c0", Name: "show", ArgumentsJson: "{}"}},
@@ -162,7 +164,8 @@ func TestAskServiceGeneratesThroughTheRouter(t *testing.T) {
 	}
 	want := &modelsv1.GenerateAskResponse{
 		Content: "looking", FinishReason: modelsv1.FinishReason_FINISH_REASON_TOOL_CALLS, Model: "p/m",
-		ToolCalls: []*modelsv1.ToolCall{{Id: "call-1", Name: "show", ArgumentsJson: `{"name":"x"}`}},
+		ToolCalls:    []*modelsv1.ToolCall{{Id: "call-1", Name: "show", ArgumentsJson: `{"name":"x"}`}},
+		OutputTokens: 37,
 	}
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("response (-want +got):\n%s", diff)
@@ -175,6 +178,9 @@ func TestAskServiceGeneratesThroughTheRouter(t *testing.T) {
 	}
 	if diff := cmp.Diff(wantMsgs, sent.Messages); diff != "" {
 		t.Errorf("messages the model got (-want +got):\n%s", diff)
+	}
+	if sent.MaxOutputTokens != 800 {
+		t.Errorf("output limit the model got = %d, want the request's 800 (D-208)", sent.MaxOutputTokens)
 	}
 	if len(sent.Tools) != 1 || sent.Tools[0].Name != "show" {
 		t.Errorf("tools the model got = %+v", sent.Tools)

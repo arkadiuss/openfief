@@ -195806,3 +195806,225 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-tools
+  - id: SYM-ask-limits-ask-limits
+    title: AskLimits
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:00:56.657Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-ask-limits-default-ask-limits
+    title: DefaultAskLimits
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:02.862Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-ask-limits-with-defaults
+    title: AskLimits.withDefaults
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:08.732Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-ask-limits-over-budget-answer
+    title: overBudgetAnswer
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:14.123Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-ask-limits-test-testasklimitsdefaultsandoverrides
+    title: TestAskLimitsDefaultsAndOverrides
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:19.133Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ask-limits-test-testmodelloopstopsattheoutputtokenlimit
+    title: TestModelLoopStopsAtTheOutputTokenLimit
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:24.161Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ask-limits-test-testmodellooplimitsareconfigurable
+    title: TestModelLoopLimitsAreConfigurable
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:29.188Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ask-limits-test-testmodelquestionist0
+    title: TestModelQuestionIsT0
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:34.575Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ask-limits-test-testquestionrefusedwithoutt0
+    title: testQuestionRefusedWithoutT0
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:39.729Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ask-limits-pb-getmaxoutputtokens
+    title: GenerateAskRequest.GetMaxOutputTokens
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:45.232Z
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask
+      - type: implements
+        target: REQ-models-ask-box-model-through-router
+  - id: SYM-ask-limits-pb-getoutputtokens
+    title: GenerateAskResponse.GetOutputTokens
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:50.273Z
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask
+      - type: implements
+        target: REQ-models-ask-box-model-through-router
+  - id: SYM-ask-limits-on-openrouter
+    title: chatClient.onOpenRouter
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:01:55.457Z
+    sourceFile: plugins/model-openai/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-models-openrouter-require-parameters
+  - id: SYM-ask-limits-request-body
+    title: chatClient.requestBody
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:02:00.486Z
+    sourceFile: plugins/model-openai/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-models-openrouter-require-parameters
+  - id: SYM-ask-limits-test-testrequestbodyrequiresparametersonopenrouterwithtools
+    title: TestRequestBodyRequiresParametersOnOpenRouterWithTools
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:02:05.648Z
+    sourceFile: plugins/model-openai/chat_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ask-limits-test-testcompletesendsrequireparameterstoopenrouteronthewire
+    title: TestCompleteSendsRequireParametersToOpenRouterOnTheWire
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:02:10.627Z
+    sourceFile: plugins/model-openai/chat_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ask-limits-test-rewritehost-roundtrip
+    title: rewriteHost.RoundTrip
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:02:16.005Z
+    sourceFile: plugins/model-openai/chat_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ask-limits-test-rewritehost
+    title: rewriteHost
+    status: active
+    origin:
+      kind: agent
+      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
+      recorded_at: 2026-11-13T20:02:20.558Z
+    sourceFile: plugins/model-openai/chat_test.go
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat

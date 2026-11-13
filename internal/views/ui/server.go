@@ -91,6 +91,9 @@ type Config struct {
 	// plugin's own token, the asking person's session in each request. It is
 	// optional: without it the Ask box answers its commands alone.
 	AskModel modelsv1connect.AskModelServiceClient
+	// AskLimits are the limits of one question the Ask box sends a model;
+	// zero fields take DefaultAskLimits' (D-208).
+	AskLimits AskLimits
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -183,7 +186,7 @@ func New(cfg *Config) (http.Handler, error) {
 		commands := commandAnswerer{s: s}
 		s.ask = routedAnswerer{
 			commands: commands, today: s.today, log: s.log,
-			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log},
+			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
 		}
 	}
 	return securityHeaders(sameOrigin(s.routes(static))), nil

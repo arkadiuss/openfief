@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b7ab8c05731
+  - type: covered_by
+    from: SYM-ask-limits-over-budget-answer
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T20:01:16.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e376e98704d
+  - type: implements
+    from: SYM-ask-limits-over-budget-answer
+    to: REQ-ui-ask-model-loop-limits
+    created_at: 2026-11-13T20:01:16.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac9e7c71851f

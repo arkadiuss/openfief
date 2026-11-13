@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"connectrpc.com/connect"
 	"github.com/google/go-cmp/cmp"
@@ -26,7 +27,8 @@ const secretAsk = "SECRET-ASK-TEXT"
 var errSecret = errors.New(secretAsk)
 
 // scriptedPort is an askModelPort that answers from a script and keeps what
-// it was sent. Its model may receive the tiers in allowed.
+// it was sent. Its model may receive the tiers in allowed. It keeps the token
+// limit of each call and says each call spent `used` tokens.
 type scriptedPort struct {
 	mu          sync.Mutex
 	unavailable error
@@ -37,6 +39,9 @@ type scriptedPort struct {
 	availCalls  int
 	requests    [][]askMessage
 	offered     []int
+	maxTokens   []int64
+	used        int64
+	refused     int
 	permitted   [][]string
 }
 
@@ -62,11 +67,20 @@ func (p *scriptedPort) permits(_ context.Context, _ session, tiers []string) (bo
 	return true, nil
 }
 
-func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool) (askReply, error) {
+func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	p.requests = append(p.requests, slices.Clone(msgs))
 	p.offered = append(p.offered, len(tools))
+	p.maxTokens = append(p.maxTokens, maxTokens)
+	for i := range msgs {
+		// The router refuses a conversation with a tier no model of the
+		// route may receive before it sends anything.
+		if !p.allowed[msgs[i].Tier] {
+			p.refused++
+			return askReply{}, codeErr(connect.CodePermissionDenied, nil)
+		}
+	}
 	if p.generateErr != nil {
 		return askReply{}, p.generateErr
 	}
@@ -74,6 +88,7 @@ func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage,
 	if len(p.replies) > 0 {
 		next, p.replies = p.replies[0], p.replies[1:]
 	}
+	next.OutputTokens = p.used
 	return next, nil
 }
 
@@ -81,8 +96,8 @@ func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage,
 func calling(calls ...askCall) askReply { return askReply{Calls: calls, Model: "p/m"} }
 
 // loopFixture is a modelAnswerer over a scripted port, with a tool table
-// whose sync_status card is public (T2) so a route that may receive only T2
-// gets that card and is refused the others, and a runner that makes a card
+// whose sync_status card is one fief's (TF) so a route that may receive T0
+// and T2 but not TF is refused that card and gets the others, and a runner that makes a card
 // per command and counts what it ran.
 type loopFixture struct {
 	port *scriptedPort
@@ -102,11 +117,12 @@ func newLoopFixture(t *testing.T, allowed ...string) *loopFixture {
 	tools := askTools()
 	for i := range tools {
 		if tools[i].Name == "sync_status" {
-			tools[i].Tier = tierT2
+			tools[i].Tier = tierTF
 		}
 	}
 	f.a = &modelAnswerer{
-		model: f.port, tools: tools, today: func() kernel.Date { return mustDate(t, askToday) },
+		limits: DefaultAskLimits(),
+		model:  f.port, tools: tools, today: func() kernel.Date { return mustDate(t, askToday) },
 		log: slog.New(slog.NewTextHandler(f.logs, nil)),
 		run: func(_ *http.Request, _ session, q *askQuery) (answerCard, error) {
 			f.mu.Lock()
@@ -193,11 +209,11 @@ func TestModelLoopTagsEveryMessageWithATier(t *testing.T) {
 	if _, err := f.ask("value?"); err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"system:T2", "user:T2", "assistant:T2", "tool:T0", "tool:T2"}
+	want := []string{"system:T2", "user:T0", "assistant:T0", "tool:T0", "tool:T2"}
 	if diff := cmp.Diff(want, roleTiers(f.port.requests[1])); diff != "" {
 		t.Errorf("messages of the second round (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]string{"system:T2", "user:T2"}, roleTiers(f.port.requests[0])); diff != "" {
+	if diff := cmp.Diff([]string{"system:T2", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
 		t.Errorf("messages of the first round (-want +got):\n%s", diff)
 	}
 }
@@ -212,39 +228,41 @@ func roleTiers(msgs []askMessage) []string {
 }
 
 // TestModelLoopRefusesEachToolResultAboveWhatTheRouteAllows checks D-206 per
-// tool result: with a model that may receive public data only, the card of a
-// T0 tool is withheld, the model is told so without any of its data, the page
-// names the card, and a public card still goes through.
+// tool result: with a model that may receive T0 and public data but not one
+// fief's data (TF), the card of the TF tool is withheld, the model is told so
+// without any of its data, the page names the card, and a T0 card still goes
+// through. The question is T0, so a route with no T0 is refused before this
+// (TestModelFailuresAreCardsThatNameTheCommands).
 func TestModelLoopRefusesEachToolResultAboveWhatTheRouteAllows(t *testing.T) {
 	t.Parallel()
-	f := newLoopFixture(t, tierT2)
+	f := newLoopFixture(t, tierT0, tierT2)
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "what_needs_me", Args: `{}`}, askCall{ID: "2", Name: "sync_status", Args: `{"connector":"xtb"}`}),
-		{Content: "I could not read what needs you.", Model: "p/m"},
+		{Content: "I could not read the sync status.", Model: "p/m"},
 	}
 	got, err := f.ask("what is wrong?")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if diff := cmp.Diff([]withheldCard{{Label: "What needs you", Tier: tierT0, Data: tierWords(tierT0)}}, got.Withheld); diff != "" {
+	if diff := cmp.Diff([]withheldCard{{Label: "Sync status", Tier: tierTF, Data: tierWords(tierTF)}}, got.Withheld); diff != "" {
 		t.Errorf("withheld (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", askSync)}, titles(got.Used)); diff != "" {
+	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", askNeeds)}, titles(got.Used)); diff != "" {
 		t.Errorf("cards shown (-want +got):\n%s", diff)
 	}
 	tools := toolMessages(f.port.requests[1])
 	if len(tools) != 2 {
 		t.Fatalf("%d tool results sent, want 2", len(tools))
 	}
-	refused, public := tools[0], tools[1]
+	shown, refused := tools[0], tools[1]
 	if !isRefusalWithoutData(&refused) {
 		t.Errorf("the refused tool result = %+v, want a refusal with no data, tagged public", refused)
 	}
-	if !strings.Contains(public.Content, secretAsk) || public.Tier != tierT2 {
-		t.Errorf("the public tool result = %+v, want the card's data", public)
+	if !strings.Contains(shown.Content, secretAsk) || shown.Tier != tierT0 {
+		t.Errorf("the shown tool result = %+v, want the card's data", shown)
 	}
 	// The router is asked about the conversation's tiers together, per result.
-	wantAsked := [][]string{{tierT0, tierT2}, {tierT2}}
+	wantAsked := [][]string{{tierT0}, {tierT0, tierTF}}
 	if diff := cmp.Diff(wantAsked, f.port.permitted); diff != "" {
 		t.Errorf("tiers asked about (-want +got):\n%s", diff)
 	}
@@ -266,9 +284,9 @@ func toolMessages(msgs []askMessage) []askMessage {
 	return out
 }
 
-// TestModelLoopIsBounded checks the loop's limits (D-203): at most
-// askMaxRounds calls of the model, the last offering no tools so the model
-// must answer, and at most askMaxToolCalls tools run, the calls beyond that
+// TestModelLoopIsBounded checks the loop's limits (D-203, D-208): up to five
+// calls of the model that offer the tools and one last that offers none so
+// the model must answer, and at most ten tools run, the calls beyond that
 // refused.
 func TestModelLoopIsBounded(t *testing.T) {
 	t.Parallel()
@@ -281,26 +299,99 @@ func TestModelLoopIsBounded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	limits := DefaultAskLimits()
 	// Every round offers the tools but the last, which must answer with what it has.
-	wantOffered := make([]int, 0, askMaxRounds)
-	for range askMaxRounds - 1 {
+	wantOffered := make([]int, 0, limits.ToolRounds+1)
+	for range limits.ToolRounds {
 		wantOffered = append(wantOffered, len(f.a.tools))
 	}
 	wantOffered = append(wantOffered, 0)
 	if diff := cmp.Diff(wantOffered, f.port.offered); diff != "" {
 		t.Errorf("tools offered per round (-want +got):\n%s", diff)
 	}
-	if len(f.ran) != askMaxToolCalls {
-		t.Errorf("%d tools ran, want at most %d for one question", len(f.ran), askMaxToolCalls)
+	if len(f.ran) != limits.ToolCalls {
+		t.Errorf("%d tools ran, want at most %d for one question", len(f.ran), limits.ToolCalls)
 	}
 	if got.Title != "The model didn't finish" || got.Model != "" {
 		t.Errorf("answer = %+v, want the card of a model that didn't finish", got)
 	}
 	// The calls over the limit still got an answer: a refusal the model can read.
-	if !slices.ContainsFunc(toolMessages(f.port.requests[askMaxRounds-1]), func(m askMessage) bool {
+	if !slices.ContainsFunc(toolMessages(f.port.requests[limits.ToolRounds]), func(m askMessage) bool {
 		return strings.Contains(m.Content, "too many tool calls")
 	}) {
 		t.Errorf("no tool call was refused for the limit")
+	}
+}
+
+// TestAskLimitsDefaultsAndOverrides checks D-208's defaults, which a zero
+// field takes, and that a configured limit replaces only its own field.
+func TestAskLimitsDefaultsAndOverrides(t *testing.T) {
+	t.Parallel()
+	want := AskLimits{ToolRounds: 5, ToolCalls: 10, OutputTokens: 800, Deadline: 2 * time.Minute}
+	tests := []struct {
+		name string
+		in   AskLimits
+		want AskLimits
+	}{
+		{name: "defaults", in: AskLimits{}, want: want},
+		{name: "one field", in: AskLimits{ToolCalls: 3}, want: AskLimits{ToolRounds: 5, ToolCalls: 3, OutputTokens: 800, Deadline: 2 * time.Minute}},
+		{name: "negative is unset", in: AskLimits{ToolRounds: -1, OutputTokens: -5}, want: want},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if diff := cmp.Diff(tt.want, tt.in.withDefaults()); diff != "" {
+				t.Errorf("limits (-want +got):\n%s", diff)
+			}
+		})
+	}
+	if diff := cmp.Diff(want, DefaultAskLimits()); diff != "" {
+		t.Errorf("DefaultAskLimits (-want +got):\n%s", diff)
+	}
+}
+
+// TestModelLoopStopsAtTheOutputTokenLimit checks D-208's 800 tokens per
+// question: each call is limited to what is left of them, and once the
+// calls have used them all no more are made, however many rounds remain.
+func TestModelLoopStopsAtTheOutputTokenLimit(t *testing.T) {
+	t.Parallel()
+	f := newLoopFixture(t, tierT0, tierT2)
+	f.port.used = 300
+	one := askCall{ID: "c", Name: "value", Args: `{}`}
+	for range 10 {
+		f.port.replies = append(f.port.replies, calling(one))
+	}
+	got, err := f.ask("endless")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if diff := cmp.Diff([]int64{800, 500, 200}, f.port.maxTokens); diff != "" {
+		t.Errorf("token limit of each call (-want +got):\n%s", diff)
+	}
+	if got.Title != "The model didn't finish" {
+		t.Errorf("answer = %+v, want the card of a model that spent its tokens", got)
+	}
+}
+
+// TestModelLoopLimitsAreConfigurable checks that the limits a loop is given
+// are the ones it keeps, not the defaults.
+func TestModelLoopLimitsAreConfigurable(t *testing.T) {
+	t.Parallel()
+	f := newLoopFixture(t, tierT0, tierT2)
+	f.a.limits = AskLimits{ToolRounds: 1, ToolCalls: 1, OutputTokens: 50, Deadline: time.Minute}
+	one := askCall{ID: "c", Name: "value", Args: `{}`}
+	f.port.replies = []askReply{calling(one, one), {Content: "ok", Model: "p/m"}}
+	if _, err := f.ask("two tools"); err != nil {
+		t.Fatal(err)
+	}
+	if diff := cmp.Diff([]int{len(f.a.tools), 0}, f.port.offered); diff != "" {
+		t.Errorf("tools offered per round (-want +got):\n%s", diff)
+	}
+	if len(f.ran) != 1 {
+		t.Errorf("%d tools ran, want the configured 1", len(f.ran))
+	}
+	if diff := cmp.Diff([]int64{50, 50}, f.port.maxTokens); diff != "" {
+		t.Errorf("token limit of each call (-want +got):\n%s", diff)
 	}
 }
 
@@ -369,6 +460,49 @@ func TestModelLoopToolReadFailures(t *testing.T) {
 	})
 }
 
+// TestModelQuestionIsT0 checks the author's correction of D-206 for the Ask
+// box: the question is the owner's own words, which may carry amounts or
+// holdings, so it is T0 like a tool's result. A route whose models may not
+// receive T0 is refused, with nothing sent and no tool run, however public
+// the rest is; one that may receive it is asked.
+func TestModelQuestionIsT0(t *testing.T) {
+	t.Parallel()
+	testQuestionRefusedWithoutT0(t)
+	t.Run("a route with T0 is asked, the question tagged T0", func(t *testing.T) {
+		t.Parallel()
+		f := newLoopFixture(t, tierT0, tierT2)
+		got, err := f.ask("what is my value?")
+		if err != nil || got.Text != "done" {
+			t.Fatalf("answer = %+v, %v", got, err)
+		}
+		if diff := cmp.Diff([]string{"system:T2", "user:T0"}, roleTiers(f.port.requests[0])); diff != "" {
+			t.Errorf("messages (-want +got):\n%s", diff)
+		}
+	})
+}
+
+// testQuestionRefusedWithoutT0 is the refusal half of TestModelQuestionIsT0.
+func testQuestionRefusedWithoutT0(t *testing.T) {
+	t.Helper()
+	t.Run("a route without T0 is refused before anything is sent", func(t *testing.T) {
+		t.Parallel()
+		f := newLoopFixture(t, tierT2)
+		got, err := f.ask("I hold 1 000,00 PLN of X, is that too much?")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got.Title != "No model may see this question" || got.Text == "" || len(got.Help) == 0 {
+			t.Errorf("answer = %+v, want the card that names the commands", got)
+		}
+		if !strings.Contains(got.Text, "T0") || !strings.Contains(got.Text, "Nothing was sent") {
+			t.Errorf("text = %q, want it to say the question is T0 and nothing was sent", got.Text)
+		}
+		if f.port.refused != 1 || len(f.ran) != 0 || len(f.port.permitted) != 0 {
+			t.Errorf("refused %d times, ran %v, asked about tiers %v; want one refusal and nothing else", f.port.refused, f.ran, f.port.permitted)
+		}
+	})
+}
+
 // TestModelFailuresAreCardsThatNameTheCommands checks what the person sees
 // when the router won't or can't answer, by the core's Connect code alone.
 func TestModelFailuresAreCardsThatNameTheCommands(t *testing.T) {
@@ -388,7 +522,7 @@ func TestModelFailuresAreCardsThatNameTheCommands(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			f := newLoopFixture(t, tierT2)
+			f := newLoopFixture(t, tierT0, tierT2)
 			f.port.generateErr = tt.err
 			got, err := f.ask("anything " + secretAsk)
 			if err != nil || got.Title != tt.wantTitle {
@@ -411,7 +545,7 @@ func TestModelFailuresAreCardsThatNameTheCommands(t *testing.T) {
 // longer accepts is the page's to handle, not a card.
 func TestModelEndedSessionEndsTheQuestion(t *testing.T) {
 	t.Parallel()
-	f := newLoopFixture(t, tierT2)
+	f := newLoopFixture(t, tierT0, tierT2)
 	f.port.generateErr = connect.NewError(connect.CodeUnauthenticated, errSecret)
 	if _, err := f.ask("anything"); connect.CodeOf(err) != connect.CodeUnauthenticated {
 		t.Errorf("error = %v, want Unauthenticated up to the page", err)
@@ -443,7 +577,7 @@ func TestModelAnswerNeverLogsTheQuestionOrTheAnswer(t *testing.T) {
 
 func TestModelAnswerText(t *testing.T) {
 	t.Parallel()
-	f := newLoopFixture(t, tierT2)
+	f := newLoopFixture(t, tierT0, tierT2)
 	long := strings.Repeat("é", maxModelAnswerRunes+10)
 	tests := []struct {
 		name, reply, want string

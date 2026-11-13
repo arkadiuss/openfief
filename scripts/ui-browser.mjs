@@ -8,7 +8,7 @@
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
 // at 360 px the overview's Ask box (D-194) takes "/", answers a suggestion chip, a typed command and one it doesn't
 // understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions; with a
-// model (D-203) it says where a question goes, shows the model's text with the card it read and names a card withheld;
+// model (D-203) it says where a question goes, shows the model's text with the card it read and refuses a question no model may receive;
 // at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
@@ -213,7 +213,7 @@ async function askBox(browser) {
 
 // askModelBox checks the Ask box with a model (D-203) at phone width, in light and dark: the box says a question beyond its
 // commands goes to the model; the answer shows the model's text and the card it read; a model that may not receive the
-// card's data tier gets it withheld and the page names it; a command still answers as before; and none of it scrolls
+// question's data tier (T0) is refused with nothing sent, and the page says so; a command still answers as before; and none of it scrolls
 // sideways. The model is the fakes' (browserAskModel); it is taken away again at the end.
 async function askModelBox(browser) {
   for (const scheme of ['light', 'dark']) {
@@ -237,10 +237,11 @@ async function askModelBox(browser) {
     check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a command is not answered by the box itself`);
     await page.goto(base + '/test/ask-model?tiers=T2', { waitUntil: 'networkidle' });
-    await ask('how diversified am I', '#answer .withheld');
-    check((await page.textContent('#answer .withheld')).includes('Allocation') && (await page.locator('#answer .used-card').count()) === 0,
-      `phone ${scheme}: the withheld card is not named, or is drawn anyway`);
-    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-withheld.png`), fullPage: true });
+    await ask('how diversified am I', '#answer .answer-title');
+    check((await page.textContent('#answer .answer-title')).includes('No model may see this question') && (await page.textContent('#answer')).includes('Nothing was sent')
+      && (await page.locator('#answer .used-card').count()) === 0,
+      `phone ${scheme}: the refusal of a question no model may receive is not shown, or a card is drawn anyway`);
+    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refused.png`), fullPage: true });
     await page.goto(base + '/test/ask-model?tiers=off', { waitUntil: 'networkidle' });
     check((await page.textContent('#ask-help')).includes('no AI model'), `phone ${scheme}: the Ask box does not go back to no model`);
     await ctx.close();
