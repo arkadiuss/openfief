@@ -229,6 +229,11 @@ func TestReadAPIRefusesWithoutToken(t *testing.T) {
 // at once if its pod can't start.
 func waitCoreAvailable(t *testing.T, k *kube) {
 	t.Helper()
+	// Under --authz=spicedb the core needs SpiceDB's preshared key, which the
+	// credentials Job creates (D-216); until it does, the core exits and
+	// restarts, which the pod check below would take for a core that can't
+	// start. So the Job first.
+	waitCredentialsJob(t, k)
 	available := k.deploymentAvailable(namespace, "openfief-core")
 	err := waitFor(t.Context(), coreTimeout, func(ctx context.Context) (string, bool, error) {
 		if state, done, err := available(ctx); done || (err != nil && !errors.Is(err, errRetry)) {

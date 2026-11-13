@@ -231,6 +231,26 @@ func waitSpiceDBAvailable(t *testing.T, k *kube) {
 	}
 }
 
+// waitCredentialsJob waits until the credentials Job, found by its label once it
+// exists, completes.
+func waitCredentialsJob(t *testing.T, k *kube) {
+	t.Helper()
+	err := waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
+		jobs, err := k.clients.BatchV1().Jobs(namespace).List(ctx, metav1.ListOptions{LabelSelector: appLabel + "=" + spicedbJobApp})
+		if err != nil {
+			return "", false, fmt.Errorf("%w: %w", errRetry, err)
+		}
+		if len(jobs.Items) != 1 {
+			return fmt.Sprintf("%d Jobs labelled %s=%s", len(jobs.Items), appLabel, spicedbJobApp), false, nil
+		}
+		done, jobErr := jobFinished(&jobs.Items[0])
+		return fmt.Sprintf("%s: %d failed attempts", jobs.Items[0].Name, jobs.Items[0].Status.Failed), done, jobErr
+	})
+	if err != nil {
+		t.Fatalf("waiting for the credentials Job: %v", err)
+	}
+}
+
 // waitJobComplete waits until Job name in the openfief namespace completes.
 func waitJobComplete(t *testing.T, k *kube, name string) {
 	t.Helper()
