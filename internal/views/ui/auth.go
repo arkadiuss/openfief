@@ -146,6 +146,12 @@ func (s *server) registerBegin(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+	if err != nil && in.Code != "" && connect.CodeOf(err) == connect.CodePermissionDenied {
+		// A link that expired, was cancelled, was used or never existed: one plain answer that says
+		// nothing about the household or why.
+		s.jsonError(w, r, http.StatusForbidden, inviteGone)
+		return
+	}
 	if err != nil {
 		s.jsonFailed(w, r, "BeginRegistration", err)
 		return
@@ -165,6 +171,11 @@ func (s *server) registerFinish(w http.ResponseWriter, r *http.Request) {
 	resp, err := s.auth.FinishRegistration(r.Context(), connect.NewRequest(&identityv1.FinishRegistrationRequest{
 		Origin: requestOrigin(r), CeremonyId: in.CeremonyID, CredentialJson: in.Credential, Name: in.Name,
 	}))
+	if err != nil && sessionToken(r) == "" && connect.CodeOf(err) == connect.CodePermissionDenied {
+		// A registration from a link, which no session signs in: the link was spent or cancelled meanwhile.
+		s.jsonError(w, r, http.StatusForbidden, inviteGone)
+		return
+	}
 	if err != nil {
 		s.jsonFailed(w, r, "FinishRegistration", err)
 		return

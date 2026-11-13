@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e656bd6d8fe
+  - type: specified_by
+    from: REQ-ui-access-pending-invites
+    to: SCEN-ui-access-pending-invites
+    created_at: 2026-11-13T23:29:46.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97d22c72d77d

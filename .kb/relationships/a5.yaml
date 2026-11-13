@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7118933b74
+  - type: executable_for
+    from: SYM-invites-internal-identity-postgres-invites_test-testpendinginvites
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:47:27.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d85dd6df5b

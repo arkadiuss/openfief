@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4dc3bd682221
+  - type: executable_for
+    from: SYM-invites-internal-identity-connectapi-invites_test-invitestore-pendinginvites
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:32:31.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8745dddd50ba

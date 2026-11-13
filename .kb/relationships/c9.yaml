@@ -1077,3 +1077,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05cf965535dd
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-authfixture-registercancelling
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:44.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eef24ba4b1d7

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/identity"
@@ -15,8 +16,9 @@ import (
 // the grants for targets, which must exist. Whoever opens the link enrolls
 // their own passkey, which creates the person, binds the passkey, makes the
 // grants and signs them in with a read session; the link is then spent. It
-// lasts ttl, or identity.DefaultEnrollmentTTL when ttl is zero, and works on
-// target, another allowed origin, or on origin itself when target is empty.
+// lasts ttl, or identity.DefaultInviteTTL (an hour) when ttl is zero, and works
+// on target, another allowed origin, or on origin itself when target is empty.
+// Until it is used the owner can cancel it (CancelInvite).
 func (a *Auth) InviteViewer(ctx context.Context, origin, token, name string, targets []identity.GrantTarget, target string, ttl time.Duration) (EnrollmentLink, error) {
 	o, s, err := a.recentOwner(ctx, origin, token)
 	if err != nil {
@@ -40,7 +42,72 @@ func (a *Auth) InviteViewer(ctx context.Context, origin, token, name string, tar
 			return EnrollmentLink{}, err
 		}
 	}
+	if ttl == 0 {
+		ttl = identity.DefaultInviteTTL
+	}
 	return issueLink(ctx, a.store, a.random, a.now(), a.cfg.Origins, t, ttl, ownerActor(&s), &invite)
+}
+
+// Invite is a viewer's invitation that has not been used, cancelled or
+// expired: what the owner chose for the viewer, and until when the link works.
+// The link itself is not here: only a hash of its key is kept.
+type Invite struct {
+	// ID is the enrollment code's ID, which names the invitation in the audit
+	// log and in CancelInvite.
+	ID identity.EnrollmentCodeID
+	// Name is what the owner calls the viewer; Targets the grants they start
+	// with.
+	Name    string
+	Targets []identity.GrantTarget
+	// CreatedAt and ExpiresAt bound the link's life.
+	CreatedAt, ExpiresAt time.Time
+}
+
+// Invites returns the pending viewer invitations for an owner session,
+// oldest first: those not used, not cancelled and not expired.
+func (a *Auth) Invites(ctx context.Context, origin, token string) ([]Invite, error) {
+	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
+		return nil, err
+	}
+	codes, err := a.store.PendingInvites(ctx, a.now().UTC())
+	if err != nil {
+		return nil, fmt.Errorf("listing pending invitations: %w", err)
+	}
+	out := make([]Invite, 0, len(codes))
+	for i := range codes {
+		out = append(out, Invite{
+			ID: codes[i].ID, Name: codes[i].Viewer.Name, Targets: slices.Clone(codes[i].Viewer.Targets),
+			CreatedAt: codes[i].CreatedAt, ExpiresAt: codes[i].ExpiresAt,
+		})
+	}
+	return out, nil
+}
+
+// CancelInvite cancels the pending viewer invitation id for an owner session
+// (D-183's one-time link, D-210): from then on its link is refused like an
+// expired one, and the cancellation is an audit entry, written in the same
+// transaction (D-211). It needs no passkey check: it only takes a way in away.
+// An unknown invitation, or one already used, cancelled or expired, fails with
+// an error wrapping ErrNotFound.
+func (a *Auth) CancelInvite(ctx context.Context, origin, token, id string) error {
+	_, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
+		return err
+	}
+	code := identity.EnrollmentCodeID(id)
+	err = within(ctx, a.store, func(ctx context.Context) error {
+		if cancelErr := a.store.CancelEnrollmentCode(ctx, code, a.now().UTC()); cancelErr != nil {
+			return fmt.Errorf("marking the invitation cancelled: %w", cancelErr)
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionEnrollmentLinkCancelled, identity.OutcomeOK, identity.Ref{Kind: identity.RefEnrollmentCode, ID: id})
+	})
+	if errors.Is(err, ErrUnknownEnrollmentCode) {
+		return fmt.Errorf("%w: no such pending invitation", ErrNotFound)
+	}
+	if err != nil {
+		return fmt.Errorf("cancelling an invitation: %w", err)
+	}
+	return nil
 }
 
 // PersonAccess is a person with what they may view and how they sign in

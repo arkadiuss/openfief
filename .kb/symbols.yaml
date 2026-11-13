@@ -52230,6 +52230,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-585F02DB972C1660
       - type: implements
+        target: REQ-ui-enroll-invite-no-longer-valid
+      - type: implements
         target: REQ-ui-login-flows
   - id: SYM-ui-server-register-finish
     title: server.registerFinish
@@ -52244,6 +52246,8 @@ symbols:
         target: TEST-ui-auth
       - type: implements
         target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-enroll-invite-no-longer-valid
       - type: implements
         target: REQ-ui-login-flows
   - id: SYM-ui-server-logout
@@ -70897,6 +70901,8 @@ symbols:
         target: REQ-plugins-verified-status
       - type: implements
         target: REQ-ui-installed-plugins
+      - type: implements
+        target: REQ-ui-plugins-viewer-lists-installed
   - id: SYM-ui-trust-label
     title: trustLabel
     sourceFile: internal/views/ui/plugins.go
@@ -143055,6 +143061,8 @@ symbols:
       - type: implements
         target: REQ-ui-inbox-page
       - type: implements
+        target: REQ-ui-inbox-viewer-nothing-shared
+      - type: implements
         target: REQ-ui-inbox-views-and-counts
   - id: SYM-ui-server-retry-sync
     title: server.retrySync
@@ -196385,6 +196393,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-people-app
       - type: implements
+        target: REQ-identity-invite-lifetime
+      - type: implements
         target: REQ-identity-viewer-invite-link
   - id: SYM-viewers-internal-identity-app-people-personaccess
     title: PersonAccess
@@ -199278,6 +199288,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-people
+      - type: implements
+        target: REQ-identity-invite-lifetime
       - type: implements
         target: REQ-ui-access-people
   - id: SYM-people-internal-views-ui-people-selectlifetime
@@ -207169,3 +207181,1157 @@ symbols:
         target: REQ-maintainer-apply-dismiss-owner-audited
       - type: implements
         target: REQ-maintainer-note-readers
+  - id: SYM-invites-internal-identity-app-authstore_test-memauthstore-pendinginvites
+    title: memAuthStore.PendingInvites
+    status: active
+    sourceFile: internal/identity/app/authstore_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-authstore_test-memauthstore-cancelenrollmentcode
+    title: memAuthStore.CancelEnrollmentCode
+    status: active
+    sourceFile: internal/identity/app/authstore_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-inviteid
+    title: inviteID
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-authfixture-registercancelling
+    title: authFixture.registerCancelling
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-testinvitelifetimedefaultstoanhour
+    title: TestInviteLifetimeDefaultsToAnHour
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-testpendinginvitesandcancel
+    title: TestPendingInvitesAndCancel
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-testcancelledinvitecannotbeusedmidceremony
+    title: TestCancelledInviteCannotBeUsedMidCeremony
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-testinvitesaretheowners
+    title: TestInvitesAreTheOwners
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-people-invite
+    title: Invite
+    status: active
+    sourceFile: internal/identity/app/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-app
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-app-people-auth-invites
+    title: Auth.Invites
+    status: active
+    sourceFile: internal/identity/app/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-app
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-app-people-auth-cancelinvite
+    title: Auth.CancelInvite
+    status: active
+    sourceFile: internal/identity/app/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-app
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-connectapi-invites_test-invitestore
+    title: inviteStore
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-invitestore-pendinginvites
+    title: inviteStore.PendingInvites
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-invitestore-cancelenrollmentcode
+    title: inviteStore.CancelEnrollmentCode
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-invitesserved
+    title: invitesServed
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-newinvitesserved
+    title: newInvitesServed
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-mustorigin
+    title: mustOrigin
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-testinvitecallsareowneronly
+    title: TestInviteCallsAreOwnerOnly
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-invites_test-testlistandcancelinvites
+    title: TestListAndCancelInvites
+    status: active
+    sourceFile: internal/identity/connectapi/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-connectapi
+  - id: SYM-invites-internal-identity-connectapi-people-authservice-listinvites
+    title: authService.ListInvites
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-connectapi-people-authservice-cancelinvite
+    title: authService.CancelInvite
+    status: active
+    sourceFile: internal/identity/connectapi/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-enrollment-enrollmentcode-pending
+    title: EnrollmentCode.Pending
+    status: active
+    sourceFile: internal/identity/enrollment.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-app
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-postgres-auth-viewerinvite
+    title: viewerInvite
+    status: active
+    sourceFile: internal/identity/postgres/auth.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-postgres
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-postgres-auth-store-pendinginvites
+    title: Store.PendingInvites
+    status: active
+    sourceFile: internal/identity/postgres/auth.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-postgres
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-postgres-auth-store-cancelenrollmentcode
+    title: Store.CancelEnrollmentCode
+    status: active
+    sourceFile: internal/identity/postgres/auth.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-postgres
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-views-ui-fakes_test-fakeauth-listinvites
+    title: fakeAuth.ListInvites
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-invites
+  - id: SYM-invites-internal-views-ui-fakes_test-fakeauth-cancelinvite
+    title: fakeAuth.CancelInvite
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-invites
+  - id: SYM-invites-internal-views-ui-invites_test-testaccesspendinginvites
+    title: TestAccessPendingInvites
+    status: active
+    sourceFile: internal/views/ui/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-invites
+  - id: SYM-invites-internal-views-ui-invites_test-testcancelinvite
+    title: TestCancelInvite
+    status: active
+    sourceFile: internal/views/ui/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-invites
+  - id: SYM-invites-internal-views-ui-invites_test-testenrollmentlinknolongervalid
+    title: TestEnrollmentLinkNoLongerValid
+    status: active
+    sourceFile: internal/views/ui/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-invites
+  - id: SYM-invites-internal-views-ui-people-inviterow
+    title: inviteRow
+    status: active
+    sourceFile: internal/views/ui/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-invites
+      - type: implements
+        target: REQ-ui-access-pending-invites
+  - id: SYM-invites-internal-views-ui-people-inviterows
+    title: inviteRows
+    status: active
+    sourceFile: internal/views/ui/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-invites
+      - type: implements
+        target: REQ-ui-access-pending-invites
+  - id: SYM-invites-internal-views-ui-people-targetsinwords
+    title: targetsInWords
+    status: active
+    sourceFile: internal/views/ui/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-invites
+      - type: implements
+        target: REQ-ui-access-pending-invites
+  - id: SYM-invites-internal-views-ui-people-server-cancelinvite
+    title: server.cancelInvite
+    status: active
+    sourceFile: internal/views/ui/people.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-invites
+      - type: implements
+        target: REQ-ui-access-pending-invites
+  - id: SYM-invites-internal-views-ui-viewernothing_test-testviewernothingsharedkeepsplugins
+    title: TestViewerNothingSharedKeepsPlugins
+    status: active
+    sourceFile: internal/views/ui/viewernothing_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer-nothing-shared
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest
+    title: ListInvitesRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-reset
+    title: ListInvitesRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-string
+    title: ListInvitesRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protomessage
+    title: ListInvitesRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protoreflect
+    title: ListInvitesRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-descriptor
+    title: ListInvitesRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getorigin
+    title: ListInvitesRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getsessiontoken
+    title: ListInvitesRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite
+    title: Invite
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-reset
+    title: Invite.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-string
+    title: Invite.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-protomessage
+    title: Invite.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-protoreflect
+    title: Invite.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-descriptor
+    title: Invite.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getid
+    title: Invite.GetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getname
+    title: Invite.GetName
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getgrants
+    title: Invite.GetGrants
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getcreatedat
+    title: Invite.GetCreatedAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getexpiresat
+    title: Invite.GetExpiresAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse
+    title: ListInvitesResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-reset
+    title: ListInvitesResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-string
+    title: ListInvitesResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-protomessage
+    title: ListInvitesResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-protoreflect
+    title: ListInvitesResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-descriptor
+    title: ListInvitesResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-getinvites
+    title: ListInvitesResponse.GetInvites
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest
+    title: CancelInviteRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-reset
+    title: CancelInviteRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-string
+    title: CancelInviteRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protomessage
+    title: CancelInviteRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protoreflect
+    title: CancelInviteRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-descriptor
+    title: CancelInviteRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-getorigin
+    title: CancelInviteRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-getsessiontoken
+    title: CancelInviteRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-getinviteid
+    title: CancelInviteRequest.GetInviteId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse
+    title: CancelInviteResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    granularity_reason: config-artifact
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-reset
+    title: CancelInviteResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-string
+    title: CancelInviteResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protomessage
+    title: CancelInviteResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protoreflect
+    title: CancelInviteResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-descriptor
+    title: CancelInviteResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-listinvites
+    title: authServiceClient.ListInvites
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-cancelinvite
+    title: authServiceClient.CancelInvite
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-listinvites
+    title: UnimplementedAuthServiceHandler.ListInvites
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-cancelinvite
+    title: UnimplementedAuthServiceHandler.CancelInvite
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-invites-connectapi
+      - type: implements
+        target: REQ-identity-invite-cancel
+  - id: SYM-invites-internal-identity-app-invites_test-invitenames
+    title: inviteNames
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-app-invites_test-testcancelledandexpiredlinksarerefusedalike
+    title: TestCancelledAndExpiredLinksAreRefusedAlike
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-app
+  - id: SYM-invites-internal-identity-postgres-invites_test-seededinvites
+    title: seededInvites
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-postgres
+  - id: SYM-invites-internal-identity-postgres-invites_test-seedinvites
+    title: seedInvites
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-postgres
+  - id: SYM-invites-internal-identity-postgres-invites_test-testpendinginvites
+    title: TestPendingInvites
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-postgres
+  - id: SYM-invites-internal-identity-postgres-invites_test-seededinvites-wantcancelrefused
+    title: seededInvites.wantCancelRefused
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-postgres
+  - id: SYM-invites-internal-identity-postgres-invites_test-testcancelenrollmentcode
+    title: TestCancelEnrollmentCode
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-invites-postgres
+  - id: SYM-invites-internal-views-ui-inbox-server-inboxnothingshared
+    title: server.inboxNothingShared
+    status: active
+    sourceFile: internal/views/ui/inbox.go
+    origin:
+      kind: agent
+      ref: 'author answers of 2026-11-13 recorded in the S7 task brief (S6c): invitations, Inbox and Plugins pages of a viewer'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-viewer-nothing-shared
+      - type: implements
+        target: REQ-ui-inbox-viewer-nothing-shared

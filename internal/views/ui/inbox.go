@@ -247,9 +247,32 @@ func viewOf(v string) (string, viewsv1.AttentionView) {
 	return viewOpen, viewsv1.AttentionView_ATTENTION_VIEW_OPEN
 }
 
+// inboxNothingShared answers a viewer the owner granted nothing yet with the
+// empty state of the other pages, and reports whether it did: their Inbox is
+// empty because nothing was shared with them (D-165, D-199), not because nothing
+// needs attention. It answers for a failed read too.
+func (s *server) inboxNothingShared(w http.ResponseWriter, r *http.Request, sess session) bool {
+	if !sess.Viewer() {
+		return false
+	}
+	accounts, err := s.read.ListAccounts(r.Context(), bearer(&viewsv1.ListAccountsRequest{}, sess))
+	if err != nil {
+		s.coreFailed(w, r, "ListAccounts", err)
+		return true
+	}
+	if !emptyForViewer(sess, len(accounts.Msg.GetAccounts())) {
+		return false
+	}
+	s.nothingShared(w, r, sess, "Inbox")
+	return true
+}
+
 // renderInbox shows the Inbox with status, a notice of the owner's last
 // action and the core's reason for refusing it, if any.
 func (s *server) renderInbox(w http.ResponseWriter, r *http.Request, sess session, status int, notice, refusal string) {
+	if s.inboxNothingShared(w, r, sess) {
+		return
+	}
 	key, view := viewOf(r.URL.Query().Get("view"))
 	resp, err := s.read.ListAttentionItems(r.Context(), bearer(&viewsv1.ListAttentionItemsRequest{View: view}, sess))
 	if err != nil {

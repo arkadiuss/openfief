@@ -26,6 +26,34 @@ func (s *authService) InviteViewer(ctx context.Context, req *connect.Request[ide
 	return connect.NewResponse(&identityv1.InviteViewerResponse{Url: link.URL, ExpiresAt: timestamppb.New(link.ExpiresAt)}), nil
 }
 
+// ListInvites returns the viewer invitations still pending.
+func (s *authService) ListInvites(ctx context.Context, req *connect.Request[identityv1.ListInvitesRequest]) (*connect.Response[identityv1.ListInvitesResponse], error) {
+	invites, err := s.auth.Invites(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &identityv1.ListInvitesResponse{Invites: make([]*identityv1.Invite, 0, len(invites))}
+	for i := range invites {
+		inv := &identityv1.Invite{
+			Id: string(invites[i].ID), Name: invites[i].Name,
+			CreatedAt: timestamppb.New(invites[i].CreatedAt), ExpiresAt: timestamppb.New(invites[i].ExpiresAt),
+		}
+		for _, t := range invites[i].Targets {
+			inv.Grants = append(inv.Grants, &identityv1.GrantTarget{Kind: pbTargetKinds()[t.Kind], Id: t.ID})
+		}
+		out.Invites = append(out.Invites, inv)
+	}
+	return connect.NewResponse(out), nil
+}
+
+// CancelInvite cancels a pending viewer invitation.
+func (s *authService) CancelInvite(ctx context.Context, req *connect.Request[identityv1.CancelInviteRequest]) (*connect.Response[identityv1.CancelInviteResponse], error) {
+	if err := s.auth.CancelInvite(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetInviteId()); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&identityv1.CancelInviteResponse{}), nil
+}
+
 // ListPeople returns the owner and every viewer, with their access.
 func (s *authService) ListPeople(ctx context.Context, req *connect.Request[identityv1.ListPeopleRequest]) (*connect.Response[identityv1.ListPeopleResponse], error) {
 	people, err := s.auth.People(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())

@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6af09e585544
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protomessage
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:34:53.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc1765ff4b4f
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protomessage
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:34:53.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6a3c26e8cca

@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fd2e4859adc
+  - type: implements
+    from: SYM-invites-internal-views-ui-inbox-server-inboxnothingshared
+    to: REQ-ui-inbox-viewer-nothing-shared
+    created_at: 2026-11-13T23:47:44.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df1184b6a594
+  - type: covered_by
+    from: SYM-invites-internal-views-ui-inbox-server-inboxnothingshared
+    to: TEST-ui-viewer-nothing-shared
+    created_at: 2026-11-13T23:47:44.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5c93cb3554b

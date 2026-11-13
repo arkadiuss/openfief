@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7e0d97be176
+  - type: implements
+    from: SYM-invites-internal-identity-postgres-auth-viewerinvite
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:33:24.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b54d8955b4d
+  - type: covered_by
+    from: SYM-invites-internal-identity-postgres-auth-viewerinvite
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:33:24.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80b30fa38ca0

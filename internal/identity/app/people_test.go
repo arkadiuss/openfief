@@ -145,7 +145,7 @@ func TestExpiredViewerLinkRefused(t *testing.T) {
 	f := newGrantFixture(t, demoConfig{})
 	_, owner := f.enroll(t)
 	code := f.invite(t, &owner, "Bob")
-	f.clock.set(authStart().Add(identity.DefaultEnrollmentTTL + time.Second))
+	f.clock.set(authStart().Add(identity.DefaultInviteTTL + time.Second))
 	if _, _, err := f.register(t, local, app.RegistrationGrant{EnrollmentCode: code}); !errors.Is(err, app.ErrForbidden) || !errors.Is(err, identity.ErrEnrollmentCodeExpired) {
 		t.Errorf("an expired link = %v, want %v for %v", err, app.ErrForbidden, identity.ErrEnrollmentCodeExpired)
 	}

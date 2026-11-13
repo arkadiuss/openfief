@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a7c9f4ffafa
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protoreflect
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:37:33.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba8fdc0400fe
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protoreflect
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:37:33.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d45bacc5b967

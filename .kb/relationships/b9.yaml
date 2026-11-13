@@ -1336,3 +1336,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e32e148a171
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-testinvitelifetimedefaultstoanhour
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:49.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-603ea49b7b7d
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-reset
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:26.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ef1b74f32cc
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-reset
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:26.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc3328385c6

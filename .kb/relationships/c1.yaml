@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19e91bd7ad55
+  - type: executable_for
+    from: SYM-invites-internal-views-ui-invites_test-testcancelinvite
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:34:02.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64f2f1bc4e0d
+  - type: executable_for
+    from: SYM-invites-internal-views-ui-invites_test-testenrollmentlinknolongervalid
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:34:07.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbd8426a0aab

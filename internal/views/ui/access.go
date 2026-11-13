@@ -81,7 +81,9 @@ type accessData struct {
 	// People are the owner and the viewers (D-210), and Invite the form that
 	// invites a viewer.
 	People []personRow
-	Invite inviteForm
+	// Pending are the invitations not used, cancelled or expired yet.
+	Pending []inviteRow
+	Invite  inviteForm
 	// Confirm is the viewer the owner asked to revoke, shown with what
 	// revoking does until the owner confirms.
 	Confirm *personRow
@@ -153,6 +155,7 @@ func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess sessi
 		data.Plugins = append(data.Plugins, pluginHolder(p, in.Sleeves, in.Accounts))
 	}
 	data.People = peopleRows(in.People.GetPeople(), in.Sleeves, in.Accounts)
+	data.Pending = inviteRows(in.Invites.GetInvites(), in.Sleeves, in.Accounts)
 	data.Invite.Choices = newChoices("new-viewer", in.Sleeves, in.Accounts, data.Invite.Grants)
 	data.Invite.Lifetimes = selectLifetime(inviteLifetimes(), data.Invite.Minutes)
 	s.show(w, r, status, "access", page{Title: "Access", Session: &sess, Data: data})
@@ -160,11 +163,12 @@ func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess sessi
 
 // accessInputs is what the Access page reads: the script tokens, the
 // installed view plugins (nil when the core can't read them now), the people,
-// and the sleeves and accounts that can be granted.
+// the pending invitations, and the sleeves and accounts that can be granted.
 type accessInputs struct {
 	Tokens   *identityv1.ListScriptTokensResponse
 	Plugins  *identityv1.ListViewPluginsResponse
 	People   *identityv1.ListPeopleResponse
+	Invites  *identityv1.ListInvitesResponse
 	Sleeves  []*viewsv1.Sleeve
 	Accounts []*viewsv1.Account
 }
@@ -191,6 +195,11 @@ func (s *server) loadAccessInputs(r *http.Request, sess session) (*accessInputs,
 		return nil, fmt.Errorf("ListPeople: %w", err)
 	}
 	in.People = people.Msg
+	invites, err := s.auth.ListInvites(ctx, connect.NewRequest(&identityv1.ListInvitesRequest{Origin: sess.Origin, SessionToken: sess.Token}))
+	if err != nil {
+		return nil, fmt.Errorf("ListInvites: %w", err)
+	}
+	in.Invites = invites.Msg
 	sleeves, err := s.read.ListSleeves(ctx, bearer(&viewsv1.ListSleevesRequest{}, sess))
 	if err != nil {
 		return nil, fmt.Errorf("ListSleeves: %w", err)

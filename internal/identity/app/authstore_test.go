@@ -161,10 +161,36 @@ func (m *memAuthStore) UseEnrollmentCode(_ context.Context, id identity.Enrollme
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	c, ok := m.codes[id]
-	if !ok || !c.code.UsedAt.IsZero() {
+	if !ok || !c.code.UsedAt.IsZero() || !c.code.CancelledAt.IsZero() {
 		return identity.ErrEnrollmentCodeUsed
 	}
 	c.code.UsedAt = at
+	m.codes[id] = c
+	return nil
+}
+
+func (m *memAuthStore) PendingInvites(_ context.Context, now time.Time) ([]identity.EnrollmentCode, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	var out []identity.EnrollmentCode
+	for id := range m.codes {
+		code := m.codes[id].code
+		if code.Pending(now) {
+			out = append(out, code)
+		}
+	}
+	slices.SortFunc(out, func(a, b identity.EnrollmentCode) int { return a.CreatedAt.Compare(b.CreatedAt) })
+	return out, nil
+}
+
+func (m *memAuthStore) CancelEnrollmentCode(_ context.Context, id identity.EnrollmentCodeID, at time.Time) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	c, ok := m.codes[id]
+	if !ok || !c.code.Pending(at) {
+		return app.ErrUnknownEnrollmentCode
+	}
+	c.code.CancelledAt = at
 	m.codes[id] = c
 	return nil
 }

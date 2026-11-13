@@ -986,3 +986,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1047b4142d78
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protomessage
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:38:17.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dd56c2c9f02
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protomessage
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:38:17.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a7f1726206
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-descriptor
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:38:28.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-704654f5a793
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-descriptor
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:38:28.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b201510ae9c
+  - type: implements
+    from: SYM-ui-server-plugins-page
+    to: REQ-ui-plugins-viewer-lists-installed
+    created_at: 2026-11-13T23:39:35.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aee16e03567

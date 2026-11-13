@@ -1,10 +1,10 @@
 ---
 title: The Access page lists the view plugins with their grants.
 status: open
-text_ref: design-decisions:D-210#3
+text_ref: design-decisions:D-210#4
 origin:
   kind: import
-  ref: design-decisions:D-210#3
+  ref: design-decisions:D-210#4
   recorded_at: '2026-11-13T18:00:00.000Z'
 firmness: firm
 required_evidence: asserted

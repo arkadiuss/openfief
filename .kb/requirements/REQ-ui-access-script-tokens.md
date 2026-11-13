@@ -1,10 +1,10 @@
 ---
 title: The Access page lists the script tokens, each with its grants, its expiry and whether it may use MCP.
 status: open
-text_ref: design-decisions:D-210#2
+text_ref: design-decisions:D-210#3
 origin:
   kind: import
-  ref: design-decisions:D-210#2
+  ref: design-decisions:D-210#3
   recorded_at: '2026-11-13T18:00:00.000Z'
 firmness: firm
 required_evidence: asserted

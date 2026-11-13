@@ -1133,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa30bbcce061
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-invitenames
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:47:05.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04002d12eb2

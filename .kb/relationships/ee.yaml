@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-621ffd95a263
+  - type: implements
+    from: SYM-invites-internal-identity-enrollment-enrollmentcode-pending
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:33:18.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e101edbf4a93
+  - type: covered_by
+    from: SYM-invites-internal-identity-enrollment-enrollmentcode-pending
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:33:18.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830b756cbc3e

@@ -97,6 +97,25 @@
     {{end}}
     </tbody>
   </table></div>
+  <h3 id="pending-invites-title">Pending invitations</h3>
+  {{if .Pending}}
+  <div class="table"><table aria-labelledby="pending-invites-title">
+    <thead><tr><th scope="col">For</th><th scope="col">Will be able to view</th><th scope="col">Link works until</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody>
+    {{range .Pending}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{template "holds" .}}</td>
+      <td class="mono">{{.Expires}}</td>
+      <td><form method="post" action="{{.Cancel}}" class="inline"><button type="submit" class="danger">Cancel invitation</button></form></td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <p class="help">An invitation works once. Cancelling it, or letting it expire, makes its link say it is no longer valid.</p>
+  {{else}}
+  <p class="muted">No invitations are waiting to be used.</p>
+  {{end}}
   <h3 id="invite-title">Invite a viewer</h3>
   <form method="post" action="/access/people" aria-labelledby="invite-title">
     <div class="fields">

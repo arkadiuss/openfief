@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc10f748d3d4
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:29:38.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ddb6da0979b
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:29:38.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a432ea58fd
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:29:38.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9122e38fed

@@ -1413,3 +1413,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c98f438ce868
+  - type: implements
+    from: SYM-invites-internal-identity-app-people-auth-cancelinvite
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:32:19.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9980ad02604f
+  - type: covered_by
+    from: SYM-invites-internal-identity-app-people-auth-cancelinvite
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:32:19.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93850150e8d

@@ -15,8 +15,30 @@ import (
 )
 
 // inviteMinutes are the lifetimes the owner may give an enrollment link, in
-// minutes, the core's default first; the core allows at most 24 hours.
+// minutes, shortest first; the core allows at most 24 hours.
 func inviteMinutes() []int { return []int{15, 60, 24 * 60} }
+
+// defaultInviteMinutes is the lifetime the form selects: an hour, as the core's
+// default for a viewer's link is.
+const defaultInviteMinutes = 60
+
+// inviteGone is what the enrollment page says of a link that can't be used any
+// more, whether it expired, was cancelled, was used or never existed: nothing
+// about the household, or why.
+const inviteGone = "This invite is no longer valid."
+
+// inviteRow is a pending invitation as the People section lists it: who it is
+// for, what they start with and until when the link works.
+type inviteRow struct {
+	ID, Name string
+	// Holds are what the viewer will be granted, in words; none when the owner
+	// chose nothing.
+	Holds []string
+	// Expires is when the link stops working, as "2006-01-02 15:04 MST".
+	Expires string
+	// Cancel is the path the cancel form posts to.
+	Cancel string
+}
 
 // confirmField is the field of the revoke form that says the owner confirmed.
 const (
@@ -76,6 +98,44 @@ func (s *server) peopleRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST "+accessPath+"/people", s.withOwner(s.inviteViewer))
 	mux.HandleFunc("POST "+accessPath+"/people/{id}/revoke", s.withOwner(s.revokePerson))
 	mux.HandleFunc("POST "+accessPath+"/people/{id}/grants", s.withOwner(s.updatePersonGrants))
+	mux.HandleFunc("POST "+accessPath+"/invites/{id}/cancel", s.withOwner(s.cancelInvite))
+}
+
+// inviteRows returns the pending invitations as the section lists them, oldest
+// first as the core gave them.
+func inviteRows(invites []*identityv1.Invite, sleeves []*viewsv1.Sleeve, accounts []*viewsv1.Account) []inviteRow {
+	rows := make([]inviteRow, 0, len(invites))
+	for _, inv := range invites {
+		rows = append(rows, inviteRow{
+			ID: inv.GetId(), Name: inv.GetName(), Holds: targetsInWords(inv.GetGrants(), sleeves, accounts),
+			Expires: inv.GetExpiresAt().AsTime().UTC().Format("2006-01-02 15:04 MST"),
+			Cancel:  accessPath + "/invites/" + url.PathEscape(inv.GetId()) + "/cancel",
+		})
+	}
+	return rows
+}
+
+// targetsInWords is holdsInWords for the targets of an invitation, which are
+// not grants yet.
+func targetsInWords(targets []*identityv1.GrantTarget, sleeves []*viewsv1.Sleeve, accounts []*viewsv1.Account) []string {
+	grants := make([]*identityv1.Grant, 0, len(targets))
+	for _, t := range targets {
+		grants = append(grants, &identityv1.Grant{TargetKind: t.GetKind(), TargetId: t.GetId()})
+	}
+	return holdsInWords(grants, sleeves, accounts)
+}
+
+// cancelInvite cancels a pending invitation (CancelInvite): its link is refused
+// from then on. It needs no passkey check, since it only takes a way in away.
+func (s *server) cancelInvite(w http.ResponseWriter, r *http.Request, sess session) {
+	_, err := s.auth.CancelInvite(r.Context(), connect.NewRequest(&identityv1.CancelInviteRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, InviteId: r.PathValue("id"),
+	}))
+	if err != nil {
+		s.accessFailed(w, r, sess, "CancelInvite", err, nil)
+		return
+	}
+	http.Redirect(w, r, accessPath+peopleAnchor, http.StatusSeeOther)
 }
 
 // activeViewer reports whether p is a viewer the owner has not revoked.
@@ -112,8 +172,8 @@ func peopleRows(people []*identityv1.PersonAccess, sleeves []*viewsv1.Sleeve, ac
 func inviteLifetimes() []lifetime {
 	labels := map[int]string{15: "15 minutes", 60: "1 hour", 24 * 60: "24 hours"}
 	out := make([]lifetime, 0, len(inviteMinutes()))
-	for i, m := range inviteMinutes() {
-		out = append(out, lifetime{Minutes: m, Label: labels[m], Selected: i == 0})
+	for _, m := range inviteMinutes() {
+		out = append(out, lifetime{Minutes: m, Label: labels[m], Selected: m == defaultInviteMinutes})
 	}
 	return out
 }
@@ -141,7 +201,7 @@ func (s *server) inviteViewer(w http.ResponseWriter, r *http.Request, sess sessi
 		return
 	}
 	posted := inviteForm{Name: r.PostFormValue("name"), Minutes: r.PostFormValue("minutes"), Grants: r.PostForm[grantField]}
-	minutes := inviteMinutes()[0]
+	minutes := defaultInviteMinutes
 	if posted.Minutes != "" {
 		m, err := strconv.Atoi(posted.Minutes)
 		if err != nil || !slices.Contains(inviteMinutes(), m) {

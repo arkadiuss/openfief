@@ -117,6 +117,15 @@ type EnrollmentStore interface {
 	// wrapping identity.ErrEnrollmentCodeUsed when it already was,
 	// atomically, so a code is used once even under concurrent calls.
 	UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error
+	// PendingInvites returns the codes that invite a viewer and can still be
+	// used at now (EnrollmentCode.Pending), oldest first. It never returns
+	// a key's hash.
+	PendingInvites(ctx context.Context, now time.Time) ([]identity.EnrollmentCode, error)
+	// CancelEnrollmentCode marks the pending viewer invitation id cancelled
+	// at at, atomically, failing with an error wrapping
+	// ErrUnknownEnrollmentCode when id is no invitation, or one already
+	// used, cancelled or expired at at.
+	CancelEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error
 }
 
 // SessionStore keeps sessions.

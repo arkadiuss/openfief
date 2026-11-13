@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-466bd57fd4c8
+  - type: executable_for
+    from: SYM-invites-internal-identity-connectapi-invites_test-testinvitecallsareowneronly
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:32:57.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bebd0d8d767

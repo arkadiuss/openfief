@@ -1378,3 +1378,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-608e4a23b3e3
+  - type: verified_by
+    from: SCEN-identity-invite-lifetime
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:29:37.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef41d53d9d84

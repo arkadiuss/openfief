@@ -102,6 +102,9 @@ const (
 	// ActionEnrollmentLinkUsed is an enrollment link used up to create a
 	// passkey.
 	ActionEnrollmentLinkUsed AuditAction = "enrollment_link_used"
+	// ActionEnrollmentLinkCancelled is a viewer's invitation the owner
+	// cancelled before it was used.
+	ActionEnrollmentLinkCancelled AuditAction = "enrollment_link_cancelled"
 	// ActionScriptTokenCreated is a script token created. Its text is written
 	// as two parts only so gosec's G101 doesn't read the constant's name and
 	// the shape of its value as a hardcoded credential; the value is a word,
@@ -155,21 +158,22 @@ const (
 // A function, not a variable: the domain holds no package-level state.
 func actionKinds() map[AuditAction][]RefKind {
 	return map[AuditAction][]RefKind{
-		ActionSignIn:               {RefSession, RefPerson},
-		ActionSignOut:              {RefSession},
-		ActionSignOutEverywhere:    nil,
-		ActionPasskeyAdded:         {RefPasskey, RefPerson},
-		ActionPasskeyRemoved:       {RefPasskey, RefPerson},
-		ActionEnrollmentLinkIssued: {RefEnrollmentCode},
-		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey, RefPerson},
-		ActionPersonCreated:        {RefPerson, RefEnrollmentCode},
-		ActionPersonRevoked:        {RefPerson},
-		ActionScriptTokenCreated:   {RefScriptToken},
-		ActionScriptTokenRevoked:   {RefScriptToken},
-		ActionGrantCreated:         grantRefKinds(),
-		ActionGrantRevoked:         grantRefKinds(),
-		ActionModelCall:            {RefModelRole, RefModel, RefModelCall},
-		ActionModelCallResult:      {RefModelRole, RefModel, RefModelCall, RefModelError},
+		ActionSignIn:                  {RefSession, RefPerson},
+		ActionSignOut:                 {RefSession},
+		ActionSignOutEverywhere:       nil,
+		ActionPasskeyAdded:            {RefPasskey, RefPerson},
+		ActionPasskeyRemoved:          {RefPasskey, RefPerson},
+		ActionEnrollmentLinkIssued:    {RefEnrollmentCode},
+		ActionEnrollmentLinkUsed:      {RefEnrollmentCode, RefPasskey, RefPerson},
+		ActionEnrollmentLinkCancelled: {RefEnrollmentCode},
+		ActionPersonCreated:           {RefPerson, RefEnrollmentCode},
+		ActionPersonRevoked:           {RefPerson},
+		ActionScriptTokenCreated:      {RefScriptToken},
+		ActionScriptTokenRevoked:      {RefScriptToken},
+		ActionGrantCreated:            grantRefKinds(),
+		ActionGrantRevoked:            grantRefKinds(),
+		ActionModelCall:               {RefModelRole, RefModel, RefModelCall},
+		ActionModelCallResult:         {RefModelRole, RefModel, RefModelCall, RefModelError},
 
 		ActionMaintainerRun:               {RefModelRole, RefMaintainerRun, RefModelError},
 		ActionMaintainerProposalDropped:   {RefMaintainerRun},

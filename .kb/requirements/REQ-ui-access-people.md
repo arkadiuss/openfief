@@ -3,13 +3,13 @@ title: The Access page lists the people, the owner and each viewer with their gr
 status: open
 origin:
   kind: import
-  ref: design-decisions:D-210#1
+  ref: design-decisions:D-210#2
   recorded_at: '2026-11-13T22:00:00.000Z'
 id: REQ-ui-access-people
 type: req
 firmness: firm
 semantic_text: The Access page lists the people, the owner and each viewer with their grants and sessions, who are invited by a one-time link to enroll their own passkey and revoked from there.
-text_ref: design-decisions:D-210#1
+text_ref: design-decisions:D-210#2
 required_evidence: asserted
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text

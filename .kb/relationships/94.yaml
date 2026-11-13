@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85da10e0b598
+  - type: implements
+    from: SYM-invites-internal-identity-connectapi-people-authservice-listinvites
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:33:08.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e52ce15bfd5
+  - type: covered_by
+    from: SYM-invites-internal-identity-connectapi-people-authservice-listinvites
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:33:08.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fa202a3b8a4

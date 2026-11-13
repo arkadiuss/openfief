@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -112,6 +113,62 @@ type fakeAuth struct {
 	// makes it fail as the core does.
 	revokedPeople   []string
 	revokePersonErr error
+	// cancelledInvites are the invitations CancelInvite cancelled, and
+	// cancelInviteErr makes it fail as the core does.
+	cancelledInvites []string
+	cancelInviteErr  error
+	// codeRefused makes BeginRegistration refuse an enrollment code, as the
+	// core does one that expired, was cancelled or was used; its message here
+	// is one the page must never show.
+	codeRefused bool
+}
+
+// errCodeRefused is the fake core's refusal of an enrollment code, with words
+// no page may repeat.
+var errCodeRefused = errors.New("forbidden: the household's invite expired")
+
+// pendingInvite is the fake core's one pending invitation, for Dana, with a
+// sleeve and one account, until 2026-03-02 12:30 UTC.
+const pendingInvite = "00aa11bb22cc33dd"
+
+func (f *fakeAuth) ListInvites(_ context.Context, r *connect.Request[identityv1.ListInvitesRequest]) (*connect.Response[identityv1.ListInvitesResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if slices.Contains(f.cancelledInvites, pendingInvite) {
+		return connect.NewResponse(&identityv1.ListInvitesResponse{}), nil
+	}
+	return connect.NewResponse(&identityv1.ListInvitesResponse{Invites: []*identityv1.Invite{{
+		Id: pendingInvite, Name: "Dana",
+		Grants: []*identityv1.GrantTarget{
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, Id: "core"},
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, Id: accountID},
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, Id: "acc-deleted-1"},
+		},
+		CreatedAt: timestamppb.New(time.Date(2026, 3, 2, 11, 30, 0, 0, time.UTC)),
+		ExpiresAt: timestamppb.New(time.Date(2026, 3, 2, 12, 30, 0, 0, time.UTC)),
+	}}}), nil
+}
+
+func (f *fakeAuth) CancelInvite(_ context.Context, r *connect.Request[identityv1.CancelInviteRequest]) (*connect.Response[identityv1.CancelInviteResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.cancelInviteErr != nil {
+		return nil, f.cancelInviteErr
+	}
+	f.cancelledInvites = append(f.cancelledInvites, r.Msg.GetInviteId())
+	return connect.NewResponse(&identityv1.CancelInviteResponse{}), nil
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -157,7 +214,11 @@ func (f *fakeAuth) BeginRegistration(_ context.Context, r *connect.Request[ident
 	}
 	f.mu.Lock()
 	f.enrollCode, f.regSession = r.Msg.GetEnrollmentCode(), r.Msg.GetSessionToken()
+	refused := f.codeRefused
 	f.mu.Unlock()
+	if r.Msg.GetEnrollmentCode() != "" && refused {
+		return nil, codeErr(connect.CodePermissionDenied, errCodeRefused)
+	}
 	if r.Msg.GetEnrollmentCode() == "" {
 		if err := owner(r.Msg.GetSessionToken()); err != nil {
 			return nil, err

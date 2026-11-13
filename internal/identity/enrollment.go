@@ -12,6 +12,9 @@ var (
 	ErrMalformedEnrollmentCode = errors.New("malformed enrollment code")
 	// ErrEnrollmentCodeUsed reports an enrollment code that was used.
 	ErrEnrollmentCodeUsed = errors.New("enrollment code already used")
+	// ErrEnrollmentCodeCancelled reports an enrollment code the owner
+	// cancelled before it was used.
+	ErrEnrollmentCodeCancelled = errors.New("enrollment code cancelled")
 	// ErrEnrollmentCodeExpired reports an enrollment code used at or after
 	// its expiry.
 	ErrEnrollmentCodeExpired = errors.New("enrollment code expired")
@@ -37,6 +40,11 @@ const (
 	EnrollPath = "/enroll"
 	// DefaultEnrollmentTTL is how long an enrollment link lasts by default.
 	DefaultEnrollmentTTL = 15 * time.Minute
+	// DefaultInviteTTL is how long the link that invites a viewer lasts by
+	// default: an hour, while the owner may choose 15 minutes or 24 hours.
+	// Like any enrollment link it is one-time and needs a passkey check to
+	// issue (D-183).
+	DefaultInviteTTL = time.Hour
 	// MaxEnrollmentTTL is the longest an enrollment link may last.
 	MaxEnrollmentTTL = 24 * time.Hour
 	// CeremonyTTL is how long a WebAuthn ceremony may take, begin to finish.
@@ -58,6 +66,10 @@ type EnrollmentCode struct {
 	ExpiresAt time.Time
 	// UsedAt is when a passkey was created with it; zero while unused.
 	UsedAt time.Time
+	// CancelledAt is when the owner cancelled a viewer's invitation before
+	// it was used; zero otherwise. A cancelled code is refused like an
+	// expired one.
+	CancelledAt time.Time
 	// Viewer is set on a link that invites a viewer: using it creates that
 	// viewer with those grants and their first passkey, and signs them in
 	// with a read session. Nil on a link for the owner's own passkey.
@@ -90,13 +102,21 @@ func (c *EnrollmentCode) WithViewer(invite *ViewerInvite) error {
 	return nil
 }
 
+// Pending reports whether c is a viewer's invitation that can still be used
+// at now: not used, not cancelled and not expired.
+func (c *EnrollmentCode) Pending(now time.Time) bool {
+	return c.Viewer != nil && c.UsedAt.IsZero() && c.CancelledAt.IsZero() && now.Before(c.ExpiresAt)
+}
+
 // Check returns nil when c may be used at now on origin. Otherwise, in this
-// order: ErrEnrollmentCodeUsed, ErrEnrollmentCodeExpired,
-// ErrEnrollmentCodeWrongOrigin.
+// order: ErrEnrollmentCodeUsed, ErrEnrollmentCodeCancelled,
+// ErrEnrollmentCodeExpired, ErrEnrollmentCodeWrongOrigin.
 func (c *EnrollmentCode) Check(now time.Time, origin Origin) error {
 	switch {
 	case !c.UsedAt.IsZero():
 		return ErrEnrollmentCodeUsed
+	case !c.CancelledAt.IsZero():
+		return ErrEnrollmentCodeCancelled
 	case !now.Before(c.ExpiresAt):
 		return ErrEnrollmentCodeExpired
 	case origin != c.Origin:

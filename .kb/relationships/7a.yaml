@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d656bf88ad72
+  - type: implements
+    from: SYM-invites-internal-identity-app-people-auth-invites
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:32:14.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a56ab15c2240
+  - type: covered_by
+    from: SYM-invites-internal-identity-app-people-auth-invites
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:32:14.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1d29ab37191

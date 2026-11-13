@@ -1217,3 +1217,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd693ad6153c
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-string
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:37:21.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b2aa42ce6b0
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-string
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:37:21.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58374a467d01

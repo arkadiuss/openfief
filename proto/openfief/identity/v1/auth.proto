@@ -189,6 +189,19 @@ service AuthService {
   // Owner scope, with a recent passkey check (D-183).
   rpc InviteViewer(InviteViewerRequest) returns (InviteViewerResponse);
 
+  // ListInvites returns the viewer invitations still pending, oldest first:
+  // not used, not cancelled and not expired, each with the name and grants the
+  // owner chose and when its link stops working. Never the link: only a hash
+  // of its key is kept. Owner scope only.
+  rpc ListInvites(ListInvitesRequest) returns (ListInvitesResponse);
+
+  // CancelInvite cancels a pending viewer invitation before it is used: its
+  // link is then refused like an expired one. The cancellation is an audit
+  // entry, written in the same transaction. An invitation unknown, used,
+  // cancelled or expired already is NOT_FOUND. Owner scope only; it only takes
+  // a way in away, so it needs no passkey check.
+  rpc CancelInvite(CancelInviteRequest) returns (CancelInviteResponse);
+
   // ListPeople returns the owner and every viewer, revoked ones included,
   // each with the grants in force, the passkeys that work and the sessions
   // not ended (D-210). Owner scope only.
@@ -619,6 +632,9 @@ enum AuditAction {
   AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED = 32;
   // The owner dismissing a proposal; names the run.
   AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED = 33;
+  // A viewer's invitation cancelled by the owner before it was used; the
+  // entry names the link.
+  AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED = 16;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -850,7 +866,7 @@ message InviteViewerRequest {
   // The origin the viewer enrolls on, as CreateEnrollmentLinkRequest's;
   // empty is origin itself.
   string target_origin = 5;
-  // How long the link is valid, at most 24 hours; unset is 15 minutes.
+  // How long the link is valid, at most 24 hours; unset is one hour.
   google.protobuf.Duration ttl = 6;
 }
 
@@ -860,6 +876,38 @@ message InviteViewerResponse {
   string url = 1;
   google.protobuf.Timestamp expires_at = 2;
 }
+
+message ListInvitesRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// Invite is a viewer invitation that is still pending (D-210).
+message Invite {
+  // The enrollment code's ID, which the audit log names the invitation by and
+  // CancelInvite takes; it is not secret and cannot open the link.
+  string id = 1;
+  // What the owner calls the viewer.
+  string name = 2;
+  // The grants the viewer starts with, made when they enroll.
+  repeated GrantTarget grants = 3;
+  google.protobuf.Timestamp created_at = 4;
+  // When the link stops working.
+  google.protobuf.Timestamp expires_at = 5;
+}
+
+message ListInvitesResponse {
+  repeated Invite invites = 1;
+}
+
+message CancelInviteRequest {
+  string origin = 1;
+  string session_token = 2;
+  // An Invite.id.
+  string invite_id = 3;
+}
+
+message CancelInviteResponse {}
 
 message ListPeopleRequest {
   string origin = 1;

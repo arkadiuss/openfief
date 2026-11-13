@@ -39,8 +39,10 @@ func TestAccessPeopleSection(t *testing.T) {
 		`action="/access/people/`+alicePerson+`/grants"`, `action="/access/people/`+alicePerson+`/revoke"`,
 		`action="/access/people/`+bobPerson+`/grants"`, `action="/access/people"`,
 		`name="grant" value="sleeve:core" checked`, `id="person-`+alicePerson+`-sleeve-1"`,
-		`name="minutes"`, `value="15" selected`, `name="grant" value="household:home"`, "Create invitation link",
+		`name="minutes"`, `value="60" selected`, `name="grant" value="household:home"`, "Create invitation link",
 	)
+	// The default lifetime is an hour; 15 minutes and 24 hours are choices.
+	wantBody(t, rec, `<option value="15">15 minutes</option>`, `<option value="60" selected>1 hour</option>`, `<option value="1440">24 hours</option>`)
 	// The "no access yet" mark is Bob's alone, and the revoked viewer and the
 	// owner have no form to change or revoke them.
 	if n := strings.Count(rec.Body.String(), "no access yet"); n != 1 {
@@ -78,8 +80,8 @@ func TestInviteViewer(t *testing.T) {
 	rec = h.serve(t, withSession(form("/access/people", "name=Erin"), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	h.auth.locked(func() { req = h.auth.inviteReq })
-	if req.GetName() != "Erin" || len(req.GetGrants()) != 0 || req.GetTtl().AsDuration() != 15*time.Minute {
-		t.Errorf("InviteViewer = %v, want Erin with no grants for 15 minutes", req)
+	if req.GetName() != "Erin" || len(req.GetGrants()) != 0 || req.GetTtl().AsDuration() != time.Hour {
+		t.Errorf("InviteViewer = %v, want Erin with no grants for an hour", req)
 	}
 
 	sent := req
@@ -233,6 +235,7 @@ func TestPeopleActionsAreTheOwners(t *testing.T) {
 	h := newHarness(t)
 	posts := []string{
 		"/access/people", "/access/people/" + alicePerson + "/revoke", "/access/people/" + alicePerson + "/grants",
+		"/access/invites/" + pendingInvite + "/cancel",
 	}
 	for _, session := range []string{viewerSession, emptyViewerSession, readSession, demoSession} {
 		for _, p := range posts {
@@ -247,8 +250,9 @@ func TestPeopleActionsAreTheOwners(t *testing.T) {
 	}
 	h.postsNeedALogin(t, posts)
 	h.auth.locked(func() {
-		if h.auth.inviteReq != nil || len(h.auth.revokedPeople) != 0 || len(h.auth.updates) != 0 {
-			t.Errorf("a refused post reached the core: invite %v, revoked %v, updates %v", h.auth.inviteReq, h.auth.revokedPeople, h.auth.updates)
+		if h.auth.inviteReq != nil || len(h.auth.revokedPeople) != 0 || len(h.auth.updates) != 0 || len(h.auth.cancelledInvites) != 0 {
+			t.Errorf("a refused post reached the core: invite %v, revoked %v, updates %v, cancelled %v",
+				h.auth.inviteReq, h.auth.revokedPeople, h.auth.updates, h.auth.cancelledInvites)
 		}
 	})
 }

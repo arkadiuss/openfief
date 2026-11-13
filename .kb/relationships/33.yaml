@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d91ca7af460
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-authstore_test-memauthstore-pendinginvites
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:29.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70385ede614a
+  - type: executable_for
+    from: SYM-invites-internal-identity-postgres-invites_test-seedinvites
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:47:21.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c8487c7fdf

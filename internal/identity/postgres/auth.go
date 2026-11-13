@@ -263,15 +263,16 @@ func (s *Store) SaveEnrollmentCode(ctx context.Context, c *identity.EnrollmentCo
 // wrapping app.ErrUnknownEnrollmentCode.
 func (s *Store) EnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID) (identity.EnrollmentCode, []byte, error) {
 	var (
-		c      identity.EnrollmentCode
-		origin string
-		hash   []byte
-		used   *time.Time
-		name   *string
-		grants []inviteTarget
+		c         identity.EnrollmentCode
+		origin    string
+		hash      []byte
+		used      *time.Time
+		cancelled *time.Time
+		name      *string
+		grants    []inviteTarget
 	)
-	err := s.db(ctx).QueryRow(ctx, `SELECT id, origin, key_sha256, created_at, expires_at, used_at, viewer_name, viewer_grants
-		FROM identity.enrollment_codes WHERE id = $1`, string(id)).Scan(&c.ID, &origin, &hash, &c.CreatedAt, &c.ExpiresAt, &used, &name, &grants)
+	err := s.db(ctx).QueryRow(ctx, `SELECT id, origin, key_sha256, created_at, expires_at, used_at, cancelled_at, viewer_name, viewer_grants
+		FROM identity.enrollment_codes WHERE id = $1`, string(id)).Scan(&c.ID, &origin, &hash, &c.CreatedAt, &c.ExpiresAt, &used, &cancelled, &name, &grants)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return identity.EnrollmentCode{}, nil, fmt.Errorf("%w: %s", app.ErrUnknownEnrollmentCode, id)
 	}
@@ -285,20 +286,81 @@ func (s *Store) EnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID
 	if used != nil {
 		c.UsedAt = used.UTC()
 	}
+	if cancelled != nil {
+		c.CancelledAt = cancelled.UTC()
+	}
 	if name != nil {
-		c.Viewer = &identity.ViewerInvite{Name: *name}
-		for _, g := range grants {
-			c.Viewer.Targets = append(c.Viewer.Targets, identity.GrantTarget{Kind: identity.GrantTargetKind(g.Kind), ID: g.ID})
-		}
+		c.Viewer = viewerInvite(*name, grants)
 	}
 	return c, hash, nil
 }
 
+// viewerInvite returns the invitation a code stores: the viewer's name and
+// grants.
+func viewerInvite(name string, grants []inviteTarget) *identity.ViewerInvite {
+	v := &identity.ViewerInvite{Name: name}
+	for _, g := range grants {
+		v.Targets = append(v.Targets, identity.GrantTarget{Kind: identity.GrantTargetKind(g.Kind), ID: g.ID})
+	}
+	return v
+}
+
+// PendingInvites returns the codes that invite a viewer and can still be used
+// at now, oldest first, without their keys' hashes.
+func (s *Store) PendingInvites(ctx context.Context, now time.Time) ([]identity.EnrollmentCode, error) {
+	rows, err := s.db(ctx).Query(ctx, `SELECT id, origin, created_at, expires_at, viewer_name, viewer_grants
+		FROM identity.enrollment_codes
+		WHERE viewer_name IS NOT NULL AND used_at IS NULL AND cancelled_at IS NULL AND expires_at > $1
+		ORDER BY created_at, id`, now)
+	if err != nil {
+		return nil, fmt.Errorf("listing pending invitations: %w", err)
+	}
+	defer rows.Close()
+	var out []identity.EnrollmentCode
+	for rows.Next() {
+		var (
+			c      identity.EnrollmentCode
+			origin string
+			name   string
+			grants []inviteTarget
+		)
+		if err = rows.Scan(&c.ID, &origin, &c.CreatedAt, &c.ExpiresAt, &name, &grants); err != nil {
+			return nil, fmt.Errorf("scanning an invitation: %w", err)
+		}
+		if c.Origin, err = identity.ParseOrigin(origin); err != nil {
+			return nil, fmt.Errorf("enrollment code %s: %w", c.ID, err)
+		}
+		c.CreatedAt, c.ExpiresAt = c.CreatedAt.UTC(), c.ExpiresAt.UTC()
+		c.Viewer = viewerInvite(name, grants)
+		out = append(out, c)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("listing pending invitations: %w", err)
+	}
+	return out, nil
+}
+
+// CancelEnrollmentCode marks the pending viewer invitation id cancelled at at,
+// failing with an error wrapping app.ErrUnknownEnrollmentCode when id is no
+// invitation or one that was used, cancelled or has expired.
+func (s *Store) CancelEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error {
+	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.enrollment_codes SET cancelled_at = GREATEST($2, created_at)
+		WHERE id = $1 AND viewer_name IS NOT NULL AND used_at IS NULL AND cancelled_at IS NULL AND expires_at > $2`, string(id), at)
+	if err != nil {
+		return fmt.Errorf("cancelling enrollment code %s: %w", id, err)
+	}
+	if tag.RowsAffected() == 0 {
+		return fmt.Errorf("%w: %s", app.ErrUnknownEnrollmentCode, id)
+	}
+	return nil
+}
+
 // UseEnrollmentCode marks the code id used at at, failing with an error
-// wrapping identity.ErrEnrollmentCodeUsed when it already was.
+// wrapping identity.ErrEnrollmentCodeUsed when it already was, or was
+// cancelled meanwhile.
 func (s *Store) UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error {
 	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.enrollment_codes SET used_at = GREATEST($2, created_at)
-		WHERE id = $1 AND used_at IS NULL`, string(id), at)
+		WHERE id = $1 AND used_at IS NULL AND cancelled_at IS NULL`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("using enrollment code %s: %w", id, err)
 	}

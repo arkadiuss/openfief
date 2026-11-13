@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9194bc79795f
+  - type: implements
+    from: SYM-ui-server-render-inbox
+    to: REQ-ui-inbox-viewer-nothing-shared
+    created_at: 2026-11-13T23:39:30.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87f67b9fb1aa

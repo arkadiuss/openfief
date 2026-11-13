@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe4e7397d5e1
+  - type: specified_by
+    from: REQ-identity-invite-cancel
+    to: SCEN-identity-invite-cancel
+    created_at: 2026-11-13T23:29:44.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa47c945a15
