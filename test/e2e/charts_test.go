@@ -20,6 +20,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/test/e2e/chartcheck"
 )
@@ -51,13 +52,17 @@ var errChartsDiffer = errors.New("the page's charts differ from the read API")
 // StatementService's ListStatementAccounts, which an account page asks
 // whether the account takes uploaded files (D-109), and TickerService's
 // ListConfirmedTickers, which an instrument page asks for the tickers the
-// owner confirmed (D-116). None of them answers a value, a price, a return
-// or an allocation, so every number a chart draws comes from the read API.
+// owner confirmed (D-116), and AskModelService's GetAskModel, which the
+// overview asks whether its Ask box sends questions to a model (D-203) and
+// which answers one boolean. None of them answers a value, a price, a
+// return or an allocation, so every number a chart draws comes from the
+// read API.
 func uiNonReadCalls() []string {
 	return []string{
 		"/" + identityv1connect.AuthServiceName + "/",
 		ingestv1connect.StatementServiceListStatementAccountsProcedure,
 		ingestv1connect.TickerServiceListConfirmedTickersProcedure,
+		modelsv1connect.AskModelServiceGetAskModelProcedure,
 	}
 }
 
