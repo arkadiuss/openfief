@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bc540078d03
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantstore-grantcutoverdone
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:51.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6663012e5894

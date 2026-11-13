@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53c663fc646a
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakemodel-lines
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:37.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5298acf0848d

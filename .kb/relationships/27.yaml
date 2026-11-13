@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2e60f10fd63
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-holdertypes
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:16:35.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d27cdf53a8
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-holdertypes
+    to: REQ-identity-grants-only-view
+    created_at: 2026-11-13T10:16:35.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19bb8e755de9
+  - type: covered_by
+    from: SYM-grants-internal-identity-spicedb-syncer-holdertypes
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:16:35.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af545415952c

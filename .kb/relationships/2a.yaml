@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed169d4521ac
+  - type: implements
+    from: SYM-grants-cmd-core-config-issueargs
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:01:47.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6967e54a0378
+  - type: covered_by
+    from: SYM-grants-cmd-core-config-issueargs
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:01:47.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15e882baa0c3

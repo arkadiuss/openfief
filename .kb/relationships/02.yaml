@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-376022937042
+  - type: implements
+    from: SYM-grants-internal-identity-app-auth-withgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:02.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf09b6424d9
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-auth-withgrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:02.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60c25c61d91d

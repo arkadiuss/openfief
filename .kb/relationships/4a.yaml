@@ -860,3 +860,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec0f8f5f70b8
+  - type: verified_by
+    from: SCEN-identity-grants-cutover
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:00:20.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea9ffd2307e1
+  - type: verified_by
+    from: SCEN-identity-grants-cutover
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:00:20.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b049527088d9
+  - type: verified_by
+    from: SCEN-identity-grants-cutover
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:00:20.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36be44e5be0a
+  - type: verified_by
+    from: SCEN-identity-grants-cutover
+    to: TEST-e2e-grants
+    created_at: 2026-11-13T10:00:20.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25f13faf42fe
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-gonesides
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:54.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ce18e1d129
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-gonesides
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:54.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e2489d445c5
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantmatch-validate
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:13:17.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e429b4ef1022
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantmatch-validate
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:13:17.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e704dad96660
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grantmatch-validate
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:17.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d522713aedf
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-protoreflect
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:01.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4452839d7f
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-protoreflect
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:01.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914b007d0364

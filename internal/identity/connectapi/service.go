@@ -283,6 +283,8 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionEnrollmentLinkUsed:   identityv1.AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_USED,
 		identity.ActionScriptTokenCreated:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_CREATED,
 		identity.ActionScriptTokenRevoked:   identityv1.AuditAction_AUDIT_ACTION_SCRIPT_TOKEN_REVOKED,
+		identity.ActionGrantCreated:         identityv1.AuditAction_AUDIT_ACTION_GRANT_CREATED,
+		identity.ActionGrantRevoked:         identityv1.AuditAction_AUDIT_ACTION_GRANT_REVOKED,
 	}
 }
 
@@ -302,6 +304,11 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefPasskey:        identityv1.AuditRefKind_AUDIT_REF_KIND_PASSKEY,
 		identity.RefEnrollmentCode: identityv1.AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE,
 		identity.RefScriptToken:    identityv1.AuditRefKind_AUDIT_REF_KIND_SCRIPT_TOKEN,
+		identity.RefPerson:         identityv1.AuditRefKind_AUDIT_REF_KIND_PERSON,
+		identity.RefViewPlugin:     identityv1.AuditRefKind_AUDIT_REF_KIND_VIEW_PLUGIN,
+		identity.RefAccount:        identityv1.AuditRefKind_AUDIT_REF_KIND_ACCOUNT,
+		identity.RefSleeve:         identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE,
+		identity.RefHousehold:      identityv1.AuditRefKind_AUDIT_REF_KIND_HOUSEHOLD,
 	}
 }
 

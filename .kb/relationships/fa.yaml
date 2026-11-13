@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc0b847f8311
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-testnewgrant
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:32.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81ec13485041
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:04.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e7e0972c4a5
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:04.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93921f0821b6

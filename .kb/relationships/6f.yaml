@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e058d99927f
+  - type: implements
+    from: SYM-grants-internal-identity-grant-isalnum
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:12:28.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de6c0e7543de
+  - type: implements
+    from: SYM-grants-internal-identity-grant-isalnum
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:12:28.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acf12af31a19
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-isalnum
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:12:28.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eabdbd23becc

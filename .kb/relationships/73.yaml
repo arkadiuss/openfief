@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-291463dd21af
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:33.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5645ae2f6c2
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetkind
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:33.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6dd9e5fd5cf

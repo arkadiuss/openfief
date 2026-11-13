@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-918b96a9c58d
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerreconciles
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:16.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3489d791ed97

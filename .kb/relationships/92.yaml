@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bf1e788f0cb
+  - type: implements
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T10:09:59.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2492e0967247
+  - type: implements
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-13T10:09:59.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a97af9d234c
+  - type: covered_by
+    from: SYM-grants-internal-identity-audit-ref-validategrantref
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T10:09:59.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62978e555ea5

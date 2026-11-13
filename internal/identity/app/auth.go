@@ -67,12 +67,23 @@ type Auth struct {
 	cfg        AuthConfig
 	now        func() time.Time
 	random     io.Reader
+	grants     *Grants
+}
+
+// AuthOption configures the auth use cases.
+type AuthOption func(*Auth)
+
+// WithGrants gives the auth use cases the owner's grants (D-209): the
+// owner's session can then create, revoke and list them, and revoking a
+// script token ends its grants. Without them, those calls are refused.
+func WithGrants(g *Grants) AuthOption {
+	return func(a *Auth) { a.grants = g }
 }
 
 // NewAuth returns the auth use cases over store, ceremonies, the script
 // token use cases and the demo marker, reading the time from now and
 // secrets from random; a nil random is crypto/rand.Reader.
-func NewAuth(store AuthStore, ceremonies Ceremonies, tokens *Tokens, demo DemoMarker, cfg AuthConfig, now func() time.Time, random io.Reader) (*Auth, error) {
+func NewAuth(store AuthStore, ceremonies Ceremonies, tokens *Tokens, demo DemoMarker, cfg AuthConfig, now func() time.Time, random io.Reader, opts ...AuthOption) (*Auth, error) {
 	if err := cfg.Sessions.Validate(); err != nil {
 		return nil, fmt.Errorf("auth: %w", err)
 	}
@@ -82,7 +93,11 @@ func NewAuth(store AuthStore, ceremonies Ceremonies, tokens *Tokens, demo DemoMa
 	if random == nil {
 		random = rand.Reader
 	}
-	return &Auth{store: store, ceremonies: ceremonies, tokens: tokens, demo: demo, cfg: cfg, now: now, random: random}, nil
+	a := &Auth{store: store, ceremonies: ceremonies, tokens: tokens, demo: demo, cfg: cfg, now: now, random: random}
+	for _, o := range opts {
+		o(a)
+	}
+	return a, nil
 }
 
 // Authenticated is what an authenticator proved: the owner, with the scope

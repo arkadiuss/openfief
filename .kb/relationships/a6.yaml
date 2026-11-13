@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c471ae49ec2
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-fakesleeves-sleeves
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:42.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06eccca6c252

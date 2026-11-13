@@ -64,6 +64,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 const (
@@ -106,6 +108,23 @@ func withMigratedPool(ctx context.Context, dsn string, fn func(d *deps) error) e
 	})
 }
 
+// runTokenCommand runs a token command over a migrated database, with the
+// connection to SpiceDB it asked for, if any, which it closes at the end.
+func runTokenCommand(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
+	return withMigratedPool(ctx, cmd.DSN, func(d *deps) error {
+		tokens, closer, err := newTokens(d.pool, &cmd.Authz, time.Now)
+		if err != nil {
+			return err
+		}
+		defer func() {
+			if closeErr := closer.Close(); closeErr != nil {
+				log.Warn("closing the connection to SpiceDB failed", "error", kernel.LogSafe(closeErr))
+			}
+		}()
+		return tokenCommand(ctx, cmd, tokens, out, time.Now())
+	})
+}
+
 // run runs cmd, writing what a token command shows to out.
 func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
 	switch cmd.Name {
@@ -120,9 +139,7 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 			return nil
 		})
 	case cmdTokenIssue, cmdTokenList, cmdTokenRevoke:
-		return withMigratedPool(ctx, cmd.DSN, func(d *deps) error {
-			return tokenCommand(ctx, cmd, newTokens(d.pool, time.Now), out, time.Now())
-		})
+		return runTokenCommand(ctx, cmd, out, log)
 	case cmdInitCredentials:
 		return initCredentialsInCluster(ctx, log)
 	case cmdEnrollLink:

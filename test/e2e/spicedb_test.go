@@ -53,9 +53,6 @@ const (
 // errNoRoleStatus reports a cluster whose status doesn't list SpiceDB's role as reconciled.
 var errNoRoleStatus = errors.New("CloudNativePG hasn't reconciled the role spicedb")
 
-// errNoCoreContainer reports a core Deployment without the container the test changes.
-var errNoCoreContainer = errors.New("the core Deployment has no container")
-
 // cnpgDatabase is CloudNativePG's Database resource.
 func cnpgDatabase() schema.GroupVersionResource {
 	return schema.GroupVersionResource{Group: "postgresql.cnpg.io", Version: "v1", Resource: "databases"}
@@ -382,75 +379,68 @@ func podLogs(ctx context.Context, t *testing.T, k *kube, app string) []byte {
 	return all
 }
 
-// TestSpiceDBFailsClosed switches the core to SpiceDB and checks, with a
-// script token that has no grant, that SpiceDB is what answers; then stops
-// SpiceDB, and checks that the core refuses instead of answering from anywhere
-// else; then starts it and checks that the core answers again; and finally
-// returns the core to the demo's policy (SCEN-e2e-spicedb-down-fails-closed,
-// D-164).
+// TestSpiceDBFailsClosed checks, on the core that runs from SpiceDB (the suite's
+// overlay adds --authz=spicedb to the demo's core, so the whole suite runs under
+// it), that SpiceDB is what answers: a script token with no grant views nothing
+// while one with the household grant views every account, both from SpiceDB's
+// relationships; then stops SpiceDB, and checks that the core refuses instead of
+// answering from anywhere else; and then starts it and checks that the core
+// answers again, from what SpiceDB's database kept
+// (SCEN-e2e-spicedb-down-fails-closed, D-164).
 //
-// It is not parallel, on purpose: it restarts the core, so Go runs it before
-// any parallel test starts and it leaves the demo's configuration as it
-// found it. The owner's own refusal and view of every account are the
-// contract test's (task test:authz): a script token is the caller the suite
-// has without a browser, and SpiceDB grants none until the owner's grants
-// exist (D-209), which is the point: the token that the policy lets view every
-// account views none under SpiceDB.
+// It is not parallel, on purpose: it stops SpiceDB for the others, so Go runs it
+// before any parallel test starts and it leaves SpiceDB running. The owner's own
+// refusal and view of every account are the contract test's (task test:authz).
 //
-//nolint:paralleltest // see above: the test restarts the core, so it is the one that must run alone
+//nolint:paralleltest // see above: the test stops SpiceDB, so it is the one that must run alone
 func TestSpiceDBFailsClosed(t *testing.T) {
 	k := mustConnect(t)
 	diagnoseOnFailure(t, k)
 	waitCoreAvailable(t, k)
 	waitSeedComplete(t, k)
 	waitSpiceDBAvailable(t, k)
-	token := issueToken(t, k)
+	core, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	if !coreRunsSpiceDB(core) {
+		t.Fatalf("the core runs without %s: the suite's overlay (test/e2e/overlays/openfief) must switch it to SpiceDB", authzSpiceDBFlag)
+	}
+	waitLogLine(t, k, coreDeployment, reconciledLine)
+	ungranted := issueTokenWith(t, k).secret
+	granted := issueToken(t, k)
 
-	// Whatever happens, leave SpiceDB running and the core on the policy.
+	// Whatever happens, leave SpiceDB running.
 	t.Cleanup(func() {
 		ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), spicedbTimeout)
 		defer cancel()
 		if err := scaleDeployment(ctx, k, spicedbDeployment, 1); err != nil {
 			t.Logf("restoring SpiceDB: %v", err)
 		}
-		if err := setCoreAuthz(ctx, k, false); err != nil {
-			t.Logf("returning the core to the policy: %v", err)
-		}
 	})
 
 	anyAccounts := func([]string) bool { return true }
 	someAccounts := func(ids []string) bool { return len(ids) > 0 }
 	want := demoAccountIDs()
-	if got := waitAccounts(t, k, token, someAccounts); !slices.Equal(got, want) {
-		t.Fatalf("with the policy the token lists %v, want the demo accounts %v", got, want)
+	checkAnswers := func(step string) {
+		t.Helper()
+		if got := waitAccounts(t, k, granted, someAccounts); !slices.Equal(got, want) {
+			t.Fatalf("%s: the token with the household grant lists %v, want the demo accounts %v", step, got, want)
+		}
+		if got := waitAccounts(t, k, ungranted, anyAccounts); len(got) != 0 {
+			t.Fatalf("%s: the token with no grant lists %v, want nothing: SpiceDB holds no grant for it", step, got)
+		}
 	}
+	checkAnswers("with SpiceDB up")
 
-	if err := setCoreAuthz(t.Context(), k, true); err != nil {
-		t.Fatalf("switching the core to SpiceDB: %v", err)
-	}
-	waitLogLine(t, k, coreDeployment, reconciledLine)
-	// SpiceDB holds no grant for the token, so it views nothing; under the policy it viewed every account.
-	if got := waitAccounts(t, k, token, anyAccounts); len(got) != 0 {
-		t.Fatalf("with SpiceDB and no grant the token lists %v, want nothing", got)
-	}
-
-	stopSpiceDBAndExpectRefusal(t, k, token)
+	stopSpiceDBAndExpectRefusal(t, k, granted)
 
 	if err := scaleDeployment(t.Context(), k, spicedbDeployment, 1); err != nil {
 		t.Fatalf("starting SpiceDB: %v", err)
 	}
 	waitSpiceDBAvailable(t, k)
 	// SpiceDB's relationships are in PostgreSQL, so nothing is lost: the core answers again, from them.
-	if got := waitAccounts(t, k, token, anyAccounts); len(got) != 0 {
-		t.Fatalf("after SpiceDB came back the token lists %v, want nothing", got)
-	}
-
-	if err := setCoreAuthz(t.Context(), k, false); err != nil {
-		t.Fatalf("returning the core to the policy: %v", err)
-	}
-	if got := waitAccounts(t, k, token, someAccounts); !slices.Equal(got, want) {
-		t.Fatalf("with the policy again the token lists %v, want the demo accounts %v", got, want)
-	}
+	checkAnswers("after SpiceDB came back")
 }
 
 // stopSpiceDBAndExpectRefusal stops SpiceDB and waits for the core to refuse
@@ -530,30 +520,6 @@ func scaleDeployment(ctx context.Context, k *kube, name string, replicas int32) 
 		return fmt.Errorf("scaling Deployment %s: %w", name, err)
 	}
 	return waitRolledOut(ctx, k, name)
-}
-
-// setCoreAuthz adds or removes --authz=spicedb and --spicedb-insecure in the
-// core's arguments, and waits for the core to roll out. Without them the core
-// runs on the policy, the demo's default.
-func setCoreAuthz(ctx context.Context, k *kube, spicedb bool) error {
-	deployments := k.clients.AppsV1().Deployments(namespace)
-	d, err := deployments.Get(ctx, coreDeployment, metav1.GetOptions{})
-	if err != nil {
-		return fmt.Errorf("getting Deployment %s: %w", coreDeployment, err)
-	}
-	i := slices.IndexFunc(d.Spec.Template.Spec.Containers, func(c corev1.Container) bool { return c.Name == "core" })
-	if i < 0 {
-		return fmt.Errorf("%w: core", errNoCoreContainer)
-	}
-	c := &d.Spec.Template.Spec.Containers[i]
-	c.Args = slices.DeleteFunc(c.Args, func(a string) bool { return strings.HasPrefix(a, "--authz=") || a == authzInsecureFlag })
-	if spicedb {
-		c.Args = append(c.Args, authzSpiceDBFlag, authzInsecureFlag)
-	}
-	if _, err := deployments.Update(ctx, d, metav1.UpdateOptions{FieldManager: fieldManager}); err != nil {
-		return fmt.Errorf("changing Deployment %s: %w", coreDeployment, err)
-	}
-	return waitRolledOut(ctx, k, coreDeployment)
 }
 
 // waitRolledOut waits until Deployment name has rolled out its latest

@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ee83903e88
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugininstalled
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:31.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1730d17c85a
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugininstalled
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:31.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5870e9de8683
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantaudittrailoverpostgres
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:43.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cc3627c1aa7

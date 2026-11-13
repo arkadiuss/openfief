@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a7d341482d2
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetid
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:37.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e155e3f9a1
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetid
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:37.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bab1a9b41cd9

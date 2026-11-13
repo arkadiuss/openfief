@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4108e9945e76
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-newfakedirectory
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:04.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1edbbdb1aad

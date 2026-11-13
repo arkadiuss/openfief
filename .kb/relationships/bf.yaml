@@ -1252,3 +1252,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-136955935397
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:14:07.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e1202fcb03
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:14:07.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c112086630
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:07.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e97dc7d73ac
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:26.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f06b8a50c36
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:26.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-373df00f9956

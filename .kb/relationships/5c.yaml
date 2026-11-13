@@ -875,9 +875,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5e24c80b74dc
   - type: executable_for
-    from: SYM-e2e-spicedb-set-core-authz
-    to: TEST-e2e-spicedb
-    created_at: 2026-11-13T04:07:56.255Z
+    from: SYM-grants-internal-identity-app-grants-test-testcutoverrunsonce
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:13.150Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-506099561cfa
+    id: rel-ec01f7f0f0c3
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-string
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:54.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dcc32278769
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-string
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:54.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff7ebb6c048f

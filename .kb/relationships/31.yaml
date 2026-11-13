@@ -804,3 +804,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-967abf0fc1cc
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-markgrantcutover
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:14:11.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3712658cfd
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-store-markgrantcutover
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:14:11.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bea11f9fa97b
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-store-markgrantcutover
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:11.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae13e4070742

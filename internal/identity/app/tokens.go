@@ -115,6 +115,15 @@ func (t *Tokens) Revoke(ctx context.Context, id identity.ScriptTokenID) error {
 	return nil
 }
 
+// Get returns the token id, or an error wrapping ErrUnknownToken.
+func (t *Tokens) Get(ctx context.Context, id identity.ScriptTokenID) (identity.ScriptToken, error) {
+	tok, _, err := t.store.ScriptToken(ctx, id)
+	if err != nil {
+		return identity.ScriptToken{}, fmt.Errorf("loading script token %s: %w", id, err)
+	}
+	return tok, nil
+}
+
 // List returns every token, expired and revoked ones included, in creation
 // order.
 func (t *Tokens) List(ctx context.Context) ([]identity.ScriptToken, error) {
@@ -125,6 +134,13 @@ func (t *Tokens) List(ctx context.Context) ([]identity.ScriptToken, error) {
 	return toks, nil
 }
 
+// auditedAtomic is what a token's creation or revocation needs of a store
+// besides Store: one transaction with its audit entry.
+type auditedAtomic interface {
+	Atomic
+	Auditor
+}
+
 // IssueToken creates a read-only token for actor, as Tokens.Issue does, and
 // records in the audit log, in the same transaction, that actor created it
 // (D-211): if the entry can't be written, no token is created. The entry
@@ -132,7 +148,7 @@ func (t *Tokens) List(ctx context.Context) ([]identity.ScriptToken, error) {
 // reaches the log. store must be over the same database as t's store, so one
 // transaction covers both. Besides Auth.CreateScriptToken, core token issue
 // calls it, as the core itself.
-func IssueToken(ctx context.Context, store AuthStore, t *Tokens, actor identity.Actor, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+func IssueToken(ctx context.Context, store auditedAtomic, t *Tokens, actor identity.Actor, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
 	var (
 		tok    identity.ScriptToken
 		secret string
@@ -152,7 +168,7 @@ func IssueToken(ctx context.Context, store AuthStore, t *Tokens, actor identity.
 
 // RevokeToken revokes the token id as Tokens.Revoke does, and records in the
 // audit log, in the same transaction, that actor did (D-211).
-func RevokeToken(ctx context.Context, store AuthStore, t *Tokens, actor identity.Actor, id identity.ScriptTokenID) error {
+func RevokeToken(ctx context.Context, store auditedAtomic, t *Tokens, actor identity.Actor, id identity.ScriptTokenID) error {
 	return within(ctx, store, func(ctx context.Context) error {
 		if err := t.Revoke(ctx, id); err != nil {
 			return err

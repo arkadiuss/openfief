@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9029ef2e22ee
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugins
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:35.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f828744103a
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantdirectory-viewplugins
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:35.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499e0b5b0af5

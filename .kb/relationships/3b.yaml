@@ -776,3 +776,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1554be55241b
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grantstore
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:05.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae9ac707899
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grantstore
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:05.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d34dcc14c6
+  - type: implements
+    from: SYM-grants-internal-identity-app-ownergrants-auth-creategrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:09:31.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087efe73db1b
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-ownergrants-auth-creategrant
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:31.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada25e930c80
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:42.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc716425927
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:42.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22e9eba54dee

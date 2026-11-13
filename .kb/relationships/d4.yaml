@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c9342f36d06
+  - type: implements
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T10:09:55.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f384d9d2c6d
+  - type: implements
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: REQ-identity-audit-no-amount-secret-text
+    created_at: 2026-11-13T10:09:55.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4811f7eb6e33
+  - type: covered_by
+    from: SYM-grants-internal-identity-audit-isgrantaction
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T10:09:55.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82915491674a

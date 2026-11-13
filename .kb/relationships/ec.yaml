@@ -916,3 +916,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c854353de84
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-create
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:22.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd080ce02ad
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-create
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:22.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b7dd343f86e
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-sortstrings
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:28.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63123d586e06
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-number
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:53.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae51ea75ca4d
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-number
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:53.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38e7923735ed

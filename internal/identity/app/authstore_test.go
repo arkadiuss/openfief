@@ -37,6 +37,8 @@ type memAuthStore struct {
 	audit      []identity.AuditEntry
 	// auditFail, when set, is what AppendAudit returns instead of writing.
 	auditFail error
+	grants    []identity.Grant
+	cutover   bool
 }
 
 func newMemAuthStore() *memAuthStore {
@@ -248,6 +250,8 @@ type snapshot struct {
 	codes      map[identity.EnrollmentCodeID]memCode
 	sessions   map[identity.SessionID]memSession
 	audit      []identity.AuditEntry
+	grants     []identity.Grant
+	cutover    bool
 }
 
 // Atomically runs fn and, when it fails, puts every table back as it was
@@ -257,6 +261,7 @@ func (m *memAuthStore) Atomically(ctx context.Context, fn func(ctx context.Conte
 	before := snapshot{
 		owner: m.owner, passkeys: slices.Clone(m.passkeys), ceremonies: maps.Clone(m.ceremonies),
 		codes: maps.Clone(m.codes), sessions: maps.Clone(m.sessions), audit: slices.Clone(m.audit),
+		grants: slices.Clone(m.grants), cutover: m.cutover,
 	}
 	m.mu.Unlock()
 	err := fn(ctx)
@@ -264,6 +269,7 @@ func (m *memAuthStore) Atomically(ctx context.Context, fn func(ctx context.Conte
 		m.mu.Lock()
 		m.owner, m.passkeys, m.ceremonies, m.codes, m.sessions, m.audit =
 			before.owner, before.passkeys, before.ceremonies, before.codes, before.sessions, before.audit
+		m.grants, m.cutover = before.grants, before.cutover
 		m.mu.Unlock()
 	}
 	return err

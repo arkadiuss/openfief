@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2fa29f8861d
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-grantrows
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e9cf747eece
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testsweep
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:27.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17fc682c450e

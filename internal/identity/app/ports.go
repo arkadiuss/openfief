@@ -36,6 +36,7 @@ var (
 type AuthStore interface {
 	Atomic
 	Auditor
+	GrantStore
 	OwnerStore
 	PasskeyStore
 	CeremonyStore

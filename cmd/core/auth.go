@@ -43,11 +43,13 @@ type authConfig struct {
 	DemoSessions bool
 }
 
-// newAuth returns the auth use cases over pool, as cfg configures them.
-func newAuth(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time) (*identityapp.Auth, error) {
+// newAuth returns the auth use cases over pool, as cfg configures them, with
+// the owner's grants (D-209).
+func newAuth(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time, grants *identityapp.Grants) (*identityapp.Auth, error) {
 	store := identitypg.New(pool)
 	auth, err := identityapp.NewAuth(store, webauthn.New(rpName), identityapp.NewTokens(store, now, nil), demoMarker{pool: pool},
-		identityapp.AuthConfig{Origins: cfg.Origins, Sessions: cfg.Sessions, DemoSessions: cfg.DemoSessions}, now, nil)
+		identityapp.AuthConfig{Origins: cfg.Origins, Sessions: cfg.Sessions, DemoSessions: cfg.DemoSessions}, now, nil,
+		identityapp.WithGrants(grants))
 	if err != nil {
 		return nil, fmt.Errorf("auth: %w", err)
 	}

@@ -1035,3 +1035,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d583278d5a5d
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-newgrantfixture
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:53.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d4cfc0c8f68
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-testgrantmatch
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:43.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e67383dac9f4
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerunplacesanaccount
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:17:12.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b47467d2d9

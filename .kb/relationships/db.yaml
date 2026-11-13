@@ -783,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4352e34c866e
+  - type: implements
+    from: SYM-grants-internal-identity-connectapi-grants-pbtargetkinds
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:10:19.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7deff648c05
+  - type: covered_by
+    from: SYM-grants-internal-identity-connectapi-grants-pbtargetkinds
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:19.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d111190ad51f
+  - type: implements
+    from: SYM-grants-internal-portfolio-app-registry-withplacementobserver
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:17:41.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5c1b352fd01
+  - type: covered_by
+    from: SYM-grants-internal-portfolio-app-registry-withplacementobserver
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:41.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0016e3a66ea8

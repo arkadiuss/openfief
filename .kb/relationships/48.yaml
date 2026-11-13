@@ -1028,3 +1028,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47d9bfef60b1
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-ownedfilters
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:16:56.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbb944a8aa5
+  - type: implements
+    from: SYM-grants-internal-identity-spicedb-syncer-ownedfilters
+    to: REQ-identity-grants-only-view
+    created_at: 2026-11-13T10:16:56.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d2e925ea5b8
+  - type: covered_by
+    from: SYM-grants-internal-identity-spicedb-syncer-ownedfilters
+    to: TEST-identity-spicedb-syncer
+    created_at: 2026-11-13T10:16:56.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f96a469afce

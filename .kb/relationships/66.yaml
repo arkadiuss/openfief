@@ -748,3 +748,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04e617ad2036
+  - type: constrains
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: FACT-SUBJECT-94F3EA422220D5E6
+    created_at: 2026-11-13T10:00:30.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2a739de974
+  - type: requires_property
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: FACT-PROP-589AD7AB64BA95F2
+    created_at: 2026-11-13T10:00:30.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0db4f66324
+  - type: specified_by
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: SCEN-identity-spicedb-grants-cover-later-accounts
+    created_at: 2026-11-13T10:00:30.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84281f98eb7e
+  - type: specified_by
+    from: REQ-identity-grants-sleeve-covers-later-accounts
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:30.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f648df088a7d
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-newgrantcases
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:28.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f02dd581bcd5
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-string
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:07.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed89a84b4f1c
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-string
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:07.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-843f63b7f43e
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:05.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d8c5d042bcc
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:05.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce25906eca9

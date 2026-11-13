@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee8315213a2c
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantsonuninstall
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:03:01.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64e1498e5f31
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantsonuninstall
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:01.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23b30a007e3a

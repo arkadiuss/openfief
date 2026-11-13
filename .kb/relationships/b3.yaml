@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54196ab8c686
+  - type: implements
+    from: SYM-grants-internal-portfolio-app-registry-registry-observed
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:17:45.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2891ba85f26a
+  - type: covered_by
+    from: SYM-grants-internal-portfolio-app-registry-registry-observed
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:45.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e92b847ba0

@@ -1042,3 +1042,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-581a455a5a68
+  - type: implements
+    from: SYM-grants-cmd-core-authz-placementsync-sleeveremoved
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:01:39.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b0d61e008a9
+  - type: covered_by
+    from: SYM-grants-cmd-core-authz-placementsync-sleeveremoved
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:01:39.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e9ed1b57ed4
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantsstep
+    to: REQ-identity-grants-cutover-keeps-access
+    created_at: 2026-11-13T10:03:09.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-428c4dd43365
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantsstep
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:09.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d18e63099be

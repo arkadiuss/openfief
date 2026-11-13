@@ -175482,16 +175482,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-spicedb
-  - id: SYM-e2e-spicedb-set-core-authz
-    title: setCoreAuthz
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T04:07:53.928Z
-    sourceFile: test/e2e/spicedb_test.go
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-spicedb
   - id: SYM-e2e-spicedb-wait-rolled-out
     title: waitRolledOut
     status: active
@@ -176266,3 +176256,4431 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-spicedb
+  - id: SYM-grants-cmd-core-authz-placementsync-sleeveremoved
+    title: placementSync.SleeveRemoved
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:01:36.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-authz-desiredaccess
+    title: desiredAccess
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:01:40.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-config-issueargs
+    title: issueArgs
+    status: active
+    sourceFile: cmd/core/config.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:01:44.657Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-core-nothingtoclose
+    title: nothingToClose
+    status: active
+    sourceFile: cmd/core/core.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:01:56.783Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-core-nothingtoclose-close
+    title: nothingToClose.Close
+    status: active
+    sourceFile: cmd/core/core.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:01.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-core-access
+    title: access
+    status: active
+    sourceFile: cmd/core/core.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:05.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-core-newaccess
+    title: newAccess
+    status: active
+    sourceFile: cmd/core/core.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:09.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-installedplugins
+    title: installedPlugins
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:12.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-accountlookup
+    title: accountLookup
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:15.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-sleevelister
+    title: sleeveLister
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:18.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantdirectory
+    title: grantDirectory
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:22.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantdirectory-targetexists
+    title: grantDirectory.TargetExists
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:25.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantdirectory-viewplugininstalled
+    title: grantDirectory.ViewPluginInstalled
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:29.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantdirectory-viewplugins
+    title: grantDirectory.ViewPlugins
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:33.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantdirectory-records
+    title: grantDirectory.records
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:36.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-isviewrecord
+    title: isViewRecord
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:39.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantcleanup
+    title: grantCleanup
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:43.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantcleanup-accountplaced
+    title: grantCleanup.AccountPlaced
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:47.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantcleanup-accountremoved
+    title: grantCleanup.AccountRemoved
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:51.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
+    title: grantCleanup.SleeveRemoved
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:54.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantsonuninstall
+    title: grantsOnUninstall
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:02:59.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-cmd-core-grants-grantsstartup
+    title: grantsStartup
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:03.063Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access
+  - id: SYM-grants-cmd-core-grants-grantsstep
+    title: grantsStep
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:07.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access
+  - id: SYM-grants-cmd-core-grants-newgrants
+    title: newGrants
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:11.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-grants-householdonly
+    title: householdOnly
+    status: active
+    sourceFile: cmd/core/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:14.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-grants-householdonly-targetexists
+    title: householdOnly.TargetExists
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:18.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-grants-householdonly-viewplugininstalled
+    title: householdOnly.ViewPluginInstalled
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:22.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-grants-householdonly-viewplugins
+    title: householdOnly.ViewPlugins
+    status: active
+    sourceFile: cmd/core/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:26.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-grants-test-fakeaccounts-account
+    title: fakeAccounts.Account
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:33.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-fakesleeves-sleeves
+    title: fakeSleeves.Sleeves
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:39.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-fakeplugins-installedplugins
+    title: fakePlugins.InstalledPlugins
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:47.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-directoryplugins
+    title: directoryPlugins
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:51.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantdirectorytargets
+    title: TestGrantDirectoryTargets
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:03:56.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantdirectoryplugins
+    title: TestGrantDirectoryPlugins
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:00.225Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantdirectoryoutsideacluster
+    title: TestGrantDirectoryOutsideACluster
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:04.537Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-newgrantsfixture
+    title: newGrantsFixture
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:13.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-grantsfixture-trail
+    title: grantsFixture.trail
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:17.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantsstartupcutsoveronce
+    title: TestGrantsStartupCutsOverOnce
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:21.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantsstartupwaitsfortheplugins
+    title: TestGrantsStartupWaitsForThePlugins
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:25.311Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-grantrows
+    title: grantRows
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:28.765Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-newfollowing
+    title: newFollowing
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:32.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantsfollowtheirrecords
+    title: TestGrantsFollowTheirRecords
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:35.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testgrantsstartupsweepswhatwentwhilethecorewasdown
+    title: TestGrantsStartupSweepsWhatWentWhileTheCoreWasDown
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:39.174Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testtokenissuegrantsthehousehold
+    title: TestTokenIssueGrantsTheHousehold
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:42.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-grants-test-testtokenrevokeendsitsgrants
+    title: TestTokenRevokeEndsItsGrants
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:46.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants-cmd-core-main-runtokencommand
+    title: runTokenCommand
+    status: active
+    sourceFile: cmd/core/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:50.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-cmd-core-main-test-policyauthz
+    title: policyAuthz
+    status: active
+    sourceFile: cmd/core/main_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:53.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unit
+  - id: SYM-grants-internal-identity-app-auth-authoption
+    title: AuthOption
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:04:56.810Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-auth-withgrants
+    title: WithGrants
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:00.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grantstore
+    title: GrantStore
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:03.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grantprojector
+    title: GrantProjector
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:07.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-directory
+    title: Directory
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:10.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants
+    title: Grants
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:13.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-newgrants
+    title: NewGrants
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:16.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-create
+    title: Grants.Create
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:20.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-revoke
+    title: Grants.Revoke
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:23.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-revokeholder
+    title: Grants.RevokeHolder
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:27.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-revoketarget
+    title: Grants.RevokeTarget
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:31.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-list
+    title: Grants.List
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:34.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-inforce
+    title: Grants.InForce
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:38.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-revoketoken
+    title: Grants.RevokeToken
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:41.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-app-grants-grants-cutover
+    title: Grants.Cutover
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:45.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-app-grants-grants-sweep
+    title: Grants.Sweep
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:48.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-gonesides
+    title: Grants.goneSides
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:52.169Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-revokestored
+    title: Grants.revokeStored
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:55.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-require
+    title: Grants.require
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:05:59.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-holderexists
+    title: Grants.holderExists
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:02.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-record
+    title: Grants.record
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:05.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-project
+    title: Grants.project
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:09.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-unproject
+    title: Grants.unproject
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:13.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-holderstogrant
+    title: Grants.holdersToGrant
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:16.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-app-grants-grants-granthousehold
+    title: Grants.grantHousehold
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:20.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-app-grants-grants-missing
+    title: Grants.missing
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:23.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-holdergone
+    title: Grants.holderGone
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:27.448Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-savegrant
+    title: Grants.saveGrant
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:31.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-grants-inforceof
+    title: Grants.inForceOf
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:34.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-grants-test-memauthstore-savegrant
+    title: memAuthStore.SaveGrant
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:38.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-memauthstore-revokegrants
+    title: memAuthStore.RevokeGrants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:42.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-memauthstore-grants
+    title: memAuthStore.Grants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:45.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-memauthstore-grantcutoverdone
+    title: memAuthStore.GrantCutoverDone
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:49.636Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-memauthstore-markgrantcutover
+    title: memAuthStore.MarkGrantCutover
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:06:53.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-newfakedirectory
+    title: newFakeDirectory
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:02.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakedirectory-targetexists
+    title: fakeDirectory.TargetExists
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:06.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakedirectory-viewplugininstalled
+    title: fakeDirectory.ViewPluginInstalled
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:10.668Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakedirectory-viewplugins
+    title: fakeDirectory.ViewPlugins
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:14.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-projectgrants
+    title: fakeModel.ProjectGrants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:22.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-unprojectgrants
+    title: fakeModel.UnprojectGrants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:26.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-record
+    title: fakeModel.record
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:30.520Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-lines
+    title: fakeModel.lines
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:34.745Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-failwith
+    title: fakeModel.failWith
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:38.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-fakemodel-reset
+    title: fakeModel.reset
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:43.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-newgrantfixture
+    title: newGrantFixture
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:50.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-grantfixture-token
+    title: grantFixture.token
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:54.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-plugin
+    title: plugin
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:07:58.216Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-account
+    title: account
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:01.969Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-sleeve
+    title: sleeve
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:05.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-grantfixture-granttrail
+    title: grantFixture.grantTrail
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:09.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-grantfixture-created
+    title: grantFixture.created
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:12.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-grantfixture-listed
+    title: grantFixture.listed
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:16.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcreategrant
+    title: TestCreateGrant
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:19.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-checkcreated
+    title: checkCreated
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:23.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcreategranttwice
+    title: TestCreateGrantTwice
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:26.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testgrantfailsclosedwithoutitsentry
+    title: TestGrantFailsClosedWithoutItsEntry
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:30.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokefailsclosedwithoutitsentry
+    title: TestRevokeFailsClosedWithoutItsEntry
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:34.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokegrant
+    title: TestRevokeGrant
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:37.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokegrantkeepsitwhenthemodelfails
+    title: TestRevokeGrantKeepsItWhenTheModelFails
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:41.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcreategrantreportsamodelthatfails
+    title: TestCreateGrantReportsAModelThatFails
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:45.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testgrantsareowneronly
+    title: TestGrantsAreOwnerOnly
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:49.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokescripttokenendsitsgrants
+    title: TestRevokeScriptTokenEndsItsGrants
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:52.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokescripttokenreportsamodelthatfails
+    title: TestRevokeScriptTokenReportsAModelThatFails
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:56.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testrevokeholderandtarget
+    title: TestRevokeHolderAndTarget
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:08:59.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcutover
+    title: TestCutover
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:03.507Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-grantfixture-checkhousehold
+    title: grantFixture.checkHousehold
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:07.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcutoverrunsonce
+    title: TestCutoverRunsOnce
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:10.688Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-mustinforce
+    title: mustInForce
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:14.438Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcutoverwaitsfortheplugins
+    title: TestCutoverWaitsForThePlugins
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:18.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testcutoverreportsamodelthatfails
+    title: TestCutoverReportsAModelThatFails
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:21.886Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-grants-test-testsweep
+    title: TestSweep
+    status: active
+    sourceFile: internal/identity/app/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:25.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants-internal-identity-app-ownergrants-auth-creategrant
+    title: Auth.CreateGrant
+    status: active
+    sourceFile: internal/identity/app/ownergrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:29.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-ownergrants-auth-revokegrant
+    title: Auth.RevokeGrant
+    status: active
+    sourceFile: internal/identity/app/ownergrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:32.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-ownergrants-auth-listgrants
+    title: Auth.ListGrants
+    status: active
+    sourceFile: internal/identity/app/ownergrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:36.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-app-tokens-tokens-get
+    title: Tokens.Get
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:40.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-app-tokens-auditedatomic
+    title: auditedAtomic
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:44.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-audit-grantrefkinds
+    title: grantRefKinds
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:48.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-identity-audit-no-amount-secret-text
+  - id: SYM-grants-internal-identity-audit-isgrantaction
+    title: isGrantAction
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:52.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-identity-audit-no-amount-secret-text
+  - id: SYM-grants-internal-identity-audit-ref-validategrantref
+    title: Ref.validateGrantRef
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:09:56.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-identity-audit-no-amount-secret-text
+  - id: SYM-grants-internal-identity-audit-validategrantrefs
+    title: validateGrantRefs
+    status: active
+    sourceFile: internal/identity/audit.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:00.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+      - type: implements
+        target: REQ-identity-audit-no-amount-secret-text
+  - id: SYM-grants-internal-identity-connectapi-grants-authservice-creategrant
+    title: authService.CreateGrant
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:03.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-authservice-revokegrant
+    title: authService.RevokeGrant
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:07.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-authservice-listgrants
+    title: authService.ListGrants
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:10.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-pbholderkinds
+    title: pbHolderKinds
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:14.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-pbtargetkinds
+    title: pbTargetKinds
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:17.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-grantsides
+    title: grantSides
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:20.907Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-grantmatch
+    title: grantMatch
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:24.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-pbgrant
+    title: pbGrant
+    status: active
+    sourceFile: internal/identity/connectapi/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:27.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantstore-savegrant
+    title: grantStore.SaveGrant
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:35.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantstore-revokegrants
+    title: grantStore.RevokeGrants
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:40.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantstore-grants
+    title: grantStore.Grants
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:44.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantstore-grantcutoverdone
+    title: grantStore.GrantCutoverDone
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:48.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantstore-markgrantcutover
+    title: grantStore.MarkGrantCutover
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:10:52.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-directory-targetexists
+    title: directory.TargetExists
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:01.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-directory-viewplugininstalled
+    title: directory.ViewPluginInstalled
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:05.158Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-directory-viewplugins
+    title: directory.ViewPlugins
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:09.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-newgrantsserved
+    title: newGrantsServed
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:17.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-create
+    title: grantsServed.create
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:21.835Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-testgrantcallsareowneronly
+    title: TestGrantCallsAreOwnerOnly
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:25.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-revokevia
+    title: grantsServed.revokeVia
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:30.106Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-lines
+    title: grantsServed.lines
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:33.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-testcreategrantcall
+    title: TestCreateGrantCall
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:37.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-checktargetrefusals
+    title: grantsServed.checkTargetRefusals
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:41.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-checkholderrefusals
+    title: grantsServed.checkHolderRefusals
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:45.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-testrevokeandlistgrantcalls
+    title: TestRevokeAndListGrantCalls
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:49.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-connectapi-grants-test-testgrantauditoverconnect
+    title: TestGrantAuditOverConnect
+    status: active
+    sourceFile: internal/identity/connectapi/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:52.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants-internal-identity-grant-grantholderkind
+    title: GrantHolderKind
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:56.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-granttargetkind
+    title: GrantTargetKind
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:11:59.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantholder
+    title: GrantHolder
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:03.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-granttarget
+    title: GrantTarget
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:06.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grant
+    title: Grant
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:10.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-isplugininstancename
+    title: isPluginInstanceName
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:14.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-isrecordid
+    title: isRecordID
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:18.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-isloweralnum
+    title: isLowerAlnum
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:21.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-isalnum
+    title: isAlnum
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:25.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-newgrant
+    title: NewGrant
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:30.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grant-validate
+    title: Grant.Validate
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:34.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grant-active
+    title: Grant.Active
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:38.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grant-revoked
+    title: Grant.Revoked
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:42.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantholder-validate
+    title: GrantHolder.Validate
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:46.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-granttarget-validate
+    title: GrantTarget.Validate
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:50.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-household
+    title: Household
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:54.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantholder-ref
+    title: GrantHolder.Ref
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:12:58.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-granttarget-ref
+    title: GrantTarget.Ref
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:02.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantmatch
+    title: GrantMatch
+    status: active
+    sourceFile: internal/identity/grant.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:07.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantmatch-matches
+    title: GrantMatch.Matches
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:10.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-grantmatch-validate
+    title: GrantMatch.Validate
+    status: active
+    sourceFile: internal/identity/grant.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:15.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-domain
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-grant-test-grantat
+    title: grantAt
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:19.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-tokenholder
+    title: tokenHolder
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:22.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-pluginholder
+    title: pluginHolder
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:26.567Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-testnewgrant
+    title: TestNewGrant
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:30.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-wantinvalidgrant
+    title: wantInvalidGrant
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:33.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-testgrantrevoked
+    title: TestGrantRevoked
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:37.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-testgrantmatch
+    title: TestGrantMatch
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:41.423Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-grant-test-testgrantauditentries
+    title: TestGrantAuditEntries
+    status: active
+    sourceFile: internal/identity/grant_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:45.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grant-domain
+  - id: SYM-grants-internal-identity-postgres-grants-store-savegrant
+    title: Store.SaveGrant
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:49.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-store-revokegrants
+    title: Store.RevokeGrants
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:52.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-endedgrant
+    title: endedGrant
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:13:56.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-store-grants
+    title: Store.Grants
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:00.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-store-grantcutoverdone
+    title: Store.GrantCutoverDone
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:04.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-store-markgrantcutover
+    title: Store.MarkGrantCutover
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:08.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-scangrant
+    title: scanGrant
+    status: active
+    sourceFile: internal/identity/postgres/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:13.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-postgres
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-identity-postgres-grants-test-granttime
+    title: grantTime
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:17.571Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-newgrant
+    title: newGrant
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:21.625Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-mainaccount
+    title: mainAccount
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:25.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-slv
+    title: slv
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:29.327Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-seededgrants
+    title: seededGrants
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:33.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-listed
+    title: listed
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:37.025Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantstoreselects
+    title: TestGrantStoreSelects
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:41.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantstorekeepshistory
+    title: TestGrantStoreKeepsHistory
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:45.753Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantstoremakesanendedgrantagain
+    title: TestGrantStoreMakesAnEndedGrantAgain
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:50.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantstoreendsbyholderandtarget
+    title: TestGrantStoreEndsByHolderAndTarget
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:53.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantstablerefuseswhatthedomainrefuses
+    title: TestGrantsTableRefusesWhatTheDomainRefuses
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:14:57.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testauditlogtakesgrantactions
+    title: TestAuditLogTakesGrantActions
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:01.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-targetexists
+    title: grantDirectory.TargetExists
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:08.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-viewplugininstalled
+    title: grantDirectory.ViewPluginInstalled
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:13.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-viewplugins
+    title: grantDirectory.ViewPlugins
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:17.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-newgrantcases
+    title: newGrantCases
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:25.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-grantcases-issue
+    title: grantCases.issue
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:29.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-systemactor
+    title: systemActor
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:33.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantfailsclosedoverpostgres
+    title: TestGrantFailsClosedOverPostgres
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:37.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testgrantaudittrailoverpostgres
+    title: TestGrantAuditTrailOverPostgres
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:41.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-postgres-grants-test-testcutoveroverpostgres
+    title: TestCutoverOverPostgres
+    status: active
+    sourceFile: internal/identity/postgres/grants_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:45.208Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants-internal-identity-spicedb-contract-test-contractat
+    title: contractAt
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:49.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-viewergrant
+    title: viewerGrant
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:52.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-accounttarget
+    title: accountTarget
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:15:56.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-sleevetarget
+    title: sleeveTarget
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:01.211Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-contract-project
+    title: contract.project
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:05.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-contract-unproject
+    title: contract.unproject
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:09.670Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-testcontractspicedbmatchesidentitymayact
+    title: TestContractSpiceDBMatchesIdentityMayAct
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:13.327Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-testcontractgrantsfollowtheschema
+    title: TestContractGrantsFollowTheSchema
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:16.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-contract-test-testcontractreconcilewritesgrantsandisidempotent
+    title: TestContractReconcileWritesGrantsAndIsIdempotent
+    status: active
+    sourceFile: internal/identity/spicedb/contract_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:20.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-contract
+  - id: SYM-grants-internal-identity-spicedb-syncer-desired
+    title: Desired
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:24.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-granttuple
+    title: grantTuple
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:28.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-holdertypes
+    title: holderTypes
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:33.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-wanted
+    title: wanted
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:37.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-syncer-projectgrants
+    title: Syncer.ProjectGrants
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:41.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-syncer-unprojectgrants
+    title: Syncer.UnprojectGrants
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:45.524Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-granttuples
+    title: grantTuples
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:49.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-ownedfilters
+    title: ownedFilters
+    status: active
+    sourceFile: internal/identity/spicedb/syncer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:53.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-syncer
+      - type: implements
+        target: REQ-identity-grants-only-view
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-grants
+    title: grants
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:16:58.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-granttuples
+    title: grantTuples
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:02.589Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerplacesanaccount
+    title: TestSyncerPlacesAnAccount
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:06.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerunplacesanaccount
+    title: TestSyncerUnplacesAnAccount
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:10.480Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerreconciles
+    title: TestSyncerReconciles
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:14.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerprojectsgrants
+    title: TestSyncerProjectsGrants
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:18.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-tuplelines
+    title: tupleLines
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:22.024Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-sortstrings
+    title: sortStrings
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:26.130Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-identity-spicedb-syncer-test-testsyncerreportsafailedload
+    title: TestSyncerReportsAFailedLoad
+    status: active
+    sourceFile: internal/identity/spicedb/syncer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:30.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-syncer
+  - id: SYM-grants-internal-portfolio-app-registry-placementobserver
+    title: PlacementObserver
+    status: active
+    sourceFile: internal/portfolio/app/registry.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:34.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-portfolio-app-registry-withplacementobserver
+    title: WithPlacementObserver
+    status: active
+    sourceFile: internal/portfolio/app/registry.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:38.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-portfolio-app-registry-registry-observed
+    title: Registry.observed
+    status: active
+    sourceFile: internal/portfolio/app/registry.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:42.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry-observer
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-portfolio-app-registry-observer-test-placements-sleeveremoved
+    title: placements.SleeveRemoved
+    status: active
+    sourceFile: internal/portfolio/app/registry_observer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:46.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry-observer
+  - id: SYM-grants-internal-portfolio-app-registry-observer-test-must
+    title: must
+    status: active
+    sourceFile: internal/portfolio/app/registry_observer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:50.471Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry-observer
+  - id: SYM-grants-internal-portfolio-app-registry-observer-test-testregistrytellstheobserverofadeletedsleeve
+    title: TestRegistryTellsTheObserverOfADeletedSleeve
+    status: active
+    sourceFile: internal/portfolio/app/registry_observer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:54.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry-observer
+  - id: SYM-grants-internal-views-kube-plugins-plugins-onremoved
+    title: Plugins.OnRemoved
+    status: active
+    sourceFile: internal/views/kube/plugins.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:17:58.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-identity-grants-viewers-tokens-plugins
+  - id: SYM-grants-internal-views-kube-plugins-test-testpluginsonremoved
+    title: TestPluginsOnRemoved
+    status: active
+    sourceFile: internal/views/kube/plugins_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:02.027Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind
+    title: GrantHolderKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:05.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-enum
+    title: GrantHolderKind.Enum
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:09.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-string
+    title: GrantHolderKind.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:13.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-descriptor
+    title: GrantHolderKind.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:16.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-type
+    title: GrantHolderKind.Type
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:20.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-number
+    title: GrantHolderKind.Number
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:24.417Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-enumdescriptor
+    title: GrantHolderKind.EnumDescriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:28.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind
+    title: GrantTargetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:31.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enum
+    title: GrantTargetKind.Enum
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:35.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-string
+    title: GrantTargetKind.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:39.037Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-descriptor
+    title: GrantTargetKind.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:42.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-type
+    title: GrantTargetKind.Type
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:46.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-number
+    title: GrantTargetKind.Number
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:50.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enumdescriptor
+    title: GrantTargetKind.EnumDescriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:54.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant
+    title: Grant
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:18:58.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-reset
+    title: Grant.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:01.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-string
+    title: Grant.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:05.557Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-protomessage
+    title: Grant.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:09.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-protoreflect
+    title: Grant.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:13.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-descriptor
+    title: Grant.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:17.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderkind
+    title: Grant.GetHolderKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:22.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getholderid
+    title: Grant.GetHolderId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:26.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetkind
+    title: Grant.GetTargetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:30.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-gettargetid
+    title: Grant.GetTargetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:34.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getcreatedat
+    title: Grant.GetCreatedAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:38.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getrevokedat
+    title: Grant.GetRevokedAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:41.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest
+    title: CreateGrantRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:45.077Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-reset
+    title: CreateGrantRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:48.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-string
+    title: CreateGrantRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:52.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-protomessage
+    title: CreateGrantRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:55.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-protoreflect
+    title: CreateGrantRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:19:58.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-descriptor
+    title: CreateGrantRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:02.493Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getorigin
+    title: CreateGrantRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:06.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getsessiontoken
+    title: CreateGrantRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:09.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getholderkind
+    title: CreateGrantRequest.GetHolderKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:12.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-getholderid
+    title: CreateGrantRequest.GetHolderId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:15.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetkind
+    title: CreateGrantRequest.GetTargetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:18.792Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetid
+    title: CreateGrantRequest.GetTargetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:21.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse
+    title: CreateGrantResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:24.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-reset
+    title: CreateGrantResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:28.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-string
+    title: CreateGrantResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:31.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-protomessage
+    title: CreateGrantResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:34.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-protoreflect
+    title: CreateGrantResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:37.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-descriptor
+    title: CreateGrantResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:41.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-getgrant
+    title: CreateGrantResponse.GetGrant
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:44.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest
+    title: RevokeGrantRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:47.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-reset
+    title: RevokeGrantRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:50.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-string
+    title: RevokeGrantRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:53.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-protomessage
+    title: RevokeGrantRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:20:56.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-protoreflect
+    title: RevokeGrantRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:00.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-descriptor
+    title: RevokeGrantRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:03.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getorigin
+    title: RevokeGrantRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:06.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getsessiontoken
+    title: RevokeGrantRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:09.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getholderkind
+    title: RevokeGrantRequest.GetHolderKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:12.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getholderid
+    title: RevokeGrantRequest.GetHolderId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:15.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-gettargetkind
+    title: RevokeGrantRequest.GetTargetKind
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:18.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-gettargetid
+    title: RevokeGrantRequest.GetTargetId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:21.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse
+    title: RevokeGrantResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:24.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-reset
+    title: RevokeGrantResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:27.706Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-string
+    title: RevokeGrantResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:30.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-protomessage
+    title: RevokeGrantResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:33.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-protoreflect
+    title: RevokeGrantResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:37.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-descriptor
+    title: RevokeGrantResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:40.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-listgrantsrequest
+    title: ListGrantsRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    granularity_reason: module-level-behavior
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T10:21:43.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-cmd-core-grants-test-go-fakeaccounts
+    title: fakeAccounts
+    sourceFile: cmd/core/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants2-cmd-core-grants-test-go-fakesleeves
+    title: fakeSleeves
+    sourceFile: cmd/core/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants2-cmd-core-grants-test-go-fakeplugins
+    title: fakePlugins
+    sourceFile: cmd/core/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants2-cmd-core-grants-test-go-grantsfixture
+    title: grantsFixture
+    sourceFile: cmd/core/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-grants2-internal-identity-app-grants-go-grants-revoke
+    title: Grants.revoke
+    sourceFile: internal/identity/app/grants.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-app
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-internal-identity-app-grants-test-go-fakedirectory
+    title: fakeDirectory
+    sourceFile: internal/identity/app/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants2-internal-identity-app-grants-test-go-fakemodel
+    title: fakeModel
+    sourceFile: internal/identity/app/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants2-internal-identity-app-grants-test-go-grantfixture
+    title: grantFixture
+    sourceFile: internal/identity/app/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-app
+  - id: SYM-grants2-internal-identity-connectapi-grants-test-go-grantstore
+    title: grantStore
+    sourceFile: internal/identity/connectapi/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants2-internal-identity-connectapi-grants-test-go-directory
+    title: directory
+    sourceFile: internal/identity/connectapi/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants2-internal-identity-connectapi-grants-test-go-grantsserved
+    title: grantsServed
+    sourceFile: internal/identity/connectapi/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-connectapi
+  - id: SYM-grants2-internal-identity-postgres-grants-test-go-grantdirectory
+    title: grantDirectory
+    sourceFile: internal/identity/postgres/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants2-internal-identity-postgres-grants-test-go-grantcases
+    title: grantCases
+    sourceFile: internal/identity/postgres/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-grants-postgres
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-reset
+    title: ListGrantsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-string
+    title: ListGrantsRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-protomessage
+    title: ListGrantsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-protoreflect
+    title: ListGrantsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-descriptor
+    title: ListGrantsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-getorigin
+    title: ListGrantsRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-getsessiontoken
+    title: ListGrantsRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-getholderkind
+    title: ListGrantsRequest.GetHolderKind
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-getholderid
+    title: ListGrantsRequest.GetHolderId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsrequest-getinforceonly
+    title: ListGrantsRequest.GetInForceOnly
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse
+    title: ListGrantsResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-reset
+    title: ListGrantsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-string
+    title: ListGrantsResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-protomessage
+    title: ListGrantsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-protoreflect
+    title: ListGrantsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-descriptor
+    title: ListGrantsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-auth-pb-go-listgrantsresponse-getgrants
+    title: ListGrantsResponse.GetGrants
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-authserviceclient-creategrant
+    title: authServiceClient.CreateGrant
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-authserviceclient-revokegrant
+    title: authServiceClient.RevokeGrant
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-authserviceclient-listgrants
+    title: authServiceClient.ListGrants
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-unimplementedauthservicehandler-creategrant
+    title: UnimplementedAuthServiceHandler.CreateGrant
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-unimplementedauthservicehandler-revokegrant
+    title: UnimplementedAuthServiceHandler.RevokeGrant
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-go-unimplementedauthservicehandler-listgrants
+    title: UnimplementedAuthServiceHandler.ListGrants
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grants-connectapi
+      - type: implements
+        target: REQ-identity-grants-per-account-sleeve-household
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi
+    title: ownerAPI
+    sourceFile: test/e2e/access_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-newownerapi
+    title: newOwnerAPI
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-accountsof
+    title: ownerAPI.accountsOf
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-grant
+    title: ownerAPI.grant
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-revoke
+    title: ownerAPI.revoke
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-auditentries
+    title: ownerAPI.auditEntries
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-createaccount
+    title: ownerAPI.createAccount
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-ownerapi-deleteaccount
+    title: ownerAPI.deleteAccount
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-coreauthzflags
+    title: coreAuthzFlags
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-corerunsspicedb
+    title: coreRunsSpiceDB
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-issuedtoken
+    title: issuedToken
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-issuetokenwith
+    title: issueTokenWith
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-access-test-go-granthousehold
+    title: grantHousehold
+    sourceFile: test/e2e/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-testgrantslimitwhatascripttokenviews
+    title: TestGrantsLimitWhatAScriptTokenViews
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-checkcutoverkepttheui
+    title: checkCutoverKeptTheUI
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-accountpath
+    title: accountPath
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-expectstatus
+    title: expectStatus
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-checksleevetotals
+    title: checkSleeveTotals
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-sleevegroups
+    title: sleeveGroups
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants
+  - id: SYM-grants2-test-e2e-grants-test-go-checkgrantaudit
+    title: checkGrantAudit
+    sourceFile: test/e2e/grants_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T11:47:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-grants

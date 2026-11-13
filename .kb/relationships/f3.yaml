@@ -776,3 +776,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4237b096efe
+  - type: implements
+    from: SYM-grants-cmd-core-grants-sleevelister
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:20.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084ac5e30cca
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-sleevelister
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:20.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83399ecce2e0
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testrevokegrant
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:40.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5ff94efc315
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-protoreflect
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:01.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3004862568d9
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-protoreflect
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:01.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56c11677fe59

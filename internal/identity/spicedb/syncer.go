@@ -11,10 +11,16 @@ import (
 	"time"
 
 	v1 "github.com/authzed/authzed-go/proto/authzed/api/v1"
+
+	"github.com/arkadiuss/openfief/internal/identity"
 )
 
 // errNoType reports an object reference without a type.
 var errNoType = errors.New("no type")
+
+// errUnknownKind reports a grant of a kind of holder or target the schema
+// has no relation for.
+var errUnknownKind = errors.New("unknown kind")
 
 // accountRelations is how many relationships an account has at most: its
 // household and its sleeve.
@@ -51,18 +57,26 @@ type Desired struct {
 	// DemoSessions is whether every demo session holds the household grant
 	// (D-68, D-137).
 	DemoSessions bool
+	// Grants are the owner's grants in force, the identity context's table
+	// (D-209): each is the relationship that lets its holder view.
+	Grants []identity.Grant
 }
 
 // Syncer writes the relationships the core owns to SpiceDB: the household's
-// owner and the demo sessions' household grant, and each account's
-// household and sleeve (D-164). It never writes or removes a grant (a
-// viewer relation of an account or sleeve, a household reader of a person,
-// script token or view plugin): the owner's grants are theirs (D-209).
+// owner and the demo sessions' household grant, each account's household
+// and sleeve (D-164), and the owner's grants (D-209): a viewer relation of
+// an account or sleeve, a household reader of a person, script token or view
+// plugin. The grants table of the identity context is the source of truth for
+// the grants, as the ledger and the portfolio are for the accounts and
+// sleeves; SpiceDB holds a projection, and nothing writes a grant to SpiceDB
+// that the table doesn't hold.
 //
 // SpiceDB is written after the database commits, in a call of its own, so a
-// failure between them leaves the database ahead: AccountPlaced and
-// AccountUnplaced return the error, and Reconcile, which the core runs at
-// start, repairs any drift.
+// failure between them leaves the database ahead: AccountPlaced,
+// AccountUnplaced and ProjectGrants return the error, and Reconcile, which
+// the core runs at start, repairs any drift. A revocation is the exception:
+// the grants use case removes the relationship first, so SpiceDB never holds
+// a grant the table has ended.
 type Syncer struct {
 	perms   Permissions
 	timeout time.Duration
@@ -112,9 +126,55 @@ func householdTuples(demo bool) []Tuple {
 	return out
 }
 
+// grantTuple returns the relationship that is grant g (D-209): the holder is
+// a viewer of the account or the sleeve, or a reader of the household.
+func grantTuple(g *identity.Grant) (Tuple, error) {
+	subjectType, ok := holderTypes()[g.Holder.Kind]
+	if !ok {
+		return Tuple{}, fmt.Errorf("grant holder %q: %w", g.Holder.Kind, errUnknownKind)
+	}
+	holder, err := ObjectID(g.Holder.ID)
+	if err != nil {
+		return Tuple{}, fmt.Errorf("grant holder: %w", err)
+	}
+	subject := subjectType + ":" + holder
+	switch g.Target.Kind {
+	case identity.GrantTargetHousehold:
+		return Tuple{Resource: typeHousehold + ":" + householdID, Relation: relReader, Subject: subject}, nil
+	case identity.GrantTargetAccount, identity.GrantTargetSleeve:
+		target, err := ObjectID(g.Target.ID)
+		if err != nil {
+			return Tuple{}, fmt.Errorf("grant target: %w", err)
+		}
+		typ := typeAccount
+		if g.Target.Kind == identity.GrantTargetSleeve {
+			typ = typeSleeve
+		}
+		return Tuple{Resource: typ + ":" + target, Relation: relViewer, Subject: subject}, nil
+	}
+	return Tuple{}, fmt.Errorf("grant target %q: %w", g.Target.Kind, errUnknownKind)
+}
+
+// holderTypes is the subject type of each kind of grant holder in
+// authz/schema.zed.
+func holderTypes() map[identity.GrantHolderKind]string {
+	return map[identity.GrantHolderKind]string{
+		identity.GrantHolderPerson:      typePerson,
+		identity.GrantHolderScriptToken: typeScriptToken,
+		identity.GrantHolderViewPlugin:  typeViewPlugin,
+	}
+}
+
 // wanted returns every relationship d says the Syncer owns.
 func wanted(d Desired) ([]Tuple, error) {
 	out := householdTuples(d.DemoSessions)
+	for i := range d.Grants {
+		t, err := grantTuple(&d.Grants[i])
+		if err != nil {
+			return nil, fmt.Errorf("grant %d: %w", i, err)
+		}
+		out = append(out, t)
+	}
 	for _, a := range d.Accounts {
 		ts, err := accountTuples(a, d.Sleeves[a])
 		if err != nil {
@@ -205,9 +265,53 @@ func (s *Syncer) AccountUnplaced(ctx context.Context, account string) error {
 	return nil
 }
 
+// ProjectGrants writes the relationship of each grant, in batches, each batch
+// atomic. It is idempotent, and it is what makes the grants table's change
+// count for SpiceDB's checks.
+func (s *Syncer) ProjectGrants(ctx context.Context, grants []identity.Grant) error {
+	tuples, err := grantTuples(grants)
+	if err != nil {
+		return fmt.Errorf("writing grants to SpiceDB: %w", err)
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if err := s.write(ctx, tuples, nil); err != nil {
+		return fmt.Errorf("writing grants to SpiceDB: %w", err)
+	}
+	return nil
+}
+
+// UnprojectGrants removes the relationship of each grant. It is idempotent: a
+// relationship SpiceDB doesn't hold is already gone.
+func (s *Syncer) UnprojectGrants(ctx context.Context, grants []identity.Grant) error {
+	tuples, err := grantTuples(grants)
+	if err != nil {
+		return fmt.Errorf("removing grants from SpiceDB: %w", err)
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if err := s.write(ctx, nil, tuples); err != nil {
+		return fmt.Errorf("removing grants from SpiceDB: %w", err)
+	}
+	return nil
+}
+
+// grantTuples returns the relationship of each of grants.
+func grantTuples(grants []identity.Grant) ([]Tuple, error) {
+	out := make([]Tuple, 0, len(grants))
+	for i := range grants {
+		t, err := grantTuple(&grants[i])
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, t)
+	}
+	return out, nil
+}
+
 // Reconcile makes the relationships the Syncer owns what load says: it writes
 // the missing ones and removes the ones load no longer wants, such as those
-// of a deleted account, leaving every grant alone. load runs under the
+// of a deleted account or of a grant that ended. load runs under the
 // Syncer's lock, so a placement committed after it ran is written after
 // Reconcile, not undone by it. Reconcile is idempotent, and run at start it
 // repairs what a failed write after a commit left.
@@ -255,16 +359,16 @@ func (s *Syncer) writeSchema(ctx context.Context) error {
 }
 
 // ownedFilters are the relationships Reconcile reads: every one of a kind
-// the Syncer owns, and nothing of a grant.
+// the Syncer owns, the grants (a viewer of an account or a sleeve, a reader of
+// the household of any subject) among them.
 func ownedFilters() []*v1.RelationshipFilter {
 	return []*v1.RelationshipFilter{
 		{ResourceType: typeAccount, OptionalRelation: relHousehold},
 		{ResourceType: typeAccount, OptionalRelation: relSleeve},
+		{ResourceType: typeAccount, OptionalRelation: relViewer},
+		{ResourceType: typeSleeve, OptionalRelation: relViewer},
 		{ResourceType: typeHousehold, OptionalRelation: relOwner},
-		{
-			ResourceType: typeHousehold, OptionalRelation: relReader,
-			OptionalSubjectFilter: &v1.SubjectFilter{SubjectType: typeDemoSession},
-		},
+		{ResourceType: typeHousehold, OptionalRelation: relReader},
 	}
 }
 

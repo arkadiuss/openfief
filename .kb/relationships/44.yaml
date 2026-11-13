@@ -1160,5 +1160,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-717affe76411
+      },
+    {
+        type: executable_for,
+        from: SYM-grants-internal-identity-app-grants-test-memauthstore-markgrantcutover,
+        to: TEST-identity-grants-app,
+        created_at: 2026-11-13T10:06:56.468Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-9e140577663f
+      },
+    {
+        type: executable_for,
+        from: SYM-grants-internal-identity-connectapi-grants-test-testgrantauditoverconnect,
+        to: TEST-identity-grants-connectapi,
+        created_at: 2026-11-13T10:11:55.041Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c99ea388acab
       }
   ]

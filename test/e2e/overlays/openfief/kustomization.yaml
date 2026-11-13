@@ -10,6 +10,10 @@
 # institution; ../../plugins_test.go runs nbp-fx as an instance that doesn't.
 # The Job that generates SpiceDB's credentials keeps the demo's name, openfief-init-credentials-000000000000 (these are
 # tags, with no digest to name it for); the suite finds it by its label, app.kubernetes.io/name=openfief-init-credentials.
+# The core answers from SpiceDB (D-164): --authz=spicedb and --spicedb-insecure (plaintext gRPC on SpiceDB's Service behind its
+# NetworkPolicy), so the whole suite, the owner, script tokens, view plugins and the UI included, runs under SpiceDB, as the demo
+# will once its cutover has run. The demo itself keeps --authz=policy, its default, in deploy/demo. A script token the suite
+# issues with `core token issue --grant-household` and a view plugin it installs hold the household grant (D-209).
 # Everything else, args and policies included, is the demo's, so a failure here is a failure on the demo.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -21,6 +25,16 @@ resources:
 # -refused-range-exempt-host to the proxy's Deployment when it applies this layer, since the fixture's ClusterIP is only
 # known once its Service exists. Neither is in deploy/, and the release bundle's test fails if the bundle sets one.
 patches:
+  - target:
+      kind: Deployment
+      name: openfief-core
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --authz=spicedb
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --spicedb-insecure
   - target:
       kind: NetworkPolicy
       name: egress-proxy

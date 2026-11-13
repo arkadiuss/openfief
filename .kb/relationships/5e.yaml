@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e73a5ec4425
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-require
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:01.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f5c9cdb6419
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-require
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:01.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d114717e851e
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-testcontractgrantsfollowtheschema
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:19.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b627acf19dc6

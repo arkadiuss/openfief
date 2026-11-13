@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0abd34278eed
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testrevokeholderandtarget
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:02.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae6fbf4b82e

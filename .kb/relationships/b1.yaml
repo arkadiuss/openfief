@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e4c3935a40f
+  - type: implements
+    from: SYM-grants-cmd-core-core-newaccess
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:11.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f9cbd14ff95
+  - type: covered_by
+    from: SYM-grants-cmd-core-core-newaccess
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:11.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9db29a07cd19
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakedirectory-viewplugins
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:17.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7bd1371bc66

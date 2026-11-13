@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0503e80541c9
+  - type: implements
+    from: SYM-grants-internal-views-kube-plugins-plugins-onremoved
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:18:00.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b12c848b79
+  - type: covered_by
+    from: SYM-grants-internal-views-kube-plugins-plugins-onremoved
+    to: TEST-views-kube
+    created_at: 2026-11-13T10:18:00.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98aea1e33b07

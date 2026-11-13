@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7580f0f26258
+  - type: implements
+    from: SYM-grants-cmd-core-grants-householdonly-targetexists
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:03:21.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b66119d4c6a6
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-householdonly-targetexists
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:21.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4235ecb8ce3e

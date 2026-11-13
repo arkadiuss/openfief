@@ -741,3 +741,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53db6b13b157
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantdirectory-records
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:38.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65340919783
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantdirectory-records
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:38.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f38ca87df159
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakemodel-unprojectgrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:29.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd634ef08fe0

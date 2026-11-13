@@ -727,3 +727,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f63c2838689
+  - type: implements
+    from: SYM-grants-cmd-core-grants-newgrants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:03:13.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1c6652bb5d5
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-newgrants
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:13.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f25f73b1b88
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-gettargetid
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:23.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da9b8ec80c27
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-gettargetid
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:23.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6626773faaa

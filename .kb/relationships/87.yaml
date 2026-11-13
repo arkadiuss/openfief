@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f303a482ee0
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-contract-project
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:08.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e1fdf8fd46
+  - type: executable_for
+    from: SYM-grants-internal-portfolio-app-registry-observer-test-testregistrytellstheobserverofadeletedsleeve
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:56.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ad00c91fcf2

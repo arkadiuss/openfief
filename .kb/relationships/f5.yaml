@@ -1042,3 +1042,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79c1d5f2122b
+  - type: verified_by
+    from: SCEN-identity-grants-end-with-their-records
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:00:18.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43bdf51bbaf7
+  - type: verified_by
+    from: SCEN-identity-grants-end-with-their-records
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:00:19.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-279b80f71e84
+  - type: verified_by
+    from: SCEN-identity-grants-end-with-their-records
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:00:19.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f15a87b92b
+  - type: verified_by
+    from: SCEN-identity-grants-end-with-their-records
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:00:19.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c4339a4a7a8
+  - type: verified_by
+    from: SCEN-identity-grants-end-with-their-records
+    to: TEST-views-kube
+    created_at: 2026-11-13T10:00:19.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c838b554f48

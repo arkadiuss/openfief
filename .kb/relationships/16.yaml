@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8b60d342148
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantstore-grants
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:47.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ddee488224c

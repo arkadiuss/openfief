@@ -727,3 +727,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1e80773cf49
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-newfollowing
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:34.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aae72138bd5
+  - type: implements
+    from: SYM-grants-internal-identity-grant-newgrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:12:33.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-862b0f0b612a
+  - type: implements
+    from: SYM-grants-internal-identity-grant-newgrant
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:12:33.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39d382df1059
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-newgrant
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:12:33.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-292db5858f0e
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantstoremakesanendedgrantagain
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:52.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1ad1c5f54c

@@ -888,3 +888,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c688a6d5ba34
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-revokestored
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:57.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f6f2157a747
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-revokestored
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:57.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0712abda3d64
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantstore-markgrantcutover
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:55.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18a7509097d7
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantholderkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:11:58.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-833521924ba1
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grantholderkind
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:11:58.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a1b8fd25530
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grantholderkind
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:11:58.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbd275f82a9c
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-reset
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:29.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b5e4a9b9a9
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantresponse-reset
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:29.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe41f4554848

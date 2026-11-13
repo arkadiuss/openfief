@@ -1000,3 +1000,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d0f0065e053
+  - type: constrains
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: FACT-SUBJECT-4DE1DF10A2333CEF
+    created_at: 2026-11-13T10:00:26.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-941b0db161ab
+  - type: requires_property
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: FACT-PROP-43B432BC94138751
+    created_at: 2026-11-13T10:00:26.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c551008ebbaf
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-per-target
+    created_at: 2026-11-13T10:00:26.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce718819dd94
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-owner-only
+    created_at: 2026-11-13T10:00:26.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d0744567eae
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-identity-grants-end-with-their-records
+    created_at: 2026-11-13T10:00:26.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa5d4ec00382
+  - type: specified_by
+    from: REQ-identity-grants-per-account-sleeve-household
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:26.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5382545b741e

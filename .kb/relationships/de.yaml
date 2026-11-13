@@ -916,3 +916,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6694b1a83b96
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantsstartupsweepswhatwentwhilethecorewasdown
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:41.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f55c39597e95
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testtokenrevokeendsitsgrants
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:48.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ed1f24fa58
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testcreategranttwice
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:29.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03fe88ef0b4c

@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30ee80795dba
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakemodel-projectgrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:24.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17d8515cce9d

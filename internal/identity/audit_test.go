@@ -187,7 +187,7 @@ func TestAuditActionsAreClosed(t *testing.T) {
 			t.Errorf("ParseAuditAction(%q) = %q, %v, want it back", a, got, err)
 		}
 	}
-	for _, s := range []string{"", "SIGN_IN", "sign_in ", "grant_created"} {
+	for _, s := range []string{"", "SIGN_IN", "sign_in ", "grant_changed"} {
 		if _, err := identity.ParseAuditAction(s); !errors.Is(err, identity.ErrInvalidAuditEntry) {
 			t.Errorf("ParseAuditAction(%q) error = %v, want %v", s, err, identity.ErrInvalidAuditEntry)
 		}

@@ -874,3 +874,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97f80c7c67e5
+  - type: constrains
+    from: REQ-identity-grants-only-view
+    to: FACT-SUBJECT-4DE1DF10A2333CEF
+    created_at: 2026-11-13T10:00:40.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ad2336c3191
+  - type: requires_property
+    from: REQ-identity-grants-only-view
+    to: FACT-PROP-59E0FBB02237C3A8
+    created_at: 2026-11-13T10:00:40.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7db2bdc735f
+  - type: specified_by
+    from: REQ-identity-grants-only-view
+    to: SCEN-identity-spicedb-grants-cover-later-accounts
+    created_at: 2026-11-13T10:00:41.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e8d5edd2e5
+  - type: specified_by
+    from: REQ-identity-grants-only-view
+    to: SCEN-identity-grants-per-target
+    created_at: 2026-11-13T10:00:41.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a006063da7b4

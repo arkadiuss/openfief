@@ -1196,3 +1196,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8de5ed9c788a
+  - type: implements
+    from: SYM-grants-cmd-core-grants-accountlookup
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:17.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c73b8578a0b
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-accountlookup
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:17.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0365f6e42aa
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakedirectory-targetexists
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:09.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e88c95394e05
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantstoreendsbyholderandtarget
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:56.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8459c875b43

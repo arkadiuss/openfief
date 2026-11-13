@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8af6adb9b48
+  - type: implements
+    from: SYM-grants-cmd-core-grants-householdonly-viewplugins
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:03:28.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7add4615093c
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-householdonly-viewplugins
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:28.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f630b800d54f

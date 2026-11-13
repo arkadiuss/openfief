@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2603c672062
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-viewergrant
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:15:55.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c68e9182e302

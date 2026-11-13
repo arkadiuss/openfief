@@ -986,3 +986,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8cfe6f503db
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-scangrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:14:16.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95d7f83b471
+  - type: implements
+    from: SYM-grants-internal-identity-postgres-grants-scangrant
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:14:16.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-446559efe88f
+  - type: covered_by
+    from: SYM-grants-internal-identity-postgres-grants-scangrant
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:16.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2aea84f1f43

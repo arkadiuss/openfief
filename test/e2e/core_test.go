@@ -355,22 +355,11 @@ func parseReply(out []byte) (reply, error) {
 
 // issueToken issues a script token with the core's own CLI inside its pod,
 // as an owner would with kubectl exec, and returns its secret, the first
-// line of the output. The output is never logged.
+// line of the output. The token holds the household grant, so it views every
+// account whichever authorizer answers (D-209); the output is never logged.
 func issueToken(t *testing.T, k *kube) string {
 	t.Helper()
-	pod, err := k.runningPod(t.Context(), namespace, "openfief-core")
-	if err != nil {
-		t.Fatal(err)
-	}
-	out, err := k.exec(t.Context(), namespace, pod, "core", nil, "/core", "token", "issue", "--name", "e2e", "--ttl", "1h")
-	if err != nil {
-		t.Fatalf("issuing a script token: %v", err)
-	}
-	line, _, _ := bytes.Cut(out, []byte("\n"))
-	if len(line) == 0 {
-		t.Fatal(errNoSecret)
-	}
-	return string(line)
+	return issueTokenWith(t, k, append([]string{"--grant-household"}, coreAuthzFlags(t, k)...)...).secret
 }
 
 // demoAccountIDs returns the demo dataset's account IDs in ID order, the

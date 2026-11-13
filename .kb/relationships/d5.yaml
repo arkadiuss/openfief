@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7788fa6e98c
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantsfollowtheirrecords
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:37.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-859bdde8802a
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-testcontractreconcilewritesgrantsandisidempotent
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:23.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8af44652a4d

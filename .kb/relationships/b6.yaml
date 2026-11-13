@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e98db4b11163
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:12:12.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec5bac19e564
+  - type: implements
+    from: SYM-grants-internal-identity-grant-grant
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:12:12.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eda7d3a636b
+  - type: covered_by
+    from: SYM-grants-internal-identity-grant-grant
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:12:12.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3956834012a0

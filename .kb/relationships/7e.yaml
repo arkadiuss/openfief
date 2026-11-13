@@ -881,3 +881,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19e365dd15f9
+  - type: implements
+    from: SYM-grants-cmd-core-core-nothingtoclose
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:01:59.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b1de7da71a
+  - type: covered_by
+    from: SYM-grants-cmd-core-core-nothingtoclose
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:01:59.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d0530be900
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-mustinforce
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:16.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255b72b6dce4

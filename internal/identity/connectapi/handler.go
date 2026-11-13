@@ -149,6 +149,7 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 		{app.ErrPasskeyCheckRequired, connect.CodeFailedPrecondition},
 		{app.ErrLastPasskey, connect.CodeFailedPrecondition},
 		{app.ErrNotFound, connect.CodeNotFound},
+		{app.ErrGrantNotProjected, connect.CodeUnavailable},
 	}
 	for _, c := range classes {
 		if errors.Is(err, c.class) {

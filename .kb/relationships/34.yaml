@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-117c41c9a01a
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-grantsfixture-trail
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:20.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd016d3806cb

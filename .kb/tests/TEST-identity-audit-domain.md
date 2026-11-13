@@ -1,5 +1,5 @@
 ---
-title: An audit entry is a record of IDs and closed values and refuses secrets, names, amounts and sentences
+title: An audit entry is a record of IDs and closed values and refuses secrets, names, amounts and sentences, a grant entry naming its holder then its target
 status: active
 sourceFile: internal/identity/audit_test.go
 verification_scope: unit
@@ -9,4 +9,4 @@ origin:
 id: TEST-identity-audit-domain
 type: test
 ---
-Table tests of identity.NewAuditEntry, Ref, Actor and AuditFilter, in-process with no store. TestNewAuditEntry covers each valid action and each rejection: unknown action, outcome or actor kind, an owner named by a name or an email address, a reference kind the action does not name, a reference twice. TestAuditEntryRejectsSecretsAndFreeText feeds a script token secret, a session token, an enrollment code, an amount, a question's text, a long text and a newline into every reference kind and the owner actor and checks none gets in and no error quotes it. A validator that accepted a free-text field would fail it. The filter tests check the range, page size and cursor.
+Table tests of identity.AuditEntry, its actors, actions, outcomes and references, pure functions. The actions, outcomes and reference kinds are closed sets, including grant_created and grant_revoked and the references to a person, a view plugin, an account, a sleeve and the household. Each actor and reference must be an ID of a fixed shape: no name, email address, sentence, secret or amount is accepted in any position, and a message never quotes the rejected value. The filter and its page size are checked at their edges.

@@ -51,17 +51,23 @@ type AccountReader interface {
 }
 
 // PlacementObserver is told, after the database committed it, which account
-// is in which sleeve, for whoever keeps a copy of it: the authorization
-// model's account and sleeve relationships (D-164, D-209). A failure is the
-// observer's to repair, so the Registry returns its error wrapped in
-// ErrPlacementNotObserved after the change is stored, and a retry, or the
-// observer's own reconcile at start, brings it up to date. Both calls are
-// idempotent. *identity/spicedb.Syncer, through cmd/core, implements it.
+// is in which sleeve and which sleeve is gone, for whoever keeps something
+// that depends on it: the authorization model's account and sleeve
+// relationships (D-164, D-209), and the owner's grants of a sleeve or an
+// account that no longer exists. A failure is the observer's to repair, so
+// the Registry returns its error wrapped in ErrPlacementNotObserved after the
+// change is stored, and a retry, or the observer's own reconcile at start,
+// brings it up to date. Every call is idempotent. *identity/spicedb.Syncer
+// and the identity context's grants, through cmd/core, implement it.
 type PlacementObserver interface {
 	// AccountPlaced reports that account is now in sleeve.
 	AccountPlaced(ctx context.Context, account ledger.AccountID, sleeve portfolio.SleeveID) error
-	// AccountRemoved reports that account is in no sleeve.
+	// AccountRemoved reports that account is in no sleeve, because the
+	// account was deleted (D-120).
 	AccountRemoved(ctx context.Context, account ledger.AccountID) error
+	// SleeveRemoved reports that sleeve was deleted, which only an empty
+	// sleeve is (D-120).
+	SleeveRemoved(ctx context.Context, sleeve portfolio.SleeveID) error
 }
 
 // ErrPlacementNotObserved reports a placement or removal that is stored but
@@ -74,18 +80,20 @@ var ErrPlacementNotObserved = errors.New("stored, but not passed on to the autho
 // serves the owner's sleeve entries (Sleeves) and the contexts that place
 // accounts in sleeves; it checks no session itself.
 type Registry struct {
-	store    RegistryStore
-	accounts AccountReader
-	observer PlacementObserver
+	store     RegistryStore
+	accounts  AccountReader
+	observers []PlacementObserver
 }
 
 // RegistryOption configures a Registry.
 type RegistryOption func(*Registry)
 
 // WithPlacementObserver has the registry tell o of every placement and
-// removal of an account, after it is stored.
+// removal of an account, and of every sleeve deleted, after it is stored.
+// Observers are told in the order they were added, and one that fails does
+// not keep the next from hearing of it.
 func WithPlacementObserver(o PlacementObserver) RegistryOption {
-	return func(r *Registry) { r.observer = o }
+	return func(r *Registry) { r.observers = append(r.observers, o) }
 }
 
 // NewRegistry returns the registry over store, reading accounts through
@@ -158,6 +166,11 @@ func (r *Registry) DeleteSleeve(ctx context.Context, id portfolio.SleeveID) erro
 	if err := r.store.DeleteSleeve(ctx, id); err != nil {
 		return fmt.Errorf("deleting sleeve %s: %w", id, err)
 	}
+	// Told after every successful delete, one of a sleeve already gone
+	// included, so a retry after an observer failed finishes the job.
+	if err := r.observed(func(o PlacementObserver) error { return o.SleeveRemoved(ctx, id) }); err != nil {
+		return fmt.Errorf("deleting sleeve %s: %w", id, err)
+	}
 	return nil
 }
 
@@ -188,10 +201,8 @@ func (r *Registry) PlaceAccount(ctx context.Context, account ledger.AccountID, s
 	if err := r.store.PlaceAccount(ctx, account, sleeve); err != nil {
 		return fmt.Errorf("placing account %s: %w", account, err)
 	}
-	if r.observer != nil {
-		if err := r.observer.AccountPlaced(ctx, account, sleeve); err != nil {
-			return fmt.Errorf("placing account %s: %w: %w", account, ErrPlacementNotObserved, err)
-		}
+	if err := r.observed(func(o PlacementObserver) error { return o.AccountPlaced(ctx, account, sleeve) }); err != nil {
+		return fmt.Errorf("placing account %s: %w", account, err)
 	}
 	return nil
 }
@@ -213,10 +224,8 @@ func (r *Registry) RemoveAccount(ctx context.Context, account ledger.AccountID) 
 	if err := r.store.RemoveAccount(ctx, account); err != nil {
 		return fmt.Errorf("removing account %s from its sleeve: %w", account, err)
 	}
-	if r.observer != nil {
-		if err := r.observer.AccountRemoved(ctx, account); err != nil {
-			return fmt.Errorf("removing account %s from its sleeve: %w: %w", account, ErrPlacementNotObserved, err)
-		}
+	if err := r.observed(func(o PlacementObserver) error { return o.AccountRemoved(ctx, account) }); err != nil {
+		return fmt.Errorf("removing account %s from its sleeve: %w", account, err)
 	}
 	return nil
 }
@@ -255,4 +264,19 @@ func (r *Registry) EnsureDefaults(ctx context.Context) error {
 		return fmt.Errorf("ensuring default sleeves: %w", err)
 	}
 	return nil
+}
+
+// observed calls tell for each observer and joins the errors of those that
+// failed, wrapped in ErrPlacementNotObserved; nil when none did.
+func (r *Registry) observed(tell func(o PlacementObserver) error) error {
+	var errs []error
+	for _, o := range r.observers {
+		if err := tell(o); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	if len(errs) == 0 {
+		return nil
+	}
+	return fmt.Errorf("%w: %w", ErrPlacementNotObserved, errors.Join(errs...))
 }

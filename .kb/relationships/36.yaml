@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b470bebc29a5
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grantprojector
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:09.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c34b59d1feb
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grantprojector
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:09.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9baa3b484bf5
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-memauthstore-revokegrants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:44.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c98dc83b9022

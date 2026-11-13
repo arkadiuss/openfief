@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-065c943f26a9
+  - type: implements
+    from: SYM-grants-internal-identity-connectapi-grants-authservice-revokegrant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:10:09.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-820eb4367329
+  - type: covered_by
+    from: SYM-grants-internal-identity-connectapi-grants-authservice-revokegrant
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:10:09.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd286bae9125

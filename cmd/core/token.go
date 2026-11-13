@@ -17,6 +17,9 @@ import (
 type tokenAdmin struct {
 	store  identityapp.AuthStore
 	tokens *identityapp.Tokens
+	// grants ends a revoked token's grants, and gives a new token the
+	// household grant when asked (D-209).
+	grants *identityapp.Grants
 }
 
 // systemActor is the core, as the audit log names it.
@@ -24,18 +27,28 @@ func systemActor() identity.Actor {
 	return identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
 }
 
-// Issue creates a token and its audit entry.
-func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
+// Issue creates a token and its audit entry and, when household is set, the
+// token's household grant and its own entry (D-209). A token is given no grant
+// otherwise: under SpiceDB it then views nothing until the owner grants it
+// something. The grant is made after the token, so a failure leaves a token
+// that views nothing, and says so.
+func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration, household bool) (identity.ScriptToken, string, error) {
 	tok, secret, err := identityapp.IssueToken(ctx, a.store, a.tokens, systemActor(), name, ttl)
 	if err != nil {
 		return identity.ScriptToken{}, "", fmt.Errorf("issuing as the core: %w", err)
 	}
+	if household {
+		holder := identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(tok.ID)}
+		if _, err := a.grants.Create(ctx, systemActor(), holder, identity.Household()); err != nil {
+			return identity.ScriptToken{}, "", fmt.Errorf("token %s was issued but not granted the household: %w", tok.ID, err)
+		}
+	}
 	return tok, secret, nil
 }
 
-// Revoke revokes a token and writes its audit entry.
+// Revoke revokes a token, ends its grants and writes the audit entries.
 func (a tokenAdmin) Revoke(ctx context.Context, id identity.ScriptTokenID) error {
-	if err := identityapp.RevokeToken(ctx, a.store, a.tokens, systemActor(), id); err != nil {
+	if err := a.grants.RevokeToken(ctx, systemActor(), id); err != nil {
 		return fmt.Errorf("revoking as the core: %w", err)
 	}
 	return nil
@@ -56,7 +69,7 @@ func (a tokenAdmin) List(ctx context.Context) ([]identity.ScriptToken, error) {
 func tokenCommand(ctx context.Context, cmd *command, tokens tokenAdmin, out io.Writer, now time.Time) error {
 	switch cmd.Name {
 	case cmdTokenIssue:
-		tok, secret, err := tokens.Issue(ctx, cmd.TokenName, cmd.TTL)
+		tok, secret, err := tokens.Issue(ctx, cmd.TokenName, cmd.TTL, cmd.GrantHousehold)
 		if err != nil {
 			return fmt.Errorf("token issue: %w", err)
 		}

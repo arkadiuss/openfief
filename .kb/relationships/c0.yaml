@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b382778715d
+  - type: implements
+    from: SYM-grants-cmd-core-core-access
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:07.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb10da360c3e
+  - type: covered_by
+    from: SYM-grants-cmd-core-core-access
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:07.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e1d7aa34576
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-fakeaccounts-account
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:03:35.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-135f74348579

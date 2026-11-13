@@ -68,6 +68,29 @@ func (p *Plugins) Start(ctx context.Context) error {
 	return nil
 }
 
+// OnRemoved has fn called with the instance name of every Plugin resource
+// that the watch sees deleted, once the operator's finalizer let it go: the
+// plugin is uninstalled (D-58). A removal while the core was down is no
+// event of a fresh process; the core's start sweeps what it left. Call it
+// before Start; fn runs on the informer's goroutine, so it must not block
+// for long.
+func (p *Plugins) OnRemoved(fn func(instance string)) error {
+	_, err := p.informer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+		DeleteFunc: func(obj any) {
+			if tomb, ok := obj.(cache.DeletedFinalStateUnknown); ok {
+				obj = tomb.Obj
+			}
+			if u, ok := obj.(*unstructured.Unstructured); ok {
+				fn(u.GetName())
+			}
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("watching for removed plugins: %w", err)
+	}
+	return nil
+}
+
 // InstalledPlugins returns every Plugin resource in the namespace, those
 // being deleted included, or an error wrapping app.ErrPluginsUnknown before
 // Start synced the cache.

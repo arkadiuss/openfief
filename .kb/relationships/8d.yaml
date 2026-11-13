@@ -930,3 +930,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7ee8a5691cf
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantcleanup-accountplaced
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:49.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f951e6f3a8e
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantcleanup-accountplaced
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:49.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0b90a5e6d5a
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-holderexists
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:04.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae644cb01e8
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-holderexists
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:04.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e499861916ea

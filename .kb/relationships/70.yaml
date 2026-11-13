@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-070a9b8fb25c
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-directory-targetexists
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:11:03.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8c4afaf5dc6
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-accounttarget
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:15:59.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e679dcb4193

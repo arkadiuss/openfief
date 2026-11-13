@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffdbcfa0048b
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantdirectory
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:02:24.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75cd105e51ec
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantdirectory
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:02:24.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a67c5e54b373

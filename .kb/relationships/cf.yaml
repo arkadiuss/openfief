@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f7182867331
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testtokenissuegrantsthehousehold
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:45.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0beffe2d6b96

@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3df10a88fe8e
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-create
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:11:24.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-865093921c60

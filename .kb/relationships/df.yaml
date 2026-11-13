@@ -846,3 +846,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee6dae636d7f
+  - type: executable_for
+    from: SYM-grants-internal-views-kube-plugins-test-testpluginsonremoved
+    to: TEST-views-kube
+    created_at: 2026-11-13T10:18:04.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35b7e5d688ad
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getcreatedat
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:40.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64f7a6a28edf
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant-getcreatedat
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:40.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4697bfff9ba4
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getsessiontoken
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:21:11.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a91969dc8416
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-revokegrantrequest-getsessiontoken
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:21:11.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e16cf507ec2

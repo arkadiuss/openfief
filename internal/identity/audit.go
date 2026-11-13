@@ -105,6 +105,12 @@ const (
 	ActionScriptTokenCreated AuditAction = "script_" + "token_created"
 	// ActionScriptTokenRevoked is a script token revoked.
 	ActionScriptTokenRevoked AuditAction = "script_token_revoked"
+	// ActionGrantCreated is a grant of access made (D-209): to a holder,
+	// of a target, both named by ID.
+	ActionGrantCreated AuditAction = "grant_created"
+	// ActionGrantRevoked is a grant of access ended, by the owner or
+	// because its holder or its target is gone.
+	ActionGrantRevoked AuditAction = "grant_revoked"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -120,8 +126,20 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey},
 		ActionScriptTokenCreated:   {RefScriptToken},
 		ActionScriptTokenRevoked:   {RefScriptToken},
+		ActionGrantCreated:         grantRefKinds(),
+		ActionGrantRevoked:         grantRefKinds(),
 	}
 }
+
+// grantRefKinds are the kinds of record a grant entry names: its holder and
+// its target.
+func grantRefKinds() []RefKind {
+	return []RefKind{RefPerson, RefScriptToken, RefViewPlugin, RefAccount, RefSleeve, RefHousehold}
+}
+
+// isGrantAction reports whether a is one of the two actions whose entries
+// name a grant: exactly its holder, then its target.
+func isGrantAction(a AuditAction) bool { return a == ActionGrantCreated || a == ActionGrantRevoked }
 
 // AuditActions returns every audit action, sorted.
 func AuditActions() []AuditAction {
@@ -179,6 +197,16 @@ const (
 	RefEnrollmentCode RefKind = "enrollment_code"
 	// RefScriptToken is a script token, by its ID, never its secret.
 	RefScriptToken RefKind = "script_token"
+	// RefPerson is a person, by their ID.
+	RefPerson RefKind = "person"
+	// RefViewPlugin is a view plugin, by its instance name.
+	RefViewPlugin RefKind = "view_plugin"
+	// RefAccount is an account, by its ID.
+	RefAccount RefKind = "account"
+	// RefSleeve is a sleeve, by its ID.
+	RefSleeve RefKind = "sleeve"
+	// RefHousehold is the household, by its ID ("home").
+	RefHousehold RefKind = "household"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -198,6 +226,8 @@ func (r Ref) Validate() error {
 		if !isHexID(r.ID) {
 			return fmt.Errorf("%w: a %s reference is its ID", ErrInvalidAuditEntry, r.Kind)
 		}
+	case RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
+		return r.validateGrantRef()
 	case RefPasskey:
 		if len(r.ID) > maxPasskeyRefLen {
 			return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
@@ -208,6 +238,28 @@ func (r Ref) Validate() error {
 		}
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validateGrantRef checks r's ID when r names what a grant names besides a
+// script token: a person, a view plugin, an account, a sleeve or the
+// household.
+func (r Ref) validateGrantRef() error {
+	var ok bool
+	switch r.Kind {
+	case RefPerson:
+		ok = isHexID(r.ID)
+	case RefViewPlugin:
+		ok = isPluginInstanceName(r.ID)
+	case RefAccount, RefSleeve:
+		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
+	case RefHousehold:
+		ok = r.ID == HouseholdID
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken:
+	}
+	if !ok {
+		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
 	}
 	return nil
 }
@@ -223,6 +275,10 @@ func looksLikeSecret(s string) bool {
 
 // maxRefs is the most records one entry names.
 const maxRefs = 8
+
+// grantRefs is how many records a grant entry names: its holder and its
+// target.
+const grantRefs = 2
 
 // AuditEntry is one record of the append-only audit log (D-211): who, what,
 // which records by ID, when and the outcome. It never carries an amount, a
@@ -267,7 +323,28 @@ func (e *AuditEntry) Validate() error {
 	if _, err := ParseAuditOutcome(string(e.Outcome)); err != nil {
 		return err
 	}
-	return validateRefs(e.Action, kinds, e.Refs)
+	if err := validateRefs(e.Action, kinds, e.Refs); err != nil {
+		return err
+	}
+	if isGrantAction(e.Action) {
+		return validateGrantRefs(e.Refs)
+	}
+	return nil
+}
+
+// validateGrantRefs checks that refs are what a grant entry names: its holder,
+// then its target, and nothing else (D-209, D-211).
+func validateGrantRefs(refs []Ref) error {
+	if len(refs) != grantRefs {
+		return fmt.Errorf("%w: a grant entry names its holder and its target", ErrInvalidAuditEntry)
+	}
+	if !slices.Contains([]RefKind{RefPerson, RefScriptToken, RefViewPlugin}, refs[0].Kind) {
+		return fmt.Errorf("%w: a grant entry names its holder first", ErrInvalidAuditEntry)
+	}
+	if !slices.Contains([]RefKind{RefAccount, RefSleeve, RefHousehold}, refs[1].Kind) {
+		return fmt.Errorf("%w: a grant entry names its target second", ErrInvalidAuditEntry)
+	}
+	return nil
 }
 
 // validateRefs checks refs: few enough, each an ID of its kind, of a kind the

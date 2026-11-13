@@ -301,6 +301,9 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 		return nil, fmt.Errorf("starting the revaluation workers: %w", err)
 	}
 	go c.attention.run(ctx, attentionEvery, log)
+	// The cutover waits for the installed plugins to be read, so it runs in the background: until it has,
+	// a holder that is to be given the household grant views nothing under SpiceDB.
+	go grantsStartup(ctx, c.access.grants, cfg.Authz.Mode == authzSpiceDB, c.access.reconcile, log)
 	startCluster(ctx, c, cfg, cl, log)
 	return c, nil
 }

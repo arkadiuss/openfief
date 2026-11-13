@@ -972,3 +972,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e52dfc8c7883
+  - type: executable_for
+    from: SYM-grants-internal-identity-connectapi-grants-test-grantsserved-lines
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:11:36.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89c731f19eb5
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-testgrantfailsclosedoverpostgres
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:39.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc589006c167
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-descriptor
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:19.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c805b983008f
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grantholderkind-descriptor
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:19.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-215e1a7bfe55

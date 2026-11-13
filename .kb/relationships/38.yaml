@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bf52620cbae
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-testrevokescripttokenreportsamodelthatfails
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:58.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aca5abecdb2b

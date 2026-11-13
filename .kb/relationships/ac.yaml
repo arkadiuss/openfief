@@ -636,3 +636,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-addd28e564cb
+  - type: constrains
+    from: REQ-identity-grants-cutover-keeps-access
+    to: FACT-SUBJECT-569878765413087D
+    created_at: 2026-11-13T10:00:44.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b3e9091ff39
+  - type: requires_property
+    from: REQ-identity-grants-cutover-keeps-access
+    to: FACT-PROP-0E572FFF10849656
+    created_at: 2026-11-13T10:00:44.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5da17e6b99
+  - type: specified_by
+    from: REQ-identity-grants-cutover-keeps-access
+    to: SCEN-identity-grants-cutover
+    created_at: 2026-11-13T10:00:44.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e1f5de03651
+  - type: specified_by
+    from: REQ-identity-grants-cutover-keeps-access
+    to: SCEN-e2e-grants-limit-what-a-script-token-views
+    created_at: 2026-11-13T10:00:44.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a73c3c16bf
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetkind
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:20.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e41f7cda8702
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantrequest-gettargetkind
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:20.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e50c7926d036

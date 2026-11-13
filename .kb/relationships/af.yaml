@@ -1063,3 +1063,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b965e11a06cb
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:15.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d6341a53cda
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:15.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3664a34387c2
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-reset
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:20:30.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a0982cd5703
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-creategrantresponse-reset
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:20:30.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8bd389e7c8f

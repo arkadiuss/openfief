@@ -1196,3 +1196,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5593d5a3b2a6
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-newgrant
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:14:24.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fe1b02d23c2
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:19:00.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ba41d8442c1
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-grant
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:19:00.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4e9d1beccb

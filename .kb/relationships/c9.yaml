@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-456d1511fe65
+  - type: executable_for
+    from: SYM-grants-internal-identity-grant-test-grantat
+    to: TEST-identity-grant-domain
+    created_at: 2026-11-13T10:13:21.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b821b6d860e4
+  - type: implements
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enum
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:18:37.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec1a654df2ef
+  - type: covered_by
+    from: SYM-grants-sdk-go-gen-openfief-identity-v1-auth-pb-granttargetkind-enum
+    to: TEST-identity-grants-connectapi
+    created_at: 2026-11-13T10:18:37.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-713487c5e554

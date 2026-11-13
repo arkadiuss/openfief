@@ -839,3 +839,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7eea8363ad0b
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-checkcreated
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:25.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39c43603a780
+  - type: implements
+    from: SYM-grants-internal-identity-app-tokens-auditedatomic
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:09:46.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dcd9ef30db1
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-tokens-auditedatomic
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:09:46.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c76956d99e1b
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-viewplugins
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:20.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9be75fadb7b

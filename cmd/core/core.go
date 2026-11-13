@@ -73,11 +73,27 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 
 // newTokens returns the script token use cases over pool, for the core's own
 // token commands: what they change is recorded in the audit log as the
-// core's (D-211).
-func newTokens(pool *pgxpool.Pool, now func() time.Time) tokenAdmin {
+// core's (D-211). With SpiceDB configured, a grant they make or end is passed
+// on to it; the returned closer closes that connection, and does nothing
+// otherwise.
+func newTokens(pool *pgxpool.Pool, authz *authzConfig, now func() time.Time) (tokenAdmin, io.Closer, error) {
+	az, err := newAuthorization(authz)
+	if err != nil {
+		return tokenAdmin{}, nil, err
+	}
 	store := identitypg.New(pool)
-	return tokenAdmin{store: store, tokens: identityapp.NewTokens(store, now, nil)}
+	tokens := identityapp.NewTokens(store, now, nil)
+	closer := az.closer
+	if closer == nil {
+		closer = nothingToClose{}
+	}
+	return tokenAdmin{store: store, tokens: tokens, grants: newGrants(store, tokens, householdOnly{}, az, now)}, closer, nil
 }
+
+// nothingToClose is the io.Closer of a command that holds no connection.
+type nothingToClose struct{}
+
+func (nothingToClose) Close() error { return nil }
 
 // core is the wired core service: what each of its ports serves (D-115),
 // the River client that runs the revaluation workers, and what the
@@ -106,6 +122,8 @@ type core struct {
 	// authz is the connection to SpiceDB, closed on shutdown; nil with the
 	// authorization policy.
 	authz io.Closer
+	// access is what start settles about grants once the plugins are read.
+	access access
 }
 
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and
@@ -175,12 +193,12 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	l, recorder := ingestDeps(pool, vstore)
 	// az.authorizer is the one authorizer every read path and owner service
 	// asks (D-163): identityapp.Policy, or SpiceDB with --authz=spicedb.
-	az, sleeves, err := newAccess(ctx, pool, cfg, l, log)
+	acc, err := newAccess(ctx, pool, cfg, l, installed, now, log)
 	if err != nil {
 		return nil, err
 	}
-	authz := az.authorizer
-	auth, err := newAuth(pool, &cfg.Auth, now)
+	authz := acc.authorizer
+	auth, err := newAuth(pool, &cfg.Auth, now, acc.grants)
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +218,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
-		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
+		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -210,7 +228,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	deps := &connectorDeps{
-		pool: pool, ledger: l, sleeves: sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
+		pool: pool, ledger: l, sleeves: acc.sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
@@ -222,29 +240,68 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withStatementService(plugin, newUploads(deps, owners), newTickers(deps, owners), newRetries(deps, owners), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
-	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
+	plugin = withOnboardingServices(plugin, newSleeves(acc.sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
-	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: az.closer}, nil
+	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
 }
 
-// newAccess returns the authorizer cfg chooses (D-163, D-164) and the sleeve
+// access is the core's authorization wiring: the authorizer and syncer
+// --authz chooses (D-163, D-164), the sleeve registry, and the owner's grants
+// (D-209), which the authorization model projects.
+type access struct {
+	authorization
+
+	sleeves *portfolioapp.Registry
+	grants  *identityapp.Grants
+	// reconcile makes SpiceDB hold what the core owns; nil with the policy.
+	reconcile func(context.Context) error
+}
+
+// newAccess returns the authorizer cfg chooses (D-163, D-164), the sleeve
 // registry, which tells SpiceDB, when it answers, of every placement of an
-// account. It stores the default sleeves when cfg asks and, with SpiceDB,
-// reconciles its relationships with the accounts and sleeves stored.
-func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *ledgerapp.Ledger, log *slog.Logger) (authorization, *portfolioapp.Registry, error) {
+// account, and the grants. It stores the default sleeves when cfg asks and,
+// with SpiceDB, reconciles its relationships with the accounts, sleeves and
+// grants stored. The grants' directory reads the installed plugins, which are
+// nil outside a cluster. The deletion of an account or a sleeve ends its
+// grants, and the deletion of a plugin instance ends its, when installed
+// reports it.
+func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *ledgerapp.Ledger, installed *viewskube.Plugins, now func() time.Time, log *slog.Logger) (access, error) {
 	az, err := newAuthorization(&cfg.Authz)
 	if err != nil {
-		return authorization{}, nil, err
+		return access{}, err
 	}
-	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l, az.registryOptions()...)
+	store := identitypg.New(pool)
+	dir := &grantDirectory{accounts: l}
+	if installed != nil {
+		dir.plugins = installed
+	}
+	grants := newGrants(store, identityapp.NewTokens(store, now, nil), dir, az, now)
+	opts := append(az.registryOptions(), portfolioapp.WithPlacementObserver(grantCleanup{grants}))
+	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l, opts...)
+	dir.sleeves = sleeves
 	if defErr := ensureDefaults(ctx, sleeves, cfg); defErr != nil {
-		return authorization{}, nil, defErr
+		return access{}, defErr
 	}
-	reconcileAccess(ctx, az.syncer, desiredAccess(l, sleeves, cfg.Auth.DemoSessions), log)
-	return az, sleeves, nil
+	acc := access{authorization: az, sleeves: sleeves, grants: grants}
+	if az.syncer != nil {
+		load := desiredAccess(l, sleeves, grants, cfg.Auth.DemoSessions)
+		acc.reconcile = func(ctx context.Context) error {
+			if err := az.syncer.Reconcile(ctx, load); err != nil {
+				return fmt.Errorf("reconciling: %w", err)
+			}
+			return nil
+		}
+		reconcileAccess(ctx, az.syncer, load, log)
+	}
+	if installed != nil {
+		if err := installed.OnRemoved(grantsOnUninstall(ctx, grants, log)); err != nil {
+			return access{}, fmt.Errorf("watching for uninstalled plugins: %w", err)
+		}
+	}
+	return acc, nil
 }
 
 // ensureDefaults stores the built-in sleeve kinds and sleeves when cfg

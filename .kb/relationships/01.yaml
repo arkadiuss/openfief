@@ -1084,3 +1084,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f09d7d05cdd2
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-list
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:05:36.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01b0963b0b6
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-list
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:05:36.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2fc1b48bd86
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-fakemodel-record
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:07:33.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-230f76bf6c4b
+  - type: executable_for
+    from: SYM-grants-internal-identity-postgres-grants-test-grantdirectory-targetexists
+    to: TEST-identity-grants-postgres
+    created_at: 2026-11-13T10:15:11.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c8e97a79bd6

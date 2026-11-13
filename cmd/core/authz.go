@@ -185,6 +185,10 @@ func (p placementSync) AccountRemoved(ctx context.Context, account ledger.Accoun
 	return nil
 }
 
+// SleeveRemoved does nothing: only an empty sleeve is deleted, so no account
+// has a relationship to it, and its grants are the grants' to end.
+func (placementSync) SleeveRemoved(context.Context, portfolio.SleeveID) error { return nil }
+
 // registryOptions returns the options of the registry az needs: with
 // SpiceDB, the placement observer.
 func (az authorization) registryOptions() []portfolioapp.RegistryOption {
@@ -195,9 +199,10 @@ func (az authorization) registryOptions() []portfolioapp.RegistryOption {
 }
 
 // desiredAccess returns the loader of what SpiceDB's relationships the core
-// owns must be: every account the ledger holds, the sleeve each is in, and
-// whether demo sessions exist (spicedb.Syncer.Reconcile).
-func desiredAccess(l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, demo bool) func(context.Context) (spicedb.Desired, error) {
+// owns must be: every account the ledger holds, the sleeve each is in,
+// whether demo sessions exist and the grants in force
+// (spicedb.Syncer.Reconcile).
+func desiredAccess(l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, grants *identityapp.Grants, demo bool) func(context.Context) (spicedb.Desired, error) {
 	return func(ctx context.Context) (spicedb.Desired, error) {
 		accounts, err := l.Accounts(ctx)
 		if err != nil {
@@ -207,7 +212,11 @@ func desiredAccess(l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, demo boo
 		if err != nil {
 			return spicedb.Desired{}, fmt.Errorf("loading the accounts' sleeves: %w", err)
 		}
-		d := spicedb.Desired{Sleeves: make(map[string]string, len(in)), DemoSessions: demo}
+		inForce, err := grants.InForce(ctx)
+		if err != nil {
+			return spicedb.Desired{}, fmt.Errorf("loading the grants: %w", err)
+		}
+		d := spicedb.Desired{Sleeves: make(map[string]string, len(in)), DemoSessions: demo, Grants: inForce}
 		for i := range accounts {
 			d.Accounts = append(d.Accounts, string(accounts[i].ID))
 		}

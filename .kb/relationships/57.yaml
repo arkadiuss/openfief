@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b5f9efce9b8
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-testgrantdirectoryoutsideacluster
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:07.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22b5ecd84d2
+  - type: executable_for
+    from: SYM-grants-cmd-core-grants-test-newgrantsfixture
+    to: TEST-core-grants
+    created_at: 2026-11-13T10:04:16.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f748ec6bad95

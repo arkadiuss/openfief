@@ -58,7 +58,11 @@ func (a *Auth) RevokeScriptToken(ctx context.Context, origin, token, id string) 
 	if err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidRequest, err)
 	}
-	err = RevokeToken(ctx, a.store, a.tokens, ownerActor(&s), tid)
+	if a.grants != nil {
+		err = a.grants.RevokeToken(ctx, ownerActor(&s), tid)
+	} else {
+		err = RevokeToken(ctx, a.store, a.tokens, ownerActor(&s), tid)
+	}
 	if errors.Is(err, ErrUnknownToken) {
 		return fmt.Errorf("%w: %w", ErrNotFound, err)
 	}

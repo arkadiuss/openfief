@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea9c94240246
+  - type: executable_for
+    from: SYM-grants-internal-identity-spicedb-contract-test-testcontractspicedbmatchesidentitymayact
+    to: TEST-identity-spicedb-contract
+    created_at: 2026-11-13T10:16:15.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-589166dc3ef9

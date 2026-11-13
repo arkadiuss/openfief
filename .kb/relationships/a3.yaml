@@ -1210,3 +1210,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1fff0d8a1c6
+  - type: executable_for
+    from: SYM-grants-internal-identity-app-grants-test-grantfixture-created
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:08:14.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d274ce99df0a
+  - type: implements
+    from: SYM-grants-internal-portfolio-app-registry-placementobserver
+    to: REQ-identity-grants-viewers-tokens-plugins
+    created_at: 2026-11-13T10:17:37.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f2243665949
+  - type: covered_by
+    from: SYM-grants-internal-portfolio-app-registry-placementobserver
+    to: TEST-portfolio-app-registry-observer
+    created_at: 2026-11-13T10:17:37.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c30ace46f3b6

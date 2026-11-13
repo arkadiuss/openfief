@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42e2cb5e2b38
+  - type: implements
+    from: SYM-grants-internal-identity-app-grants-grants-project
+    to: REQ-identity-grants-per-account-sleeve-household
+    created_at: 2026-11-13T10:06:11.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26d1e026e146
+  - type: covered_by
+    from: SYM-grants-internal-identity-app-grants-grants-project
+    to: TEST-identity-grants-app
+    created_at: 2026-11-13T10:06:11.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5997209089dd
