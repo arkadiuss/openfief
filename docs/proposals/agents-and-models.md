@@ -91,7 +91,6 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 
 ## Open questions
 
-- **[OQ-35]** What runs D-217's evals: a Go harness in OpenFief whose scorers implement goeval's interface, eval-go, promptfoo, Inspect or Langfuse (R-31)?
 - **[OQ-4]** Default agent: the author's or pfranczyk's? Should the agent contract be co-designed with pfranczyk?
 - **[OQ-6]** Which local model runs the GR-4 maintainer role on the author's hardware? (Depends on OQ-18.)
 - **[OQ-12]** Who sets the size of the offensive part: the owner, the model portfolio, or the maintainer? D-204 settles that the maintainer places no trades.
