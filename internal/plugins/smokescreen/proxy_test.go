@@ -36,6 +36,8 @@ const (
 	nolistToken = "synthetic-token-nolist"
 	publicAddr  = "8.8.4.4"
 	privateAddr = "10.0.0.7"
+	// otherPrivateAddr is in the same range as privateAddr.
+	otherPrivateAddr = "10.0.0.8"
 )
 
 var errUnknownHost = errors.New("no such host in the fake resolver")
@@ -134,6 +136,12 @@ func sampleList(port uint16) plugins.EgressAllowList {
 		{Host: "example.com", Port: port},
 		{Host: "internal.example.com", Port: port},
 		{Host: "mixed.example.com", Port: port},
+		{Host: exemptName, Port: port},
+		{Host: "twin.example.com", Port: port},
+		{Host: "neighbor.example.com", Port: port},
+		{Host: "moved.example.com", Port: port},
+		{Host: "also-mixed.example.com", Port: port},
+		{Host: "also-private.example.com", Port: port},
 	}}
 }
 
@@ -141,12 +149,19 @@ func sampleList(port uint16) plugins.EgressAllowList {
 // noSource, the egress use case has no AllowListSource at all.
 func startProxy(t *testing.T, noSource bool) *proxyFixture {
 	t.Helper()
-	return startProxyDenying(t, noSource, nil)
+	return startProxyOptions(t, noSource, func(*smokescreen.Options) {})
 }
 
 // startProxyDenying is startProxy with the extra ranges deny refused
 // (D-184).
 func startProxyDenying(t *testing.T, noSource bool, deny []netip.Prefix) *proxyFixture {
+	t.Helper()
+	return startProxyOptions(t, noSource, func(o *smokescreen.Options) { o.Deny = deny })
+}
+
+// startProxyOptions is startProxy with tweak applied to the proxy's options
+// before it starts.
+func startProxyOptions(t *testing.T, noSource bool, tweak func(*smokescreen.Options)) *proxyFixture {
 	t.Helper()
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set(reachedHeader, "reached")
@@ -166,24 +181,32 @@ func startProxyDenying(t *testing.T, noSource bool, deny []netip.Prefix) *proxyF
 	if noSource {
 		egressCase = app.NewEgress(fakeReviewer{}, nil)
 	}
-	r := serve(t, egressCase, &smokescreen.Options{
+	opts := &smokescreen.Options{
 		Resolver: fakeResolver{
 			"example.com":          {publicAddr},
 			"other.example.com":    {publicAddr},
 			"internal.example.com": {privateAddr},
 			"mixed.example.com":    {publicAddr, privateAddr},
+			// The exemption tests' hosts (exemption_test.go).
+			exemptName:                 {privateAddr},
+			"twin.example.com":         {privateAddr},
+			"neighbor.example.com":     {otherPrivateAddr},
+			"moved.example.com":        {otherPrivateAddr},
+			"also-mixed.example.com":   {privateAddr, publicAddr},
+			"also-private.example.com": {privateAddr, otherPrivateAddr},
 		},
 		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
 			f.dials.add(address)
 			return (&net.Dialer{}).DialContext(ctx, network, server.Listener.Addr().String())
 		},
-		Deny:        deny,
 		Healthcheck: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusTeapot) }),
 		// Long enough that a test's own connections, closed before cleanup stops the proxy, go idle within it even
 		// on a loaded machine (100 ms timed out there, and Serve rightly reported it); a tunnel a test leaves open
 		// still waits it out, which is what TestProxyServeStops checks.
 		DrainTimeout: 2 * time.Second,
-	})
+	}
+	tweak(opts)
+	r := serve(t, egressCase, opts)
 	f.proxyAddr, f.listener, f.stop = r.addr, r.listener, r.stop
 	return f
 }
@@ -219,9 +242,11 @@ func (c *closeWatcher) Close() error {
 // test ends.
 func serve(t *testing.T, e *app.Egress, opts *smokescreen.Options) running {
 	t.Helper()
-	logger := logrus.New()
-	logger.SetOutput(io.Discard)
-	opts.Log = logger
+	if opts.Log == nil {
+		logger := logrus.New()
+		logger.SetOutput(io.Discard)
+		opts.Log = logger
+	}
 	listener := &closeWatcher{Listener: listen(t)}
 	opts.Listener = listener
 	proxy, err := smokescreen.New(e, opts)

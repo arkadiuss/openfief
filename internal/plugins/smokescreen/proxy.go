@@ -42,6 +42,10 @@ const (
 	tunnelIdleTimeout = 5 * time.Minute
 )
 
+// ExemptionWarning is the msg of the warning the proxy logs at start whenever
+// a host is exempt from its refused address ranges (D-215).
+const ExemptionWarning = "TEST-ONLY EXEMPTION: a host is exempt from the refused address ranges (D-215); a shipped install never sets one"
+
 // Errors behind a refused request or a proxy that will not start;
 // Smokescreen logs them, never the token.
 var (
@@ -67,6 +71,11 @@ type Options struct {
 	// node's own address and a cluster's public pod, Service or node ranges
 	// (egress.ParseDenyList, D-184).
 	Deny []netip.Prefix
+	// Exempt, when set, exempts one host from the refused ranges: the named
+	// hostname, resolving to exactly the exempt addresses (egress.Exemption,
+	// D-215). It is for the end-to-end suite alone; New logs a warning
+	// naming it, and the zero value, the default, exempts nothing.
+	Exempt egress.Exemption
 	// Healthcheck, when set, answers GET /healthcheck.
 	Healthcheck http.Handler
 	// Log receives Smokescreen's request log; nil means its default logger.
@@ -152,7 +161,10 @@ func newConfig(e *app.Egress, opts *Options) (*ss.Config, *conntrack.Tracker, er
 	if base == nil {
 		base = cfg.Resolver
 	}
-	cfg.Resolver = checkingResolver{base: base, deny: opts.Deny}
+	cfg.Resolver = &checkingResolver{base: base, deny: opts.Deny, exempt: opts.Exempt}
+	if err := exemptHost(cfg, opts.Exempt); err != nil {
+		return nil, nil, err
+	}
 	cfg.ProxyDialTimeout = dialer(opts.Dial)
 	cfg.IdleTimeout = tunnelIdleTimeout
 	if err := cfg.Validate(); err != nil {
@@ -166,6 +178,22 @@ func newConfig(e *app.Egress, opts *Options) (*ss.Config, *conntrack.Tracker, er
 	tracker.ShuttingDown.Store(false)
 	cfg.ConnTracker = tracker
 	return cfg, tracker, nil
+}
+
+// exemptHost applies the exemption, when set, to cfg and logs the warning of
+// it (D-215). Smokescreen checks the address again after the resolver
+// (checkingResolver): its filter is skipped for the exempt host's exact name
+// only, and the resolver has already refused that name at any address but
+// the exempt ones, and every other name.
+func exemptHost(cfg *ss.Config, exempt egress.Exemption) error {
+	if !exempt.IsSet() {
+		return nil
+	}
+	if err := cfg.SetIPFilterBypassedDomains([]string{exempt.Host()}); err != nil {
+		return fmt.Errorf("egress proxy exempt host: %w", err)
+	}
+	cfg.Log.WithFields(logrus.Fields{"host": exempt.Host(), "addresses": addressList(exempt)}).Warn(ExemptionWarning)
+	return nil
 }
 
 // dialer adapts a dial function, or a plain net.Dialer when nil, to
@@ -324,14 +352,26 @@ func forbiddenRanges(deny []netip.Prefix) []string {
 // checkingResolver refuses a hostname when any address it resolves to fails
 // egress.CheckAddressDenying with the extra ranges deny, so a name that
 // mixes public and private addresses is refused outright rather than dialed
-// at its public one.
+// at its public one. The one exempt host (D-215), at exactly its exempt
+// addresses, is not refused for being in a refused range.
 type checkingResolver struct {
-	base ss.Resolver
-	deny []netip.Prefix
+	base   ss.Resolver
+	deny   []netip.Prefix
+	exempt egress.Exemption
+}
+
+// addressList returns the exempt addresses as text, for the start warning.
+func addressList(e egress.Exemption) []string {
+	addrs := e.Addrs()
+	out := make([]string, len(addrs))
+	for i, a := range addrs {
+		out[i] = a.String()
+	}
+	return out
 }
 
 // LookupPort implements smokescreen.Resolver.
-func (r checkingResolver) LookupPort(ctx context.Context, network, service string) (int, error) {
+func (r *checkingResolver) LookupPort(ctx context.Context, network, service string) (int, error) {
 	port, err := r.base.LookupPort(ctx, network, service)
 	if err != nil {
 		return 0, fmt.Errorf("look up port %q: %w", service, err)
@@ -340,19 +380,24 @@ func (r checkingResolver) LookupPort(ctx context.Context, network, service strin
 }
 
 // LookupIP implements smokescreen.Resolver.
-func (r checkingResolver) LookupIP(ctx context.Context, network, host string) ([]net.IP, error) {
+func (r *checkingResolver) LookupIP(ctx context.Context, network, host string) ([]net.IP, error) {
 	ips, err := r.base.LookupIP(ctx, network, host)
 	if err != nil {
 		return nil, fmt.Errorf("resolve %q: %w", host, err)
 	}
+	addrs := make([]netip.Addr, 0, len(ips))
 	for _, ip := range ips {
 		addr, ok := netip.AddrFromSlice(ip)
 		if !ok {
 			return nil, &forbiddenError{host: host, err: egress.ErrForbiddenAddress}
 		}
-		if err := egress.CheckAddressDenying(addr.Unmap(), r.deny); err != nil {
-			return nil, &forbiddenError{host: host, err: err}
-		}
+		addrs = append(addrs, addr.Unmap())
+	}
+	if len(addrs) == 0 {
+		return ips, nil // Smokescreen reports a name with no address itself
+	}
+	if err := egress.CheckResolved(host, addrs, r.deny, r.exempt); err != nil {
+		return nil, &forbiddenError{host: host, err: err}
 	}
 	return ips, nil
 }

@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bedb89ec9690
+  - type: executable_for
+    from: SYM-e2e-egressallowed-exemption-probes
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:32.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b5f9efce9b8

@@ -174972,3 +174972,373 @@ symbols:
         target: TEST-core-authz-sync
       - type: implements
         target: REQ-identity-authz-spicedb-answers
+  - id: SYM-plugins-egress-exemption
+    title: Exemption
+    granularity_reason: module-level-behavior
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:20.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-parse-exemption
+    title: ParseExemption
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:31.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-is-set
+    title: Exemption.IsSet
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:46.892Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-host
+    title: Exemption.Host
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:51.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-addrs
+    title: Exemption.Addrs
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:55.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-string
+    title: Exemption.String
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:47:59.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-exemption-covers
+    title: Exemption.Covers
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:17.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-check-resolved
+    title: CheckResolved
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:22.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-normalize-host
+    title: normalizeHost
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:26.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-sorted-unique
+    title: sortedUnique
+    status: active
+    sourceFile: internal/plugins/egress/exemption.go
+    symbol_role: structural
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:30.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+  - id: SYM-plugins-egress-test-parse-exemption
+    title: TestParseExemption
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:35.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-test-addrs
+    title: addrs
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:39.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-egress-test-check-resolved
+    title: TestCheckResolved
+    status: active
+    sourceFile: internal/plugins/egress/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:48:44.297Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-exemption
+  - id: SYM-plugins-smokescreen-test-must-exempt
+    title: mustExempt
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:05.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-proxy-exempts-one-host
+    title: TestProxyExemptsOneHost
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:10.277Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-exemption-ip-literal
+    title: TestProxyExemptionIsRefusedForAnIPLiteral
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:14.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-warns-of-exemption
+    title: TestProxyWarnsOfAnExemption
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:19.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-logs-exemption-decisions
+    title: TestProxyLogsExemptionDecisions
+    status: active
+    sourceFile: internal/plugins/smokescreen/exemption_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:24.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-test-start-proxy-options
+    title: startProxyOptions
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:28.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-exemption
+  - id: SYM-plugins-smokescreen-fn-address-list
+    title: addressList
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:32.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-warns-at-start
+  - id: SYM-tooling-release-bundle-check-no-exemption
+    title: check_no_exemption
+    status: active
+    sourceFile: scripts/release-bundle.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:36.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-never-shipped
+  - id: SYM-e2e-egressallowed-skips-egress-fixture
+    title: skipsEgressFixture
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:49:59.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-install-egress-fixture
+    title: installEgressFixture
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:04.374Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-egress-fixture-objects
+    title: egressFixtureObjects
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:08.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exempt-proxy
+    title: exemptProxy
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:12.984Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-install-fx-at
+    title: installFXAt
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:17.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-connect-allowed
+    title: connectAllowed
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:21.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-connect-bad-gateway
+    title: connectBadGateway
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:25.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exemption-probes
+    title: exemptionProbes
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:30.212Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-exemption-log-problems
+    title: exemptionLogProblems
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:34.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-e2e-egressallowed-check-allowed-audit
+    title: checkAllowedAudit
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:50:38.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation
+  - id: SYM-plugins-smokescreen-fn-exempt-host
+    title: exemptHost
+    status: active
+    sourceFile: internal/plugins/smokescreen/proxy.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:54:17.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-smokescreen-exemption
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-one-host
+      - type: implements
+        target: REQ-plugins-egress-test-exemption-warns-at-start
+  - id: SYM-e2e-egressallowed-exemption-warned
+    title: exemptionWarned
+    status: active
+    sourceFile: test/e2e/egressallowed_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-12T23:54:22.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-isolation

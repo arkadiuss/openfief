@@ -85,6 +85,17 @@ install_images() {
     '[.[] | .. | objects | (.containers?, .initContainers?) // empty | .[] | .image] | unique | .[]' "$1"
 }
 
+# check_no_exemption fails if a manifest in file $1 sets the egress proxy's test-only exemption from its refused
+# address ranges (D-215), as a flag or as an environment variable, so a shipped install never has one.
+check_no_exemption() {
+  local found
+  found="$(gojq -r --yaml-input -s \
+    '[.[] | .. | objects | (.containers?, .initContainers?) // empty | .[]
+      | ((.args? // [])[], (.command? // [])[], ((.env? // [])[] | .name)) | select(type == "string")
+      | select(test("refused-range-exempt-host|REFUSED_RANGE_EXEMPT_HOST"; "i"))] | unique | join(", ")' "$1")"
+  [ -z "$found" ] || fail "the install sets the egress proxy's test-only exemption from its refused ranges (D-215): $found"
+}
+
 # given_images fills the array `given` (name -> image) from the arguments, or from DIGESTS and PREFIX.
 declare -A given=()
 given_images() {
@@ -182,6 +193,7 @@ done >"$work/install/base.yaml"
 pin "$work/install/base.yaml" "$work/install/kustomization.yaml"
 kustomize build "$work/install" >"$work/install.yaml"
 check_pinned "$work/install.yaml"
+check_no_exemption "$work/install.yaml"
 if [ "${VERIFY:-0}" = 1 ]; then
   verify "$work/install.yaml"
 fi

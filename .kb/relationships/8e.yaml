@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72cfd43563b3
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-address-list
+    to: REQ-plugins-egress-test-exemption-warns-at-start
+    created_at: 2026-11-12T23:49:35.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f8780f9d3ea
+  - type: covered_by
+    from: SYM-plugins-smokescreen-fn-address-list
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:49:35.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-228d0fb4d386

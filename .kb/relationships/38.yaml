@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a0901ebf126
+  - type: executable_for
+    from: SYM-plugins-smokescreen-test-must-exempt
+    to: TEST-plugins-smokescreen-exemption
+    created_at: 2026-11-12T23:49:08.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2e6a0c4315f

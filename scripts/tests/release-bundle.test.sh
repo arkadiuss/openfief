@@ -150,6 +150,21 @@ done
 sed -i 's|openfief/core$|openfief/core:latest|' fake/core/deployment.yaml
 deploy="$work/fake" expect_fail "a base image with a tag" "with a tag or digest" "$version" d "${refs[@]}"
 sed -i 's|openfief/core:latest$|openfief/core|' fake/core/deployment.yaml
+# The real install sets no exemption from the proxy's refused ranges (D-215); one that does, as a flag or as an
+# environment variable, fails the bundle.
+if grep -qiE 'refused-range-exempt-host|REFUSED_RANGE_EXEMPT_HOST' "a/openfief-install-$version.yaml"; then
+  fail_case "the real install sets the egress proxy's test-only exemption"
+fi
+printf '          args: ["-listen=:4750", "-refused-range-exempt-host=fixture.example.test=10.0.0.1"]\n' >>fake/egress-proxy/deployment.yaml
+deploy="$work/fake" expect_fail "an exemption set by a flag" "test-only exemption from its refused ranges (D-215)" \
+  "$version" d "${refs[@]}"
+[ ! -e d ] || fail_case "a bundle with an exemption wrote files"
+sed -i '$d' fake/egress-proxy/deployment.yaml
+printf '          env:\n            - name: OPENFIEF_REFUSED_RANGE_EXEMPT_HOST\n              value: fixture.example.test=10.0.0.1\n' >>fake/egress-proxy/deployment.yaml
+deploy="$work/fake" expect_fail "an exemption set by an environment variable" "OPENFIEF_REFUSED_RANGE_EXEMPT_HOST" \
+  "$version" d "${refs[@]}"
+[ ! -e d ] || fail_case "a bundle with an exemption wrote files"
+sed -i '$d;$d;$d' fake/egress-proxy/deployment.yaml
 sed -i 's|name: openfief-db$|name: other-db|' fake/database/openfief-db.yaml
 deploy="$work/fake" expect_fail "a database the install doesn't read" "exactly the Cluster openfief/openfief-db" \
   "$version" d "${refs[@]}"
@@ -166,4 +181,4 @@ grep -qF "$pinned_sum" "$root/docs/guides/install.md" || fail_case "the install 
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-bundle: 26 cases passed"
+echo "release-bundle: 29 cases passed"

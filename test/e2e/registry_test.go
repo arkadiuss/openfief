@@ -19,6 +19,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/cosign/cosigntest"
+	"github.com/arkadiuss/openfief/internal/plugins/egress"
 )
 
 // The suite's registry (scripts/e2e-images.sh): task e2e:images pushes the
@@ -190,10 +191,13 @@ func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(stri
 // editApp returns the changes the suite makes to the demo's application
 // layer: the operator's pod template gets the trusted signers' hash, and the
 // demo's Plugin ui the built-in UI's image in the suite's registry, which
-// the suite signed, as the cluster names it.
-func editApp(signersHash string, ui plugins.ImageRef) func(*unstructured.Unstructured) error {
+// the suite signed, as the cluster names it; and the egress proxy, when
+// exempt is set, the test-only exemption of D-215 (egressallowed_test.go).
+func editApp(signersHash string, ui plugins.ImageRef, exempt egress.Exemption) func(*unstructured.Unstructured) error {
 	return func(obj *unstructured.Unstructured) error {
 		switch {
+		case exempt.IsSet() && obj.GetKind() == "Deployment" && obj.GetName() == proxyService:
+			return exemptProxy(obj, exempt)
 		case obj.GetKind() == "Deployment" && obj.GetName() == operatorDeployment:
 			err := unstructured.SetNestedField(obj.Object, signersHash, "spec", "template", "metadata", "annotations", signersAnnotation)
 			if err != nil {

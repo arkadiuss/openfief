@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a943c33dc372
+  - type: implements
+    from: SYM-plugins-egress-exemption-string
+    to: REQ-plugins-egress-test-exemption-one-host
+    created_at: 2026-11-12T23:48:02.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ac36db5574
+  - type: covered_by
+    from: SYM-plugins-egress-exemption-string
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:48:02.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c27e0e077ed
+  - type: executable_for
+    from: SYM-plugins-egress-test-addrs
+    to: TEST-plugins-egress-exemption
+    created_at: 2026-11-12T23:48:42.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da419e828af9

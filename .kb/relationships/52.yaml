@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0755c02cef60
+  - type: executable_for
+    from: SYM-e2e-egressallowed-skips-egress-fixture
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:02.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb5cbfeca072
+  - type: executable_for
+    from: SYM-e2e-egressallowed-install-fx-at
+    to: TEST-e2e-isolation
+    created_at: 2026-11-12T23:50:20.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-444f6bbb1318

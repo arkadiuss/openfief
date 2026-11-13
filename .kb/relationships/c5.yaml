@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-241c251a4c9d
+  - type: verified_by
+    from: SCEN-tooling-release-bundle-no-exemption
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-12T23:20:24.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a47ec5cb1be

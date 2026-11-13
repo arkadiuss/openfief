@@ -14,6 +14,28 @@ kind: Kustomization
 resources:
   - ../../../../deploy/demo/openfief
   - core-from-e2e-client.yaml
+# D-215: the proxy's NetworkPolicy also lets it reach the suite's egress fixture (../../egressallowed_test.go), its pods
+# on their port and nothing else, so criterion 16 is checked on an allowed connection. The suite adds the matching
+# -refused-range-exempt-host to the proxy's Deployment when it applies this layer, since the fixture's ClusterIP is only
+# known once its Service exists. Neither is in deploy/, and the release bundle's test fails if the bundle sets one.
+patches:
+  - target:
+      kind: NetworkPolicy
+      name: egress-proxy
+    patch: |-
+      - op: add
+        path: /spec/egress/-
+        value:
+          to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: openfief-e2e-egress
+              podSelector:
+                matchLabels:
+                  app.kubernetes.io/name: egress-fixture
+          ports:
+            - protocol: TCP
+              port: 8443
 images:
   - name: ghcr.io/arkadiuss/openfief/core
     newName: openfief.test/core
