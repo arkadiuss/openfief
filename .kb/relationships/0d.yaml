@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18e33ba0bbf6
+  - type: executable_for
+    from: SYM-tooling-kibi-staged-test-expect
+    to: TEST-tooling-kibi-staged
+    created_at: 2026-11-13T02:54:52.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a1fc8b9b553

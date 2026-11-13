@@ -175352,3 +175352,23 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-isolation
+  - id: SYM-tooling-kibi-staged-test-expect
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T02:54:50.515Z
+    title: expect
+    sourceFile: scripts/tests/kibi-staged.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-staged
+  - id: SYM-tooling-kibi-staged-test-run
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T02:54:55.614Z
+    title: run
+    sourceFile: scripts/tests/kibi-staged.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-staged

@@ -97,7 +97,7 @@ Two targets drive a browser and are in no check, since a check must not need Chr
 | `authz:validate` | `zed validate authz/validation.yaml`, offline: the authorization model's SpiceDB schema ([authz/schema.zed](../../authz/schema.zed), D-164) against its relationships and assertions | the schema doesn't parse, or an assertion fails |
 
 `task test:authz` is outside `task check`: it runs the authorization contract test ([test-authz.sh](../../scripts/test-authz.sh), build tag `spicedb`) against a real SpiceDB in testing mode, which must answer every holder and action as `identity.MayAct` does. SpiceDB is pinned as `SPICEDB_VERSION` and built from its module into `.bin/` on first use (`tool:spicedb`, through retry.sh), which takes minutes, so `task tools` doesn't install it.
-| `kibi:check` or `kibi:staged` | `kibi check` through kibi-check.sh (CI); `kibi check-generated --staged --changed-only` and `kibi check --staged` (hook) | a knowledge-base rule violation |
+| `kibi:check` or `kibi:staged` | `kibi check` through kibi-check.sh (CI); `kibi check-generated --staged --changed-only` and `kibi check --staged` through kibi-staged.sh (hook) | a knowledge-base rule violation |
 
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
 
@@ -203,6 +203,8 @@ flowchart TD
 ### The kibi gate
 
 On commit, `kibi:staged` runs two commands. `kibi check-generated --staged --changed-only` regenerates kibi's symbol manifest from the staged bytes and compares it with what is staged; it skips the work when no staged path can affect a symbol. `kibi check --staged` then runs kibi's rules on the staged change, including the rule that blocks a behavioral symbol with no `implements` requirement or no `covered_by` test. kibi's own help marks `--staged` as experimental.
+
+[kibi-staged.sh](../../scripts/kibi-staged.sh) runs both. First it removes the throwaway stores (`/tmp/kibi-precommit-<pid>-*`, tens of megabytes each) that earlier `kibi check --staged` runs left behind when they were killed, only those whose process is gone. `kibi check --staged` builds one such knowledge base per run, in a Prolog process of its own, to apply the staged symbols to the branch's records; a local kibi patch keeps that store off the disk ([Setup notes in kibi.md](kibi.md#setup-notes)), which is what keeps the step at about 30 seconds for a one-file commit.
 
 In CI, the setup action sets `KIBI_BRANCH`, because `actions/checkout` leaves a detached HEAD and kibi won't write a store without a branch name. `setup:ci` then runs `kibi sync`, and `task check` ends with `kibi check` over the whole knowledge base. CI is therefore stricter than the hook: it also catches problems outside the staged change.
 

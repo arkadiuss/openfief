@@ -1054,10 +1054,9 @@ tasks:
       - bash scripts/kibi-check.sh '{{.KIBI}}'
 
   kibi:staged:
-    desc: kibi checks on staged changes (what the pre-commit hook runs)
+    desc: kibi checks on staged changes (what the pre-commit hook runs), after removing the throwaway stores killed runs left in the temporary directory (scripts/kibi-staged.sh)
     cmds:
-      - '{{.KIBI}} check-generated --staged --changed-only'
-      - '{{.KIBI}} check --staged'
+      - bash scripts/kibi-staged.sh '{{.KIBI}}'
 
   kibi:sync:
     desc: Compile this branch's knowledge base (hooks run it after checkout, merge and rebase; CI sets KIBI_BRANCH)
