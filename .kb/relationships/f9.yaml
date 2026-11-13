@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3b5ed79c230
+  - type: covered_by
+    from: SYM-tooling-kibi-install-status-patches
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:14.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d47ac2db2c42
+  - type: implements
+    from: SYM-tooling-kibi-install-status-patches
+    to: REQ-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:14.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50ddb879812

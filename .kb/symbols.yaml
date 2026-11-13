@@ -199073,3 +199073,105 @@ symbols:
         target: TEST-identity-access-connectapi
       - type: implements
         target: REQ-identity-revoke-viewer
+  - id: SYM-tooling-kibi-install-status-pinned
+    title: pinned
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:00.442Z
+    sourceFile: scripts/kibi-install-status.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-install-tracks-pins
+      - type: implements
+        target: REQ-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-installed
+    title: installed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:05.753Z
+    sourceFile: scripts/kibi-install-status.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-install-tracks-pins
+      - type: implements
+        target: REQ-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-patches
+    title: patches
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:11.355Z
+    sourceFile: scripts/kibi-install-status.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-install-tracks-pins
+      - type: implements
+        target: REQ-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-state
+    title: state
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:16.145Z
+    sourceFile: scripts/kibi-install-status.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-install-tracks-pins
+      - type: implements
+        target: REQ-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-fresh-test
+    title: fresh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:21.020Z
+    sourceFile: scripts/tests/kibi-install-status.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-installed-test
+    title: installed
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:25.011Z
+    sourceFile: scripts/tests/kibi-install-status.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-status-test
+    title: status
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:29.319Z
+    sourceFile: scripts/tests/kibi-install-status.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-check-test
+    title: check
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:33.333Z
+    sourceFile: scripts/tests/kibi-install-status.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-install-tracks-pins
+  - id: SYM-tooling-kibi-install-status-says-test
+    title: says
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:42:37.745Z
+    sourceFile: scripts/tests/kibi-install-status.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-install-tracks-pins

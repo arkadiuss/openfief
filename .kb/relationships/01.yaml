@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef9659a6bf85
+  - type: executable_for
+    from: SYM-tooling-kibi-install-status-fresh-test
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:23.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a32944fe07

@@ -170,11 +170,13 @@ The setup action caches `.bin/` (without `.bin/e2e`, the e2e job's own state) wi
 
 - `pre-commit` runs `task check:commit`, which runs only the checks the staged change affects ([Affected checks](#affected-checks)).
 - `commit-msg` runs `task docs:fresh:commit` with the message file: the docs staleness gate on the staged files. It skips merge commits; CI checks the merged commits one by one. It also runs `task proto:breaking:commit`, which fails a commit that adds a breaking-change exception, or before the first beta breaks a contract, without marking itself breaking ([Breaking contract changes](#breaking-contract-changes)), and skips merges the same way.
-- `post-checkout` runs `task kibi:sync` for a branch checkout (lefthook's `{3}` argument is `1`), not for a file checkout.
-- `post-merge` runs `task kibi:sync`.
+- `post-checkout` runs, for a branch checkout only (lefthook's `{3}` argument is `1`, a file checkout is skipped), `task kibi:install` when `package.json`, `package-lock.json` or `patches/` differ between the old and the new HEAD, then `task kibi:sync`.
+- `post-merge` does the same after a merge, comparing `ORIG_HEAD` (git sets it to the HEAD before the merge, fast-forwards too) with `HEAD`, and installing when there is no `ORIG_HEAD`.
 - `post-rewrite` runs `task kibi:sync` after a rebase, not after an amend.
 
-kibi compiles one store per branch, and the sync hooks keep it in step with the branch you're on. kibi's own git hooks stay uninstalled, so lefthook alone owns `.git/hooks`.
+kibi compiles one store per branch, and the sync hooks keep it in step with the branch you're on. The install runs first, since the sync needs the kibi the branch pins (lefthook's `priority`). A rebase reinstalls only through its checkout of the new base; `post-rewrite` just syncs.
+
+`kibi:install` is a no-op when `node_modules` is current. Its `status:` is [kibi-install-status.sh](../../scripts/kibi-install-status.sh), not a checksum of the input files, which once reported "up to date" after a merge moved kibi-cli and kibi-core to new pins and patches, and the old kibi (2.36) ran the docs build for over two minutes until `task --force kibi:install`. The script fails, which runs the install, when a kibi package in `node_modules` isn't at the version `package-lock.json` pins (an optional package npm skipped on this platform doesn't count), when `node_modules/.kibi-install-stamp` is missing, or when the stamp, which the install writes after `npm ci` and its patch-package postinstall, no longer matches the sha256 of each file in `patches/` and the installed versions. [kibi-install-status.test.sh](../../scripts/tests/kibi-install-status.test.sh) runs it on a fake tree. The worktrees of one clone share nothing here but what each links: a worktree that links the main checkout's `node_modules` and sits on another pin makes every `kibi:install` there reinstall the shared one. kibi's own git hooks stay uninstalled, so lefthook alone owns `.git/hooks`.
 
 The hook checks the working tree, not a clean copy of the index. Go tests, lint and the docs check read files on disk, so an unstaged edit can make a commit pass locally and fail in CI. Only `gen:check` and the kibi gate compare against the index.
 
@@ -197,7 +199,7 @@ flowchart TD
   msg -->|"covered code without its page, or an unmarked new exception"| fix
   cc -->|"a step fails"| fix["Fix the cause and stage again"]
   fix --> commit
-  switch["git checkout, merge or rebase"] --> sync["post-checkout, post-merge or post-rewrite: task kibi:sync"]
+  switch["git checkout, merge or rebase"] --> sync["post-checkout, post-merge: task kibi:install when the pins or patches changed, then task kibi:sync; post-rewrite: task kibi:sync"]
 ```
 
 ### The kibi gate

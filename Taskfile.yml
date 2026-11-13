@@ -1034,10 +1034,14 @@ tasks:
 
   kibi:install:
     desc: Install the pinned npm packages, kibi and playwright-core (npm ci)
-    sources: [package.json, package-lock.json, patches/*.patch]
-    generates: [node_modules/.package-lock.json]
+    # Not sources/generates: that checksum once missed a merge that moved kibi to new pins and patches, and the old kibi
+    # kept running. The status script compares the installed kibi packages with package-lock.json and the patches with
+    # the stamp the last install wrote (scripts/kibi-install-status.sh); a failing status runs the install.
+    status:
+      - bash scripts/kibi-install-status.sh check
     cmds:
       - bash scripts/retry.sh npm ci
+      - bash scripts/kibi-install-status.sh stamp
 
   kibi:doctor:
     desc: Diagnose the kibi setup
