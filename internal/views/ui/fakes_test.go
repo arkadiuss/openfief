@@ -24,6 +24,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -772,8 +773,11 @@ type harness struct {
 	// checkpoints is the CashCheckpointService (D-158).
 	checkpoints *fakeCheckpoints
 	read        *fakeRead
-	handler     http.Handler
-	tokenFile   string
+	// askModel is the core's router for the Ask box (D-203), off until a
+	// test turns it on.
+	askModel  *fakeAskModel
+	handler   http.Handler
+	tokenFile string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -800,7 +804,9 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	h.syncs = &fakeSyncs{}
 	h.names = &fakeInstruments{}
 	h.read.transfers = h.transfers
+	h.askModel = &fakeAskModel{}
 	mux := http.NewServeMux()
+	mux.Handle(modelsv1connect.NewAskModelServiceHandler(h.askModel))
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
 	mux.Handle(ingestv1connect.NewBondLotServiceHandler(h.bondLots))
@@ -830,6 +836,7 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		Accounts:        ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		MarketData:      valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		AskModel:        modelsv1connect.NewAskModelServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),

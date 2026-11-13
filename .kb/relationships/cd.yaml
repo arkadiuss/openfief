@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89f588defa10
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-new-loop-fixture
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:28:57.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a67f00185467

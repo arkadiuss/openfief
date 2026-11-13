@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88fb208f053b
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:26:31.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbf3d61255b
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-test-model-loop-tool-read-failures
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:29:58.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b633e081444f

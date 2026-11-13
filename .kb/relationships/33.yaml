@@ -909,3 +909,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3c843fb755f
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-service-refuses-too-much
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:24:14.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3faf0dbb7bd
+  - type: implements
+    from: SYM-ask-model-askanswer-go-command-answerer-run
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:24:39.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fba9157cf9a
+  - type: covered_by
+    from: SYM-ask-model-askanswer-go-command-answerer-run
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:24:39.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a385e5be9b1
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-ask-fixture-may-receive
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:58:31.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e3902d984a2

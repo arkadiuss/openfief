@@ -1280,3 +1280,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ab817de1fa4
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client-get-ask-model
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:39:50.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e14109827c26
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-ask-model-service-client-get-ask-model
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:39:50.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-555c422f98c3

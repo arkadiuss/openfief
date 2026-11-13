@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8583b51f6d3
+  - type: implements
+    from: SYM-ask-model-asktools-go-tool-result
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:54.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e87a2fdc0627
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-tool-result
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:54.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77f2b5d0e99e

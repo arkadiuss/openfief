@@ -1126,3 +1126,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6b722e7fece
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model-check-ask-tiers
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:27:05.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba3378bda47
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-test-routed-answerer-falls-back-to-the-commands-alone
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:30:23.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcd9d95e87cd
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-get-origin
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:33:42.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71cef6355224
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-get-origin
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:33:42.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59a70ba66599
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-descriptor
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:37:49.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b43d5d0bcc3a
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-descriptor
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:37:49.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a82a390e54ad

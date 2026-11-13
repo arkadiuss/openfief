@@ -1,0 +1,105 @@
+// The Ask box's model contract (docs/DESIGN.md D-203, D-205, D-206, D-211).
+//
+// With a model configured, the Ask box answers its fixed commands itself and
+// sends anything else to the model through the core's model router. The
+// built-in UI runs the tool loop, since the tools are its own read-only
+// answerers and it reads with the asking person's session; the core holds
+// the switch, the route and the data tiers, so every round goes through the
+// router: AskModelService is the router's door for the Ask box's role, and
+// nothing else. A view plugin can't name another role, and nothing here
+// changes anything.
+//
+// The core serves AskModelService to VIEW plugins only, next to the
+// ModelSettingsService. Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+//   - Every call carries the view plugin's projected ServiceAccount token
+//     (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//     call without one, or from a plugin that is not a view plugin, fails
+//     with PERMISSION_DENIED.
+//   - Every request carries origin and the asking person's session_token. A
+//     missing, unknown, expired or revoked session fails with
+//     UNAUTHENTICATED. A read-scoped session may ask: what the model sees is
+//     limited by what that session may read, which the plugin enforces by
+//     reading with the session's own token, never its own.
+//   - Text of messages, answers and tool arguments is the owner's data: the
+//     core neither logs nor keeps it (GR-12, D-211). The audit log keeps the
+//     role, the provider instance and model and a call ID, and nothing else.
+syntax = "proto3";
+
+package openfief.models.v1;
+
+import "openfief/models/v1/provider.proto";
+
+// AskModelService is the Ask box's door to the model router.
+service AskModelService {
+  // GetAskModel says whether the Ask box has a model: the one switch is on,
+  // the Ask box's toggle is on and its route has a model (D-212). It writes
+  // no audit entry: nothing is asked.
+  rpc GetAskModel(GetAskModelRequest) returns (GetAskModelResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // CheckAskTiers says whether a model of the Ask box's route may receive
+  // data of every one of the given tiers together, and serves tools
+  // (D-206). The plugin asks it before it puts a tool's result into the
+  // conversation, so the model gets a refusal for a result it may not see.
+  // It calls no model and writes no audit entry.
+  rpc CheckAskTiers(CheckAskTiersRequest) returns (CheckAskTiersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // GenerateAsk asks the Ask box's models for the next message of a
+  // conversation, the primary first and then the fallbacks the data tiers
+  // allow. Each message carries the data tier of what it holds; the core
+  // refuses a conversation with a message that carries none, or that no
+  // model of the route may receive (PERMISSION_DENIED), and writes the two
+  // audit entries of each call (D-211).
+  rpc GenerateAsk(GenerateAskRequest) returns (GenerateAskResponse);
+}
+
+message GetAskModelRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message GetAskModelResponse {
+  // Whether the Ask box sends questions beyond its commands to a model.
+  bool available = 1;
+}
+
+message CheckAskTiersRequest {
+  string origin = 1;
+  string session_token = 2;
+  // "T0", "TF", "T1" or "T2".
+  repeated string tiers = 3;
+}
+
+message CheckAskTiersResponse {
+  // Whether a model may receive every tier in the request, together, with
+  // tools.
+  bool allowed = 1;
+}
+
+// AskMessage is a message of the Ask box's conversation with the data tier of
+// what it holds: a tool's result carries the tier of the data the tool read.
+message AskMessage {
+  Message message = 1;
+  // "T0", "TF", "T1" or "T2" (D-206).
+  string data_tier = 2;
+}
+
+message GenerateAskRequest {
+  string origin = 1;
+  string session_token = 2;
+  repeated AskMessage messages = 3;
+  // The tools the model may call: the Ask box's read-only answerers.
+  repeated Tool tools = 4;
+}
+
+message GenerateAskResponse {
+  string content = 1;
+  repeated ToolCall tool_calls = 2;
+  FinishReason finish_reason = 3;
+  // The model that answered, as "provider/model".
+  string model = 4;
+}

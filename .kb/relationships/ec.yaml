@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a482c12e8d02
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-ask-message-descriptor
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:36:57.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46268e898b22
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-ask-message-descriptor
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:36:57.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b2f2642d2a8

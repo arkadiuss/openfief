@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c29659939c5e
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-provider
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:22:44.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c834bfdef21
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-ask-fixture-available
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:58:25.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a6713d7ce0a

@@ -29,6 +29,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
@@ -39,6 +40,10 @@ import (
 const (
 	// coreTimeout bounds one call to the core.
 	coreTimeout = 30 * time.Second
+	// askTimeout bounds one call to the core's model router for the Ask box
+	// (D-203): the core may try several models, each under its provider
+	// instance's own timeout.
+	askTimeout = 60 * time.Second
 	// uploadTimeout bounds one statement upload, the file streamed to the
 	// core and the connector's import together: up to 64 MiB, on a slow
 	// link from the owner's browser.
@@ -113,6 +118,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Tickers:         ingestv1connect.NewTickerServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Syncs:           ingestv1connect.NewSyncServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		AskModel:        modelsv1connect.NewAskModelServiceClient(askClient(openfief.TokenFile{}), coreURL),
 		Read:            viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:             log,
 		Settings:        valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
@@ -160,6 +166,14 @@ func authClient(tokens openfief.TokenSource) *http.Client {
 func uploadClient(tokens openfief.TokenSource) *http.Client {
 	c := authClient(tokens)
 	c.Timeout = uploadTimeout
+	return c
+}
+
+// askClient is authClient for the Ask box's model calls, which may take up
+// to askTimeout.
+func askClient(tokens openfief.TokenSource) *http.Client {
+	c := authClient(tokens)
+	c.Timeout = askTimeout
 	return c
 }
 

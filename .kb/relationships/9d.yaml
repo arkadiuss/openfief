@@ -818,3 +818,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c8dd8d66583
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-asker
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:20:25.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5dc6d3137fd
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-asker
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:25.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c51e69ae1cf5
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-unimplemented-ask-model-service-handler-get-ask-model
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:40:27.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-949d13020885
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-unimplemented-ask-model-service-handler-get-ask-model
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:40:27.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6cd5b3c9778

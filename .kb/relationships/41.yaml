@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-142109e3c045
+  - type: executable_for
+    from: SYM-ask-model-askmodel-page-test-go-tool-names
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:27:37.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa838db026cc
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-tool-argument-errors-quote-nothing
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:30.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ebc963836b8

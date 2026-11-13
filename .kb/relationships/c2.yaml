@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3c6f5f33601
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-router-permits-calls-nothing
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:21:25.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e27f37c730a

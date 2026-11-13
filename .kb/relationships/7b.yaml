@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-608386158054
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-get-origin
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:37:55.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e19e33b418
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-request-get-origin
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:37:55.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bdd456272ac

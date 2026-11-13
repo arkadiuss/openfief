@@ -250,7 +250,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withIngestServices(plugin, deps, owners, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(acc.sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
-	plugin = withSettingsService(withModelSettingsService(plugin, agents.settings, callers, log),
+	plugin = withSettingsService(withAskModelService(withModelSettingsService(plugin, agents.settings, callers, log), agents.ask, callers, log),
 		newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)

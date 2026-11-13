@@ -1056,3 +1056,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa6813b3dd05
+  - type: implements
+    from: SYM-ask-model-router-go-router-plan
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:21:36.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61b9c915f927
+  - type: covered_by
+    from: SYM-ask-model-router-go-router-plan
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:21:36.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c98b37dee162
+  - type: implements
+    from: SYM-ask-model-asktools-go-needs-tool
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:59:21.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2c260076a7c
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-needs-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:59:21.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ade9f2ea4e42

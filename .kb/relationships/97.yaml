@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d852b5b0d80f
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-ui-callers
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:06.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-994fca8594ac
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-check-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:59:56.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-172582939436

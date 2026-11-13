@@ -769,3 +769,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d267549ba3f
+  - type: validates
+    from: TEST-ui-ask-model-loop
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:12:08.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06349ec1458a
+  - type: validates
+    from: TEST-ui-ask-model-loop
+    to: REQ-ui-ask-model-fixed-commands-first
+    created_at: 2026-11-13T18:12:08.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db6a914913cb
+  - type: validates
+    from: TEST-ui-ask-model-loop
+    to: REQ-ui-ask-model-fallback-as-before
+    created_at: 2026-11-13T18:12:08.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecd2d9e733ff
+  - type: validates
+    from: TEST-ui-ask-model-loop
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:12:08.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dbec7dab6bb

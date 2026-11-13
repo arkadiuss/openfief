@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6d08e382d92
+  - type: verified_by
+    from: SCEN-models-ask-box-tool-results-tiered
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:12:05.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3e22d9b2836
+  - type: verified_by
+    from: SCEN-models-ask-box-tool-results-tiered
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:12:05.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edea65e3331e
+  - type: verified_by
+    from: SCEN-models-ask-box-tool-results-tiered
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:12:05.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7989b0f8f2

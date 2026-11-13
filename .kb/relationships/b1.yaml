@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ec6c4109002
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-no-attention-clear
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:23:37.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e22c065027d

@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb6311d3d000
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model-say
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:26:42.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dadddd1887b2

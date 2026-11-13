@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6c0981a48d2
+  - type: implements
+    from: SYM-ask-model-asktools-go-ask-tools
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:18.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b978205d7ed
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-ask-tools
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:18.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4d5de5db53b

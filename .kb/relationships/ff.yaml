@@ -1063,3 +1063,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-472b237973a0
+  - type: verified_by
+    from: SCEN-ui-ask-model-read-only-tools
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:12:03.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4965ff6c9275
+  - type: verified_by
+    from: SCEN-ui-ask-model-read-only-tools
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:12:03.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74ae6c931a88
+  - type: verified_by
+    from: SCEN-ui-ask-model-read-only-tools
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:12:03.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75fd48d1967b

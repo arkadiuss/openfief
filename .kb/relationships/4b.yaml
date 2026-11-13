@@ -1077,3 +1077,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6755be0603a7
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-scripted-port-available
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:28:29.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be76d8e84c8d

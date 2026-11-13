@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1faa4015c06
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-scripted-reply
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:26:26.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-add971a147a1

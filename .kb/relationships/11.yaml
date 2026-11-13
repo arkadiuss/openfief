@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81c70dd3eb8a
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-test-model-failures-are-cards-that-name-the-commands
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:30:03.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec2f5753a24b
+  - type: implements
+    from: SYM-ask-model-asktools-go-performance-tool
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:59:45.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b26b4b539a
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-performance-tool
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:59:45.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1940db59361d

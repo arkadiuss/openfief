@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53a640bc713c
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-scripted-port
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:28:23.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de7a52249d4
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-scripted-port-generate-calls
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:30:29.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e3936ff1b3d

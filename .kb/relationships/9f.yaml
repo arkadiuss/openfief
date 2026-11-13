@@ -734,3 +734,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3744122ab2e
+  - type: implements
+    from: SYM-ask-model-askmodel-go-ask-conversation-call-tool
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:25:29.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15090fcc3c03
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-ask-conversation-call-tool
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:25:29.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d67a56efb9
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-get-tiers
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:35:36.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46b9d8da03fb
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-get-tiers
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:35:36.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dec790c9d2c

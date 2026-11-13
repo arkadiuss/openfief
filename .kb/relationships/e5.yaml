@@ -958,3 +958,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-955356e414aa
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-needs-avalid-session
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:58.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8310bfffb854
+  - type: implements
+    from: SYM-ask-model-askmodel-go-ask-reply
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:24:53.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5c7eb33503f
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-ask-reply
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:24:53.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20b1bf38b948

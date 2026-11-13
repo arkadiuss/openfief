@@ -944,3 +944,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc6e34623dcb
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-scope-sessions-session
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:18:17.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-407209839af6
+  - type: implements
+    from: SYM-ask-model-modelrouter-go-ask-sessions
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:19:33.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecc6c4be171e
+  - type: covered_by
+    from: SYM-ask-model-modelrouter-go-ask-sessions
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:33.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24fdd8e13fac
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-generate-ask-response-proto-message
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:38:32.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e134d80add72
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-generate-ask-response-proto-message
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:38:32.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48b31411fb88

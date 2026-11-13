@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c2fee0e470f
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-ui-callers-verify-caller
+    to: TEST-core-ask-sessions
+    created_at: 2026-11-13T18:19:12.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8339caa1dd5

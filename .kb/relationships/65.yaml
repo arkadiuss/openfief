@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dbd77969a05
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-permits
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-13T18:20:12.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7258bc93e092
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-permits
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:12.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c766b79fe6f

@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d751b86a8d33
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-ask-tools-are-the-read-only-answerers
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:14.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-008833c046db

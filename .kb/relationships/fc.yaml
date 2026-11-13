@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-429af402935a
+  - type: executable_for
+    from: SYM-ask-model-askmodel-page-test-go-test-ask-box-never-logs-the-question-or-answer-with-amodel
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:28:18.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55b20e333b84
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-descriptor
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:35:16.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5fedb226701
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-check-ask-tiers-request-descriptor
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:35:16.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f94c2722c93

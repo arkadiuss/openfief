@@ -1133,3 +1133,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df1d6c11fc79
+  - type: implements
+    from: SYM-ask-model-askmodel-go-ask-model-port
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:24:58.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a3c93ac8e83
+  - type: covered_by
+    from: SYM-ask-model-askmodel-go-ask-model-port
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:24:58.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-180dc5111fe9
+  - type: executable_for
+    from: SYM-ask-model-asktools-test-go-test-tools-refuse-malformed-arguments
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:32:19.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465fb521ab8a

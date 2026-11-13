@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03ba8cf2702a
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-available
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:20:07.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ff8dd7e34a0
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-available
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:07.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c2ab401e87

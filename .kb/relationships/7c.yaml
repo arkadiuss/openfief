@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe78f9ff0c8a
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-test-ask-generate-refuses-data-the-tiers-deny
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:21:20.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46174f84a91d

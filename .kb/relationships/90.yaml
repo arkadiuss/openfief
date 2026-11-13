@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed95662d2a56
+  - type: implements
+    from: SYM-ask-model-asktools-go-decode-args
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:24.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2029b9ed8b6f
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-decode-args
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:24.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f74ec3e5ba6
+  - type: implements
+    from: SYM-ask-model-asktools-go-allocation-query
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:31:33.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22f083b7678
+  - type: covered_by
+    from: SYM-ask-model-asktools-go-allocation-query
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-13T18:31:33.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117471f573b0

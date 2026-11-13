@@ -338,6 +338,13 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
 .answer-table td.num { white-space: nowrap; }
 .answer .open { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
 .answer .open::after { content: " \2192"; white-space: pre; }
+/* A model's answer (D-203): its text keeps its line breaks; the cards it read sit under it, each set apart, and a card the
+   route's models may not receive is named in a note, never drawn. */
+.model-text { white-space: pre-line; overflow-wrap: anywhere; }
+.used-cards { display: flex; flex-direction: column; gap: var(--space-3); margin: var(--space-3) 0; }
+.used-card { border-left: 3px solid var(--border-strong); padding-left: var(--space-4); min-width: 0; }
+.used-card > p { margin: 0 0 var(--space-2); }
+.withheld { margin: var(--space-2) 0 0; padding: var(--space-2) var(--space-3); background: var(--warn-soft); color: var(--warn-text); border-left: 3px solid var(--highlight); }
 .ask-help { margin: 0 0 var(--space-3); padding-left: var(--space-5); }
 .ask-help li { margin-bottom: var(--space-1); }
 

@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-269f0206a797
+  - type: implements
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-reset
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:33:08.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c8de68e7e91
+  - type: covered_by
+    from: SYM-ask-model-ask-pb-go-get-ask-model-request-reset
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:33:09.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a0c1cf0449e

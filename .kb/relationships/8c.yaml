@@ -972,3 +972,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f475d6a27f3
+  - type: implements
+    from: SYM-ask-model-ask-go-ask-response-to
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:22:24.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9589f033a787
+  - type: covered_by
+    from: SYM-ask-model-ask-go-ask-response-to
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:22:24.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79db22e8f431
+  - type: implements
+    from: SYM-ask-model-askmodelclient-go-ask-model-client-permits
+    to: REQ-decision-d203-1-ask-box-model
+    created_at: 2026-11-13T18:30:44.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-008b18c10b37
+  - type: covered_by
+    from: SYM-ask-model-askmodelclient-go-ask-model-client-permits
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-13T18:30:44.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-812672c2c517

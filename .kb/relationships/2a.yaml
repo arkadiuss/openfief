@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cbb1aceb329
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-fake-askers
+    to: TEST-models-app-ask
+    created_at: 2026-11-13T18:20:36.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7e1334f35cb

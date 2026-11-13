@@ -202,12 +202,41 @@ func newCallID() (string, error) {
 	return hex.EncodeToString(b[:]), nil
 }
 
-// agentModels is the wired models context: the owner's settings (D-212) and the
-// router (D-205), which the Ask box (D-203) and the maintainer (D-204) call
-// for a model's answer once they are built; nothing calls it yet.
+// askSessions is the Ask box's Askers (D-203): any valid session on an allowed
+// origin, a read-scoped one included, answers with its ID.
+type askSessions struct {
+	auth    sessions
+	origins identity.Origins
+}
+
+var _ modelsapp.Askers = askSessions{}
+
+// Asker returns the ID of the session of sessionToken on origin, or an error
+// wrapping modelsapp.ErrNoSession for an origin off the allow-list and for a
+// session that is missing, unknown, expired or revoked.
+func (a askSessions) Asker(ctx context.Context, origin, sessionToken string) (string, error) {
+	allowed, err := a.origins.Allowed(origin)
+	if err != nil {
+		return "", fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
+	}
+	s, err := a.auth.Session(ctx, allowed, sessionToken, identity.SessionScopeRead)
+	switch {
+	case err == nil:
+		return string(s.ID), nil
+	case errors.Is(err, identityapp.ErrInvalidSession):
+		return "", fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
+	}
+	return "", fmt.Errorf("checking a session: %w", err)
+}
+
+// agentModels is the wired models context: the owner's settings (D-212), the
+// router (D-205) and the Ask box's door to it (D-203); the maintainer (D-204)
+// will call the router for its notes once it is built.
 type agentModels struct {
 	settings  *modelsapp.Settings
 	router    *modelsapp.Router
+	ask       *modelsapp.Ask
+	askers    modelsapp.Askers
 	providers *modelProviderInstances
 
 	store *modelspg.Store
@@ -223,7 +252,8 @@ func newAgentModels(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity
 	store := modelspg.New(pool)
 	owners := &ownerSessions{auth: auth, origins: origins, noSession: modelsapp.ErrNoSession, notOwner: modelsapp.ErrNotOwner}
 	return &agentModels{
-		settings: modelsapp.NewSettings(store, owners), providers: &modelProviderInstances{}, store: store, pool: pool, now: now,
+		settings: modelsapp.NewSettings(store, owners), askers: askSessions{auth: auth, origins: origins},
+		providers: &modelProviderInstances{}, store: store, pool: pool, now: now,
 	}
 }
 
@@ -269,6 +299,19 @@ func (a *agentModels) attend(items attentionItems) {
 		Settings: a.store, Providers: a.providers, Audit: modelAudit{log: identitypg.New(a.pool)},
 		Attention: valuationAttention{items: items}, CallIDs: newCallID, Now: a.now,
 	})
+	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router)
+}
+
+// withAskModelService returns h with the AskModelService mounted next to it
+// (D-203): its calls go to the Ask box's door to the router, admitted like
+// the ModelSettingsService's, view plugins only, every other path to h.
+// Nothing may store its responses.
+func withAskModelService(h http.Handler, ask *modelsapp.Ask, callers identityconnect.Callers, log *slog.Logger) http.Handler {
+	path, handler := modelsconnect.NewAsk(ask, identityconnect.NewCallerInterceptor(callers, log), log)
+	mux := http.NewServeMux()
+	mux.Handle(path, noStore(handler))
+	mux.Handle("/", h)
+	return mux
 }
 
 // withModelSettingsService returns h with the ModelSettingsService mounted

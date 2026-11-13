@@ -15,6 +15,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
@@ -86,6 +87,10 @@ type Config struct {
 	// Instruments calls the core's InstrumentService (D-197, D-79) like
 	// Auth: the owner's display names of instruments.
 	Instruments ledgerv1connect.InstrumentServiceClient
+	// AskModel calls the core's AskModelService (D-203) like Auth: with the
+	// plugin's own token, the asking person's session in each request. It is
+	// optional: without it the Ask box answers its commands alone.
+	AskModel modelsv1connect.AskModelServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -132,8 +137,12 @@ type server struct {
 	syncs       ingestv1connect.SyncServiceClient
 	// instruments takes the owner's display names of instruments (D-197).
 	instruments ledgerv1connect.InstrumentServiceClient
-	// ask answers the Ask box's questions (D-194): commandAnswerer in M0.
+	// ask answers the Ask box's questions (D-194, D-203): the commands, and
+	// with a model configured, the model for anything else.
 	ask answerer
+	// askModel is the core's router as the Ask box uses it; nil without
+	// Config.AskModel.
+	askModel askModelPort
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -169,6 +178,14 @@ func New(cfg *Config) (http.Handler, error) {
 		s.log = slog.New(slog.DiscardHandler)
 	}
 	s.ask = commandAnswerer{s: s}
+	if cfg.AskModel != nil {
+		s.askModel = askModelClient{c: cfg.AskModel}
+		commands := commandAnswerer{s: s}
+		s.ask = routedAnswerer{
+			commands: commands, today: s.today, log: s.log,
+			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log},
+		}
+	}
 	return securityHeaders(sameOrigin(s.routes(static))), nil
 }
 

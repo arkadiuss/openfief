@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6ca38da30af
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-calling
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:28:46.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-735185c8b448
+  - type: executable_for
+    from: SYM-ask-model-askmodel-test-go-role-tiers
+    to: TEST-ui-ask-model-loop
+    created_at: 2026-11-13T18:58:52.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a80184747a7

@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b62df9b6e36e
+  - type: implements
+    from: SYM-ask-model-ask-connect-go-new-ask-model-service-client
+    to: REQ-models-ask-box-model-through-router
+    created_at: 2026-11-13T18:39:38.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af568dea7733
+  - type: covered_by
+    from: SYM-ask-model-ask-connect-go-new-ask-model-service-client
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:39:38.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45de1f7d21e8

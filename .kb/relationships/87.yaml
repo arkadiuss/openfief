@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59d9edc22850
+  - type: executable_for
+    from: SYM-ask-model-ask-test-go-audit-record-sent
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-13T18:23:16.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e29f226d5c98
