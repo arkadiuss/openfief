@@ -1070,3 +1070,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f9969d56be7
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-apply
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:47.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-659cacf2d5a2
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-apply
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:25:47.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79887f4b4f70
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-queue-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:21.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ad07867ff6
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-run-of
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:01.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec46387a1279
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-current-percent
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:38.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-375fd1efe660
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-current-percent
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:38.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b79c12268ba9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-current-percent
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:38.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b480ea78aba2

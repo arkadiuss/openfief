@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b83e2323e9c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-fail-weekly
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:34:19.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede3cd5ee4f1
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-latest-note
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:27.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c47ca4f3f187

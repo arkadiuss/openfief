@@ -1056,3 +1056,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e83da86e5960
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:07:26.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d9fc5bc02bd
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:07:26.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d0b58ab9bd7
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:07:26.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67cf63f75f0d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-change
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:39.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a29612f934f2
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-change
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:40.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d1a092ec3a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-queue-run
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:07.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-176d306f0b52

@@ -1336,3 +1336,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0c631f78bb5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-pending
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:41.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0471ab2d8440
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-wrap-latest
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:51.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-634c9c95d2a6
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-wrap-latest
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T21:30:51.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1845eda9d4ce
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:03.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05f2f9275701
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:03.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf8e027eebe
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:03.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7ffe81ae4d3

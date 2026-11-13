@@ -156,6 +156,74 @@ func TestNewAuditEntry(t *testing.T) {
 			refs: []identity.Ref{{Kind: identity.RefPasskey, ID: auditHandle}},
 		},
 
+		{
+			name: "a maintainer run that left a note", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionMaintainerRun, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}},
+		},
+		{
+			name: "a maintainer run that was refused, with its class", actor: owner,
+			action: identity.ActionMaintainerRun, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}, {Kind: identity.RefModelError, ID: "denied"}},
+		},
+		{
+			name: "a maintainer run that failed on invalid output", actor: owner,
+			action: identity.ActionMaintainerRun, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}, {Kind: identity.RefModelError, ID: "invalid_output"}},
+		},
+		{
+			name: "a proposal dropped", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionMaintainerProposalDropped, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}},
+		},
+		{
+			name: "a proposal applied", actor: owner, action: identity.ActionMaintainerProposalApplied, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}},
+		},
+		{
+			name: "a proposal applied but stale", actor: owner, action: identity.ActionMaintainerProposalApplied, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}},
+		},
+		{
+			name: "a proposal dismissed", actor: owner, action: identity.ActionMaintainerProposalDismissed, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}},
+		},
+		{
+			name: "a maintainer run refused without its class", actor: owner, action: identity.ActionMaintainerRun, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a maintainer run that is ok with a class", actor: owner, action: identity.ActionMaintainerRun, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}, {Kind: identity.RefModelError, ID: "denied"}}, wantErr: true,
+		},
+		{
+			name: "a maintainer run for the ask role", actor: owner, action: identity.ActionMaintainerRun, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefMaintainerRun, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a maintainer run that is sent", actor: owner, action: identity.ActionMaintainerRun, outcome: identity.OutcomeSent,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefMaintainerRun, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a maintainer run without its run", actor: owner, action: identity.ActionMaintainerRun, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}}, wantErr: true,
+		},
+		{
+			name: "a maintainer run named by a sentence", actor: owner, action: identity.ActionMaintainerProposalDismissed, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: "trim ETFA to 55"}}, wantErr: true,
+		},
+		{
+			name: "a proposal dropped as ok", actor: owner, action: identity.ActionMaintainerProposalDropped, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a proposal dismissed as failed", actor: owner, action: identity.ActionMaintainerProposalDismissed, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}}, wantErr: true,
+		},
+		{
+			name: "a proposal applied that also names a model", actor: owner, action: identity.ActionMaintainerProposalApplied, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}, {Kind: identity.RefModelRole, ID: "maintainer"}}, wantErr: true,
+		},
 		{name: "unknown action", actor: owner, action: "transfer 100 PLN", outcome: identity.OutcomeOK, wantErr: true},
 		{name: "empty action", actor: owner, outcome: identity.OutcomeOK, wantErr: true},
 		{name: "unknown outcome", actor: owner, action: identity.ActionSignOut, outcome: "ok, with a note", wantErr: true},

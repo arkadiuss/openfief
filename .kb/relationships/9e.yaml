@@ -1133,3 +1133,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e77c35136d28
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:09.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b036d084688a
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:09.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5d16a236733
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:09.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66ec121d4194

@@ -958,3 +958,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81f38f779b69
+  - type: covered_by
+    from: SYM-maintainer-identity-audit-maintainer-outcomes
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T21:22:31.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e85dd3cfdc54
+  - type: implements
+    from: SYM-maintainer-identity-audit-maintainer-outcomes
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T21:22:31.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf1f4398b23
+  - type: implements
+    from: SYM-maintainer-identity-audit-maintainer-outcomes
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:22:31.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b4915cf0cc
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-decisions-raise
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:31.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c341e5e7461
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-work-retried-after-the-item-failed-still-raises-it
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:49.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d79a55303dde
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-decisions-clear
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:38.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db5472dd441a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:40.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8815d5279817
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:40.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74b87b53e4a7
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:40.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adba0ac4f81e

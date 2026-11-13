@@ -965,3 +965,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b9ef8dd4988
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-test-maintainer-asker-sends-figures-as-t0-and-instructions-as-t2
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:20:10.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f1f84d74730
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-state
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:22:52.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379e02110034
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-state
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:22:52.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f4f67abecc
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:55.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c54aa8a3e5c9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:55.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de114aced274
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:55.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a12ea9a03da
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:33.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c083818ec93
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:33.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85bc435b1af3
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:33.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba97be9e8f0b
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:07:04.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b9432ad1e69
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:07:04.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e575fce6a5b9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:07:04.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74982077493b
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:21.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041c73010be1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:21.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dd37d5d3f73
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:21.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecbe047cee3

@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff093abe2951
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-finish-stores-the-note-whole
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:38.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5a350fd257b

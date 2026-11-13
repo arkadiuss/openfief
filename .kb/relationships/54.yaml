@@ -1105,3 +1105,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53d16dde0693
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-no-raise-raise
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:19:40.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec6e28cabe72
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-clear-failing
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:00.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f40854cfad
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-clear-failing
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:31:00.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-200562006895

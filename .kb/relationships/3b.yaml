@@ -951,3 +951,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec41f7a5dd0f
+  - type: verified_by
+    from: SCEN-maintainer-weekly-and-on-ask
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:29.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a3dd88a18d0
+  - type: verified_by
+    from: SCEN-maintainer-weekly-and-on-ask
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:07:29.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd7044dda289
+  - type: verified_by
+    from: SCEN-maintainer-weekly-and-on-ask
+    to: TEST-valuation-postgres-jobs
+    created_at: 2026-11-13T21:07:29.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2591e29d66bd
+  - type: verified_by
+    from: SCEN-maintainer-weekly-and-on-ask
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:07:29.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af77a68ee0a1
+  - type: verified_by
+    from: SCEN-ui-inbox-proposal-card
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:07:35.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b801014b0fbe
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-ask-class
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:18.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96c977469541
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-ask-class
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:16:18.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ca100003fb1

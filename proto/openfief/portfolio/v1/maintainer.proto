@@ -1,0 +1,197 @@
+// OpenFief's model-portfolio maintainer contract (docs/DESIGN.md D-204).
+//
+// The maintainer is a role of the model router (D-205): OpenFief computes the
+// model portfolio's weights and drift, a model writes a short note about them
+// weekly and whenever the owner asks, and may propose changes to the targets,
+// which wait in the Inbox for the owner to apply or dismiss. It has no
+// trading tools, and applying a proposal changes the model portfolio's
+// weights only: nothing trades.
+//
+// The core serves MaintainerService to VIEW plugins only, next to the
+// ModelPortfolioService, and it is not part of the public read API (D-6).
+// Calling conventions are the ModelPortfolioService's
+// (proto/openfief/portfolio/v1/model.proto):
+// - Every call carries the view plugin's projected ServiceAccount token as
+//   "Authorization: Bearer <token>".
+// - Every request carries origin and the person's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED.
+// - GetMaintainer is for the owner and for any session that may view every
+//   account (D-163), since the note speaks of the whole portfolio; a session
+//   that may not fails with PERMISSION_DENIED. Every other call is the
+//   owner's alone: a read-scoped session fails with PERMISSION_DENIED.
+// - Nothing here carries an amount: weights are percent of the portfolio, as
+//   decimal strings.
+syntax = "proto3";
+
+package openfief.portfolio.v1;
+
+// MaintainerService reads the maintainer's latest note and starts a run, and
+// shows, applies and dismisses the target changes it proposed.
+service MaintainerService {
+  // GetMaintainer returns the latest note with when and by which model it was
+  // written, whether the maintainer can run now, and whether a run is under
+  // way.
+  rpc GetMaintainer(GetMaintainerRequest) returns (GetMaintainerResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // AskMaintainer asks the maintainer for a note now, unless one is already
+  // queued or running for the model portfolio. It returns at once: the run
+  // happens in the background and its note shows in GetMaintainer.
+  rpc AskMaintainer(AskMaintainerRequest) returns (AskMaintainerResponse);
+
+  // GetProposal returns a proposed set of target changes with the figures
+  // behind it, pending or decided.
+  rpc GetProposal(GetProposalRequest) returns (GetProposalResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ApplyProposal changes the model portfolio's targets to the proposal's.
+  // It fails with FAILED_PRECONDITION when the proposal is already decided or
+  // the model portfolio changed since it was made.
+  rpc ApplyProposal(ApplyProposalRequest) returns (ApplyProposalResponse);
+
+  // DismissProposal leaves the model portfolio as it is and closes the
+  // proposal.
+  rpc DismissProposal(DismissProposalRequest) returns (DismissProposalResponse);
+}
+
+// Note is what the maintainer's model wrote in one run.
+message Note {
+  // The run's ID, 16 hex digits.
+  string run_id = 1;
+  // The note's text: plain text of at most 2000 characters.
+  string text = 2;
+  // When the run ended, RFC 3339 in UTC.
+  string created_at = 3;
+  // The model that wrote it, as "provider/model".
+  string model = 4;
+  // What started the run.
+  RunTrigger trigger = 5;
+}
+
+// RunTrigger says what started a run.
+enum RunTrigger {
+  RUN_TRIGGER_UNSPECIFIED = 0;
+  // The weekly schedule.
+  RUN_TRIGGER_WEEKLY = 1;
+  // The owner asked.
+  RUN_TRIGGER_OWNER = 2;
+}
+
+// RunFailure is how the latest run ended when it left no note.
+message RunFailure {
+  // When the run ended, RFC 3339 in UTC.
+  string at = 1;
+  // The class it ended in: unavailable, rejected, canceled, misconfigured,
+  // internal, denied, invalid_output or no_figures; never a provider's text.
+  string error_class = 2;
+  RunTrigger trigger = 3;
+}
+
+message GetMaintainerRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message GetMaintainerResponse {
+  // Whether the maintainer can run: the models switch and the maintainer's
+  // toggle are on and the model portfolio is on.
+  bool available = 1;
+  // The latest note; unset when there is none yet.
+  Note note = 2;
+  // Whether a run is queued or running now.
+  bool running = 3;
+  // The latest run's failure, owner only: set when the latest run ended
+  // without a note.
+  RunFailure last_failure = 4;
+  // How many proposals wait for the owner in the Inbox, owner only.
+  int64 pending_proposals = 5;
+}
+
+message AskMaintainerRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message AskMaintainerResponse {
+  // True when a run was queued, false when one was already queued or
+  // running.
+  bool started = 1;
+}
+
+// ProposalStatus is where a proposal stands.
+enum ProposalStatus {
+  PROPOSAL_STATUS_UNSPECIFIED = 0;
+  // Waiting for the owner in the Inbox.
+  PROPOSAL_STATUS_PENDING = 1;
+  PROPOSAL_STATUS_APPLIED = 2;
+  PROPOSAL_STATUS_DISMISSED = 3;
+  // Replaced by a later run's proposal before the owner decided.
+  PROPOSAL_STATUS_SUPERSEDED = 4;
+}
+
+// TargetChange is one proposed change of a target's weight with the figures
+// behind it.
+message TargetChange {
+  // The target's key: "instrument:ISIN/symbol" or "index:NAME".
+  string target = 1;
+  // The weight in the model portfolio now and the proposed one, in percent.
+  string before_percent = 2;
+  string after_percent = 3;
+  // Whether the target is held at all: false for an index, which has no
+  // current weight and no drift.
+  bool held = 4;
+  // The weight the portfolio held when the maintainer asked, in percent, and
+  // its drift from the target in percentage points; empty when not held.
+  string current_percent = 5;
+  string drift_points = 6;
+  // The model's one-line reason.
+  string reason = 7;
+}
+
+// Proposal is a proposed set of target changes. Applied together they leave
+// the weights summing to 100%.
+message Proposal {
+  // The run's ID, which names the proposal.
+  string id = 1;
+  ProposalStatus status = 2;
+  // When it was made, and when the owner decided it; empty while pending.
+  string created_at = 3;
+  string decided_at = 4;
+  // The model that proposed it, as "provider/model".
+  string model = 5;
+  repeated TargetChange changes = 6;
+  // The note of the same run.
+  string note = 7;
+}
+
+message GetProposalRequest {
+  string origin = 1;
+  string session_token = 2;
+  string id = 3;
+}
+
+message GetProposalResponse {
+  Proposal proposal = 1;
+}
+
+message ApplyProposalRequest {
+  string origin = 1;
+  string session_token = 2;
+  string id = 3;
+}
+
+message ApplyProposalResponse {
+  Proposal proposal = 1;
+}
+
+message DismissProposalRequest {
+  string origin = 1;
+  string session_token = 2;
+  string id = 3;
+}
+
+message DismissProposalResponse {
+  Proposal proposal = 1;
+}

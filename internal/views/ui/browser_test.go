@@ -35,6 +35,7 @@ func browserInboxItems(h *harness) {
 	tickerItems(h)
 	priceCheckItem(h)
 	syncItem(h, 40, "xtb-main")
+	h.attention.add(proposalItem(viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN))
 	h.attention.add(&viewsv1.AttentionItem{
 		Id: 60, Kind: kindBrokerUnmapped, Subject: "ibkr-main", Detail: "last seen 2026-03-31",
 		State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DATA_COMING_IN,

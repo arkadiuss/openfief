@@ -881,3 +881,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c158dc6a1c4
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-build-prompt
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:36.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f55de88748b7
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-build-prompt
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:44:36.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a2e387e61cc
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-enum
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:02.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-147c4bd692ef
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-enum
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:02.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc3ae3e6d14b
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-enum
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:02.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-751e8457c1c6

@@ -1,0 +1,47 @@
+{{define "content"}}
+{{with .Data}}
+<p class="lede">The weighted basket your portfolio is compared with. Its weights are targets, not trades: nothing here buys or sells.</p>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Notice}}<p class="alert alert-info" role="status">{{.Notice}}</p>{{end}}
+<section class="card" aria-labelledby="targets-title">
+  <h2 id="targets-title" class="eyebrow">Targets</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Target</th><th scope="col" class="num">Weight</th></tr></thead>
+    <tbody>
+    {{range .Targets}}<tr><td>{{.Label}}</td><td class="num">{{.Weight}}%</td></tr>{{end}}
+    </tbody>
+  </table></div>
+  <p class="muted">Weights are percent of the model and sum to 100%. Its backtest and drawdowns are on the <a href="/?over=performance">overview</a>{{with $.Session}}{{if .Owner}}; the owner edits the targets in the <a href="/settings#model-title">settings</a>{{end}}{{end}}.</p>
+</section>
+{{if .Maintainer}}
+{{with .Maintainer}}
+<section class="card" aria-labelledby="maintainer-title">
+  <h2 id="maintainer-title" class="eyebrow">The maintainer</h2>
+  {{if .Note}}
+  {{with .Note}}
+  <p class="model-text" id="maintainer-note">{{.Text}}</p>
+  <p class="muted">Written {{.When}} by <span class="mono">{{.Model}}</span>, {{.How}}. A model wrote it from the weights below; check it against your own record.</p>
+  {{end}}
+  {{else}}
+  <p class="muted">No note yet.{{if .Available}} It comes every Monday morning, and whenever the owner asks.{{end}}</p>
+  {{end}}
+  {{if .Running}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>A run is under way</span> <span class="muted">Reload in a moment.</span></p>{{end}}
+  {{with .Failure}}<p class="alert alert-warn" role="status">{{.}}</p>{{end}}
+  {{if .Pending}}<p><a href="/inbox">{{.Pending}} proposal(s) of new target weights wait in the Inbox.</a></p>{{end}}
+  {{if not .Available}}<p class="muted">The maintainer is off. The owner turns it on with the models switch and the maintainer's toggle, with a model on its route that is allowed to receive whole-portfolio data.</p>{{end}}
+  {{if .CanAsk}}
+  <form method="post" action="/model/maintainer/ask" class="actions">
+    <button type="submit" class="primary">Ask the maintainer</button>
+    <span class="muted">Sends your holdings' weights, no amounts, to the model you allowed for whole-portfolio data.</span>
+  </form>
+  {{end}}
+</section>
+{{end}}
+{{else if .Unreachable}}
+<section class="card" aria-labelledby="maintainer-title">
+  <h2 id="maintainer-title" class="eyebrow">The maintainer</h2>
+  <p class="muted">The core could not say how the maintainer stands. Try again in a moment.</p>
+</section>
+{{end}}
+{{end}}
+{{end}}

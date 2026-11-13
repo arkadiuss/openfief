@@ -986,3 +986,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-789ee0cd9269
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-no-raise
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:19:33.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a21f238085a9
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-attempt
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:57.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e33d8ddbc2b2
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-attempt
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:29:57.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df7f4412e7a1
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-recorded
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:50:25.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43978b5895d4
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-server-ask-maintainer
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:23.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21ea5071bca0
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-server-ask-maintainer
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:53:23.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5ab3c4050ba

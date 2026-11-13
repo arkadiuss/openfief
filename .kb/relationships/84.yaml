@@ -1042,3 +1042,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c273ce661d43
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-store
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:30.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281d103df576
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-store
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:23:30.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058cdce01e56
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-new
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:41:44.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-131db2291645
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-new
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:41:44.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd777300bf30
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-model-page-offers-the-owner-to-ask
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:25.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c57f418ec9dc

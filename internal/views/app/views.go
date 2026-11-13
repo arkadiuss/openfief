@@ -10,6 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
+	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views"
@@ -301,35 +302,49 @@ type AllocationOn struct {
 // at their stored valuation on that date, and its cash converted at the FX
 // rate for that date and valued in the account's tax wrapper.
 func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimension, k views.ValueKind) (AllocationOn, error) {
-	accounts, err := v.Accounts(ctx)
+	items, unvalued, err := v.itemsOn(ctx, on, k, true)
 	if err != nil {
 		return AllocationOn{}, err
+	}
+	out := AllocationOn{Date: on, Kind: k, Unvalued: unvalued}
+	if out.Allocation, err = views.Allocate(items, d, v.reporting); err != nil {
+		return AllocationOn{}, fmt.Errorf("allocating: %w", err)
+	}
+	return out, nil
+}
+
+// itemsOn returns the allocation items of every account the caller may view
+// at the end of on, valued as k, and what lacks that value; withSleeves
+// stamps each with its account's sleeve.
+func (v *Views) itemsOn(ctx context.Context, on kernel.Date, k views.ValueKind, withSleeves bool) ([]views.AllocationItem, []views.Unvalued, error) {
+	accounts, err := v.Accounts(ctx)
+	if err != nil {
+		return nil, nil, err
 	}
 	settings, err := v.valueSettings(ctx)
 	if err != nil {
-		return AllocationOn{}, err
+		return nil, nil, err
 	}
-	sleeves, err := v.accountSleeves(ctx)
-	if err != nil {
-		return AllocationOn{}, err
+	var sleeves map[ledger.AccountID]portfolio.SleeveID
+	if withSleeves {
+		if sleeves, err = v.accountSleeves(ctx); err != nil {
+			return nil, nil, err
+		}
 	}
 	var items []views.AllocationItem
-	out := AllocationOn{Date: on, Kind: k}
+	var unvalued []views.Unvalued
 	for i := range accounts {
-		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on, k, &settings)
+		got, missing, itemErr := v.allocationItems(ctx, &accounts[i], on, k, &settings)
 		if itemErr != nil {
-			return AllocationOn{}, itemErr
+			return nil, nil, itemErr
 		}
 		for j := range got {
 			got[j].Sleeve = sleeves[accounts[i].ID]
 		}
 		items = append(items, got...)
-		out.Unvalued = append(out.Unvalued, unvalued...)
+		unvalued = append(unvalued, missing...)
 	}
-	if out.Allocation, err = views.Allocate(items, d, v.reporting); err != nil {
-		return AllocationOn{}, fmt.Errorf("allocating: %w", err)
-	}
-	return out, nil
+	return items, unvalued, nil
 }
 
 // allocationItems returns a's holdings and cash at the end of on that have

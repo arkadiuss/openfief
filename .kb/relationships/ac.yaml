@@ -748,3 +748,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f6bd4b40125
+  - type: specified_by
+    from: REQ-maintainer-off-runs-nothing
+    to: SCEN-maintainer-off-runs-nothing
+    created_at: 2026-11-13T21:07:42.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2daf4c76824e
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-call-log
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:19:13.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa81327517b1
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-ask-error-error
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:11.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d5da43a8d51
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-ask-error-error
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:24:11.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e35e689ddd7c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-asker
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:09.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5740b64345b2
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-sessions-reader
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:19.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33c71b1ecb48
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-number
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:22.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3035fab30a5
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-number
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:22.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dec475a4a86
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-number
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:22.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c992931d5241
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:55.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22189c509296
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:55.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e8461784c64
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:55.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5cd24b9157
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:07:09.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811da7235045
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:07:09.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e9923e1b16
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:07:09.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7e0d97be176

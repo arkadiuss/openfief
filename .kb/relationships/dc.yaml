@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e24db35a9f21
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-fake-maintainer-admit
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:01.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caccf4890193

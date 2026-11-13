@@ -1357,3 +1357,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7f2effde254
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:07:27.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e400d1e01ec7
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:07:27.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdfe0d6cd2ed
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:27.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a22a57812ce
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-note
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:08.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26854a2efdaa
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-note
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:23:08.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b223bf2217
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-proposals-dismiss-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:12.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e0f2ccf172

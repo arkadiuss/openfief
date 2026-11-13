@@ -307,6 +307,11 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionModelCallResult:      identityv1.AuditAction_AUDIT_ACTION_MODEL_CALL_RESULT,
 		identity.ActionPersonCreated:        identityv1.AuditAction_AUDIT_ACTION_PERSON_CREATED,
 		identity.ActionPersonRevoked:        identityv1.AuditAction_AUDIT_ACTION_PERSON_REVOKED,
+
+		identity.ActionMaintainerRun:               identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_RUN,
+		identity.ActionMaintainerProposalDropped:   identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED,
+		identity.ActionMaintainerProposalApplied:   identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED,
+		identity.ActionMaintainerProposalDismissed: identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED,
 	}
 }
 
@@ -336,6 +341,7 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefModel:          identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
 		identity.RefModelCall:      identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL,
 		identity.RefModelError:     identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
+		identity.RefMaintainerRun:  identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN,
 	}
 }
 

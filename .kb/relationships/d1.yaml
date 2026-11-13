@@ -832,3 +832,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff4534c2b567
+  - type: executable_for
+    from: SYM-maintainer-views-app-held-test-test-held-values
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:51:55.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d2df6729e11
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:24.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-643373830cca
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:24.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4000f3235917
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:24.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa31fa17e605
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-note
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:23.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ec785688c2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-note
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:23.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f332380f0d0f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-note
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:23.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77c2bebce649

@@ -375,6 +375,17 @@ const (
 	// A viewer revoked: sessions ended, passkeys disabled, grants ended; the
 	// entry names the person.
 	AuditAction_AUDIT_ACTION_PERSON_REVOKED AuditAction = 15
+	// A run of the model-portfolio maintainer (D-204): the entry names the role
+	// and the run, and, when the run was refused or failed, its error class.
+	AuditAction_AUDIT_ACTION_MAINTAINER_RUN AuditAction = 30
+	// A proposed set of target changes dropped for breaking a rule; names the
+	// run.
+	AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED AuditAction = 31
+	// The owner applying a proposal: ok, or refused when the model portfolio
+	// changed since; names the run.
+	AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED AuditAction = 32
+	// The owner dismissing a proposal; names the run.
+	AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED AuditAction = 33
 )
 
 // Enum value maps for AuditAction.
@@ -396,24 +407,32 @@ var (
 		13: "AUDIT_ACTION_MODEL_CALL_RESULT",
 		14: "AUDIT_ACTION_PERSON_CREATED",
 		15: "AUDIT_ACTION_PERSON_REVOKED",
+		30: "AUDIT_ACTION_MAINTAINER_RUN",
+		31: "AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED",
+		32: "AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED",
+		33: "AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED",
 	}
 	AuditAction_value = map[string]int32{
-		"AUDIT_ACTION_UNSPECIFIED":            0,
-		"AUDIT_ACTION_SIGN_IN":                1,
-		"AUDIT_ACTION_SIGN_OUT":               2,
-		"AUDIT_ACTION_SIGN_OUT_EVERYWHERE":    3,
-		"AUDIT_ACTION_PASSKEY_ADDED":          4,
-		"AUDIT_ACTION_PASSKEY_REMOVED":        5,
-		"AUDIT_ACTION_ENROLLMENT_LINK_ISSUED": 6,
-		"AUDIT_ACTION_ENROLLMENT_LINK_USED":   7,
-		"AUDIT_ACTION_SCRIPT_TOKEN_CREATED":   8,
-		"AUDIT_ACTION_SCRIPT_TOKEN_REVOKED":   9,
-		"AUDIT_ACTION_GRANT_CREATED":          10,
-		"AUDIT_ACTION_GRANT_REVOKED":          11,
-		"AUDIT_ACTION_MODEL_CALL":             12,
-		"AUDIT_ACTION_MODEL_CALL_RESULT":      13,
-		"AUDIT_ACTION_PERSON_CREATED":         14,
-		"AUDIT_ACTION_PERSON_REVOKED":         15,
+		"AUDIT_ACTION_UNSPECIFIED":                   0,
+		"AUDIT_ACTION_SIGN_IN":                       1,
+		"AUDIT_ACTION_SIGN_OUT":                      2,
+		"AUDIT_ACTION_SIGN_OUT_EVERYWHERE":           3,
+		"AUDIT_ACTION_PASSKEY_ADDED":                 4,
+		"AUDIT_ACTION_PASSKEY_REMOVED":               5,
+		"AUDIT_ACTION_ENROLLMENT_LINK_ISSUED":        6,
+		"AUDIT_ACTION_ENROLLMENT_LINK_USED":          7,
+		"AUDIT_ACTION_SCRIPT_TOKEN_CREATED":          8,
+		"AUDIT_ACTION_SCRIPT_TOKEN_REVOKED":          9,
+		"AUDIT_ACTION_GRANT_CREATED":                 10,
+		"AUDIT_ACTION_GRANT_REVOKED":                 11,
+		"AUDIT_ACTION_MODEL_CALL":                    12,
+		"AUDIT_ACTION_MODEL_CALL_RESULT":             13,
+		"AUDIT_ACTION_PERSON_CREATED":                14,
+		"AUDIT_ACTION_PERSON_REVOKED":                15,
+		"AUDIT_ACTION_MAINTAINER_RUN":                30,
+		"AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED":   31,
+		"AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED":   32,
+		"AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED": 33,
 	}
 )
 
@@ -529,8 +548,12 @@ const (
 	// The ID that links a call to a model to its result, a 16-digit hex ID.
 	AuditRefKind_AUDIT_REF_KIND_MODEL_CALL AuditRefKind = 12
 	// The class a failed call to a model ended in: unavailable, rejected,
-	// canceled, misconfigured or internal.
+	// canceled, misconfigured or internal; a maintainer run adds denied,
+	// invalid_output and no_figures.
 	AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR AuditRefKind = 13
+	// A run of the model-portfolio maintainer and the proposal it made, by the
+	// run's 16-digit hex id.
+	AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN AuditRefKind = 30
 )
 
 // Enum value maps for AuditRefKind.
@@ -550,6 +573,7 @@ var (
 		11: "AUDIT_REF_KIND_MODEL",
 		12: "AUDIT_REF_KIND_MODEL_CALL",
 		13: "AUDIT_REF_KIND_MODEL_ERROR",
+		30: "AUDIT_REF_KIND_MAINTAINER_RUN",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":     0,
@@ -566,6 +590,7 @@ var (
 		"AUDIT_REF_KIND_MODEL":           11,
 		"AUDIT_REF_KIND_MODEL_CALL":      12,
 		"AUDIT_REF_KIND_MODEL_ERROR":     13,
+		"AUDIT_REF_KIND_MAINTAINER_RUN":  30,
 	}
 )
 
@@ -5116,7 +5141,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
 	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04\x12\x1b\n" +
-	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05*\xa9\x04\n" +
+	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05*\xd6\x05\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5134,13 +5159,17 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x17AUDIT_ACTION_MODEL_CALL\x10\f\x12\"\n" +
 	"\x1eAUDIT_ACTION_MODEL_CALL_RESULT\x10\r\x12\x1f\n" +
 	"\x1bAUDIT_ACTION_PERSON_CREATED\x10\x0e\x12\x1f\n" +
-	"\x1bAUDIT_ACTION_PERSON_REVOKED\x10\x0f*\x90\x01\n" +
+	"\x1bAUDIT_ACTION_PERSON_REVOKED\x10\x0f\x12\x1f\n" +
+	"\x1bAUDIT_ACTION_MAINTAINER_RUN\x10\x1e\x12,\n" +
+	"(AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED\x10\x1f\x12,\n" +
+	"(AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED\x10 \x12.\n" +
+	"*AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED\x10!*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xb3\x03\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xd6\x03\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5156,7 +5185,8 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x12\x18\n" +
 	"\x14AUDIT_REF_KIND_MODEL\x10\v\x12\x1d\n" +
 	"\x19AUDIT_REF_KIND_MODEL_CALL\x10\f\x12\x1e\n" +
-	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r*\x99\x01\n" +
+	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r\x12!\n" +
+	"\x1dAUDIT_REF_KIND_MAINTAINER_RUN\x10\x1e*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

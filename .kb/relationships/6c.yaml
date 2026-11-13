@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40abb2e81c76
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-stored
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:51.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5209b04e8b7e

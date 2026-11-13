@@ -1105,3 +1105,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f9c38048cec
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-apply-and-dismiss-fail-closed-on-the-audit-log
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:20.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1c390ece3e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-proposal-of
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:49.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1192f1936038
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-ask-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:42.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9bf91c818c1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-ask-maintainer
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:42.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87b5f33d8f83
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-ask-maintainer
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:42.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b83ab2544c
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-new-maintainer-service-handler
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:13:06.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e032c3ee755
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-new-maintainer-service-handler
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:13:06.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdece2bb2afb
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-new-maintainer-service-handler
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:13:06.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3816b0284b17

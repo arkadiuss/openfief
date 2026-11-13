@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66705c8a2bfa
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-work-stores-the-note-with-its-audit-entry
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:09.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b0adb53dd5

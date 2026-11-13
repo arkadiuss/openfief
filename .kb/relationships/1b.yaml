@@ -804,3 +804,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3adc944fb8c9
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-audit-event
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:26.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b3cab36c676
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-audit-event
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:24:26.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c85b6d20d21
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-weekly-at
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:40:30.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92c5090cc4f7
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-weekly-at
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:40:30.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95ab9fed8030
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-finish-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:49.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117a4605bc0d
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-finish-run
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:46:49.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bacf0aa98fba

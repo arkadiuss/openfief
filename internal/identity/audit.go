@@ -133,6 +133,22 @@ const (
 	// refused. A call the router refused before choosing a model (the
 	// switch, the data tiers) has only this entry, with no model.
 	ActionModelCallResult AuditAction = "model_call_result"
+	// ActionMaintainerRun is a run of the model-portfolio maintainer that
+	// ended without a note or with one (D-204, D-211): the role, the run's ID
+	// and, when it was refused or failed, the class it ended in. The model
+	// calls of the run are their own entries.
+	ActionMaintainerRun AuditAction = "maintainer_run"
+	// ActionMaintainerProposalDropped is a proposed set of target changes
+	// that broke a rule and was dropped whole, the run's note kept. It names
+	// the run, never what the model wrote.
+	ActionMaintainerProposalDropped AuditAction = "maintainer_proposal_dropped"
+	// ActionMaintainerProposalApplied is the owner applying a proposal: ok
+	// when the model portfolio's targets changed, refused when the model had
+	// changed since the proposal was made. It names the run.
+	ActionMaintainerProposalApplied AuditAction = "maintainer_proposal_applied"
+	// ActionMaintainerProposalDismissed is the owner dismissing a proposal.
+	// It names the run.
+	ActionMaintainerProposalDismissed AuditAction = "maintainer_proposal_dismissed"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -154,6 +170,11 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionGrantRevoked:         grantRefKinds(),
 		ActionModelCall:            {RefModelRole, RefModel, RefModelCall},
 		ActionModelCallResult:      {RefModelRole, RefModel, RefModelCall, RefModelError},
+
+		ActionMaintainerRun:               {RefModelRole, RefMaintainerRun, RefModelError},
+		ActionMaintainerProposalDropped:   {RefMaintainerRun},
+		ActionMaintainerProposalApplied:   {RefMaintainerRun},
+		ActionMaintainerProposalDismissed: {RefMaintainerRun},
 	}
 }
 
@@ -248,6 +269,9 @@ const (
 	// RefModelError is the class a failed call to a model ended in, one of
 	// ModelErrorClasses; never the provider's message.
 	RefModelError RefKind = "model_error"
+	// RefMaintainerRun is a run of the model-portfolio maintainer, and the
+	// proposal it made, by the run's ID: 16 hex digits the core makes.
+	RefMaintainerRun RefKind = "maintainer_run"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -263,7 +287,7 @@ type Ref struct {
 // Validate returns nil when r's ID has the shape its kind's IDs have.
 func (r Ref) Validate() error {
 	switch r.Kind {
-	case RefSession, RefEnrollmentCode, RefScriptToken:
+	case RefSession, RefEnrollmentCode, RefScriptToken, RefMaintainerRun:
 		if !isHexID(r.ID) {
 			return fmt.Errorf("%w: a %s reference is its ID", ErrInvalidAuditEntry, r.Kind)
 		}
@@ -306,7 +330,7 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -329,7 +353,7 @@ func (r Ref) validateModel() error {
 		ok = isHexID(r.ID)
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -342,9 +366,56 @@ func (r Ref) validateModel() error {
 // plugin's key ("unavailable"); the provider or its plugin rejected the
 // request ("rejected"); the caller gave up ("canceled"); the route names a
 // provider instance that is missing or is not a model provider
-// ("misconfigured"); anything else ("internal").
+// ("misconfigured"); anything else ("internal"). A maintainer run (D-204)
+// adds three of its own: the router refused the data, the route or the
+// feature's toggle ("denied"), the model's answer was no usable note
+// ("invalid_output"), and OpenFief had no portfolio figures to send
+// ("no_figures").
 func ModelErrorClasses() []string {
-	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal"}
+	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal", "denied", "invalid_output", "no_figures"}
+}
+
+// maintainerOutcomes are the outcomes the entries of each maintainer action
+// may have: a run ends ok, refused or failed; a dropped proposal is refused;
+// an applied one ok, refused (the model portfolio changed since) or failed;
+// a dismissed one ok.
+func maintainerOutcomes() map[AuditAction][]AuditOutcome {
+	return map[AuditAction][]AuditOutcome{
+		ActionMaintainerRun:               {OutcomeOK, OutcomeRefused, OutcomeFailed},
+		ActionMaintainerProposalDropped:   {OutcomeRefused},
+		ActionMaintainerProposalApplied:   {OutcomeOK, OutcomeRefused, OutcomeFailed},
+		ActionMaintainerProposalDismissed: {OutcomeOK},
+	}
+}
+
+// validateMaintainerEntry checks the references and the outcome of a
+// maintainer entry (D-204, D-211): every entry names its run once, with an
+// outcome its action allows. A run entry also names its role, "maintainer",
+// once, and a class (model_error) exactly when it was refused or failed; the
+// other three are about a proposal and name nothing else.
+func validateMaintainerEntry(e *AuditEntry) error {
+	if !slices.Contains(maintainerOutcomes()[e.Action], e.Outcome) || !maintainerRefsOK(e) {
+		return fmt.Errorf("%w: a %s entry names its run, and the role and class its outcome needs", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
+}
+
+// maintainerRefsOK reports whether e names the records a maintainer entry of
+// its action and outcome names, and nothing else.
+func maintainerRefsOK(e *AuditEntry) bool {
+	count := map[RefKind]int{}
+	for _, r := range e.Refs {
+		count[r.Kind]++
+	}
+	if count[RefMaintainerRun] != 1 {
+		return false
+	}
+	if e.Action != ActionMaintainerRun {
+		return len(e.Refs) == 1
+	}
+	classed := e.Outcome == OutcomeRefused || e.Outcome == OutcomeFailed
+	asMaintainer := slices.ContainsFunc(e.Refs, func(r Ref) bool { return r.Kind == RefModelRole && r.ID == "maintainer" })
+	return asMaintainer && count[RefModelRole] == 1 && (count[RefModelError] == 1) == classed && len(e.Refs) == 2+count[RefModelError]
 }
 
 // validateModelEntry checks the references of a model call's entries
@@ -488,6 +559,9 @@ func (e *AuditEntry) Validate() error {
 		return validateGrantRefs(e.Refs)
 	case e.Action == ActionModelCall || e.Action == ActionModelCallResult:
 		return validateModelEntry(e)
+	case e.Action == ActionMaintainerRun, e.Action == ActionMaintainerProposalDropped,
+		e.Action == ActionMaintainerProposalApplied, e.Action == ActionMaintainerProposalDismissed:
+		return validateMaintainerEntry(e)
 	}
 	return nil
 }

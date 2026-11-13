@@ -119,6 +119,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Tickers:         ingestv1connect.NewTickerServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Syncs:           ingestv1connect.NewSyncServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		AskModel:        modelsv1connect.NewAskModelServiceClient(askClient(openfief.TokenFile{}), coreURL),
+		Maintainer:      portfoliov1connect.NewMaintainerServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:            viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:             log,
 		Settings:        valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),

@@ -1294,3 +1294,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce7e95812dfd
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:25.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c32debfa65d
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:07:25.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e8ed995632
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:07:25.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd2a3513cfad
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-new-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:34:40.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6286931641
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-new-maintainer
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:34:40.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e5604404b7
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-fake-runner-work
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:26.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e32e148a171

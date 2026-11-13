@@ -972,3 +972,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b557cd1f3ff9
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-held
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:33.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f942acb8f41
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-held
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:33.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6219f8e3e7d0
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-held
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:33.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f4878e62f91

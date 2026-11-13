@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af35543265c4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-new-rig
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:30.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10c075419a34
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-worker-waits-until-the-maintainer-is-built
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:54.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8639ed19d12b
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-periodic-weekly-job-has-one-attempt-and-no-run
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:43:04.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5b0f17d9f16

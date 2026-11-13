@@ -200,8 +200,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
 	l, recorder := ingestDeps(pool, vstore)
-	// az.authorizer is the one authorizer every read path and owner service
-	// asks (D-163): identityapp.Policy, or SpiceDB with --authz=spicedb.
+	// authz, below, is the one authorizer every read path asks (D-163).
 	acc, err := newAccess(ctx, pool, cfg, l, installed, now, log)
 	if err != nil {
 		return nil, err
@@ -217,7 +216,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	agents, attn := newAgentsAndAttention(pool, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
 		ungrantedViewPluginsIn(cfg, installed, acc.grants))
-	client, err := revaluationClient(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
+	rv, err := newRevaluation(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +244,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(pool), names, l),
 		providers: agents.providers,
 	}
-	plugin := withModelService(withAuthService(apis.plugin, auth, callers, log), models, callers, log)
+	plugin := withPortfolioServices(withAuthService(apis.plugin, auth, callers, log), models, newMaintainer(pool, rv, agents, attn, views, auth, cfg.Auth.Origins, l, authz, now), callers, log)
 	owners := ingestOwners(auth, cfg.Auth.Origins, authz)
 	plugin = withIngestServices(plugin, deps, owners, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(acc.sleeves, auth, cfg.Auth.Origins),
@@ -254,7 +253,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
-	return &core{agents: agents, browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
+	return &core{agents: agents, browserPort: apis.browser, pluginPort: plugin, river: rv.client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
 }
 
 // withIngestServices returns h with the services that feed the ledger and

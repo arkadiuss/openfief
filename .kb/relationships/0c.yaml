@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5307a0541d0d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-proposal
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:43:19.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4268d49afb7f
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-proposal
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:43:19.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16f02074498f

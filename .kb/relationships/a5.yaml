@@ -839,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88fc82afe58e
+  - type: specified_by
+    from: REQ-maintainer-failure-no-note-attention
+    to: SCEN-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:07:49.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4c357f59204
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-fake-runner-weekly
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:20.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d77b77ea1e8f
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-proposal-apply
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:15.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8acb11199321
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-proposal-apply
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:44:15.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-202e1267dd23
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-proposal-apply
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:44:15.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af7118933b74

@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff3656507446
+  - type: covered_by
+    from: SYM-maintainer-portfolio-drift-percent-of
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:39:46.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59e50600735
+  - type: implements
+    from: SYM-maintainer-portfolio-drift-percent-of
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:39:46.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3271264aac
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:26.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf84633a15fc
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:44:26.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1538208f17bc
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:44:26.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d98c884311f

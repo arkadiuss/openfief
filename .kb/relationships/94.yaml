@@ -1007,3 +1007,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-729b096078bc
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-trigger
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:21.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36441a4b2124
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-trigger
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:21.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-540ef4f202fc
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:08.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64407e022cec
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:08.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2336cb799430
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:08.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85da10e0b598

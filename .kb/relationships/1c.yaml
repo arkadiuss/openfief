@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8045f32122f
+  - type: verified_by
+    from: SCEN-maintainer-failure-no-note-attention
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:31.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3195e7e2dae0
+  - type: verified_by
+    from: SCEN-maintainer-failure-no-note-attention
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:07:31.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09b1844302df
+  - type: verified_by
+    from: SCEN-maintainer-failure-no-note-attention
+    to: TEST-core-maintainer-real-core
+    created_at: 2026-11-13T21:07:32.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f046626e52c5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-proposed-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:31.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a97782f799d

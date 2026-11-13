@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a7ce2a676cc
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-sessions
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:12.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-876dfb9d52c2

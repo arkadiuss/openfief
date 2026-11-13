@@ -1021,3 +1021,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d13932217500
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-maintainer-client
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:14.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1142f2a90992
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-fake-runner
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:12.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f09e479bf5d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-has-note
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:08.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac60afd9dd02
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-apply-proposal-changes-the-targets-in-one-step
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:50:38.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1ea950870e1
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-drift-points
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:54:03.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b787a02dce
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-drift-points
+    to: REQ-ui-inbox-proposal-card
+    created_at: 2026-11-13T21:54:03.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ceac295ddda
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:48.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f34dafff80ee
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:48.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2edc04eb1b65
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:48.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30f69f5f8a1d

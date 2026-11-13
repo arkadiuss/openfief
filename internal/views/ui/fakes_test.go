@@ -875,9 +875,12 @@ type harness struct {
 	read        *fakeRead
 	// askModel is the core's router for the Ask box (D-203), off until a
 	// test turns it on.
-	askModel  *fakeAskModel
-	handler   http.Handler
-	tokenFile string
+	askModel *fakeAskModel
+	// maintainer is the core's model-portfolio maintainer (D-204), with a
+	// note and nothing proposed until a test says.
+	maintainer *fakeMaintainer
+	handler    http.Handler
+	tokenFile  string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -905,7 +908,9 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	h.names = &fakeInstruments{}
 	h.read.transfers = h.transfers
 	h.askModel = &fakeAskModel{}
+	h.maintainer = newFakeMaintainer()
 	mux := http.NewServeMux()
+	mux.Handle(portfoliov1connect.NewMaintainerServiceHandler(h.maintainer))
 	mux.Handle(modelsv1connect.NewAskModelServiceHandler(h.askModel))
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
@@ -937,6 +942,7 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		MarketData:      valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		AskModel:        modelsv1connect.NewAskModelServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Maintainer:      portfoliov1connect.NewMaintainerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),

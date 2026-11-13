@@ -2,7 +2,8 @@
 // Browser checks of the built-in UI over its in-memory fakes (task ui:browser). It starts them itself with
 // TestServeForBrowser (go test) on ADDR, default localhost:8099, and stops them when done: a screenshot of every main page at 390 px in light and dark and at desktop width; no page
 // scrolls sideways at 360 or 390 px; the menu folds the navigation away on a phone, with the Inbox's open count; the check
-// pages D-192 removed land on the Inbox at 360 px with its in-place forms, and an account's banner links there; the manifest makes the UI
+// pages D-192 removed land on the Inbox at 360 px with its in-place forms, and an account's banner links there; the Inbox shows the
+// maintainer's proposal with its figures, Apply and Dismiss, and the model portfolio's page its latest note (D-204); the manifest makes the UI
 // installable; the service worker caches only static files, serves the offline page instead of a page when the
 // network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
@@ -59,7 +60,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', access: '/access', setup: '/setup',
+  settings: '/settings', access: '/access', setup: '/setup', model: '/model',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -167,9 +168,23 @@ async function removedRedirect(browser) {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `phone: the Inbox from ${target} scrolls ${overflow} px sideways`);
   }
-  for (const form of ['/inbox/tickers/confirm', '/inbox/retry-sync', '/accounts/bind', '/inbox/price-checks/acknowledge']) {
+  for (const form of ['/inbox/tickers/confirm', '/inbox/retry-sync', '/accounts/bind', '/inbox/price-checks/acknowledge', '/inbox/proposals/apply', '/inbox/proposals/dismiss']) {
     check(await page.locator(`form[action="${form}"]`).count() > 0, `phone: the Inbox has no ${form} form`);
   }
+  // The maintainer's proposal card (D-204): the figures behind the change are in the page and the table fits the phone.
+  await page.goto(base + '/inbox', { waitUntil: 'networkidle' });
+  check((await page.textContent('#item-70')).includes('63.1%'), "phone: the proposal's card shows no current weight");
+  check(await page.locator('#item-70 form[action="/inbox/proposals/apply"] button').isVisible(), 'phone: the proposal has no visible Apply button');
+  const proposalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check(proposalOverflow <= 0, `phone: the proposal's card scrolls ${proposalOverflow} px sideways`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-inbox-proposal.png'), fullPage: true });
+  // The model portfolio's page: the maintainer's latest note and the owner's Ask button.
+  await page.goto(base + '/model', { waitUntil: 'networkidle' });
+  check(await page.isVisible('#maintainer-note'), "phone: the model portfolio's page shows no maintainer note");
+  check(await page.locator('form[action="/model/maintainer/ask"] button').isVisible(), 'phone: the owner has no Ask the maintainer button');
+  const modelOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check(modelOverflow <= 0, `phone: the model portfolio's page scrolls ${modelOverflow} px sideways`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-model.png'), fullPage: true });
   await page.goto(base + '/accounts/acc-synthetic-1', { waitUntil: 'networkidle' });
   check(await page.isVisible('.banner a[href^="/inbox#item-"]'), "phone: the account's banner doesn't link its items");
   await page.screenshot({ path: path.join(out, 'phone360-light-account-banner.png') });

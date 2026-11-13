@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6832f239f39
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-ending
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:15.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05cf965535dd

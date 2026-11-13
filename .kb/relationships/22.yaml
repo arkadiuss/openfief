@@ -1000,3 +1000,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fdd393c9aec
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-dismiss-leaves-the-model-and-is-audited
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:26.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f28d7446ea9
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-check-change
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:06.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf3158d4aab7
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-check-change
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:44:06.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd6904612349
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-number
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:00:47.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fc1e1e7d9a7
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-number
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:00:47.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333301852eaf
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-number
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:00:47.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd204ceb524

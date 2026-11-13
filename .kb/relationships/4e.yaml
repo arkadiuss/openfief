@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31b25c470759
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-new-router-for
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:19:59.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47ef6e846b71

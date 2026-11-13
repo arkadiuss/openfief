@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b85d27e2524c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-start-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:26.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-156d5150d0a0

@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b4b85be4e0f
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-with-maintainer-service
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:17:43.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48f7c1896612
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-with-maintainer-service
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:17:43.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56a46b7964a8
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-holdings-class
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:07.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f6f878526b
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-holdings-class
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:30:07.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ed6eacda1a
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-fake-maintainer
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:54:13.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2fb9da339f

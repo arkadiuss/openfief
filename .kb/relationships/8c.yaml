@@ -1035,3 +1035,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-644556109b38
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-server-maintainer-routes
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:52:15.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38d7e9e3c6f2
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-server-maintainer-routes
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:52:15.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7dbc6daf5fe
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:52.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94de88f1f30
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:52.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7826f31a833
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:52.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a452b7b48cce

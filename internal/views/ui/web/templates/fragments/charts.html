@@ -61,6 +61,7 @@
   {{end}}
   {{with .Model}}
   <h3>Model portfolio</h3>
+  <p class="muted"><a href="/model">Open the model portfolio</a> for its targets and the maintainer's latest note.</p>
   {{if .BacktestStart}}
   <p class="muted">The second line is the model portfolio's backtest, rebalanced to its target weights at each year end, 100 on the same first day. Its history runs from {{.BacktestStart}} to {{.BacktestEnd}}.</p>
   {{else}}

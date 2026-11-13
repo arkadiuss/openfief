@@ -965,3 +965,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-765e250c77f9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-overview-shows-running-and-the-owners-last-failure
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:48.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d8419da192f
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:00:52.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf0403de20fa
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:00:52.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ada556a692
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:00:52.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3544c73d035

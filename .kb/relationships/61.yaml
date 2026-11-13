@@ -1007,3 +1007,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccd3896b5b86
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-weekly-does-nothing-while-arun-is-active
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:34:09.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50144c7fd0a0
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:18.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33a85439371f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:18.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5680164a80cd
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:18.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc3bd682221

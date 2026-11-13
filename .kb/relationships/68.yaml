@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-872252381039
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-amalformed-proposal-idnever-reaches-the-core
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:56:20.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c6092d3663

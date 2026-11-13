@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fe615fbd1b5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-proposal
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:11.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c01e598a7d5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-decisions
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:28.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65c12cf98da

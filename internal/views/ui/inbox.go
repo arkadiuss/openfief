@@ -11,6 +11,7 @@ import (
 
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
+	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -51,6 +52,8 @@ func (s *server) inboxRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /inbox/transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("POST /inbox/retry-sync", s.withOwner(s.retrySync))
 	mux.HandleFunc("POST /inbox/grant-household", s.withOwner(s.grantHousehold))
+	mux.HandleFunc("POST /inbox/proposals/apply", s.withOwner(s.applyProposal))
+	mux.HandleFunc("POST /inbox/proposals/dismiss", s.withOwner(s.dismissProposal))
 	for _, p := range removedCheckPages() {
 		mux.HandleFunc("GET "+p, toInbox)
 	}
@@ -94,6 +97,11 @@ type inboxItem struct {
 	Sync       *syncTimeline
 	Assertions []*viewsv1.AssertionCheck
 	Transfer   *viewsv1.Transfer
+	// Proposal is the maintainer's proposal of target changes with the
+	// figures behind it (D-204), for the owner; Apply and Dismiss settle it
+	// in place when DecideProposal.
+	Proposal       *portfoliov1.Proposal
+	DecideProposal bool
 	// Suggestion is a suggested transfer's pair (D-105), which the owner
 	// confirms or marks not a transfer in place when Decide; a read
 	// session sees it Waiting for the owner.
@@ -191,6 +199,10 @@ func inboxNotice(q url.Values) string {
 		return "A sync of " + q.Get("retried") + " has started. Its attempt shows in the timeline once it ends."
 	case q.Get("granted") != "":
 		return q.Get("granted") + " can now read the whole household."
+	case q.Get("applied") != "":
+		return "The model portfolio's targets changed. Nothing was bought or sold."
+	case q.Get("dismissed") != "":
+		return "The proposal was dismissed. The model portfolio is as it was."
 	}
 	return ""
 }
@@ -314,12 +326,14 @@ type inboxEvidence struct {
 	transfers *viewsv1.ListTransfersResponse
 	brokers   []*ingestv1.BrokerAccount
 	accounts  []*viewsv1.Account
+	// proposals are the maintainer's proposals the items name, by ID.
+	proposals map[string]*portfoliov1.Proposal
 }
 
 // inboxEvidence reads what the items' evidence and forms need: only what
 // some item, or the view's extra lists, asks for.
 func (s *server) inboxEvidence(r *http.Request, sess session, view string, items []*viewsv1.AttentionItem) (*inboxEvidence, error) {
-	ev := &inboxEvidence{syncs: map[string]*syncTimeline{}, asserts: map[string][]*viewsv1.AssertionCheck{}}
+	ev := &inboxEvidence{syncs: map[string]*syncTimeline{}, asserts: map[string][]*viewsv1.AssertionCheck{}, proposals: map[string]*portfoliov1.Proposal{}}
 	for _, st := range s.evidenceSteps(r, sess, view, items, ev) {
 		if !st.needed {
 			continue
@@ -397,6 +411,8 @@ func (s *server) itemEvidence(r *http.Request, sess session, it *viewsv1.Attenti
 		return s.syncEvidence(r, sess, it.GetConnectorInstance(), ev)
 	case kindAssertion:
 		return s.assertionEvidence(r, sess, it.GetAccountId(), ev)
+	case kindTargetProposal:
+		return s.proposalEvidence(r, sess, it.GetSubject(), ev)
 	}
 	return nil
 }
@@ -478,6 +494,7 @@ func (ev *inboxEvidence) item(it *viewsv1.AttentionItem, owner bool, seen map[st
 	row.GrantHousehold = owner && !resolved && it.GetKind() == kindViewPluginUngranted
 	ev.evidence(&row, owner && !resolved, seen)
 	row.Waiting = !owner && !resolved && row.Suggestion != nil
+	ev.proposalOf(&row, owner, resolved)
 	return row
 }
 
@@ -504,6 +521,18 @@ func (ev *inboxEvidence) evidence(row *inboxItem, act bool, seen map[string]bool
 	case kindBrokerUnmapped:
 		ev.mapForm(row, act, seen)
 	}
+}
+
+// proposalOf adds to the row of the maintainer's proposal the proposal its
+// subject names, and its form when the owner may decide it and it is pending
+// (D-204); a session that is not the owner's sees it waiting for the owner.
+func (ev *inboxEvidence) proposalOf(row *inboxItem, owner, resolved bool) {
+	if row.Item.GetKind() != kindTargetProposal {
+		return
+	}
+	row.Proposal = ev.proposals[row.Item.GetSubject()]
+	row.DecideProposal = owner && !resolved && row.Proposal.GetStatus() == portfoliov1.ProposalStatus_PROPOSAL_STATUS_PENDING
+	row.Waiting = !owner && !resolved
 }
 
 // syncOf returns the timeline of instance's syncs, with the owner's "Retry
@@ -621,6 +650,8 @@ func fixedTitles() map[string]string {
 		kindImportProblems:    "An import left rows out",
 		kindTransferBroken:    "A confirmed transfer no longer matches",
 		kindTransferSuggested: "Confirm a transfer between your accounts",
+		kindTargetProposal:    "The maintainer proposes new target weights",
+		kindMaintainerFailing: "The maintainer's weekly run keeps failing",
 	}
 }
 

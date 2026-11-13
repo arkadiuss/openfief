@@ -979,3 +979,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ffada55977a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-one-run-is-queued-or-running-at-atime
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:21.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4089a22c58
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:31.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-899166ca474c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:31.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aec13ce9c4e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:32.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80e0866894fd

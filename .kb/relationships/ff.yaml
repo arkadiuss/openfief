@@ -1105,3 +1105,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df9737e0ee46
+  - type: verified_by
+    from: SCEN-maintainer-no-trading-tools
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:07:24.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac0e164fea6
+  - type: verified_by
+    from: SCEN-maintainer-no-trading-tools
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:24.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04b8cd5cc917
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-ports
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:02.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23e640a1909a
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-ports
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:25:02.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ce4f2b8bdcc
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-get-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:37.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adb511cee44
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-get-maintainer
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:37.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be1dddee3033
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-get-maintainer
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:37.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3141e2791b5f

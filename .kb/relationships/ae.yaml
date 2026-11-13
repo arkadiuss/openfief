@@ -1042,3 +1042,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69de704b7cdb
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-core-test-real-core
+    to: TEST-core-maintainer-real-core
+    created_at: 2026-11-13T21:17:49.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31850f43b0fc
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-test-maintainer-asker-names-the-system-when-the-schedule-asks
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:20:21.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e353d00654a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-decisions
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:20.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-974675d41a51

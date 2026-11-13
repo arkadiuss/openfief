@@ -1301,3 +1301,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6204ae81f154
+  - type: specified_by
+    from: REQ-maintainer-weekly-and-on-ask
+    to: SCEN-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:07:44.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d842376afd6
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:46.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59800dd3bd23
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:46.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62dfae361913
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:46.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df30e590bea1

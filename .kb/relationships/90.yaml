@@ -853,3 +853,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3335a0aee131
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-new-revaluation
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:17:25.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-969abd5ac484
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-new-revaluation
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:17:25.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66426b864fdb
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:31.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85d6efa8a9cb
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:18.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8a9a7dd018f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:18.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b2433e88bfe
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:18.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddaa0f4a6ce7

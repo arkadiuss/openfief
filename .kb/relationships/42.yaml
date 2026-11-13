@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-638834a93697
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:47:05.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c228f4316ad9
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-proposal
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:47:05.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e73bb3b6e7ef

@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd82c439629f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-new-needs-what-it-runs
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:43:09.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e816f5d3af3d
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:41.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d860032d035
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:41.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009a4d55ccd1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:41.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b73f497eb8

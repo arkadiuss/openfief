@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca62b15f18d6
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-test-ask-class
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:20:34.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc3f622246c9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-weights-of
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:45:47.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360431b132b2

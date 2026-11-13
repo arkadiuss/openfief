@@ -951,3 +951,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3af2d49297a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:26.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d7a5dda9350
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:27.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc7fb2d5e156
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:27.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9045cf7d812
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:42.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb0bcec82eb4
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:42.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-957a9d70c048
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:42.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db38a3e4f38d

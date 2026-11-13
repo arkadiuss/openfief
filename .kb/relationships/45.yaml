@@ -1105,3 +1105,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-925f997ec7ff
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-new-worker
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:37.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feba6fa6210a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-model
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:07:48.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6e95a803eda
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-model
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:07:48.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc0aa263b854
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-model
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:07:48.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-890d7d3cf6ae

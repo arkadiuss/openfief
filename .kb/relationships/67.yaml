@@ -1210,3 +1210,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0709bc226ecd
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-audit-record
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:45.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc76cd0c55b6
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-audit-record
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:16:45.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc7dbe288934
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-proposals
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:56.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90dfc87a638
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-pending-of
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:55.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e2b7f84b450

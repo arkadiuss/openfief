@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e46fc19ad27
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-model
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:11.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3fa391de5f7
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-decided-at
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:07:42.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2397c4378a60
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-decided-at
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:07:42.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a1a0700501
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-decided-at
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:07:42.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cfec5caaae7

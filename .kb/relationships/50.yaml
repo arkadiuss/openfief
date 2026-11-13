@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64069fd21d71
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-finish-supersedes-earlier-pending-proposals
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:50.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ab1cef845ed

@@ -965,3 +965,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f256b03d1e48
+  - type: specified_by
+    from: REQ-maintainer-one-run-at-a-time
+    to: SCEN-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:07:45.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d821b3dfbdab
+  - type: covered_by
+    from: SYM-maintainer-identity-audit-maintainer-refs-ok
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T21:22:42.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9ea2df66c97
+  - type: implements
+    from: SYM-maintainer-identity-audit-maintainer-refs-ok
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T21:22:42.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab62ab375f68
+  - type: implements
+    from: SYM-maintainer-identity-audit-maintainer-refs-ok
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:22:42.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830ee9065abc
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-find
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:35.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c46d3aeaa0ed
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-audit
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:43.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a88d72335d4a
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-change-json
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:43:34.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68351dc112e2
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-change-json
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:43:34.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5634b0e34e13
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-test-parse-answer-fills-the-figures-behind-each-change
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:45:37.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d10c29b952d2
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-queue-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:27.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1801a5a253b2
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-queue-run
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:46:27.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dbeeee54864
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-get-id
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:22.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6516a8c68a53
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-get-id
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:22.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-157efd32b8a0
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-get-id
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:22.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ca78b0c88bc
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-get-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:13:25.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f57a87f9627
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-get-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:13:25.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67d51b9d979e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-get-proposal
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:13:25.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5366732a8923

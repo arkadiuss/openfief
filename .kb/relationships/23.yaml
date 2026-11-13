@@ -937,3 +937,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55679004cb68
+  - type: specified_by
+    from: REQ-decision-d204-1-no-trading-tools
+    to: SCEN-maintainer-no-trading-tools
+    created_at: 2026-11-13T21:07:36.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379f45dd3868
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:43.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b77007ce3abf
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-run
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:46:43.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50e7890872bc

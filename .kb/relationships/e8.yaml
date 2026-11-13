@@ -902,3 +902,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c755905bca58
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-held-values-reader
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:29.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a7da6deb71f
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-held-values-reader
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:16:29.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8774f90bcc74
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-audit-record
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:49.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a057de7611d0
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-recent-weekly
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:39.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4ea1de86284
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-apply-and-dismiss-map-the-use-cases-errors
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:39:09.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e5c5404169d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-drift-drift-of
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:39:39.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09889cbded92
+  - type: implements
+    from: SYM-maintainer-portfolio-drift-drift-of
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:39:39.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f2f133a2c5
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-queued-enqueue
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:03.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de7ed78310b5
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-queued-enqueue
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:42:03.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1a6e46991ad
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-check-changes
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:00.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98a9ca339057
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-check-changes
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:44:01.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a108fe53a8cd
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-x
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:17.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51d8233381fb
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-x
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:17.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45e1e094d703
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-x
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:17.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740012205f2d

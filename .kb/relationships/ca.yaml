@@ -1049,3 +1049,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5ae4c44443f
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-trigger
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:22:47.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e8b1162a94e
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-trigger
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:22:47.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27593412e3b5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-weekly-with-the-maintainer-off-does-nothing-at-all
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:34:04.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b0dbd6a0e86
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-pending-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:50:32.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-353e734b1ea6

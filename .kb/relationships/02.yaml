@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad07e44925ee
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-change
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:47:35.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3571605179f1
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-change
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:47:35.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79fea2372003

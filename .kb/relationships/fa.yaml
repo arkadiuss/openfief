@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7ed7ed0ff02
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:34:44.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc8dde186ec
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:34:44.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ecc51039c2b
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-fake-maintainer-dismiss-proposal
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:54:55.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7ef2fe786ec

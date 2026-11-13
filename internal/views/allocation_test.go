@@ -192,8 +192,8 @@ func TestValueHoldings(t *testing.T) {
 		t.Fatalf("ValueHoldings: %v", err)
 	}
 	wantItems := []views.AllocationItem{
-		{Account: acc, AssetClass: views.AssetTreasuryBond, Value: money(t, "1050.00", "PLN"), Reporting: money(t, "1050.00", "PLN")},
-		{Account: acc, AssetClass: views.AssetListed, Value: money(t, "30", "USD"), Reporting: money(t, "120.00", "PLN")},
+		{Account: acc, AssetClass: views.AssetTreasuryBond, Instrument: bond, Value: money(t, "1050.00", "PLN"), Reporting: money(t, "1050.00", "PLN")},
+		{Account: acc, AssetClass: views.AssetListed, Instrument: etf, Value: money(t, "30", "USD"), Reporting: money(t, "120.00", "PLN")},
 	}
 	if diff := cmp.Diff(wantItems, items); diff != "" {
 		t.Errorf("ValueHoldings() items mismatch (-want +got):\n%s", diff)

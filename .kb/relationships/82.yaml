@@ -881,3 +881,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61e67df796e5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-holdings
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:58.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03a95c6f0c8b
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service-get-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:00.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e788926ad4bc
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service-get-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:00.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e68eac245de4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-drift-test-values
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:40:00.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4a87e9d2370
+  - type: covered_by
+    from: SYM-maintainer-valuation-postgres-worker-add-jobs
+    to: TEST-valuation-postgres-jobs
+    created_at: 2026-11-13T21:51:36.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a584f7e905c
+  - type: implements
+    from: SYM-maintainer-valuation-postgres-worker-add-jobs
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:51:36.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85cb222ae4d9
+  - type: implements
+    from: SYM-maintainer-valuation-postgres-worker-add-jobs
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-11-13T21:51:36.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa51a89e3f22

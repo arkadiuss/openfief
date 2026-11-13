@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e80acf952f35
+  - type: specified_by
+    from: REQ-maintainer-sends-figures-through-router
+    to: SCEN-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:07:41.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bf6ebb8729e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-worker-runs-the-run-or-the-weekly-turn
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:48.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c01ba4b6a358

@@ -1070,3 +1070,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d173d9a785b9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-on-gate
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:17.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c583b4094122
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:31.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd411226cb27
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:31.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2067f9d9dce2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:31.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e693aadec8b2

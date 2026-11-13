@@ -108,6 +108,8 @@ type AllocationItem struct {
 	// empty for none.
 	Sleeve     portfolio.SleeveID
 	AssetClass AssetClass
+	// Instrument is the instrument a holding's item is; zero for cash.
+	Instrument ledger.Instrument
 	// Value is in its original currency.
 	Value kernel.Money
 	// Reporting is Value converted to the reporting currency.
@@ -216,7 +218,7 @@ func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []val
 			unvalued = append(unvalued, Unvalued{Account: account.ID, Holding: *h, Missing: missing.String()})
 			continue
 		}
-		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: value})
+		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Instrument: h.Instrument, Value: v.Value, Reporting: value})
 	}
 	return items, unvalued, nil
 }

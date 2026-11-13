@@ -67,6 +67,10 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"askLink":      askLink,
 		"askGet":       askGet,
 		"needsAction":  needsAction,
+
+		"proposalTarget": proposalTarget,
+		"driftPoints":    driftPoints,
+		"proposalStatus": proposalStatusWords,
 	}
 }
 

@@ -937,3 +937,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09ea7d5b127d
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-view-authz-may-act
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:42.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97cb8f0e9cb0
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:38.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9f086b57189
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-run
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:46:38.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e1f1534be96
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-afinal-run-is-neither-finished-nor-started-again
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:27.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7259b7f82722
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:00:27.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1405678d35
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:00:27.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38711cffa64f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:00:27.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1047b4142d78

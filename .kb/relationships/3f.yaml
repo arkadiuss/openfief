@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5cb944de08af
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-model-notice
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:52:49.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9adfc163a1c
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-model-notice
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:52:49.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1e6c525de0

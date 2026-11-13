@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc4e0074dcef
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-decimal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:55.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd693ad6153c

@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c7b7ac697dd
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:26.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff4ec44f73de
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:26.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e59f63593b
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:26.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-621ffd95a263

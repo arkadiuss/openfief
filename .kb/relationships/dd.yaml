@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e3936ff1b3d
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-2
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:32.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-126d8971cfe6
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-2
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:32.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-babbc09a117a
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-maintainer-service-client-2
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:32.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c545ed6080d8

@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e7a59779848
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-start-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:32.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13dfa8fad767
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-start-run
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:46:32.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf0a26fec4a
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-applied-by
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:54.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc10f748d3d4

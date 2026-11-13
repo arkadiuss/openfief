@@ -1133,3 +1133,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22de322516e5
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-overview
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:22.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16477d7f5b6a
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-overview
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T21:25:22.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f714a2da1c4e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-gate
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:46.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04700a3b3418
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-test-build-prompt
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:46:12.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afe095c7b2b6

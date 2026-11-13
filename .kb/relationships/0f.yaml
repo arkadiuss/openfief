@@ -1112,3 +1112,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0cdb50c20db
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-worker-hands-river-no-text
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:59.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74ba4aadb976
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-finish-in-tx
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:54.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc83f9eacf3
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-finish-in-tx
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:46:54.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bb70bc80efb
+  - type: covered_by
+    from: SYM-maintainer-views-app-held-views-held-values
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:51:46.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4251b98bea68
+  - type: implements
+    from: SYM-maintainer-views-app-held-views-held-values
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:51:46.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcdc6d90a2e
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-get-at
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:51.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f29dc851f414
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-get-at
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:52.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaccb28808f7
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-get-at
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:52.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-184c00861ad2

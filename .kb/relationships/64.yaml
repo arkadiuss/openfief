@@ -1056,3 +1056,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51b5be9c3959
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:46.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a77b34123e9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:46.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31fe15329ca
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:46.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5b81e04ae1
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:09.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f2c3d20f90
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:09.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-701a91c7586e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:09.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-862c0132423f

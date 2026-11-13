@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4aa550ec074a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:09:21.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bc6a2d1eb45
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:09:21.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63d7b515374f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:09:21.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acae8659783c
