@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-301fcfed9bef
+  - type: implements
+    from: SYM-spicedb-key-authz-accesssyncer
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:03.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2786ab54de1
+  - type: covered_by
+    from: SYM-spicedb-key-authz-accesssyncer
+    to: TEST-core-authz-sync
+    created_at: 2026-11-13T13:09:03.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2627869d3989

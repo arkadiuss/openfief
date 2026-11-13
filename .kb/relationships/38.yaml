@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aca5abecdb2b
+  - type: verified_by
+    from: SCEN-core-spicedb-waits-for-key
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:03:11.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba1bf814778
+  - type: verified_by
+    from: SCEN-core-spicedb-waits-for-key
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T13:03:11.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6b2f23720e6

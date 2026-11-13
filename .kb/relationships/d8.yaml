@@ -832,3 +832,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2305203e9fa
+  - type: implements
+    from: SYM-spicedb-key-authz-serveauthorization
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:08.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-266ed3cd3c89
+  - type: covered_by
+    from: SYM-spicedb-key-authz-serveauthorization
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:09:08.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1fefe33dc21
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-writelog-count
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:48:04.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a598a0538bde

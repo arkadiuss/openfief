@@ -391,6 +391,9 @@ func parseIssue(args []string, getenv func(string) string) (issueArgs, error) {
 	if err := parseAuthz(&a.Authz, getenv); err != nil {
 		return issueArgs{}, err
 	}
+	if err := a.Authz.requireKey(); err != nil {
+		return issueArgs{}, err
+	}
 	if fs.NArg() > 0 {
 		return issueArgs{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
 	}
@@ -407,6 +410,9 @@ func parseRevoke(args []string, getenv func(string) string) (string, authzConfig
 		return "", authzConfig{}, fmt.Errorf("token revoke: %w", err)
 	}
 	if err := parseAuthz(&authz, getenv); err != nil {
+		return "", authzConfig{}, err
+	}
+	if err := authz.requireKey(); err != nil {
 		return "", authzConfig{}, err
 	}
 	if fs.NArg() != 1 {

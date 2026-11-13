@@ -30,21 +30,31 @@ func TestParseAuthz(t *testing.T) {
 		env  map[string]string
 		want authzConfig
 	}{
-		{name: "the policy is the default", want: authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout}},
+		{name: "the policy is the default", want: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout}},
 		{
 			name: "the policy ignores SpiceDB's settings", args: []string{"--authz=policy"},
 			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbKeyEnv: testKey},
-			want: authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout},
+			want: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
 		},
 		{
 			name: "spicedb from the environment", args: []string{"--authz=spicedb"},
 			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbKeyEnv: testKey},
-			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", Key: testKey, Timeout: defaultSpiceDBTimeout},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", Key: testKey, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		},
+		{
+			name: "no key yet is not an error: serve waits for the file", args: []string{"--authz=spicedb"},
+			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051"},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		},
+		{
+			name: "the key file flag", args: []string{"--authz=spicedb", "--spicedb-key-file=/k/key"},
+			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051"},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "spicedb:50051", KeyFile: "/k/key", Timeout: defaultSpiceDBTimeout},
 		},
 		{
 			name: "the flag overrides the endpoint", args: []string{"--authz=spicedb", "--spicedb-endpoint=other:1", "--spicedb-insecure", "--spicedb-timeout=1s"},
 			env:  map[string]string{spicedbEndpointEnv: "spicedb:50051", spicedbKeyEnv: testKey},
-			want: authzConfig{Mode: authzSpiceDB, Endpoint: "other:1", Key: testKey, Insecure: true, Timeout: time.Second},
+			want: authzConfig{Mode: authzSpiceDB, Endpoint: "other:1", Key: testKey, KeyFile: defaultSpiceDBKeyFile, Insecure: true, Timeout: time.Second},
 		},
 	}
 	for _, tt := range tests {
@@ -74,7 +84,7 @@ func TestParseAuthzRefuses(t *testing.T) {
 		wantErr error // nil: any error
 	}{
 		{name: "no endpoint", args: []string{"--authz=spicedb"}, env: key, wantErr: errNoSpiceDBEndpoint},
-		{name: "no key", args: []string{"--authz=spicedb"}, env: endpoint, wantErr: errNoSpiceDBKey},
+		{name: "no key and no file", args: []string{"--authz=spicedb", "--spicedb-key-file="}, env: endpoint, wantErr: errNoSpiceDBKey},
 		{name: "an unknown mode", args: []string{"--authz=openfga"}, wantErr: errBadAuthz},
 		{name: "no timeout", args: []string{"--authz=spicedb", "--spicedb-endpoint=x:1", "--spicedb-timeout=0s"}, env: key, wantErr: errBadSpiceDBTimeout},
 		{name: "no key flag exists", args: []string{"--spicedb-key=" + testKey}},

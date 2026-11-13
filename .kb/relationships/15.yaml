@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d83fea1c93c
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-gatefor
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:11:12.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d858459b08

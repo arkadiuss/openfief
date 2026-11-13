@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0241ed04c051
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-spicedb-waits-for-key
+    created_at: 2026-11-13T13:03:12.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d958cd6c09ea

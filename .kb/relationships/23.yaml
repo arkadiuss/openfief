@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddc91ba99797
+  - type: implements
+    from: SYM-spicedb-key-serve-core-settlegrants
+    to: REQ-identity-grants-cutover-keeps-access
+    created_at: 2026-11-13T13:48:18.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c541cab82bcb
+  - type: covered_by
+    from: SYM-spicedb-key-serve-core-settlegrants
+    to: TEST-core-grants
+    created_at: 2026-11-13T13:48:18.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43a9647d599a

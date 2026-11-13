@@ -266,7 +266,7 @@ func newGrants(store identityapp.GrantStore, tokens *identityapp.Tokens, dir ide
 	return identityapp.NewGrants(store, tokens, dir, az.syncer, now)
 }
 
-var _ identityapp.GrantProjector = (*spicedb.Syncer)(nil)
+var _ accessSyncer = (*spicedb.Syncer)(nil)
 
 // householdOnly is the identityapp.Directory of the core's own commands,
 // which know no accounts or plugins: they grant the household alone.

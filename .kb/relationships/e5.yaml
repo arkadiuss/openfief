@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba8f4bbe46a4
+  - type: implements
+    from: SYM-spicedb-key-authz-placementsync
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:23.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3d2e37db79
+  - type: covered_by
+    from: SYM-spicedb-key-authz-placementsync
+    to: TEST-core-authz-sync
+    created_at: 2026-11-13T13:09:23.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fd118c8dd4c

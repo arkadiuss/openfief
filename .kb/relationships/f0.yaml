@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a083f3edde78
+  - type: executable_for
+    from: SYM-spicedb-key-authz-test-testparseauthzrefuses
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:09:33.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f4faad11a8

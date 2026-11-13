@@ -269,7 +269,7 @@ type access struct {
 // grants, and the deletion of a plugin instance ends its, when installed
 // reports it.
 func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *ledgerapp.Ledger, installed *viewskube.Plugins, now func() time.Time, log *slog.Logger) (access, error) {
-	az, err := newAuthorization(&cfg.Authz)
+	az, err := serveAuthorization(ctx, &cfg.Authz, log)
 	if err != nil {
 		return access{}, err
 	}
@@ -287,14 +287,7 @@ func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *led
 	}
 	acc := access{authorization: az, sleeves: sleeves, grants: grants}
 	if az.syncer != nil {
-		load := desiredAccess(l, sleeves, grants, cfg.Auth.DemoSessions)
-		acc.reconcile = func(ctx context.Context) error {
-			if err := az.syncer.Reconcile(ctx, load); err != nil {
-				return fmt.Errorf("reconciling: %w", err)
-			}
-			return nil
-		}
-		reconcileAccess(ctx, az.syncer, load, log)
+		acc.reconcile = az.startReconcile(ctx, desiredAccess(l, sleeves, grants, cfg.Auth.DemoSessions), log)
 	}
 	if installed != nil {
 		if err := installed.OnRemoved(grantsOnUninstall(ctx, grants, log)); err != nil {

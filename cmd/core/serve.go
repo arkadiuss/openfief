@@ -60,10 +60,19 @@ type server struct {
 	// and the owner services.
 	plugin   atomic.Pointer[http.Handler]
 	draining atomic.Bool
+	// authzReady reports whether the authorizer can answer, once the core is
+	// wired: nil when it always can, with the policy, or with SpiceDB's key
+	// from the environment. Without the key it is false until the key is read
+	// (D-164), so the Service sends no read to a core that refuses them all.
+	authzReady atomic.Pointer[func() bool]
 }
 
 // ready stores the handlers c serves on each port; s then reports ready.
 func (s *server) ready(c *core) {
+	if g := c.access.gate; g != nil {
+		ready := g.isConnected
+		s.authzReady.Store(&ready)
+	}
 	s.plugin.Store(&c.pluginPort)
 	s.browser.Store(&c.browserPort)
 }
@@ -131,7 +140,8 @@ func (*server) healthz(w http.ResponseWriter, _ *http.Request) {
 }
 
 // readyz reports whether the core is ready: migrated and wired, not shutting
-// down, and with the database reachable now.
+// down, with SpiceDB's key there when it is to be waited for, and with the
+// database reachable now.
 func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case s.draining.Load():
@@ -139,6 +149,10 @@ func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 		return
 	case s.browser.Load() == nil:
 		plain(w, http.StatusServiceUnavailable, "starting")
+		return
+	}
+	if ready := s.authzReady.Load(); ready != nil && !(*ready)() {
+		plain(w, http.StatusServiceUnavailable, "waiting for SpiceDB's preshared key")
 		return
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), pingTimeout)
@@ -303,9 +317,19 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	go c.attention.run(ctx, attentionEvery, log)
 	// The cutover waits for the installed plugins to be read, so it runs in the background: until it has,
 	// a holder that is to be given the household grant views nothing under SpiceDB.
-	go grantsStartup(ctx, c.access.grants, cfg.Authz.Mode == authzSpiceDB, c.access.reconcile, log)
+	go c.settleGrants(ctx, cfg.Authz.Mode == authzSpiceDB, log)
 	startCluster(ctx, c, cfg, cl, log)
 	return c, nil
+}
+
+// settleGrants runs grantsStartup, once SpiceDB has its key when that is still
+// to come: until then every change is refused, and the cutover would only
+// retry.
+func (c *core) settleGrants(ctx context.Context, spicedbOn bool, log *slog.Logger) {
+	if g := c.access.gate; g != nil && !g.wait(ctx) {
+		return // stopped while waiting for SpiceDB's key
+	}
+	grantsStartup(ctx, c.access.grants, spicedbOn, c.access.reconcile, log)
 }
 
 // startCluster starts, when the core runs in cluster cl, the watch of the

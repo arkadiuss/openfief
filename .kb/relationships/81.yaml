@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-499e0b5b0af5
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedauthorizer
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:19.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-681528b0c0a7
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedauthorizer
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:19.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddc20019307e

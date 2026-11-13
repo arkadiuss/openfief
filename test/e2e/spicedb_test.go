@@ -231,26 +231,6 @@ func waitSpiceDBAvailable(t *testing.T, k *kube) {
 	}
 }
 
-// waitCredentialsJob waits until the credentials Job, found by its label once it
-// exists, completes.
-func waitCredentialsJob(t *testing.T, k *kube) {
-	t.Helper()
-	err := waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
-		jobs, err := k.clients.BatchV1().Jobs(namespace).List(ctx, metav1.ListOptions{LabelSelector: appLabel + "=" + spicedbJobApp})
-		if err != nil {
-			return "", false, fmt.Errorf("%w: %w", errRetry, err)
-		}
-		if len(jobs.Items) != 1 {
-			return fmt.Sprintf("%d Jobs labelled %s=%s", len(jobs.Items), appLabel, spicedbJobApp), false, nil
-		}
-		done, jobErr := jobFinished(&jobs.Items[0])
-		return fmt.Sprintf("%s: %d failed attempts", jobs.Items[0].Name, jobs.Items[0].Status.Failed), done, jobErr
-	})
-	if err != nil {
-		t.Fatalf("waiting for the credentials Job: %v", err)
-	}
-}
-
 // waitJobComplete waits until Job name in the openfief namespace completes.
 func waitJobComplete(t *testing.T, k *kube, name string) {
 	t.Helper()
@@ -336,6 +316,54 @@ func checkSpiceDBPod(t *testing.T, spec *corev1.PodSpec) {
 		checkSpiceDBContainer(t, &containers[i])
 	}
 	checkCredentialsFromSecrets(t, spec.Containers[0].Env)
+}
+
+// checkCoreKeyIsMounted checks that the core takes SpiceDB's preshared key from
+// the optional volume of its Secret, mounted read-only, and from no
+// environment variable: the volume lets it start before the credentials Job
+// has made the Secret and wait for it (SCEN-core-spicedb-waits-for-key).
+func checkCoreKeyIsMounted(t *testing.T, d *appsv1.Deployment) {
+	t.Helper()
+	spec := &d.Spec.Template.Spec
+	var volume string
+	for i := range spec.Volumes {
+		if s := spec.Volumes[i].Secret; s != nil && s.SecretName == spicedbPresharedName {
+			if s.Optional == nil || !*s.Optional {
+				t.Errorf("the core's volume of Secret %s isn't optional, so the pod can't start before the Secret exists", spicedbPresharedName)
+			}
+			volume = spec.Volumes[i].Name
+		}
+	}
+	if volume == "" {
+		t.Fatalf("the core mounts no volume of Secret %s", spicedbPresharedName)
+	}
+	for i := range spec.Containers {
+		checkKeyMount(t, &spec.Containers[i], volume)
+	}
+}
+
+// checkKeyMount checks that c mounts volume read-only, when it is the core,
+// and takes the preshared key from no environment variable.
+func checkKeyMount(t *testing.T, c *corev1.Container, volume string) {
+	t.Helper()
+	for _, e := range c.Env {
+		if e.Name == "OPENFIEF_SPICEDB_PRESHARED_KEY" {
+			t.Errorf("container %s takes the preshared key from the environment, which is fixed when it starts", c.Name)
+		}
+	}
+	mounted := false
+	for _, m := range c.VolumeMounts {
+		if m.Name != volume {
+			continue
+		}
+		mounted = true
+		if !m.ReadOnly {
+			t.Errorf("container %s mounts the preshared key's volume writable", c.Name)
+		}
+	}
+	if c.Name == "core" && !mounted {
+		t.Errorf("container core doesn't mount the preshared key's volume")
+	}
 }
 
 // checkCredentialsFromSecrets checks that the preshared key and the role's
@@ -426,6 +454,7 @@ func TestSpiceDBFailsClosed(t *testing.T) {
 	if !coreRunsSpiceDB(core) {
 		t.Fatalf("the core runs without %s: the suite's overlay (test/e2e/overlays/openfief) must switch it to SpiceDB", authzSpiceDBFlag)
 	}
+	checkCoreKeyIsMounted(t, core)
 	waitLogLine(t, k, coreDeployment, reconciledLine)
 	ungranted := issueTokenWith(t, k).secret
 	granted := issueToken(t, k)

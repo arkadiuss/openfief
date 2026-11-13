@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd30a3573ebc
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-testnotreadywithoutthekey
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:11:38.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13df7ba31767

@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63008164a29f
+  - type: executable_for
+    from: SYM-spicedb-key-spicedb-test-checkcorekeyismounted
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T13:12:03.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67ba363fe994

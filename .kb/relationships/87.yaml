@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ad00c91fcf2
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedauthorizer-mayact
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:24.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ee852ed0aa
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedauthorizer-mayact
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:24.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7013ad10b070

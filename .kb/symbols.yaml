@@ -176256,16 +176256,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-spicedb
-  - id: SYM-e2e-spicedb-wait-credentials-job
-    title: waitCredentialsJob
-    status: active
-    sourceFile: test/e2e/spicedb_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T14:00:00.000Z
-    relationships:
-      - type: executable_for
-        target: TEST-e2e-spicedb
   - id: SYM-grants-cmd-core-authz-placementsync-sleeveremoved
     title: placementSync.SleeveRemoved
     status: active
@@ -180694,3 +180684,581 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-grants
+  - id: SYM-spicedb-key-authz-authzconfig
+    title: authzConfig
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:08:36.690Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-authzflags
+    title: authzFlags
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:08:42.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-readkeyfile
+    title: readKeyFile
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:08:47.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-authzconfig-requirekey
+    title: authzConfig.requireKey
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:08:52.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-authorization
+    title: authorization
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:08:56.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-accesssyncer
+    title: accessSyncer
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:01.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-serveauthorization
+    title: serveAuthorization
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:06.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-spicedbconn
+    title: spicedbConn
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:10.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-dialspicedb
+    title: dialSpiceDB
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:15.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-flags
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-placementsync
+    title: placementSync
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:20.641Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-sync
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authz-test-testparseauthz
+    title: TestParseAuthz
+    status: active
+    sourceFile: cmd/core/authz_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:25.814Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-flags
+  - id: SYM-spicedb-key-authz-test-testparseauthzrefuses
+    title: TestParseAuthzRefuses
+    status: active
+    sourceFile: cmd/core/authz_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:30.981Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-flags
+  - id: SYM-spicedb-key-authzkey-keygate
+    title: keyGate
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:35.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-newkeygate
+    title: newKeyGate
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:40.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-keygate-run
+    title: keyGate.run
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:46.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-keygate-step
+    title: keyGate.step
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:51.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-keygate-wait
+    title: keyGate.wait
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:09:57.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-keygate-isconnected
+    title: keyGate.isConnected
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:02.620Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-keygate-close
+    title: keyGate.Close
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:07.579Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedauthorization
+    title: gatedAuthorization
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:12.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedauthorizer
+    title: gatedAuthorizer
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:17.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedauthorizer-mayact
+    title: gatedAuthorizer.MayAct
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:22.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedauthorizer-actableaccounts
+    title: gatedAuthorizer.ActableAccounts
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:27.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer
+    title: gatedSyncer
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:31.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-syncer
+    title: gatedSyncer.syncer
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:37.469Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-accountplaced
+    title: gatedSyncer.AccountPlaced
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:42.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-accountunplaced
+    title: gatedSyncer.AccountUnplaced
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:48.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-projectgrants
+    title: gatedSyncer.ProjectGrants
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:53.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-unprojectgrants
+    title: gatedSyncer.UnprojectGrants
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:10:59.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-gatedsyncer-reconcile
+    title: gatedSyncer.Reconcile
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:04.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-authzkey-test-gatefor
+    title: gateFor
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:10.058Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testkeygaterefusesuntilthekeyisthere
+    title: TestKeyGateRefusesUntilTheKeyIsThere
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:15.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testkeygateaccountlister
+    title: TestKeyGateAccountLister
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:20.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testkeygaterunconnects
+    title: TestKeyGateRunConnects
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:26.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testkeygateneverlogsthekey
+    title: TestKeyGateNeverLogsTheKey
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:31.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testnotreadywithoutthekey
+    title: TestNotReadyWithoutTheKey
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:36.320Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testreadkeyfile
+    title: TestReadKeyFile
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:41.242Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testserveauthorization
+    title: TestServeAuthorization
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:51.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testrequirekey
+    title: TestRequireKey
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:11:56.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-spicedb-test-checkcorekeyismounted
+    title: checkCoreKeyIsMounted
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:12:01.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-spicedb-key-authzkey-test-requirerefused
+    title: requireRefused
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:47:21.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testkeygateconnectswiththekey
+    title: TestKeyGateConnectsWithTheKey
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:47:25.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-testreadkeyfilefollowsthekubeletslinks
+    title: TestReadKeyFileFollowsTheKubeletsLinks
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:47:30.188Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-teststartreconcilewaitsforthekey
+    title: TestStartReconcileWaitsForTheKey
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:47:34.761Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-authzkey-test-writelog-count
+    title: writeLog.count
+    status: active
+    sourceFile: cmd/core/authzkey_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:48:02.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-key-wait
+  - id: SYM-spicedb-key-spicedb-test-checkkeymount
+    title: checkKeyMount
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:48:07.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-spicedb-key-authz-authorization-startreconcile
+    title: authorization.startReconcile
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:48:11.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-key-wait
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-spicedb-key-serve-core-settlegrants
+    title: core.settleGrants
+    status: active
+    sourceFile: cmd/core/serve.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T13:48:16.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: implements
+        target: REQ-identity-grants-cutover-keeps-access

@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9775b12f04e
+  - type: implements
+    from: SYM-spicedb-key-authz-spicedbconn
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:13.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11b98ce6b4fa
+  - type: covered_by
+    from: SYM-spicedb-key-authz-spicedbconn
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:09:13.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ae11303ea67

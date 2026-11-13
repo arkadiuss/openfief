@@ -51,14 +51,14 @@ func defaultServe(t *testing.T) serveConfig {
 			ServiceAccount: "openfief-core",
 		},
 		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
-		Authz: authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout},
+		Authz: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
 	}
 }
 
 // policyAuthz is the authorization the token commands have when no flag asks
 // for SpiceDB.
 func policyAuthz() authzConfig {
-	return authzConfig{Mode: authzPolicy, Timeout: defaultSpiceDBTimeout}
+	return authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout}
 }
 
 // mustOrigins returns the allow-list of texts.

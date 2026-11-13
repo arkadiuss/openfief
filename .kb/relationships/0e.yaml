@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23b30a007e3a
+  - type: executable_for
+    from: SYM-spicedb-key-authzkey-test-testkeygateconnectswiththekey
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:47:27.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69875fe8d2aa

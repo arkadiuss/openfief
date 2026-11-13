@@ -713,3 +713,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d483fc8905a
+  - type: implements
+    from: SYM-spicedb-key-authz-authzflags
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:08:44.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8b520636307
+  - type: covered_by
+    from: SYM-spicedb-key-authz-authzflags
+    to: TEST-core-authz-flags
+    created_at: 2026-11-13T13:08:44.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9455adee7058
+  - type: implements
+    from: SYM-spicedb-key-authzkey-keygate-step
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:09:54.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f37043b722dd
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-keygate-step
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:09:54.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa83898cf42b
+  - type: implements
+    from: SYM-spicedb-key-authzkey-gatedsyncer-accountunplaced
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T13:10:50.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daf692dc11f9
+  - type: covered_by
+    from: SYM-spicedb-key-authzkey-gatedsyncer-accountunplaced
+    to: TEST-core-authz-key-wait
+    created_at: 2026-11-13T13:10:50.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17276c7556c5
