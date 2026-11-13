@@ -208,6 +208,10 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, "ListAccounts", err)
 		return
 	}
+	if emptyForViewer(sess, len(accounts.Msg.GetAccounts())) {
+		s.nothingShared(w, r, sess, "Overview")
+		return
+	}
 	demo, answered := s.firstRunAnswer(w, r, sess, len(accounts.Msg.GetAccounts()))
 	if answered {
 		return

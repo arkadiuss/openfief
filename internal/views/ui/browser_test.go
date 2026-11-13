@@ -16,6 +16,9 @@ const (
 	serveMargin = 5 * time.Second
 	// browserSignIn is where the browser checks get the owner's session.
 	browserSignIn = "/test/sign-in"
+	// browserSignInViewer is where they get the session of a viewer the
+	// owner granted nothing yet (D-210).
+	browserSignInViewer = "/test/sign-in-viewer"
 	// browserEndedSession is where they get a session the core rejects.
 	browserEndedSession = "/test/ended-session"
 	// browserAskModel is where they set up the Ask box's model (D-203): the
@@ -67,6 +70,10 @@ func TestServeForBrowser(t *testing.T) {
 	// from a Set-Cookie header, as the UI's own sign-in sends it.
 	mux.HandleFunc("GET "+browserSignIn, func(w http.ResponseWriter, r *http.Request) {
 		setSession(w, ownerSession, issued(identityv1.SessionScope_SESSION_SCOPE_OWNER))
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	mux.HandleFunc("GET "+browserSignInViewer, func(w http.ResponseWriter, r *http.Request) {
+		setSession(w, emptyViewerSession, issued(identityv1.SessionScope_SESSION_SCOPE_READ))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	// Here the browser gets a session the core no longer accepts, as one

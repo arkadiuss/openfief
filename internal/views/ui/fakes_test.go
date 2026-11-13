@@ -41,11 +41,13 @@ const (
 	// viewerSession is a viewer's read session (D-65); grantedAccount is the one account they were granted.
 	viewerSession  = "session-viewer"
 	grantedAccount = "acc-granted-1"
-	newSession     = "session-new"
-	accountID      = "acc-synthetic-1"
-	testHost       = "ui.example.com"
-	testOrigin     = "https://" + testHost
-	localOrigin    = "http://localhost:8080"
+	// emptyViewerSession is a viewer's session who was granted nothing yet.
+	emptyViewerSession = "session-viewer-empty"
+	newSession         = "session-new"
+	accountID          = "acc-synthetic-1"
+	testHost           = "ui.example.com"
+	testOrigin         = "https://" + testHost
+	localOrigin        = "http://localhost:8080"
 )
 
 // codeErr is a Connect error with code, as the fake core returns it.
@@ -102,6 +104,14 @@ type fakeAuth struct {
 	pluginsDown bool
 	// enforced is the grants_enforced the lists answer.
 	enforced bool
+	// inviteReq is the last InviteViewer request, and inviteErr makes it fail
+	// as the core does.
+	inviteReq *identityv1.InviteViewerRequest
+	inviteErr error
+	// revokedPeople are the viewers RevokePerson revoked, and revokePersonErr
+	// makes it fail as the core does.
+	revokedPeople   []string
+	revokePersonErr error
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -195,7 +205,82 @@ func (f *fakeAuth) WhoAmI(_ context.Context, r *connect.Request[identityv1.WhoAm
 	if r.Msg.GetSessionToken() == viewerSession {
 		out.Person = &identityv1.Person{Id: "0123456789abcdef", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Alice"}
 	}
+	if r.Msg.GetSessionToken() == emptyViewerSession {
+		out.Person = &identityv1.Person{Id: "fedcba9876543210", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Bob"}
+	}
 	return connect.NewResponse(out), nil
+}
+
+// The fake core's people: the owner, Alice with a sleeve and one account, Bob
+// with nothing granted yet, and Carol, revoked.
+const (
+	alicePerson = "0123456789abcdef"
+	bobPerson   = "fedcba9876543210"
+	carolPerson = "00112233445566ff"
+)
+
+func (f *fakeAuth) ListPeople(_ context.Context, r *connect.Request[identityv1.ListPeopleRequest]) (*connect.Response[identityv1.ListPeopleResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	created := timestamppb.New(time.Date(2026, 3, 1, 0, 0, 0, 0, time.UTC))
+	person := func(id, name string, kind identityv1.PersonKind) *identityv1.Person {
+		return &identityv1.Person{Id: id, Kind: kind, Name: name, CreatedAt: created}
+	}
+	grant := func(kind identityv1.GrantTargetKind, id string) *identityv1.Grant {
+		return &identityv1.Grant{HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_PERSON, HolderId: alicePerson, TargetKind: kind, TargetId: id}
+	}
+	carol := person(carolPerson, "Carol", identityv1.PersonKind_PERSON_KIND_VIEWER)
+	carol.RevokedAt = created
+	return connect.NewResponse(&identityv1.ListPeopleResponse{GrantsEnforced: f.flag(&f.enforced), People: []*identityv1.PersonAccess{
+		{Person: person("owner", "Owner", identityv1.PersonKind_PERSON_KIND_OWNER), Passkeys: 2, ActiveSessions: 3},
+		{
+			Person: person(alicePerson, "Alice", identityv1.PersonKind_PERSON_KIND_VIEWER), Passkeys: 1, ActiveSessions: 2,
+			Grants: []*identityv1.Grant{grant(identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, "core"), grant(identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, accountID)},
+		},
+		{Person: person(bobPerson, "Bob", identityv1.PersonKind_PERSON_KIND_VIEWER), Passkeys: 1, ActiveSessions: 1},
+		{Person: carol},
+	}}), nil
+}
+
+func (f *fakeAuth) InviteViewer(_ context.Context, r *connect.Request[identityv1.InviteViewerRequest]) (*connect.Response[identityv1.InviteViewerResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if err := f.needsCheck(); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.inviteErr != nil {
+		return nil, f.inviteErr
+	}
+	f.inviteReq = r.Msg
+	return connect.NewResponse(&identityv1.InviteViewerResponse{
+		Url: testOrigin + "/enroll#code=synthetic-invite-code", ExpiresAt: timestamppb.New(time.Date(2026, 3, 2, 12, 30, 0, 0, time.UTC)),
+	}), nil
+}
+
+func (f *fakeAuth) RevokePerson(_ context.Context, r *connect.Request[identityv1.RevokePersonRequest]) (*connect.Response[identityv1.RevokePersonResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.revokePersonErr != nil {
+		return nil, f.revokePersonErr
+	}
+	f.revokedPeople = append(f.revokedPeople, r.Msg.GetPersonId())
+	return connect.NewResponse(&identityv1.RevokePersonResponse{SessionsEnded: 2, PasskeysDisabled: 1, GrantsEnded: 2}), nil
 }
 
 func (f *fakeAuth) ListPasskeys(_ context.Context, r *connect.Request[identityv1.ListPasskeysRequest]) (*connect.Response[identityv1.ListPasskeysResponse], error) {
@@ -401,7 +486,7 @@ func scopeOf(token string) (identityv1.SessionScope, error) {
 	switch token {
 	case ownerSession, newSession:
 		return identityv1.SessionScope_SESSION_SCOPE_OWNER, nil
-	case readSession, demoSession, viewerSession:
+	case readSession, demoSession, viewerSession, emptyViewerSession:
 		return identityv1.SessionScope_SESSION_SCOPE_READ, nil
 	}
 	return identityv1.SessionScope_SESSION_SCOPE_UNSPECIFIED, codeErr(connect.CodeUnauthenticated, nil)
@@ -501,6 +586,10 @@ func syntheticInstrument() *viewsv1.Instrument {
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
+	}
+	if r.Header().Get("Authorization") == "Bearer "+emptyViewerSession {
+		// A viewer granted nothing is listed no account.
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
 	}
 	if r.Header().Get("Authorization") == "Bearer "+viewerSession {
 		// The core lists a viewer the accounts they were granted, and no other.
@@ -751,7 +840,7 @@ func (f *fakeRead) check(h http.Header) error {
 	f.mu.Lock()
 	f.bearers = append(f.bearers, h.Get("Authorization"))
 	f.mu.Unlock()
-	for _, s := range []string{ownerSession, readSession, demoSession, newSession, viewerSession} {
+	for _, s := range []string{ownerSession, readSession, demoSession, newSession, viewerSession, emptyViewerSession} {
 		if h.Get("Authorization") == "Bearer "+s {
 			return nil
 		}

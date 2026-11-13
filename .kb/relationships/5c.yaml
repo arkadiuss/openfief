@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f53647bd19c6
+  - type: executable_for
+    from: SYM-people-internal-views-ui-people_test-testinviteviewerrefusals
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:40:05.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84587cffceb5

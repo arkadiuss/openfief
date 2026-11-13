@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-274b377a045e
+  - type: implements
+    from: SYM-people-internal-views-ui-people-inviteform
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:31.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7731f37a447
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-inviteform
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:31.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d168e6046d8

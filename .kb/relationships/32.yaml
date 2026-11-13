@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-587ac128f0c6
+  - type: executable_for
+    from: SYM-people-internal-views-ui-people_test-harness-postsneedalogin
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:40:33.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e7a59779848

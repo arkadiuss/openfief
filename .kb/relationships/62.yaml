@@ -1322,3 +1322,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d897341a7f68
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-checkviewerreads
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:41:06.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fa927ac0cdc

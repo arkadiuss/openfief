@@ -12,7 +12,8 @@
 // at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
-// session ends (D-151).
+// session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
+// granted nothing sees "Nothing has been shared with you yet" on every page (D-210).
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -339,6 +340,49 @@ async function passkeyCheck(browser) {
   await ctx.close();
 }
 
+// people checks the Access page's People section (D-210): the invitation form asks for the passkey check like a new token
+// (the fake core's check was passed above), shows the one-time link, and Revoke asks for a confirmation first; the section
+// does not scroll sideways at 360 px.
+async function people(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
+  const section = await page.textContent('#people-title ~ .table');
+  check(section.includes('Alice') && section.includes('no access yet') && section.includes('revoked'), 'people: the section lacks Alice, Bob\'s "no access yet" or Carol\'s revoked mark');
+  check(await sideways(page) <= 0, 'people: the Access page scrolls sideways at 360 px');
+  await page.fill('#viewer-name', 'Dana');
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/access/people"] button[type="submit"]')]);
+  let body = await page.textContent('body');
+  check(body.includes('Invitation for Dana created') && body.includes('/enroll#code='), 'people: no invitation link after inviting a viewer');
+  check(await sideways(page) <= 0, 'people: the invitation link scrolls the page sideways at 360 px');
+  await page.screenshot({ path: path.join(out, 'phone360-light-people-invited.png'), fullPage: true });
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action$="/revoke"] button.danger')]);
+  body = await page.textContent('body');
+  check(body.includes('Revoke Alice?') && body.includes('Yes, revoke Alice'), 'people: Revoke did not ask for a confirmation');
+  await page.screenshot({ path: path.join(out, 'phone360-light-people-revoke.png'), fullPage: true });
+  await ctx.close();
+}
+
+// viewerEmpty checks a viewer the owner granted nothing yet (D-210): every page they have says plainly that nothing has
+// been shared with them, with no chart and no error, at phone and desktop width.
+async function viewerEmpty(browser) {
+  for (const [label, options] of [['phone', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }], ['desktop', { viewport: { width: 1280, height: 800 } }]]) {
+    const ctx = await browser.newContext(options);
+    const page = await ctx.newPage();
+    await page.goto(base + '/test/sign-in-viewer');
+    for (const target of ['/', '/accounts', '/sleeves']) {
+      const response = await page.goto(base + target, { waitUntil: 'networkidle' });
+      check(response && response.status() === 200, `viewer ${label} ${target}: status ${response && response.status()}`);
+      check((await page.textContent('body')).includes('Nothing has been shared with you yet'), `viewer ${label} ${target}: no empty state`);
+      check(await page.locator('canvas').count() === 0, `viewer ${label} ${target}: an empty chart`);
+      check(await sideways(page) <= 0, `viewer ${label} ${target}: scrolls sideways`);
+      await page.screenshot({ path: path.join(out, `${label}-viewer-empty${target === '/' ? '-overview' : target.replace('/', '-')}.png`), fullPage: true });
+    }
+    await ctx.close();
+  }
+}
+
 async function app() {
   const profile = mkdtempSync(path.join(os.tmpdir(), 'openfief-ui-'));
   const ctx = await chromium.launchPersistentContext(profile, { ...browserOptions(), viewport: { width: 1280, height: 800 } });
@@ -508,6 +552,8 @@ try {
   await askModelBox(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
+  await people(browser);
+  await viewerEmpty(browser);
   await app();
   await keptOverview();
 } finally {

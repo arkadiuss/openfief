@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af8a268f0cae
+  - type: implements
+    from: SYM-people-internal-views-ui-people-activeviewer
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:42.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90810a8580b8
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-activeviewer
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:42.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d54d0597e19
+  - type: implements
+    from: SYM-people-internal-views-ui-people-selectlifetime
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:58.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4fa0967876e
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-selectlifetime
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:58.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606b10fd43c0

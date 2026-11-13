@@ -951,3 +951,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b523a590793
+  - type: implements
+    from: SYM-people-internal-views-ui-people-peoplerows
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:47.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8048a050d08
+  - type: implements
+    from: SYM-people-internal-views-ui-people-peoplerows
+    to: REQ-ui-viewer-nothing-shared
+    created_at: 2026-11-13T22:12:47.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb2c86a42754
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-peoplerows
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:47.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cd1e8a2286f
+  - type: implements
+    from: SYM-people-internal-views-ui-people-inviteminutes
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:39:30.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe13b25990f
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-inviteminutes
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:39:30.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-056f3676793c

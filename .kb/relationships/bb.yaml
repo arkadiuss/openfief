@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b1a89031f0b
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-registerviewer
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:41:00.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a9b60e89623

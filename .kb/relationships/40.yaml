@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6f2d25db32a
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-updatepersongrants
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:13:19.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c5bda5dbc33
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-updatepersongrants
+    to: REQ-ui-access-people-revoke-grant-no-passkey-check
+    created_at: 2026-11-13T22:13:19.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5739e2566440
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-server-updatepersongrants
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:13:19.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa550ec074a

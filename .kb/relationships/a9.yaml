@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9cb58dc542e
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-enrollment
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:40:55.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff3656507446

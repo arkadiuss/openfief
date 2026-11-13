@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b6de6ca9566
+  - type: implements
+    from: SYM-people-internal-views-ui-access-accessinputs
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:13:35.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e327a8c50877
+  - type: covered_by
+    from: SYM-people-internal-views-ui-access-accessinputs
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:13:35.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b4b85be4e0f

@@ -1021,3 +1021,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc15d1d61aaa
+  - type: implements
+    from: SYM-people-internal-views-ui-people-personrow
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:22.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a4939ffe733
+  - type: implements
+    from: SYM-people-internal-views-ui-people-personrow
+    to: REQ-ui-viewer-nothing-shared
+    created_at: 2026-11-13T22:12:22.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea5dccb6ae62
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-personrow
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:22.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69de704b7cdb

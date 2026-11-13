@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37a8bef5c37e
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-peopleroutes
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:36.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a892728bf52e
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-server-peopleroutes
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:36.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc4e90df77d

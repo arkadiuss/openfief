@@ -106,6 +106,19 @@ func (s *server) renderSleeves(w http.ResponseWriter, r *http.Request, sess sess
 		s.coreFailed(w, r, "ListSleeves", err)
 		return
 	}
+	if emptyForViewer(sess, len(data.Sleeves)) {
+		// A viewer granted accounts alone may see no sleeve: they are shared
+		// something unless the core lists them no account either.
+		accounts, listErr := s.read.ListAccounts(r.Context(), bearer(&viewsv1.ListAccountsRequest{}, sess))
+		if listErr != nil {
+			s.coreFailed(w, r, "ListAccounts", listErr)
+			return
+		}
+		if emptyForViewer(sess, len(accounts.Msg.GetAccounts())) {
+			s.nothingShared(w, r, sess, "Sleeves")
+			return
+		}
+	}
 	data.Error = message
 	s.show(w, r, status, "sleeves", page{Title: "Sleeves", Session: &sess, Data: data})
 }

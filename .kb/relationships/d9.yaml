@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e5cfce3e8b9
+  - type: executable_for
+    from: SYM-people-internal-views-ui-people_test-testupdateviewergrants
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:40:17.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a2f0838a188

@@ -1294,3 +1294,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4da1e57a05fc
+  - type: executable_for
+    from: SYM-people-internal-views-ui-fakes_test-fakeauth-revokeperson
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:39:48.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6204ae81f154

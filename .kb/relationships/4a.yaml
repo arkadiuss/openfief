@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6dd2fa02b7c9
+  - type: executable_for
+    from: SYM-people-internal-views-ui-fakes_test-fakeauth-inviteviewer
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:39:42.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d13932217500

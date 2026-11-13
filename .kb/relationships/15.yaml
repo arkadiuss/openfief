@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51d3847876b0
+  - type: specified_by
+    from: REQ-ui-access-people
+    to: SCEN-ui-access-people-invite-grant-revoke
+    created_at: 2026-11-13T22:12:11.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51f960dcf02e
+  - type: specified_by
+    from: REQ-ui-access-people
+    to: SCEN-e2e-viewers-read-only-their-grants
+    created_at: 2026-11-13T22:12:11.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9df53a8de2c4

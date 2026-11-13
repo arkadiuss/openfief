@@ -171,6 +171,9 @@ func (f *fakeRead) ListSleeves(_ context.Context, r *connect.Request[viewsv1.Lis
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
+	if r.Header().Get("Authorization") == "Bearer "+emptyViewerSession {
+		return connect.NewResponse(&viewsv1.ListSleevesResponse{}), nil
+	}
 	return connect.NewResponse(&viewsv1.ListSleevesResponse{Sleeves: []*viewsv1.Sleeve{
 		{Id: "bonds", Name: "Bonds", Kind: "bonds", Role: viewsv1.SleeveRole_SLEEVE_ROLE_DEFENSIVE},
 		{Id: "core", Name: "Core", Kind: "core", Role: viewsv1.SleeveRole_SLEEVE_ROLE_DEFENSIVE},

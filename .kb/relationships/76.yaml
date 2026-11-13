@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9e0d8a97a92
+  - type: executable_for
+    from: SYM-people-internal-views-ui-people_test-testviewerwithnothingsharedseesanemptystate
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:40:28.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-377dc3db2d21
