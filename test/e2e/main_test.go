@@ -233,15 +233,23 @@ func applyDatabase(ctx context.Context, k *kube, logf func(string, ...any), sour
 	return nil
 }
 
+// isCore picks the core's Deployment. installApp applies it after every other object of the layer, the plugins
+// included: the core's start runs the cutover (D-209) once, which gives the household grant to the view plugins
+// installed by then, so a Plugin created a second after the core started, as the layer's order did, is left
+// without one for good and the UI's own token views nothing (TestGrantsLimitWhatAScriptTokenViews).
+func isCore(obj *unstructured.Unstructured) bool {
+	return obj.GetKind() == "Deployment" && obj.GetName() == coreDeployment
+}
+
 // installApp applies the demo's application layer, each object changed by
-// edit first, and, on k3s, the demo's route through Traefik.
+// edit first and the core last, and, on k3s, the demo's route through Traefik.
 func installApp(ctx context.Context, k *kube, logf func(string, ...any), edit func(*unstructured.Unstructured) error) error {
 	logf("e2e: applying the demo's application layer")
 	app, err := build(exec.CommandContext(ctx, "kustomize", "build", openfiefDir))
 	if err != nil {
 		return err
 	}
-	if applyErr := k.applyEdited(ctx, app, edit); applyErr != nil {
+	if applyErr := k.applyEdited(ctx, app, edit, isCore); applyErr != nil {
 		return applyErr
 	}
 	isK3s, err := k.isK3s(ctx)

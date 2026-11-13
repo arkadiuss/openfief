@@ -190275,3 +190275,25 @@ symbols:
         target: REQ-identity-audit-entry-content
       - type: implements
         target: REQ-models-calls-two-entries-linked
+  - id: SYM-e2e-is-core
+    title: isCore
+    status: active
+    sourceFile: test/e2e/main_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T16:51:28.232Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-decode-edited
+    title: decodeEdited
+    status: active
+    sourceFile: test/e2e/kube_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T16:51:37.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-plugins

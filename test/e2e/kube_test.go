@@ -125,33 +125,51 @@ func (k *kube) applyBuild(ctx context.Context, cmd *exec.Cmd) error {
 // apply applies every object in manifests, YAML or JSON, server-side, as
 // Flux applies the demo's layers.
 func (k *kube) apply(ctx context.Context, manifests []byte) error {
-	return k.applyEdited(ctx, manifests, nil)
+	return k.applyEdited(ctx, manifests, nil, nil)
 }
 
 // applyEdited is apply with each object changed by edit first, unless edit
-// is nil.
-func (k *kube) applyEdited(ctx context.Context, manifests []byte, edit func(*unstructured.Unstructured) error) error {
+// is nil, and the objects last picks, unless it is nil, applied after all the
+// others, in their order.
+func (k *kube) applyEdited(ctx context.Context, manifests []byte, edit func(*unstructured.Unstructured) error, last func(*unstructured.Unstructured) bool) error {
+	objs, err := decodeEdited(manifests, edit)
+	if err != nil {
+		return err
+	}
+	if last != nil {
+		objs = slices.Concat(slices.DeleteFunc(slices.Clone(objs), last), slices.DeleteFunc(slices.Clone(objs), func(o *unstructured.Unstructured) bool { return !last(o) }))
+	}
+	for _, obj := range objs {
+		if err := k.applyOne(ctx, obj); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// decodeEdited returns the objects of manifests, YAML or JSON, each changed by
+// edit first, unless edit is nil.
+func decodeEdited(manifests []byte, edit func(*unstructured.Unstructured) error) ([]*unstructured.Unstructured, error) {
 	dec := utilyaml.NewYAMLOrJSONDecoder(bytes.NewReader(manifests), yamlBuffer)
+	var objs []*unstructured.Unstructured
 	for {
-		var obj unstructured.Unstructured
+		obj := &unstructured.Unstructured{}
 		err := dec.Decode(&obj.Object)
 		if errors.Is(err, io.EOF) {
-			return nil
+			return objs, nil
 		}
 		if err != nil {
-			return fmt.Errorf("decoding manifests: %w", err)
+			return nil, fmt.Errorf("decoding manifests: %w", err)
 		}
 		if len(obj.Object) == 0 {
 			continue
 		}
 		if edit != nil {
-			if err := edit(&obj); err != nil {
-				return err
+			if err := edit(obj); err != nil {
+				return nil, err
 			}
 		}
-		if err := k.applyOne(ctx, &obj); err != nil {
-			return err
-		}
+		objs = append(objs, obj)
 	}
 }
 
