@@ -230,8 +230,9 @@ func TestReadAPIRefusesWithoutToken(t *testing.T) {
 func waitCoreAvailable(t *testing.T, k *kube) {
 	t.Helper()
 	// The core is ready once it holds SpiceDB's key, not once SpiceDB answers:
-	// `core token issue` writes the token's grant to SpiceDB at once and fails
-	// while SpiceDB is still starting, so SpiceDB first.
+	// `core token issue --grant-household` waits for SpiceDB to answer, up to
+	// --spicedb-wait, and issues nothing if it doesn't; waiting for SpiceDB
+	// here first keeps that wait short.
 	waitSpiceDBAvailable(t, k)
 	// Under --authz=spicedb a core that starts before the credentials Job has made SpiceDB's key waits for it,
 	// serving and not ready (D-164, D-216); a core that crashes instead is still taken for one that can't start.

@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc87b317b40c
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-scriptedauthorizer-mayact
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:03.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e91115e1761c

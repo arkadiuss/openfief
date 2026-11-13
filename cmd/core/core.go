@@ -76,7 +76,7 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 // core's (D-211). With SpiceDB configured, a grant they make or end is passed
 // on to it; the returned closer closes that connection, and does nothing
 // otherwise.
-func newTokens(pool *pgxpool.Pool, authz *authzConfig, now func() time.Time) (tokenAdmin, io.Closer, error) {
+func newTokens(pool *pgxpool.Pool, authz *authzConfig, wait time.Duration, now func() time.Time) (tokenAdmin, io.Closer, error) {
 	az, err := newAuthorization(authz)
 	if err != nil {
 		return tokenAdmin{}, nil, err
@@ -87,7 +87,10 @@ func newTokens(pool *pgxpool.Pool, authz *authzConfig, now func() time.Time) (to
 	if closer == nil {
 		closer = nothingToClose{}
 	}
-	return tokenAdmin{store: store, tokens: tokens, grants: newGrants(store, tokens, householdOnly{}, az, now)}, closer, nil
+	return tokenAdmin{
+		store: store, tokens: tokens, grants: newGrants(store, tokens, householdOnly{}, az, now),
+		ping: az.ping, wait: wait, pollEvery: spicedbPollEvery,
+	}, closer, nil
 }
 
 // nothingToClose is the io.Closer of a command that holds no connection.

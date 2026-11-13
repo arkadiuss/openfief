@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6211eee9127
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-grantsfixture-requirenograntandtrail
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:38.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80fe27675433

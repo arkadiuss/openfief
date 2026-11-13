@@ -58,6 +58,7 @@ const (
 	defaultWorkers         = 2
 	defaultShutdownTimeout = 25 * time.Second
 	defaultTokenTTL        = 720 * time.Hour
+	defaultSpiceDBWait     = time.Minute
 	defaultSyncEvery       = 6 * time.Hour
 	defaultSyncJitter      = 30 * time.Minute
 	defaultSyncTimeout     = 5 * time.Minute
@@ -82,6 +83,8 @@ var (
 	errNoAccount = errors.New("--account is required")
 	// errBadMode reports a --mode that is not an ingest mode.
 	errBadMode = errors.New("--mode must be opening or transactions")
+	// errBadSpiceDBWait reports a --spicedb-wait below zero.
+	errBadSpiceDBWait = errors.New("--spicedb-wait must not be negative")
 	// errBadEndOfDay reports an end-of-day time that is not HH:MM.
 	errBadEndOfDay = errors.New("end of day must be HH:MM, 00:00 to 23:59")
 )
@@ -98,7 +101,10 @@ type command struct {
 	TokenName      string
 	TTL            time.Duration
 	GrantHousehold bool
-	TokenID        string
+	// SpiceDBWait is how long token issue waits for SpiceDB to answer before
+	// it issues a token whose grant it must write there.
+	SpiceDBWait time.Duration
+	TokenID     string
 	// Authz is how token issue and token revoke reach SpiceDB, to pass on a
 	// grant they make or end (D-209); with the policy, which is the default,
 	// they change the database alone.
@@ -200,7 +206,7 @@ func parseCommand(name string, rest []string, getenv func(string) string) (comma
 	case cmdTokenIssue:
 		var issue issueArgs
 		issue, err = parseIssue(rest, getenv)
-		cmd.TokenName, cmd.TTL, cmd.GrantHousehold, cmd.Authz = issue.Name, issue.TTL, issue.Household, issue.Authz
+		cmd.TokenName, cmd.TTL, cmd.GrantHousehold, cmd.Authz, cmd.SpiceDBWait = issue.Name, issue.TTL, issue.Household, issue.Authz, issue.Wait
 	case cmdTokenRevoke:
 		cmd.TokenID, cmd.Authz, err = parseRevoke(rest, getenv)
 	case cmdBind, cmdSync:
@@ -373,6 +379,7 @@ type issueArgs struct {
 	Name      string
 	TTL       time.Duration
 	Household bool
+	Wait      time.Duration
 	Authz     authzConfig
 }
 
@@ -384,9 +391,13 @@ func parseIssue(args []string, getenv func(string) string) (issueArgs, error) {
 	fs.StringVar(&a.Name, "name", "", "the token's name, such as the script that uses it")
 	fs.DurationVar(&a.TTL, "ttl", defaultTokenTTL, "how long the token is valid, at most 8760h")
 	fs.BoolVar(&a.Household, "grant-household", false, "also give the token the household grant, so under --authz=spicedb it views every account, present and future; without it a token views nothing there until the owner grants it (D-209)")
+	fs.DurationVar(&a.Wait, "spicedb-wait", defaultSpiceDBWait, "how long to wait for SpiceDB to answer before issuing a token with --grant-household under --authz=spicedb; if it doesn't, nothing is issued")
 	authzFlags(fs, &a.Authz)
 	if err := fs.Parse(args); err != nil {
 		return issueArgs{}, fmt.Errorf("token issue: %w", err)
+	}
+	if a.Wait < 0 {
+		return issueArgs{}, errBadSpiceDBWait
 	}
 	if err := parseAuthz(&a.Authz, getenv); err != nil {
 		return issueArgs{}, err

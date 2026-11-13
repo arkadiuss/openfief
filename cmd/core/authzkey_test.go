@@ -172,7 +172,8 @@ func TestNotReadyWithoutTheKey(t *testing.T) {
 	s := &server{}
 	api := http.NotFoundHandler()
 	s.browser.Store(&api)
-	s.ready(&core{access: access{authorization: gatedAuthorization(g)}})
+	az := gatedAuthorization(g)
+	s.ready(&core{access: access{authorization: az}})
 
 	get := func(p string) (int, string) {
 		rec := httptest.NewRecorder()
@@ -191,8 +192,13 @@ func TestNotReadyWithoutTheKey(t *testing.T) {
 	if !g.step() {
 		t.Fatal("step did not connect")
 	}
-	if ready := s.authzReady.Load(); ready == nil || !(*ready)() {
-		t.Error("the authorizer is not ready after the key appeared")
+	// The key alone is not enough: SpiceDB must answer, with its schema written.
+	if code, body := get("/readyz"); code != http.StatusServiceUnavailable || body != "waiting for SpiceDB to answer and take its schema" {
+		t.Errorf("GET /readyz with the key but no answer yet = %d %q, want 503 waiting for the schema", code, body)
+	}
+	az.markStarted()
+	if waiting := az.waiting(); waiting != "" {
+		t.Errorf("still %q after the key and the reconcile", waiting)
 	}
 }
 

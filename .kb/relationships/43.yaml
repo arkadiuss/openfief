@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7b8c1eaf6c9
+  - type: implements
+    from: SYM-cmd-core-authzmonitor-authzmonitor-startprobe
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:38:53.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0be291a3adf1
+  - type: covered_by
+    from: SYM-cmd-core-authzmonitor-authzmonitor-startprobe
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:38:53.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1508374bdc4
+  - type: executable_for
+    from: SYM-cmd-core-authzsync-test-testreconcileaccesswritestheowner
+    to: TEST-core-authz-sync
+    created_at: 2026-11-13T15:41:39.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95135263648c

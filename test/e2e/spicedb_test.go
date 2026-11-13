@@ -493,25 +493,34 @@ func TestSpiceDBFailsClosed(t *testing.T) {
 }
 
 // stopSpiceDBAndExpectRefusal stops SpiceDB and waits for the core to refuse
-// the read API with a server error, never an answer, while the core itself
-// still runs.
+// the read API with 503 and the plain text "authorization is unavailable",
+// never an answer, a 500 or a 403, while the core itself still runs: /healthz
+// and /readyz stay 200, because readiness is the start's alone and an outage
+// later fails the checks closed instead of taking the core out of its Service.
 func stopSpiceDBAndExpectRefusal(t *testing.T, k *kube, token string) {
 	t.Helper()
 	if err := scaleDeployment(t.Context(), k, spicedbDeployment, 0); err != nil {
 		t.Fatalf("stopping SpiceDB: %v", err)
 	}
+	var refused reply
 	err := waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
 		r, callErr := call(ctx, k, clientPod, "/v1/accounts", token)
 		if callErr != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, callErr)
 		}
+		refused = r
 		return fmt.Sprintf("HTTP %d", r.status), r.status >= http.StatusInternalServerError, nil
 	})
 	if err != nil {
 		t.Fatalf("waiting for the core to refuse the read API with SpiceDB stopped: %v", err)
 	}
-	if r := answerFrom(t, k, clientPod, "/healthz"); r.status != http.StatusOK {
-		t.Errorf("GET /healthz with SpiceDB stopped: status %d, want 200: the core runs, it only refuses to answer for accounts", r.status)
+	if refused.status != http.StatusServiceUnavailable || !bytes.Contains(refused.body, []byte("authorization is unavailable")) {
+		t.Errorf("GET /v1/accounts with SpiceDB stopped: status %d, body %q, want 503 with %q", refused.status, refused.body, "authorization is unavailable")
+	}
+	for _, path := range []string{"/healthz", "/readyz"} {
+		if r := answerFrom(t, k, clientPod, path); r.status != http.StatusOK {
+			t.Errorf("GET %s with SpiceDB stopped: status %d, want 200: the core runs and stays ready, it only refuses to answer for accounts", path, r.status)
+		}
 	}
 }
 

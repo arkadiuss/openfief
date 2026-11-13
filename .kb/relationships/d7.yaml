@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fdfb0083f4a
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-failingperms-readrelationships
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:41:07.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63931b46113d

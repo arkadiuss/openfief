@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67ba363fe994
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-testreadystaysreadyduringanoutage
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:41:33.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c55ad411665

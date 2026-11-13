@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bcad1eed570
+  - type: specified_by
+    from: REQ-identity-audit-every-change
+    to: SCEN-core-token-issue-atomic-under-spicedb
+    created_at: 2026-11-13T15:35:53.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc467749f59a

@@ -22,7 +22,15 @@ var (
 	// there now, such as a plugin outside a cluster or before its cache has
 	// synced. It refuses a new grant, and never revokes one.
 	ErrDirectoryUnknown = errors.New("can't tell whether it exists yet")
+	// ErrTokenRevoked reports a token that was issued and then revoked
+	// because its household grant could not reach the authorization model:
+	// no secret is returned for it, and the token views nothing.
+	ErrTokenRevoked = errors.New("issued and revoked again: its grant could not reach the authorization model")
 )
+
+// revokeTimeout bounds the revocation of a token whose grant could not be
+// passed on, which runs even when the caller's own context has ended.
+const revokeTimeout = 30 * time.Second
 
 // GrantStore keeps grants (D-209): the source of truth for who may view
 // what, which the authorization model only projects. A grant and its audit
@@ -224,6 +232,60 @@ func (g *Grants) RevokeToken(ctx context.Context, actor identity.Actor, id ident
 		return fmt.Errorf("%w: %w", ErrGrantNotProjected, unprojectErr)
 	}
 	return nil
+}
+
+// IssueToken creates a read-only token for actor as IssueToken does and,
+// when household is set, its household grant (D-209): the token, the grant
+// and the audit entries of both in one transaction (D-211), and then the
+// grant is written to the authorization model. If that write fails, the
+// token is revoked at once, with its own audit entry, no secret is returned,
+// and the error wraps ErrTokenRevoked and ErrGrantNotProjected; if the
+// revocation fails too, the error says the token must be revoked by hand. A
+// token without the household grant needs nothing of the model. The caller
+// makes sure the model answers before it asks for a grant, so a failure here
+// is the rare race.
+func (g *Grants) IssueToken(ctx context.Context, actor identity.Actor, name string, ttl time.Duration, household bool) (identity.ScriptToken, string, error) {
+	var (
+		tok    identity.ScriptToken
+		secret string
+		grant  identity.Grant
+	)
+	err := within(ctx, g.store, func(ctx context.Context) error {
+		var issueErr error
+		if tok, secret, issueErr = IssueToken(ctx, g.store, g.tokens, actor, name, ttl); issueErr != nil {
+			return issueErr
+		}
+		if !household {
+			return nil
+		}
+		var grantErr error
+		holder := identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(tok.ID)}
+		if grant, grantErr = identity.NewGrant(holder, identity.Household(), g.now().UTC().Truncate(time.Microsecond)); grantErr != nil {
+			return fmt.Errorf("building the household grant: %w", grantErr)
+		}
+		if _, saveErr := g.store.SaveGrant(ctx, &grant); saveErr != nil {
+			return fmt.Errorf("saving the grant: %w", saveErr)
+		}
+		return g.record(ctx, actor, identity.ActionGrantCreated, &grant)
+	})
+	if err != nil {
+		return identity.ScriptToken{}, "", err
+	}
+	if !household {
+		return tok, secret, nil
+	}
+	projectErr := g.project(ctx, []identity.Grant{grant})
+	if projectErr == nil {
+		return tok, secret, nil
+	}
+	rctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), revokeTimeout)
+	defer cancel()
+	// The grant never reached the model, so the removal RevokeToken then asks of it may fail too:
+	// the token is revoked in the table either way, and the model holds nothing of it.
+	if revokeErr := g.RevokeToken(rctx, actor, tok.ID); revokeErr != nil && !errors.Is(revokeErr, ErrGrantNotProjected) {
+		return identity.ScriptToken{ID: tok.ID}, "", fmt.Errorf("token %s was issued but its grant could not reach the authorization model, and revoking it failed, so revoke it by hand: %w", tok.ID, errors.Join(projectErr, revokeErr))
+	}
+	return identity.ScriptToken{ID: tok.ID}, "", fmt.Errorf("token %s: %w: %w", tok.ID, ErrTokenRevoked, projectErr)
 }
 
 // Cutover is the step D-209 describes for the day SpiceDB takes over: every

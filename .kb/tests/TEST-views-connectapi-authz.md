@@ -9,4 +9,4 @@ origin:
 id: TEST-views-connectapi-authz
 type: test
 ---
-Through the real Vanguard transcoder and auth interceptor, an authorizer that lets only the token's caller view acc-1 makes GET /v1/accounts list acc-1 alone, and every account path of acc-2 answer 404 with the same body as an account not stored, while acc-1's paths answer 200.
+Through the real Vanguard transcoder and auth interceptor, an authorizer that lets only the token's caller view acc-1 makes GET /v1/accounts list acc-1 alone, and every account path of acc-2 answer 404 with the same body as an account not stored, while acc-1's paths answer 200. An authorizer that cannot answer makes every read path answer 503 with the text authorization is unavailable, on a list and on an account alike.

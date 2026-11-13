@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-419bfa37fdb6
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-flakywrites-writerelationships
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:41:55.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eed614bc4f1f

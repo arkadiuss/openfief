@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-604d7fc85a97
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testwaitforspicedb
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:49.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abb67e8facfe

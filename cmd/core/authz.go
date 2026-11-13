@@ -10,10 +10,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/authzed/authzed-go/v1"
 	"github.com/authzed/grpcutil"
+	"go.opentelemetry.io/otel"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -70,7 +72,7 @@ var (
 	errNoSpiceDBKey = errors.New("--authz=spicedb needs the preshared key in " + spicedbKeyEnv + " or in --spicedb-key-file")
 	// errSpiceDBKeyPending is what every check answers until the core has
 	// SpiceDB's key: refused, closed (D-164).
-	errSpiceDBKeyPending = errors.New("SpiceDB's preshared key is not there yet; every check is refused until it is")
+	errSpiceDBKeyPending = fmt.Errorf("%w: SpiceDB's preshared key is not there yet; every check is refused until it is", kernel.ErrAuthzUnavailable)
 )
 
 // secret is a credential that prints as nothing: no format verb, log
@@ -186,6 +188,27 @@ type authorization struct {
 	// gate is non-nil while the core may still be waiting for SpiceDB's key
 	// (D-164): serve without the key in the environment.
 	gate *keyGate
+	// ping asks SpiceDB whether it answers; nil with the policy.
+	ping func(context.Context) error
+	// started is set once SpiceDB has answered and holds the schema and the
+	// relationships the core owns: the start's reconcile succeeded. Readiness
+	// waits for it, and it is never unset (an outage later is the monitor's);
+	// nil with the policy.
+	started *atomic.Bool
+}
+
+// waiting says what the core still waits for before it is ready, or "" when
+// nothing: with SpiceDB, its key, then an answer with the schema written.
+// It only ever turns from waiting to "", so a SpiceDB outage after the start
+// never makes the core not ready.
+func (az authorization) waiting() string {
+	if az.gate != nil && !az.gate.isConnected() {
+		return "waiting for SpiceDB's preshared key"
+	}
+	if az.started != nil && !az.started.Load() {
+		return "waiting for SpiceDB to answer and take its schema"
+	}
+	return ""
 }
 
 // accessSyncer is what the core asks of the syncer that keeps SpiceDB's
@@ -209,20 +232,35 @@ func newAuthorization(cfg *authzConfig) (authorization, error) {
 	if err != nil {
 		return authorization{}, err
 	}
-	return authorization{authorizer: c.authorizer, syncer: c.syncer, closer: c.client}, nil
+	return authorization{authorizer: c.authorizer, syncer: c.syncer, closer: c.client, ping: c.authorizer.Ping, started: new(atomic.Bool)}, nil
 }
 
 // serveAuthorization returns the authorization serve runs with. With SpiceDB
 // and no key in the environment it is the gate's, which waits for the key's
 // file in the background (D-164, D-216) while every check is refused; with the
-// key in the environment, or with the policy, it is newAuthorization's.
+// key in the environment, or with the policy, it is newAuthorization's. With
+// SpiceDB the authorizer is watched: a change of its availability is logged
+// once and counted (authzMonitor).
 func serveAuthorization(ctx context.Context, cfg *authzConfig, log *slog.Logger) (authorization, error) {
-	if cfg.Mode != authzSpiceDB || cfg.Key != "" {
+	if cfg.Mode != authzSpiceDB {
 		return newAuthorization(cfg)
 	}
-	g := newKeyGate(cfg, keyPollEvery, log)
-	go g.run(ctx)
-	return gatedAuthorization(g), nil
+	var az authorization
+	if cfg.Key != "" {
+		var err error
+		if az, err = newAuthorization(cfg); err != nil {
+			return authorization{}, err
+		}
+	} else {
+		g := newKeyGate(cfg, keyPollEvery, log)
+		go g.run(ctx)
+		az = gatedAuthorization(g)
+	}
+	m, err := newAuthzMonitor(ctx, log, otel.Meter(coreService), az.ping, authzProbeEvery)
+	if err != nil {
+		return authorization{}, err
+	}
+	return m.watch(az), nil
 }
 
 // spicedbConn is a client of SpiceDB and what is built on it.
@@ -297,11 +335,11 @@ func (az authorization) registryOptions() []portfolioapp.RegistryOption {
 // reconcile runs then, in the background.
 func (az authorization) startReconcile(ctx context.Context, load func(context.Context) (spicedb.Desired, error), log *slog.Logger) func(context.Context) error {
 	if az.gate == nil {
-		reconcileAccess(ctx, az.syncer, load, log)
+		reconcileAccess(ctx, az.syncer, load, log, az.markStarted)
 	} else {
 		go func() {
 			if az.gate.wait(ctx) {
-				reconcileAccess(ctx, az.syncer, load, log)
+				reconcileAccess(ctx, az.syncer, load, log, az.markStarted)
 			}
 		}()
 	}
@@ -310,6 +348,13 @@ func (az authorization) startReconcile(ctx context.Context, load func(context.Co
 			return fmt.Errorf("reconciling: %w", err)
 		}
 		return nil
+	}
+}
+
+// markStarted records that the start's reconcile succeeded.
+func (az authorization) markStarted() {
+	if az.started != nil {
+		az.started.Store(true)
 	}
 }
 
@@ -346,13 +391,18 @@ func desiredAccess(l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, grants *
 // at start and, when SpiceDB can't take it yet, again every authzRetryEvery
 // in the background until it does or ctx ends. Until then every check is
 // refused, closed, since no account has a household. A failure is logged,
-// without any credential.
-func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context.Context) (spicedb.Desired, error), log *slog.Logger) {
+// without any credential. done, when not nil, is called once the reconcile
+// succeeded: SpiceDB has answered and holds the schema.
+func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context.Context) (spicedb.Desired, error), log *slog.Logger, done func()) {
 	if syncer == nil {
 		return
 	}
+	if done == nil {
+		done = func() {}
+	}
 	err := syncer.Reconcile(ctx, load)
 	if err == nil {
+		done()
 		log.Info("authorization reconciled with SpiceDB")
 		return
 	}
@@ -370,6 +420,7 @@ func reconcileAccess(ctx context.Context, syncer accessSyncer, load func(context
 				log.Warn("SpiceDB is not reconciled yet; retrying", "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, spicedb.ErrInvalidID))
 				continue
 			}
+			done()
 			log.Info("authorization reconciled with SpiceDB")
 			return
 		}

@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50c636c479ef
+  - type: implements
+    from: SYM-cmd-core-authz-authorization-waiting
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:38:22.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd777339fa18
+  - type: covered_by
+    from: SYM-cmd-core-authz-authorization-waiting
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:38:22.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8193ba6466d5
+  - type: implements
+    from: SYM-cmd-core-authz-authorization-markstarted
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:38:28.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8565b8c23e
+  - type: covered_by
+    from: SYM-cmd-core-authz-authorization-markstarted
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:38:28.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a35715de682c

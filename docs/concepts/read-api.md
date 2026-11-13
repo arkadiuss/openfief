@@ -143,6 +143,7 @@ Errors never carry their own text to the client, because it can quote an account
 | `app.ErrUnknownInstrument`, for an ISIN no account the caller may view posts to and with no stored price | not found | 404 | `no such instrument` |
 | `app.ErrUnknownInstance`, for a connector instance never synced | not found | 404 | `no such connector instance` |
 | `app.ErrPluginsUnknown` | unavailable | 503 | `the installed plugins can't be read now` |
+| `kernel.ErrAuthzUnavailable`, the authorization model can't answer, such as a SpiceDB that is down (D-164) | unavailable | 503 | `authorization is unavailable` |
 | `views.ErrInvalidRange`, `ErrInvalidCursor`, `ErrInvalidPageSize`, `ErrUnknownDimension`, a malformed field | invalid argument | 400 | a fixed sentence per cause |
 | No bearer token, or one the verifier rejects | unauthenticated | 401 | a fixed sentence and a `WWW-Authenticate: Bearer` challenge |
 | `views.ErrTaxConversion`, a yearly tax whose FX rate isn't stored yet (D-127) | failed precondition | 400 | `an FX rate the yearly tax needs is not stored yet` |

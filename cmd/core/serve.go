@@ -60,18 +60,24 @@ type server struct {
 	// and the owner services.
 	plugin   atomic.Pointer[http.Handler]
 	draining atomic.Bool
-	// authzReady reports whether the authorizer can answer, once the core is
-	// wired: nil when it always can, with the policy, or with SpiceDB's key
-	// from the environment. Without the key it is false until the key is read
-	// (D-164), so the Service sends no read to a core that refuses them all.
-	authzReady atomic.Pointer[func() bool]
+	// authzWaiting says what the authorizer still lacks before the core is
+	// ready, "" when nothing, once the core is wired: nil when it always can
+	// answer, with the policy. With SpiceDB it is its key, if still to come,
+	// then an answer with the schema written (D-164), so the Service sends no
+	// read to a core that refuses them all. It gates the start only: once
+	// "" it stays "", and a SpiceDB outage later never makes the core not
+	// ready; checks fail closed and the requests that need one answer 503.
+	authzWaiting atomic.Pointer[func() string]
+	// dbPing asks the database whether it answers; nil is the pool's Ping,
+	// which a test replaces.
+	dbPing func(context.Context) error
 }
 
 // ready stores the handlers c serves on each port; s then reports ready.
 func (s *server) ready(c *core) {
-	if g := c.access.gate; g != nil {
-		ready := g.isConnected
-		s.authzReady.Store(&ready)
+	if c.access.syncer != nil {
+		waiting := c.access.waiting
+		s.authzWaiting.Store(&waiting)
 	}
 	s.plugin.Store(&c.pluginPort)
 	s.browser.Store(&c.browserPort)
@@ -140,8 +146,9 @@ func (*server) healthz(w http.ResponseWriter, _ *http.Request) {
 }
 
 // readyz reports whether the core is ready: migrated and wired, not shutting
-// down, with SpiceDB's key there when it is to be waited for, and with the
-// database reachable now.
+// down, with SpiceDB's key there when it is to be waited for and SpiceDB
+// answered once with its schema written (the start's alone: a later outage of
+// SpiceDB does not flip it), and with the database reachable now.
 func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case s.draining.Load():
@@ -151,13 +158,19 @@ func (s *server) readyz(w http.ResponseWriter, r *http.Request) {
 		plain(w, http.StatusServiceUnavailable, "starting")
 		return
 	}
-	if ready := s.authzReady.Load(); ready != nil && !(*ready)() {
-		plain(w, http.StatusServiceUnavailable, "waiting for SpiceDB's preshared key")
-		return
+	if waiting := s.authzWaiting.Load(); waiting != nil {
+		if what := (*waiting)(); what != "" {
+			plain(w, http.StatusServiceUnavailable, what)
+			return
+		}
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), pingTimeout)
 	defer cancel()
-	if err := s.pool.Ping(ctx); err != nil {
+	ping := s.dbPing
+	if ping == nil {
+		ping = s.pool.Ping
+	}
+	if err := ping(ctx); err != nil {
 		plain(w, http.StatusServiceUnavailable, "database unreachable")
 		return
 	}

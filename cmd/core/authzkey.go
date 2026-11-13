@@ -104,7 +104,7 @@ func (g *keyGate) isConnected() bool { return g.conn.Load() != nil }
 // missing: the gate's authorizer and syncer, which refuse until the gate has
 // connected, then answer as SpiceDB's.
 func gatedAuthorization(g *keyGate) authorization {
-	return authorization{authorizer: gatedAuthorizer{g}, syncer: gatedSyncer{g}, closer: g, gate: g}
+	return authorization{authorizer: gatedAuthorizer{g}, syncer: gatedSyncer{g}, closer: g, gate: g, ping: gatedAuthorizer{g}.Ping, started: new(atomic.Bool)}
 }
 
 // gatedAuthorizer is identityapp.Authorizer and AccountLister over the gate.
@@ -125,6 +125,18 @@ func (a gatedAuthorizer) MayAct(ctx context.Context, c identity.Caller, act iden
 		return false, fmt.Errorf("SpiceDB's check: %w", err)
 	}
 	return ok, nil
+}
+
+// Ping asks SpiceDB whether it answers: not before the key is there.
+func (a gatedAuthorizer) Ping(ctx context.Context) error {
+	conn := a.g.conn.Load()
+	if conn == nil {
+		return errSpiceDBKeyPending
+	}
+	if err := conn.authorizer.Ping(ctx); err != nil {
+		return fmt.Errorf("SpiceDB's ping: %w", err)
+	}
+	return nil
 }
 
 func (a gatedAuthorizer) ActableAccounts(ctx context.Context, c identity.Caller, act identity.Action) (map[string]struct{}, error) {

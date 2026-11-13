@@ -115,4 +115,4 @@ Errors carry fixed texts, never your data, and a request ID you can find in the 
 | 404 | No such account, or the model portfolio is off |
 | 400 | A malformed date, page token or parameter; the text says which |
 | 405 | Anything but `GET` over REST: the API has no writes |
-| 503 | The installed plugins can't be read right now |
+| 503 | The installed plugins can't be read right now, or the core can't ask its authorization model (`authorization is unavailable`, as when SpiceDB is down): nothing was refused, try again |

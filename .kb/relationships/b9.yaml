@@ -1238,3 +1238,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94c889c3077c
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-listingauthorizer-actableaccounts
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:40:18.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d01aaf21b5c
+  - type: executable_for
+    from: SYM-cmd-core-authzmonitor-test-failingperms
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:41:01.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92bf6c9df1dd

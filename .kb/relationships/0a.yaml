@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a906cee0f89d
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-testtokenissuewithoutagrantneedsnothingofspicedb
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:27.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b2320382bed

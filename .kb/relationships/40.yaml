@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c989c56712e4
+  - type: executable_for
+    from: SYM-cmd-core-tokenissue-test-grantsfixture-issuer
+    to: TEST-core-token-issue-atomic
+    created_at: 2026-11-13T15:42:00.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b0691cbda5

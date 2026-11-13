@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d958cd6c09ea
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-token-issue-atomic-under-spicedb
+    created_at: 2026-11-13T15:35:54.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bfafd5c5739
+  - type: specified_by
+    from: REQ-identity-authz-spicedb-answers
+    to: SCEN-core-authz-outage-fails-closed-ready-at-start
+    created_at: 2026-11-13T15:35:54.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85565b81b59f

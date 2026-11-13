@@ -112,7 +112,7 @@ func withMigratedPool(ctx context.Context, dsn string, fn func(d *deps) error) e
 // connection to SpiceDB it asked for, if any, which it closes at the end.
 func runTokenCommand(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
 	return withMigratedPool(ctx, cmd.DSN, func(d *deps) error {
-		tokens, closer, err := newTokens(d.pool, &cmd.Authz, time.Now)
+		tokens, closer, err := newTokens(d.pool, &cmd.Authz, cmd.SpiceDBWait, time.Now)
 		if err != nil {
 			return err
 		}

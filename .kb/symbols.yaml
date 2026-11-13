@@ -181262,3 +181262,666 @@ symbols:
         target: TEST-core-grants
       - type: implements
         target: REQ-identity-grants-cutover-keeps-access
+  - id: SYM-cmd-core-authz-authorization-waiting
+    title: authorization.waiting
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:19.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authz-authorization-markstarted
+    title: authorization.markStarted
+    status: active
+    sourceFile: cmd/core/authz.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:25.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzkey-gatedauthorizer-ping
+    title: gatedAuthorizer.Ping
+    status: active
+    sourceFile: cmd/core/authzkey.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:31.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-authzmonitor
+    title: authzMonitor
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:36.768Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-newauthzmonitor
+    title: newAuthzMonitor
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:41.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-authzmonitor-observe
+    title: authzMonitor.observe
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:46.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-authzmonitor-startprobe
+    title: authzMonitor.startProbe
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:51.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-monitored
+    title: monitored
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:38:56.660Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-monitored-mayact
+    title: monitored.MayAct
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:01.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-monitoredlister
+    title: monitoredLister
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:06.620Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-monitoredlister-actableaccounts
+    title: monitoredLister.ActableAccounts
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:11.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-authzmonitor-watch
+    title: authzMonitor.watch
+    status: active
+    sourceFile: cmd/core/authzmonitor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:16.444Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-authz-outage
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-cmd-core-authzmonitor-test-recorded
+    title: recorded
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:21.505Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-newrecorded
+    title: newRecorded
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:26.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-recorded-enabled
+    title: recorded.Enabled
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:31.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-recorded-withattrs
+    title: recorded.WithAttrs
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:36.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-recorded-withgroup
+    title: recorded.WithGroup
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:41.293Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-recorded-handle
+    title: recorded.Handle
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:46.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-recorded-all
+    title: recorded.all
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:51.044Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-scriptedauthorizer
+    title: scriptedAuthorizer
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:39:55.971Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-scriptedauthorizer-mayact
+    title: scriptedAuthorizer.MayAct
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:01.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-scriptedauthorizer-set
+    title: scriptedAuthorizer.set
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:06.144Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-listingauthorizer
+    title: listingAuthorizer
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:11.265Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-listingauthorizer-actableaccounts
+    title: listingAuthorizer.ActableAccounts
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:16.192Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testmonitor
+    title: testMonitor
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:21.301Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testauthzmonitorlogseachchangeonce
+    title: TestAuthzMonitorLogsEachChangeOnce
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:26.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testauthzmonitorprobeseesthewayback
+    title: TestAuthzMonitorProbeSeesTheWayBack
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:31.327Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-metrics
+    title: metrics
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:36.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-collect
+    title: collect
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:41.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testauthzmonitormetric
+    title: TestAuthzMonitorMetric
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:46.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testauthzmonitorkeepsthelisting
+    title: TestAuthzMonitorKeepsTheListing
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:52.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-failingperms
+    title: failingPerms
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:40:58.730Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-failingperms-readrelationships
+    title: failingPerms.ReadRelationships
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:05.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-readyserver
+    title: readyServer
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:11.581Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-answer
+    title: answer
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:16.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-readyz
+    title: readyz
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:21.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testreadyonlyafterspicedbansweredwithitsschema
+    title: TestReadyOnlyAfterSpiceDBAnsweredWithItsSchema
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:26.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzmonitor-test-testreadystaysreadyduringanoutage
+    title: TestReadyStaysReadyDuringAnOutage
+    status: active
+    sourceFile: cmd/core/authzmonitor_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:31.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-outage
+  - id: SYM-cmd-core-authzsync-test-testreconcileaccesswritestheowner
+    title: TestReconcileAccessWritesTheOwner
+    status: active
+    sourceFile: cmd/core/authzsync_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:36.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-authz-sync
+  - id: SYM-cmd-core-token-waitforspicedb
+    title: waitForSpiceDB
+    status: active
+    sourceFile: cmd/core/token.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:42.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-token-issue-atomic
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-cmd-core-tokenissue-test-flakywrites
+    title: flakyWrites
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:47.978Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-flakywrites-writerelationships
+    title: flakyWrites.WriteRelationships
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:53.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-grantsfixture-issuer
+    title: grantsFixture.issuer
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:41:58.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-up
+    title: up
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:03.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-down
+    title: down
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:08.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testtokenissuewaitsforspicedbandissuesnothingwithoutit
+    title: TestTokenIssueWaitsForSpiceDBAndIssuesNothingWithoutIt
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:13.937Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testtokenissuewaitsuntilspicedbanswers
+    title: TestTokenIssueWaitsUntilSpiceDBAnswers
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:19.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testtokenissuewithoutagrantneedsnothingofspicedb
+    title: TestTokenIssueWithoutAGrantNeedsNothingOfSpiceDB
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:24.829Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testtokenissuerevokeswhenitsgrantcantreachspicedb
+    title: TestTokenIssueRevokesWhenItsGrantCantReachSpiceDB
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:30.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-grantsfixture-requirenograntandtrail
+    title: grantsFixture.requireNoGrantAndTrail
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:35.556Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testtokenissuewithspicedbup
+    title: TestTokenIssueWithSpiceDBUp
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:41.148Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testwaitforspicedb
+    title: TestWaitForSpiceDB
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:46.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-cmd-core-tokenissue-test-testgaterefusesasunavailable
+    title: TestGateRefusesAsUnavailable
+    status: active
+    sourceFile: cmd/core/tokenissue_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:52.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-token-issue-atomic
+  - id: SYM-internal-identity-app-grants-grants-issuetoken
+    title: Grants.IssueToken
+    status: active
+    sourceFile: internal/identity/app/grants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:42:57.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-token-issue-atomic
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-internal-identity-spicedb-authorizer-authorizer-ping
+    title: Authorizer.Ping
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:02.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-internal-identity-spicedb-authorizer-unavailable
+    title: unavailable
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:07.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-spicedb-authorizer
+      - type: implements
+        target: REQ-identity-authz-spicedb-answers
+  - id: SYM-internal-identity-spicedb-authorizer-test-testauthorizerunavailableismarked
+    title: TestAuthorizerUnavailableIsMarked
+    status: active
+    sourceFile: internal/identity/spicedb/authorizer_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:12.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-spicedb-authorizer
+  - id: SYM-internal-views-connectapi-authz-test-downauthorizer
+    title: downAuthorizer
+    status: active
+    sourceFile: internal/views/connectapi/authz_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:17.590Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-internal-views-connectapi-authz-test-downauthorizer-mayact
+    title: downAuthorizer.MayAct
+    status: active
+    sourceFile: internal/views/connectapi/authz_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:22.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-internal-views-connectapi-authz-test-testrestauthorizationunavailableis503
+    title: TestRESTAuthorizationUnavailableIs503
+    status: active
+    sourceFile: internal/views/connectapi/authz_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T15:43:27.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz

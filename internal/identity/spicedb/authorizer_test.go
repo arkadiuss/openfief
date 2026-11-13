@@ -3,6 +3,7 @@ package spicedb_test
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/identity/spicedb"
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 var errSpiceDB = errors.New("spicedb unavailable")
@@ -295,4 +297,68 @@ func TestObjectID(t *testing.T) {
 	if _, err := spicedb.ObjectID(""); !errors.Is(err, spicedb.ErrInvalidID) {
 		t.Errorf("ObjectID(\"\") = %v, want ErrInvalidID", err)
 	}
+}
+
+// TestAuthorizerUnavailableIsMarked checks that a SpiceDB that fails or is too
+// slow, in a check, a lookup or a ping, is reported as
+// kernel.ErrAuthzUnavailable, which the APIs answer as 503; that a refused ID
+// is not, since SpiceDB was never asked; and that a client that went away is
+// not blamed on SpiceDB.
+func TestAuthorizerUnavailableIsMarked(t *testing.T) {
+	t.Parallel()
+	owner := identity.Caller{Holder: identity.HolderOwner, ID: "s"}
+	check := func(ctx context.Context, z *spicedb.Authorizer) error {
+		_, err := z.MayAct(ctx, owner, identity.ActionView, "bonds")
+		return fmt.Errorf("check: %w", err)
+	}
+	lookup := func(ctx context.Context, z *spicedb.Authorizer) error {
+		_, err := z.ActableAccounts(ctx, owner, identity.ActionView)
+		return fmt.Errorf("lookup: %w", err)
+	}
+	ping := func(ctx context.Context, z *spicedb.Authorizer) error { return fmt.Errorf("ping: %w", z.Ping(ctx)) }
+	tests := []struct {
+		name string
+		call func(ctx context.Context, z *spicedb.Authorizer) error
+		f    *fake
+	}{
+		{"a check that fails", check, &fake{err: errSpiceDB}},
+		{"a check that times out", check, &fake{block: true}},
+		{"a lookup that fails", lookup, &fake{err: errSpiceDB}},
+		{"a lookup that times out", lookup, &fake{block: true}},
+		{"a lookup stream that fails", lookup, &fake{lookup: lookedUp("bonds"), lookupErr: errSpiceDB}},
+		{"a ping that fails", ping, &fake{err: errSpiceDB}},
+		{"a ping that times out", ping, &fake{block: true}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			err := tt.call(t.Context(), spicedb.NewAuthorizer(tt.f, spicedb.WithTimeout(10*time.Millisecond)))
+			if !errors.Is(err, kernel.ErrAuthzUnavailable) {
+				t.Errorf("error = %v, want kernel.ErrAuthzUnavailable", err)
+			}
+		})
+	}
+	t.Run("a refused ID", func(t *testing.T) {
+		t.Parallel()
+		_, err := spicedb.NewAuthorizer(&fake{}).MayAct(t.Context(), owner, identity.ActionView, "")
+		if err == nil || errors.Is(err, kernel.ErrAuthzUnavailable) {
+			t.Errorf("error = %v, want a refusal that is not unavailable: SpiceDB was never asked", err)
+		}
+	})
+	t.Run("a client that went away", func(t *testing.T) {
+		t.Parallel()
+		ctx, cancel := context.WithCancel(t.Context())
+		cancel()
+		_, err := spicedb.NewAuthorizer(&fake{block: true}).MayAct(ctx, owner, identity.ActionView, "bonds")
+		if err == nil || errors.Is(err, kernel.ErrAuthzUnavailable) {
+			t.Errorf("error = %v, want one that is not unavailable", err)
+		}
+	})
+	t.Run("a ping that is answered", func(t *testing.T) {
+		t.Parallel()
+		f := &fake{}
+		if err := spicedb.NewAuthorizer(f).Ping(t.Context()); err != nil || len(f.checks) != 1 {
+			t.Errorf("Ping = %v after %d checks, want nil after one", err, len(f.checks))
+		}
+	})
 }

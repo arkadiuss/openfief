@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ab1f83b13e0
+  - type: implements
+    from: SYM-cmd-core-authzmonitor-monitoredlister
+    to: REQ-identity-authz-spicedb-answers
+    created_at: 2026-11-13T15:39:08.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da99892f88f2
+  - type: covered_by
+    from: SYM-cmd-core-authzmonitor-monitoredlister
+    to: TEST-core-authz-outage
+    created_at: 2026-11-13T15:39:08.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b82cae3bb5a

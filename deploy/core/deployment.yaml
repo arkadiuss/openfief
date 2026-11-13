@@ -101,7 +101,9 @@ spec:
             - name: connect
               containerPort: 8081
           # /healthz answers as soon as the process listens, also while it waits for the database and migrates;
-          # /readyz only once it is migrated and the database answers. Neither needs a token or returns data.
+          # /readyz only once it is migrated and the database answers and, with --authz=spicedb, SpiceDB has answered
+          # once with its schema written: the start's alone, so a SpiceDB outage later makes the APIs answer 503 for
+          # what needs a check and does not take the core out of its Service. Neither needs a token or returns data.
           livenessProbe:
             httpGet:
               path: /healthz
