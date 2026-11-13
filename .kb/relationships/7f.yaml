@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3c98ac3e00f
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-count
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:39.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-885de0a7a245

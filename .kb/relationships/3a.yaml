@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13df7ba31767
+  - type: covered_by
+    from: SYM-models-models-provider-pb-init
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:04:22.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b96c50fe914
+  - type: implements
+    from: SYM-models-models-provider-pb-init
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:04:22.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32176a4ab743
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:23.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a568820ac7
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:23.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b0bb90d65d2

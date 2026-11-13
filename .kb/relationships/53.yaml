@@ -734,3 +734,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e56730ed897
+  - type: specified_by
+    from: REQ-models-data-tiers-deny-by-default
+    to: SCEN-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T11:28:54.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99dbdcd9ee94
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-rejection-ends-the-call
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:30.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75906ddb02c7
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:05.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca7339b55f46
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:05.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-975258dc6097
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:36.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9262767a8baa
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:36.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c91a090f3d
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-request
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:12:27.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6d49606d340
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-request
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:12:27.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-887ac272a0a9

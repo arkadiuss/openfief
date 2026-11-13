@@ -152,7 +152,7 @@ The tool sorts each changed path by the first rule that matches it, in [classify
 | A page under `docs/`, or a record under `.kb/` | docs:check, docs:build, kibi:staged | 90 to 100 seconds, almost all in docs:build | 3 minutes or more; 20 to 25 minutes with `.kb/` staged |
 | `Taskfile.yml` or `go.mod`: check:commit:full | everything | 170 seconds (the kibi upgrade commit) | 35 to 38 minutes |
 
-The architecture tests ([tools/archtest](../../tools/archtest/doc.go), [code-organization.md](code-organization.md#architecture-tests)) read the whole repository, and name the directories they walk as relative literals (`"../../internal"`, `"../../plugins"` and the others), so the hook reruns them for a change under any of those directories.
+The architecture tests ([tools/archtest](../../tools/archtest/doc.go), [code-organization.md](code-organization.md#architecture-tests)) read the whole repository, and name the directories they walk as relative literals (`"../../internal"`, `"../../plugins"` and the others), so the hook reruns them for a change under any of those directories. A new bounded context is added to the tests' context map (`tools/archtest/layout.go`) with the table in code-organization.md; a test that skips without PostgreSQL is listed in `exceptions.txt` with its reason.
 
 The hook is less strict than CI by design: CI's `task check` stays whole, and runs on every pull request and every push to `main`. Linting a subset of packages can miss a finding that needs other packages (`dupl` compares code across packages), and a test that reads a file through a path built at run time, rather than a literal, isn't rerun when that file changes. [testing.md](testing.md#stability) asks tests to name such files with literal paths.
 

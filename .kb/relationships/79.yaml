@@ -1238,3 +1238,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e49ab4c35160
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-check-capabilities
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:01.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcf2754d38b1
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-check-capabilities
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:50:02.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ea3696be81
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-feature
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:21.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbb95613213c
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-feature
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:21.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5f6eb5c75ec

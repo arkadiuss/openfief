@@ -307,6 +307,9 @@ const (
 	AuditAction_AUDIT_ACTION_GRANT_CREATED AuditAction = 10
 	// A grant of access ended; the entry names its holder, then its target.
 	AuditAction_AUDIT_ACTION_GRANT_REVOKED AuditAction = 11
+	// A call to a model, or one the model router refused (D-205, D-211): the
+	// entry names the role and the model, never a question or an answer.
+	AuditAction_AUDIT_ACTION_MODEL_CALL AuditAction = 12
 )
 
 // Enum value maps for AuditAction.
@@ -324,6 +327,7 @@ var (
 		9:  "AUDIT_ACTION_SCRIPT_TOKEN_REVOKED",
 		10: "AUDIT_ACTION_GRANT_CREATED",
 		11: "AUDIT_ACTION_GRANT_REVOKED",
+		12: "AUDIT_ACTION_MODEL_CALL",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":            0,
@@ -338,6 +342,7 @@ var (
 		"AUDIT_ACTION_SCRIPT_TOKEN_REVOKED":   9,
 		"AUDIT_ACTION_GRANT_CREATED":          10,
 		"AUDIT_ACTION_GRANT_REVOKED":          11,
+		"AUDIT_ACTION_MODEL_CALL":             12,
 	}
 )
 
@@ -441,21 +446,27 @@ const (
 	AuditRefKind_AUDIT_REF_KIND_SLEEVE AuditRefKind = 8
 	// The household, by its id, "home".
 	AuditRefKind_AUDIT_REF_KIND_HOUSEHOLD AuditRefKind = 9
+	// A role of the model router, by its name: "ask" or "maintainer".
+	AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE AuditRefKind = 10
+	// A model entry, as "provider/model", the names the owner configured.
+	AuditRefKind_AUDIT_REF_KIND_MODEL AuditRefKind = 11
 )
 
 // Enum value maps for AuditRefKind.
 var (
 	AuditRefKind_name = map[int32]string{
-		0: "AUDIT_REF_KIND_UNSPECIFIED",
-		1: "AUDIT_REF_KIND_SESSION",
-		2: "AUDIT_REF_KIND_PASSKEY",
-		3: "AUDIT_REF_KIND_ENROLLMENT_CODE",
-		4: "AUDIT_REF_KIND_SCRIPT_TOKEN",
-		5: "AUDIT_REF_KIND_PERSON",
-		6: "AUDIT_REF_KIND_VIEW_PLUGIN",
-		7: "AUDIT_REF_KIND_ACCOUNT",
-		8: "AUDIT_REF_KIND_SLEEVE",
-		9: "AUDIT_REF_KIND_HOUSEHOLD",
+		0:  "AUDIT_REF_KIND_UNSPECIFIED",
+		1:  "AUDIT_REF_KIND_SESSION",
+		2:  "AUDIT_REF_KIND_PASSKEY",
+		3:  "AUDIT_REF_KIND_ENROLLMENT_CODE",
+		4:  "AUDIT_REF_KIND_SCRIPT_TOKEN",
+		5:  "AUDIT_REF_KIND_PERSON",
+		6:  "AUDIT_REF_KIND_VIEW_PLUGIN",
+		7:  "AUDIT_REF_KIND_ACCOUNT",
+		8:  "AUDIT_REF_KIND_SLEEVE",
+		9:  "AUDIT_REF_KIND_HOUSEHOLD",
+		10: "AUDIT_REF_KIND_MODEL_ROLE",
+		11: "AUDIT_REF_KIND_MODEL",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":     0,
@@ -468,6 +479,8 @@ var (
 		"AUDIT_REF_KIND_ACCOUNT":         7,
 		"AUDIT_REF_KIND_SLEEVE":          8,
 		"AUDIT_REF_KIND_HOUSEHOLD":       9,
+		"AUDIT_REF_KIND_MODEL_ROLE":      10,
+		"AUDIT_REF_KIND_MODEL":           11,
 	}
 )
 
@@ -3982,7 +3995,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
-	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xa6\x03\n" +
+	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04*\xc3\x03\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -3996,12 +4009,13 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"!AUDIT_ACTION_SCRIPT_TOKEN_REVOKED\x10\t\x12\x1e\n" +
 	"\x1aAUDIT_ACTION_GRANT_CREATED\x10\n" +
 	"\x12\x1e\n" +
-	"\x1aAUDIT_ACTION_GRANT_REVOKED\x10\v*x\n" +
+	"\x1aAUDIT_ACTION_GRANT_REVOKED\x10\v\x12\x1b\n" +
+	"\x17AUDIT_ACTION_MODEL_CALL\x10\f*x\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
-	"\x14AUDIT_OUTCOME_FAILED\x10\x03*\xbb\x02\n" +
+	"\x14AUDIT_OUTCOME_FAILED\x10\x03*\xf4\x02\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -4012,7 +4026,10 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1aAUDIT_REF_KIND_VIEW_PLUGIN\x10\x06\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_ACCOUNT\x10\a\x12\x19\n" +
 	"\x15AUDIT_REF_KIND_SLEEVE\x10\b\x12\x1c\n" +
-	"\x18AUDIT_REF_KIND_HOUSEHOLD\x10\t*\x99\x01\n" +
+	"\x18AUDIT_REF_KIND_HOUSEHOLD\x10\t\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_MODEL_ROLE\x10\n" +
+	"\x12\x18\n" +
+	"\x14AUDIT_REF_KIND_MODEL\x10\v*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

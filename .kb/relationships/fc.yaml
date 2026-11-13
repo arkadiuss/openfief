@@ -790,3 +790,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f02ba39918d8
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-owners
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:18.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c1b6363ef1
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler-generate
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:52.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d86874cb792
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler-generate
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:52.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd7dde0b3cd
+  - type: covered_by
+    from: SYM-models-models-provider-pb-finish-reason-number
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:55:20.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c10a08fdfa5a
+  - type: implements
+    from: SYM-models-models-provider-pb-finish-reason-number
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:55:20.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-494b766f1af1
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:42.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11e7bb4bca06
+  - type: implements
+    from: SYM-models-models-provider-pb-message-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:43.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-429af402935a

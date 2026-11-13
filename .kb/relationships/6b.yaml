@@ -1105,3 +1105,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4728d160c2fe
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-role-to
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:16.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfc6f58f6939
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-role-to
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:36:16.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e9a46efa5b6
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-test-generate
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:34.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da2ab9e401f
+  - type: covered_by
+    from: SYM-models-models-provider-pb-wire-protocol-enum
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:20.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f90f94b235
+  - type: implements
+    from: SYM-models-models-provider-pb-wire-protocol-enum
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:20.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbe8f66ee863

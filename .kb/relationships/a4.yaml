@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-865093921c60
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-keeps-text-out-of-records-and-errors
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:48.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b044d71178d

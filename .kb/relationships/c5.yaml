@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4713dea0bcac
+  - type: executable_for
+    from: SYM-models-cmd-core-modelrouter-test-recording-log-append-audit
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:19.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470e45071606
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-caches-entries-until-they-expire
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:38.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8214f51bba7
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-role-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:51.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec4239845798

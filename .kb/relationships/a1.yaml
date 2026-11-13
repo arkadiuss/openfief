@@ -846,3 +846,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fde2b6b4ef2
+  - type: executable_for
+    from: SYM-models-modelrouter-app-settings-test-test-settings-route-cleared
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:54.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71d3ce6cbc40
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-policy
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:40:22.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7171591a3fe4
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-policy
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:40:22.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fed818732e6
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-role
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:55.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc382993cce2
+  - type: implements
+    from: SYM-models-modelrouter-ref-role
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:55.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18c62c0422b2
+  - type: covered_by
+    from: SYM-models-models-provider-pb-wire-protocol-number
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:40.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88be0fe3eb6b
+  - type: implements
+    from: SYM-models-models-provider-pb-wire-protocol-number
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:40.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470c121b5311
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-request-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:05:00.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fac284be478
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-request-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:05:01.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcb93b427660

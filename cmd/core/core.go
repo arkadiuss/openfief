@@ -22,6 +22,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	modelspg "github.com/arkadiuss/openfief/internal/modelrouter/postgres"
 	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
@@ -47,7 +48,7 @@ func withPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
 }
 
 // migrate applies every context's migrations: the ledger's, valuation's with
-// River's, identity's, ingest's, portfolio's and attention's. Each takes its own advisory lock, so replicas
+// River's, identity's, ingest's, portfolio's, attention's and the models'. Each takes its own advisory lock, so replicas
 // starting at once apply each migration once.
 func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err := ledgerpg.Migrate(ctx, pool); err != nil {
@@ -66,6 +67,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	if err := attentionpg.Migrate(ctx, pool); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
+	if err := modelspg.Migrate(ctx, pool); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	return nil
@@ -122,6 +126,8 @@ type core struct {
 	// attention runs the checks that raise attention items and publishes
 	// the outbox's events (D-130).
 	attention *attention
+	// agents holds the models settings and the model router (D-205, D-212).
+	agents *agentModels
 	// authz is the connection to SpiceDB, closed on shutdown; nil with the
 	// authorization policy.
 	authz io.Closer
@@ -218,6 +224,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
+	agents := newAgentModels(pool, auth, cfg.Auth.Origins, now)
 	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
@@ -236,19 +243,29 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(pool), names, l),
+		providers: agents.providers,
 	}
 	plugin := withModelService(withAuthService(apis.plugin, auth, callers, log), models, callers, log)
 	owners := ingestOwners(auth, cfg.Auth.Origins, authz)
-	plugin = withBondLotService(plugin, newBondLots(deps, owners), callers, log)
-	plugin = withStatementService(plugin, newUploads(deps, owners), newTickers(deps, owners), newRetries(deps, owners), callers, log)
-	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
-	plugin = withPriceCheckService(plugin, checks, callers, log)
+	plugin = withIngestServices(plugin, deps, owners, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(acc.sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
-	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
+	plugin = withSettingsService(withModelSettingsService(plugin, agents.settings, callers, log),
+		newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
-	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
+	return &core{agents: agents, browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
+}
+
+// withIngestServices returns h with the services that feed the ledger and
+// its prices mounted next to it: the BondLotService (D-9, D-49), the
+// StatementService (D-7, D-49), the MarketDataService (D-94) and the
+// PriceCheckService (D-110, D-112).
+func withIngestServices(h http.Handler, deps *connectorDeps, owners *ownerSessions, callers identityconnect.Callers, log *slog.Logger) http.Handler {
+	h = withBondLotService(h, newBondLots(deps, owners), callers, log)
+	h = withStatementService(h, newUploads(deps, owners), newTickers(deps, owners), newRetries(deps, owners), callers, log)
+	h = withMarketDataService(h, deps.rankings, callers, log)
+	return withPriceCheckService(h, deps.crossChecks, callers, log)
 }
 
 // access is the core's authorization wiring: the authorizer and syncer

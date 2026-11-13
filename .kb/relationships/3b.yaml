@@ -818,3 +818,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22e9eba54dee
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-store-save-toggle
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:47.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9afc3d6a54c8
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-store-save-toggle
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:47.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f53d4807e87
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-new-model-settings-service-handler
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:52:40.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e0b0888c700
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-new-model-settings-service-handler
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:52:40.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-140ab168e7e0
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:35.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa405791bb6
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:35.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7efe44ae99a3
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-get-description
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:42.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5739286e2c18
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-get-description
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:42.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c52a62ddc59

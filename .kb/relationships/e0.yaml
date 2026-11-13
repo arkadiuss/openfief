@@ -1119,3 +1119,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41488599a9b9
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider-describe
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:37.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f855c92d64
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider-describe
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:37.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87acffe6c2f6
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-proto-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:32.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d95f326ab4f
+  - type: implements
+    from: SYM-models-models-provider-pb-message-proto-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:32.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9c77d5c5416

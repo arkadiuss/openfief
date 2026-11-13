@@ -699,3 +699,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e70d9bd1939
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings-switch
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:00.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cfffbe40ab2
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings-switch
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:32:00.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75699bd9476d
+  - type: covered_by
+    from: SYM-models-models-settings-pb-route-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:06:24.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99725113c807
+  - type: implements
+    from: SYM-models-models-settings-pb-route-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:06:24.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5225eb7e38f4
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-features
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:09.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39b451b998a6
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-features
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:09.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0015cb94d47
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:29.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23d408773691
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:29.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6e513d428de

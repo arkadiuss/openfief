@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff66e9792836
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-store-save-enabled
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:27:32.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2834023a4188
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-main-run
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:08.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ed7775fbf86
+  - type: implements
+    from: SYM-models-plugins-model-openai-main-run
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:08.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39113cc9297d

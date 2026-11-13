@@ -902,3 +902,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a285374cc85b
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-ref-valid
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:30.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121a24d1ff9d
+  - type: implements
+    from: SYM-models-modelrouter-ref-ref-valid
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:30.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7a6f2db7c9e
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:06:58.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47cb9e2368c5
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:06:58.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d640e09a974d

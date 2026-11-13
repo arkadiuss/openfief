@@ -881,3 +881,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e16cf507ec2
+  - type: covered_by
+    from: SYM-models-identity-audit-valid-model-ref
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T12:26:43.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b9cb32de78
+  - type: implements
+    from: SYM-models-identity-audit-valid-model-ref
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-13T12:26:43.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dd105d93caf
+  - type: implements
+    from: SYM-models-identity-audit-valid-model-ref
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:26:43.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ca751bde7b1
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-target
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:35:45.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a65656a844
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-target
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:35:45.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b631465b731
+  - type: executable_for
+    from: SYM-models-plugins-operator-model-provider-test-test-model-provider-manifest
+    to: TEST-operator-model-provider-manifest
+    created_at: 2026-11-13T12:45:21.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5d73db585c1

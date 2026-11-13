@@ -881,3 +881,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2627869d3989
+  - type: covered_by
+    from: SYM-models-modelrouter-app-ports-call-record
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:03.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c4ce6f3085f
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-call-record
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:03.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b879343e406b
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-call-record
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:29:03.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2afb05c33bf3
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-input-price
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:21.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17d4857a802b
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-input-price
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:21.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b847ef360cd3
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-route-request-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:11:31.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5abaad0c2b2d
+  - type: implements
+    from: SYM-models-models-settings-pb-set-route-request-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:11:31.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-254b15f93af4

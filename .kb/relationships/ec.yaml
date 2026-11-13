@@ -951,3 +951,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38e7923735ed
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-owners-check-owner
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:18.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47212da66aa0
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-tool-call-to
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:36:11.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1cce9043ab7
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-tool-call-to
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:36:11.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c752b0aed1b
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-chat-test-test-complete-key-error-is-unavailable
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:47:40.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaf01ba977de
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-raw-config-parse
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:10.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e088abdad37c
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-raw-config-parse
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:48:10.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3184611bc085
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-request-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:56.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0e16e3cc5ec
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-request-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:56.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3695e870d8de

@@ -853,3 +853,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-832011ea9a56
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-works-when-a-provider-cannot-list-its-models
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:43.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efb40f508660
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-switch-with-toggle
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:21.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee965080e66e
+  - type: implements
+    from: SYM-models-modelrouter-switch-switch-with-toggle
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:44:21.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e111f8a165f
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-tool
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:45:51.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b8d7dc1253
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-tool
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:45:51.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e09691f14303

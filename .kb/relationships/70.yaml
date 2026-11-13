@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e679dcb4193
+  - type: verified_by
+    from: SCEN-models-calls-audited-fail-closed
+    to: TEST-models-app-router
+    created_at: 2026-11-13T11:28:20.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00a35e0c8f72
+  - type: verified_by
+    from: SCEN-models-calls-audited-fail-closed
+    to: TEST-core-model-router
+    created_at: 2026-11-13T11:28:20.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e2e1fec04e
+  - type: verified_by
+    from: SCEN-models-calls-audited-fail-closed
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-13T11:28:20.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76f9932c7068

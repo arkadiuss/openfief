@@ -930,3 +930,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-910915b57172
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-output-price
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:26.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd805991c89d
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-output-price
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58e17bb7ab55
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-enabled
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:27.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-819cee4e47a6
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-get-enabled
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:27.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbc62edca641

@@ -979,3 +979,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2adb1b093ece
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-provider-list-models
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:49:42.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1beba8ae0e36
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-provider-list-models
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:49:42.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd393b2f0770

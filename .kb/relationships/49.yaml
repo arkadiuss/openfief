@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff1492865412
+  - type: covered_by
+    from: SYM-models-ingest-kube-discovery-running-as
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T12:26:58.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-370ff04d62bb
+  - type: implements
+    from: SYM-models-ingest-kube-discovery-running-as
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:26:58.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf3eef2685c8
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-unsafe-model-char
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:41.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a431315880d
+  - type: implements
+    from: SYM-models-modelrouter-ref-unsafe-model-char
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:41.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9277a9eac5f7

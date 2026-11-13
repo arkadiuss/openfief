@@ -811,3 +811,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ce25906eca9
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-catalog
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:15.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4544b58ad174
+  - type: implements
+    from: SYM-models-modelrouter-app-router-catalog
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:15.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a02b8ec2c4d
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:25.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-784ece39ba18
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:26.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a63aae2881aa
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-switch-gates-calls
+    created_at: 2026-11-13T12:29:26.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e56ac6d38d8
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:29:26.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71fb0bba4632
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-generate
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:29:26.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39da429666d
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-features
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:56.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6759850e7bd
+  - type: implements
+    from: SYM-models-modelrouter-switch-features
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:43:56.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec71b0d7b84
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-validate-tier-models
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:45:05.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6b3ecb046d2
+  - type: implements
+    from: SYM-models-modelrouter-tier-validate-tier-models
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:45:05.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbbbc59a32c
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-client
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:45:36.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ebe20318ae
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-client
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:45:37.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5abb2306aef8
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-describe
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:13.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a9197ec473b
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-describe
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:13.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2e93bfad53a

@@ -713,3 +713,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c71a5412ac1
+  - type: covered_by
+    from: SYM-models-modelrouter-request-message
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:35.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c48e1b1204e
+  - type: implements
+    from: SYM-models-modelrouter-request-message
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:35.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f7f23520b39
+  - type: covered_by
+    from: SYM-models-modelrouter-request-request-needs
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:00.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ea26fc4a6d
+  - type: implements
+    from: SYM-models-modelrouter-request-request-needs
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:43:00.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6b85ad5808d
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-valid-config
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:39.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b4c16dbebcf
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-request-get-tier
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:13:12.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f809f89db47
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-request-get-tier
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:13:12.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abbdcd93307c

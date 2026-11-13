@@ -902,3 +902,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ae11303ea67
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:49.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe6ef169338c
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:49.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5579ff5f13f2
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-response-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:03:50.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-097060e548b1
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-response-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:03:50.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a333b48a20c

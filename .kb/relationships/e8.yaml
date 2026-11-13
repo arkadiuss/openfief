@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b047e78dbe3
+  - type: covered_by
+    from: SYM-models-models-settings-pb-feature-toggle-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:05:54.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b69a182802a8
+  - type: implements
+    from: SYM-models-models-settings-pb-feature-toggle-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:05:54.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa776c6ed1bd

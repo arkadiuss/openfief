@@ -867,3 +867,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e91f40941a96
+  - type: specified_by
+    from: REQ-models-provider-plugin-contract
+    to: SCEN-models-provider-plugin-contract
+    created_at: 2026-11-13T11:28:51.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca4c303a761d
+  - type: covered_by
+    from: SYM-models-cmd-core-modelrouter-new-agent-models
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:05.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4774872d5365
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-new-agent-models
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:26:05.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8fb85f6157c
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-new-agent-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:26:05.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-289146b3f40a
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-new-agent-models
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:26:05.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d079c03f9d25
+  - type: covered_by
+    from: SYM-models-modelrouter-plan-skip
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:37.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ccb675db4a7
+  - type: implements
+    from: SYM-models-modelrouter-plan-skip
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:38:37.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53bf23a0794e
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-switch
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:06.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8342d647d080
+  - type: implements
+    from: SYM-models-modelrouter-switch-switch
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:44:06.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae5ef9e235d
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-get-tool-call-id
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:03.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e86bb18281
+  - type: implements
+    from: SYM-models-models-provider-pb-message-get-tool-call-id
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:03.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff093abe2951

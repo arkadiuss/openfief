@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b70dc278e648
+  - type: covered_by
+    from: SYM-models-modelrouter-request-finish-reason
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:25.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07ec5cb8b2cd
+  - type: implements
+    from: SYM-models-modelrouter-request-finish-reason
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:43:25.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d56770043a2

@@ -111,6 +111,10 @@ const (
 	// ActionGrantRevoked is a grant of access ended, by the owner or
 	// because its holder or its target is gone.
 	ActionGrantRevoked AuditAction = "grant_revoked"
+	// ActionModelCall is a call to a model, or one the model router refused
+	// (D-205, D-211): who asked, for which role and which model, and the
+	// outcome. Never the request, the answer or what it cost.
+	ActionModelCall AuditAction = "model_call"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -128,6 +132,7 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionScriptTokenRevoked:   {RefScriptToken},
 		ActionGrantCreated:         grantRefKinds(),
 		ActionGrantRevoked:         grantRefKinds(),
+		ActionModelCall:            {RefModelRole, RefModel},
 	}
 }
 
@@ -207,6 +212,12 @@ const (
 	RefSleeve RefKind = "sleeve"
 	// RefHousehold is the household, by its ID ("home").
 	RefHousehold RefKind = "household"
+	// RefModelRole is the role a model call was made for, by its name: "ask"
+	// or "maintainer" (D-205).
+	RefModelRole RefKind = "model_role"
+	// RefModel is a model entry called, as "provider/model" (D-205): names
+	// the owner configured, never text a model was sent.
+	RefModel RefKind = "model"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -229,15 +240,24 @@ func (r Ref) Validate() error {
 	case RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
 		return r.validateGrantRef()
 	case RefPasskey:
-		if len(r.ID) > maxPasskeyRefLen {
-			return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
-		}
-		b, err := ParsePasskeyID(r.ID)
-		if err != nil || looksLikeSecret(r.ID) || base64.RawURLEncoding.EncodeToString(b) != r.ID {
-			return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
-		}
+		return r.validatePasskeyRef()
+	case RefModelRole, RefModel:
+		return r.validateModel()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validatePasskeyRef checks that r's ID is a passkey's credential ID, in the
+// one encoding it is written in.
+func (r Ref) validatePasskeyRef() error {
+	if len(r.ID) > maxPasskeyRefLen {
+		return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
+	}
+	b, err := ParsePasskeyID(r.ID)
+	if err != nil || looksLikeSecret(r.ID) || base64.RawURLEncoding.EncodeToString(b) != r.ID {
+		return fmt.Errorf("%w: a passkey reference is its credential ID", ErrInvalidAuditEntry)
 	}
 	return nil
 }
@@ -256,13 +276,60 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
 	}
 	return nil
 }
+
+// validateModel returns nil when r, of kind RefModelRole or RefModel, names
+// a role or a model entry: names the owner configured, never text.
+func (r Ref) validateModel() error {
+	if r.Kind == RefModelRole && r.ID != "ask" && r.ID != "maintainer" {
+		return fmt.Errorf("%w: a model role reference is a role's name", ErrInvalidAuditEntry)
+	}
+	if r.Kind == RefModel && !validModelRef(r.ID) {
+		return fmt.Errorf("%w: a model reference is provider/model", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validModelRef reports whether id is a model reference: a provider
+// instance's name, a slash and the model's id (the models context's Ref).
+func validModelRef(id string) bool {
+	provider, model, ok := strings.Cut(id, "/")
+	return ok && validProviderRef(provider) && validModelID(model)
+}
+
+// validProviderRef reports whether name is a lower-case DNS label of at most
+// maxProviderRefID characters, without "--".
+func validProviderRef(name string) bool {
+	if name == "" || len(name) > maxProviderRefID || strings.Contains(name, "--") || name[0] == '-' || name[len(name)-1] == '-' {
+		return false
+	}
+	return !strings.ContainsFunc(name, func(c rune) bool {
+		return (c < 'a' || c > 'z') && (c < '0' || c > '9') && c != '-'
+	})
+}
+
+// validModelID reports whether id is one to maxModelRefID characters of
+// those ids and tags contain: letters, digits and "._:/@+-".
+func validModelID(id string) bool {
+	if id == "" || len(id) > maxModelRefID {
+		return false
+	}
+	return !strings.ContainsFunc(id, func(c rune) bool {
+		return (c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') && !strings.ContainsRune("._:/@+-", c)
+	})
+}
+
+// The longest provider instance name and model id of a model reference.
+const (
+	maxProviderRefID = 63
+	maxModelRefID    = 128
+)
 
 // looksLikeSecret reports whether s starts as a script token secret, a
 // session token or an enrollment code does. Their alphabet is base64url's,

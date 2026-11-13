@@ -979,3 +979,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6663012e5894
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-response-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:52.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-321b55f5c1e4
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-response-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:52.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17fec48a6868
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-request-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:05:07.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08c2504e6b3e
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-request-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:05:07.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4258b1d03504
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:43.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-776dfbebba7e
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:43.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269f0206a797

@@ -44,6 +44,9 @@ const (
 	PortName = "connect"
 	// CapabilityConnector is the capability of a connector plugin.
 	CapabilityConnector = "connector"
+	// CapabilityModelProvider is the capability of a model-provider plugin
+	// (D-205).
+	CapabilityModelProvider = "model-provider"
 )
 
 // PluginResource returns the operator's Plugin custom resource.
@@ -57,6 +60,9 @@ var (
 	ErrNotStarted = errors.New("connector discovery not started")
 	// ErrNoAddress reports an instance without a Service the core can call.
 	ErrNoAddress = errors.New("connector instance has no address")
+	// ErrNotModelProvider reports an instance that is not a running
+	// model-provider plugin.
+	ErrNotModelProvider = errors.New("not a running model-provider instance")
 )
 
 // Discovery follows the cluster's Plugin resources and plugin Services in
@@ -193,15 +199,41 @@ func (d *Discovery) BaseURL(instance string) (string, error) {
 	return "", fmt.Errorf("%w: %s", ErrNoAddress, instance)
 }
 
+// ModelProviderBaseURL returns the URL the core calls the model-provider
+// instance at, as BaseURL does, but only while the instance runs and may act
+// as a model provider (D-205): a route naming any other plugin, or one that
+// is not ready, sends nothing to it.
+func (d *Discovery) ModelProviderBaseURL(instance string) (string, error) {
+	if !d.started {
+		return "", ErrNotStarted
+	}
+	o, err := d.plugins.Lister().ByNamespace(d.ns).Get(instance)
+	if err != nil {
+		return "", fmt.Errorf("%w: %s: no such plugin: %w", ErrNotModelProvider, instance, err)
+	}
+	u, ok := o.(*unstructured.Unstructured)
+	if !ok || !runningAs(u, CapabilityModelProvider) {
+		return "", fmt.Errorf("%w: %s", ErrNotModelProvider, instance)
+	}
+	return d.BaseURL(instance)
+}
+
 // RunningConnector reports whether a Plugin resource runs a version that
 // may act as a connector: not being deleted, its Ready condition True, and
 // connector among its effective capabilities.
 func RunningConnector(u *unstructured.Unstructured) bool {
+	return runningAs(u, CapabilityConnector)
+}
+
+// runningAs reports whether a Plugin resource runs a version that may act
+// as capability: not being deleted, Ready, with capability among its
+// effective capabilities.
+func runningAs(u *unstructured.Unstructured, capability string) bool {
 	if u.GetDeletionTimestamp() != nil {
 		return false
 	}
 	caps, _, err := unstructured.NestedStringSlice(u.Object, "status", "effective", "capabilities")
-	if err != nil || !slices.Contains(caps, CapabilityConnector) {
+	if err != nil || !slices.Contains(caps, capability) {
 		return false
 	}
 	conds, _, err := unstructured.NestedSlice(u.Object, "status", "conditions")

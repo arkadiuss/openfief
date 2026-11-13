@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9f8c39a57d3
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-list-models
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:18.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559bb87b3fc1
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-list-models
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:18.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4110e79e8043

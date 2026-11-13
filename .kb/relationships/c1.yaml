@@ -965,3 +965,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9af16dcd7980
+  - type: covered_by
+    from: SYM-models-modelrouter-connectapi-settings-ref-strings
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:40.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44fc6dc59c22
+  - type: implements
+    from: SYM-models-modelrouter-connectapi-settings-ref-strings
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:33:40.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd0aac0829ab
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:26.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8e4426944dc
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:26.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-751afd4edc02
+  - type: covered_by
+    from: SYM-models-models-provider-pb-usage-get-output-tokens
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:03:19.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14e6df1b104b
+  - type: implements
+    from: SYM-models-models-provider-pb-usage-get-output-tokens
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:03:19.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca5a58ca841b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-routes
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:14.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6418d46c5625
+  - type: implements
+    from: SYM-models-models-settings-pb-get-model-settings-response-get-routes
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:14.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-977733a4e6a9

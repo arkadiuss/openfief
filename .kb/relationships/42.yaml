@@ -937,3 +937,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f26df4f5d0e9
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-ref
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:07.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d0fde8ff34
+  - type: implements
+    from: SYM-models-modelrouter-ref-ref
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:08.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e21b1220fd6b
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-parse-role
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:05.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13040425f184
+  - type: implements
+    from: SYM-models-modelrouter-ref-parse-role
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:05.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c7a95cd1284
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-proto-reflect
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:01.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-944b397cf40e
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-proto-reflect
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:01.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01f22f9dd6ff

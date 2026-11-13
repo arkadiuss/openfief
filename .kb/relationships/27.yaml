@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af545415952c
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-switch-allows
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:32.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e67efd42416

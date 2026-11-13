@@ -972,3 +972,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8813cb7c1074
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-router-try
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:35.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e556cc891319
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-try
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:35.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5c2a290b3f1
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router-try
+    to: REQ-models-calls-audited-fail-closed
+    created_at: 2026-11-13T12:29:35.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d2c691af2ee

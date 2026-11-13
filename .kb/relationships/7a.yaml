@@ -853,3 +853,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0435b9c715fa
+  - type: covered_by
+    from: SYM-models-modelrouter-plan-plan-input
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:28.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668ca35355c6
+  - type: implements
+    from: SYM-models-modelrouter-plan-plan-input
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:38:28.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e89ebf4531d
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-new-provider
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:20.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81505e7dcb2d
+  - type: covered_by
+    from: SYM-models-models-settings-pb-feature-toggle-proto-message
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:05:42.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28f7f23da547
+  - type: implements
+    from: SYM-models-models-settings-pb-feature-toggle-proto-message
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:05:42.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f49de7c36b65

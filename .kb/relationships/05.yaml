@@ -811,3 +811,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41e7b422feb4
+  - type: verified_by
+    from: SCEN-models-data-tiers-deny-by-default
+    to: TEST-models-domain
+    created_at: 2026-11-13T11:28:19.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86f689478848
+  - type: verified_by
+    from: SCEN-models-data-tiers-deny-by-default
+    to: TEST-models-app-router
+    created_at: 2026-11-13T11:28:19.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27b9777db94b
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-l121
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:08.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b245f709b5c9
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client-l121
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:08.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-235c39db3ef3
+  - type: covered_by
+    from: SYM-models-models-provider-pb-wire-protocol-enum-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:45.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9803eabe8406
+  - type: implements
+    from: SYM-models-models-provider-pb-wire-protocol-enum-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:45.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e10130cc0f29
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-response-get-finish-reason
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:04:05.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38b48ca3ada2
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-response-get-finish-reason
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:04:05.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e072c4f3ddb

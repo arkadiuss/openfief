@@ -29,6 +29,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	modelsrpc "github.com/arkadiuss/openfief/internal/modelrouter/connectrpc"
 	"github.com/arkadiuss/openfief/internal/plugins"
 	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
@@ -119,6 +120,9 @@ type connectorDeps struct {
 	// delivers bond terms or index levels it may not deliver (D-179), and
 	// one for its undeclared cross-check prices (D-141).
 	attention attentionItems
+	// providers is the model router's client of the model-provider plugins;
+	// runConnectors sets it once discovery has found the instances (D-205).
+	providers *modelProviders
 	// syncs is the scheduler the owner's sync retries go to (D-196);
 	// runConnectors sets it once the scheduler runs.
 	syncs *syncTrigger
@@ -233,6 +237,10 @@ func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncC
 		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 		d.entries.set(connectrpc.NewClient(pluginClient(), discovery.BaseURL, tokens))
 		d.entries.setDiscovery(discovery)
+	}
+	if d.providers != nil {
+		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
+		d.providers.set(modelsrpc.NewClient(pluginClient(), discovery.ModelProviderBaseURL, tokens))
 	}
 	ticker := time.NewTicker(schedulerTick)
 	defer ticker.Stop()

@@ -902,3 +902,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa39082d9db0
+  - type: verified_by
+    from: SCEN-models-provider-plugin-contract
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T11:28:17.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51f69c3cf444
+  - type: verified_by
+    from: SCEN-models-provider-plugin-contract
+    to: TEST-sdk-model-provider-server
+    created_at: 2026-11-13T11:28:17.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ff91ca75e4
+  - type: verified_by
+    from: SCEN-models-provider-plugin-contract
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-13T11:28:17.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a1fce981a57
+  - type: verified_by
+    from: SCEN-models-provider-plugin-contract
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T11:28:17.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f99b4d858bd9
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-request-get-model
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:20.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f588c11a7d37
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-request-get-model
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:20.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3877029a3318
+  - type: covered_by
+    from: SYM-models-models-settings-pb-feature-toggle-get-feature
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:06:00.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce2f52eee2b
+  - type: implements
+    from: SYM-models-models-settings-pb-feature-toggle-get-feature
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:06:00.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57f652dd4304

@@ -503,6 +503,9 @@ enum AuditAction {
   AUDIT_ACTION_GRANT_CREATED = 10;
   // A grant of access ended; the entry names its holder, then its target.
   AUDIT_ACTION_GRANT_REVOKED = 11;
+  // A call to a model, or one the model router refused (D-205, D-211): the
+  // entry names the role and the model, never a question or an answer.
+  AUDIT_ACTION_MODEL_CALL = 12;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -531,6 +534,10 @@ enum AuditRefKind {
   AUDIT_REF_KIND_SLEEVE = 8;
   // The household, by its id, "home".
   AUDIT_REF_KIND_HOUSEHOLD = 9;
+  // A role of the model router, by its name: "ask" or "maintainer".
+  AUDIT_REF_KIND_MODEL_ROLE = 10;
+  // A model entry, as "provider/model", the names the owner configured.
+  AUDIT_REF_KIND_MODEL = 11;
 }
 
 // AuditActor is who made the change.

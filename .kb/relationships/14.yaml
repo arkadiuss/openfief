@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0acb0c1d8608
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-chat-test-test-complete-errors
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:47:29.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92e9cf467acf
+  - type: covered_by
+    from: SYM-models-models-provider-pb-list-models-request-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:57:25.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66a1b2db9278
+  - type: implements
+    from: SYM-models-models-provider-pb-list-models-request-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:57:25.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e077c5320355

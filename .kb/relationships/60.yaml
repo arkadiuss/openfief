@@ -769,3 +769,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f630b800d54f
+  - type: covered_by
+    from: SYM-models-models-provider-pb-finish-reason
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:57.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aee14e15627e
+  - type: implements
+    from: SYM-models-models-provider-pb-finish-reason
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:57.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adc172a2d185
+  - type: covered_by
+    from: SYM-models-models-provider-pb-model-entry-get-max-output-tokens
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:58:41.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28920afd121a
+  - type: implements
+    from: SYM-models-models-provider-pb-model-entry-get-max-output-tokens
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:58:41.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c04a2a724a0a
+  - type: covered_by
+    from: SYM-models-models-provider-pb-generate-request-get-response-schema-json
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:35.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97a34c87a7e
+  - type: implements
+    from: SYM-models-models-provider-pb-generate-request-get-response-schema-json
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:35.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b99b28f993a0
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-response-proto-message
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:10:48.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaa3773e2553
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-response-proto-message
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:10:48.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0bc06364d5

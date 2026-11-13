@@ -734,3 +734,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0a4212e864f
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tier-policy-allows
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:45:10.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b79f92728cb5
+  - type: implements
+    from: SYM-models-modelrouter-tier-tier-policy-allows
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:45:10.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281c6fb3df34
+  - type: covered_by
+    from: SYM-models-models-provider-pb-usage-string
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:02:54.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db61d977d7b2
+  - type: implements
+    from: SYM-models-models-provider-pb-usage-string
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:02:54.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc243476fae
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-tier-models-request-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:12:33.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcd16a443bc0
+  - type: implements
+    from: SYM-models-models-settings-pb-set-tier-models-request-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:12:33.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-651f97dcb5af

@@ -755,3 +755,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17276c7556c5
+  - type: covered_by
+    from: SYM-models-modelrouter-plan-make-plan
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:47.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9be26280192
+  - type: implements
+    from: SYM-models-modelrouter-plan-make-plan
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:38:47.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-320af5a883ea
+  - type: implements
+    from: SYM-models-modelrouter-plan-make-plan
+    to: REQ-models-switch-gates-calls
+    created_at: 2026-11-13T12:38:47.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-851872ef03e5
+  - type: covered_by
+    from: SYM-models-modelrouter-request-tool-call
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:30.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7fc6b48d4b6
+  - type: implements
+    from: SYM-models-modelrouter-request-tool-call
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:30.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efb1905b0acc

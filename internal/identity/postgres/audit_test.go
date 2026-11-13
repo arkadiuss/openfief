@@ -85,6 +85,30 @@ func TestAuditLogIsAppendOnly(t *testing.T) {
 	}
 }
 
+// TestAuditLogKeepsModelCalls checks that the model router's entries (D-205)
+// go in and come back: the role and the model by name, an outcome, and the
+// system actor, with no text of a request.
+func TestAuditLogKeepsModelCalls(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t, true))
+	ctx := t.Context()
+	e := identity.AuditEntry{
+		At: issuedAt(), Actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}, Action: identity.ActionModelCall,
+		Outcome: identity.OutcomeOK,
+		Refs:    []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"}},
+	}
+	if err := store.AppendAudit(ctx, &e); err != nil {
+		t.Fatalf("AppendAudit: %v", err)
+	}
+	page, err := store.AuditEntries(ctx, &identity.AuditFilter{Action: identity.ActionModelCall})
+	if err != nil || len(page.Entries) != 1 {
+		t.Fatalf("AuditEntries = %+v, %v; want the entry", page, err)
+	}
+	if diff := cmp.Diff(e, page.Entries[0]); diff != "" {
+		t.Errorf("entry (-want +got):\n%s", diff)
+	}
+}
+
 // TestAuditLogRefusesFreeText checks the database's own CHECKs: an insert
 // that bypasses the domain still can't put free text, a secret or a long
 // payload in an entry.

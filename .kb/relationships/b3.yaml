@@ -874,3 +874,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07e92b847ba0
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-clock
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:28.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6fc4112bff
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:50.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75c570c5c0fd
+  - type: implements
+    from: SYM-models-modelrouter-switch-feature
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:43:50.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2d9e4575cd7
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-test-parse-config-refusals
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:53.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e810e9a5291

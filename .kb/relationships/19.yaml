@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80b027315c9e
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-response-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:38.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f50b3bf67aa
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-response-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:39.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37caa0c27525

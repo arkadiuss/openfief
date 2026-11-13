@@ -825,3 +825,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63931b46113d
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-pass-through-wrap-streaming-client
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:34:32.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94bbf004b6d2
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-ref
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:28.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8d70019c8a3
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tiers
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:37.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c169d3e0420
+  - type: implements
+    from: SYM-models-modelrouter-tier-tiers
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:44:37.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-453f7a71712e
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-proto-reflect
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:59:53.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38e0833892a2
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-proto-reflect
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:59:53.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb3f8d1ed497

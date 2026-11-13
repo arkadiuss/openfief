@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-257ef9fc3f56
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-migrate-migration
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:38:57.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c2861ba49ca
+  - type: implements
+    from: SYM-models-modelrouter-postgres-migrate-migration
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:38:57.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8d3d02a0c66
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:09.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01e285c40140
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:09.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15733ded321f

@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7592b55f8cd
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-audit-record-call
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:14.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4b6fb0a3442
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-must-ref
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:59.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b33081f0ca9

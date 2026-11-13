@@ -916,3 +916,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94a27e922492
+  - type: covered_by
+    from: SYM-models-modelrouter-tier-tier
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:31.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a64c2de353f9
+  - type: implements
+    from: SYM-models-modelrouter-tier-tier
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-13T12:44:31.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc7eb74c2788
+  - type: covered_by
+    from: SYM-models-models-provider-pb-location-enum
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:53:54.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6181cf3f42a4
+  - type: implements
+    from: SYM-models-models-provider-pb-location-enum
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:53:54.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-631a4a1db3aa

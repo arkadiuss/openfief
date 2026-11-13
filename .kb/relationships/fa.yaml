@@ -846,3 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d25c5a09dcb
+  - type: covered_by
+    from: SYM-models-modelrouter-app-ports-providers
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:46.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-702803339579
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-providers
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:28:46.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b164179007e8
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-wire-message
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:06.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c7a21229786
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-wire-message
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:50:06.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b367923e7757

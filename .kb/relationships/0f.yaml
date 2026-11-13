@@ -1056,3 +1056,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0b47467d2d9
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings-set-tier-models
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:22.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ba97bf75eb5
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings-set-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:32:22.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786b755f0309
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-descriptor
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:35.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b61649030576
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-descriptor
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:35.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce019becf7e4

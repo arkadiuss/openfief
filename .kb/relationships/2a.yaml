@@ -979,3 +979,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15e882baa0c3
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-fails-closed-without-settings
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:30:41.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a5f50d5c76a
+  - type: covered_by
+    from: SYM-models-models-provider-pb-describe-response
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:34.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c9c52b40b6
+  - type: implements
+    from: SYM-models-models-provider-pb-describe-response
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:34.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d3edea17450
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-call-get-name
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:08.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af313eeff696
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-call-get-name
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:08.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aa3bf7d2e05

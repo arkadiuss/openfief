@@ -1077,3 +1077,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0de749cbf19a
+  - type: covered_by
+    from: SYM-models-cmd-core-modelrouter-model-providers-describe
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:21:10.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab1271e43ea3
+  - type: implements
+    from: SYM-models-cmd-core-modelrouter-model-providers-describe
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:21:10.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ce581bb501f
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-config-entry
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-13T12:48:35.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5de2f40bb25
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-config-entry
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:48:35.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b13d482cca8
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-client
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:51:56.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-644b229c60ed
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-model-settings-service-client
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:51:56.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ba3a8594d9b

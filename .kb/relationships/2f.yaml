@@ -776,3 +776,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46e2c86dfbaa
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-new-settings
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:31:56.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b3ecf112dd
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-new-settings
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:31:56.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b4958af8da8
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-new-tier-policy-errors
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:38:04.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-781efce58133
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-proto-message
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:56.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5156829e4d
+  - type: implements
+    from: SYM-models-models-settings-pb-set-feature-enabled-request-proto-message
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:56.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b718cbcfbe

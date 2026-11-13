@@ -58,7 +58,7 @@ The sidebar tells one story, in reading order, and the docs home lays out the sa
 
 1. **Get started:** the [introduction](../OVERVIEW.md), the [quickstart](../quickstart.md) and [how it works](../architecture.md). A newcomer reads these three in order.
 2. **Guides:** tasks, step by step, such as [exposing OpenFief](../guides/expose.md) and [building a plugin](../guides/build-a-plugin.md).
-3. **Concepts:** each area in depth, split into **Platform** (plugins, operator, egress, identity, read API, views) and **Money and records** (kernel, ledger, ingest, valuation, treasury bonds, portfolio).
+3. **Concepts:** each area in depth, split into **Platform** (plugins, operator, egress, identity, read API, views, models) and **Money and records** (kernel, ledger, ingest, valuation, treasury bonds, portfolio).
 4. **Reference**, **Design** and **Contributing**: generated pages, the decisions, and these rules.
 
 Groups other than the first two fold away until the reader opens one or is on one of its pages. A page left out of `params.nav` appears under "More", so nothing is ever hidden; a path in `params.nav` that names no page fails the build. Status belongs in the reference and at the end of a page, never at the top: say what a thing does first, and mark what isn't built where it matters, in one plain sentence.

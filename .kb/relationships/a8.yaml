@@ -1070,3 +1070,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7de32f7a26dd
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:31:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e0f217a0c3
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:31:51.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e678466b0d8
+  - type: executable_for
+    from: SYM-models-modelrouter-connectapi-settings-test-mem-store-save-enabled
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:54.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b33f0b90bf8
+  - type: executable_for
+    from: SYM-models-modelrouter-modelrouter-test-test-switch-changes
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:37:37.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50c03943d7b7
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message-role-enum-descriptor
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:54:53.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94169c26a82
+  - type: implements
+    from: SYM-models-models-provider-pb-message-role-enum-descriptor
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:54:53.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34520fc0cae5

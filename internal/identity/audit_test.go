@@ -54,6 +54,31 @@ func TestNewAuditEntry(t *testing.T) {
 			action: identity.ActionEnrollmentLinkIssued, outcome: identity.OutcomeOK,
 			refs: []identity.Ref{{Kind: identity.RefEnrollmentCode, ID: auditCode}},
 		},
+		{
+			name: "model call", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "openrouter/openai/gpt-oss-120b"}},
+		},
+		{
+			name: "refused model call names the role only", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}},
+		},
+		{
+			name: "model call of the system", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionModelCall, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefModel, ID: "ollama/qwen3:8b"}},
+		},
+		{
+			name: "model reference that is a sentence", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModel, ID: "what is my net worth/x"}}, wantErr: true,
+		},
+		{
+			name: "model reference without a provider", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModel, ID: "gpt-oss"}}, wantErr: true,
+		},
+		{
+			name: "model role that is not a role", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "my question"}}, wantErr: true,
+		},
 		{name: "sign out everywhere names no record", actor: owner, action: identity.ActionSignOutEverywhere, outcome: identity.OutcomeOK},
 		{
 			name: "failed outcome", actor: owner, action: identity.ActionPasskeyRemoved, outcome: identity.OutcomeFailed,
@@ -164,7 +189,7 @@ func checkRefRejected(t *testing.T, kind identity.RefKind, name, v string) {
 // in and the error does not quote it.
 func TestAuditEntryRejectsSecretsAndFreeText(t *testing.T) {
 	t.Parallel()
-	kinds := []identity.RefKind{identity.RefSession, identity.RefPasskey, identity.RefEnrollmentCode, identity.RefScriptToken}
+	kinds := []identity.RefKind{identity.RefSession, identity.RefPasskey, identity.RefEnrollmentCode, identity.RefScriptToken, identity.RefModelRole, identity.RefModel}
 	for name, v := range rejectedValues() {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

@@ -1287,3 +1287,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-373df00f9956
+  - type: covered_by
+    from: SYM-models-modelrouter-request-tool
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:39.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c858de145efc
+  - type: implements
+    from: SYM-models-modelrouter-request-tool
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:39.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-581b43f25de4
+  - type: covered_by
+    from: SYM-models-modelrouter-switch-parse-feature
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:44:01.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b6fa3845b4
+  - type: implements
+    from: SYM-models-modelrouter-switch-parse-feature
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:44:01.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f414fa488879
+  - type: covered_by
+    from: SYM-models-models-provider-pb-message
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:00:17.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f70ad2e267ed
+  - type: implements
+    from: SYM-models-models-provider-pb-message
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:00:17.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d68e0a84fb45

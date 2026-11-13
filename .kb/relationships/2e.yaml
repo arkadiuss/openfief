@@ -1042,3 +1042,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eed614bc4f1f
+  - type: covered_by
+    from: SYM-models-modelrouter-app-ports-settings-store
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:42.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14baeda50e41
+  - type: implements
+    from: SYM-models-modelrouter-app-ports-settings-store
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:28:42.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d460b00238d
+  - type: covered_by
+    from: SYM-models-modelrouter-connectrpc-client-client-service
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:35:40.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4145c9b2463d
+  - type: implements
+    from: SYM-models-modelrouter-connectrpc-client-client-service
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:35:40.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0714bf3a442b

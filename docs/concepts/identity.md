@@ -194,6 +194,7 @@ Every use case that changes identity state runs its store calls inside `Atomic.A
 | A passkey is removed | `passkey_removed` | the removal and the sessions it revokes |
 | An enrollment link is issued, by a session or `core enroll-link` | `enrollment_link_issued` | the code row |
 | A script token is created or revoked, by a session or `core token` | `script_token_created`, `script_token_revoked` | the token row |
+| A model is called, or the model router refuses a call (D-205, [Models](models.md)) | `model_call`, `ok` when the call is about to be sent, `failed` when it came back with an error, `refused` when the router would not send it | nothing: the router writes the entry first and sends the call only if it was written; it names the role (`model_role`) and the model (`model`, `provider/model`), never the request, the answer or a token count |
 
 A registration begun in an owner session remembers that session (`identity.ceremonies.session_id`), so the passkey it creates is recorded under the right sign-in; one begun before that column existed is refused at its finish and begun again.
 

@@ -41,7 +41,7 @@ timeout = '120s'
   section = '/docs/concepts'
   [[params.nav.parts]]
     title = 'Platform'
-    pages = ['/docs/concepts/plugins.md', '/docs/concepts/operator.md', '/docs/concepts/egress.md', '/docs/concepts/identity.md', '/docs/concepts/read-api.md', '/docs/concepts/ui.md', '/docs/concepts/ghostfolio.md']
+    pages = ['/docs/concepts/plugins.md', '/docs/concepts/operator.md', '/docs/concepts/egress.md', '/docs/concepts/identity.md', '/docs/concepts/read-api.md', '/docs/concepts/ui.md', '/docs/concepts/ghostfolio.md', '/docs/concepts/models.md']
   [[params.nav.parts]]
     title = 'Money and records'
     pages = ['/docs/concepts/kernel.md', '/docs/concepts/ledger.md', '/docs/concepts/ingest.md', '/docs/concepts/valuation.md', '/docs/concepts/treasury-bonds.md', '/docs/concepts/portfolio.md', '/docs/concepts/attention.md']

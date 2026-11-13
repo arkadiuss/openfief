@@ -979,3 +979,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a35715de682c
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-store-save-toggle
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:27:36.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c23f6129c68
+  - type: covered_by
+    from: SYM-models-modelrouter-app-router-router
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:29:11.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-777a4698e5f8
+  - type: implements
+    from: SYM-models-modelrouter-app-router-router
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:29:11.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ac511c5d78
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-ref-string
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:19.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5852422f20b
+  - type: implements
+    from: SYM-models-modelrouter-ref-ref-string
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:19.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b3f71cf62db
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-safe-model-char
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:41:46.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b96f58954a7d
+  - type: implements
+    from: SYM-models-modelrouter-ref-safe-model-char
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:41:46.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b717cd97f474
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-settings-connect-unimplemented-model-settings-service-handler-set-tier-models
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:53:10.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10d6e1b97609
+  - type: implements
+    from: SYM-models-models-modelsv1connect-settings-connect-unimplemented-model-settings-service-handler-set-tier-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:53:10.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d13be426aa3

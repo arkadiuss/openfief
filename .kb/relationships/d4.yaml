@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bf6c760515b
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-fake-providers-models
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:28:00.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f59cfeeff68
+  - type: covered_by
+    from: SYM-models-modelrouter-ref-new-route
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:42:20.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1badc1a5c721
+  - type: implements
+    from: SYM-models-modelrouter-ref-new-route
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:42:20.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac36a7f6e6f9

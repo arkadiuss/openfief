@@ -846,3 +846,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-363fbacab5f7
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-migrate-migrations
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:39:17.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb529d59ad37
+  - type: implements
+    from: SYM-models-modelrouter-postgres-migrate-migrations
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:39:17.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b6bf38ee389
+  - type: covered_by
+    from: SYM-models-modelrouter-postgres-store-ref-row
+    to: TEST-models-postgres-store
+    created_at: 2026-11-13T12:40:06.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b38e3cecf3e
+  - type: implements
+    from: SYM-models-modelrouter-postgres-store-ref-row
+    to: REQ-models-switch-default-off
+    created_at: 2026-11-13T12:40:06.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb2e47af08fe
+  - type: executable_for
+    from: SYM-models-plugins-operator-model-provider-test-test-model-provider-config
+    to: TEST-operator-model-provider-manifest
+    created_at: 2026-11-13T12:45:32.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7584fc2f11a7
+  - type: covered_by
+    from: SYM-models-models-settings-pb-init
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:13:58.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0edde6a51d3
+  - type: implements
+    from: SYM-models-models-settings-pb-init
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:13:58.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0aa5f78a518

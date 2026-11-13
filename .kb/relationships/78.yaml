@@ -1056,3 +1056,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64b0e9ea896b
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-reply
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:01.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56730fa11f3f
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-reply
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:01.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d22c2fa593
+  - type: covered_by
+    from: SYM-models-models-provider-pb-retention-reset
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:56:02.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad075118a54d
+  - type: implements
+    from: SYM-models-models-provider-pb-retention-reset
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:56:02.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f36f69d24d5
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-proto-message
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:38.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5569b622ac6
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-proto-message
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:38.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1d4f441d9c6

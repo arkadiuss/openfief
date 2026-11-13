@@ -958,3 +958,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e499861916ea
+  - type: executable_for
+    from: SYM-models-modelrouter-app-fakes-test-events
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:27:07.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d5ec2339a8
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-test-generate-text
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:44.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89c2e7168e93
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:50:58.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8653f3ced455
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-model-provider-service-client
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:50:58.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d831129f9d70

@@ -1077,3 +1077,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c838b554f48
+  - type: covered_by
+    from: SYM-models-models-provider-pb-tool-get-name
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T13:01:37.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b3dabd4dbf
+  - type: implements
+    from: SYM-models-models-provider-pb-tool-get-name
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T13:01:37.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-761845f1f2bf
+  - type: covered_by
+    from: SYM-models-models-settings-pb-tier-models-get-models
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:07:32.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-743c2f5362ba
+  - type: implements
+    from: SYM-models-models-settings-pb-tier-models-get-models
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:07:32.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bb76c8c1977

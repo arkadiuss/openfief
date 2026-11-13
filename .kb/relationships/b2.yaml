@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-273b52d3b614
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-provider-key-from-mount
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-13T12:50:16.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5b0e69e04c
+  - type: implements
+    from: SYM-models-plugins-model-openai-provider-key-from-mount
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:50:16.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de95b740b5e4

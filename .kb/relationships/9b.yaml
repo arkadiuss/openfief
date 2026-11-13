@@ -1007,3 +1007,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2aea84f1f43
+  - type: executable_for
+    from: SYM-models-cmd-core-modelrouter-test-test-model-audit-records-calls-as-audit-entries
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:23.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c29d50e78bf
+  - type: executable_for
+    from: SYM-models-cmd-core-modelrouter-test-test-model-providers-before-discovery
+    to: TEST-core-model-router
+    created_at: 2026-11-13T12:26:33.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b75acb2c563
+  - type: executable_for
+    from: SYM-models-modelrouter-app-router-test-test-router-no-route
+    to: TEST-models-app-router
+    created_at: 2026-11-13T12:31:11.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ddcd966f221
+  - type: covered_by
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-13T12:51:37.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16c3256c0c5b
+  - type: implements
+    from: SYM-models-models-modelsv1connect-provider-connect-unimplemented-model-provider-service-handler
+    to: REQ-models-provider-plugin-contract
+    created_at: 2026-11-13T12:51:37.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fb935a1fd00

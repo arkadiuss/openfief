@@ -1,0 +1,174 @@
+// The model-provider contract (docs/DESIGN.md D-205): a model-provider plugin
+// serves ModelProviderService and the core's model router calls it. A plugin
+// speaks one wire protocol (OpenAI-compatible chat first, Anthropic's and
+// Gemini's later) to one provider instance; its model entries come from its
+// configuration. The core holds the router, the roles and the data tiers
+// (D-206): the plugin never sees a role, a tier or who asked.
+//
+// Conventions for every message in this package:
+//   - Prices are exact decimal strings of an ISO 4217 currency per million
+//     tokens, never floating point.
+//   - Text the core sends or receives (messages, answers, tool arguments)
+//     is the owner's data: neither the plugin nor the core logs it or keeps
+//     it (GR-12, D-211).
+//   - The core authenticates every call with a short-lived ServiceAccount
+//     token whose audience is "openfief-plugin:<instance>", in
+//     "Authorization: Bearer <token>" (D-59). The Go SDK verifies it.
+//   - A plugin reaches its provider only through the egress proxy, and only
+//     the host its grant approves (D-32).
+//   - A model that is not one of the plugin's entries, a message list that
+//     is empty or ends with an assistant message, or a tool without a name
+//     fails with INVALID_ARGUMENT. A provider that is down, slow or refuses
+//     the key fails with UNAVAILABLE, so the router tries the next model; a
+//     provider that rejects the request itself fails with INVALID_ARGUMENT.
+syntax = "proto3";
+
+package openfief.models.v1;
+
+// ModelProviderService is served by a model-provider plugin and called by the
+// core.
+service ModelProviderService {
+  // Describe says which wire protocol the plugin speaks, where its models
+  // run and the provider's retention terms (D-205).
+  rpc Describe(DescribeRequest) returns (DescribeResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ListModels returns the plugin's model entries: id, price per million
+  // tokens, context and output limits, and flags for tool calling and
+  // structured output (D-205).
+  rpc ListModels(ListModelsRequest) returns (ListModelsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // Generate asks one model for one answer, with tools and structured output
+  // when the entry's flags allow them, and reports the call's usage. It
+  // does not stream in M1.
+  rpc Generate(GenerateRequest) returns (GenerateResponse);
+}
+
+message DescribeRequest {}
+
+// WireProtocol is how the plugin speaks to its provider.
+enum WireProtocol {
+  WIRE_PROTOCOL_UNSPECIFIED = 0;
+  // The OpenAI-compatible chat completions API, which serves OpenAI,
+  // OpenRouter, Ollama, vLLM, LM Studio and others.
+  WIRE_PROTOCOL_OPENAI_COMPATIBLE = 1;
+}
+
+// Location is where a provider instance's models run.
+enum Location {
+  LOCATION_UNSPECIFIED = 0;
+  // On hardware the owner runs: the data stays in the owner's network.
+  LOCATION_OWNER_HARDWARE = 1;
+  // At a third party's cloud: the data leaves the owner's network.
+  LOCATION_THIRD_PARTY_CLOUD = 2;
+}
+
+// Retention is the provider's terms for data it receives.
+message Retention {
+  // Days the provider keeps requests and answers; zero for none.
+  int32 days = 1;
+  // Whether the provider may train on them.
+  bool may_train = 2;
+}
+
+message DescribeResponse {
+  WireProtocol protocol = 1;
+  Location location = 2;
+  Retention retention = 3;
+}
+
+message ListModelsRequest {}
+
+// ModelEntry is one model of a provider instance (D-205).
+message ModelEntry {
+  // The model's id at its provider, such as "openai/gpt-oss-120b" (an
+  // OpenRouter id) or "qwen3:8b" (an Ollama tag).
+  string id = 1;
+  // Price per million input and output tokens, decimal strings, in
+  // price_currency; empty when the entry has no price, such as a local
+  // model.
+  string input_price = 2;
+  string output_price = 3;
+  string price_currency = 4;
+  // Context window and the most output tokens, in tokens.
+  int64 context_tokens = 5;
+  int64 max_output_tokens = 6;
+  // Whether the model may be given tools, and a response schema.
+  bool tool_calling = 7;
+  bool structured_output = 8;
+}
+
+message ListModelsResponse {
+  repeated ModelEntry models = 1;
+}
+
+// MessageRole is the role of a message in a conversation.
+enum MessageRole {
+  MESSAGE_ROLE_UNSPECIFIED = 0;
+  MESSAGE_ROLE_SYSTEM = 1;
+  MESSAGE_ROLE_USER = 2;
+  MESSAGE_ROLE_ASSISTANT = 3;
+  // The result of a tool call the model asked for.
+  MESSAGE_ROLE_TOOL = 4;
+}
+
+// ToolCall is a call of a tool the model asked for.
+message ToolCall {
+  // The provider's id for the call, echoed back in the tool's result.
+  string id = 1;
+  string name = 2;
+  // The arguments as a JSON object text.
+  string arguments_json = 3;
+}
+
+message Message {
+  MessageRole role = 1;
+  string content = 2;
+  // On an assistant message: the tools it asked for.
+  repeated ToolCall tool_calls = 3;
+  // On a tool message: the call it answers.
+  string tool_call_id = 4;
+}
+
+// Tool is a function the model may call.
+message Tool {
+  string name = 1;
+  string description = 2;
+  // A JSON Schema of the arguments, as JSON text.
+  string parameters_schema_json = 3;
+}
+
+message GenerateRequest {
+  // The model entry's id.
+  string model = 1;
+  repeated Message messages = 2;
+  repeated Tool tools = 3;
+  // When set, the answer must be a JSON text of this JSON Schema.
+  string response_schema_json = 4;
+  // The most tokens the answer may have; zero means the entry's limit.
+  int64 max_output_tokens = 5;
+}
+
+// Usage is what one call used, as the provider reports it.
+message Usage {
+  int64 input_tokens = 1;
+  int64 output_tokens = 2;
+}
+
+// FinishReason is why the model stopped.
+enum FinishReason {
+  FINISH_REASON_UNSPECIFIED = 0;
+  FINISH_REASON_STOP = 1;
+  FINISH_REASON_LENGTH = 2;
+  FINISH_REASON_TOOL_CALLS = 3;
+}
+
+message GenerateResponse {
+  string content = 1;
+  repeated ToolCall tool_calls = 2;
+  FinishReason finish_reason = 3;
+  Usage usage = 4;
+}

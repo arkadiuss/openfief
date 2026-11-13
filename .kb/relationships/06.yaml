@@ -993,3 +993,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2198959a8fe9
+  - type: covered_by
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-route
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T12:33:26.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4c81bc257fd
+  - type: implements
+    from: SYM-models-modelrouter-connectapi-settings-settings-service-set-route
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:33:26.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead75359601c
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-string
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:09:19.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee15e06093ca
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-response-string
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:09:19.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71bcc0d68d98

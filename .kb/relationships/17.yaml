@@ -713,3 +713,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33798bcb687f
+  - type: specified_by
+    from: REQ-models-switch-default-off
+    to: SCEN-models-switch-default-off
+    created_at: 2026-11-13T11:28:45.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9259ed0e265b
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-session-token
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:58.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9557107083da
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-get-session-token
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:58.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14b1f15199ff

@@ -1238,3 +1238,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22b5c3d8f06d
+  - type: verified_by
+    from: SCEN-models-settings-owner-only
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T11:28:15.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b04dc77c26
+  - type: verified_by
+    from: SCEN-models-settings-owner-only
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T11:28:15.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e1be411fbe
+  - type: covered_by
+    from: SYM-models-modelrouter-app-settings-settings-set-enabled
+    to: TEST-models-app-settings
+    created_at: 2026-11-13T12:32:09.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-854c1a56e365
+  - type: implements
+    from: SYM-models-modelrouter-app-settings-settings-set-enabled
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T12:32:09.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fa03bc4982b

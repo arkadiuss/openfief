@@ -958,3 +958,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd286bae9125
+  - type: covered_by
+    from: SYM-models-modelrouter-request-location
+    to: TEST-models-domain
+    created_at: 2026-11-13T12:43:35.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4396c1cc8590
+  - type: implements
+    from: SYM-models-modelrouter-request-location
+    to: REQ-models-router-roles-fallbacks
+    created_at: 2026-11-13T12:43:35.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09e74cd0aa04
+  - type: covered_by
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-reset
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-13T13:08:28.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d946c4eb352
+  - type: implements
+    from: SYM-models-models-settings-pb-set-agents-enabled-request-reset
+    to: REQ-models-settings-owner-only
+    created_at: 2026-11-13T13:08:28.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71bde90c3567

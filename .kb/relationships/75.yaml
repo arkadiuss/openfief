@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2a565ea55b8
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-client-post
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-13T12:46:37.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc352a7df095
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-client-post
+    to: REQ-models-openai-compatible-plugin
+    created_at: 2026-11-13T12:46:37.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d38c2fa5ab6
