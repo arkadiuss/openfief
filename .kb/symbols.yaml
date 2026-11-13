@@ -196028,3 +196028,13 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-model-openai-chat
+  - id: SYM-tooling-image-carry-test-tag-verifies
+    title: tag_verifies
+    sourceFile: scripts/tests/image-carry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T21:30:43.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-image-carry

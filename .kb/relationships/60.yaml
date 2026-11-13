@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d41cce1329c7
+  - type: executable_for
+    from: SYM-tooling-image-carry-test-tag-verifies
+    to: TEST-tooling-image-carry
+    created_at: 2026-11-13T21:30:46.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb634f337a28

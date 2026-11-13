@@ -36,6 +36,13 @@ if [[ "$ref" == *@* ]]; then
 else
   file="$FAKE_REG/$(printf '%s' "$ref" | tr '/:' '__')"
   [ -f "$file" ] || { echo "no such tag" >&2; exit 1; }
+  # FAKE_TAG_MISSES makes the first N lookups of a tag find nothing, like a registry that hasn't caught up.
+  misses="$(cat "$FAKE_REG/.misses" 2>/dev/null || echo 0)"
+  if [ "$misses" -lt "${FAKE_TAG_MISSES:-0}" ]; then
+    echo $((misses + 1)) >"$FAKE_REG/.misses"
+    echo "no matching signatures" >&2
+    exit 1
+  fi
   digest="$(cat "$file")"
 fi
 for signed in $FAKE_SIGNED; do
@@ -87,6 +94,17 @@ check "an unsigned digest is never tagged" "$(yes_if bash -c "! grep -q '^crane'
 
 carry FAKE_SIGNED="$old $other" FAKE_CRANE_DIGEST="$other" && rc=0 || rc=$?
 check "a tag that verifies to another digest fails" "$([ "$rc" -ne 0 ] && grep -q "not the carried" "$work/out" && echo yes || echo no)"
+
+tag_verifies() { grep -c "cosign verify $image:sha-abcdef0 " "$work/log" || true; }
+
+carry FAKE_SIGNED="$old" FAKE_TAG_MISSES=2 IMAGE_CARRY_WAIT=0 && rc=0 || rc=$?
+check "a tag that verifies as nothing at first is asked again and carried" "$([ "$rc" -eq 0 ] && [ "$(tag_verifies)" -eq 3 ] && echo yes || echo no)"
+
+carry FAKE_SIGNED="$old" FAKE_TAG_MISSES=9 IMAGE_CARRY_ATTEMPTS=3 IMAGE_CARRY_WAIT=0 && rc=0 || rc=$?
+check "a tag that keeps verifying as nothing fails after the last try" "$([ "$rc" -ne 0 ] && [ "$(tag_verifies)" -eq 3 ] && grep -q "nothing verified, not the carried" "$work/out" && echo yes || echo no)"
+
+carry FAKE_SIGNED="$old $other" FAKE_CRANE_DIGEST="$other" IMAGE_CARRY_WAIT=0 && rc=0 || rc=$?
+check "a tag that verifies as another digest fails without asking again" "$([ "$rc" -ne 0 ] && [ "$(tag_verifies)" -eq 1 ] && echo yes || echo no)"
 
 rm -rf "$work/reg" && mkdir -p "$work/reg" && : >"$work/log"
 for args in "$image notadigest $commit example/openfief" "$image $old xyz example/openfief" "$image $old $commit not-a-repo" "UPPER/case $old $commit example/openfief"; do
