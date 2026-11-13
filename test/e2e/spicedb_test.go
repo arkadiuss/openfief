@@ -143,8 +143,10 @@ func checkCredentialsJob(t *testing.T, k *kube) *batchv1.Job {
 		t.Fatalf("Job %s has %d containers, want 1", job.Name, len(job.Spec.Template.Spec.Containers))
 	}
 	c := &job.Spec.Template.Spec.Containers[0]
-	if want := core.Spec.Template.Spec.Containers[0].Image; c.Image != want || !strings.Contains(c.Image, "@sha256:") {
-		t.Errorf("the credentials Job runs %s, want the core's image %s, by digest", c.Image, want)
+	// The same reference as the core's: by digest wherever the core is pinned by
+	// digest (the release bundle, whose test checks the pin), by the e2e tag here.
+	if want := core.Spec.Template.Spec.Containers[0].Image; c.Image != want {
+		t.Errorf("the credentials Job runs %s, want the core's image %s", c.Image, want)
 	}
 	if !slices.Equal(c.Args, []string{"init-credentials"}) || len(c.Command) != 0 {
 		t.Errorf("the credentials Job runs %v %v, want the core's entrypoint with init-credentials", c.Command, c.Args)
