@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15d7604fc0c7
+  - type: executable_for
+    from: SYM-identity-test-platform-secrets
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:47:18.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec2aeea53f37

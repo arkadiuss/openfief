@@ -43,12 +43,15 @@ images() {
   gojq -r --yaml-input -s '[.[] | .. | objects | (.containers?, .initContainers?) // empty | .[] | .image] | unique | .[]' "$1"
 }
 
-# SpiceDB and the Job that generates its credentials are a third party's images, pinned by digest in deploy/spicedb: the
-# bundle leaves them as they are, and ours are the rest.
+# SpiceDB is a third party's image, pinned by digest in deploy/spicedb: the bundle leaves it as it is, and ours are the
+# rest. The Job that generates the credentials runs the core's image (D-216), a bare repository like the core's own, so
+# the bundle pins it with the core's signed digest and the install runs no second third-party image.
 kustomize build "$root/deploy/spicedb" >spicedb.yaml
-third="$(images spicedb.yaml)"
-[ "$(wc -l <<<"$third")" -eq 2 ] || fail_case "deploy/spicedb runs $(wc -l <<<"$third") images, want SpiceDB and the credentials Job's"
-[ "$(grep -cE '^[a-z0-9./-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$' <<<"$third")" -eq 2 ] || fail_case "deploy/spicedb's images aren't tag and digest: $third"
+third="$(images spicedb.yaml | grep -E '@sha256:' || true)"
+[ "$(wc -l <<<"$third")" -eq 1 ] || fail_case "deploy/spicedb names $(wc -l <<<"$third") images with a digest, want SpiceDB's alone: $third"
+[ "$(grep -cE '^[a-z0-9./-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$' <<<"$third")" -eq 1 ] || fail_case "deploy/spicedb's third-party image isn't tag and digest: $third"
+[ "$(images spicedb.yaml | grep -vxF "$third")" = "ghcr.io/arkadiuss/openfief/core" ] ||
+  fail_case "deploy/spicedb's other image isn't the core's: $(images spicedb.yaml | grep -vxF "$third")"
 # The image the cluster runs is the SpiceDB the Taskfile builds for the contract test.
 spicedb_pinned="$(sed -n 's/^  SPICEDB_VERSION: *//p' "$root/Taskfile.yml")"
 [ -n "$spicedb_pinned" ] && grep -q "^quay.io/authzed/spicedb:$spicedb_pinned@sha256:" <<<"$third" ||
@@ -75,6 +78,19 @@ registry.example.org:5000/e2e/core@$da"
   [ -z "$(images "a/openfief-crds-$version.yaml")" ] || fail_case "the CRDs file runs an image"
   gojq -e --yaml-input -s 'any(.[]; .kind == "Deployment" and .metadata.name == "openfief-core")' \
     "a/openfief-install-$version.yaml" >/dev/null || fail_case "the install has no core Deployment"
+  # The credentials Job runs the core's image, the very digest the core runs, and `core init-credentials` (D-216).
+  job_image="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Job" and .metadata.name == "openfief-spicedb-secrets") | .spec.template.spec.containers[] | "\(.image) \(.args | join(" "))"] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$job_image" = "registry.example.org:5000/e2e/core@$da init-credentials" ] ||
+    fail_case "the credentials Job runs '$job_image', want the core's image with init-credentials"
+  # The one right to create a Secret in the whole install is that Job's Role, which grants it and nothing else (D-216):
+  # no Role or ClusterRole, wildcards included, may create a Secret, but that one, in the openfief namespace.
+  creators="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Role" or .kind == "ClusterRole") | select(any(.rules[]?; ((.resources // []) | any(. == "secrets" or . == "*")) and ((.verbs // []) | any(. == "create" or . == "*")))) | "\(.kind) \(.metadata.namespace // "-")/\(.metadata.name)"] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$creators" = "Role openfief/openfief-spicedb-secrets" ] || fail_case "the install's Roles that may create Secrets: '$creators'"
+  rules="$(gojq -c --yaml-input -s '[.[] | select(.kind == "Role" and .metadata.name == "openfief-spicedb-secrets") | .rules] | .[]' "a/openfief-install-$version.yaml")"
+  [ "$rules" = '[{"apiGroups":[""],"resources":["secrets"],"verbs":["create"]}]' ] || fail_case "the credentials Job's Role grants $rules, want create on secrets alone"
+  # Only its own ServiceAccount is bound to it, and no ClusterRoleBinding names it.
+  bound="$(gojq -r --yaml-input -s '[.[] | select(.kind == "RoleBinding" and .roleRef.name == "openfief-spicedb-secrets") | .subjects[] | "\(.kind) \(.namespace)/\(.name)"] | join(",")' "a/openfief-install-$version.yaml")"
+  [ "$bound" = "ServiceAccount openfief/openfief-spicedb-secrets" ] || fail_case "the credentials Job's Role is bound to '$bound'"
   # The database the install brings by default (D-14): exactly the cluster the install reads, and nothing it runs.
   database="$(gojq -r --yaml-input -s '[.[] | select(. != null) | "\(.apiVersion) \(.kind) \(.metadata.namespace)/\(.metadata.name) \(.spec.bootstrap.initdb.database)/\(.spec.bootstrap.initdb.owner)"] | join(",")' \
     "a/openfief-db-$version.yaml")"

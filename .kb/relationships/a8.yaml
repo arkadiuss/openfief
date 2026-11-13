@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73c26b344bd7
+  - type: implements
+    from: SYM-core-init-credentials-in-cluster
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:56:21.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b212c0f944b2
+  - type: implements
+    from: SYM-core-init-credentials-in-cluster
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:56:21.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33fd4a547c87
+  - type: covered_by
+    from: SYM-core-init-credentials-in-cluster
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T07:56:21.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608cabb28fd8
+  - type: covered_by
+    from: SYM-core-init-credentials-in-cluster
+    to: TEST-core-init-credentials
+    created_at: 2026-11-13T07:56:21.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df95fb833eea

@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-def76535c272
+  - type: executable_for
+    from: SYM-e2e-spicedb-check-credentials-job
+    to: TEST-e2e-spicedb
+    created_at: 2026-11-13T07:47:23.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55af7f436efe

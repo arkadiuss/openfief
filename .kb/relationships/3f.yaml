@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77342dc71c18
+  - type: executable_for
+    from: SYM-identity-kube-test-secret-creator-failures
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:46:54.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154c041efa93

@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-629a683e1a3b
+  - type: verified_by
+    from: SCEN-deploy-credentials-job-core-image-create-only
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-13T07:41:54.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eec47853c3e2
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-existing
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:46:39.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9029ef2e22ee

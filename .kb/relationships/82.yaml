@@ -818,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5d1a2088575
+  - type: executable_for
+    from: SYM-identity-app-test-helper-secret-shelf
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:46:19.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2603c672062

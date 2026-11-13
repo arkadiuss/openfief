@@ -175752,3 +175752,458 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-bundle
+  - id: SYM-core-init-credentials
+    title: initCredentials
+    status: active
+    sourceFile: cmd/core/initcredentials.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:16.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-init-credentials
+      - type: implements
+        target: REQ-identity-credentials-create-only-if-missing
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+  - id: SYM-identity-app-secret-creator
+    title: SecretCreator
+    status: active
+    sourceFile: internal/identity/app/platform.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:22.133Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-platform-credentials
+      - type: implements
+        target: REQ-identity-credentials-create-only-if-missing
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+  - id: SYM-identity-app-platform-outcome
+    title: PlatformOutcome
+    status: active
+    sourceFile: internal/identity/app/platform.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:28.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-platform-credentials
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+  - id: SYM-identity-app-init-platform-credentials
+    title: InitPlatformCredentials
+    status: active
+    sourceFile: internal/identity/app/platform.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:34.067Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-platform-credentials
+      - type: covered_by
+        target: TEST-identity-kube-secret-creator
+      - type: implements
+        target: REQ-identity-credentials-create-only-if-missing
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+  - id: SYM-identity-kube-secret-creator
+    title: SecretCreator
+    status: active
+    sourceFile: internal/identity/kube/secrets.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:39.787Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-secret-creator
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+      - type: implements
+        target: REQ-identity-credentials-role-create-secrets-only
+  - id: SYM-identity-kube-new-secret-creator
+    title: NewSecretCreator
+    status: active
+    sourceFile: internal/identity/kube/secrets.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:45.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-secret-creator
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+      - type: implements
+        target: REQ-identity-credentials-role-create-secrets-only
+  - id: SYM-identity-kube-secret-creator-create-if-missing
+    title: SecretCreator.CreateIfMissing
+    status: active
+    sourceFile: internal/identity/kube/secrets.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:51.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-kube-secret-creator
+      - type: implements
+        target: REQ-identity-credentials-create-only-if-missing
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+      - type: implements
+        target: REQ-identity-credentials-role-create-secrets-only
+  - id: SYM-identity-platform-secret
+    title: PlatformSecret
+    status: active
+    sourceFile: internal/identity/platform.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:45:56.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-platform-credentials
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+  - id: SYM-identity-platform-credential
+    title: PlatformCredential
+    status: active
+    sourceFile: internal/identity/platform.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:02.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-platform-credentials
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+  - id: SYM-identity-platform-secrets
+    title: PlatformSecrets
+    status: active
+    sourceFile: internal/identity/platform.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:07.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-platform-credentials
+      - type: implements
+        target: REQ-identity-credentials-create-only-if-missing
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+  - id: SYM-core-test-init-credentials
+    title: TestInitCredentials
+    status: active
+    sourceFile: cmd/core/initcredentials_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:12.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-init-credentials
+  - id: SYM-identity-app-test-helper-secret-shelf
+    title: secretShelf
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:17.357Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-app-test-helper-secret-shelf-create
+    title: secretShelf.CreateIfMissing
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:22.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-app-test-init-platform-credentials
+    title: TestInitPlatformCredentials
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:27.399Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-kube-test-helper-verbs
+    title: callsOf
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:57:08.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-helper-existing
+    title: existing
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:37.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-secret-creator-creates-only
+    title: TestSecretCreatorCreatesOnly
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:42.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-secret-creator-keeps
+    title: TestSecretCreatorKeepsWhatExists
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:47.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-secret-creator-failures
+    title: TestSecretCreatorFailures
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:52.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-init-creates-exactly-two
+    title: TestInitCreatesExactlyTheTwoSecrets
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:46:57.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-helper-counter
+    title: counter
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:02.016Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-helper-counter-read
+    title: counter.Read
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:06.911Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-test-platform-credential
+    title: TestPlatformCredential
+    status: active
+    sourceFile: internal/identity/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:11.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-platform-credentials
+  - id: SYM-identity-test-platform-secrets
+    title: TestPlatformSecrets
+    status: active
+    sourceFile: internal/identity/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:15.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-platform-credentials
+  - id: SYM-e2e-spicedb-check-credentials-job
+    title: checkCredentialsJob
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:21.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-e2e-spicedb-check-credentials-kept
+    title: checkCredentialsKept
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:47:25.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb
+  - id: SYM-core-init-credentials-in-cluster
+    title: initCredentialsInCluster
+    status: active
+    sourceFile: cmd/core/initcredentials.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:19.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-init-credentials
+      - type: covered_by
+        target: TEST-e2e-spicedb
+      - type: implements
+        target: REQ-identity-credentials-generated-by-install
+      - type: implements
+        target: REQ-identity-credentials-never-read-change-rotate
+  - id: SYM-core-with-migrated-pool
+    title: withMigratedPool
+    status: active
+    sourceFile: cmd/core/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:24.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-token-commands
+  - id: SYM-core-test-helper-stored-secret
+    title: storedSecret
+    status: active
+    sourceFile: cmd/core/initcredentials_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:29.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-init-credentials
+  - id: SYM-core-test-helper-created-secrets
+    title: createdSecrets
+    status: active
+    sourceFile: cmd/core/initcredentials_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:33.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-init-credentials
+  - id: SYM-core-test-helper-check-log
+    title: checkLog
+    status: active
+    sourceFile: cmd/core/initcredentials_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:38.289Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-init-credentials
+  - id: SYM-identity-app-test-helper-secret-shelf-made-values
+    title: secretShelf.madeValues
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:43.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-app-test-helper-two-values
+    title: twoValues
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:48.555Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-app-test-helper-want-value
+    title: wantValue
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:53.487Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-app-test-needs-random-bytes
+    title: TestInitPlatformCredentialsNeedsRandomBytes
+    status: active
+    sourceFile: internal/identity/app/platform_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:56:58.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-platform-credentials
+  - id: SYM-identity-kube-test-helper-secrets-resource
+    title: secretsResource
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:57:03.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-helper-stored
+    title: stored
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:57:13.549Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-identity-kube-test-helper-created-names
+    title: createdNames
+    status: active
+    sourceFile: internal/identity/kube/secrets_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:57:18.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-kube-secret-creator
+  - id: SYM-e2e-spicedb-rerun-credentials-job
+    title: rerunCredentialsJob
+    status: active
+    sourceFile: test/e2e/spicedb_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-13T07:57:23.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-spicedb

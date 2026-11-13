@@ -15,7 +15,9 @@ import (
 
 	"google.golang.org/protobuf/encoding/protojson"
 	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -89,7 +91,7 @@ func TestSpiceDBDeployed(t *testing.T) {
 	}
 	checkSpiceDBPod(t, &d.Spec.Template.Spec)
 
-	for _, app := range []string{spicedbDeployment, coreDeployment} {
+	for _, app := range []string{spicedbDeployment, coreDeployment, spicedbJob} {
 		logs := podLogs(t.Context(), t, k, app)
 		for name, value := range map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password} {
 			if bytes.Contains(logs, value) {
@@ -97,6 +99,98 @@ func TestSpiceDBDeployed(t *testing.T) {
 			}
 		}
 	}
+	job := checkCredentialsJob(t, k)
+	checkCredentialsKept(t, k, job, map[string][]byte{spicedbPresharedName: key, spicedbRoleName: password})
+}
+
+// checkCredentialsJob checks that the Job that generated the credentials runs the
+// core's own image, as the Deployment of the core does, with `init-credentials`
+// and a hardened container (D-216), and returns it.
+func checkCredentialsJob(t *testing.T, k *kube) *batchv1.Job {
+	t.Helper()
+	job, err := k.clients.BatchV1().Jobs(namespace).Get(t.Context(), spicedbJob, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Job %s: %v", spicedbJob, err)
+	}
+	core, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	if err != nil {
+		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
+	}
+	if len(job.Spec.Template.Spec.Containers) != 1 || len(core.Spec.Template.Spec.Containers) == 0 {
+		t.Fatalf("Job %s has %d containers, want 1", spicedbJob, len(job.Spec.Template.Spec.Containers))
+	}
+	c := &job.Spec.Template.Spec.Containers[0]
+	if want := core.Spec.Template.Spec.Containers[0].Image; c.Image != want || !strings.Contains(c.Image, "@sha256:") {
+		t.Errorf("the credentials Job runs %s, want the core's image %s, by digest", c.Image, want)
+	}
+	if !slices.Equal(c.Args, []string{"init-credentials"}) || len(c.Command) != 0 {
+		t.Errorf("the credentials Job runs %v %v, want the core's entrypoint with init-credentials", c.Command, c.Args)
+	}
+	if !hardened(c.SecurityContext) {
+		t.Errorf("the credentials Job's container isn't read-only without privilege escalation and capabilities")
+	}
+	return job
+}
+
+// checkCredentialsKept runs the credentials Job's pod once more, as a Job of its own
+// name, and checks that it kept both Secrets as they were (D-216, D-29): it logs "kept"
+// for each, and every value is the one the first run, or an owner who fed it first, left.
+func checkCredentialsKept(t *testing.T, k *kube, job *batchv1.Job, values map[string][]byte) {
+	t.Helper()
+	logs := rerunCredentialsJob(t, k, job)
+	for secret, value := range values {
+		if !bytes.Contains(logs, []byte(`"secret":"`+secret+`","result":"kept"`)) {
+			t.Errorf("the second run's log doesn't say it kept Secret %s", secret)
+		}
+		if bytes.Contains(logs, value) {
+			t.Errorf("the second run's log holds the value of Secret %s", secret)
+		}
+		field := map[string]string{spicedbPresharedName: "key", spicedbRoleName: "password"}[secret]
+		if got := secretValue(t, k, secret, field); !bytes.Equal(got, value) {
+			t.Errorf("Secret %s changed when the Job ran again", secret)
+		}
+	}
+}
+
+// rerunCredentialsJob creates a Job of its own name from job's pod spec, waits until it
+// completes, deletes it when t ends, and returns its pod's log.
+func rerunCredentialsJob(t *testing.T, k *kube, job *batchv1.Job) []byte {
+	t.Helper()
+	name := spicedbJob + "-again"
+	again := &batchv1.Job{
+		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace, Labels: job.Labels},
+		Spec: batchv1.JobSpec{
+			BackoffLimit:          job.Spec.BackoffLimit,
+			ActiveDeadlineSeconds: job.Spec.ActiveDeadlineSeconds,
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{appLabel: spicedbJob, "app.kubernetes.io/part-of": "openfief"}},
+				Spec:       job.Spec.Template.Spec,
+			},
+		},
+	}
+	if _, err := k.clients.BatchV1().Jobs(namespace).Create(t.Context(), again, metav1.CreateOptions{}); err != nil {
+		t.Fatalf("creating Job %s: %v", name, err)
+	}
+	t.Cleanup(func() {
+		ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), spicedbTimeout)
+		defer cancel()
+		background := metav1.DeletePropagationBackground
+		err := k.clients.BatchV1().Jobs(namespace).Delete(ctx, name, metav1.DeleteOptions{PropagationPolicy: &background})
+		if err != nil && !apierrors.IsNotFound(err) {
+			t.Logf("deleting Job %s: %v", name, err)
+		}
+	})
+	waitJobComplete(t, k, name)
+
+	pods, err := k.clients.CoreV1().Pods(namespace).List(t.Context(), metav1.ListOptions{LabelSelector: "job-name=" + name})
+	if err != nil || len(pods.Items) == 0 {
+		t.Fatalf("listing the pods of Job %s: %d pods, %v", name, len(pods.Items), err)
+	}
+	logs, err := k.clients.CoreV1().Pods(namespace).GetLogs(pods.Items[0].Name, &corev1.PodLogOptions{}).DoRaw(t.Context())
+	if err != nil {
+		t.Fatalf("reading the log of Job %s: %v", name, err)
+	}
+	return logs
 }
 
 // waitSpiceDBAvailable waits until SpiceDB's Deployment is available: its

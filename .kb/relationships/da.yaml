@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dd67851125c
+  - type: executable_for
+    from: SYM-identity-app-test-helper-want-value
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:56:55.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-065c943f26a9

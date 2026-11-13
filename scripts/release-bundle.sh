@@ -23,8 +23,8 @@
 #     after it: <prefix>/<name>@<digest>. Files for images the install doesn't name (plugins, demo-seed) are ignored.
 #   - with PLACEHOLDER=1 and PREFIX, every image at an all-zeros digest: a release's dry run, which pushes and signs
 #     nothing, renders the bundle this way so that everything but the digests is checked.
-# An image the install names that already carries its digest is a third party's (SpiceDB, the Job that generates its
-# credentials): it stays as the base pins it, and is neither given nor verified here, since only images.yml signs ours.
+# An image the install names that already carries its digest is a third party's (SpiceDB; the Job that generates the
+# platform's credentials runs the core's image, D-216): it stays as the base pins it, and is neither given nor verified here, since only images.yml signs ours.
 # Every other image the install names must get a digest. With VERIFY=1 and REPO=<owner/repo> (the release workflow), each
 # pinned image must also carry a keyless cosign signature from that repository's images.yml on main, for that same
 # digest (scripts/verified-digest.sh, which needs cosign and gojq).
@@ -219,7 +219,7 @@ mkdir -p "$out"
 } >"$out/openfief-crds-$version.yaml"
 {
   printf "# OpenFief %s: the operator, the egress proxy, the core and SpiceDB. Our images are pinned to their signed digests, and\n" "$version"
-  printf "# SpiceDB's and its credentials Job's third-party images to the digests this release was built with.\n"
+  printf "# SpiceDB's third-party image to the tag and digest this release was built with.\n"
   printf '# Apply after openfief-crds-%s.yaml, next to a CloudNativePG cluster openfief-db in namespace openfief:\n' "$version"
   printf '#   kubectl apply --server-side -f openfief-install-%s.yaml\n' "$version"
   cat "$work/install.yaml"

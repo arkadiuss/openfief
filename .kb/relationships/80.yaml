@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90794ea165e2
+  - type: executable_for
+    from: SYM-core-test-helper-created-secrets
+    to: TEST-core-init-credentials
+    created_at: 2026-11-13T07:56:36.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89b23bd5ef72

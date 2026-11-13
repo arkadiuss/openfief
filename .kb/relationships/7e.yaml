@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-797d715b409e
+  - type: implements
+    from: SYM-identity-platform-secrets
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:46:10.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a3478d2cfcc
+  - type: implements
+    from: SYM-identity-platform-secrets
+    to: REQ-identity-credentials-create-only-if-missing
+    created_at: 2026-11-13T07:46:10.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95210a74ea2c
+  - type: covered_by
+    from: SYM-identity-platform-secrets
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:46:10.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e365dd15f9

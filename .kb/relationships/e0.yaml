@@ -1084,3 +1084,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d2ca3b24891
+  - type: implements
+    from: SYM-identity-kube-secret-creator
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:45:42.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2a4205a1264
+  - type: implements
+    from: SYM-identity-kube-secret-creator
+    to: REQ-identity-credentials-role-create-secrets-only
+    created_at: 2026-11-13T07:45:42.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c2a8639fa5
+  - type: covered_by
+    from: SYM-identity-kube-secret-creator
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:45:42.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b69c988e5a

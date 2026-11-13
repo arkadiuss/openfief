@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-240cb984b602
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-counter
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:47:04.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6694b1a83b96

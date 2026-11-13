@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbc06242343f
+  - type: executable_for
+    from: SYM-core-test-init-credentials
+    to: TEST-core-init-credentials
+    created_at: 2026-11-13T07:46:14.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4237b096efe

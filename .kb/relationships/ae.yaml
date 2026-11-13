@@ -860,3 +860,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c572a07ca342
+  - type: implements
+    from: SYM-identity-kube-secret-creator-create-if-missing
+    to: REQ-identity-credentials-create-only-if-missing
+    created_at: 2026-11-13T07:45:53.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa35f5f1bd6e
+  - type: implements
+    from: SYM-identity-kube-secret-creator-create-if-missing
+    to: REQ-identity-credentials-never-read-change-rotate
+    created_at: 2026-11-13T07:45:53.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b315559c40
+  - type: implements
+    from: SYM-identity-kube-secret-creator-create-if-missing
+    to: REQ-identity-credentials-role-create-secrets-only
+    created_at: 2026-11-13T07:45:53.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95cf3d0e9426
+  - type: covered_by
+    from: SYM-identity-kube-secret-creator-create-if-missing
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:45:53.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c688a6d5ba34

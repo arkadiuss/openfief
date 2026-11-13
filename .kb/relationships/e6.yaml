@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e56d2b1d3bc4
+  - type: implements
+    from: SYM-core-with-migrated-pool
+    to: REQ-core-token-commands
+    created_at: 2026-11-13T07:56:26.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2723ae15a489
+  - type: covered_by
+    from: SYM-core-with-migrated-pool
+    to: TEST-core-read-api
+    created_at: 2026-11-13T07:56:26.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d78b6638aef2

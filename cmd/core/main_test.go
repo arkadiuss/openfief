@@ -182,6 +182,11 @@ func TestParseArgs(t *testing.T) {
 		{name: "token issue default lifetime", args: []string{"token", "issue", "--name=x"}, dsn: testDSN, want: command{Name: cmdTokenIssue, DSN: testDSN, TokenName: "x", TTL: 720 * time.Hour}},
 		{name: "token list", args: []string{"token", "list"}, dsn: testDSN, want: command{Name: cmdTokenList, DSN: testDSN}},
 		{name: "token revoke", args: []string{"token", "revoke", "0123456789abcdef"}, dsn: testDSN, want: command{Name: cmdTokenRevoke, DSN: testDSN, TokenID: "0123456789abcdef"}},
+		// The credentials Job has no database: it needs no DSN, and takes no argument (D-216).
+		{name: "init-credentials needs no DSN", args: []string{"init-credentials"}, want: command{Name: cmdInitCredentials}},
+		{name: "init-credentials ignores a DSN", args: []string{"init-credentials"}, dsn: testDSN, want: command{Name: cmdInitCredentials}},
+		{name: "init-credentials with an argument", args: []string{"init-credentials", "now"}, wantErr: errUsage},
+		{name: "init-credentials with a flag", args: []string{"init-credentials", "--rotate"}, fail: true},
 		{name: "no DSN", args: []string{"migrate"}, wantErr: errNoDSN},
 		{name: "unknown command", args: []string{"frobnicate"}, dsn: testDSN, wantErr: errUsage},
 		{name: "token without subcommand", args: []string{"token"}, dsn: testDSN, wantErr: errUsage},

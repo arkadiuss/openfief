@@ -832,3 +832,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03cc2c0dd699
+  - type: constrains
+    from: REQ-identity-credentials-generated-by-install
+    to: FACT-SUBJECT-EF7CDBAB8E6DE7FA
+    created_at: 2026-11-13T07:42:45.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab5de1782dcb
+  - type: requires_property
+    from: REQ-identity-credentials-generated-by-install
+    to: FACT-PROP-F6BADC238D76F797
+    created_at: 2026-11-13T07:42:45.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9caf74ea5c6
+  - type: specified_by
+    from: REQ-identity-credentials-generated-by-install
+    to: SCEN-identity-credentials-created-when-missing
+    created_at: 2026-11-13T07:42:46.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5560743ab00f
+  - type: specified_by
+    from: REQ-identity-credentials-generated-by-install
+    to: SCEN-e2e-spicedb-deployed
+    created_at: 2026-11-13T07:42:46.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae7d3f443620

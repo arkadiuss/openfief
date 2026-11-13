@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcd65b1b8f8c
+  - type: implements
+    from: SYM-identity-platform-secret
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:45:59.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281694be4324
+  - type: covered_by
+    from: SYM-identity-platform-secret
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:45:59.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-addd28e564cb

@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-527839d4d03d
+  - type: implements
+    from: SYM-identity-app-platform-outcome
+    to: REQ-identity-credentials-generated-by-install
+    created_at: 2026-11-13T07:45:30.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87ffcef1046b
+  - type: covered_by
+    from: SYM-identity-app-platform-outcome
+    to: TEST-identity-app-platform-credentials
+    created_at: 2026-11-13T07:45:30.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a8c95fdd5fd

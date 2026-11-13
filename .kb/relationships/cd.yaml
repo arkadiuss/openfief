@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcedce6480cc
+  - type: executable_for
+    from: SYM-identity-kube-test-helper-verbs
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:46:34.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bafbd72ca21

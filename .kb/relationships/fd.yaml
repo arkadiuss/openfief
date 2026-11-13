@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97c7d023ebf2
+  - type: executable_for
+    from: SYM-identity-kube-test-secret-creator-keeps
+    to: TEST-identity-kube-secret-creator
+    created_at: 2026-11-13T07:46:49.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffdbcfa0048b

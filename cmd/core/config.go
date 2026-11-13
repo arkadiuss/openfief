@@ -44,6 +44,9 @@ const (
 	cmdEnrollLink  = "enroll-link"
 	cmdCheck       = "check balances"
 	cmdCheckLedger = "check ledger"
+	// cmdInitCredentials creates the platform's credentials (D-216). It
+	// needs no database, so it reads no DSN.
+	cmdInitCredentials = "init-credentials"
 )
 
 // Defaults of the serve flags.
@@ -68,7 +71,7 @@ const (
 
 var (
 	// errUsage reports a command line the core does not understand.
-	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances|check ledger] [flags]")
+	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link|check balances|check ledger|init-credentials] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errSyncWorkers reports --sync-workers below one.
@@ -169,6 +172,9 @@ func parseArgs(args []string, getenv func(string) string) (command, error) {
 	if err != nil {
 		return command{}, err
 	}
+	if cmd.Name == cmdInitCredentials {
+		return cmd, nil
+	}
 	if cmd.DSN = getenv(dsnEnv); cmd.DSN == "" {
 		return command{}, errNoDSN
 	}
@@ -183,7 +189,7 @@ func parseCommand(name string, rest []string, getenv func(string) string) (comma
 	switch name {
 	case cmdServe:
 		cmd.Serve, err = parseServe(rest, getenv)
-	case cmdMigrate, cmdTokenList:
+	case cmdMigrate, cmdTokenList, cmdInitCredentials:
 		err = parseNone(name, rest)
 	case cmdTokenIssue:
 		cmd.TokenName, cmd.TTL, err = parseIssue(rest)

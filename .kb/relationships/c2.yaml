@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4441074b0307
+  - type: executable_for
+    from: SYM-identity-test-platform-credential
+    to: TEST-identity-platform-credentials
+    created_at: 2026-11-13T07:47:13.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d018561e9a35
