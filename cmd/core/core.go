@@ -215,7 +215,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	agents, attn := newAgentsAndAttention(pool, auth, cfg.Auth.Origins, l, vstore, checks, now, log)
+	agents, attn := newAgentsAndAttention(pool, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
+		ungrantedViewPluginsIn(cfg, installed, acc.grants))
 	client, err := revaluationClient(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err

@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec4239845798
+  - type: implements
+    from: SYM-ui-inbox-evidence-item
+    to: REQ-ui-inbox-grant-ungranted-view-plugin
+    created_at: 2026-11-13T17:13:51.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8a026b4d8de
+  - type: covered_by
+    from: SYM-ui-inbox-evidence-item
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:13:51.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-263365d92a8c

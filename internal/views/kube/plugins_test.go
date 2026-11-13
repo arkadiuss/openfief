@@ -146,6 +146,18 @@ func TestRecordOf(t *testing.T) {
 			Signature:        views.Condition{Status: "False", Reason: "UntrustedSigner"},
 			UntrustedSigners: []string{"public key sha256:0a0a"},
 		}},
+		{"the view the core proxies browsers to (D-81)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			u := operatorPlugin(t, "ui")
+			if err := unstructured.SetNestedStringSlice(u.Object, []string{"/"}, "status", "effective", "browserPaths"); err != nil {
+				t.Fatal(err)
+			}
+			return u
+		}, func() views.PluginRecord {
+			r := signedRecord("ui")
+			r.BrowserPath = "/"
+			return r
+		}()},
 		{"not reconciled yet", func(t *testing.T) *unstructured.Unstructured {
 			t.Helper()
 			u := operatorPlugin(t, "fresh")

@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-784c9a33e43c
+  - type: executable_for
+    from: SYM-view-grants-test-helper-grants-held-in-force
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:24:55.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de876666477

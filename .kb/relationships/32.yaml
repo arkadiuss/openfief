@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d7e9e0df318
+  - type: executable_for
+    from: SYM-ui-test-inbox-ungranted-view-plugin
+    to: TEST-ui-inbox
+    created_at: 2026-11-13T17:25:51.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-923b445e19d6

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3fbdedd70a9a
+  - type: executable_for
+    from: SYM-view-grants-test-outside-a-cluster
+    to: TEST-core-view-grants
+    created_at: 2026-11-13T17:25:26.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158e0915fa9f

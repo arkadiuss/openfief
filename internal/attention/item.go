@@ -91,6 +91,11 @@ const (
 	// series. Subject: the ISIN it is held under, provisional or the
 	// registry's.
 	KindBondSeriesIncomplete Kind = "bond-series-incomplete"
+	// KindViewPluginUngranted is an installed view plugin that holds no
+	// grant (D-209) while the core answers from SpiceDB, so it can't read
+	// anything (D-196). It resolves once the owner grants it accounts, or
+	// the plugin is uninstalled. Subject: the instance.
+	KindViewPluginUngranted Kind = "view-plugin-ungranted"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

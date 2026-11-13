@@ -36,6 +36,9 @@ const (
 	kindCashCheckpoint    = "cash-checkpoint-mismatch"
 	kindBondFeeAssumed    = "bond-fee-assumed"
 	kindBondSeries        = "bond-series-incomplete"
+	// kindViewPluginUngranted is a view plugin that can't read anything until
+	// the owner grants it accounts (D-196, D-209).
+	kindViewPluginUngranted = "view-plugin-ungranted"
 )
 
 // openAccounts is the words of an item's link to the accounts page.
@@ -63,6 +66,7 @@ func attentionKindOf(kind string) attentionKind {
 		kindBondFeeAssumed:                      {Label: "Bond fee to confirm"},
 		kindBondSeries:                          {Label: "Bond series still without its ISIN or terms"},
 		"model-route-broken":                    {Label: "Model route names a missing provider instance"},
+		kindViewPluginUngranted:                 {Label: "View plugin without access to any account"},
 		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
 	}
 	if k, ok := kinds[kind]; ok {

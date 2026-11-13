@@ -9,6 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -49,6 +50,7 @@ func (s *server) inboxRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /inbox/transfers/confirm", s.withOwner(s.confirmTransfer))
 	mux.HandleFunc("POST /inbox/transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("POST /inbox/retry-sync", s.withOwner(s.retrySync))
+	mux.HandleFunc("POST /inbox/grant-household", s.withOwner(s.grantHousehold))
 	for _, p := range removedCheckPages() {
 		mux.HandleFunc("GET "+p, toInbox)
 	}
@@ -97,6 +99,9 @@ type inboxItem struct {
 	// session sees it Waiting for the owner.
 	Suggestion      *viewsv1.Transfer
 	Decide, Waiting bool
+	// GrantHousehold offers the owner "Grant the whole household" to the
+	// view plugin an ungranted view plugin's item names (D-209).
+	GrantHousehold bool
 	// Brokers are the unmapped broker accounts of an unmapped broker
 	// account's instance, and Accounts the accounts to map them to, for
 	// the owner's form; empty for a read session.
@@ -184,6 +189,8 @@ func inboxNotice(q url.Values) string {
 		return "Confirmed: " + digitsOnly(q.Get("booked")) + " waiting row(s) booked."
 	case q.Get("retried") != "":
 		return "A sync of " + q.Get("retried") + " has started. Its attempt shows in the timeline once it ends."
+	case q.Get("granted") != "":
+		return q.Get("granted") + " can now read the whole household."
 	}
 	return ""
 }
@@ -468,6 +475,7 @@ func (ev *inboxEvidence) item(it *viewsv1.AttentionItem, owner bool, seen map[st
 	resolved := it.GetState() == viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_RESOLVED
 	row.Acknowledge = owner && it.GetState() == viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN
 	row.Resolve = owner && !resolved && it.GetOwnerResolves()
+	row.GrantHousehold = owner && !resolved && it.GetKind() == kindViewPluginUngranted
 	ev.evidence(&row, owner && !resolved, seen)
 	row.Waiting = !owner && !resolved && row.Suggestion != nil
 	return row
@@ -616,12 +624,13 @@ func fixedTitles() map[string]string {
 	}
 }
 
-// instrumentTitles are the titles of the kinds whose subject is an
-// instrument's ISIN, as formats of it.
-func instrumentTitles() map[string]string {
+// subjectTitles are the titles of the kinds whose subject says what they are
+// about, an instrument's ISIN or a view plugin's instance, as formats of it.
+func subjectTitles() map[string]string {
 	return map[string]string{
-		kindUnclassified:   "Classify %s for the yearly tax",
-		kindBondFeeAssumed: "Confirm the early-redemption fee of %s",
+		kindUnclassified:        "Classify %s for the yearly tax",
+		kindBondFeeAssumed:      "Confirm the early-redemption fee of %s",
+		kindViewPluginUngranted: "Grant %s access to your accounts",
 	}
 }
 
@@ -631,7 +640,7 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 		return title
 	}
 	subject := it.GetSubject()
-	if format, ok := instrumentTitles()[it.GetKind()]; ok {
+	if format, ok := subjectTitles()[it.GetKind()]; ok {
 		return fmt.Sprintf(format, subject)
 	}
 	switch it.GetKind() {
@@ -730,6 +739,29 @@ func (s *server) retrySync(w http.ResponseWriter, r *http.Request, sess session)
 		return
 	}
 	s.afterInboxForm(w, r, sess, "RetrySync", err)
+}
+
+// grantHousehold hands the owner's "Grant the whole household" to the core
+// (CreateGrant of the household to the view plugin, D-209), which records it in
+// the audit log (D-211), then back to the Inbox saying the plugin can read, or
+// with the core's reason for refusing it, such as a plugin that was uninstalled
+// meanwhile. The item clears at the core's next check.
+func (s *server) grantHousehold(w http.ResponseWriter, r *http.Request, sess session) {
+	instance := strings.TrimSpace(r.PostFormValue("instance"))
+	if instance == "" || len(instance) > maxInstanceChars {
+		s.errorPage(w, r, http.StatusBadRequest, "The form is malformed.")
+		return
+	}
+	_, err := s.auth.CreateGrant(r.Context(), connect.NewRequest(&identityv1.CreateGrantRequest{
+		Origin: sess.Origin, SessionToken: sess.Token,
+		HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, HolderId: instance,
+		TargetKind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_HOUSEHOLD,
+	}))
+	if err == nil {
+		http.Redirect(w, r, inboxPath+"?"+url.Values{"granted": {instance}}.Encode(), http.StatusSeeOther)
+		return
+	}
+	s.afterInboxForm(w, r, sess, "CreateGrant", err)
 }
 
 // maxInstanceChars caps a posted connector instance name, as the core's

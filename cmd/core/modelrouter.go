@@ -229,12 +229,13 @@ func newAgentModels(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity
 
 // newAgentsAndAttention wires the models context and the attention items, which
 // need each other: the items run the models' route check (D-196), and the
-// router raises its items on them.
+// router raises its items on them. extra are the other checks that need the
+// owner, such as the view plugins without a grant (D-196, D-209).
 func newAgentsAndAttention(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity.Origins, l *ledgerapp.Ledger,
-	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger,
+	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
 ) (*agentModels, *attention) {
 	agents := newAgentModels(pool, auth, origins, now)
-	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, origins), now, log, agents.routeCheck())
+	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, origins), now, log, append([]attentionapp.Check{agents.routeCheck()}, extra...)...)
 	agents.attend(attn.items)
 	return agents, attn
 }

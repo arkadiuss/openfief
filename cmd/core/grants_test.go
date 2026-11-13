@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	attentionapp "github.com/arkadiuss/openfief/internal/attention/app"
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
@@ -373,4 +374,52 @@ func TestTokenRevokeEndsItsGrants(t *testing.T) {
 	if diff := cmp.Diff(want, f.trail(t)); diff != "" {
 		t.Errorf("audit log (-want +got):\n%s", diff)
 	}
+}
+
+// wantUngranted fails t unless check finds the view plugins named by want, in
+// order, and none other.
+func wantUngranted(t *testing.T, check attentionapp.Check, when string, want ...string) {
+	t.Helper()
+	got, err := check.Find(t.Context())
+	if err != nil {
+		t.Fatalf("Find %s: %v", when, err)
+	}
+	subjects := make([]string, 0, len(got))
+	for i := range got {
+		subjects = append(subjects, got[i].Subject)
+	}
+	if !slices.Equal(subjects, want) && (len(subjects) != 0 || len(want) != 0) {
+		t.Errorf("view plugins without a grant %s = %v, want %v", when, subjects, want)
+	}
+}
+
+// TestOwnerGrantsAnUngrantedViewPluginTheHousehold checks D-196's one action
+// for a view plugin that can't read anything: the owner's household grant is
+// the existing CreateGrant, which writes one audit entry by the owner and the
+// relationship to SpiceDB, and afterwards the check of ungranted view plugins
+// finds the plugin no more; it finds none either once the plugin is uninstalled.
+func TestOwnerGrantsAnUngrantedViewPluginTheHousehold(t *testing.T) {
+	t.Parallel()
+	f := newGrantsFixture(t)
+	f.plugins.records = []views.PluginRecord{readyView("ghostfolio")}
+	check := ungrantedViewPlugins(true, f.plugins, f.grants)
+	wantUngranted(t, check, "before the grant", "ghostfolio")
+
+	owner := identity.Actor{Kind: identity.ActorOwner, ID: "0123456789abcdef"}
+	holder := identity.GrantHolder{Kind: identity.GrantHolderViewPlugin, ID: "ghostfolio"}
+	if _, err := f.grants.Create(t.Context(), owner, holder, identity.Household()); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	if got, want := f.spicedb.writes, []string{"OPERATION_TOUCH household:home#reader@view_plugin:ghostfolio"}; !slices.Equal(got, want) {
+		t.Errorf("written to SpiceDB = %v, want %v", got, want)
+	}
+	if got, want := f.trail(t), []string{"owner grant_created ok"}; !slices.Equal(got, want) {
+		t.Errorf("audit log = %v, want %v", got, want)
+	}
+	wantUngranted(t, check, "after the grant")
+
+	f.plugins.records = []views.PluginRecord{readyView("second")}
+	wantUngranted(t, check, "with another plugin", "second")
+	f.plugins.records = nil
+	wantUngranted(t, check, "after the uninstall")
 }

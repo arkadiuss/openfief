@@ -1238,3 +1238,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af8fde863d8a
+  - type: executable_for
+    from: SYM-plugins-cli-test-install-view-grant-text
+    to: TEST-plugins-cli-grant-text
+    created_at: 2026-11-13T17:25:32.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87cfff4e192c

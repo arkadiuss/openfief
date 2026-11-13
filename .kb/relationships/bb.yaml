@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-840c450bf0be
+  - type: implements
+    from: SYM-identity-views-kube-first-of
+    to: REQ-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:07:30.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0767a73157ff
+  - type: covered_by
+    from: SYM-identity-views-kube-first-of
+    to: TEST-views-kube
+    created_at: 2026-11-13T17:07:30.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb6922066b08

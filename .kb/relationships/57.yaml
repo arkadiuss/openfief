@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7ed0aa8aa3
+  - type: specified_by
+    from: REQ-plugins-cli-install-view-grant-hint
+    to: SCEN-plugins-cli-install-view-grant-hint
+    created_at: 2026-11-13T17:07:05.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55fd20adbd34

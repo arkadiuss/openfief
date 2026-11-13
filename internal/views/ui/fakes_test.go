@@ -83,6 +83,8 @@ type fakeAuth struct {
 	// ownPasskey makes RemovePasskey say the caller's own session was
 	// signed out with it.
 	ownPasskey bool
+	// granted are the grants CreateGrant made, as "holder-kind/id -> target".
+	granted []string
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -224,6 +226,26 @@ func (f *fakeAuth) CreateScriptToken(_ context.Context, r *connect.Request[ident
 		Token:  &identityv1.ScriptToken{Id: "0123456789abcdef", Name: r.Msg.GetName()},
 		Secret: "ofs_0123456789abcdef_synthetic-secret",
 	}), nil
+}
+
+// errNoSuchPlugin is the fake core's refusal of a grant to a plugin that
+// isn't installed.
+var errNoSuchPlugin = errors.New("no such view plugin")
+
+func (f *fakeAuth) CreateGrant(_ context.Context, r *connect.Request[identityv1.CreateGrantRequest]) (*connect.Response[identityv1.CreateGrantResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if r.Msg.GetHolderId() == "gone" {
+		return nil, codeErr(connect.CodeNotFound, errNoSuchPlugin)
+	}
+	f.mu.Lock()
+	f.granted = append(f.granted, r.Msg.GetHolderKind().String()+"/"+r.Msg.GetHolderId()+" -> "+r.Msg.GetTargetKind().String()+"/"+r.Msg.GetTargetId())
+	f.mu.Unlock()
+	return connect.NewResponse(&identityv1.CreateGrantResponse{}), nil
 }
 
 func (f *fakeAuth) ListScriptTokens(_ context.Context, r *connect.Request[identityv1.ListScriptTokensRequest]) (*connect.Response[identityv1.ListScriptTokensResponse], error) {

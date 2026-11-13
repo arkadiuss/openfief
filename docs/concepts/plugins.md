@@ -268,6 +268,8 @@ A market-data connector's summary adds a line before its config, so the owner se
                 and the model portfolio's targets, so it learns what you hold (D-123)
 ```
 
+The install of a view plugin ends with a line about its accounts, since when OpenFief runs with SpiceDB authorization a view plugin reads nothing until the owner grants it accounts (D-209, [Identity](identity.md)): `If OpenFief runs with SpiceDB authorization, grant it accounts in Settings → Access.` The command can't tell which authorization the core runs with, so the line says when it matters; a connector's install has none. The core raises an [attention item](attention.md) for the view plugin until it is granted.
+
 ```mermaid
 sequenceDiagram
   autonumber

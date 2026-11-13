@@ -142670,6 +142670,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
       - type: implements
         target: REQ-ui-inbox-page
   - id: SYM-ui-inbox-evidence-map-form
@@ -142857,6 +142861,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
       - type: implements
         target: REQ-ui-inbox-page
   - id: SYM-ui-new-inbox-groups
@@ -164780,7 +164788,7 @@ symbols:
       - type: executable_for
         target: TEST-pl-fees
   - id: SYM-ui-instrument-titles
-    title: instrumentTitles
+    title: subjectTitles
     sourceFile: internal/views/ui/inbox.go
     status: active
     symbol_role: behavioral
@@ -164790,6 +164798,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-bond-terms
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
       - type: implements
         target: REQ-ui-instrument-bond-terms
   - id: SYM-connectorv1-bond-fee-source
@@ -190297,3 +190309,297 @@ symbols:
         target: TEST-e2e-demo-stack
       - type: executable_for
         target: TEST-e2e-plugins
+  - id: SYM-identity-view-grants-ungranted-view-plugins
+    title: ungrantedViewPlugins
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:08.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-grants
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-identity-view-grants-needs-grant
+    title: needsGrant
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:12.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-identity-view-grants-grants-in-force
+    title: grantsInForce
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:17.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-identity-views-kube-first-of
+    title: firstOf
+    status: active
+    sourceFile: internal/views/kube/plugins.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:27.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-ui-server-grant-household
+    title: server.grantHousehold
+    status: active
+    sourceFile: internal/views/ui/inbox.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:32.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
+  - id: SYM-plugins-cli-grant-text
+    title: grantText
+    status: active
+    sourceFile: internal/plugins/cli/cli.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:07:37.803Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-grant-text
+      - type: implements
+        target: REQ-plugins-cli-install-view-grant-hint
+  - id: SYM-identity-view-grants-ungranted-view-plugins-in
+    title: ungrantedViewPluginsIn
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:13:29.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-identity-view-grants-plugins-with-grants
+    title: pluginsWithGrants
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:13:34.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-identity-view-grants-ungranted-conditions
+    title: ungrantedConditions
+    status: active
+    sourceFile: cmd/core/viewgrants.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:13:39.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-view-grants
+      - type: implements
+        target: REQ-identity-view-plugin-ungranted-attention
+  - id: SYM-view-grants-test-helper-want-ungranted
+    title: wantUngranted
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:24:36.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-view-grants-test-owner-grants-ungranted
+    title: TestOwnerGrantsAnUngrantedViewPluginTheHousehold
+    status: active
+    sourceFile: cmd/core/grants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:24:41.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-grants
+  - id: SYM-view-grants-test-helper-grants-held
+    title: grantsHeld
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:24:47.355Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-helper-grants-held-in-force
+    title: grantsHeld.InForce
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:24:52.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-helper-plugin-grant
+    title: pluginGrant
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:24:58.355Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-helper-ready-view
+    title: readyView
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:03.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-helper-ungranted
+    title: ungranted
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:09.258Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-check
+    title: TestUngrantedViewPluginsCheck
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:14.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-never-guesses
+    title: TestUngrantedViewPluginsCheckNeverGuesses
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:19.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-view-grants-test-outside-a-cluster
+    title: TestUngrantedViewPluginsInOutsideACluster
+    status: active
+    sourceFile: cmd/core/viewgrants_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:24.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-view-grants
+  - id: SYM-plugins-cli-test-install-view-grant-text
+    title: TestInstallOfAViewPluginSaysToGrantItAccounts
+    status: active
+    sourceFile: internal/plugins/cli/grant_text_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:29.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-grant-text
+  - id: SYM-ui-test-helper-fake-auth-create-grant
+    title: fakeAuth.CreateGrant
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:35.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-ungranted-item
+    title: ungrantedItem
+    status: active
+    sourceFile: internal/views/ui/inbox_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:40.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-grant-post
+    title: grantPost
+    status: active
+    sourceFile: internal/views/ui/inbox_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:45.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-inbox-ungranted-view-plugin
+    title: TestInboxUngrantedViewPlugin
+    status: active
+    sourceFile: internal/views/ui/inbox_test.go
+    origin:
+      kind: agent
+      ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
+      recorded_at: 2026-11-13T17:25:49.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox

@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2e93bfad53a
+  - type: specified_by
+    from: REQ-identity-view-plugin-ungranted-attention
+    to: SCEN-identity-view-plugin-ungranted-attention
+    created_at: 2026-11-13T17:07:01.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99e32fc1a1e2

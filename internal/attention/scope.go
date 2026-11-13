@@ -73,7 +73,7 @@ func GroupOf(k Kind) Group {
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
 	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified, KindBondFeeAssumed,
-		KindBondSeriesIncomplete, kindModelRouteBroken:
+		KindBondSeriesIncomplete, kindModelRouteBroken, KindViewPluginUngranted:
 	}
 	return GroupDecisions
 }
@@ -107,7 +107,9 @@ type Scope struct {
 //     earlier payments (D-149): the account;
 //   - any other setting-missing, transfer-broken and transfer-suggested (a
 //     pair of transaction keys), model-route-broken (a role, a provider
-//     instance and a model, tied to no account) and any other kind: nothing.
+//     instance and a model, tied to no account), view-plugin-ungranted (a
+//     view plugin instance, which no account or connector is) and any other
+//     kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
@@ -126,7 +128,7 @@ func ScopeOf(it *Item) Scope {
 		if len(parts) == 2 && parts[0] == earlierPaymentsSetting {
 			return Scope{Account: parts[1]}
 		}
-	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken:
+	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken, KindViewPluginUngranted:
 	}
 	return Scope{}
 }
