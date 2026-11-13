@@ -14,9 +14,7 @@ This area covers running agents (GR-5, GR-7, GR-9, GR-10), the model-portfolio m
 
 Decided as D-206 (tiers and per-tier allowed models) and D-205 (providers and the router).
 
-- **[P-64] The Ask box's eval cases and pinned hosts.**
-  - **Cases (D-217).** Each case is a question, in English or Polish, with the answerers it must call and their arguments (account, instrument, dates, dimension), the cards it must show and the numbers it may state. It passes when the calls are right within D-208's five rounds and 800 output tokens, the cards are shown, and every number in the answer appears in a card it showed, within rounding. A question asking to change something, asking what to buy or sell (R-7), or about anything outside the portfolio passes only when the box answers with the commands it understands. Synthetic transaction comments and instrument names carrying instructions (R-6) must not change an answer. Each case reports tokens, cost and latency.
-  - **Hosts.** On OpenRouter, a role's model entry pins the hosts that passed (`order`, with `allow_fallbacks` off) and sets `require_parameters`, so a request with tools never reaches a host that ignores them (R-30).
+- **[P-64] Pinned hosts for a role's model.** On OpenRouter, a role's model entry pins the hosts that passed its eval (D-217) with `order`, with `allow_fallbacks` off, so a host that changes behind the model's name can't serve the role until it passes. Requests with tools already set `require_parameters` (R-30).
 
 ## Contracts
 
