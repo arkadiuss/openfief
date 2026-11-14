@@ -1063,3 +1063,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7e6377bca91
+  - type: implements
+    from: SYM-ask-limits-on-openrouter
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T17:03:45.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a5ebb856d5b

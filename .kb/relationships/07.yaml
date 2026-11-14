@@ -881,3 +881,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af173a91c3b8
+  - type: implements
+    from: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    to: REQ-ask-prompt-declines-only-three-things
+    created_at: 2026-11-14T16:55:57.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bd31df711ac
+  - type: covered_by
+    from: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T16:55:57.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab59ca458f1
+  - type: implements
+    from: SYM-ab4-tools-askbench-main-go-reasoningof
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T16:57:32.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b8fbbd841d5
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-main-go-reasoningof
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:32.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f111b13df29
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testthehoststhatservedthecallsarelistedwiththeircounts
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:49.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b99d60d43590

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/big"
 	"net/http"
 	"strings"
 	"sync"
@@ -39,6 +40,9 @@ type Model struct {
 	// (D-205): the structured answer is then asked of it strictly (json_schema),
 	// else as a JSON object (JSON mode) that the loop checks and retries once.
 	Structured bool
+	// Reasoning, when not empty, is OpenRouter's reasoning control for the
+	// model (openaichat.ReasoningOff, Low, Medium or High); empty sends none.
+	Reasoning string
 }
 
 // modelLabel names a run of the model: its id, and, when it is pinned to hosts, the
@@ -95,6 +99,12 @@ type ModelCall struct {
 	// Label is the short fixed label of a failed call's status or timeout:
 	// never any text of the provider's reply.
 	Label string
+	// Cost is what the call cost in USD: the provider's own figure when the
+	// reply held one (Measured), else the tokens times the model entry's prices.
+	Cost     kernel.Decimal
+	Measured bool
+	// Provider is the host that served the call, "" when the reply named none.
+	Provider string
 }
 
 // meter counts what a run spends, across the runs that share it, and says when
@@ -126,15 +136,13 @@ func (m *meter) allow() error {
 	return nil
 }
 
-// charge adds the tokens of an answered call, priced by model.
-func (m *meter) charge(model *Model, in, out int64) kernel.Decimal {
-	spent := costOf(model, in, out)
+// charge adds the tokens and the cost of an answered call.
+func (m *meter) charge(in, out int64, cost kernel.Decimal) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.inTok += in
 	m.outTok += out
-	m.cost = m.cost.Add(spent)
-	return spent
+	m.cost = m.cost.Add(cost)
 }
 
 // spent is what a meter has counted.
@@ -156,6 +164,20 @@ func (m *meter) snapshot() spent {
 func costOf(model *Model, in, out int64) kernel.Decimal {
 	perToken := kernel.NewDecimal(1, -6)
 	return kernel.NewDecimal(in, 0).Mul(model.InputPrice).Mul(perToken).Add(kernel.NewDecimal(out, 0).Mul(model.OutputPrice).Mul(perToken))
+}
+
+// measuredCost reads the cost a provider reported, the text of a JSON number
+// such as 0.0000123 or 1.5e-05, exactly; it reports false for no figure, one that
+// is no number, or a negative one.
+func measuredCost(text string) (kernel.Decimal, bool) {
+	r, parsed := new(big.Rat).SetString(text)
+	if text == "" || !parsed || r.Sign() < 0 {
+		return kernel.Decimal{}, false
+	}
+	const places = 18
+	plain := strings.TrimRight(strings.TrimRight(r.FloatString(places), "0"), ".")
+	d, err := kernel.ParseDecimal(plain)
+	return d, err == nil
 }
 
 // modelRun is the model of one question, ui.AskModel over the plugin's own
@@ -199,8 +221,13 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 		r.calls = append(r.calls, call)
 		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
 	}
-	call.InputTokens, call.OutputTokens = reply.InputTokens, reply.OutputTokens
-	r.cost = r.cost.Add(r.meter.charge(r.model, reply.InputTokens, reply.OutputTokens))
+	call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
+	call.Cost, call.Measured = measuredCost(reply.Cost)
+	if !call.Measured {
+		call.Cost = costOf(r.model, reply.InputTokens, reply.OutputTokens)
+	}
+	r.meter.charge(reply.InputTokens, reply.OutputTokens, call.Cost)
+	r.cost = r.cost.Add(call.Cost)
 	r.calls = append(r.calls, call)
 	out := ui.AskReply{Content: reply.Content, Model: r.model.ID, OutputTokens: reply.OutputTokens}
 	for _, tc := range reply.ToolCalls {
@@ -309,15 +336,28 @@ func routedClient(hc *http.Client, baseURL, key string, route []string) *openaic
 	return c
 }
 
-// routingProbe returns the request body a request with one tool gets at
-// baseURL, pinned to route: it holds the provider routing member (OpenRouter's
-// require_parameters, and the order and no fallback of a route) the plugin's
-// client adds for the host, which the config hash covers.
-func routingProbe(baseURL string, route []string) map[string]any {
-	c := routedClient(nil, baseURL, "", route)
+// benchClient is the chat client of a run of model: pinned to its hosts, with
+// its reasoning control, and asking OpenRouter for each call's exact cost. The
+// last two reach OpenRouter only (openaichat); the plugin sets neither.
+func benchClient(hc *http.Client, baseURL, key string, m *Model) *openaichat.Client {
+	c := routedClient(hc, baseURL, key, m.Route)
+	c.Reasoning, c.IncludeCost = m.Reasoning, true
+	return c
+}
+
+// routingProbe returns the request body members a request with one tool gets at
+// baseURL for model m: the provider routing (OpenRouter's require_parameters,
+// and the order and no fallback of a route), the reasoning control and the
+// usage accounting the bench's client adds for the host. The config hash
+// covers them.
+func routingProbe(baseURL string, m *Model) map[string]any {
+	c := benchClient(nil, baseURL, "", m)
 	body := c.RequestBody(&openaichat.Request{Model: "m", Tools: []openaichat.Tool{{Name: "t"}}})
-	if provider, ok := body["provider"]; ok {
-		return map[string]any{"provider": provider}
+	out := map[string]any{}
+	for _, key := range []string{"provider", "reasoning", "usage"} {
+		if v, ok := body[key]; ok {
+			out[key] = v
+		}
 	}
-	return map[string]any{}
+	return out
 }

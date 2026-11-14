@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c69ad942ee0
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthesafewithqualitybesideit
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:12.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50383b0f2e1b

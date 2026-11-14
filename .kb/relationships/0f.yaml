@@ -1245,3 +1245,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0236af84653c
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-tallyhosts
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T16:59:23.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab149e2890de
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-tallyhosts
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:59:23.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0885e04ffa9

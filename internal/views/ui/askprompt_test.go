@@ -56,3 +56,47 @@ func TestPromptSplitsWhatTheBoxSaysOfItselfFromTheRest(t *testing.T) {
 		t.Error("the prompt is not its sentences in order")
 	}
 }
+
+func TestPromptDeclinesExactlyChangesAdviceAndQuestionsOutsideThePortfolio(t *testing.T) {
+	t.Parallel()
+	const prefix = "Refuse only these three things: "
+	var rules []string
+	for _, p := range askPromptParts(kernel.Date{}) {
+		if strings.HasPrefix(p.Text, prefix) {
+			rules = append(rules, p.Text)
+		}
+	}
+	if len(rules) != 1 {
+		t.Fatalf("%d decline rules, want one", len(rules))
+	}
+	got := strings.Split(strings.TrimSuffix(strings.TrimPrefix(rules[0], prefix), "."), "; ")
+	want := []string{"changing anything", "advice on what to buy, sell or hold", "a question that is not about the portfolio"}
+	if strings.Join(got, "|") != strings.Join(want, "|") {
+		t.Errorf("the rule names %q, want exactly %q", got, want)
+	}
+	if other := sentencesNamingADeclinedClass(rules[0]); len(other) > 0 {
+		t.Errorf("sentences besides the rule name a declined class: %q", other)
+	}
+}
+
+// sentencesNamingADeclinedClass returns the sentences of the prompt other than
+// rule that name one of the declined things.
+func sentencesNamingADeclinedClass(rule string) []string {
+	var out []string
+	for _, p := range askPromptParts(kernel.Date{}) {
+		if p.Text != rule && (strings.Contains(p.Text, "buy, sell or hold") || strings.Contains(p.Text, "changing anything")) {
+			out = append(out, p.Text)
+		}
+	}
+	return out
+}
+
+func TestPromptSaysWhatToAnswerAndHowToDecline(t *testing.T) {
+	t.Parallel()
+	prompt := askSystemPrompt(kernel.Date{})
+	for _, s := range []string{"Greet back when you are greeted", "\"why\" questions too", "one friendly sentence"} {
+		if !strings.Contains(prompt, s) {
+			t.Errorf("the prompt lacks %q", s)
+		}
+	}
+}

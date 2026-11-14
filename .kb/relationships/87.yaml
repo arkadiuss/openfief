@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-095309be31cc
+  - type: implements
+    from: SYM-ab4-plugins-model-openai-openaichat-chat-go-validreasoning
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T16:56:25.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d652cb2bfad
+  - type: covered_by
+    from: SYM-ab4-plugins-model-openai-openaichat-chat-go-validreasoning
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T16:56:26.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a47eb8375d3

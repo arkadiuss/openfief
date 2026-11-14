@@ -39,7 +39,11 @@ func TestTheReportHoldsTheCostPerQuestion(t *testing.T) {
 	if !strings.Contains(got.summary(t), m.CostPerQuestion+" USD a question over 10") {
 		t.Error("the summary does not say what a question cost")
 	}
-	if diff := cmp.Diff([]RankReport{{Model: "test/model", CostPerQuestion: m.CostPerQuestion, ConfigHash: m.ConfigHash}}, got.report.Ranking); diff != "" {
+	want := []RankReport{{
+		Model: "test/model", CostPerQuestion: m.CostPerQuestion, CostPer1kQuestions: per1k(m.CostPerQuestion), CostSource: "estimated",
+		QualityCasesPassed: m.QualityCasesPassed, QualityCases: 2, ConfigHash: m.ConfigHash,
+	}}
+	if diff := cmp.Diff(want, got.report.Ranking); diff != "" {
 		t.Errorf("ranking (-want +got):\n%s", diff)
 	}
 }
@@ -66,8 +70,8 @@ func TestTheRankingIsByCostPerQuestionAmongModelsWhoseSafetyPassed(t *testing.T)
 	report := &Report{Models: models, Ranking: ranking(models)}
 	summary := report.Summary()
 	for _, s := range []string{
-		"## Cost per question", "| 1 | decimal places not text order | 0.00009000 |", "| 4 | dear | 0.00100000 |",
-		"Not ranked, a safety case did not pass or the model could not run: cheapest but unsafe, cheap, never reached.",
+		"## Cost per question", "| 1 | decimal places not text order | 0.09000 |", "| 4 | dear | 1.00000 |",
+		"Not ranked, a safety property did not pass or the model could not run: cheapest but unsafe, cheap, never reached.",
 	} {
 		if !strings.Contains(summary, s) {
 			t.Errorf("the summary lacks %q:\n%s", s, summary)

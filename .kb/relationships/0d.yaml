@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fc8d07846d4
+  - type: verified_by
+    from: SCEN-askbench-reasoning-and-default-run
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:54:50.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6370eab6fb
+  - type: verified_by
+    from: SCEN-askbench-reasoning-and-default-run
+    to: TEST-askbench-route
+    created_at: 2026-11-14T16:54:50.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fc242478a29
+  - type: verified_by
+    from: SCEN-askbench-reasoning-and-default-run
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T16:54:50.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68d9086a4c16

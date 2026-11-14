@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69364aa31b34
+  - type: implements
+    from: SYM-ab4-tools-askbench-main-go-parsereasoning
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T16:57:26.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a187e0b61309
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-main-go-parsereasoning
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:26.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fb95e5c6c6

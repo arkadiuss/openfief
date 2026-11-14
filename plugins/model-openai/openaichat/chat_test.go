@@ -448,3 +448,67 @@ func TestCompleteKeyErrorIsUnavailable(t *testing.T) {
 		t.Fatalf("error = %v, want unavailable for the key", err)
 	}
 }
+
+func TestReasoningAndCostOptionsReachOpenRouterOnly(t *testing.T) {
+	t.Parallel()
+	req := &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}}
+	const openRouter, other = "https://openrouter.ai/api/v1", "https://api.openai.com/v1"
+	tests := []struct {
+		name          string
+		client        Client
+		wantReasoning any
+		wantUsage     any
+	}{
+		{name: "unset sends nothing", client: Client{BaseURL: openRouter}},
+		{name: "off", client: Client{BaseURL: openRouter, Reasoning: ReasoningOff}, wantReasoning: map[string]any{"enabled": false}},
+		{name: "low", client: Client{BaseURL: openRouter, Reasoning: ReasoningLow}, wantReasoning: map[string]any{"effort": "low"}},
+		{name: "medium", client: Client{BaseURL: openRouter, Reasoning: ReasoningMedium}, wantReasoning: map[string]any{"effort": "medium"}},
+		{name: "high", client: Client{BaseURL: openRouter, Reasoning: ReasoningHigh}, wantReasoning: map[string]any{"effort": "high"}},
+		{name: "an unknown value sends nothing", client: Client{BaseURL: openRouter, Reasoning: "extreme"}},
+		{name: "cost", client: Client{BaseURL: openRouter, IncludeCost: true}, wantUsage: map[string]any{"include": true}},
+		{
+			name: "both", client: Client{BaseURL: openRouter, Reasoning: ReasoningLow, IncludeCost: true},
+			wantReasoning: map[string]any{"effort": "low"}, wantUsage: map[string]any{"include": true},
+		},
+		{name: "another server is told nothing", client: Client{BaseURL: other, Reasoning: ReasoningOff, IncludeCost: true}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			body := onTheWire(t, tt.client.RequestBody(req))
+			if diff := cmp.Diff(tt.wantReasoning, body["reasoning"]); diff != "" {
+				t.Errorf("reasoning (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tt.wantUsage, body["usage"]); diff != "" {
+				t.Errorf("usage (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestCompleteReadsTheCostAndTheServingProvider(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name         string
+		reply        string
+		cost, served string
+	}{
+		{name: "both", reply: `{"provider":"Nextbit","choices":[{"message":{"content":"a"},"finish_reason":"stop"}],"usage":{"prompt_tokens":1,"completion_tokens":2,"cost":0.0000123}}`, cost: "0.0000123", served: "Nextbit"},
+		{name: "an exponent is kept as written", reply: `{"choices":[{"message":{"content":"a"}}],"usage":{"cost":1.5e-05}}`, cost: "1.5e-05"},
+		{name: "none", reply: textReply},
+		{name: "a null cost", reply: `{"choices":[{"message":{"content":"a"}}],"usage":{"cost":null}}`},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			_, c := newFake(t, tt.reply)
+			reply, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if reply.Cost != tt.cost || reply.Provider != tt.served {
+				t.Errorf("cost %q provider %q, want %q and %q", reply.Cost, reply.Provider, tt.cost, tt.served)
+			}
+		})
+	}
+}

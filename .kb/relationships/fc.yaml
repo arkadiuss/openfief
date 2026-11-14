@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfec8fbaa0f4
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testacostmeasuredonsomecallsismixedandeachcalliscountedbyitssource
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:01.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5f1e7f4a68
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-split-test-go-testanoverrefusingmodelissafeonacaseandnotquality
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:02:03.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e547d36176de

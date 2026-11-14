@@ -185169,6 +185169,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
       - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-status-error
     title: statusError
@@ -195930,17 +195932,19 @@ symbols:
       - type: implements
         target: REQ-models-ask-box-model-through-router
   - id: SYM-ask-limits-on-openrouter
-    title: Client.onOpenRouter
+    title: Client.OnOpenRouter
     status: active
     origin:
       kind: agent
-      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
-      recorded_at: 2026-11-13T20:01:55.457Z
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:03:42.126Z
     sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-models-openrouter-require-parameters
   - id: SYM-ask-limits-request-body
@@ -195955,6 +195959,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-models-openrouter-require-parameters
   - id: SYM-ask-limits-test-testrequestbodyrequiresparametersonopenrouterwithtools
@@ -217210,9 +217218,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-split-list
     title: splitList
     status: active
@@ -217238,9 +217250,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-parse-price
     title: parsePrice
     status: active
@@ -217365,7 +217381,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-spent
@@ -217436,9 +217456,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-error-class
@@ -217494,7 +217518,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-numbers-reading
@@ -219014,6 +219044,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219029,6 +219063,7 @@ symbols:
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T09:19:41.725Z
     symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
@@ -219118,7 +219153,8 @@ symbols:
       kind: agent
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T08:49:19.318Z
-    symbol_role: behavioral
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
@@ -219267,8 +219303,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219340,7 +219382,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219433,8 +219479,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219669,11 +219721,17 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
       - type: implements
@@ -220126,8 +220184,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-checks
@@ -220158,8 +220220,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-grade
@@ -220174,8 +220240,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-score-inputs
@@ -220780,6 +220850,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-toolcalls-expected-of
@@ -220948,8 +221022,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-askbench-report
   - id: SYM-askbench-portfolio-test-changed-account-names
@@ -221182,19 +221260,23 @@ symbols:
       - type: implements
         target: REQ-askbench-errors-not-model-failures
   - id: SYM-askbench-report-pass-cell
-    title: passCell
+    title: passCellOf
     status: active
     sourceFile: tools/askbench/report.go
     origin:
       kind: agent
-      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
-      recorded_at: 2026-11-14T13:27:56.447Z
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:03:48.378Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-askbench-errors
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
   - id: SYM-askbench-errors-test-status-labels
     title: TestStatusLabels
     status: active
@@ -221339,6 +221421,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
       - type: implements
         target: REQ-askbench-scorers-exact
   - id: SYM-ab3-internal-views-ui-askprompt-go-asksystemprompt
@@ -222976,6 +223060,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
   - id: SYM-ab3-tools-askbench-report-go-ratof
@@ -223018,6 +223106,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
   - id: SYM-ab3-tools-askbench-route-test-go-testroutespinamodeltohostsandlabeleachrun
@@ -223114,7 +223206,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
   - id: SYM-ab3-tools-askbench-report-go-questionsasked
@@ -223145,3 +223241,815 @@ symbols:
         target: TEST-askbench-route
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    title: askDeclineClasses
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:55:54.640Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
+  - id: SYM-ab4-internal-views-ui-askprompt-go-askdeclinerule
+    title: askDeclineRule
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:00.661Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptdeclinesexactlychangesadviceandquestionsoutsidetheportfolio
+    title: TestPromptDeclinesExactlyChangesAdviceAndQuestionsOutsideThePortfolio
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:06.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-sentencesnamingadeclinedclass
+    title: sentencesNamingADeclinedClass
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:11.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptsayswhattoanswerandhowtodecline
+    title: TestPromptSaysWhatToAnswerAndHowToDecline
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:17.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-validreasoning
+    title: ValidReasoning
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:23.097Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-client-addopenrouteroptions
+    title: Client.addOpenRouterOptions
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:35.384Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-object-costtext
+    title: object.costText
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:41.396Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-test-go-testreasoningandcostoptionsreachopenrouteronly
+    title: TestReasoningAndCostOptionsReachOpenRouterOnly
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:47.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-test-go-testcompletereadsthecostandtheservingprovider
+    title: TestCompleteReadsTheCostAndTheServingProvider
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:53.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab4-tools-askbench-cases-go-safetychecks
+    title: safetyChecks
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:59.512Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-cases-go-case-safetycheck
+    title: Case.safetyCheck
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:05.456Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-fakeserver-test-go-fakemodel-withcost
+    title: fakeModel.withCost
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:11.371Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-main-go-structuredfor
+    title: structuredFor
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:17.437Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-ab4-tools-askbench-main-go-parsereasoning
+    title: parseReasoning
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:23.323Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-main-go-reasoningof
+    title: reasoningOf
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:29.327Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-measured-test-go-testaprovidercostisreadexactly
+    title: TestAProviderCostIsReadExactly
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:35.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthemeasuredcostisthecostoftherunandofthebudget
+    title: TestTheMeasuredCostIsTheCostOfTheRunAndOfTheBudget
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:40.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthehoststhatservedthecallsarelistedwiththeircounts
+    title: TestTheHostsThatServedTheCallsAreListedWithTheirCounts
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:46.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testacostfromthetokenpricesissaidsowhenthereplyhasnone
+    title: TestACostFromTheTokenPricesIsSaidSoWhenTheReplyHasNone
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:52.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testacostmeasuredonsomecallsismixedandeachcalliscountedbyitssource
+    title: TestACostMeasuredOnSomeCallsIsMixedAndEachCallIsCountedByItsSource
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:58.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthebudgetcountsthemeasuredcost
+    title: TestTheBudgetCountsTheMeasuredCost
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:03.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthesafewithqualitybesideit
+    title: TestTheRankingIsByMeasuredCostPer1kQuestionsAmongTheSafeWithQualityBesideIt
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:09.554Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testreasoningispermodelorlabel
+    title: TestReasoningIsPerModelOrLabel
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:15.309Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testbadreasoningentriesareusageerrors
+    title: TestBadReasoningEntriesAreUsageErrors
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:20.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testreasoningisrefusedonahostthatisnotopenrouter
+    title: TestReasoningIsRefusedOnAHostThatIsNotOpenRouter
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:26.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthereasoningcontrolisintherequestbodyandtheconfigurationhash
+    title: TestTheReasoningControlIsInTheRequestBodyAndTheConfigurationHash
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:31.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testamodellistedandroutedrunsonthedefaultroutingtoo
+    title: TestAModelListedAndRoutedRunsOnTheDefaultRoutingToo
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:37.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-modelclient-go-measuredcost
+    title: measuredCost
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:43.279Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-modelclient-go-benchclient
+    title: benchClient
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:49.374Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-report-go-runreport-setproperties
+    title: RunReport.setProperties
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:55.472Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-providercount
+    title: ProviderCount
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:01.520Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-per1k
+    title: per1k
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:07.700Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-modelreport-addtotals
+    title: ModelReport.addTotals
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:14.053Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-tallyhosts
+    title: tallyHosts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:20.356Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-costsource
+    title: costSource
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:26.779Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-providercounts
+    title: providerCounts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:32.925Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-casereport-count
+    title: CaseReport.count
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:39.047Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-casereport-setpassall
+    title: CaseReport.setPassAll
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:45.211Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-sourceword
+    title: sourceWord
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:51.358Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-costnote
+    title: costNote
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:57.718Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-providerstext
+    title: providersText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:03.966Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-safetycell
+    title: safetyCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:10.401Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-qualitycell
+    title: qualityCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:16.853Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-passedcell
+    title: passedCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:23.186Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-runner-go-runreport-addcall
+    title: RunReport.addCall
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:36.530Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-scorers-go-callssafe
+    title: callsSafe
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:43.251Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-scorers-go-callcap
+    title: callCap
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:49.956Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-scorers-go-callssafescorer
+    title: callsSafeScorer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:56.325Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-split-test-go-gradedrun
+    title: gradedRun
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:02.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-verdictof
+    title: verdictOf
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:09.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-failednames
+    title: failedNames
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:15.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-injectionrun
+    title: injectionRun
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:21.828Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-injectionruns
+    title: injectionRuns
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:28.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testaninjectionrunisgradedonsafetyandqualityapart
+    title: TestAnInjectionRunIsGradedOnSafetyAndQualityApart
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:34.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testthesafetychecksofaninjectionarethecallstheadviceandtheecho
+    title: TestTheSafetyChecksOfAnInjectionAreTheCallsTheAdviceAndTheEcho
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:40.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testarefusalisitsownsafetyandananswercasehasnone
+    title: TestARefusalIsItsOwnSafetyAndAnAnswerCaseHasNone
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:47.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-scored
+    title: scored
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:53.661Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testanoverrefusingmodelissafeonacaseandnotquality
+    title: TestAnOverRefusingModelIsSafeOnACaseAndNotQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:00.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testonerunthatactedonthepayloadbreakssafetypass5notquality
+    title: TestOneRunThatActedOnThePayloadBreaksSafetyPass5NotQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:06.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testananswercasehasnosafetycolumn
+    title: TestAnAnswerCaseHasNoSafetyColumn
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:12.629Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testarefuseeverythingmodeldoesnotlookgood
+    title: TestARefuseEverythingModelDoesNotLookGood
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:19.383Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-checkrankedwithquality
+    title: checkRankedWithQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:25.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testthesummaryshowsbothcolumnsandthetotalssidebyside
+    title: TestTheSummaryShowsBothColumnsAndTheTotalsSideBySide
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:32.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testaninjectionthatactsonthepayloadfailssafetyandnotqualityendtoend
+    title: TestAnInjectionThatActsOnThePayloadFailsSafetyAndNotQualityEndToEnd
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:38.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split

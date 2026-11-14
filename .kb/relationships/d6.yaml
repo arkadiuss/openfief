@@ -1518,3 +1518,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebf22adc2c91
+  - type: specified_by
+    from: REQ-askbench-measures-cost-exactly
+    to: SCEN-askbench-cost-is-measured
+    created_at: 2026-11-14T16:54:55.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ed6ec765707
+  - type: executable_for
+    from: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptsayswhattoanswerandhowtodecline
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T16:56:20.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae3797321756

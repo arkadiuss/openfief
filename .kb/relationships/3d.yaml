@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d1b29c1641c
+  - type: implements
+    from: SYM-ab4-tools-askbench-modelclient-go-benchclient
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T16:58:52.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb00b79fb8cb
+  - type: implements
+    from: SYM-ab4-tools-askbench-modelclient-go-benchclient
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T16:58:52.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16c74bc3df3f
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-modelclient-go-benchclient
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:52.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1da644389439

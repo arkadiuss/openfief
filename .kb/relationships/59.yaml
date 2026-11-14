@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e03e8c0a0ec
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-qualitycell
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-14T17:00:19.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd1a89d5698
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-qualitycell
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:00:19.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b98f3aca71
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    to: REQ-ask-prompt-declines-only-three-things
+    created_at: 2026-11-14T17:04:21.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a62418e9b54

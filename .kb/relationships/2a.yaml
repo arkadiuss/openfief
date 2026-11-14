@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85733ea82307
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testreasoningisrefusedonahostthatisnotopenrouter
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:28.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dfa42c0b9a5

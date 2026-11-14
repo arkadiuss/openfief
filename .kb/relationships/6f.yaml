@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c39923bfd775
+  - type: executable_for
+    from: SYM-ab4-plugins-model-openai-openaichat-chat-test-go-testreasoningandcostoptionsreachopenrouteronly
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T16:56:50.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d526d0d785

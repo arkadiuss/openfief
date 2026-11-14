@@ -39,6 +39,11 @@ type fakeModel struct {
 	judgeSays bool
 	// judged counts the requests that asked for structured output.
 	judged atomic.Int64
+	// cost, when not empty, is the text of the usage.cost every completion
+	// reports (the first costCalls of them when that is not zero), and
+	// provider the host it names as the one that served it, as OpenRouter does.
+	cost, provider string
+	costCalls      int
 }
 
 // newFakeModel starts the fake.
@@ -71,6 +76,7 @@ func (f *fakeModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	f.auth = append(f.auth, r.Header.Get("Authorization"))
 	status, failure := f.status, f.failureBody
 	f.seen++
+	seen := f.seen
 	if f.seen <= f.failFirst {
 		status = f.failStatus
 	}
@@ -87,7 +93,20 @@ func (f *fakeModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	c := conversationOf(body)
-	say(w, f.reply(c.question, c.results, f.counterFor(c.question, len(c.results) == 0)))
+	reply := f.reply(c.question, c.results, f.counterFor(c.question, len(c.results) == 0))
+	say(w, f.withCost(reply, seen))
+}
+
+// withCost adds the cost and the serving provider to a completion, when the
+// fake is set to report them for the seen-th request.
+func (f *fakeModel) withCost(reply string, seen int) string {
+	if f.provider != "" {
+		reply = strings.Replace(reply, `{"choices"`, `{"provider":`+jsonText(f.provider)+`,"choices"`, 1)
+	}
+	if f.cost != "" && (f.costCalls == 0 || seen <= f.costCalls) {
+		reply = strings.Replace(reply, `"completion_tokens"`, `"cost":`+f.cost+`,"completion_tokens"`, 1)
+	}
+	return reply
 }
 
 // counterFor returns how many first rounds of question it has seen, counting

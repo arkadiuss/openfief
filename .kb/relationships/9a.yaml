@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35e810efba8d
+  - type: verified_by
+    from: SCEN-ask-prompt-declines-only-three-things
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T16:54:51.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a427b1d0da7

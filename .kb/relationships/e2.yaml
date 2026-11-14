@@ -1322,3 +1322,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a10a5c83395
+  - type: implements
+    from: SYM-askbench-scorers-check-scorer
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-14T17:06:05.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cd0b396c98e
+  - type: covered_by
+    from: SYM-askbench-scorers-check-scorer
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:06:05.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6913d22c684

@@ -177,7 +177,7 @@ func resolveLimits(l ui.AskLimits) ui.AskLimits {
 // ask runs one task: a question in a conversation of its own, graded.
 func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	model := &b.opts.Models[t.model]
-	mr := &modelRun{client: routedClient(b.opts.HTTP, b.opts.BaseURL, b.opts.APIKey, model.Route), model: model, meter: b.meter, now: b.opts.Now}
+	mr := &modelRun{client: benchClient(b.opts.HTTP, b.opts.BaseURL, b.opts.APIKey, model), model: model, meter: b.meter, now: b.opts.Now}
 	style := t.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: mr, Today: func() kernel.Date { return b.seed.Today },
@@ -193,9 +193,8 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today,
 	}
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
-	for _, c := range mr.calls {
-		rep.InputTokens += c.InputTokens
-		rep.OutputTokens += c.OutputTokens
+	for i := range mr.calls {
+		rep.addCall(&mr.calls[i])
 	}
 	for _, c := range mr.calls {
 		if c.Error == "" {
@@ -220,6 +219,25 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		rep.Error = errorText(gradeErr)
 	}
 	return rep
+}
+
+// addCall adds a call of the run to its tokens, its estimated-cost count and the
+// hosts that served it.
+func (r *RunReport) addCall(c *ModelCall) {
+	r.InputTokens += c.InputTokens
+	r.OutputTokens += c.OutputTokens
+	if c.Error != "" {
+		return
+	}
+	if !c.Measured {
+		r.EstimatedCalls++
+	}
+	if c.Provider != "" {
+		if r.Providers == nil {
+			r.Providers = map[string]int{}
+		}
+		r.Providers[c.Provider]++
+	}
 }
 
 // grade scores the run's answer and fills the report with the results.

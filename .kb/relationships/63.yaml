@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06872050b747
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-costnote
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T17:00:00.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-913e7e1e5796
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-costnote
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T17:00:00.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5306c233a89

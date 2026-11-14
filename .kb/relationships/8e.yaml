@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d500df232bb
+  - type: implements
+    from: SYM-ab4-tools-askbench-main-go-structuredfor
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T16:57:20.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-485b0a9ea4bb
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-main-go-structuredfor
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T16:57:20.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168161e443be

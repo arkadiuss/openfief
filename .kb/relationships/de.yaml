@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-694c6339d4b1
+  - type: executable_for
+    from: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptdeclinesexactlychangesadviceandquestionsoutsidetheportfolio
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T16:56:09.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e82282236b4f

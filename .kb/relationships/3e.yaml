@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56518ee4913a
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-split-test-go-testananswercasehasnosafetycolumn
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:02:15.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778b80ba7d7c

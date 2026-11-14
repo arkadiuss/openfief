@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a181eaddb4b2
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-writeranking
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T17:05:53.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c6eb7c8029b
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-writeranking
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T17:05:53.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a112f48d0e87

@@ -1329,3 +1329,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9d3405cc6b0
+  - type: implements
+    from: SYM-askbench-main-parse-args
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T17:04:39.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc2998b7ba7
+  - type: covered_by
+    from: SYM-askbench-main-parse-args
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T17:04:39.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d47d7d4b52c6

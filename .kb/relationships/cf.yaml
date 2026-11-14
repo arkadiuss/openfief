@@ -1210,3 +1210,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38e610ecc9a5
+  - type: implements
+    from: SYM-ab4-tools-askbench-scorers-go-callssafescorer
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-14T17:00:59.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-046c2f0152c0
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-scorers-go-callssafescorer
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:00:59.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280e69f0a81a

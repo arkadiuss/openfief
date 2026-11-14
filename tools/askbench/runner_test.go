@@ -303,7 +303,7 @@ func TestTheReportHoldsTheCosts(t *testing.T) {
 	if got.report.Budget.Calls != 10 || got.report.Budget.Cost != "0.0117" {
 		t.Errorf("budget = %+v, want 10 calls and 0.0117", got.report.Budget)
 	}
-	for _, want := range []string{"| A1 | en | answer | pass | 5/5 |", got.report.Models[0].ConfigHash} {
+	for _, want := range []string{"| A1 | en | answer | n/a | pass | 5/5 |", got.report.Models[0].ConfigHash} {
 		if !strings.Contains(got.summary(t), want) {
 			t.Errorf("summary.md lacks %q", want)
 		}
@@ -366,10 +366,10 @@ func TestTheConfigurationHashFollowsWhatTheResultsDependOn(t *testing.T) {
 
 func TestTheRoutingMemberFollowsTheHost(t *testing.T) {
 	t.Parallel()
-	if got := routingProbe(defaultBaseURL, nil); got["provider"] == nil {
+	if got := routingProbe(defaultBaseURL, &Model{}); got["provider"] == nil {
 		t.Errorf("OpenRouter's routing = %v, want provider.require_parameters", got)
 	}
-	if got := routingProbe("https://api.openai.com/v1", nil); len(got) != 0 {
+	if got := routingProbe("https://api.openai.com/v1", &Model{}); len(got) != 0 {
 		t.Errorf("OpenAI's routing = %v, want none", got)
 	}
 }

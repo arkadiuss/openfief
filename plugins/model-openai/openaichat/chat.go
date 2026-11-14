@@ -70,6 +70,33 @@ type Client struct {
 	// `allow_fallbacks` false and `require_parameters`. Nothing sets it in the
 	// plugin; the Ask box bench does, to compare a model on one host.
 	Route []string
+	// Reasoning, when not empty, sets OpenRouter's `reasoning` request
+	// parameter: ReasoningOff sends {"enabled": false}, and ReasoningLow,
+	// ReasoningMedium or ReasoningHigh send {"effort": ...}. Empty sends
+	// nothing, the model's own default. Nothing sets it in the plugin; the Ask
+	// box bench does, to compare a model with its thinking off or turned down.
+	Reasoning string
+	// IncludeCost asks OpenRouter for the call's exact cost: `usage` with
+	// `include` true, which puts usage.cost (USD) and the serving `provider`
+	// in the reply. Nothing sets it in the plugin; the bench does.
+	IncludeCost bool
+}
+
+// The values of Client.Reasoning.
+const (
+	ReasoningOff    = "off"
+	ReasoningLow    = "low"
+	ReasoningMedium = "medium"
+	ReasoningHigh   = "high"
+)
+
+// ValidReasoning reports whether v is a value of Client.Reasoning.
+func ValidReasoning(v string) bool {
+	switch v {
+	case ReasoningOff, ReasoningLow, ReasoningMedium, ReasoningHigh:
+		return true
+	}
+	return false
 }
 
 // Message is a message of the conversation.
@@ -125,6 +152,12 @@ type Reply struct {
 	FinishReason string
 	InputTokens  int64
 	OutputTokens int64
+	// Cost is the call's cost in USD as the provider reported it (OpenRouter's
+	// usage.cost), as the number's own text; empty when the reply has none.
+	Cost string
+	// Provider is the host that served the call (OpenRouter's `provider`),
+	// empty when the reply names none.
+	Provider string
 }
 
 // object is a JSON object whose members are read by name. The OpenAI wire
@@ -231,26 +264,44 @@ const openRouterHost = "openrouter.ai"
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
 	switch {
-	case !c.onOpenRouter():
+	case !c.OnOpenRouter():
 	case len(c.Route) > 0:
 		body["provider"] = map[string]any{"order": c.Route, "allow_fallbacks": false, "require_parameters": true}
 	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
 		body["provider"] = map[string]any{"require_parameters": true}
 	}
+	if c.OnOpenRouter() {
+		c.addOpenRouterOptions(body)
+	}
 	return body
 }
 
-// onOpenRouter reports whether the client's base URL is OpenRouter's: its
+// OnOpenRouter reports whether the client's base URL is OpenRouter's: its
 // host is openrouter.ai or one of its subdomains. Other servers get no
-// `provider` object: OpenAI's own API refuses a request member it does not
-// know, so the member is sent only where it is part of the protocol.
-func (c *Client) onOpenRouter() bool {
+// `provider`, `reasoning` or `usage` member: OpenAI's own API refuses a request
+// member it does not know, so each is sent only where it is part of the
+// protocol.
+func (c *Client) OnOpenRouter() bool {
 	u, err := url.Parse(c.BaseURL)
 	if err != nil {
 		return false
 	}
 	host := strings.ToLower(u.Hostname())
 	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
+}
+
+// addOpenRouterOptions adds the reasoning and usage members the client's
+// options ask for. Both are OpenRouter's: other servers may refuse them.
+func (c *Client) addOpenRouterOptions(body map[string]any) {
+	switch {
+	case c.Reasoning == ReasoningOff:
+		body["reasoning"] = map[string]any{"enabled": false}
+	case ValidReasoning(c.Reasoning):
+		body["reasoning"] = map[string]any{"effort": c.Reasoning}
+	}
+	if c.IncludeCost {
+		body["usage"] = map[string]any{"include": true}
+	}
 }
 
 // post sends req to the provider and returns the body of its 2xx answer.
@@ -331,8 +382,19 @@ func parseReply(raw []byte) (*Reply, error) {
 	if top.get("usage", &usage) {
 		usage.get("prompt_tokens", &out.InputTokens)
 		usage.get("completion_tokens", &out.OutputTokens)
+		out.Cost = usage.costText()
 	}
+	top.get("provider", &out.Provider)
 	return &out, nil
+}
+
+// costText returns the usage's cost as the number's own text, "" when it has none.
+func (o object) costText() string {
+	var cost json.Number
+	if !o.get("cost", &cost) {
+		return ""
+	}
+	return cost.String()
 }
 
 // statusError classifies an HTTP status: a 2xx is nil, a refusal of the
