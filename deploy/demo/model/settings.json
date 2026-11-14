@@ -1,0 +1,21 @@
+{
+  "routes": {
+    "ask": [
+      "openrouter/google/gemma-4-26b-a4b-it"
+    ]
+  },
+  "tiers": {
+    "T0": [
+      "openrouter/google/gemma-4-26b-a4b-it"
+    ],
+    "TF": [
+      "openrouter/google/gemma-4-26b-a4b-it"
+    ],
+    "T1": [
+      "openrouter/google/gemma-4-26b-a4b-it"
+    ],
+    "T2": [
+      "openrouter/google/gemma-4-26b-a4b-it"
+    ]
+  }
+}

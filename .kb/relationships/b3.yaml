@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50383b0f2e1b
+  - type: specified_by
+    from: REQ-demo-model-prepared-off
+    to: SCEN-demo-model-prepared-off
+    created_at: 2026-11-14T17:59:33.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656aa3b77f27

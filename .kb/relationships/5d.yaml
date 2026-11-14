@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95af2352901e
+  - type: executable_for
+    from: SYM-demo-seed-modelsettings-test-parse-refusals
+    to: TEST-demo-seed-model-settings
+    created_at: 2026-11-14T18:18:26.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d683adb842

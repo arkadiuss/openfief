@@ -1392,3 +1392,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2283364903d0
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-refuses
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-14T18:00:17.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5695363686
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-entry-routing
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T18:00:23.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6293f59e6f4c

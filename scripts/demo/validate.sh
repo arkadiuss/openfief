@@ -31,9 +31,39 @@ unknown_variables() {
   done
 }
 
+# model_layer_failures prints one line for each way the demo's model layer (deploy/demo/model, docs/dev/demo.md) is
+# wrong, and nothing when it is right. The layer is a kustomize Component that the live demo does not list, so it must:
+# build with the demo (deploy/demo/with-model) with every image pinned by digest; stay out of the live demo
+# (deploy/demo/openfief); route only the Ask box (the maintainer has no route on the demo); and route, and allow for
+# the data tiers, only models that its provider instance lists as entries, at that instance.
+model_layer_failures() {
+  local dir="$1" out="$2" instance="openrouter" listed refs ref
+  [ -d "$dir/model" ] || return 0
+  if kustomize build "$dir/openfief" 2>/dev/null | grep -q "$instance\|demo-model-settings"; then
+    echo "the live demo ($dir/openfief) includes the model layer: it is switched on only on purpose"
+  fi
+  if ! kustomize build "$dir/with-model" >"$out" 2>/dev/null; then
+    echo "the model layer does not build with the demo ($dir/with-model)"
+    return 0
+  fi
+  if [ -n "$(unpinned_images "$out")" ]; then
+    echo "the model layer deploys images not pinned by digest: $(unpinned_images "$out" | tr '\n' ' ')"
+  fi
+  if [ "$(gojq -c '.routes | keys' "$dir/model/settings.json")" != '["ask"]' ]; then
+    echo "the model settings route something other than the Ask box"
+  fi
+  listed="$(gojq -r --yaml-input 'select(.kind == "Plugin" and .metadata.name == "'"$instance"'") | .spec.config.models[].id' "$dir/model/$instance.yaml")"
+  refs="$(gojq -r '[.routes[], .tiers[]] | flatten | unique[]' "$dir/model/settings.json")"
+  for ref in $refs; do
+    if [[ "$ref" != "$instance/"* ]] || ! grep -qxF "${ref#"$instance"/}" <<<"$listed"; then
+      echo "the model settings name $ref, which the instance $instance does not list as an entry"
+    fi
+  done
+}
+
 # validate_demo builds every layer and applies the checks; it reports every failure, then fails once.
 validate_demo() {
-  local dir="${1:-deploy/demo}" path substitutes out failures=0 unverified unknown
+  local dir="${1:-deploy/demo}" path substitutes out failures=0 unverified unknown line
   out="$(mktemp)"
   if ! kustomize build "$dir" >"$out"; then
     echo "demo: kustomize build $dir failed" >&2
@@ -60,6 +90,11 @@ validate_demo() {
     echo "$dir/routes true"
     echo "$dir/audit false"
   )
+  while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    echo "demo: $line" >&2
+    failures=$((failures + 1))
+  done < <(model_layer_failures "$dir" "$out")
   rm -f "$out"
   unverified="$(gojq -r --yaml-input 'select(.kind == "OCIRepository" and .spec.verify.provider != "cosign") | .metadata.name' "$dir/stack.yaml")"
   if [ -n "$unverified" ]; then

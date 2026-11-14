@@ -1105,3 +1105,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95d547b0ca7e
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-chat-for
+    to: REQ-models-entry-hosts-reasoning
+    created_at: 2026-11-14T17:59:59.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd5cd78c416
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-chat-for
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-14T17:59:59.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-319db0cc553e

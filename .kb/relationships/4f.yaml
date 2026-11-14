@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65c30303e6ae
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-provider-test-wire-body
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T18:00:29.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d467270a270

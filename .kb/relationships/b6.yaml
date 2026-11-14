@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c28e8733fd61
+  - type: executable_for
+    from: SYM-demo-seed-modelsettings-test-committed
+    to: TEST-demo-seed-model-settings
+    created_at: 2026-11-14T18:02:03.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c5a3c174a9

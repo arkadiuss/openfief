@@ -31,6 +31,11 @@
 // models run and how long the provider keeps what it receives: the owner's
 // own statement, which the router shows and the owner's choices of which
 // models may see which data rest on (D-206). Prices are per million tokens.
+// At OpenRouter, and only there, a model's entry may also set "hosts", the
+// OpenRouter providers to pin it to in order with no fallback to others
+// (["nextbit/bf16"]), and "reasoning" ("off", "low", "medium" or "high"); each
+// applies to that entry's requests alone, and a config that sets one for
+// another server is refused.
 // The client trusts the system's roots plus the PEM certificates of the
 // instance's optional Secret <instance>--ca-bundle (file ca.crt), mounted at
 // /etc/openfief/ca-bundle.

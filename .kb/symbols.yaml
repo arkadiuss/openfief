@@ -224053,3 +224053,367 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-split
+  - id: SYM-models-plugins-model-openai-config-routing
+    title: routing
+    status: active
+    sourceFile: plugins/model-openai/config.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T17:59:37.604Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-config
+      - type: implements
+        target: REQ-models-entry-hosts-reasoning
+  - id: SYM-models-plugins-model-openai-config-routings
+    title: rawConfig.routings
+    status: active
+    sourceFile: plugins/model-openai/config.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T17:59:43.566Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-config
+      - type: implements
+        target: REQ-models-entry-hosts-reasoning
+  - id: SYM-models-plugins-model-openai-config-check-routing
+    title: rawModel.checkRouting
+    status: active
+    sourceFile: plugins/model-openai/config.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T17:59:49.385Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-config
+      - type: implements
+        target: REQ-models-entry-hosts-reasoning
+  - id: SYM-models-plugins-model-openai-config-chat-for
+    title: config.chatFor
+    status: active
+    sourceFile: plugins/model-openai/config.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T17:59:55.824Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-config
+      - type: implements
+        target: REQ-models-entry-hosts-reasoning
+  - id: SYM-models-plugins-model-openai-config-test-open-router-config
+    title: openRouterConfig
+    status: active
+    sourceFile: plugins/model-openai/config_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:02.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-config
+  - id: SYM-models-plugins-model-openai-config-test-hosts-and-reasoning
+    title: TestParseConfigHostsAndReasoningOfAnEntryOnOpenRouter
+    status: active
+    sourceFile: plugins/model-openai/config_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:08.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-config
+  - id: SYM-models-plugins-model-openai-config-test-refuses
+    title: TestParseConfigRefusesHostsAndReasoning
+    status: active
+    sourceFile: plugins/model-openai/config_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:14.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-config
+  - id: SYM-models-plugins-model-openai-provider-test-entry-routing
+    title: TestAnEntrysHostsAndReasoningReachOnlyItsOwnRequestsOnOpenRouter
+    status: active
+    sourceFile: plugins/model-openai/provider_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:20.264Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-models-plugins-model-openai-provider-test-wire-body
+    title: wireBody
+    status: active
+    sourceFile: plugins/model-openai/provider_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:26.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-demo-seed-modelsettings-file
+    title: modelSettingsFile
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:32.699Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-settings
+    title: modelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:39.114Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-parse
+    title: parseModelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:45.423Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-store
+    title: modelSettingsStore
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:52.151Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-seed
+    title: seedModelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:00:58.974Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-apply
+    title: applyModelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:05.568Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-model-settings
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-test-refs
+    title: refs
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:12.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-parse
+    title: TestParseModelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:19.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-fake
+    title: fakeSettingsStore
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:26.407Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-fake-settings
+    title: fakeSettingsStore.Settings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:33.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-fake-save-route
+    title: fakeSettingsStore.SaveRoute
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:39.922Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-fake-save-tier
+    title: fakeSettingsStore.SaveDataTierModels
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:46.670Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-seed
+    title: TestSeedModelSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:01:53.461Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-committed
+    title: TestTheDemosModelSettingsRouteOnlyTheAskBoxToItsModel
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:02:00.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-flag
+    title: TestParseConfigTakesTheModelSettingsFileFromItsFlag
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:02:06.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-real-db
+    title: TestApplyModelSettingsOnARealDatabase
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:02:13.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-ui-askmodel-down-test
+    title: TestAskBoxWithEveryModelDownStillAnswersItsCommands
+    status: active
+    sourceFile: internal/views/ui/askmodel_down_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:02:19.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-down
+  - id: SYM-tooling-demo-validate-model-layer-failures
+    title: model_layer_failures
+    status: active
+    sourceFile: scripts/demo/validate.sh
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:02:25.746Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-demo-model-prepared-off
+  - id: SYM-demo-seed-modelsettings-test-parse-refusals
+    title: TestParseModelSettingsRefusals
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:18:23.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-write-file
+    title: writeSettingsFile
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:18:30.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings
+  - id: SYM-demo-seed-modelsettings-test-check-seeded
+    title: checkSeededSettings
+    status: active
+    sourceFile: cmd/demo-seed/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
+      recorded_at: 2026-11-14T18:18:36.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-model-settings

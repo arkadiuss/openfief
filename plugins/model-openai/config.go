@@ -7,6 +7,7 @@ import (
 	"slices"
 	"time"
 
+	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 )
 
@@ -25,6 +26,10 @@ const (
 	maxTimeout = 2 * time.Minute
 	// maxModels is the most model entries a provider instance holds.
 	maxModels = 64
+	// maxHosts is the most hosts an entry pins, and maxHostLen the longest
+	// slug of one.
+	maxHosts   = 8
+	maxHostLen = 64
 )
 
 // A decimal price: digits, optionally a fraction. A function-free variable
@@ -32,6 +37,9 @@ const (
 var (
 	decimalPattern  = regexp.MustCompile(`^\d{1,12}(\.\d{1,12})?$`)
 	currencyPattern = regexp.MustCompile(`^[A-Z]{3}$`)
+	// hostPattern is an OpenRouter provider slug, such as "groq" or
+	// "nextbit/bf16": lower-case letters, digits and . _ - /.
+	hostPattern = regexp.MustCompile(`^[a-z0-9][a-z0-9._/-]*$`)
 )
 
 // rawConfig is the plugin's configuration as OPENFIEF_CONFIG holds it.
@@ -57,6 +65,12 @@ type rawModel struct {
 	MaxOutputTokens  int64  `json:"maxOutputTokens"`
 	ToolCalling      bool   `json:"toolCalling"`
 	StructuredOutput bool   `json:"structuredOutput"`
+	// Hosts pins the entry to OpenRouter's providers of these slugs, in this
+	// order and with no fallback to others; Reasoning sets OpenRouter's
+	// reasoning control (off, low, medium or high). Both are OpenRouter's,
+	// and a config that sets one for another server is refused.
+	Hosts     []string `json:"hosts"`
+	Reasoning string   `json:"reasoning"`
 }
 
 // config is the checked configuration of one provider instance (D-205).
@@ -65,6 +79,16 @@ type config struct {
 	location  modelsv1.Location
 	retention *modelsv1.Retention
 	models    []*modelsv1.ModelEntry
+	// routing holds the OpenRouter options of the entries that set any, by
+	// the entry's id.
+	routing map[string]routing
+}
+
+// routing is one entry's OpenRouter options: the hosts it is pinned to and
+// its reasoning setting, each empty when the entry sets none.
+type routing struct {
+	hosts     []string
+	reasoning string
 }
 
 // parse checks the raw config: a known location, a timeout in range, one
@@ -88,6 +112,10 @@ func (r *rawConfig) parse() (config, error) {
 	}
 	c.retention = &modelsv1.Retention{Days: r.Retention.Days, MayTrain: r.Retention.MayTrain}
 	c.models, err = r.entries()
+	if err != nil {
+		return config{}, err
+	}
+	c.routing, err = r.routings()
 	if err != nil {
 		return config{}, err
 	}
@@ -128,6 +156,51 @@ func (r *rawConfig) entries() ([]*modelsv1.ModelEntry, error) {
 	return out, nil
 }
 
+// routings checks the OpenRouter options of the entries: pinned hosts and a
+// reasoning setting are OpenRouter's, so they are refused on any other base
+// URL, where the plugin would never send them.
+func (r *rawConfig) routings() (map[string]routing, error) {
+	onOpenRouter := (&openaichat.Client{BaseURL: r.BaseURL}).OnOpenRouter()
+	var out map[string]routing
+	for i := range r.Models {
+		m := &r.Models[i]
+		if len(m.Hosts) == 0 && m.Reasoning == "" {
+			continue
+		}
+		if !onOpenRouter {
+			return nil, fmt.Errorf("%w: models[%d]: hosts and reasoning are OpenRouter's: the baseUrl's host is openrouter.ai", errBadConfig, i)
+		}
+		if err := m.checkRouting(); err != nil {
+			return nil, fmt.Errorf("%w: models[%d]: %w", errBadConfig, i, err)
+		}
+		if out == nil {
+			out = make(map[string]routing)
+		}
+		out[m.ID] = routing{hosts: slices.Clone(m.Hosts), reasoning: m.Reasoning}
+	}
+	return out, nil
+}
+
+// checkRouting checks the entry's hosts, at most maxHosts distinct provider
+// slugs, and its reasoning setting.
+func (m *rawModel) checkRouting() error {
+	if len(m.Hosts) > maxHosts {
+		return fmt.Errorf("%w: at most %d hosts", errBadEntry, maxHosts)
+	}
+	for i, h := range m.Hosts {
+		if len(h) > maxHostLen || !hostPattern.MatchString(h) {
+			return fmt.Errorf("%w: a host is an OpenRouter provider slug", errBadEntry)
+		}
+		if slices.Contains(m.Hosts[:i], h) {
+			return fmt.Errorf("%w: a host listed twice", errBadEntry)
+		}
+	}
+	if m.Reasoning != "" && !openaichat.ValidReasoning(m.Reasoning) {
+		return fmt.Errorf("%w: reasoning is off, low, medium or high", errBadEntry)
+	}
+	return nil
+}
+
 // errBadEntry reports a model entry the schema would refuse.
 var errBadEntry = errors.New("invalid model entry")
 
@@ -158,6 +231,19 @@ func (m *rawModel) pricedWrongly() bool {
 	}
 	return !decimalPattern.MatchString(m.InputPrice) || !decimalPattern.MatchString(m.OutputPrice) ||
 		!currencyPattern.MatchString(m.PriceCurrency)
+}
+
+// chatFor returns the chat client that serves the entry with id: base, with
+// the entry's pinned hosts and reasoning setting when it has them. base is
+// not changed. The client sends them to OpenRouter only.
+func (c *config) chatFor(base *openaichat.Client, id string) *openaichat.Client {
+	r, ok := c.routing[id]
+	if !ok {
+		return base
+	}
+	out := *base
+	out.Route, out.Reasoning = r.hosts, r.reasoning
+	return &out
 }
 
 // entry returns the entry with id.
