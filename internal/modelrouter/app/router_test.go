@@ -545,6 +545,31 @@ func TestRouterSkipsModelsWithoutWhatTheRequestNeeds(t *testing.T) {
 	}
 }
 
+// TestRouterServesTheStructuredAnswerByAModelWithoutTheFlagWhenTheRequestAllows
+// checks the fallback: a request with a response schema that allows JSON mode is
+// served by a model whose entry has no structured output, and the request that
+// reaches the provider says so, so the plugin asks for JSON mode; one that does
+// not allow it still finds no capable model there.
+func TestRouterServesTheStructuredAnswerByAModelWithoutTheFlagWhenTheRequestAllows(t *testing.T) {
+	t.Parallel()
+	f := newRouterFixture(t)
+	f.store.settings.Policy[modelrouter.DataTierT2] = []modelrouter.Ref{f.local} // only the model without the flag
+	req := request(modelrouter.DataTierT2)
+	req.ResponseSchemaJSON, req.JSONModeFallback = `{"type":"object"}`, true
+	res, err := f.generate(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Model != f.local {
+		t.Errorf("answered by %v, want the model without the flag", res.Model)
+	}
+	strict := request(modelrouter.DataTierT2)
+	strict.ResponseSchemaJSON = `{"type":"object"}`
+	if _, err := f.generate(strict); !errors.Is(err, modelrouter.ErrNoCapableModel) {
+		t.Errorf("error = %v, want ErrNoCapableModel for a request that does not allow JSON mode", err)
+	}
+}
+
 func TestRouterCachesEntriesUntilTheyExpire(t *testing.T) {
 	t.Parallel()
 	f := newRouterFixture(t)

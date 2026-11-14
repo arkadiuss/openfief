@@ -1091,3 +1091,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa093574071e
+  - type: executable_for
+    from: SYM-askbench-errors-test-check-says-could-not-run
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:47.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f8edeb39995
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T13:59:05.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15fb936c4d07
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:05.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abb39d9831a8
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-loopfixture-askconv
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:58.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-047a3b8172fb
+  - type: implements
+    from: SYM-askbench-report-tool-report
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:41:17.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dcbd8e9e320
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-ratof
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T15:47:03.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64e450256de1
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-ratof
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:47:03.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9de2ee1cd439
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testthemeasuredcostisthecostoftherunandofthebudget
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:43.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1122622b620c
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-parse-reply
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T17:04:33.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7881ccf7ff0

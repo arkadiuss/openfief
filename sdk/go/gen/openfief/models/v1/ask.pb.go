@@ -317,8 +317,13 @@ type GenerateAskRequest struct {
 	// The most tokens this call's answer may hold (D-208); zero means the
 	// model entry's own limit.
 	MaxOutputTokens int64 `protobuf:"varint,5,opt,name=max_output_tokens,json=maxOutputTokens,proto3" json:"max_output_tokens,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// When set, the message to generate is a JSON text of this JSON Schema: the
+	// Ask box's structured answer. A model whose entry has structured output is
+	// held to the schema; one that has not is asked for a JSON object (JSON mode)
+	// and the caller checks the reply against the schema.
+	ResponseSchemaJson string `protobuf:"bytes,6,opt,name=response_schema_json,json=responseSchemaJson,proto3" json:"response_schema_json,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GenerateAskRequest) Reset() {
@@ -384,6 +389,13 @@ func (x *GenerateAskRequest) GetMaxOutputTokens() int64 {
 		return x.MaxOutputTokens
 	}
 	return 0
+}
+
+func (x *GenerateAskRequest) GetResponseSchemaJson() string {
+	if x != nil {
+		return x.ResponseSchemaJson
+	}
+	return ""
 }
 
 type GenerateAskResponse struct {
@@ -485,13 +497,14 @@ const file_openfief_models_v1_ask_proto_rawDesc = "" +
 	"\n" +
 	"AskMessage\x125\n" +
 	"\amessage\x18\x01 \x01(\v2\x1b.openfief.models.v1.MessageR\amessage\x12\x1b\n" +
-	"\tdata_tier\x18\x02 \x01(\tR\bdataTier\"\xe9\x01\n" +
+	"\tdata_tier\x18\x02 \x01(\tR\bdataTier\"\x9b\x02\n" +
 	"\x12GenerateAskRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12:\n" +
 	"\bmessages\x18\x03 \x03(\v2\x1e.openfief.models.v1.AskMessageR\bmessages\x12.\n" +
 	"\x05tools\x18\x04 \x03(\v2\x18.openfief.models.v1.ToolR\x05tools\x12*\n" +
-	"\x11max_output_tokens\x18\x05 \x01(\x03R\x0fmaxOutputTokens\"\xee\x01\n" +
+	"\x11max_output_tokens\x18\x05 \x01(\x03R\x0fmaxOutputTokens\x120\n" +
+	"\x14response_schema_json\x18\x06 \x01(\tR\x12responseSchemaJson\"\xee\x01\n" +
 	"\x13GenerateAskResponse\x12\x18\n" +
 	"\acontent\x18\x01 \x01(\tR\acontent\x12;\n" +
 	"\n" +

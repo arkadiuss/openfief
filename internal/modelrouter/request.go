@@ -61,6 +61,10 @@ type Request struct {
 	// ResponseSchemaJSON, when set, asks for an answer that is a JSON text
 	// of this JSON Schema (structured output).
 	ResponseSchemaJSON string
+	// JSONModeFallback, with a response schema, lets a model whose entry has no
+	// structured output serve the request: it is asked for a JSON object (JSON
+	// mode) instead, and the caller checks the reply against the schema.
+	JSONModeFallback bool
 	// MaxOutputTokens bounds the answer; zero means the entry's limit.
 	MaxOutputTokens int64
 }
@@ -104,7 +108,7 @@ func (r *Request) DataTiers() (DataTierSet, error) {
 
 // Needs returns what a model must support to serve r.
 func (r *Request) Needs() Needs {
-	return Needs{Tools: len(r.Tools) > 0, StructuredOutput: r.ResponseSchemaJSON != ""}
+	return Needs{Tools: len(r.Tools) > 0, StructuredOutput: r.ResponseSchemaJSON != "" && !r.JSONModeFallback}
 }
 
 // Needs is what a request asks of a model entry.

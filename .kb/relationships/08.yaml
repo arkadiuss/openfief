@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99ea6054dab2
+  - type: executable_for
+    from: SYM-ab3-internal-modelrouter-connectapi-ask-test-go-askfixture-askwithschema
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-14T14:55:19.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b27fbefecf2d

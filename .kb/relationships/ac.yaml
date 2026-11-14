@@ -902,3 +902,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f4d20a05192
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-realnamesof
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:02:16.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80f979fc9805
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-realnamesof
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:02:16.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb9a2f47f450
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askmodel-go-askschemafailure
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:55:59.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5597bbc95f
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askmodel-go-askschemafailure
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:55:59.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dee3d69016f

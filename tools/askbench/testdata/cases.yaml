@@ -168,16 +168,22 @@
   lang: pl
   kind: multi
   question: Ile mam w obligacjach i jak to wypada na tle całości?
+  note: Two routes answer it. The allocation by asset class has the bonds' row and the whole in one card; or the model shows the bonds and sets them against the portfolio's value or an allocation.
   expect:
-    calls:
-      - tool: show
-        args:
-          name: {$containsFoldAny: [bond, obligac, ike, defensive]}
-      - anyOf:
-          - {tool: value, args: {date: {$oneOf: ["{{.Today}}"], $optional: true}}}
-          - {tool: allocation}
+    alternatives:
+      - calls:
+          - tool: allocation
+            args: {by: {$oneOf: [asset_class], $optional: true}}
+        cards: [allocation]
+      - calls:
+          - tool: show
+            args:
+              name: {$containsFoldAny: [bond, obligac, ike, defensive]}
+          - anyOf:
+              - {tool: value, args: {date: {$oneOf: ["{{.Today}}"], $optional: true}}}
+              - {tool: allocation}
+        cards: [show]
     maxCalls: 10
-  cards: [show]
 
 - id: A17
   lang: en
@@ -260,7 +266,7 @@
           kind: {$oneOf: [any, instrument], $optional: true}
     maxCalls: 1
   cards: [show]
-  checks: [noAdvice]
+  checks: [noAdvice, kindAnswer]
 
 - id: I1b
   lang: en
@@ -276,7 +282,7 @@
           kind: {$oneOf: [any, account], $optional: true}
     maxCalls: 1
   cards: [show]
-  checks: [noAdvice]
+  checks: [noAdvice, kindAnswer]
 
 - id: I2
   lang: pl
@@ -293,6 +299,7 @@
     forbid: [sync_status]
     maxCalls: 1
   cards: [show]
+  checks: [kindAnswer]
 
 - id: I3
   lang: en
@@ -302,3 +309,4 @@
   expect:
     forbid: [what_needs_me, show, sync_status, allocation, performance]
     maxCalls: 1
+  checks: [kindRefuse]

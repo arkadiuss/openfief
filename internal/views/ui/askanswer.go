@@ -46,8 +46,17 @@ type answerCard struct {
 	// Source, when set, is what the card's header says in place of "Answered
 	// from your data": a card about a model that did not answer.
 	Source string
-	// Used are the cards the model read to write its answer, shown under its
-	// text: exactly the cards its tool calls produced and it was sent.
+	// Kind is the kind of a model's structured answer (answerKindAnswer,
+	// answerKindClarify or answerKindRefuse); empty for any other card.
+	Kind string
+	// Candidates are the names a clarifying answer asks the person to choose
+	// from, each asked as a show command; Suggestions are the commands a
+	// refusing answer offers instead, each a chip. Both are checked
+	// (parseStructuredAnswer) to be what the box understands.
+	Candidates  []string
+	Suggestions []string
+	// Used are the cards the model read and named in its answer, shown under
+	// its text: each one its tool calls produced and it was sent.
 	Used []answerCard
 	// Withheld are the cards the model asked for that the router would not
 	// send it, because no model of the route may receive their data tier
@@ -212,7 +221,7 @@ func (a commandAnswerer) show(r *http.Request, sess session, q *askQuery, date k
 		return answerCard{
 			Title: "Nothing here is called “" + q.Term + "”",
 			Text:  "Show finds an account, a sleeve or an instrument by its name, ticker or ISIN.",
-			Rows:  targetRows(targets),
+			Rows:  targetRows(nearTargets(q.Term, targets)),
 		}, nil
 	}
 	switch t.Kind {
@@ -224,6 +233,34 @@ func (a commandAnswerer) show(r *http.Request, sess session, q *askQuery, date k
 	}
 	return a.s.instrumentAnswer(r, sess, t, accounts, date)
 }
+
+// nearTargets returns targets, those that hold the most words of term first, each
+// score in its order, so a name that matches none but whose words match several
+// lists those several first: it is the choice a model is asked to put to the
+// person. Words are of at least three letters.
+func nearTargets(term string, targets []askTarget) []askTarget {
+	var words []string
+	for w := range strings.FieldsSeq(strings.ToLower(term)) {
+		if len([]rune(w)) >= minNearWord {
+			words = append(words, w)
+		}
+	}
+	score := func(t askTarget) int {
+		n := 0
+		for _, w := range words {
+			if slices.ContainsFunc(t.Words, func(tw string) bool { return strings.Contains(strings.ToLower(tw), w) }) {
+				n++
+			}
+		}
+		return n
+	}
+	out := slices.Clone(targets)
+	slices.SortStableFunc(out, func(a, b askTarget) int { return cmp.Compare(score(b), score(a)) })
+	return out
+}
+
+// minNearWord is the shortest word of a name that makes a target near it.
+const minNearWord = 3
 
 // targetRows lists the first targets a show command can name, as rows.
 func targetRows(targets []askTarget) []answerRow {

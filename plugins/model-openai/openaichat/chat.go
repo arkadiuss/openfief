@@ -12,6 +12,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,6 +34,25 @@ var (
 	ErrBadReply = errors.New("the provider's reply is not a chat completion")
 )
 
+// CallError is a failed call's error as a program reads it: errors.As finds
+// it in any error of Complete that came from the provider's HTTP status or from
+// no answer. Its text and its sentinel (ErrRejected, ErrUnavailable) are those
+// of the error it wraps, so what a user is shown does not change. It carries
+// the status code and nothing of the provider's reply or the request.
+type CallError struct {
+	// Status is the HTTP status the provider answered, 0 when it gave none.
+	Status int
+	// Timeout is true when the call ran out of time without an answer.
+	Timeout bool
+	err     error
+}
+
+// Error is the text of the wrapped error.
+func (e *CallError) Error() string { return e.err.Error() }
+
+// Unwrap returns the wrapped error, which wraps the sentinel.
+func (e *CallError) Unwrap() error { return e.err }
+
 // Client speaks the OpenAI-compatible chat completions protocol: the
 // first wire protocol (D-205), which OpenAI, OpenRouter, Ollama, vLLM, LM
 // Studio and others serve. HTTP must reach only the provider (the egress
@@ -45,6 +65,38 @@ type Client struct {
 	BaseURL string
 	// Key returns the API key of a call.
 	Key func() (string, error)
+	// Route, when not empty, pins the hosts OpenRouter may use, in this order
+	// (its provider slugs), with no fallback to others: `provider.order`,
+	// `allow_fallbacks` false and `require_parameters`. Nothing sets it in the
+	// plugin; the Ask box bench does, to compare a model on one host.
+	Route []string
+	// Reasoning, when not empty, sets OpenRouter's `reasoning` request
+	// parameter: ReasoningOff sends {"enabled": false}, and ReasoningLow,
+	// ReasoningMedium or ReasoningHigh send {"effort": ...}. Empty sends
+	// nothing, the model's own default. Nothing sets it in the plugin; the Ask
+	// box bench does, to compare a model with its thinking off or turned down.
+	Reasoning string
+	// IncludeCost asks OpenRouter for the call's exact cost: `usage` with
+	// `include` true, which puts usage.cost (USD) and the serving `provider`
+	// in the reply. Nothing sets it in the plugin; the bench does.
+	IncludeCost bool
+}
+
+// The values of Client.Reasoning.
+const (
+	ReasoningOff    = "off"
+	ReasoningLow    = "low"
+	ReasoningMedium = "medium"
+	ReasoningHigh   = "high"
+)
+
+// ValidReasoning reports whether v is a value of Client.Reasoning.
+func ValidReasoning(v string) bool {
+	switch v {
+	case ReasoningOff, ReasoningLow, ReasoningMedium, ReasoningHigh:
+		return true
+	}
+	return false
 }
 
 // Message is a message of the conversation.
@@ -74,9 +126,23 @@ type Request struct {
 	Model    string
 	Messages []Message
 	Tools    []Tool
-	// ResponseSchema, when set, asks for a JSON answer of this JSON Schema.
+	// ResponseSchema, when set, asks for a JSON answer of this JSON Schema,
+	// strictly; JSONMode asks for a JSON object only (response_format
+	// json_object), for a model that has no structured output. SetAnswerFormat
+	// sets one or the other.
 	ResponseSchema json.RawMessage
+	JSONMode       bool
 	MaxTokens      int64
+}
+
+// SetAnswerFormat asks for a JSON answer of schema: strictly (json_schema) when
+// the model takes structured output, else as a JSON object (JSON mode) that the
+// caller checks against the schema.
+func (r *Request) SetAnswerFormat(schema json.RawMessage, structured bool) {
+	r.ResponseSchema, r.JSONMode = nil, true
+	if structured {
+		r.ResponseSchema, r.JSONMode = schema, false
+	}
 }
 
 // Reply is the part of a completion the plugin reads.
@@ -86,6 +152,12 @@ type Reply struct {
 	FinishReason string
 	InputTokens  int64
 	OutputTokens int64
+	// Cost is the call's cost in USD as the provider reported it (OpenRouter's
+	// usage.cost), as the number's own text; empty when the reply has none.
+	Cost string
+	// Provider is the host that served the call (OpenRouter's `provider`),
+	// empty when the reply names none.
+	Provider string
 }
 
 // object is a JSON object whose members are read by name. The OpenAI wire
@@ -123,11 +195,14 @@ func (r *Request) body() map[string]any {
 		}
 		body["tools"] = tools
 	}
-	if len(r.ResponseSchema) > 0 {
+	switch {
+	case len(r.ResponseSchema) > 0:
 		body["response_format"] = map[string]any{
 			keyType:       "json_schema",
 			"json_schema": map[string]any{keyName: "response", "strict": true, "schema": r.ResponseSchema},
 		}
+	case r.JSONMode:
+		body["response_format"] = map[string]any{keyType: "json_object"}
 	}
 	if r.MaxTokens > 0 {
 		body["max_tokens"] = r.MaxTokens
@@ -179,30 +254,54 @@ func (c *Client) Complete(ctx context.Context, req *Request) (*Reply, error) {
 const openRouterHost = "openrouter.ai"
 
 // RequestBody returns the JSON object req is sent as. On OpenRouter a
-// request that sends tools also asks `provider.require_parameters`, so the
-// router only picks a host that supports every parameter of the request,
-// tools included: without it a host that silently drops them can answer
-// with no tool call, which the Ask box would read as an answer from data it
-// never read. Host pinning (`order`, `allow_fallbacks`) is not set here.
+// request that sends tools or a response format also asks
+// `provider.require_parameters`, so the router only picks a host that supports
+// every parameter of the request, tools and format included: without it a host
+// that silently drops them can answer with no tool call, which the Ask box
+// would read as an answer from data it never read, or with text that is not the
+// structured answer it asked for. Host pinning (`order`, `allow_fallbacks`) is
+// set only when the client has a Route, which pins the hosts for every request.
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
-	if len(req.Tools) > 0 && c.onOpenRouter() {
+	switch {
+	case !c.OnOpenRouter():
+	case len(c.Route) > 0:
+		body["provider"] = map[string]any{"order": c.Route, "allow_fallbacks": false, "require_parameters": true}
+	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
 		body["provider"] = map[string]any{"require_parameters": true}
+	}
+	if c.OnOpenRouter() {
+		c.addOpenRouterOptions(body)
 	}
 	return body
 }
 
-// onOpenRouter reports whether the client's base URL is OpenRouter's: its
+// OnOpenRouter reports whether the client's base URL is OpenRouter's: its
 // host is openrouter.ai or one of its subdomains. Other servers get no
-// `provider` object: OpenAI's own API refuses a request member it does not
-// know, so the member is sent only where it is part of the protocol.
-func (c *Client) onOpenRouter() bool {
+// `provider`, `reasoning` or `usage` member: OpenAI's own API refuses a request
+// member it does not know, so each is sent only where it is part of the
+// protocol.
+func (c *Client) OnOpenRouter() bool {
 	u, err := url.Parse(c.BaseURL)
 	if err != nil {
 		return false
 	}
 	host := strings.ToLower(u.Hostname())
 	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
+}
+
+// addOpenRouterOptions adds the reasoning and usage members the client's
+// options ask for. Both are OpenRouter's: other servers may refuse them.
+func (c *Client) addOpenRouterOptions(body map[string]any) {
+	switch {
+	case c.Reasoning == ReasoningOff:
+		body["reasoning"] = map[string]any{"enabled": false}
+	case ValidReasoning(c.Reasoning):
+		body["reasoning"] = map[string]any{"effort": c.Reasoning}
+	}
+	if c.IncludeCost {
+		body["usage"] = map[string]any{"include": true}
+	}
 }
 
 // post sends req to the provider and returns the body of its 2xx answer.
@@ -228,7 +327,7 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	if err != nil {
 		// A transport error can quote the URL, never the body; the key and
 		// the request are not in it.
-		return nil, fmt.Errorf("%w: no answer from the provider", ErrUnavailable)
+		return nil, noAnswer(err)
 	}
 	raw, readErr := io.ReadAll(io.LimitReader(resp.Body, maxReplyBytes+1))
 	closeErr := resp.Body.Close()
@@ -239,6 +338,15 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 		return nil, fmt.Errorf("%w: the reply could not be read", ErrUnavailable)
 	}
 	return raw, nil
+}
+
+// noAnswer is the error of a call that got no HTTP answer, from the transport's
+// error cause, which is not quoted: it can name the URL. It says only whether
+// the call ran out of time.
+func noAnswer(cause error) error {
+	var netErr net.Error
+	timeout := errors.Is(cause, context.DeadlineExceeded) || (errors.As(cause, &netErr) && netErr.Timeout())
+	return &CallError{Timeout: timeout, err: fmt.Errorf("%w: no answer from the provider", ErrUnavailable)}
 }
 
 // parseReply reads the first choice and the usage of a chat completion.
@@ -274,8 +382,19 @@ func parseReply(raw []byte) (*Reply, error) {
 	if top.get("usage", &usage) {
 		usage.get("prompt_tokens", &out.InputTokens)
 		usage.get("completion_tokens", &out.OutputTokens)
+		out.Cost = usage.costText()
 	}
+	top.get("provider", &out.Provider)
 	return &out, nil
+}
+
+// costText returns the usage's cost as the number's own text, "" when it has none.
+func (o object) costText() string {
+	var cost json.Number
+	if !o.get("cost", &cost) {
+		return ""
+	}
+	return cost.String()
 }
 
 // statusError classifies an HTTP status: a 2xx is nil, a refusal of the
@@ -288,7 +407,7 @@ func statusError(code int) error {
 		return nil
 	case code == http.StatusBadRequest, code == http.StatusNotFound, code == http.StatusRequestEntityTooLarge,
 		code == http.StatusUnprocessableEntity:
-		return fmt.Errorf("%w: HTTP %d", ErrRejected, code)
+		return &CallError{Status: code, err: fmt.Errorf("%w: HTTP %d", ErrRejected, code)}
 	}
-	return fmt.Errorf("%w: HTTP %d", ErrUnavailable, code)
+	return &CallError{Status: code, err: fmt.Errorf("%w: HTTP %d", ErrUnavailable, code)}
 }

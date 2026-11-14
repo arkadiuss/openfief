@@ -979,3 +979,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fdd8a213126
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:56:32.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69094c35b796
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:56:32.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d33d9fa559
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-cost-test-go-testnomodelpassingsafetyisnoranking
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T15:46:18.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a074c66c1dbb

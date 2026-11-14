@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -39,6 +40,7 @@ type scriptedPort struct {
 	availCalls  int
 	requests    [][]askMessage
 	offered     []int
+	answers     []bool
 	maxTokens   []int64
 	used        int64
 	refused     int
@@ -67,11 +69,12 @@ func (p *scriptedPort) permits(_ context.Context, _ session, tiers []string) (bo
 	return true, nil
 }
 
-func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error) {
+func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	p.requests = append(p.requests, slices.Clone(msgs))
 	p.offered = append(p.offered, len(tools))
+	p.answers = append(p.answers, answer)
 	p.maxTokens = append(p.maxTokens, maxTokens)
 	for i := range msgs {
 		// The router refuses a conversation with a tier no model of the
@@ -84,12 +87,46 @@ func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage,
 	if p.generateErr != nil {
 		return askReply{}, p.generateErr
 	}
-	next := askReply{Content: "done", Model: "p/m"}
+	next := say("done")
 	if len(p.replies) > 0 {
 		next, p.replies = p.replies[0], p.replies[1:]
 	}
 	next.OutputTokens = p.used
 	return next, nil
+}
+
+// answerJSON is the structured answer a model writes, as JSON text.
+func answerJSON(kind, text string, cards, suggestions, candidates []string) string {
+	if cards == nil {
+		cards = []string{}
+	}
+	if suggestions == nil {
+		suggestions = []string{}
+	}
+	if candidates == nil {
+		candidates = []string{}
+	}
+	b, err := json.Marshal(structuredAnswer{Kind: kind, Text: text, Cards: cards, Suggestions: suggestions, Candidates: candidates})
+	if err != nil {
+		panic(err)
+	}
+	return string(b)
+}
+
+// answerText is the structured answer of kind answer that rests on the cards.
+func answerText(text string, cards ...string) string {
+	return answerJSON(answerKindAnswer, text, cards, nil, nil)
+}
+
+// say is a model reply that ends the question with an answer resting on the cards.
+func say(text string, cards ...string) askReply {
+	return askReply{Content: answerText(text, cards...), Model: "p/m"}
+}
+
+// sayKind is a model reply that ends the question with a structured answer of
+// any kind, naming no card.
+func sayKind(kind, text string, suggestions, candidates []string) askReply {
+	return askReply{Content: answerJSON(kind, text, nil, suggestions, candidates), Model: "p/m"}
 }
 
 // calling is a model reply that asks for tools.
@@ -161,7 +198,7 @@ func TestModelLoopShowsExactlyTheCardsUsed(t *testing.T) {
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "allocation", Args: `{"by":"currency"}`}, askCall{ID: "2", Name: "value", Args: `{}`}),
 		calling(askCall{ID: "3", Name: "show", Args: `{"name":"bonds"}`}),
-		{Content: "  Mostly PLN.  ", Model: "p/m"},
+		say("  Mostly PLN.  ", "c1", "c2", "c3"),
 	}
 	got, err := f.ask("how am I doing?")
 	if err != nil {
@@ -184,7 +221,7 @@ func TestModelLoopShowsExactlyTheCardsUsed(t *testing.T) {
 	// Every card the model was sent is one the page shows, and the other way round.
 	shown := make([]string, 0, len(got.Used))
 	for i := range got.Used {
-		shown = append(shown, cardResult(&got.Used[i]))
+		shown = append(shown, cardResult(&got.Used[i], cardID(i+1)))
 	}
 	sent := make([]string, 0, 4)
 	for _, m := range toolMessages(f.port.requests[2]) {
@@ -204,7 +241,7 @@ func TestModelLoopTagsEveryMessageWithATier(t *testing.T) {
 	f := newLoopFixture(t, tierT0, tierT2)
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "value", Args: `{}`}, askCall{ID: "2", Name: "nope", Args: `{}`}),
-		{Content: "ok", Model: "p/m"},
+		say("ok"),
 	}
 	if _, err := f.ask("value?"); err != nil {
 		t.Fatal(err)
@@ -238,7 +275,7 @@ func TestModelLoopRefusesEachToolResultAboveWhatTheRouteAllows(t *testing.T) {
 	f := newLoopFixture(t, tierT0, tierT2)
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "what_needs_me", Args: `{}`}, askCall{ID: "2", Name: "sync_status", Args: `{"connector":"xtb"}`}),
-		{Content: "I could not read the sync status.", Model: "p/m"},
+		say("I could not read the sync status.", "c1"),
 	}
 	got, err := f.ask("what is wrong?")
 	if err != nil {
@@ -380,7 +417,7 @@ func TestModelLoopLimitsAreConfigurable(t *testing.T) {
 	f := newLoopFixture(t, tierT0, tierT2)
 	f.a.limits = AskLimits{ToolRounds: 1, ToolCalls: 1, OutputTokens: 50, Deadline: time.Minute}
 	one := askCall{ID: "c", Name: "value", Args: `{}`}
-	f.port.replies = []askReply{calling(one, one), {Content: "ok", Model: "p/m"}}
+	f.port.replies = []askReply{calling(one, one), say("ok")}
 	if _, err := f.ask("two tools"); err != nil {
 		t.Fatal(err)
 	}
@@ -404,7 +441,7 @@ func TestModelLoopBadCallsGetAFailureAndRunNothing(t *testing.T) {
 			askCall{ID: "2", Name: "show", Args: `{"name":"` + secretAsk + `","kind":"nonsense"}`},
 			askCall{ID: "3", Name: "value", Args: `not json`},
 		),
-		{Content: "I could not.", Model: "p/m"},
+		say("I could not."),
 	}
 	got, err := f.ask("do something")
 	if err != nil {
@@ -429,7 +466,7 @@ func TestModelLoopToolReadFailures(t *testing.T) {
 		t.Parallel()
 		f := newLoopFixture(t, tierT0, tierT2)
 		f.fail[askValue] = fmt.Errorf("GetThing: %w", connect.NewError(connect.CodeNotFound, errSecret))
-		f.port.replies = []askReply{calling(askCall{ID: "1", Name: "value", Args: `{}`}), {Content: "no", Model: "p/m"}}
+		f.port.replies = []askReply{calling(askCall{ID: "1", Name: "value", Args: `{}`}), say("no")}
 		got, err := f.ask("value?")
 		if err != nil {
 			t.Fatal(err)
@@ -561,7 +598,7 @@ func TestModelAnswerNeverLogsTheQuestionOrTheAnswer(t *testing.T) {
 	f.fail[askShow] = errSecret
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "value", Args: `{}`}, askCall{ID: "2", Name: "show", Args: `{"name":"` + secretAsk + `"}`}),
-		{Content: "the answer is " + secretAsk, Model: "p/m"},
+		say("the answer is "+secretAsk, "c1"),
 	}
 	got, err := f.ask("my question is " + secretAsk)
 	if err != nil {
@@ -582,12 +619,11 @@ func TestModelAnswerText(t *testing.T) {
 	tests := []struct {
 		name, reply, want string
 	}{
-		{"empty", "  \n ", "The model returned no text."},
 		{"trimmed", "  hello  ", "hello"},
 		{"cut at the limit", long, strings.Repeat("é", maxModelAnswerRunes) + "…"},
 	}
 	for _, tt := range tests {
-		f.port.replies = []askReply{{Content: tt.reply, Model: "p/m"}}
+		f.port.replies = []askReply{say(tt.reply)}
 		got, err := f.ask("q")
 		if err != nil || got.Text != tt.want {
 			t.Errorf("%s: text = %q, %v; want %q", tt.name, got.Text, err, tt.want)

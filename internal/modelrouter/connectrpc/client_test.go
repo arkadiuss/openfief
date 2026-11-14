@@ -145,7 +145,7 @@ func TestGenerateTranslatesBothWays(t *testing.T) {
 			{Role: modelrouter.MessageTool, ToolCallID: "c0", Content: "r", DataTier: modelrouter.DataTierT0},
 		},
 		Tools:              []modelrouter.Tool{{Name: "show_account", Description: "d", ParametersSchemaJSON: `{"type":"object"}`}},
-		ResponseSchemaJSON: `{"type":"object"}`, MaxOutputTokens: 800,
+		ResponseSchemaJSON: `{"type":"object"}`, JSONModeFallback: true, MaxOutputTokens: 800,
 	}
 	got, err := newClient(t, p, tokens{}).Generate(t.Context(), "openrouter", "openai/gpt-oss-120b", req)
 	if err != nil {
@@ -168,7 +168,7 @@ func TestGenerateTranslatesBothWays(t *testing.T) {
 			{Role: modelsv1.MessageRole_MESSAGE_ROLE_TOOL, ToolCallId: "c0", Content: "r"},
 		},
 		Tools:              []*modelsv1.Tool{{Name: "show_account", Description: "d", ParametersSchemaJson: `{"type":"object"}`}},
-		ResponseSchemaJson: `{"type":"object"}`, MaxOutputTokens: 800,
+		ResponseSchemaJson: `{"type":"object"}`, JsonModeFallback: true, MaxOutputTokens: 800,
 	}
 	if diff := cmp.Diff(wantReq, p.gotReq, protocmp.Transform()); diff != "" {
 		t.Errorf("the plugin received (-want +got):\n%s", diff)

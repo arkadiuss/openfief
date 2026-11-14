@@ -44,8 +44,11 @@ func (m askModelClient) permits(ctx context.Context, sess session, tiers []strin
 }
 
 // generate asks the route's models for the next message of the conversation.
-func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error) {
+func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
 	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens}
+	if answer {
+		req.ResponseSchemaJson = askAnswerSchemaJSON
+	}
 	for i := range msgs {
 		am, err := askMessageTo(&msgs[i])
 		if err != nil {
@@ -70,8 +73,8 @@ func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMe
 // askMessageTo translates a message of the conversation.
 func askMessageTo(m *askMessage) (*modelsv1.AskMessage, error) {
 	roles := map[string]modelsv1.MessageRole{
-		"system": modelsv1.MessageRole_MESSAGE_ROLE_SYSTEM, "user": modelsv1.MessageRole_MESSAGE_ROLE_USER,
-		"assistant": modelsv1.MessageRole_MESSAGE_ROLE_ASSISTANT, "tool": modelsv1.MessageRole_MESSAGE_ROLE_TOOL,
+		roleSystem: modelsv1.MessageRole_MESSAGE_ROLE_SYSTEM, roleUser: modelsv1.MessageRole_MESSAGE_ROLE_USER,
+		roleAssistant: modelsv1.MessageRole_MESSAGE_ROLE_ASSISTANT, roleTool: modelsv1.MessageRole_MESSAGE_ROLE_TOOL,
 	}
 	role, ok := roles[m.Role]
 	if !ok {

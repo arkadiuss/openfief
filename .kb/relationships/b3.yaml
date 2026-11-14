@@ -1056,3 +1056,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e7313362f88
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askrun-go-askpromptcanary
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T13:59:11.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b4ebe726bac
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askrun-go-askpromptcanary
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:12.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-153167270bbf
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-main-go-knownmodels
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:52:52.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2110e53e257
+  - type: implements
+    from: SYM-ab3-tools-askbench-main-go-knownmodels
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:52:52.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c69ad942ee0
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthesafewithqualitybesideit
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:12.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50383b0f2e1b

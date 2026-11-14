@@ -9,9 +9,12 @@
 // The model is reached the way the core's model-openai plugin reaches it, with
 // the key in the environment variable OPENROUTER_API_KEY; the key goes only to
 // the provider and is in no report, log or error. The bench exits 0 when every
-// safety case (refusals and injections) passed on all five runs for every
-// model, 1 when one did not, 2 when it could not run and 3 when its budget ran
-// out before every question was asked. Answer cases are reported, not gated.
+// safety property (the refusals, and the injection cases' safety: no payload
+// followed, no extra call, no echo) passed on all five runs for every model, 1
+// when one did not, 2 when it could not run (a bad argument or key, or
+// a model that no call reached: bad key, no credits, no network) and 3 when its
+// budget ran out before every question was asked. A call that fails while
+// others answer is an error listed in the report, not a model failure. Answer cases are reported, not gated.
 package main
 
 import (
@@ -23,6 +26,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"slices"
 	"strings"
 	"syscall"
 	"time"
@@ -31,6 +35,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/views/ui"
+	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
 )
 
 // keyEnv names the environment variable of the provider key: the same key the
@@ -95,6 +100,8 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 		return exitError
 	}
 	switch {
+	case report.CouldNotRun():
+		return exitError
 	case report.Budget.Aborted:
 		return exitBudget
 	case report.Failed():
@@ -117,10 +124,18 @@ func resultText(r *Report, dir string) string {
 	for i := range r.Models {
 		m := &r.Models[i]
 		verdict := "every safety case passed on all runs"
-		if !m.SafetyPassed {
+		switch {
+		case m.CouldNotRun:
+			verdict = "COULD NOT RUN: no call reached the model, so nothing was scored"
+		case !m.SafetyPassed:
 			verdict = "A SAFETY CASE DID NOT PASS ON ALL RUNS"
+		case m.ErroredRuns > 0:
+			verdict = "no safety case failed, but it is not proven: some calls failed"
 		}
 		fmt.Fprintf(&b, "%s: %s; %s USD; configuration %s\n", m.Model, verdict, m.Cost, m.ConfigHash[:hashShown])
+		if len(m.Errors) > 0 {
+			fmt.Fprintf(&b, "%s: failed calls (errors, not model failures): %s\n", m.Model, errorsText(m.Errors))
+		}
 	}
 	if r.Budget.Aborted {
 		fmt.Fprintf(&b, "the budget ran out (%s of %s USD, %d of %d calls): the run was aborted\n", r.Budget.Cost, r.Budget.MaxCost, r.Budget.Calls, r.Budget.MaxCalls)
@@ -135,6 +150,10 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	fs.SetOutput(stderr)
 	models := fs.String("model", "", "comma-separated OpenRouter model ids; default D-207's two candidates, qwen/qwen3.7-flash and openai/gpt-oss-120b")
 	prices := fs.String("price", "", "comma-separated id=input:output prices in USD per million tokens, for a model not among the candidates")
+	routes := fs.String("route", "", "comma-separated model=provider1|provider2 entries: pin the model to those OpenRouter hosts (their provider slugs), in that order, with no fallback; one model may have several entries, each a run of its own labelled model@provider1|provider2; a model also listed in -model keeps its default-routing run beside them")
+	reasoning := fs.String("reasoning", "", "comma-separated model=off|low|medium|high entries (the model's id or its label): OpenRouter's reasoning control for that run, {\"enabled\": false} for off and {\"effort\": ...} for the rest; nothing is sent for a model without an entry; OpenRouter base URLs only")
+	structured := fs.String("structured", "", "comma-separated model ids whose entry has the structured-output flag, asked for the answer strictly (gpt-oss and gemma-4 are by default)")
+	jsonMode := fs.String("json-mode", "", "comma-separated model ids whose entry has no structured-output flag, asked for the answer as a JSON object, whatever the default")
 	baseURL := fs.String("base-url", defaultBaseURL, "the OpenAI-compatible API root")
 	out := fs.String("out", defaultOut, "directory for report.json and summary.md")
 	budget := fs.String("budget", defaultBudget, "the most to spend on the model, in USD; the run aborts cleanly past it")
@@ -150,9 +169,12 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	if key == "" {
 		return nil, fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
 	}
-	list, err := modelsFrom(*models, *prices)
+	list, err := modelsFrom(&modelFlags{names: *models, prices: *prices, routes: *routes, reasoning: *reasoning, structured: splitList(*structured), jsonMode: splitList(*jsonMode)})
 	if err != nil {
 		return nil, err
+	}
+	if *reasoning != "" && !newChatClient(nil, *baseURL, "").OnOpenRouter() {
+		return nil, fmt.Errorf("%w: -reasoning is OpenRouter's request parameter and -base-url is not OpenRouter's", ErrUsage)
 	}
 	limit, err := kernel.ParseDecimal(*budget)
 	if err != nil || limit.Sign() <= 0 {
@@ -181,9 +203,115 @@ func splitList(s string) []string {
 	return out
 }
 
+// modelFlags are the flags that choose the models of a run.
+type modelFlags struct {
+	names, prices, routes, reasoning string
+	structured, jsonMode             []string
+}
+
 // modelsFrom returns the models to ask: those named, or the candidates, each
-// with the price the -price flag gives or the candidates' table.
-func modelsFrom(names, prices string) ([]Model, error) {
+// with the price the -price flag gives or the candidates' table, the
+// structured-output flag by default or as asked, the reasoning control -reasoning
+// gives it, and, for a model with -route entries, one run of it for each, pinned
+// to its hosts, and one with the default routing too when -model lists the model.
+// A model that only a route names is asked only on its routes.
+func modelsFrom(f *modelFlags) ([]Model, error) {
+	known, err := knownModels(f.prices)
+	if err != nil {
+		return nil, err
+	}
+	rs, err := parseRoutes(f.routes)
+	if err != nil {
+		return nil, err
+	}
+	effort, err := parseReasoning(f.reasoning)
+	if err != nil {
+		return nil, err
+	}
+	named := splitList(f.names)
+	var out []Model
+	used := map[string]bool{}
+	for _, id := range modelIDs(f.names, &rs) {
+		m, ok := known[id]
+		if !ok {
+			return nil, fmt.Errorf("%w: no price for %s: give one with -price %s=input:output", ErrModels, id, id)
+		}
+		for _, v := range routedVariants(&m, rs.byModel[id], slices.Contains(named, id)) {
+			v.Reasoning = reasoningOf(effort, id, modelLabel(&v), used)
+			v.Structured = structuredFor(f, id, modelLabel(&v))
+			out = append(out, v)
+		}
+	}
+	for key := range effort {
+		if !used[key] {
+			return nil, fmt.Errorf("%w: -reasoning names %q, which no run of this bench is", ErrUsage, key)
+		}
+	}
+	return out, nil
+}
+
+// structuredFor reports whether the run of the model with that id and label has
+// the structured-output flag: by default for the models that have it, or as
+// -structured asks, and not as -json-mode asks, each by the id or the label.
+func structuredFor(f *modelFlags, id, label string) bool {
+	byFlag := func(list []string) bool { return slices.Contains(list, id) || slices.Contains(list, label) }
+	return (slices.Contains(structuredModels(), id) || byFlag(f.structured)) && !byFlag(f.jsonMode)
+}
+
+// parseReasoning reads the -reasoning entries, model=off|low|medium|high, by the
+// key of the model's id or label; a malformed entry, an unknown setting or a key
+// given twice is a usage error.
+func parseReasoning(s string) (map[string]string, error) {
+	out := map[string]string{}
+	for _, entry := range splitList(s) {
+		i := strings.LastIndex(entry, "=")
+		key, value := "", ""
+		if i > 0 {
+			key, value = strings.TrimSpace(entry[:i]), strings.TrimSpace(entry[i+1:])
+		}
+		if key == "" || !openaichat.ValidReasoning(value) {
+			return nil, fmt.Errorf("%w: -reasoning wants model=off|low|medium|high, got %q", ErrUsage, entry)
+		}
+		if _, dup := out[key]; dup {
+			return nil, fmt.Errorf("%w: -reasoning gives %q twice", ErrUsage, key)
+		}
+		out[key] = value
+	}
+	return out, nil
+}
+
+// reasoningOf returns the setting for the run with that id and label: the label's
+// entry before the id's, "" when it has none. It marks the entry it used.
+func reasoningOf(effort map[string]string, id, label string, used map[string]bool) string {
+	for _, key := range []string{label, id} {
+		if v, ok := effort[key]; ok {
+			used[key] = true
+			return v
+		}
+	}
+	return ""
+}
+
+// modelIDs returns the ids to ask: those named, or the candidates when neither a
+// name nor a route gives one, and then the models only a route names.
+func modelIDs(names string, rs *routeSet) []string {
+	ids := splitList(names)
+	if len(ids) == 0 && len(rs.models) == 0 {
+		for _, m := range candidateModels() {
+			ids = append(ids, m.ID)
+		}
+	}
+	for _, id := range rs.models {
+		if !slices.Contains(ids, id) {
+			ids = append(ids, id)
+		}
+	}
+	return ids
+}
+
+// knownModels returns the models with a price by id: the candidates and those the
+// -price flag gives.
+func knownModels(prices string) (map[string]Model, error) {
 	known := map[string]Model{}
 	for _, m := range candidateModels() {
 		known[m.ID] = m
@@ -195,21 +323,62 @@ func modelsFrom(names, prices string) ([]Model, error) {
 		}
 		known[m.ID] = m
 	}
-	ids := splitList(names)
-	if len(ids) == 0 {
-		for _, m := range candidateModels() {
-			ids = append(ids, m.ID)
-		}
+	return known, nil
+}
+
+// routedVariants returns the runs of m: one for each of its routes, and, when
+// m is listed in -model (withDefault), the run with the default routing first;
+// m itself when it has no route.
+func routedVariants(m *Model, routes [][]string, withDefault bool) []Model {
+	if len(routes) == 0 {
+		return []Model{*m}
 	}
-	out := make([]Model, 0, len(ids))
-	for _, id := range ids {
-		m, ok := known[id]
-		if !ok {
-			return nil, fmt.Errorf("%w: no price for %s: give one with -price %s=input:output", ErrModels, id, id)
-		}
-		out = append(out, m)
+	out := make([]Model, 0, len(routes)+1)
+	if withDefault {
+		out = append(out, *m)
 	}
-	return out, nil
+	for _, route := range routes {
+		v := *m
+		v.Route = route
+		out = append(out, v)
+	}
+	return out
+}
+
+// parseRoutes reads the -route entries, model=provider1|provider2: the routes of
+// each model in the order given, and the models that have one, in that order. A
+// model may have several; a route that names no provider, or names one twice, or
+// the same route twice for a model, is a usage error.
+func parseRoutes(s string) (routeSet, error) {
+	set := routeSet{byModel: map[string][][]string{}}
+	for _, entry := range splitList(s) {
+		i := strings.LastIndex(entry, "=")
+		if i <= 0 {
+			return routeSet{}, fmt.Errorf("%w: -route wants model=provider1|provider2, got %q", ErrUsage, entry)
+		}
+		var route []string
+		for p := range strings.SplitSeq(entry[i+1:], "|") {
+			if p = strings.TrimSpace(p); p != "" && !slices.Contains(route, p) {
+				route = append(route, p)
+			}
+		}
+		id := entry[:i]
+		if len(route) == 0 || slices.ContainsFunc(set.byModel[id], func(r []string) bool { return slices.Equal(r, route) }) {
+			return routeSet{}, fmt.Errorf("%w: -route %q names no provider, or repeats a route of the model", ErrUsage, entry)
+		}
+		if _, seen := set.byModel[id]; !seen {
+			set.models = append(set.models, id)
+		}
+		set.byModel[id] = append(set.byModel[id], route)
+	}
+	return set, nil
+}
+
+// routeSet is the -route entries: the routes of each model in the order given,
+// and the models that have one, in that order.
+type routeSet struct {
+	byModel map[string][][]string
+	models  []string
 }
 
 // parsePrice reads id=input:output, the prices in USD per million tokens.

@@ -1238,3 +1238,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3979a5b5e68b
+  - type: covered_by
+    from: SYM-openaichat-call-error-error
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T13:26:35.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa9715db743
+  - type: implements
+    from: SYM-openaichat-call-error-error
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:26:35.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b208dad550d3
+  - type: executable_for
+    from: SYM-ab3-internal-modelrouter-connectapi-ask-test-go-testaskservicerefusesaschemathatisnojsonortoolong
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-14T14:55:25.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2a2a6aedf4
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testthemodelstoolresultscarrytheidsitnamescardsby
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:58:03.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e342cb979f1
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-kindword
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:12.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c647fe560572
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-kindword
+    to: REQ-askbench-grades-by-the-structured-answer
+    created_at: 2026-11-14T15:01:12.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ba109a2e300
+  - type: implements
+    from: SYM-askbench-report-bench-config
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:38:35.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f74557cad53
+  - type: implements
+    from: SYM-askbench-runner-bench-work
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
+    created_at: 2026-11-14T15:42:16.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c40fcf5351c2
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-providerstext
+    to: REQ-askbench-measures-cost-exactly
+    created_at: 2026-11-14T17:00:06.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eb0b2a285bf
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-providerstext
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T17:00:07.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c08b71b106e
+  - type: implements
+    from: SYM-askbench-report-bench-config
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T17:05:40.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63f712a81ab7
+  - type: covered_by
+    from: SYM-askbench-report-bench-config
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T17:05:40.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c117d550f86

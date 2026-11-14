@@ -2,6 +2,7 @@ package connectapi
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -22,6 +23,9 @@ import (
 const (
 	maxAskMessages = 64
 	maxAskTools    = 16
+	// maxAskSchemaBytes caps the response schema of a call: the Ask box's is a
+	// few hundred bytes.
+	maxAskSchemaBytes = 4096
 )
 
 // NewAsk returns the AskModelService's path and HTTP handler over ask, with
@@ -81,6 +85,15 @@ func askRequestFrom(m *modelsv1.GenerateAskRequest) (*modelrouter.Request, error
 		return nil, fmt.Errorf("%w: too many messages or tools", errBadAsk)
 	}
 	out := &modelrouter.Request{MaxOutputTokens: m.GetMaxOutputTokens()}
+	if schema := m.GetResponseSchemaJson(); schema != "" {
+		if len(schema) > maxAskSchemaBytes || !json.Valid([]byte(schema)) {
+			return nil, fmt.Errorf("%w: a response schema that is too long or not JSON", errBadAsk)
+		}
+		// The Ask box's structured answer: a model whose entry has no
+		// structured output is asked for a JSON object instead, which the Ask
+		// box checks against the schema.
+		out.ResponseSchemaJSON, out.JSONModeFallback = schema, true
+	}
 	for _, am := range m.GetMessages() {
 		msg, err := askMessageFrom(am)
 		if err != nil {

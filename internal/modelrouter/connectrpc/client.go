@@ -230,7 +230,9 @@ func entryFrom(m *modelsv1.ModelEntry) (modelrouter.ModelEntry, error) {
 
 // requestTo translates a request for model.
 func requestTo(model string, r *modelrouter.Request) (*modelsv1.GenerateRequest, error) {
-	out := &modelsv1.GenerateRequest{Model: model, ResponseSchemaJson: r.ResponseSchemaJSON, MaxOutputTokens: r.MaxOutputTokens}
+	out := &modelsv1.GenerateRequest{
+		Model: model, ResponseSchemaJson: r.ResponseSchemaJSON, JsonModeFallback: r.JSONModeFallback, MaxOutputTokens: r.MaxOutputTokens,
+	}
 	for _, m := range r.Messages {
 		role, err := roleTo(m.Role)
 		if err != nil {

@@ -1084,3 +1084,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f38136ef664
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-structured-test-go-testthekinddecidestherefusalsandtheambiguousname
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T15:02:21.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7398761dc3e3
+  - type: implements
+    from: SYM-askbench-report-failure-cell
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:39:39.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcccd0f88eea
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-split-test-go-checkrankedwithquality
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:02:29.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9010a5108f0f

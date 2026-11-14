@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be6f635912d3
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-runof
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:55.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9014a08cc14a
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-alnum
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:02:04.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5533f66dd5e
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-alnum
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:02:04.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5b4c45b0780

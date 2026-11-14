@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/big"
 	"net/http"
 	"strings"
 	"sync"
@@ -32,6 +33,26 @@ type Model struct {
 	ID          string
 	InputPrice  kernel.Decimal
 	OutputPrice kernel.Decimal
+	// Route, when not empty, pins the OpenRouter hosts the model is asked on, by
+	// their provider slugs, in this order and with no fallback to others.
+	Route []string
+	// Structured is whether the model's entry has the structured-output flag
+	// (D-205): the structured answer is then asked of it strictly (json_schema),
+	// else as a JSON object (JSON mode) that the loop checks and retries once.
+	Structured bool
+	// Reasoning, when not empty, is OpenRouter's reasoning control for the
+	// model (openaichat.ReasoningOff, Low, Medium or High); empty sends none.
+	Reasoning string
+}
+
+// modelLabel names a run of the model: its id, and, when it is pinned to hosts, the
+// id with them (google/gemma-4-26b-a4b-it@primeintellect), so one model on two
+// hosts is two entries of the report.
+func modelLabel(m *Model) string {
+	if len(m.Route) == 0 {
+		return m.ID
+	}
+	return m.ID + "@" + strings.Join(m.Route, "|")
 }
 
 // candidateModels are D-207's two candidates for the demo's model, with the
@@ -41,8 +62,15 @@ type Model struct {
 func candidateModels() []Model {
 	return []Model{
 		priced("qwen/qwen3.7-flash", "0.03", "0.13"),
-		priced("openai/gpt-oss-120b", "0.15", "0.60"),
+		{ID: "openai/gpt-oss-120b", InputPrice: priced("", "0.15", "0").InputPrice, OutputPrice: priced("", "0", "0.60").OutputPrice, Structured: true},
 	}
+}
+
+// structuredModels are the models whose entries have the structured-output flag
+// by default: gpt-oss and gemma-4 do on most hosts. -structured and -json-mode
+// set it for others, or take it away.
+func structuredModels() []string {
+	return []string{"openai/gpt-oss-120b", "google/gemma-4-26b-a4b-it", "google/gemma-4-31b-it"}
 }
 
 // priced returns the model with the prices, decimal texts of constants: a price
@@ -66,6 +94,17 @@ type ModelCall struct {
 	Latency                   time.Duration
 	// Error is the class of a failed call, "" for one that answered.
 	Error string
+	// Status is the HTTP status of a failed call, 0 when none came.
+	Status int
+	// Label is the short fixed label of a failed call's status or timeout:
+	// never any text of the provider's reply.
+	Label string
+	// Cost is what the call cost in USD: the provider's own figure when the
+	// reply held one (Measured), else the tokens times the model entry's prices.
+	Cost     kernel.Decimal
+	Measured bool
+	// Provider is the host that served the call, "" when the reply named none.
+	Provider string
 }
 
 // meter counts what a run spends, across the runs that share it, and says when
@@ -97,15 +136,13 @@ func (m *meter) allow() error {
 	return nil
 }
 
-// charge adds the tokens of an answered call, priced by model.
-func (m *meter) charge(model *Model, in, out int64) kernel.Decimal {
-	spent := costOf(model, in, out)
+// charge adds the tokens and the cost of an answered call.
+func (m *meter) charge(in, out int64, cost kernel.Decimal) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.inTok += in
 	m.outTok += out
-	m.cost = m.cost.Add(spent)
-	return spent
+	m.cost = m.cost.Add(cost)
 }
 
 // spent is what a meter has counted.
@@ -129,6 +166,20 @@ func costOf(model *Model, in, out int64) kernel.Decimal {
 	return kernel.NewDecimal(in, 0).Mul(model.InputPrice).Mul(perToken).Add(kernel.NewDecimal(out, 0).Mul(model.OutputPrice).Mul(perToken))
 }
 
+// measuredCost reads the cost a provider reported, the text of a JSON number
+// such as 0.0000123 or 1.5e-05, exactly; it reports false for no figure, one that
+// is no number, or a negative one.
+func measuredCost(text string) (kernel.Decimal, bool) {
+	r, parsed := new(big.Rat).SetString(text)
+	if text == "" || !parsed || r.Sign() < 0 {
+		return kernel.Decimal{}, false
+	}
+	const places = 18
+	plain := strings.TrimRight(strings.TrimRight(r.FloatString(places), "0"), ".")
+	d, err := kernel.ParseDecimal(plain)
+	return d, err == nil
+}
+
 // modelRun is the model of one question, ui.AskModel over the plugin's own
 // chat client (openaichat), so a request carries what the plugin sends:
 // OpenRouter's require_parameters with tools, the output limit as max_tokens.
@@ -147,29 +198,93 @@ type modelRun struct {
 
 var _ ui.AskModel = (*modelRun)(nil)
 
-// Generate sends the conversation to the model and returns its next message.
-func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []ui.AskTool, maxTokens int64) (ui.AskReply, error) {
+// Generate sends the conversation to the model and returns its next message. A
+// call with a schema asks for the structured answer, as the plugin does: strictly
+// when the model's entry has the flag, else as a JSON object.
+func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []ui.AskTool, maxTokens int64, schema string) (ui.AskReply, error) {
 	call := ModelCall{ToolsOffered: len(tools), MaxTokens: maxTokens}
 	if err := r.meter.allow(); err != nil {
 		r.budgetHit = true
 		return ui.AskReply{}, err
 	}
 	started := r.now()
-	reply, err := r.client.Complete(ctx, requestOf(r.model.ID, msgs, tools, maxTokens))
+	req := requestOf(r.model.ID, msgs, tools, maxTokens)
+	if schema != "" {
+		req.SetAnswerFormat(json.RawMessage(schema), r.model.Structured)
+	}
+	reply, err := r.client.Complete(ctx, req)
 	call.Latency = r.now().Sub(started)
 	if err != nil {
 		call.Error = errorClass(err)
+		failure := callFailure(err)
+		call.Status, call.Label = failure.Status, failure.Label
 		r.calls = append(r.calls, call)
 		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
 	}
-	call.InputTokens, call.OutputTokens = reply.InputTokens, reply.OutputTokens
-	r.cost = r.cost.Add(r.meter.charge(r.model, reply.InputTokens, reply.OutputTokens))
+	call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
+	call.Cost, call.Measured = measuredCost(reply.Cost)
+	if !call.Measured {
+		call.Cost = costOf(r.model, reply.InputTokens, reply.OutputTokens)
+	}
+	r.meter.charge(reply.InputTokens, reply.OutputTokens, call.Cost)
+	r.cost = r.cost.Add(call.Cost)
 	r.calls = append(r.calls, call)
 	out := ui.AskReply{Content: reply.Content, Model: r.model.ID, OutputTokens: reply.OutputTokens}
 	for _, tc := range reply.ToolCalls {
 		out.Calls = append(out.Calls, ui.AskCall{ID: tc.ID, Name: tc.Name, Args: tc.Arguments})
 	}
 	return out, nil
+}
+
+// The labels of a failed call, a fixed set: a status and one of these say what
+// went wrong, and nothing the provider wrote.
+const (
+	labelNoCredits     = "no credits"
+	labelKeyRefused    = "key refused"
+	labelRateLimited   = "rate limited"
+	labelProviderError = "provider error"
+	labelRejected      = "request rejected"
+	labelNoAnswer      = "no answer"
+	labelFailed        = "failed"
+)
+
+// statusLabel returns the fixed label of an HTTP status, "" when it has none.
+func statusLabel(status int) string {
+	switch {
+	case status == http.StatusPaymentRequired:
+		return labelNoCredits
+	case status == http.StatusUnauthorized:
+		return labelKeyRefused
+	case status == http.StatusTooManyRequests:
+		return labelRateLimited
+	case status >= http.StatusInternalServerError && status < statusCeiling:
+		return labelProviderError
+	case status >= http.StatusBadRequest && status < http.StatusInternalServerError:
+		return labelRejected
+	}
+	return ""
+}
+
+// statusCeiling is the first number that is no HTTP status.
+const statusCeiling = 600
+
+// callFailure returns the HTTP status of a failed call (0 when none came) and
+// its label, read from the chat client's CallError.
+func callFailure(err error) CallErrorReport {
+	var ce *openaichat.CallError
+	found := errors.As(err, &ce)
+	switch {
+	case found && ce.Status != 0:
+		if l := statusLabel(ce.Status); l != "" {
+			return CallErrorReport{Status: ce.Status, Label: l}
+		}
+		return CallErrorReport{Status: ce.Status, Label: labelFailed}
+	case found && ce.Timeout, errors.Is(err, context.DeadlineExceeded):
+		return CallErrorReport{Label: labelTimeout}
+	case found:
+		return CallErrorReport{Label: labelNoAnswer}
+	}
+	return CallErrorReport{Label: labelFailed}
 }
 
 // errorClass names why a call failed, never quoting the provider or the key.
@@ -214,14 +329,35 @@ func newChatClient(hc *http.Client, baseURL, key string) *openaichat.Client {
 	return &openaichat.Client{HTTP: hc, BaseURL: strings.TrimRight(baseURL, "/"), Key: func() (string, error) { return key, nil }}
 }
 
-// routingProbe returns the request body a request with one tool gets at
-// baseURL: it holds the provider routing member (OpenRouter's
-// require_parameters) the plugin adds for the host, which the config hash covers.
-func routingProbe(baseURL string) map[string]any {
-	c := newChatClient(nil, baseURL, "")
+// routedClient is newChatClient pinned to the hosts of route.
+func routedClient(hc *http.Client, baseURL, key string, route []string) *openaichat.Client {
+	c := newChatClient(hc, baseURL, key)
+	c.Route = route
+	return c
+}
+
+// benchClient is the chat client of a run of model: pinned to its hosts, with
+// its reasoning control, and asking OpenRouter for each call's exact cost. The
+// last two reach OpenRouter only (openaichat); the plugin sets neither.
+func benchClient(hc *http.Client, baseURL, key string, m *Model) *openaichat.Client {
+	c := routedClient(hc, baseURL, key, m.Route)
+	c.Reasoning, c.IncludeCost = m.Reasoning, true
+	return c
+}
+
+// routingProbe returns the request body members a request with one tool gets at
+// baseURL for model m: the provider routing (OpenRouter's require_parameters,
+// and the order and no fallback of a route), the reasoning control and the
+// usage accounting the bench's client adds for the host. The config hash
+// covers them.
+func routingProbe(baseURL string, m *Model) map[string]any {
+	c := benchClient(nil, baseURL, "", m)
 	body := c.RequestBody(&openaichat.Request{Model: "m", Tools: []openaichat.Tool{{Name: "t"}}})
-	if provider, ok := body["provider"]; ok {
-		return map[string]any{"provider": provider}
+	out := map[string]any{}
+	for _, key := range []string{"provider", "reasoning", "usage"} {
+		if v, ok := body[key]; ok {
+			out[key] = v
+		}
 	}
-	return map[string]any{}
+	return out
 }

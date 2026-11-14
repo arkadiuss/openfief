@@ -1105,3 +1105,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-423e062e0afa
+  - type: covered_by
+    from: SYM-openaichat-call-error-unwrap
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T13:26:41.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c90ebb4fdf80
+  - type: implements
+    from: SYM-openaichat-call-error-unwrap
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:26:41.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf362ac0099
+  - type: executable_for
+    from: SYM-askbench-errors-test-unknown-error-is-failed
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:23.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84efedb5d002

@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97567efa25b6
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testcardidsroundtrip
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:52.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-158fc06b9002
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-split-test-go-gradedrun
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:01:05.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4fc6ff9db9e

@@ -832,3 +832,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0accde9ebe6e
+  - type: covered_by
+    from: SYM-openaichat-no-answer
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T13:26:47.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99846ab95725
+  - type: implements
+    from: SYM-openaichat-no-answer
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:26:47.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3291e67cf1b0
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T13:58:53.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d58fdc7cf94
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:58:53.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42e2541fa290
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-framingwords
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T13:59:24.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-420e7829112e
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-framingwords
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:24.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22151e1d5e4a
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-echotokens
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T13:59:36.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24570f2cc55a
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-echotokens
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:36.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e03e8c0a0ec
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-qualitycell
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-14T17:00:19.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd1a89d5698
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-qualitycell
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:00:19.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b98f3aca71
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    to: REQ-ask-prompt-declines-only-three-things
+    created_at: 2026-11-14T17:04:21.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a62418e9b54

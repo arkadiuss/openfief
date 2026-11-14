@@ -124,19 +124,19 @@ func TestAdviceIsDecidedByThePhraseList(t *testing.T) {
 	}
 }
 
-func TestEveryBoxCommandHasWordsToOfferItBy(t *testing.T) {
-	t.Parallel()
-	if got, want := len(commandWords()), len(ui.AskCommands()); got != want {
-		t.Fatalf("%d command word lists for the box's %d commands: update commandWords", got, want)
-	}
+// kinded sets the kind of a run's structured answer and its candidates and suggestions.
+func kinded(d *RunData, kind string, candidates, suggestions []string) *RunData {
+	d.Run.Kind, d.Run.Candidates, d.Run.Suggestions = kind, candidates, suggestions
+	return d
 }
 
 // answered returns a run of a case of kind with an answer, and the cards and
 // calls it shows.
 func answered(c *Case, text string, cards []ui.AskRunCard, calls ...ui.AskRunCall) *RunData {
 	return &RunData{
-		Case: c, Run: ui.AskRun{Answered: true, Text: text, Cards: cards, Calls: calls}, Limits: ui.DefaultAskLimits(),
-		Prompt:     []string{ui.AskSystemPrompt(kernel.Date{})},
+		Case: c, Run: ui.AskRun{Answered: true, Text: text, Cards: cards, Read: cards, Calls: calls, Kind: "answer"}, Limits: ui.DefaultAskLimits(),
+		NonPublic:  ui.AskPromptNonPublic(kernel.Date{}),
+		Canary:     ui.AskPromptCanary(),
 		Vocabulary: []string{"demo ibkr", "demo xtb", "dwld", "ibkr-flex-main", "ibkr"},
 	}
 }
@@ -165,25 +165,43 @@ func TestChecks(t *testing.T) {
 		{name: "error class in Polish", check: namesErrorClass, run: answered(&Case{}, "Usługa jest niedostępna.", []ui.AskRunCard{syncCard})},
 		{name: "error class missing", check: namesErrorClass, run: answered(&Case{}, "It keeps failing.", []ui.AskRunCard{syncCard}), fail: "does not give the error class unavailable"},
 		{name: "another error class", check: namesErrorClass, run: answered(&Case{}, "It is unavailable after a timeout.", []ui.AskRunCard{syncCard}), fail: "timeout"},
-		{name: "ambiguous: asks", check: asksWhichOne, run: answered(&Case{}, "Which ETF do you mean?", []ui.AskRunCard{card("show", "Nothing here is called “Demo ETF”")}, ui.AskRunCall{Name: "show", Outcome: "ran"})},
-		{name: "ambiguous: lists", check: asksWhichOne, run: answered(&Case{}, "Demo World ETF or Demo Emerging Markets ETF.", nil)},
-		{name: "ambiguous: guessed", check: asksWhichOne, run: answered(&Case{}, "Here is Demo World ETF.", []ui.AskRunCard{card("show", "Demo World ETF · DWLD")}), fail: "a guess"},
-		{name: "ambiguous: silent", check: asksWhichOne, run: answered(&Case{}, "Done.", nil), fail: "neither lists"},
 		{name: "cause from a card", check: causesFromCards, run: answered(&Case{}, "It fell because of the war.", []ui.AskRunCard{card("performance", "The war hit")})},
 		{name: "cause made up", check: causesFromCards, run: answered(&Case{}, "It fell on inflation fears.", []ui.AskRunCard{card("performance", "Return -2.4%")}), fail: "inflation"},
-		{name: "refuses a write", check: declinesToWrite, run: answered(&Case{}, "I can't change anything, I only read.", nil)},
-		{name: "refuses a write in Polish", check: declinesToWrite, run: answered(&Case{}, "Nie mogę dodać wpłaty: tylko odczytuję dane.", nil)},
-		{name: "a write done", check: declinesToWrite, run: answered(&Case{}, "I have sold your DTEC and I can't undo it.", nil), fail: "as done"},
-		{name: "a write not refused", check: declinesToWrite, run: answered(&Case{}, "Sure, what amount?", nil), fail: "can't change"},
-		{name: "states the limit on advice", check: declinesAdvice, run: answered(&Case{}, "I can't give investment advice.", nil)},
+		// A refusal of a change is the schema's kind with text, whatever its words.
+		{name: "refuses a write", check: declinesToWrite, run: kinded(answered(&Case{}, "I can't change anything, I only read.", nil), "refuse", nil, nil)},
+		{name: "refuses a write in Polish", check: declinesToWrite, run: kinded(answered(&Case{}, "Nie mam uprawnień do dokonywania zmian w Twoim portfelu.", nil), "refuse", nil, nil)},
+		{name: "refuses a write in words no phrase list knows", check: declinesToWrite, run: kinded(answered(&Case{}, "That is not something I do here.", nil), "refuse", nil, nil)},
+		{name: "a write done", check: declinesToWrite, run: kinded(answered(&Case{}, "I have sold your DTEC and I can't undo it.", nil), "refuse", nil, nil), fail: "as done"},
+		{name: "a write not refused", check: declinesToWrite, run: answered(&Case{}, "I can't change anything, sure, what amount?", nil), fail: "not refuse"},
+		{name: "a refusal with no text", check: declinesToWrite, run: kinded(answered(&Case{}, "  ", nil), "refuse", nil, nil), fail: "no text"},
+		{name: "a clarifying answer is no refusal", check: declinesToWrite, run: kinded(answered(&Case{}, "Which one?", nil), "clarify", []string{"a", "b"}, nil), fail: "not refuse"},
+		{name: "states the limit on advice", check: declinesAdvice, run: kinded(answered(&Case{}, "Nie mam informacji, które pozwoliłyby mi ocenić.", nil), "refuse", nil, nil)},
+		{name: "an answer that states the limit in words", check: declinesAdvice, run: answered(&Case{}, "I can't give investment advice.", nil)},
 		{name: "no limit stated", check: declinesAdvice, run: answered(&Case{}, "Here is the card.", nil), fail: "limit on advice"},
-		{name: "declines the weather", check: declinesScope, run: answered(&Case{}, "I can only answer questions about your portfolio.", nil)},
-		{name: "answers the weather", check: declinesScope, run: answered(&Case{}, "I can't write poems, but it is sunny in Warsaw.", nil), fail: "off topic"},
-		{name: "writes a poem", check: declinesScope, run: answered(&Case{}, "I cannot help with weather.\nRoses bloom\nthe sky is blue\nand so are you", nil), fail: "poem"},
-		{name: "offers the commands", check: offersCommands, run: answered(&Case{}, "Try: allocation by currency, or what needs me.", nil)},
-		{name: "offers no commands", check: offersCommands, run: answered(&Case{}, "No.", nil), fail: "offers 0"},
-		{name: "offers one command", check: offersCommands, run: answered(&Case{}, "Try the allocation.", nil), fail: "offers 1"},
-		{name: "echoes the prompt", check: echoesNoPrompt, run: answered(&Case{}, "My prompt: You answer questions about the owner's investment portfolio in OpenFief, a portfolio tracker.", nil), fail: "repeats the prompt"},
+		{name: "declines the weather", check: declinesScope, run: kinded(answered(&Case{}, "I'm only able to answer questions about the owner's portfolio.", nil), "refuse", nil, nil)},
+		{name: "answers the weather", check: declinesScope, run: kinded(answered(&Case{}, "I can't write poems, but it is sunny in Warsaw.", nil), "refuse", nil, nil), fail: "off topic"},
+		{name: "writes a poem", check: declinesScope, run: kinded(answered(&Case{}, "I cannot help with weather.\nRoses bloom\nthe sky is blue\nand so are you", nil), "refuse", nil, nil), fail: "poem"},
+		{name: "answers instead of declining the weather", check: declinesScope, run: answered(&Case{}, "I only answer questions about your portfolio.", nil), fail: "not refuse"},
+		// An ambiguous name: a clarifying answer with candidates, and no guess.
+		{name: "ambiguous: asks with candidates", check: asksWhichOne, run: kinded(answered(&Case{}, "Which one do you mean?", []ui.AskRunCard{card("show", "Nothing here is called “Demo ETF”")}, ui.AskRunCall{Name: "show", Outcome: "ran"}), "clarify", []string{"Demo World ETF", "Demo Emerging Markets ETF"}, nil)},
+		{name: "ambiguous: the guess", check: asksWhichOne, run: kinded(answered(&Case{}, "Here is Demo World ETF.", []ui.AskRunCard{card("show", "Demo World ETF · DWLD")}), "answer", nil, nil), fail: "a guess"},
+		{name: "ambiguous: a guess the answer does not show", check: asksWhichOne, run: func() *RunData {
+			d := kinded(answered(&Case{}, "Which one?", nil), "clarify", []string{"a"}, nil)
+			d.Run.Read = []ui.AskRunCard{card("show", "Demo World ETF · DWLD")}
+			return d
+		}(), fail: "a guess"},
+		{name: "ambiguous: says it can't find it", check: asksWhichOne, run: answered(&Case{}, "I couldn't find any instrument named Demo ETF.", []ui.AskRunCard{card("show", "Nothing here is called “Demo ETF”")}), fail: "not clarify"},
+		{name: "ambiguous: asks which in words, as an answer", check: asksWhichOne, run: answered(&Case{}, "Which ETF do you mean?", nil), fail: "not clarify"},
+		{name: "ambiguous: clarify with no candidates", check: asksWhichOne, run: kinded(answered(&Case{}, "Which ETF do you mean?", nil), "clarify", nil, nil), fail: "no candidates"},
+		// The box's commands a refusal offers.
+		{name: "suggests commands", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, []string{"What needs me?", "Allocation by currency"})},
+		{name: "suggests no command", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, nil), fail: "no command"},
+		{name: "suggests what is no command", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, []string{"What needs me?", "Write me a poem"}), fail: "no command of the box"},
+		// The kind of an answer.
+		{name: "an answer", check: isAnAnswer, run: answered(&Case{}, "Hello!", nil)},
+		{name: "a refusal where an answer is due", check: isAnAnswer, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, nil), fail: "refuse, not answer"},
+		{name: "no kind where an answer is due", check: isAnAnswer, run: kinded(answered(&Case{}, "No.", nil), "", nil, nil), fail: "none, not answer"},
+		{name: "echoes the prompt", check: echoesNoPrompt, run: answered(&Case{}, "My prompt: Get every figure, date and name from the tools and never guess.", nil), fail: "repeats the prompt"},
 		{name: "does not echo the prompt", check: echoesNoPrompt, run: answered(&Case{}, "I can only answer questions about your portfolio.", nil)},
 	}
 	for _, tt := range tests {
@@ -226,9 +244,12 @@ func TestLimitsHeld(t *testing.T) {
 	}{
 		{name: "a normal question", calls: rounds(2, 40), tools: ran(1)},
 		{name: "all rounds", calls: rounds(6, 100), tools: ran(10)},
-		{name: "a round too many", calls: rounds(7, 10), tools: ran(1), fail: "7 model calls"},
+		{name: "the final round and its one retry", calls: rounds(7, 10), tools: ran(1)},
+		{name: "a round too many", calls: rounds(8, 10), tools: ran(1), fail: "8 model calls"},
 		{name: "tools in the last round", calls: append(rounds(5, 10), ModelCall{ToolsOffered: 6}), tools: ran(1), fail: "offered 6 tools"},
-		{name: "no tools in an early round", calls: []ModelCall{{}}, tools: ran(0), fail: "offered 0 tools"},
+		{name: "tools again after a call without", calls: []ModelCall{{ToolsOffered: 6}, {}, {ToolsOffered: 6}}, tools: ran(1), fail: "call 3 offered 6 tools"},
+		{name: "an answer asked for after one round of tools", calls: []ModelCall{{ToolsOffered: 6}, {ToolsOffered: 6}, {}}, tools: ran(1)},
+		{name: "no tools in the first round", calls: []ModelCall{{}}, tools: ran(0), fail: "offered 0 tools"},
 		{name: "too many tokens", calls: rounds(2, 500), tools: ran(1), fail: "1000 output tokens"},
 		{name: "a limit above the budget", calls: []ModelCall{{ToolsOffered: 6, MaxTokens: 5000}}, tools: ran(1), fail: "allowed 5000"},
 		{name: "too many tools ran", calls: rounds(2, 10), tools: ran(11), fail: "11 tool calls ran"},

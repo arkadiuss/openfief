@@ -800,8 +800,12 @@ type GenerateRequest struct {
 	ResponseSchemaJson string `protobuf:"bytes,4,opt,name=response_schema_json,json=responseSchemaJson,proto3" json:"response_schema_json,omitempty"`
 	// The most tokens the answer may have; zero means the entry's limit.
 	MaxOutputTokens int64 `protobuf:"varint,5,opt,name=max_output_tokens,json=maxOutputTokens,proto3" json:"max_output_tokens,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// With a response schema, an entry without structured output is asked for a
+	// JSON object (JSON mode) instead of being refused, and the caller checks the
+	// reply against the schema.
+	JsonModeFallback bool `protobuf:"varint,6,opt,name=json_mode_fallback,json=jsonModeFallback,proto3" json:"json_mode_fallback,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *GenerateRequest) Reset() {
@@ -867,6 +871,13 @@ func (x *GenerateRequest) GetMaxOutputTokens() int64 {
 		return x.MaxOutputTokens
 	}
 	return 0
+}
+
+func (x *GenerateRequest) GetJsonModeFallback() bool {
+	if x != nil {
+		return x.JsonModeFallback
+	}
+	return false
 }
 
 // Usage is what one call used, as the provider reports it.
@@ -1031,13 +1042,14 @@ const file_openfief_models_v1_provider_proto_rawDesc = "" +
 	"\x04Tool\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x124\n" +
-	"\x16parameters_schema_json\x18\x03 \x01(\tR\x14parametersSchemaJson\"\xee\x01\n" +
+	"\x16parameters_schema_json\x18\x03 \x01(\tR\x14parametersSchemaJson\"\x9c\x02\n" +
 	"\x0fGenerateRequest\x12\x14\n" +
 	"\x05model\x18\x01 \x01(\tR\x05model\x127\n" +
 	"\bmessages\x18\x02 \x03(\v2\x1b.openfief.models.v1.MessageR\bmessages\x12.\n" +
 	"\x05tools\x18\x03 \x03(\v2\x18.openfief.models.v1.ToolR\x05tools\x120\n" +
 	"\x14response_schema_json\x18\x04 \x01(\tR\x12responseSchemaJson\x12*\n" +
-	"\x11max_output_tokens\x18\x05 \x01(\x03R\x0fmaxOutputTokens\"O\n" +
+	"\x11max_output_tokens\x18\x05 \x01(\x03R\x0fmaxOutputTokens\x12,\n" +
+	"\x12json_mode_fallback\x18\x06 \x01(\bR\x10jsonModeFallback\"O\n" +
 	"\x05Usage\x12!\n" +
 	"\finput_tokens\x18\x01 \x01(\x03R\vinputTokens\x12#\n" +
 	"\routput_tokens\x18\x02 \x01(\x03R\foutputTokens\"\xe1\x01\n" +

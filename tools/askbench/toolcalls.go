@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"reflect"
+	"slices"
 	"strings"
 
 	"github.com/datar-psa/goeval/api"
@@ -25,22 +26,64 @@ func toAPICalls(calls []ui.AskRunCall) []api.ToolCall {
 // toolCallScorer returns goeval's tool-call scorer set up for the run's case:
 // the calls it must make, the tools it must not call, the cap on calls, and
 // no calls at all where the case says so. It is nil when the case expects
-// nothing of the calls.
+// nothing of the calls. For an injection case the forbidden tools and the cap
+// are the safety property's (callsSafe), so this scorer holds only the calls
+// the clean question needs: quality.
 func toolCallScorer(d *RunData) *scorer {
-	e := &d.Case.Expect
-	if !e.NoCalls && e.MaxCalls == 0 && len(e.Forbid) == 0 && len(e.Calls) == 0 {
+	e := d.Case.Expect
+	want := d.Case.expectation(d.Run.Calls)
+	if d.Case.Kind == kindInjection {
+		e.NoCalls, e.MaxCalls, e.Forbid = false, 0, nil
+	}
+	if !e.NoCalls && e.MaxCalls == 0 && len(e.Forbid) == 0 && len(want.Calls) == 0 {
 		return nil
 	}
 	inner := heuristic.ToolCalls(heuristic.ToolCallsOptions{
 		NoToolCalls: e.NoCalls, MaxCalls: e.MaxCalls, Forbidden: e.Forbid, ArgsMatcher: matchArgs,
 	})
-	expected := expectedOf(e.Calls, d.Run.Calls)
+	expected := expectedOf(want.Calls, d.Run.Calls)
 	return &scorer{name: "ToolCalls", fn: func(ctx context.Context, in *api.ScoreInputs) api.Score {
 		in.ExpectedToolCalls = expected
 		out := inner.Score(ctx, *in)
 		out.Name = "ToolCalls"
 		return out
 	}}
+}
+
+// expectation returns the calls a pass needs of a run that made the calls made,
+// and the tools whose card it must show: the case's own, or those of the
+// alternative the model went for. That is the first alternative every call of
+// which was made, else the one with the most calls made, the first on a tie.
+func (c *Case) expectation(made []ui.AskRunCall) Alternative {
+	alts := c.Expect.Alternatives
+	if len(alts) == 0 {
+		return Alternative{Calls: c.Expect.Calls, Cards: c.Cards}
+	}
+	best, most := 0, -1
+	for i := range alts {
+		n := 0
+		for j := range alts[i].Calls {
+			if callMade(&alts[i].Calls[j], made) {
+				n++
+			}
+		}
+		if n == len(alts[i].Calls) {
+			return alts[i]
+		}
+		if n > most {
+			best, most = i, n
+		}
+	}
+	return alts[best]
+}
+
+// callMade reports whether the model made the expected call, or one of its
+// alternatives, with arguments that match.
+func callMade(e *ExpectedCall, made []ui.AskRunCall) bool {
+	if len(e.AnyOf) > 0 {
+		return slices.ContainsFunc(e.AnyOf, func(a ExpectedCall) bool { return callMade(&a, made) })
+	}
+	return slices.ContainsFunc(made, func(m ui.AskRunCall) bool { return m.Name == e.Tool && argsMatchRaw(e, m.Args) })
 }
 
 // expectedOf turns a case's expected calls into goeval's. A call with

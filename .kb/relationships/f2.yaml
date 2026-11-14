@@ -923,3 +923,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d5a19c2c98b
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-refuses
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:24.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d6a358deaa0
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-refuses
+    to: REQ-askbench-grades-by-the-structured-answer
+    created_at: 2026-11-14T15:01:24.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40653e0b964
+  - type: verified_by
+    from: SCEN-askbench-cost-is-measured
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:54:49.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b539dd70522b
+  - type: verified_by
+    from: SCEN-askbench-cost-is-measured
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T16:54:49.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75215866126e
+  - type: verified_by
+    from: SCEN-askbench-cost-is-measured
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T16:54:49.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7093dd87dbdb

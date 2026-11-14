@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e30aeae32c16
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-testechomaskscutonlythespantheyname
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:01:29.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5f78799bce
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-route-test-go-testarouteisintheroutingandtheconfigurationhash
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:47:37.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8372facfd9b2

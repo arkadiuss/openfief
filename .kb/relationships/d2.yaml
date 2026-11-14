@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9074b01deeb6
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-passes
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:09:38.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129cb427690c

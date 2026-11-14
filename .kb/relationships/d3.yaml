@@ -1147,3 +1147,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cfa322d3d60e
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askstructured-go-retrytext
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:29.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21558a410892
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-retrytext
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:57:29.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89ad5fc22f2f

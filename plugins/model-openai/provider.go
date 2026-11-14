@@ -111,7 +111,7 @@ func (p *provider) wireRequest(req *modelsv1.GenerateRequest) (*openaichat.Reque
 		out.Tools = append(out.Tools, tool)
 	}
 	if s := req.GetResponseSchemaJson(); s != "" {
-		out.ResponseSchema = []byte(s)
+		out.SetAnswerFormat([]byte(s), entry.GetStructuredOutput())
 	}
 	return out, nil
 }
@@ -144,7 +144,7 @@ func checkCapabilities(req *modelsv1.GenerateRequest, entry *modelsv1.ModelEntry
 	if len(req.GetTools()) > 0 && !entry.GetToolCalling() {
 		return fmt.Errorf("%w: the model's entry does not allow tools", errInvalidRequest)
 	}
-	if req.GetResponseSchemaJson() != "" && !entry.GetStructuredOutput() {
+	if req.GetResponseSchemaJson() != "" && !entry.GetStructuredOutput() && !req.GetJsonModeFallback() {
 		return fmt.Errorf("%w: the model's entry does not allow structured output", errInvalidRequest)
 	}
 	for _, t := range req.GetTools() {

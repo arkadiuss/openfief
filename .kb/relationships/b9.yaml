@@ -1420,3 +1420,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-023fa56898e8
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-cost-test-go-testthereportholdsthecostperquestion
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T15:46:07.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44ad1fb7b0f4

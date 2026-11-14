@@ -185169,6 +185169,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
       - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-status-error
     title: statusError
@@ -193491,20 +193493,6 @@ symbols:
         target: TEST-ui-ask-model-loop
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
-  - id: SYM-ask-model-askmodel-go-ask-conversation-answer
-    title: askConversation.answer
-    status: active
-    sourceFile: internal/views/ui/askmodel.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      ref: M2 brief (the Ask box's model, D-203) on the model router, 2026-11-13
-      recorded_at: 2026-11-13T18:25:37.212Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-ask-model-loop
-      - type: implements
-        target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-askmodel-go-model-answerer-tool
     title: modelAnswerer.tool
     status: active
@@ -195944,17 +195932,19 @@ symbols:
       - type: implements
         target: REQ-models-ask-box-model-through-router
   - id: SYM-ask-limits-on-openrouter
-    title: Client.onOpenRouter
+    title: Client.OnOpenRouter
     status: active
     origin:
       kind: agent
-      ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
-      recorded_at: 2026-11-13T20:01:55.457Z
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:03:42.126Z
     sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-models-openrouter-require-parameters
   - id: SYM-ask-limits-request-body
@@ -195969,6 +195959,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-models-openrouter-require-parameters
   - id: SYM-ask-limits-test-testrequestbodyrequiresparametersonopenrouterwithtools
@@ -217211,6 +217205,8 @@ symbols:
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
   - id: SYM-askbench-main-parse-args
     title: parseArgs
     status: active
@@ -217222,9 +217218,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-split-list
     title: splitList
     status: active
@@ -217250,9 +217250,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-parse-price
     title: parsePrice
     status: active
@@ -217377,7 +217381,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-spent
@@ -217448,7 +217456,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-error-class
@@ -217504,7 +217518,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-numbers-reading
@@ -217809,34 +217829,6 @@ symbols:
       kind: agent
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T08:40:13.279Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-scorers
-      - type: implements
-        target: REQ-decision-d219-3-phrase-list-decides-advice
-  - id: SYM-askbench-phrases-clarify-phrases
-    title: clarifyPhrases
-    status: active
-    sourceFile: tools/askbench/phrases.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:40:19.385Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-scorers
-      - type: implements
-        target: REQ-decision-d219-3-phrase-list-decides-advice
-  - id: SYM-askbench-phrases-command-words
-    title: commandWords
-    status: active
-    sourceFile: tools/askbench/phrases.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:40:25.351Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
@@ -219002,6 +218994,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-check-report
     title: CheckReport
     status: active
@@ -219018,6 +219012,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-call-report
     title: CallReport
     status: active
@@ -219034,6 +219030,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-run-report-fill
     title: RunReport.fill
     status: active
@@ -219046,10 +219044,16 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-case-report
     title: CaseReport
     status: active
@@ -219059,6 +219063,7 @@ symbols:
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T09:19:41.725Z
     symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
@@ -219066,6 +219071,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-count
     title: FailureCount
     status: active
@@ -219082,6 +219089,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-config-report
     title: ConfigReport
     status: active
@@ -219098,6 +219107,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-tool-report
     title: ToolReport
     status: active
@@ -219114,6 +219125,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-limits-report
     title: LimitsReport
     status: active
@@ -219130,6 +219143,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-model-report
     title: ModelReport
     status: active
@@ -219138,7 +219153,8 @@ symbols:
       kind: agent
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T08:49:19.318Z
-    symbol_role: behavioral
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
@@ -219146,6 +219162,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-budget-report
     title: BudgetReport
     status: active
@@ -219162,6 +219180,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-disagreement
     title: Disagreement
     status: active
@@ -219178,6 +219198,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report
     title: Report
     status: active
@@ -219195,6 +219217,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-report
     title: Bench.report
     status: active
@@ -219211,6 +219235,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-disagreements
     title: disagreements
     status: active
@@ -219227,6 +219253,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-phrase-word
     title: phraseWord
     status: active
@@ -219243,6 +219271,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-judge-word
     title: judgeWord
     status: active
@@ -219259,6 +219289,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-model-report
     title: Bench.modelReport
     status: active
@@ -219271,10 +219303,20 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-decimal-of
     title: decimalOf
     status: active
@@ -219291,6 +219333,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-counts
     title: failureCounts
     status: active
@@ -219307,6 +219351,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-reasons
     title: failureReasons
     status: active
@@ -219323,6 +219369,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-config
     title: Bench.config
     status: active
@@ -219334,11 +219382,17 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
       - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-host-of
     title: hostOf
     status: active
@@ -219355,6 +219409,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-failed
     title: Report.Failed
     status: active
@@ -219368,9 +219424,13 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-write-to
     title: Report.WriteTo
     status: active
@@ -219387,6 +219447,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-summary
     title: Report.Summary
     status: active
@@ -219403,6 +219465,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-write-model
     title: writeModel
     status: active
@@ -219415,10 +219479,20 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-pass-word
     title: passWord
     status: active
@@ -219435,6 +219509,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-cell
     title: failureCell
     status: active
@@ -219451,6 +219527,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-write-judge
     title: writeJudge
     status: active
@@ -219467,6 +219545,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-one-line
     title: oneLine
     status: active
@@ -219483,6 +219563,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-runner-options
     title: Options
     status: active
@@ -219499,6 +219581,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-task
     title: task
     status: active
@@ -219515,6 +219599,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench
     title: Bench
     status: active
@@ -219532,6 +219618,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-new-bench
     title: NewBench
     status: active
@@ -219548,6 +219636,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-run
     title: Bench.Run
     status: active
@@ -219564,6 +219654,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-work
     title: Bench.work
     status: active
@@ -219580,6 +219672,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-ask-unless-stopped
     title: Bench.askUnlessStopped
     status: active
@@ -219596,6 +219690,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-resolve-limits
     title: resolveLimits
     status: active
@@ -219612,6 +219708,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-ask
     title: Bench.ask
     status: active
@@ -219623,11 +219721,21 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-grade
     title: Bench.grade
     status: active
@@ -219644,6 +219752,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-test-bench-run
     title: benchRun
     status: active
@@ -220074,8 +220184,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-checks
@@ -220106,8 +220220,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-grade
@@ -220122,8 +220240,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-score-inputs
@@ -220430,22 +220552,6 @@ symbols:
         target: REQ-askbench-answers-grounded-in-cards
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
-  - id: SYM-askbench-scorers-offers-commands
-    title: offersCommands
-    status: active
-    sourceFile: tools/askbench/scorers.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:58:03.915Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-scorers
-      - type: implements
-        target: REQ-askbench-answers-grounded-in-cards
-      - type: implements
-        target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-echoes-no-prompt
     title: echoesNoPrompt
     status: active
@@ -220470,22 +220576,6 @@ symbols:
       kind: agent
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T08:58:15.505Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-scorers
-      - type: implements
-        target: REQ-askbench-answers-grounded-in-cards
-      - type: implements
-        target: REQ-decision-d218-1-go-harness-goeval-scorers
-  - id: SYM-askbench-scorers-prompt-texts
-    title: promptTexts
-    status: active
-    sourceFile: tools/askbench/scorers.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:58:21.422Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
@@ -220535,17 +220625,6 @@ symbols:
       kind: agent
       ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
       recorded_at: 2026-11-14T08:58:43.473Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-scorers
-  - id: SYM-askbench-scorers-test-test-every-box-command-has-words-to-offer-it-by
-    title: TestEveryBoxCommandHasWordsToOfferItBy
-    status: active
-    sourceFile: tools/askbench/scorers_test.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:58:49.036Z
     relationships:
       - type: executable_for
         target: TEST-askbench-scorers
@@ -220771,6 +220850,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-scorers
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-toolcalls-expected-of
@@ -220939,6 +221022,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-askbench-report
   - id: SYM-askbench-portfolio-test-changed-account-names
@@ -220963,3 +221052,3004 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-read-service
+  - id: SYM-openaichat-call-error
+    title: CallError
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:26.874Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-call-error-error
+    title: CallError.Error
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:32.891Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-call-error-unwrap
+    title: CallError.Unwrap
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:38.735Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-no-answer
+    title: noAnswer
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:44.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-test-complete-errors-carry-the-status
+    title: TestCompleteErrorsCarryTheStatusAndNothingElse
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:50.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-openaichat-test-complete-no-answer-carries-no-status
+    title: TestCompleteNoAnswerCarriesNoStatus
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:56.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-askbench-modelclient-status-label
+    title: statusLabel
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:02.685Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-modelclient-call-failure
+    title: callFailure
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:09.018Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-call-error-report
+    title: CallErrorReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:14.401Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-count
+    title: ErrorCount
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:20.066Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-count-string
+    title: ErrorCount.String
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:26.235Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-tally-calls
+    title: tallyCalls
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:32.271Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-counts
+    title: errorCounts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:38.260Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-errors-text
+    title: errorsText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:44.276Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-report-could-not-run
+    title: Report.CouldNotRun
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:50.268Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-pass-cell
+    title: passCellOf
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:03:48.378Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-askbench-errors-test-status-labels
+    title: TestStatusLabels
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:02.616Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-call-failure-is-status-and-label
+    title: TestACallFailureIsItsStatusAndALabel
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:08.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-timeout-label
+    title: TestACallThatTimesOutIsLabelledTimeoutWithNoStatus
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:14.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-unknown-error-is-failed
+    title: TestCallFailureOfAnUnknownErrorIsFailed
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:20.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-nothing-reaching-a-model
+    title: TestNothingReachingAModelCouldNotRunAndExitsTwo
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:26.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-could-not-run-report
+    title: checkCouldNotRunReport
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:32.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-all-errored
+    title: checkAllErrored
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:38.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-says-could-not-run
+    title: checkSaysCouldNotRun
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:44.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-no-provider-words
+    title: checkNoProviderWords
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:50.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-partial-outage-is-scored
+    title: TestAPartialOutageIsScoredAndItsErrorsAreListedNotCountedAsFailures
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:56.504Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-lists-errors
+    title: checkListsErrors
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:29:02.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-partial-outage-on-a-safety-case
+    title: TestAPartialOutageOnASafetyCaseIsNotAModelFailure
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:29:08.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    title: askPromptParts
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:58:51.099Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-go-asksystemprompt
+    title: askSystemPrompt
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:58:56.940Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    title: askPromptNonPublic
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:02.833Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askrun-go-askpromptcanary
+    title: AskPromptCanary
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:09.031Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askrun-go-askpromptnonpublic
+    title: AskPromptNonPublic
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:15.094Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framingwords
+    title: framingWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:21.316Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stopwords
+    title: stopWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:27.264Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-echotokens
+    title: echoTokens
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:33.176Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-quotedspan
+    title: quotedSpan
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:39.254Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stemof
+    title: stemOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:45.164Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-iscontent
+    title: isContent
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:51.154Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-isword
+    title: isWord
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:57.323Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stemsof
+    title: stemsOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:03.405Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-maskechoedquestion
+    title: maskEchoedQuestion
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:09.507Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-firstrune
+    title: firstRune
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:15.720Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-lastrune
+    title: lastRune
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:21.957Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-onlyquestionwords
+    title: onlyQuestionWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:27.968Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-maskframed
+    title: maskFramed
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:34.233Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-masknames
+    title: maskNames
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:40.377Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-adviceof
+    title: adviceOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:46.707Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-runof
+    title: runOf
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:52.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-ran
+    title: ran
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:57.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-passescalls
+    title: passesCalls
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:03.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testa16isansweredbytheallocationorbythebondsandthewhole
+    title: TestA16IsAnsweredByTheAllocationOrByTheBondsAndTheWhole
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:09.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testacasehascallsoralternativesnotboth
+    title: TestACaseHasCallsOrAlternativesNotBoth
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:14.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testarefusalthatquotesthequestionisnoadvice
+    title: TestARefusalThatQuotesTheQuestionIsNoAdvice
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:20.601Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testechomaskscutonlythespantheyname
+    title: TestEchoMasksCutOnlyTheSpanTheyName
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:26.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testthepromptechoisthenonpublicsentencesandthecanary
+    title: TestThePromptEchoIsTheNonPublicSentencesAndTheCanary
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:32.552Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testtheboxsayswhatitisandthepromptkeepstherest
+    title: TestTheBoxSaysWhatItIsAndThePromptKeepsTheRest
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:38.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testanamedaccountisnotanechobuttheinstructionis
+    title: TestANamedAccountIsNotAnEchoButTheInstructionIs
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:44.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testi1bpassesonlywhennothingthepayloadasksisdone
+    title: TestI1bPassesOnlyWhenNothingThePayloadAsksIsDone
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:49.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorers-go-wordsof
+    title: wordsOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:55.726Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-alnum
+    title: alnum
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:01.978Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-tracesof
+    title: tracesOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:07.907Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-realnamesof
+    title: realNamesOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:14.096Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-toolcalls-go-case-expectation
+    title: Case.expectation
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:19.645Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-toolcalls-go-callmade
+    title: callMade
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:25.106Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-test-go-testpromptholdsthecanaryandtheday
+    title: TestPromptHoldsTheCanaryAndTheDay
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:30.921Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab3-internal-views-ui-askprompt-test-go-testpromptsplitswhattheboxsaysofitselffromtherest
+    title: TestPromptSplitsWhatTheBoxSaysOfItselfFromTheRest
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:36.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptpart
+    title: askPromptPart
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:08.135Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-cases-go-alternative
+    title: Alternative
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:13.415Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framed
+    title: framed
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:24.520Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framedrun
+    title: framedRun
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:30.461Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-passes
+    title: passes
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:35.917Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-cases-go-checkexpectation
+    title: checkExpectation
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:16:52.655Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-modelrouter-app-router-test-go-testrouterservesthestructuredanswerbyamodelwithouttheflagwhentherequestallows
+    title: TestRouterServesTheStructuredAnswerByAModelWithoutTheFlagWhenTheRequestAllows
+    status: active
+    sourceFile: internal/modelrouter/app/router_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:05.810Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-router
+  - id: SYM-ab3-internal-modelrouter-connectapi-ask-test-go-testaskserviceasksthestructuredanswerwithjsonmodeasthefallback
+    title: TestAskServiceAsksTheStructuredAnswerWithJSONModeAsTheFallback
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:11.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask
+  - id: SYM-ab3-internal-modelrouter-connectapi-ask-test-go-askfixture-askwithschema
+    title: askFixture.askWithSchema
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:17.241Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask
+  - id: SYM-ab3-internal-modelrouter-connectapi-ask-test-go-testaskservicerefusesaschemathatisnojsonortoolong
+    title: TestAskServiceRefusesASchemaThatIsNoJSONOrTooLong
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:22.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask
+  - id: SYM-ab3-internal-modelrouter-modelrouter-test-go-testrequestneeds
+    title: TestRequestNeeds
+    status: active
+    sourceFile: internal/modelrouter/modelrouter_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:28.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain
+  - id: SYM-ab3-internal-views-ui-askanswer-go-neartargets
+    title: nearTargets
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:33.797Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-finish
+    title: askConversation.finish
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:39.320Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    title: askConversation.retry
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:45.019Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-answered
+    title: askConversation.answered
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:50.631Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askmodel-go-askschemafailure
+    title: askSchemaFailure
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:55:56.439Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askmodel-fakes-test-go-firstuser
+    title: firstUser
+    status: active
+    sourceFile: internal/views/ui/askmodel_fakes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:02.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-page
+  - id: SYM-ab3-internal-views-ui-askmodel-test-go-answerjson
+    title: answerJSON
+    status: active
+    sourceFile: internal/views/ui/askmodel_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:07.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ab3-internal-views-ui-askmodel-test-go-answertext
+    title: answerText
+    status: active
+    sourceFile: internal/views/ui/askmodel_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:13.485Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ab3-internal-views-ui-askmodel-test-go-say
+    title: say
+    status: active
+    sourceFile: internal/views/ui/askmodel_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:19.201Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ab3-internal-views-ui-askmodel-test-go-saykind
+    title: sayKind
+    status: active
+    sourceFile: internal/views/ui/askmodel_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:24.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop
+  - id: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer
+    title: structuredAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:29.931Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-parsestructuredanswer
+    title: parseStructuredAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:35.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer-check
+    title: structuredAnswer.check
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:41.278Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer-checkreferences
+    title: structuredAnswer.checkReferences
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:46.958Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-notaname
+    title: notAName
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:52.517Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-cardread
+    title: cardRead
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:56:58.264Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-cardid
+    title: cardID
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:03.903Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-cardnumber
+    title: cardNumber
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:09.515Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-isaskcommand
+    title: IsAskCommand
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:15.073Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-askanswerschema
+    title: AskAnswerSchema
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:20.939Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-retrytext
+    title: retryText
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:26.599Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
+    title: answerExamples
+    status: active
+    sourceFile: internal/views/ui/askstructured.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:32.309Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testparsestructuredanswer
+    title: TestParseStructuredAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:38.056Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testtheanswerschemaisthestructsfields
+    title: TestTheAnswerSchemaIsTheStructsFields
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:43.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testcardidsroundtrip
+    title: TestCardIDsRoundTrip
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:49.507Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-loopfixture-askconv
+    title: loopFixture.askConv
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:57:55.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testthemodelstoolresultscarrytheidsitnamescardsby
+    title: TestTheModelsToolResultsCarryTheIDsItNamesCardsBy
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:01.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testtheanswershowsthecardsitnamesintheorderitnamesthem
+    title: TestTheAnswerShowsTheCardsItNamesInTheOrderItNamesThem
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:06.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testananswershowsnocarditdoesnotname
+    title: TestAnAnswerShowsNoCardItDoesNotName
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:12.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testthekinddecideswhatthepagedraws
+    title: TestTheKindDecidesWhatThePageDraws
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:18.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testareplyinaroundwithtoolsthatisananswerendsthequestionatonce
+    title: TestAReplyInARoundWithToolsThatIsAnAnswerEndsTheQuestionAtOnce
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:23.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testplaintextinaroundwithtoolsisaskedforagainastheanswer
+    title: TestPlainTextInARoundWithToolsIsAskedForAgainAsTheAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:29.397Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testaninvalidfinalanswergetsoneretrywiththereason
+    title: TestAnInvalidFinalAnswerGetsOneRetryWithTheReason
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:35.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testtwoinvalidanswersareanerrortheboxcallscouldnotanswer
+    title: TestTwoInvalidAnswersAreAnErrorTheBoxCallsCouldNotAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:41.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-wantcouldnotanswer
+    title: wantCouldNotAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:46.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-wanttwoinvalid
+    title: wantTwoInvalid
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:52.849Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testeverycallthatasksfortheansweroffersnotools
+    title: TestEveryCallThatAsksForTheAnswerOffersNoTools
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:58:58.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testtheretryisspentfromthequestionstokens
+    title: TestTheRetryIsSpentFromTheQuestionsTokens
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:04.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testsuggestionsarecommandstheboxunderstands
+    title: TestSuggestionsAreCommandsTheBoxUnderstands
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:10.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testthepromptsayswhateachfieldisfor
+    title: TestThePromptSaysWhatEachFieldIsFor
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:15.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testshownamestheneartargetswhennothingmatches
+    title: TestShowNamesTheNearTargetsWhenNothingMatches
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:21.448Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testtheclientaskstheschemaonlyfortheanswer
+    title: TestTheClientAsksTheSchemaOnlyForTheAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:26.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-internal-views-ui-askstructured-test-go-testaskboxdrawseachkindofanswer
+    title: TestAskBoxDrawsEachKindOfAnswer
+    status: active
+    sourceFile: internal/views/ui/askstructured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:32.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-go-request-setanswerformat
+    title: Request.SetAnswerFormat
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:38.323Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-models-structured-answer-path
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-onthewire
+    title: onTheWire
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:44.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testrequestbodyasksfortheanswerformat
+    title: TestRequestBodyAsksForTheAnswerFormat
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:49.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-strictformat
+    title: strictFormat
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:59:55.432Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testaschemawinsoverjsonmode
+    title: TestASchemaWinsOverJSONMode
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:01.030Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testsetanswerformatsetsoneformandclearstheother
+    title: TestSetAnswerFormatSetsOneFormAndClearsTheOther
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:06.776Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-plugins-model-openai-provider-test-go-testgenerateasksforthestructuredanswerbytheentrysflag
+    title: TestGenerateAsksForTheStructuredAnswerByTheEntrysFlag
+    status: active
+    sourceFile: plugins/model-openai/provider_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-ab3-plugins-model-openai-provider-test-go-testgeneraterefusesastrictrequestforanentrywithouttheflagandasksnothingforafallbackalone
+    title: TestGenerateRefusesAStrictRequestForAnEntryWithoutTheFlagAndAsksNothingForAFallbackAlone
+    status: active
+    sourceFile: plugins/model-openai/provider_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:17.520Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-ab3-sdk-go-gen-openfief-models-v1-ask-pb-go-generateaskrequest-getresponseschemajson
+    title: GenerateAskRequest.GetResponseSchemaJson
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:23.361Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask
+      - type: implements
+        target: REQ-models-structured-answer-path
+  - id: SYM-ab3-sdk-go-gen-openfief-models-v1-provider-pb-go-generaterequest-getjsonmodefallback
+    title: GenerateRequest.GetJsonModeFallback
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/provider.pb.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:29.126Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-provider
+      - type: implements
+        target: REQ-models-structured-answer-path
+  - id: SYM-ab3-tools-askbench-fakeserver-test-go-answerreply
+    title: answerReply
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:34.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-ab3-tools-askbench-fakeserver-test-go-kindreply
+    title: kindReply
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:40.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-ab3-tools-askbench-modelclient-go-structuredmodels
+    title: structuredModels
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:52.406Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-structured
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-followsschema
+    title: followsSchema
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:00:58.291Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-isananswer
+    title: isAnAnswer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:04.346Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-kindword
+    title: kindWord
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:10.081Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-tooloffers
+    title: toolOffers
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:15.931Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-refuses
+    title: refuses
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:21.742Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-go-suggestscommands
+    title: suggestsCommands
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:27.288Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-grades-by-the-structured-answer
+  - id: SYM-ab3-tools-askbench-scorers-test-go-kinded
+    title: kinded
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:32.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-ab3-tools-askbench-structured-test-go-testtheanswerisaskedstrictlyofamodelwiththeflagandasjsonmodeofonewithout
+    title: TestTheAnswerIsAskedStrictlyOfAModelWithTheFlagAndAsJSONModeOfOneWithout
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:38.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-fakemodel-formatsandtools
+    title: fakeModel.formatsAndTools
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:44.127Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-requestformats
+    title: requestFormats
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:49.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-testthestrictformatcarriestheschema
+    title: TestTheStrictFormatCarriesTheSchema
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:01:55.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-testthestructuredflagisintheconfigurationhash
+    title: TestTheStructuredFlagIsInTheConfigurationHash
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:02:01.233Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-testthedefaultmodelskeeptheirflags
+    title: TestTheDefaultModelsKeepTheirFlags
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:02:07.018Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-testareplythatisnostructuredanswerisaschemafailure
+    title: TestAReplyThatIsNoStructuredAnswerIsASchemaFailure
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:02:12.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-tools-askbench-structured-test-go-testthekinddecidestherefusalsandtheambiguousname
+    title: TestTheKindDecidesTheRefusalsAndTheAmbiguousName
+    status: active
+    sourceFile: tools/askbench/structured_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:02:18.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-structured
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testaroutehostpinsopenrouterandnothingelse
+    title: TestARouteHostPinsOpenRouterAndNothingElse
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:45:54.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-tools-askbench-cost-test-go-testcostperquestionisthemeanovereveryquestionasked
+    title: TestCostPerQuestionIsTheMeanOverEveryQuestionAsked
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:45:59.345Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testthereportholdsthecostperquestion
+    title: TestTheReportHoldsTheCostPerQuestion
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:04.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhosesafetypassed
+    title: TestTheRankingIsByCostPerQuestionAmongModelsWhoseSafetyPassed
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:10.192Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testnomodelpassingsafetyisnoranking
+    title: TestNoModelPassingSafetyIsNoRanking
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:15.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-main-go-modelflags
+    title: modelFlags
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:20.671Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-parseroutes
+    title: parseRoutes
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:26.551Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-routeset
+    title: routeSet
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:31.707Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-modelclient-go-routedclient
+    title: routedClient
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:43.358Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-rankreport
+    title: RankReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:48.642Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-ranking
+    title: ranking
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:54.814Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-ratof
+    title: ratOf
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:00.696Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-perquestion
+    title: perQuestion
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:06.602Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-writeranking
+    title: writeRanking
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:12.509Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-route-test-go-testroutespinamodeltohostsandlabeleachrun
+    title: TestRoutesPinAModelToHostsAndLabelEachRun
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:18.045Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testbadroutesareusageerrors
+    title: TestBadRoutesAreUsageErrors
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:23.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testtheflagsofaroutedmodelarefoundbyidorbylabel
+    title: TestTheFlagsOfARoutedModelAreFoundByIDOrByLabel
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:28.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testarouteisintheroutingandtheconfigurationhash
+    title: TestARouteIsInTheRoutingAndTheConfigurationHash
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:34.409Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testthereportkeysamodelbyitslabelandholdsitsroute
+    title: TestTheReportKeysAModelByItsLabelAndHoldsItsRoute
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:39.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-main-go-modelids
+    title: modelIDs
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:43.271Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-knownmodels
+    title: knownModels
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:49.286Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-routedvariants
+    title: routedVariants
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:55.429Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-questionsasked
+    title: questionsAsked
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:53:01.559Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-modelclient-go-modellabel
+    title: modelLabel
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:00:04.337Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    title: askDeclineClasses
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:55:54.640Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
+  - id: SYM-ab4-internal-views-ui-askprompt-go-askdeclinerule
+    title: askDeclineRule
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:00.661Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-declines-only-three-things
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptdeclinesexactlychangesadviceandquestionsoutsidetheportfolio
+    title: TestPromptDeclinesExactlyChangesAdviceAndQuestionsOutsideThePortfolio
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:06.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-sentencesnamingadeclinedclass
+    title: sentencesNamingADeclinedClass
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:11.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-internal-views-ui-askprompt-test-go-testpromptsayswhattoanswerandhowtodecline
+    title: TestPromptSaysWhatToAnswerAndHowToDecline
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:17.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-validreasoning
+    title: ValidReasoning
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:23.097Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-client-addopenrouteroptions
+    title: Client.addOpenRouterOptions
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:35.384Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-go-object-costtext
+    title: object.costText
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:41.396Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-test-go-testreasoningandcostoptionsreachopenrouteronly
+    title: TestReasoningAndCostOptionsReachOpenRouterOnly
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:47.468Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab4-plugins-model-openai-openaichat-chat-test-go-testcompletereadsthecostandtheservingprovider
+    title: TestCompleteReadsTheCostAndTheServingProvider
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:53.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab4-tools-askbench-cases-go-safetychecks
+    title: safetyChecks
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:56:59.512Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-cases-go-case-safetycheck
+    title: Case.safetyCheck
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:05.456Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-fakeserver-test-go-fakemodel-withcost
+    title: fakeModel.withCost
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:11.371Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-main-go-structuredfor
+    title: structuredFor
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:17.437Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-ab4-tools-askbench-main-go-parsereasoning
+    title: parseReasoning
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:23.323Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-main-go-reasoningof
+    title: reasoningOf
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:29.327Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-measured-test-go-testaprovidercostisreadexactly
+    title: TestAProviderCostIsReadExactly
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:35.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthemeasuredcostisthecostoftherunandofthebudget
+    title: TestTheMeasuredCostIsTheCostOfTheRunAndOfTheBudget
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:40.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthehoststhatservedthecallsarelistedwiththeircounts
+    title: TestTheHostsThatServedTheCallsAreListedWithTheirCounts
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:46.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testacostfromthetokenpricesissaidsowhenthereplyhasnone
+    title: TestACostFromTheTokenPricesIsSaidSoWhenTheReplyHasNone
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:52.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testacostmeasuredonsomecallsismixedandeachcalliscountedbyitssource
+    title: TestACostMeasuredOnSomeCallsIsMixedAndEachCallIsCountedByItsSource
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:57:58.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthebudgetcountsthemeasuredcost
+    title: TestTheBudgetCountsTheMeasuredCost
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:03.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthesafewithqualitybesideit
+    title: TestTheRankingIsByMeasuredCostPer1kQuestionsAmongTheSafeWithQualityBesideIt
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:09.554Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testreasoningispermodelorlabel
+    title: TestReasoningIsPerModelOrLabel
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:15.309Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testbadreasoningentriesareusageerrors
+    title: TestBadReasoningEntriesAreUsageErrors
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:20.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testreasoningisrefusedonahostthatisnotopenrouter
+    title: TestReasoningIsRefusedOnAHostThatIsNotOpenRouter
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:26.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testthereasoningcontrolisintherequestbodyandtheconfigurationhash
+    title: TestTheReasoningControlIsInTheRequestBodyAndTheConfigurationHash
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:31.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-measured-test-go-testamodellistedandroutedrunsonthedefaultroutingtoo
+    title: TestAModelListedAndRoutedRunsOnTheDefaultRoutingToo
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:37.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab4-tools-askbench-modelclient-go-measuredcost
+    title: measuredCost
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:43.279Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-modelclient-go-benchclient
+    title: benchClient
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:49.374Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-reasoning-control-and-default-run
+  - id: SYM-ab4-tools-askbench-report-go-runreport-setproperties
+    title: RunReport.setProperties
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:58:55.472Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-providercount
+    title: ProviderCount
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:01.520Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-per1k
+    title: per1k
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:07.700Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-modelreport-addtotals
+    title: ModelReport.addTotals
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:14.053Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-tallyhosts
+    title: tallyHosts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:20.356Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-costsource
+    title: costSource
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:26.779Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-providercounts
+    title: providerCounts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:32.925Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-casereport-count
+    title: CaseReport.count
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:39.047Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-casereport-setpassall
+    title: CaseReport.setPassAll
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:45.211Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-sourceword
+    title: sourceWord
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:51.358Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-costnote
+    title: costNote
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:59:57.718Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-providerstext
+    title: providersText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:03.966Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-report-go-safetycell
+    title: safetyCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:10.401Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-qualitycell
+    title: qualityCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:16.853Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-report-go-passedcell
+    title: passedCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:23.186Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-runner-go-runreport-addcall
+    title: RunReport.addCall
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:36.530Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-measured
+      - type: implements
+        target: REQ-askbench-measures-cost-exactly
+  - id: SYM-ab4-tools-askbench-scorers-go-callssafe
+    title: callsSafe
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:43.251Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-scorers-go-callcap
+    title: callCap
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:49.956Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-scorers-go-callssafescorer
+    title: callsSafeScorer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:00:56.325Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-ab4-tools-askbench-split-test-go-gradedrun
+    title: gradedRun
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:02.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-verdictof
+    title: verdictOf
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:09.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-failednames
+    title: failedNames
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:15.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-injectionrun
+    title: injectionRun
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:21.828Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-injectionruns
+    title: injectionRuns
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:28.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testaninjectionrunisgradedonsafetyandqualityapart
+    title: TestAnInjectionRunIsGradedOnSafetyAndQualityApart
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:34.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testthesafetychecksofaninjectionarethecallstheadviceandtheecho
+    title: TestTheSafetyChecksOfAnInjectionAreTheCallsTheAdviceAndTheEcho
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:40.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testarefusalisitsownsafetyandananswercasehasnone
+    title: TestARefusalIsItsOwnSafetyAndAnAnswerCaseHasNone
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:47.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-scored
+    title: scored
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:01:53.661Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testanoverrefusingmodelissafeonacaseandnotquality
+    title: TestAnOverRefusingModelIsSafeOnACaseAndNotQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:00.113Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testonerunthatactedonthepayloadbreakssafetypass5notquality
+    title: TestOneRunThatActedOnThePayloadBreaksSafetyPass5NotQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:06.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testananswercasehasnosafetycolumn
+    title: TestAnAnswerCaseHasNoSafetyColumn
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:12.629Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testarefuseeverythingmodeldoesnotlookgood
+    title: TestARefuseEverythingModelDoesNotLookGood
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:19.383Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-checkrankedwithquality
+    title: checkRankedWithQuality
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:25.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testthesummaryshowsbothcolumnsandthetotalssidebyside
+    title: TestTheSummaryShowsBothColumnsAndTheTotalsSideBySide
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:32.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab4-tools-askbench-split-test-go-testaninjectionthatactsonthepayloadfailssafetyandnotqualityendtoend
+    title: TestAnInjectionThatActsOnThePayloadFailsSafetyAndNotQualityEndToEnd
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T17:02:38.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split

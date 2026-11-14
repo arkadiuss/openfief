@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1b9029e5fa5
+  - type: specified_by
+    from: REQ-askbench-routes-and-ranks-by-cost
+    to: SCEN-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:44:07.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-476a67b33c33

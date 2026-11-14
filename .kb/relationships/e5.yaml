@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3469fa1600fb
+  - type: executable_for
+    from: SYM-ab3-internal-modelrouter-app-router-test-go-testrouterservesthestructuredanswerbyamodelwithouttheflagwhentherequestallows
+    to: TEST-models-app-router
+    created_at: 2026-11-14T14:55:08.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-989e6cd840a5

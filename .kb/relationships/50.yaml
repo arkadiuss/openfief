@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecd5f57fe831
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-fakeserver-test-go-kindreply
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T15:00:43.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4cd726ce03e
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-split-test-go-verdictof
+    to: TEST-askbench-split
+    created_at: 2026-11-14T17:01:12.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0903ccd9eeaf

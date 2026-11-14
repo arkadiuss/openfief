@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1edce1291bea
+  - type: covered_by
+    from: SYM-askbench-report-tally-calls
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:35.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52c6499b5ba0
+  - type: implements
+    from: SYM-askbench-report-tally-calls
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:35.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558d00aa0ba8

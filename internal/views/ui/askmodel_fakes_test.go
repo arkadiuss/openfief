@@ -44,8 +44,10 @@ type fakeAskModel struct {
 	availableErr error
 	// requests are the conversations GenerateAsk was sent, tiers included.
 	requests [][]*modelsv1.AskMessage
-	// toolsSeen are the tool names each request offered.
+	// toolsSeen are the tool names each request offered, and schemas the
+	// response schema each carried ("" for none).
 	toolsSeen [][]string
+	schemas   []string
 	// sessions are the session tokens each call carried.
 	sessions []string
 	bearers  []string
@@ -107,7 +109,8 @@ func (f *fakeAskModel) GenerateAsk(_ context.Context, r *connect.Request[modelsv
 		names = append(names, t.GetName())
 	}
 	f.toolsSeen = append(f.toolsSeen, names)
-	next := scriptedReply{text: "done"}
+	f.schemas = append(f.schemas, r.Msg.GetResponseSchemaJson())
+	next := scriptedReply{text: answerText("done")}
 	switch {
 	case f.reply != nil:
 		next = f.reply(r.Msg.GetMessages())
@@ -182,17 +185,38 @@ func browserSetUpAskModel(f *fakeAskModel, tiers string) {
 		f.allowed[t] = true
 	}
 	f.reply = func(msgs []*modelsv1.AskMessage) scriptedReply {
+		// The fake model answers by the question: one that asks for a change is
+		// refused, with commands to ask instead; one that names the fund is
+		// asked about, with the choices; any other reads the allocation.
+		switch question := firstUser(msgs); {
+		case strings.Contains(question, "sell"):
+			return scriptedReply{text: answerJSON(answerKindRefuse, "I can only read, so I can't sell anything.", nil,
+				[]string{"What needs me?", "Allocation by currency"}, nil)}
+		case strings.Contains(question, "fund"):
+			return scriptedReply{text: answerJSON(answerKindClarify, "Which one do you mean?", nil, nil,
+				[]string{"Synthetic brokerage", "Synthetic Fund"})}
+		}
 		for _, m := range msgs {
 			if m.GetMessage().GetRole() != modelsv1.MessageRole_MESSAGE_ROLE_TOOL {
 				continue
 			}
 			if strings.Contains(m.GetMessage().GetContent(), "withheld") {
-				return scriptedReply{text: "I may not read your allocation, so I can't say."}
+				return scriptedReply{text: answerText("I may not read your allocation, so I can't say.")}
 			}
-			return scriptedReply{text: "Most of it is listed.\nThe rest is cash."}
+			return scriptedReply{text: answerText("Most of it is listed.\nThe rest is cash.", "c1")}
 		}
 		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"asset_class"}`)}}
 	}
+}
+
+// firstUser is the first user message of a conversation: the question.
+func firstUser(msgs []*modelsv1.AskMessage) string {
+	for _, m := range msgs {
+		if m.GetMessage().GetRole() == modelsv1.MessageRole_MESSAGE_ROLE_USER {
+			return m.GetMessage().GetContent()
+		}
+	}
+	return ""
 }
 
 // toolCall is a scripted call of a tool.

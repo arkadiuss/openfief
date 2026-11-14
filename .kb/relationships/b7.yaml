@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb70bedc855b
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-firstrune
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:18.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4f0cfa1ffaa
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-firstrune
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:00:18.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c17cb8adda

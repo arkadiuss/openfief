@@ -458,6 +458,33 @@ func TestErrorsNeverQuoteTheRequest(t *testing.T) {
 	}
 }
 
+// TestRequestNeeds checks what a request asks of a model entry: a response
+// schema needs structured output, unless the request allows JSON mode instead,
+// as the Ask box's structured answer does for a model that has no such flag.
+func TestRequestNeeds(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		req  modelrouter.Request
+		want modelrouter.Needs
+	}{
+		{name: "nothing", want: modelrouter.Needs{}},
+		{name: "tools", req: modelrouter.Request{Tools: []modelrouter.Tool{{Name: "t"}}}, want: modelrouter.Needs{Tools: true}},
+		{name: "a schema", req: modelrouter.Request{ResponseSchemaJSON: `{}`}, want: modelrouter.Needs{StructuredOutput: true}},
+		{name: "a schema that allows JSON mode", req: modelrouter.Request{ResponseSchemaJSON: `{}`, JSONModeFallback: true}, want: modelrouter.Needs{}},
+		{name: "the fallback without a schema asks nothing", req: modelrouter.Request{JSONModeFallback: true}, want: modelrouter.Needs{}},
+		{name: "tools and a schema with the fallback", req: modelrouter.Request{Tools: []modelrouter.Tool{{Name: "t"}}, ResponseSchemaJSON: `{}`, JSONModeFallback: true}, want: modelrouter.Needs{Tools: true}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := tt.req.Needs(); got != tt.want {
+				t.Errorf("Needs = %+v, want %+v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestEntryServes(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

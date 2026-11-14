@@ -1175,3 +1175,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45a446ba2810
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askanswer-go-neartargets
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:55:36.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82c47075842e
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askanswer-go-neartargets
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:55:36.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a81868784806

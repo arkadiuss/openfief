@@ -3,9 +3,9 @@ title: A question stops at its rounds, tool calls and output tokens
 status: active
 origin:
   kind: agent
-  ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
-  recorded_at: '2026-11-13T20:00:49.706Z'
+  ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+  recorded_at: '2026-11-14T14:53:01.777Z'
 id: SCEN-ui-ask-model-loop-limits
 type: scenario
 ---
-Given a model that keeps calling tools, when one question runs, then at most five rounds offer tools and one last offers none, at most ten tools run and the calls beyond get a refusal, each call is limited to the output tokens the question has left, no call is made once the 800 are spent, and a limit set in the configuration replaces its default.
+Given a model that keeps calling tools, when one question runs, then at most five rounds offer tools and one last offers none and asks for the structured answer, with one retry of it, at most ten tools run and the calls beyond get a refusal, each call is limited to the output tokens the question has left, no call is made once the 800 are spent, and a limit set in the configuration replaces its default.

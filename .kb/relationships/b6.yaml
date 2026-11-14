@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44ac83b0a22a
+  - type: executable_for
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testaschemawinsoverjsonmode
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T15:00:03.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dd814eba516
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testreasoningispermodelorlabel
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:58:18.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c28e8733fd61

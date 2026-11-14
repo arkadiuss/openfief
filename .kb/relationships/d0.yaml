@@ -937,3 +937,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-128a66cab20d
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-answered
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:55:53.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dddd89de8e3
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-answered
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:55:53.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e34dc2e8c51

@@ -9,7 +9,7 @@ require (
 	github.com/areknoster/hypert v0.51.0
 	github.com/authzed/authzed-go v1.11.0
 	github.com/authzed/grpcutil v0.0.0-20240123194739-2ea1e3d2d98b
-	github.com/datar-psa/goeval v0.1.1-0.20261114073905-618f6a04c840
+	github.com/datar-psa/goeval v0.1.1-0.20261114114639-64d10bf3ced7
 	github.com/go-webauthn/webauthn v0.18.2
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-containerregistry v0.22.1

@@ -853,3 +853,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dfd78a9a01d7
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-testthepromptechoisthenonpublicsentencesandthecanary
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:01:35.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71876ce3de75
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-toolcalls-go-case-expectation
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:02:22.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-967bc41bee0f
+  - type: implements
+    from: SYM-ab3-tools-askbench-toolcalls-go-case-expectation
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:02:22.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f78746710ce
+  - type: implements
+    from: SYM-askbench-report-failure-count
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:39:45.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af173a91c3b8
+  - type: implements
+    from: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    to: REQ-ask-prompt-declines-only-three-things
+    created_at: 2026-11-14T16:55:57.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bd31df711ac
+  - type: covered_by
+    from: SYM-ab4-internal-views-ui-askprompt-go-askdeclineclasses
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T16:55:57.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab59ca458f1
+  - type: implements
+    from: SYM-ab4-tools-askbench-main-go-reasoningof
+    to: REQ-askbench-reasoning-control-and-default-run
+    created_at: 2026-11-14T16:57:32.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b8fbbd841d5
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-main-go-reasoningof
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:32.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f111b13df29
+  - type: executable_for
+    from: SYM-ab4-tools-askbench-measured-test-go-testthehoststhatservedthecallsarelistedwiththeircounts
+    to: TEST-askbench-measured
+    created_at: 2026-11-14T16:57:49.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b99d60d43590

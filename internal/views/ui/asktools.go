@@ -288,6 +288,8 @@ func valueQuery(args string, today kernel.Date) (askQuery, error) {
 // toolResult is a card as the model receives it: the card's data, with
 // nothing the page needs to draw it, such as links, or the question.
 type toolResult struct {
+	// ID is what the model names the card by in its answer.
+	ID    string          `json:"id"`
 	Title string          `json:"title"`
 	Text  string          `json:"text,omitempty"`
 	Rows  []toolResultRow `json:"rows,omitempty"`
@@ -300,9 +302,10 @@ type toolResultRow struct {
 	Figure string `json:"figure,omitempty"`
 }
 
-// cardResult returns card as the JSON text of the tool's result.
-func cardResult(card *answerCard) string {
-	res := toolResult{Title: card.Title, Text: card.Text}
+// cardResult returns card as the JSON text of the tool's result, with the id
+// the model names it by.
+func cardResult(card *answerCard, id string) string {
+	res := toolResult{ID: id, Title: card.Title, Text: card.Text}
 	for _, r := range card.Rows {
 		res.Rows = append(res.Rows, toolResultRow{Label: r.Label, Detail: r.Detail, Figure: r.Figure})
 	}

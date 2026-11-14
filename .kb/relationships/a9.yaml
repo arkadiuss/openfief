@@ -1028,3 +1028,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bd07e913bf5
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-quotedspan
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T13:59:42.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6541c47f152
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-quotedspan
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:42.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3edb23a18081
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-isananswer
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:07.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3029a486634
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-isananswer
+    to: REQ-askbench-grades-by-the-structured-answer
+    created_at: 2026-11-14T15:01:07.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3805558e21
+  - type: implements
+    from: SYM-askbench-report-judge-word
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:40:08.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f54e1bc4169
+  - type: implements
+    from: SYM-askbench-report-limits-report
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:40:14.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15e044936eb1

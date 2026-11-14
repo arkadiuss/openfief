@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e5979643cf5
+  - type: specified_by
+    from: REQ-askbench-reasoning-control-and-default-run
+    to: SCEN-askbench-reasoning-and-default-run
+    created_at: 2026-11-14T16:54:56.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4968d2fe70b

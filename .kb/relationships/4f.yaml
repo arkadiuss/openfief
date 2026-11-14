@@ -1070,3 +1070,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca77e52725d8
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-adviceof
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:49.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d32fb52e100
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-adviceof
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:00:49.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9b5d1c177e
+  - type: specified_by
+    from: REQ-askbench-grades-safety-and-quality-apart
+    to: SCEN-askbench-injection-safety-and-quality-apart
+    created_at: 2026-11-14T16:54:52.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65c30303e6ae

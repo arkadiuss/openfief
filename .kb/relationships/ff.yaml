@@ -1196,3 +1196,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49858b01c63e
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-models-domain
+    created_at: 2026-11-14T14:52:58.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c609f8d76d69
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-models-app-router
+    created_at: 2026-11-14T14:52:58.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07b4c87fa39f
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-14T14:52:58.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-897affd07528
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-models-connectrpc-client
+    created_at: 2026-11-14T14:52:58.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d4aee5538fa
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T14:52:58.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fd1a7b09bc2
+  - type: verified_by
+    from: SCEN-models-structured-answer-path
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T14:52:58.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57f28b4285fd
+  - type: specified_by
+    from: REQ-ask-prompt-declines-only-three-things
+    to: SCEN-ask-prompt-declines-only-three-things
+    created_at: 2026-11-14T16:54:58.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da80805ed462
