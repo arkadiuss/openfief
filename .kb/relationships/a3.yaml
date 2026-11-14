@@ -1399,3 +1399,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce47b8affb5a
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-structured-test-go-testthestrictformatcarriestheschema
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T15:01:58.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4450a9be56e

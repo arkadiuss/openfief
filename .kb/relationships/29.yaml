@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8dec190ca884
+  - type: covered_by
+    from: SYM-ab3-sdk-go-gen-openfief-models-v1-ask-pb-go-generateaskrequest-getresponseschemajson
+    to: TEST-models-connectapi-ask
+    created_at: 2026-11-14T15:00:26.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc3cb479841
+  - type: implements
+    from: SYM-ab3-sdk-go-gen-openfief-models-v1-ask-pb-go-generateaskrequest-getresponseschemajson
+    to: REQ-models-structured-answer-path
+    created_at: 2026-11-14T15:00:26.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-589e478d354d

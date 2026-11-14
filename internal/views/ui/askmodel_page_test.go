@@ -45,7 +45,7 @@ func TestAskBoxAnswersBeyondItsCommandsWithAModel(t *testing.T) {
 			h.askModel.turnOn("T0", "T2")
 			h.askModel.say(
 				scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"currency"}`)}},
-				scriptedReply{text: "Two thirds of it is listed."},
+				scriptedReply{text: answerText("Two thirds of it is listed.", "c1")},
 			)
 			rec := h.asks(t, session, "how diversified am I?")
 			wantStatus(t, rec, http.StatusOK)
@@ -130,7 +130,7 @@ func TestAskBoxWithholdsACardAboveWhatTheRouteAllows(t *testing.T) {
 	h.askModel.denyChecks = map[string]bool{"T0": true}
 	h.askModel.say(
 		scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{}`)}},
-		scriptedReply{text: "I am not allowed to see your allocation."},
+		scriptedReply{text: answerText("I am not allowed to see your allocation.")},
 	)
 	rec := h.asks(t, ownerSession, "how diversified am I?")
 	wantStatus(t, rec, http.StatusOK)
@@ -246,7 +246,7 @@ func TestAskBoxNeverLogsTheQuestionOrAnswerWithAModel(t *testing.T) {
 	h.askModel.turnOn("T0", "T2")
 	h.askModel.say(
 		scriptedReply{calls: []*modelsv1.ToolCall{toolCall("show", `{"name":"secret-question"}`)}},
-		scriptedReply{text: "answer holding secret-answer"},
+		scriptedReply{text: answerText("answer holding secret-answer", "c1")},
 	)
 	rec := h.asks(t, ownerSession, "what is secret-question?")
 	wantStatus(t, rec, http.StatusOK)

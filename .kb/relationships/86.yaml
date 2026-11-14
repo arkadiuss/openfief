@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dabc0e18e60
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:35.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7190271ae0c1
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:57:35.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-748cc5f9b0aa

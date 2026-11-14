@@ -16,7 +16,7 @@ import (
 // runOf returns a run of a case with the calls the model made and the tools of
 // the cards the answer shows.
 func runOf(c *Case, text string, calls []ui.AskRunCall, cardTools ...string) *RunData {
-	d := &RunData{Case: c, Run: ui.AskRun{Answered: true, Text: text, Calls: calls}, Limits: ui.DefaultAskLimits()}
+	d := &RunData{Case: c, Run: ui.AskRun{Answered: true, Text: text, Calls: calls, Kind: "answer"}, Limits: ui.DefaultAskLimits()}
 	for _, tool := range cardTools {
 		d.Run.Cards = append(d.Run.Cards, ui.AskRunCard{Tool: tool})
 	}

@@ -1063,3 +1063,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5a80e567c24
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-structured-test-go-fakemodel-formatsandtools
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T15:01:46.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b9ecdfeafc5

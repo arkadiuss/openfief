@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ecb75b5b101
+  - type: covered_by
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-go-request-setanswerformat
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T14:59:41.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a66ca4126b4
+  - type: implements
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-go-request-setanswerformat
+    to: REQ-models-structured-answer-path
+    created_at: 2026-11-14T14:59:41.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35fe50246458

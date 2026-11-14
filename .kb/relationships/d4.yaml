@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aed19b10e167
+  - type: covered_by
+    from: SYM-ab3-sdk-go-gen-openfief-models-v1-provider-pb-go-generaterequest-getjsonmodefallback
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T15:00:31.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1294cf0aa93b
+  - type: implements
+    from: SYM-ab3-sdk-go-gen-openfief-models-v1-provider-pb-go-generaterequest-getjsonmodefallback
+    to: REQ-models-structured-answer-path
+    created_at: 2026-11-14T15:00:31.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72c5911f693

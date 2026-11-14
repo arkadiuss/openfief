@@ -22,9 +22,11 @@
 <div class="conversation">
   <p class="bubble"><span class="sr-only">You asked: </span>{{.Question}}</p>
   <div class="answer">
-    <div class="answer-head">{{with .Title}}<p class="answer-title">{{.}}</p>{{end}}<span class="muted">{{if .Model}}Answered by {{.Model}} · {{if .Used}}it read only the cards below{{else}}it read nothing from your data{{end}}{{else if .Source}}{{.Source}}{{else}}Answered from your data · no AI model{{end}}</span></div>
+    <div class="answer-head">{{with .Title}}<p class="answer-title">{{.}}</p>{{end}}<span class="muted">{{if .Model}}{{if eq .Kind "answer"}}Answered by {{.Model}}{{else}}From {{.Model}}{{end}} · {{if eq .Kind "clarify"}}it asks which you mean{{else if eq .Kind "refuse"}}it can't do that{{else if .Used}}it read only the cards below{{else}}it read nothing from your data{{end}}{{else if .Source}}{{.Source}}{{else}}Answered from your data · no AI model{{end}}</span></div>
     {{if .Model}}{{with .Text}}<p class="model-text">{{.}}</p>{{end}}{{else}}{{with .Text}}<p>{{.}}</p>{{end}}{{end}}
     {{template "ask-card-body" .}}
+    {{with .Candidates}}<div class="chips ask-choices" role="group" aria-label="Which one do you mean">{{range .}}<a class="chip" href="{{askLink (printf "Show %s" .)}}" hx-get="{{askGet (printf "Show %s" .)}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
+    {{with .Suggestions}}<div class="chips ask-suggestions" role="group" aria-label="Commands you can ask instead">{{range .}}<a class="chip" href="{{askLink .}}" hx-get="{{askGet .}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
     {{with .Used}}<div class="used-cards" role="group" aria-label="Cards the model read">{{range .}}
       <section class="used-card"><p class="answer-title">{{.Title}}</p>{{with .Text}}<p>{{.}}</p>{{end}}{{template "ask-card-body" .}}</section>{{end}}
     </div>{{end}}

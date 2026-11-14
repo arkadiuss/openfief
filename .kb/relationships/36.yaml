@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49558ae86c92
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorers-test-go-kinded
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:35.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db7a3e890880

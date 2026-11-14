@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3edb23a18081
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-isananswer
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:07.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3029a486634
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-isananswer
+    to: REQ-askbench-grades-by-the-structured-answer
+    created_at: 2026-11-14T15:01:07.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3805558e21

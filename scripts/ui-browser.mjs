@@ -9,7 +9,7 @@
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
 // at 360 px the overview's Ask box (D-194) takes "/", answers a suggestion chip, a typed command and one it doesn't
 // understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions; with a
-// model (D-203) it says where a question goes, shows the model's text with the card it read and refuses a question no model may receive;
+// model (D-203) it says where a question goes, shows the model's text with the card it read, a refusal with the box's commands as chips, a clarifying answer with its choices, and refuses a question no model may receive;
 // at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
@@ -229,9 +229,10 @@ async function askBox(browser) {
 }
 
 // askModelBox checks the Ask box with a model (D-203) at phone width, in light and dark: the box says a question beyond its
-// commands goes to the model; the answer shows the model's text and the card it read; a model that may not receive the
-// question's data tier (T0) is refused with nothing sent, and the page says so; a command still answers as before; and none of it scrolls
-// sideways. The model is the fakes' (browserAskModel); it is taken away again at the end.
+// commands goes to the model; the answer shows the model's text and the card it read; a refusal shows the box's commands as
+// chips and a clarifying answer its candidates as choices, each of which the box answers itself at once; a model that may not
+// receive the question's data tier (T0) is refused with nothing sent, and the page says so; a command still answers as before;
+// and none of it scrolls sideways. The model is the fakes' (browserAskModel); it is taken away again at the end.
 async function askModelBox(browser) {
   for (const scheme of ['light', 'dark']) {
     const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: scheme, isMobile: true, hasTouch: true }, true);
@@ -253,6 +254,28 @@ async function askModelBox(browser) {
     await ask('allocation by currency', '#answer:has-text("By currency")');
     check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a command is not answered by the box itself`);
+    // A refusal: the model's words, and the box's commands it offers as chips.
+    await ask('sell everything', '#answer .ask-suggestions .chip');
+    const refusal = await page.textContent('#answer');
+    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 2
+      && (await page.locator('#answer .ask-choices').count()) === 0 && (await page.locator('#answer .used-card').count()) === 0,
+      `phone ${scheme}: a refusal does not show the model's words and two command chips`);
+    check((await page.locator('#answer .ask-suggestions .chip').first().boundingBox()).height >= 44, `phone ${scheme}: a command chip is under 44 px tall`);
+    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refuse.png`), fullPage: true });
+    await page.click('#answer .ask-suggestions .chip:has-text("Allocation by currency")');
+    await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
+    check((await page.textContent('#answer')).includes('By currency'), `phone ${scheme}: a command chip of a refusal is not answered by the box itself`);
+    // A clarifying answer: the model's question, and its candidates as choices that ask the box's own show command.
+    await ask('i mean the fund', '#answer .ask-choices .chip');
+    const clarify = await page.textContent('#answer');
+    check(clarify.includes('Which one do you mean?') && clarify.includes('it asks which you mean') && (await page.locator('#answer .ask-choices .chip').count()) === 2
+      && (await page.locator('#answer .ask-suggestions').count()) === 0,
+      `phone ${scheme}: a clarifying answer does not show its question and two choices`);
+    await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-clarify.png`), fullPage: true });
+    await page.click('#answer .ask-choices .chip:has-text("Synthetic Fund")');
+    await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
+    check((await page.textContent('#answer')).includes('Synthetic Fund') && (await page.locator('#answer .ask-choices').count()) === 0,
+      `phone ${scheme}: a choice of a clarifying answer is not answered by the box itself`);
     await page.goto(base + '/test/ask-model?tiers=T2', { waitUntil: 'networkidle' });
     await ask('how diversified am I', '#answer .answer-title');
     check((await page.textContent('#answer .answer-title')).includes('No model may see this question') && (await page.textContent('#answer')).includes('Nothing was sent')

@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9321b3612bd
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testtheanswerschemaisthestructsfields
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:46.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02a509d8b6d1

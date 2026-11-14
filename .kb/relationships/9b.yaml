@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-302a5425552e
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testaninvalidfinalanswergetsoneretrywiththereason
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:58:38.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0089936f2c47

@@ -101,9 +101,10 @@ func TestCompleteSendsTheChatProtocol(t *testing.T) {
 
 // TestRequestBodyRequiresParametersOnOpenRouterWithTools checks the request
 // body per base URL and per whether it sends tools: only OpenRouter, and only
-// with tools, gets provider.require_parameters, so a host that would drop the
-// tools is never picked; a server that refuses unknown members, such as
-// OpenAI's own, never sees the member.
+// with tools or a response format (TestRequestBodyAsksForTheAnswerFormat), gets
+// provider.require_parameters, so a host that would drop the tools is never
+// picked; a server that refuses unknown members, such as OpenAI's own, never
+// sees the member.
 func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
 	t.Parallel()
 	tools := []Tool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}}
@@ -141,6 +142,84 @@ func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
 				t.Errorf("the body does not encode: %v", err)
 			}
 		})
+	}
+}
+
+// onTheWire returns body as the server decodes it.
+func onTheWire(t *testing.T, body map[string]any) map[string]any {
+	t.Helper()
+	raw, err := json.Marshal(body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var out map[string]any
+	if err := json.Unmarshal(raw, &out); err != nil {
+		t.Fatal(err)
+	}
+	return out
+}
+
+func TestRequestBodyAsksForTheAnswerFormat(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name       string
+		baseURL    string
+		structured bool
+		format     bool
+		want       map[string]any
+		provider   bool
+	}{
+		{name: "strict on OpenRouter", baseURL: "https://openrouter.ai/api/v1", structured: true, format: true, want: strictFormat(), provider: true},
+		{name: "JSON mode on OpenRouter", baseURL: "https://openrouter.ai/api/v1", format: true, want: map[string]any{"type": "json_object"}, provider: true},
+		{name: "strict on OpenAI", baseURL: "https://api.openai.com/v1", structured: true, format: true, want: strictFormat()},
+		{name: "JSON mode on OpenAI", baseURL: "https://api.openai.com/v1", format: true, want: map[string]any{"type": "json_object"}},
+		{name: "no format on OpenRouter", baseURL: "https://openrouter.ai/api/v1"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			req := &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}}
+			if tt.format {
+				req.SetAnswerFormat(json.RawMessage(`{"type":"object"}`), tt.structured)
+			}
+			body := onTheWire(t, (&Client{BaseURL: tt.baseURL}).RequestBody(req))
+			var want any
+			if tt.want != nil {
+				want = tt.want
+			}
+			if diff := cmp.Diff(want, body["response_format"]); diff != "" {
+				t.Errorf("response_format (-want +got):\n%s", diff)
+			}
+			if _, has := body["provider"]; has != tt.provider {
+				t.Errorf("provider member present = %v, want %v", has, tt.provider)
+			}
+		})
+	}
+}
+
+// strictFormat is the response format of strict structured output for an object.
+func strictFormat() map[string]any {
+	return map[string]any{"type": "json_schema", "json_schema": map[string]any{"name": "response", "strict": true, "schema": map[string]any{"type": "object"}}}
+}
+
+func TestASchemaWinsOverJSONMode(t *testing.T) {
+	t.Parallel()
+	body := onTheWire(t, (&Client{BaseURL: "https://api.openai.com/v1"}).RequestBody(&Request{Model: "m", ResponseSchema: json.RawMessage(`{"type":"object"}`), JSONMode: true}))
+	if diff := cmp.Diff(strictFormat(), body["response_format"]); diff != "" {
+		t.Errorf("response_format (-want +got):\n%s", diff)
+	}
+}
+
+func TestSetAnswerFormatSetsOneFormAndClearsTheOther(t *testing.T) {
+	t.Parallel()
+	req := &Request{}
+	req.SetAnswerFormat(json.RawMessage(`{"type":"object"}`), true)
+	if req.JSONMode || len(req.ResponseSchema) == 0 {
+		t.Errorf("strict: %+v", req)
+	}
+	req.SetAnswerFormat(json.RawMessage(`{"type":"object"}`), false)
+	if !req.JSONMode || len(req.ResponseSchema) != 0 {
+		t.Errorf("JSON mode: %+v", req)
 	}
 }
 

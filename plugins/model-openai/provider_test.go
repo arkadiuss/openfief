@@ -95,6 +95,60 @@ func count(v any) int {
 	return len(list)
 }
 
+func TestGenerateAsksForTheStructuredAnswerByTheEntrysFlag(t *testing.T) {
+	t.Parallel()
+	strict := map[string]any{"type": "json_schema", "json_schema": map[string]any{
+		"name": "response", "strict": true, "schema": map[string]any{"type": "object"},
+	}}
+	tests := []struct {
+		name     string
+		model    string
+		fallback bool
+		want     map[string]any
+	}{
+		{name: "an entry with structured output is held to the schema", model: "capable", want: strict},
+		{name: "the fallback changes nothing for it", model: "capable", fallback: true, want: strict},
+		{name: "an entry without it gets JSON mode when the request allows it", model: "plain", fallback: true, want: map[string]any{"type": "json_object"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f, p := newProvider(t, textReply)
+			if _, err := p.Generate(t.Context(), connect.NewRequest(&modelsv1.GenerateRequest{
+				Model: tt.model, Messages: []*modelsv1.Message{userMessage("u")}, ResponseSchemaJson: `{"type":"object"}`, JsonModeFallback: tt.fallback,
+			})); err != nil {
+				t.Fatalf("Generate: %v", err)
+			}
+			if diff := cmp.Diff(tt.want, f.body["response_format"]); diff != "" {
+				t.Errorf("response_format as the provider saw it (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// TestGenerateRefusesAStrictRequestForAnEntryWithoutTheFlagAndAsksNothingForAFallbackAlone
+// checks the two edges: a request that does not allow JSON mode is refused for an
+// entry without structured output, as before, with no call; the fallback with no
+// schema asks for no format at all.
+func TestGenerateRefusesAStrictRequestForAnEntryWithoutTheFlagAndAsksNothingForAFallbackAlone(t *testing.T) {
+	t.Parallel()
+	f, p := newProvider(t, textReply)
+	_, err := p.Generate(t.Context(), connect.NewRequest(&modelsv1.GenerateRequest{
+		Model: "plain", Messages: []*modelsv1.Message{userMessage("u")}, ResponseSchemaJson: `{"type":"object"}`,
+	}))
+	if connect.CodeOf(err) != connect.CodeInvalidArgument || f.path != "" {
+		t.Fatalf("code = %v (%v), call made: %v; want a refusal and no call", connect.CodeOf(err), err, f.path != "")
+	}
+	if _, err := p.Generate(t.Context(), connect.NewRequest(&modelsv1.GenerateRequest{
+		Model: "plain", Messages: []*modelsv1.Message{userMessage("u")}, JsonModeFallback: true,
+	})); err != nil {
+		t.Fatal(err)
+	}
+	if f.body["response_format"] != nil {
+		t.Errorf("response_format = %v, want none", f.body["response_format"])
+	}
+}
+
 func TestGenerateText(t *testing.T) {
 	t.Parallel()
 	_, p := newProvider(t, textReply)

@@ -214,9 +214,9 @@ type numberStyle struct {
 func defaultChecks(kind string) []string {
 	switch kind {
 	case kindAnswer, kindMulti, kindWhy:
-		return []string{checkNumbers, checkEntities}
+		return []string{checkNumbers, checkEntities, checkKindAnswer}
 	case kindNoTool:
-		return []string{checkNoNumbers}
+		return []string{checkNoNumbers, checkKindAnswer}
 	case kindRefusalWrite:
 		return []string{checkRefusalWrite}
 	case kindRefusalAdvice:

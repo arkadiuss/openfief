@@ -26,9 +26,12 @@ type (
 
 // AskModel is the model side of the Ask box's loop for a harness that has no
 // core: it answers one call of the loop with at most maxTokens output tokens.
-// The page reaches its model through the core's router instead (D-203).
+// A call with a schema asks for the structured answer: a JSON text of the JSON
+// Schema, strict structured output for a model that has it and JSON mode for one
+// that has not, which the loop checks. The page reaches its model through the
+// core's router instead (D-203).
 type AskModel interface {
-	Generate(ctx context.Context, msgs []AskMessage, tools []AskTool, maxTokens int64) (AskReply, error)
+	Generate(ctx context.Context, msgs []AskMessage, tools []AskTool, maxTokens int64, schema string) (AskReply, error)
 }
 
 // AskerConfig is what an Asker needs.
@@ -88,8 +91,12 @@ func (askModelFunc) available(context.Context, session) (bool, error) { return t
 
 func (askModelFunc) permits(context.Context, session, []string) (bool, error) { return true, nil }
 
-func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error) {
-	reply, err := f.m.Generate(ctx, msgs, tools, maxTokens)
+func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
+	schema := ""
+	if answer {
+		schema = askAnswerSchemaJSON
+	}
+	reply, err := f.m.Generate(ctx, msgs, tools, maxTokens, schema)
 	if err != nil {
 		return askReply{}, fmt.Errorf("the harness's model: %w", err)
 	}
@@ -99,13 +106,27 @@ func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage
 // AskRun is what one question did: the answer, the cards it read and every
 // call the model made.
 type AskRun struct {
-	// Answered is true when the model wrote the answer; false when the box
-	// gave up (Title says why) and Text is its own explanation.
+	// Answered is true when the model gave a valid structured answer; false
+	// when the box gave up (Title says why) and Text is its own explanation.
 	Answered bool
 	Title    string
 	Text     string
-	// Cards are the cards the answer shows, in the order the tools ran.
+	// Kind is the answer's kind, "answer", "clarify" or "refuse"; empty when
+	// the box gave up. Candidates are a clarifying answer's choices and
+	// Suggestions a refusing answer's commands, as the page shows them.
+	Kind        string
+	Candidates  []string
+	Suggestions []string
+	// SchemaError says why the model's reply was not a structured answer, when
+	// the box gave up for it; Invalid counts the replies that were not one, a
+	// retried one included.
+	SchemaError string
+	Invalid     int
+	// Cards are the cards the answer names, the ones the page shows under it,
+	// in the order it names them; Read are all the cards the model's tool calls
+	// produced, in the order the tools ran.
 	Cards []AskRunCard
+	Read  []AskRunCard
 	// Withheld counts the cards the route's data tiers kept from the model.
 	Withheld int
 	// Calls are the tool calls the model asked for, in order.
@@ -148,18 +169,24 @@ func (a *Asker) Ask(ctx context.Context, question string) (AskRun, error) {
 		return AskRun{}, fmt.Errorf("asking: %w", err)
 	}
 	run := AskRun{
-		Answered: card.Source == "" && len(card.Help) == 0, Title: card.Title, Text: card.Text,
-		Withheld: len(conv.withheld), Rounds: conv.rounds,
-		Cards: make([]AskRunCard, len(conv.used)),
+		Answered: card.Source == "" && len(card.Help) == 0, Title: card.Title, Text: card.Text, Kind: card.Kind,
+		Candidates: card.Candidates, Suggestions: card.Suggestions, Invalid: conv.invalid,
+		Withheld: len(conv.withheld), Rounds: conv.rounds, Read: make([]AskRunCard, len(conv.used)),
+	}
+	if !run.Answered && conv.schemaErr != nil {
+		run.SchemaError = conv.schemaErr.Error()
 	}
 	for i := range conv.used {
-		run.Cards[i] = runCard(&conv.used[i])
+		run.Read[i] = runCard(&conv.used[i])
 	}
 	for _, t := range conv.trace {
 		run.Calls = append(run.Calls, AskRunCall{Name: t.Name, Args: t.Args, Outcome: t.Outcome})
 		if t.Card >= 0 {
-			run.Cards[t.Card].Tool = t.Name
+			run.Read[t.Card].Tool = t.Name
 		}
+	}
+	for _, i := range conv.cited {
+		run.Cards = append(run.Cards, run.Read[i])
 	}
 	return run, nil
 }

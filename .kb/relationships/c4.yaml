@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70cdab1d2a10
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-structured-test-go-testthestructuredflagisintheconfigurationhash
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T15:02:03.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16430c78f47c

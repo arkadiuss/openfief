@@ -56,7 +56,7 @@ func TestACallFailureIsItsStatusAndALabel(t *testing.T) {
 			f := newFakeModel(t)
 			f.status, f.failureBody = tt.status, `{"error":"provider words Bearer `+testKey+`"}`
 			mr := &modelRun{client: newChatClient(http.DefaultClient, f.url, testKey), model: &Model{ID: "m"}, meter: newMeter(decimalOf("1"), 10), now: time.Now}
-			_, err := mr.Generate(t.Context(), nil, nil, 10)
+			_, err := mr.Generate(t.Context(), nil, nil, 10, "")
 			if err == nil || len(mr.calls) != 1 {
 				t.Fatalf("err = %v, calls = %d", err, len(mr.calls))
 			}
@@ -76,7 +76,7 @@ func TestACallThatTimesOutIsLabelledTimeoutWithNoStatus(t *testing.T) {
 	ctx, cancel := context.WithTimeout(t.Context(), 50*time.Millisecond)
 	defer cancel()
 	mr := &modelRun{client: newChatClient(http.DefaultClient, srv.URL, testKey), model: &Model{ID: "m"}, meter: newMeter(decimalOf("1"), 10), now: time.Now}
-	if _, err := mr.Generate(ctx, nil, nil, 10); err == nil {
+	if _, err := mr.Generate(ctx, nil, nil, 10, ""); err == nil {
 		t.Fatal("no error")
 	}
 	if c := mr.calls[0]; c.Status != 0 || c.Label != labelTimeout {

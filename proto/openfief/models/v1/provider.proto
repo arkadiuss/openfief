@@ -150,6 +150,10 @@ message GenerateRequest {
   string response_schema_json = 4;
   // The most tokens the answer may have; zero means the entry's limit.
   int64 max_output_tokens = 5;
+  // With a response schema, an entry without structured output is asked for a
+  // JSON object (JSON mode) instead of being refused, and the caller checks the
+  // reply against the schema.
+  bool json_mode_fallback = 6;
 }
 
 // Usage is what one call used, as the provider reports it.

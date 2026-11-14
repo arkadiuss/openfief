@@ -87,28 +87,6 @@ func offTopicPhrases() []string {
 	}
 }
 
-// clarifyPhrases are the words of a question that asks which one is meant.
-func clarifyPhrases() []string {
-	return []string{
-		"which", "do you mean", "did you mean", "could you specify", "can you specify", "please specify", "clarify", "more specific",
-		"które", "który", "którą", "o który", "chodzi", "doprecyzuj", "uściślij", "podaj",
-	}
-}
-
-// commandWords are, for each command the box suggests (ui.AskCommands, in its
-// order), the words by which an answer is taken to offer it. A test keeps this
-// list as long as the box's.
-func commandWords() [][]string {
-	return [][]string{
-		{"what needs me", "needs me", "needs your attention", "inbox", "co wymaga", "wymaga mojej uwagi", "wymaga uwagi"},
-		{"show", "pokaż", "pokaz"},
-		{"sync", "synchroniz"},
-		{"allocation", "alokacj", "podział", "podzial"},
-		{"performance", "return", "wyniki", "stopa zwrotu", "zwrot"},
-		{"value", "wartość", "wartosc", "worth", "wycen"},
-	}
-}
-
 // causeWords are the causes a model might give for a fall out of its own head
 // rather than from a card: the markets, the news, the economy. An answer that
 // names one a shown card doesn't hold has made a cause up.

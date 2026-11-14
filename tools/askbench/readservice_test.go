@@ -14,9 +14,10 @@ type scripted struct {
 	tool, args string
 }
 
-func (s scripted) Generate(_ context.Context, msgs []ui.AskMessage, _ []ui.AskTool, _ int64) (ui.AskReply, error) {
+func (s scripted) Generate(_ context.Context, msgs []ui.AskMessage, _ []ui.AskTool, _ int64, _ string) (ui.AskReply, error) {
 	if last := msgs[len(msgs)-1]; last.Role == "tool" {
-		return ui.AskReply{Content: "ok", Model: "scripted", OutputTokens: 1}, nil
+		answer := `{"kind":"answer","text":"ok","cards":["c1"],"suggestions":[],"candidates":[]}`
+		return ui.AskReply{Content: answer, Model: "scripted", OutputTokens: 1}, nil
 	}
 	return ui.AskReply{Calls: []ui.AskCall{{ID: "c1", Name: s.tool, Args: s.args}}, Model: "scripted", OutputTokens: 1}, nil
 }

@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47b952300594
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testthepromptsayswhateachfieldisfor
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:59:18.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33bca39fe296
+  - type: executable_for
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testrequestbodyasksfortheanswerformat
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T14:59:52.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34aa4a7e5767

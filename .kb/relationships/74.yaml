@@ -1371,3 +1371,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-930910b7c124
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-scorers-go-suggestscommands
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T15:01:29.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ea81a0542b5
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-suggestscommands
+    to: REQ-askbench-grades-by-the-structured-answer
+    created_at: 2026-11-14T15:01:30.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd018fa28e51

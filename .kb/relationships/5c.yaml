@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd39257555b3
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testparsestructuredanswer
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:57:40.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-accf931ba448

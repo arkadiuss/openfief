@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c77ca4f5edc6
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-structured-test-go-testthedefaultmodelskeeptheirflags
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T15:02:09.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10235fc9e981

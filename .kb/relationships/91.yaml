@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e223f9b66749
+  - type: executable_for
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-onthewire
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T14:59:46.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54782f3cd6ca

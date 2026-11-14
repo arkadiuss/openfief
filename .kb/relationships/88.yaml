@@ -881,3 +881,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-653941c550f3
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askstructured-go-notaname
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:56:55.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d20f3e4908
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-notaname
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-14T14:56:55.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ac4264a4a5f
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testeverycallthatasksfortheansweroffersnotools
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:59:01.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-417b3fed4295

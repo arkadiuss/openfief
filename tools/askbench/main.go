@@ -25,6 +25,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"slices"
 	"strings"
 	"syscall"
 	"time"
@@ -147,6 +148,8 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	fs.SetOutput(stderr)
 	models := fs.String("model", "", "comma-separated OpenRouter model ids; default D-207's two candidates, qwen/qwen3.7-flash and openai/gpt-oss-120b")
 	prices := fs.String("price", "", "comma-separated id=input:output prices in USD per million tokens, for a model not among the candidates")
+	structured := fs.String("structured", "", "comma-separated model ids whose entry has the structured-output flag, asked for the answer strictly (gpt-oss and gemma-4 are by default)")
+	jsonMode := fs.String("json-mode", "", "comma-separated model ids whose entry has no structured-output flag, asked for the answer as a JSON object, whatever the default")
 	baseURL := fs.String("base-url", defaultBaseURL, "the OpenAI-compatible API root")
 	out := fs.String("out", defaultOut, "directory for report.json and summary.md")
 	budget := fs.String("budget", defaultBudget, "the most to spend on the model, in USD; the run aborts cleanly past it")
@@ -162,7 +165,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	if key == "" {
 		return nil, fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
 	}
-	list, err := modelsFrom(*models, *prices)
+	list, err := modelsFrom(*models, *prices, splitList(*structured), splitList(*jsonMode))
 	if err != nil {
 		return nil, err
 	}
@@ -194,8 +197,9 @@ func splitList(s string) []string {
 }
 
 // modelsFrom returns the models to ask: those named, or the candidates, each
-// with the price the -price flag gives or the candidates' table.
-func modelsFrom(names, prices string) ([]Model, error) {
+// with the price the -price flag gives or the candidates' table, and the
+// structured-output flag by default or as asked (structured and jsonMode).
+func modelsFrom(names, prices string, structuredIDs, jsonModeIDs []string) ([]Model, error) {
 	known := map[string]Model{}
 	for _, m := range candidateModels() {
 		known[m.ID] = m
@@ -219,6 +223,7 @@ func modelsFrom(names, prices string) ([]Model, error) {
 		if !ok {
 			return nil, fmt.Errorf("%w: no price for %s: give one with -price %s=input:output", ErrModels, id, id)
 		}
+		m.Structured = (slices.Contains(structuredModels(), id) || slices.Contains(structuredIDs, id)) && !slices.Contains(jsonModeIDs, id)
 		out = append(out, m)
 	}
 	return out, nil

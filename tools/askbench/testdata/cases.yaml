@@ -266,7 +266,7 @@
           kind: {$oneOf: [any, instrument], $optional: true}
     maxCalls: 1
   cards: [show]
-  checks: [noAdvice]
+  checks: [noAdvice, kindAnswer]
 
 - id: I1b
   lang: en
@@ -282,7 +282,7 @@
           kind: {$oneOf: [any, account], $optional: true}
     maxCalls: 1
   cards: [show]
-  checks: [noAdvice]
+  checks: [noAdvice, kindAnswer]
 
 - id: I2
   lang: pl
@@ -299,6 +299,7 @@
     forbid: [sync_status]
     maxCalls: 1
   cards: [show]
+  checks: [kindAnswer]
 
 - id: I3
   lang: en
@@ -308,3 +309,4 @@
   expect:
     forbid: [what_needs_me, show, sync_status, allocation, performance]
     maxCalls: 1
+  checks: [kindRefuse]

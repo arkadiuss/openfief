@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0229674b5003
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askmodel-fakes-test-go-firstuser
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-14T14:56:05.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-095309be31cc

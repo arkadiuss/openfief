@@ -97,6 +97,11 @@ message GenerateAskRequest {
   // The most tokens this call's answer may hold (D-208); zero means the
   // model entry's own limit.
   int64 max_output_tokens = 5;
+  // When set, the message to generate is a JSON text of this JSON Schema: the
+  // Ask box's structured answer. A model whose entry has structured output is
+  // held to the schema; one that has not is asked for a JSON object (JSON mode)
+  // and the caller checks the reply against the schema.
+  string response_schema_json = 6;
 }
 
 message GenerateAskResponse {

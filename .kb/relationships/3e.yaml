@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44080c75d909
+  - type: verified_by
+    from: SCEN-askbench-grades-by-the-structured-answer
+    to: TEST-askbench-structured
+    created_at: 2026-11-14T14:52:59.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-944f13588440
+  - type: verified_by
+    from: SCEN-askbench-grades-by-the-structured-answer
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T14:52:59.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a0f053a1c35

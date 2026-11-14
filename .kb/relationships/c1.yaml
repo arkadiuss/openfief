@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbcc6de41bf6
+  - type: executable_for
+    from: SYM-ab3-internal-views-ui-askstructured-test-go-testtheclientaskstheschemaonlyfortheanswer
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-14T14:59:29.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b5c02c336bb

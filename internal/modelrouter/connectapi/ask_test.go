@@ -332,3 +332,52 @@ func TestCheckAskTiers(t *testing.T) {
 		t.Errorf("the checks wrote audit entries or called a model")
 	}
 }
+
+func TestAskServiceAsksTheStructuredAnswerWithJSONModeAsTheFallback(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name, schema string
+		wantFallback bool
+	}{
+		{name: "a schema is sent with the fallback allowed", schema: `{"type":"object"}`, wantFallback: true},
+		{name: "no schema asks for neither"},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f := newAskFixture(t)
+			if err := f.askWithSchema(tt.schema); err != nil {
+				t.Fatal(err)
+			}
+			if sent := f.provider.requests[0]; sent.ResponseSchemaJSON != tt.schema || sent.JSONModeFallback != tt.wantFallback {
+				t.Errorf("the model got schema %q, fallback %v", sent.ResponseSchemaJSON, sent.JSONModeFallback)
+			}
+		})
+	}
+}
+
+// askWithSchema sends the reader's question with a response schema.
+func (f *askFixture) askWithSchema(schema string) error {
+	_, err := f.client.GenerateAsk(context.Background(), connect.NewRequest(&modelsv1.GenerateAskRequest{
+		Origin: "o", SessionToken: "read", Messages: []*modelsv1.AskMessage{userMessage("T2")}, ResponseSchemaJson: schema,
+	}))
+	if err != nil {
+		return fmt.Errorf("GenerateAsk: %w", err)
+	}
+	return nil
+}
+
+func TestAskServiceRefusesASchemaThatIsNoJSONOrTooLong(t *testing.T) {
+	t.Parallel()
+	for name, schema := range map[string]string{"not JSON": "type object", "too long": `{"x":"` + strings.Repeat("a", 5000) + `"}`} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			f := newAskFixture(t)
+			if err := f.askWithSchema(schema); connect.CodeOf(err) != connect.CodeInvalidArgument {
+				t.Errorf("code = %v, want InvalidArgument", connect.CodeOf(err))
+			}
+			if len(f.provider.requests) != 0 {
+				t.Errorf("a model was called with %d requests", len(f.provider.requests))
+			}
+		})
+	}
+}

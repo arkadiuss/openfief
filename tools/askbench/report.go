@@ -34,7 +34,15 @@ type RunReport struct {
 	BudgetSpent bool `json:"budgetSpent,omitempty"`
 	Answered    bool `json:"answered"`
 	// Answer is the text the model wrote (or the box's own, when it gave up).
-	Answer       string        `json:"answer,omitempty"`
+	Answer string `json:"answer,omitempty"`
+	// Kind, Candidates and Suggestions are the structured answer's other fields;
+	// SchemaError says why the model's reply was not one after its retry, and
+	// Invalid counts the replies that were not one, a retried one included.
+	Kind         string        `json:"kind,omitempty"`
+	Candidates   []string      `json:"candidates,omitempty"`
+	Suggestions  []string      `json:"suggestions,omitempty"`
+	SchemaError  string        `json:"schemaError,omitempty"`
+	Invalid      int           `json:"invalidReplies,omitempty"`
 	Checks       []CheckReport `json:"checks,omitempty"`
 	Calls        []CallReport  `json:"calls,omitempty"`
 	Cards        []string      `json:"cards,omitempty"`
@@ -98,6 +106,7 @@ type CallReport struct {
 // fill records the graded run in the report.
 func (r *RunReport) fill(d *RunData, results []result) {
 	r.Answered, r.Answer, r.ModelCalls = d.Run.Answered, d.Run.Text, len(d.Calls)
+	r.Kind, r.Candidates, r.Suggestions, r.SchemaError, r.Invalid = d.Run.Kind, d.Run.Candidates, d.Run.Suggestions, d.Run.SchemaError, d.Run.Invalid
 	if !d.Run.Answered {
 		r.Answer = d.Run.Title + ": " + d.Run.Text
 	}
@@ -151,10 +160,14 @@ type ConfigReport struct {
 	Model   string `json:"model"`
 	BaseURL string `json:"baseUrl"`
 	// Routing is the provider member the request body carries on this host.
-	Routing      map[string]any `json:"routing"`
-	SystemPrompt string         `json:"systemPrompt"`
-	Tools        []ToolReport   `json:"tools"`
-	Limits       LimitsReport   `json:"limits"`
+	Routing map[string]any `json:"routing"`
+	// StructuredOutput is the model entry's structured-output flag: whether the
+	// answer is asked strictly or as a JSON object; AnswerSchema is its schema.
+	StructuredOutput bool         `json:"structuredOutput"`
+	AnswerSchema     string       `json:"answerSchema"`
+	SystemPrompt     string       `json:"systemPrompt"`
+	Tools            []ToolReport `json:"tools"`
+	Limits           LimitsReport `json:"limits"`
 }
 
 // ToolReport is a tool as the model is told it.
@@ -447,6 +460,7 @@ func failureReasons(r *RunReport) []string {
 func (b *Bench) config(m *Model) (ConfigReport, string, error) {
 	cfg := ConfigReport{
 		Model: m.ID, BaseURL: hostOf(b.opts.BaseURL), Routing: routingProbe(b.opts.BaseURL), SystemPrompt: ui.AskSystemPrompt(b.seed.Today),
+		StructuredOutput: m.Structured, AnswerSchema: ui.AskAnswerSchema(),
 		Limits: LimitsReport{
 			ToolRounds: b.opts.Limits.ToolRounds, ToolCalls: b.opts.Limits.ToolCalls, OutputTokens: b.opts.Limits.OutputTokens,
 			Deadline: b.opts.Limits.Deadline.String(),

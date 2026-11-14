@@ -173,8 +173,8 @@ func TestCardResultCarriesTheDataAndNothingToDrawIt(t *testing.T) {
 		Link: &answerLink{Href: "/?by=currency", Text: "Open the allocation"},
 		Help: knownCommands(),
 	}
-	got := cardResult(&card)
-	want := `{"title":"By currency, gross","text":"Holdings at their stored valuations.","rows":[` +
+	got := cardResult(&card, "c2")
+	want := `{"id":"c2","title":"By currency, gross","text":"Holdings at their stored valuations.","rows":[` +
 		`{"label":"PLN","detail":"66.7%","figure":"1 000,00 PLN"},{"label":"EUR","figure":"500,00 EUR"}]}`
 	if got != want {
 		t.Errorf("cardResult =\n%s\nwant\n%s", got, want)
@@ -184,7 +184,7 @@ func TestCardResultCarriesTheDataAndNothingToDrawIt(t *testing.T) {
 			t.Errorf("the tool result holds %q", leak)
 		}
 	}
-	if got := cardResult(&answerCard{Title: "A <b> & c"}); got != `{"title":"A <b> & c"}` {
+	if got := cardResult(&answerCard{Title: "A <b> & c"}, "c1"); got != `{"id":"c1","title":"A <b> & c"}` {
 		t.Errorf("cardResult escaped HTML: %s", got)
 	}
 }

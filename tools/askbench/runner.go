@@ -190,7 +190,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	run, err := asker.Ask(ctx, t.c.Question)
 	d := &RunData{
 		Case: t.c, Run: run, Calls: mr.calls, Limits: b.opts.Limits, Duration: b.opts.Now().Sub(started),
-		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names,
+		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today,
 	}
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
 	for _, c := range mr.calls {

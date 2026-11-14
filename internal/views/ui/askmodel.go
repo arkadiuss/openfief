@@ -7,7 +7,6 @@ import (
 	"log/slog"
 	"net/http"
 	"slices"
-	"strings"
 	"time"
 	"unicode/utf8"
 
@@ -83,10 +82,18 @@ func (l AskLimits) withDefaults() AskLimits {
 	return l
 }
 
+// The roles of a message of the conversation.
+const (
+	roleSystem    = "system"
+	roleUser      = "user"
+	roleAssistant = "assistant"
+	roleTool      = "tool"
+)
+
 // askMessage is a message of the conversation with the model, with the data
 // tier of what it holds (D-206).
 type askMessage struct {
-	// Role is "system", "user", "assistant" or "tool".
+	// Role is roleSystem, roleUser, roleAssistant or roleTool.
 	Role    string
 	Content string
 	// Calls are the tools an assistant message asked for.
@@ -125,8 +132,10 @@ type askModelPort interface {
 	// tier together, with tools.
 	permits(ctx context.Context, sess session, tiers []string) (bool, error)
 	// generate asks the route's models for the next message, of at most
-	// maxTokens output tokens.
-	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64) (askReply, error)
+	// maxTokens output tokens. With answer set the message is the structured
+	// answer (askAnswerSchemaJSON): strict structured output for a model
+	// whose entry has it, a JSON object (JSON mode) for one that has not.
+	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error)
 }
 
 // toolRunner runs a command as a tool: the commands' own answerer, reading
@@ -180,28 +189,27 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	*conv = askConversation{
 		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
 		msgs: []askMessage{
-			{Role: "system", Content: askSystemPrompt(a.today()), Tier: tierT2},
-			{Role: "user", Content: question, Tier: tierT0},
+			{Role: roleSystem, Content: askSystemPrompt(a.today()), Tier: tierT2},
+			{Role: roleUser, Content: question, Tier: tierT0},
 		},
 	}
 	for round := 1; round <= a.limits.ToolRounds+1; round++ {
 		tools := a.tools
-		if round > a.limits.ToolRounds {
+		final := round > a.limits.ToolRounds
+		if final {
 			tools = nil
 		}
 		if conv.tokens >= a.limits.OutputTokens {
 			return overBudgetAnswer(question), nil
 		}
-		conv.rounds++
-		reply, err := conv.generate(ctx, tools)
+		reply, err := conv.generate(ctx, tools, final)
 		if err != nil {
 			return a.failure(r, question, err)
 		}
-		conv.tokens += reply.OutputTokens
 		if len(reply.Calls) == 0 {
-			return conv.answer(question, &reply), nil
+			return conv.finish(ctx, question, &reply, final)
 		}
-		conv.msgs = append(conv.msgs, askMessage{Role: "assistant", Content: reply.Content, Calls: reply.Calls, Tier: mostSensitive(conv.tiers)})
+		conv.msgs = append(conv.msgs, askMessage{Role: roleAssistant, Content: reply.Content, Calls: reply.Calls, Tier: mostSensitive(conv.tiers)})
 		for _, call := range reply.Calls {
 			if err := conv.callTool(ctx, call); err != nil {
 				return a.failure(r, question, err)
@@ -226,6 +234,11 @@ type askConversation struct {
 	tokens   int64
 	used     []answerCard
 	withheld []withheldCard
+	// cited are the indexes in used of the cards the answer names, in order,
+	// and schemaErr why the last reply was not an answer; for the bench.
+	cited     []int
+	schemaErr error
+	invalid   int
 	// rounds are the calls made to the model so far, and trace the calls it
 	// asked its tools for, in order, for the Ask box bench.
 	rounds int
@@ -252,11 +265,17 @@ type askTrace struct {
 }
 
 // generate asks the router for the next message, offering tools and no more
-// output tokens than the question has left.
-func (c *askConversation) generate(ctx context.Context, tools []askTool) (askReply, error) {
+// output tokens than the question has left, and counts the call and its tokens.
+// With answer set the message is asked as the structured answer.
+func (c *askConversation) generate(ctx context.Context, tools []askTool, answer bool) (askReply, error) {
 	ctx, cancel := context.WithTimeout(ctx, askCallTimeout)
 	defer cancel()
-	return c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens)
+	c.rounds++
+	reply, err := c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens, answer)
+	if err == nil {
+		c.tokens += reply.OutputTokens
+	}
+	return reply, err
 }
 
 // callTool runs one tool call of the model and adds its result to the
@@ -308,7 +327,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	}
 	c.tiers = next
 	c.used = append(c.used, card)
-	c.addResult(&call, callRan, cardResult(&card), tool.Tier)
+	c.addResult(&call, callRan, cardResult(&card, cardID(len(c.used))), tool.Tier)
 	return nil
 }
 
@@ -320,20 +339,89 @@ func (c *askConversation) addResult(call *askCall, outcome, content, tier string
 		card = len(c.used) - 1
 	}
 	c.trace = append(c.trace, askTrace{Name: call.Name, Args: call.Args, Outcome: outcome, Card: card})
-	c.msgs = append(c.msgs, askMessage{Role: "tool", Content: content, CallID: call.ID, Tier: tier})
+	c.msgs = append(c.msgs, askMessage{Role: roleTool, Content: content, CallID: call.ID, Tier: tier})
 }
 
-// answer is the model's final text with the cards it read and those it was
-// refused.
-func (c *askConversation) answer(question string, reply *askReply) answerCard {
-	text := strings.TrimSpace(reply.Content)
-	if text == "" {
-		text = "The model returned no text."
+// finish ends the question with the model's reply, which called no tool: its
+// structured answer when it is one. A reply of a round that offered tools that
+// is not one (a model that answers in plain text) is not an answer yet: the box
+// asks for it once, in a round without tools whose format is the answer's. A
+// reply that is not a valid answer in that round, or any round, gets one retry
+// with the reason, and a second failure ends the question as a card that says
+// the model did not reply in the form the box needs (askSchemaFailure).
+func (c *askConversation) finish(ctx context.Context, question string, reply *askReply, final bool) (answerCard, error) {
+	ans, err := parseStructuredAnswer(reply.Content, len(c.used), c.a.today())
+	if err == nil {
+		return c.answered(question, &ans, reply.Model), nil
 	}
+	if final {
+		c.invalid++
+		c.schemaErr = err
+	}
+	// A reply that was already the final round's has only the retry left.
+	attempts := 2
+	if final {
+		c.retry(reply.Content, err)
+		attempts = 1
+	} else {
+		c.msgs = append(c.msgs,
+			askMessage{Role: roleAssistant, Content: reply.Content, Tier: mostSensitive(c.tiers)},
+			askMessage{Role: roleUser, Content: finalText, Tier: tierT2})
+	}
+	for attempt := range attempts {
+		if c.tokens >= c.a.limits.OutputTokens {
+			return overBudgetAnswer(question), nil
+		}
+		next, err := c.generate(ctx, nil, true)
+		if err != nil {
+			return c.a.failure(c.r, question, err)
+		}
+		ans, perr := parseStructuredAnswer(next.Content, len(c.used), c.a.today())
+		if perr == nil {
+			return c.answered(question, &ans, next.Model), nil
+		}
+		c.schemaErr = perr
+		c.invalid++
+		if attempt < attempts-1 {
+			c.retry(next.Content, perr)
+		}
+	}
+	return askSchemaFailure(question), nil
+}
+
+// retry adds the model's reply that was not an answer and the reason, so its
+// next reply can mend it. The reason is fixed words and never the reply.
+func (c *askConversation) retry(content string, why error) {
+	c.msgs = append(c.msgs,
+		askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)},
+		askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+}
+
+// answered is the answer card of a valid structured answer: its text, the kind,
+// the cards it names among those it read, in the order it names them, the
+// suggestions and the candidates, and the cards the model was refused.
+func (c *askConversation) answered(question string, a *structuredAnswer, model string) answerCard {
+	text := a.Text
 	if utf8.RuneCountInString(text) > maxModelAnswerRunes {
 		text = string([]rune(text)[:maxModelAnswerRunes]) + "…"
 	}
-	return answerCard{Question: question, Text: text, Model: reply.Model, Used: c.used, Withheld: c.withheld}
+	card := answerCard{Question: question, Text: text, Model: model, Kind: a.Kind, Withheld: c.withheld}
+	seen := map[string]bool{}
+	for _, id := range a.Cards {
+		n, _ := cardNumber(id)
+		if !seen[id] {
+			seen[id] = true
+			card.Used = append(card.Used, c.used[n-1])
+			c.cited = append(c.cited, n-1)
+		}
+	}
+	switch a.Kind {
+	case answerKindClarify:
+		card.Candidates = a.Candidates
+	case answerKindRefuse:
+		card.Suggestions = a.Suggestions
+	}
+	return card
 }
 
 // tool returns the tool called name.
@@ -382,6 +470,13 @@ func (a *modelAnswerer) failure(r *http.Request, question string, err error) (an
 	a.log.WarnContext(r.Context(), "ask model call failed", "code", code.String())
 	return modelCard(question, "The model couldn't answer",
 		"Something went wrong asking it. The commands answer from your own record."), nil
+}
+
+// askSchemaFailure is the answer of a model whose reply, after the retry, is not
+// the structured answer the box draws from.
+func askSchemaFailure(question string) answerCard {
+	return modelCard(question, "The model couldn't answer",
+		"It didn't reply in the form the box needs. Try again, or use a command: they answer from your own record.")
 }
 
 // overBudgetAnswer is the answer of a model that spent the question's output

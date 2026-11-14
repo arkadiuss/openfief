@@ -32,6 +32,10 @@ type Model struct {
 	ID          string
 	InputPrice  kernel.Decimal
 	OutputPrice kernel.Decimal
+	// Structured is whether the model's entry has the structured-output flag
+	// (D-205): the structured answer is then asked of it strictly (json_schema),
+	// else as a JSON object (JSON mode) that the loop checks and retries once.
+	Structured bool
 }
 
 // candidateModels are D-207's two candidates for the demo's model, with the
@@ -41,8 +45,21 @@ type Model struct {
 func candidateModels() []Model {
 	return []Model{
 		priced("qwen/qwen3.7-flash", "0.03", "0.13"),
-		priced("openai/gpt-oss-120b", "0.15", "0.60"),
+		structured(priced("openai/gpt-oss-120b", "0.15", "0.60")),
 	}
+}
+
+// structured returns m with the structured-output flag.
+func structured(m Model) Model {
+	m.Structured = true
+	return m
+}
+
+// structuredModels are the models whose entries have the structured-output flag
+// by default: gpt-oss and gemma-4 do on most hosts. -structured and -json-mode
+// set it for others, or take it away.
+func structuredModels() []string {
+	return []string{"openai/gpt-oss-120b", "google/gemma-4-26b-a4b-it", "google/gemma-4-31b-it"}
 }
 
 // priced returns the model with the prices, decimal texts of constants: a price
@@ -152,15 +169,21 @@ type modelRun struct {
 
 var _ ui.AskModel = (*modelRun)(nil)
 
-// Generate sends the conversation to the model and returns its next message.
-func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []ui.AskTool, maxTokens int64) (ui.AskReply, error) {
+// Generate sends the conversation to the model and returns its next message. A
+// call with a schema asks for the structured answer, as the plugin does: strictly
+// when the model's entry has the flag, else as a JSON object.
+func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []ui.AskTool, maxTokens int64, schema string) (ui.AskReply, error) {
 	call := ModelCall{ToolsOffered: len(tools), MaxTokens: maxTokens}
 	if err := r.meter.allow(); err != nil {
 		r.budgetHit = true
 		return ui.AskReply{}, err
 	}
 	started := r.now()
-	reply, err := r.client.Complete(ctx, requestOf(r.model.ID, msgs, tools, maxTokens))
+	req := requestOf(r.model.ID, msgs, tools, maxTokens)
+	if schema != "" {
+		req.SetAnswerFormat(json.RawMessage(schema), r.model.Structured)
+	}
+	reply, err := r.client.Complete(ctx, req)
 	call.Latency = r.now().Sub(started)
 	if err != nil {
 		call.Error = errorClass(err)

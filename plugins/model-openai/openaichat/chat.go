@@ -94,9 +94,23 @@ type Request struct {
 	Model    string
 	Messages []Message
 	Tools    []Tool
-	// ResponseSchema, when set, asks for a JSON answer of this JSON Schema.
+	// ResponseSchema, when set, asks for a JSON answer of this JSON Schema,
+	// strictly; JSONMode asks for a JSON object only (response_format
+	// json_object), for a model that has no structured output. SetAnswerFormat
+	// sets one or the other.
 	ResponseSchema json.RawMessage
+	JSONMode       bool
 	MaxTokens      int64
+}
+
+// SetAnswerFormat asks for a JSON answer of schema: strictly (json_schema) when
+// the model takes structured output, else as a JSON object (JSON mode) that the
+// caller checks against the schema.
+func (r *Request) SetAnswerFormat(schema json.RawMessage, structured bool) {
+	r.ResponseSchema, r.JSONMode = nil, true
+	if structured {
+		r.ResponseSchema, r.JSONMode = schema, false
+	}
 }
 
 // Reply is the part of a completion the plugin reads.
@@ -143,11 +157,14 @@ func (r *Request) body() map[string]any {
 		}
 		body["tools"] = tools
 	}
-	if len(r.ResponseSchema) > 0 {
+	switch {
+	case len(r.ResponseSchema) > 0:
 		body["response_format"] = map[string]any{
 			keyType:       "json_schema",
 			"json_schema": map[string]any{keyName: "response", "strict": true, "schema": r.ResponseSchema},
 		}
+	case r.JSONMode:
+		body["response_format"] = map[string]any{keyType: "json_object"}
 	}
 	if r.MaxTokens > 0 {
 		body["max_tokens"] = r.MaxTokens
@@ -199,14 +216,16 @@ func (c *Client) Complete(ctx context.Context, req *Request) (*Reply, error) {
 const openRouterHost = "openrouter.ai"
 
 // RequestBody returns the JSON object req is sent as. On OpenRouter a
-// request that sends tools also asks `provider.require_parameters`, so the
-// router only picks a host that supports every parameter of the request,
-// tools included: without it a host that silently drops them can answer
-// with no tool call, which the Ask box would read as an answer from data it
-// never read. Host pinning (`order`, `allow_fallbacks`) is not set here.
+// request that sends tools or a response format also asks
+// `provider.require_parameters`, so the router only picks a host that supports
+// every parameter of the request, tools and format included: without it a host
+// that silently drops them can answer with no tool call, which the Ask box
+// would read as an answer from data it never read, or with text that is not the
+// structured answer it asked for. Host pinning (`order`, `allow_fallbacks`) is
+// not set here.
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
-	if len(req.Tools) > 0 && c.onOpenRouter() {
+	if (len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode) && c.onOpenRouter() {
 		body["provider"] = map[string]any{"require_parameters": true}
 	}
 	return body
