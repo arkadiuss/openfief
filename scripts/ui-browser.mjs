@@ -206,7 +206,7 @@ async function askBox(browser) {
   await page.click('.chips .chip >> nth=0');
   await page.waitForSelector('#answer .answer .open', { timeout: 5000 });
   await page.screenshot({ path: path.join(out, 'phone360-light-ask-chip.png'), fullPage: true });
-  for (const [question, expected] of [['allocation by currency', 'By currency'], ['why is xtb failing', 'xtb-main'], ['buy more bonds', "can't answer that yet"]]) {
+  for (const [question, expected] of [['allocation by currency', 'By currency'], ['why is xtb failing', 'the latest with the error class timeout'], ['buy more bonds', "can't answer that yet"]]) {
     await page.fill('#ask-q', question);
     await page.click('.ask-form button[type="submit"]');
     const answered = await page.waitForFunction(

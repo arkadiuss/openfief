@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-309edd2723a7
+  - type: verified_by
+    from: SCEN-ui-ask-sync-answer-error-class
+    to: TEST-ui-ask
+    created_at: 2026-11-14T19:20:03.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317d399ca51b
+  - type: verified_by
+    from: SCEN-ui-ask-sync-answer-error-class
+    to: TEST-ui-home
+    created_at: 2026-11-14T19:20:04.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba283da1fb5b

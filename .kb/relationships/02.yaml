@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-836560b8582c
+  - type: executable_for
+    from: SYM-ab5-internal-views-ui-ask-test-go-testsyncanswersayswhysyncfails
+    to: TEST-ui-ask
+    created_at: 2026-11-14T19:20:27.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79928ebf9b34

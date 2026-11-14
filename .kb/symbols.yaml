@@ -145797,6 +145797,8 @@ symbols:
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-command-answerer-value
     title: commandAnswerer.value
     sourceFile: internal/views/ui/askanswer.go
@@ -146004,11 +146006,15 @@ symbols:
       recorded_at: 2026-11-06T08:22:28.430Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask
+      - type: covered_by
         target: TEST-ui-home
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-sync-status-row
     title: syncStatusRow
     sourceFile: internal/views/ui/askanswer.go
@@ -224977,3 +224983,56 @@ symbols:
         target: TEST-askbench-verdict
       - type: implements
         target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    title: errorClassLabel
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-askanswer-go-failuresummary
+    title: failureSummary
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-askanswer-go-days
+    title: days
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-ask-test-go-testsyncanswersayswhysyncfails
+    title: TestSyncAnswerSaysWhySyncFails
+    status: active
+    sourceFile: internal/views/ui/ask_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask

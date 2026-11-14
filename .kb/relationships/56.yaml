@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f32627aa511e
+  - type: implements
+    from: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    to: REQ-ui-ask-sync-answer-error-class
+    created_at: 2026-11-14T19:20:09.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b3bd0f59288
+  - type: covered_by
+    from: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    to: TEST-ui-ask
+    created_at: 2026-11-14T19:20:09.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec6a0415eb6
