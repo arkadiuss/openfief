@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e5d0d165af9
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-newadmitfixture
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:47:13.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8622e3176dcc

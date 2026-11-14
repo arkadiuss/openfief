@@ -1224,3 +1224,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-734953eb3d28
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-newguardedask
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:35.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ec75539ebe
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask-admit
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:41.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99b9daca9ac4

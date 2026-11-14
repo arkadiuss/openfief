@@ -1441,3 +1441,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bba12fe5e28f
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-blockingproviders
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:01.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-268b789710ec

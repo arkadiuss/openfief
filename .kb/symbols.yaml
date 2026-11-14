@@ -226893,3 +226893,2441 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-demo-secret
+  - id: SYM-m5-cmd-core-guards-go-guardconfig
+    title: guardConfig
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:41:45.743Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-cmd-core-guards-go-guardflags
+    title: guardFlags
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:41:52.251Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-cmd-core-guards-go-guardconfig-validate
+    title: guardConfig.validate
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:41:58.654Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-cmd-core-guards-go-guardconfig-budget
+    title: guardConfig.budget
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:05.266Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-cmd-core-guards-go-guardconfig-limits
+    title: guardConfig.limits
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:12.228Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-cmd-core-guards-go-guardconfig-routerguards
+    title: guardConfig.routerGuards
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:18.911Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-cmd-core-guards-go-guardconfig-proxyoptions
+    title: guardConfig.proxyOptions
+    status: active
+    sourceFile: cmd/core/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:25.690Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-cmd-core-guards-test-go-testguardflags
+    title: TestGuardFlags
+    status: active
+    sourceFile: cmd/core/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:31.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-guards
+  - id: SYM-m5-cmd-core-guards-test-go-testguardconfigbuildstheroutersguardsandtheaskslimits
+    title: TestGuardConfigBuildsTheRoutersGuardsAndTheAsksLimits
+    status: active
+    sourceFile: cmd/core/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:37.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-guards
+  - id: SYM-m5-cmd-core-guards-test-go-testguardconfigproxyoptions
+    title: TestGuardConfigProxyOptions
+    status: active
+    sourceFile: cmd/core/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:44.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-guards
+  - id: SYM-m5-cmd-core-modelrouter-go-modelguardsetup
+    title: modelGuardSetup
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:50.493Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-ask-go-ask-withquestionlimits
+    title: Ask.WithQuestionLimits
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:42:56.892Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ask-go-admitdecision
+    title: AdmitDecision
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:03.310Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ask-go-admission
+    title: Admission
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:10.005Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ask-go-ask-admit
+    title: Ask.Admit
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:16.108Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ask-go-addresskey
+    title: addressKey
+    status: active
+    sourceFile: internal/modelrouter/app/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:22.500Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-guards-go-guards
+    title: Guards
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:28.445Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-go-router-budgetstate
+    title: Router.BudgetState
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:34.494Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-go-router-checkbudget
+    title: Router.checkBudget
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:40.868Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-go-router-recordusage
+    title: Router.recordUsage
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:47.313Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-go-router-entryof
+    title: Router.entryOf
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:53.376Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-go-router-acquire
+    title: Router.acquire
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:43:59.501Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-concurrent-calls
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-decimalof
+    title: decimalOf
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:06.155Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-usd
+    title: usd
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:12.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-fakeusage
+    title: fakeUsage
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:19.528Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-fakeusage-spent
+    title: fakeUsage.Spent
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:26.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-fakeusage-record
+    title: fakeUsage.Record
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:33.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-guardedfixture
+    title: guardedFixture
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:40.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-rebuild
+    title: routerFixture.rebuild
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:46.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-budgetof
+    title: budgetOf
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:53.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesbeforecallingoncethedaysbudgetisspent
+    title: TestRouterRefusesBeforeCallingOnceTheDaysBudgetIsSpent
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:44:59.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testroutercountseveryrolescallsandstartsthenextdayover
+    title: TestRouterCountsEveryRolesCallsAndStartsTheNextDayOver
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:06.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testroutercountsthedayinitszone
+    title: TestRouterCountsTheDayInItsZone
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:12.461Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwithoutabudgetreadsandrecordsnothing
+    title: TestRouterWithoutABudgetReadsAndRecordsNothing
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:19.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testroutercountsanentrywithnopriceasfree
+    title: TestRouterCountsAnEntryWithNoPriceAsFree
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:25.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesacandidatepricedinanothercurrency
+    title: TestRouterRefusesACandidatePricedInAnotherCurrency
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:31.313Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterfailsclosedwhenthedaysusagecannotberead
+    title: TestRouterFailsClosedWhenTheDaysUsageCannotBeRead
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:38.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwithholdsanansweritcannotcount
+    title: TestRouterWithholdsAnAnswerItCannotCount
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:44.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterbudgetkeepstextoutofrecordsanderrors
+    title: TestRouterBudgetKeepsTextOutOfRecordsAndErrors
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:51.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-blockingproviders
+    title: blockingProviders
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:45:57.935Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-blockingproviders-generate
+    title: blockingProviders.Generate
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:05.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-gatedfixture
+    title: gatedFixture
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:13.086Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-generateasync
+    title: routerFixture.generateAsync
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:20.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesathirdcallatonceafterthequeuewait
+    title: TestRouterRefusesAThirdCallAtOnceAfterTheQueueWait
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:27.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterqueuesathirdcallforafreedslot
+    title: TestRouterQueuesAThirdCallForAFreedSlot
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:33.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterreleasestheslotwhenacallfails
+    title: TestRouterReleasesTheSlotWhenACallFails
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:39.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwaitendswiththecallerscontext
+    title: TestRouterWaitEndsWithTheCallersContext
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:45.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwithnolimitoncallsatonceneverwaits
+    title: TestRouterWithNoLimitOnCallsAtOnceNeverWaits
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:51.621Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-fakequestions
+    title: fakeQuestions
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:46:58.228Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-fakequestions-admit
+    title: fakeQuestions.Admit
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:04.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-newadmitfixture
+    title: newAdmitFixture
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:10.997Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitcountsquestionspersessionandtellswhenitresets
+    title: TestAskAdmitCountsQuestionsPerSessionAndTellsWhenItResets
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:16.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitaddresskeys
+    title: TestAskAdmitAddressKeys
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:22.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitwithanunknownaddressstilllimitsthesession
+    title: TestAskAdmitWithAnUnknownAddressStillLimitsTheSession
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:29.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitsaysthebudgetisspentbeforecountingaquestion
+    title: TestAskAdmitSaysTheBudgetIsSpentBeforeCountingAQuestion
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:35.243Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitwithnolimitsallowsandcountsnothing
+    title: TestAskAdmitWithNoLimitsAllowsAndCountsNothing
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:41.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitrefusesaninvalidsessionandfailsclosedonstoreerrors
+    title: TestAskAdmitRefusesAnInvalidSessionAndFailsClosedOnStoreErrors
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:48.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-ports-go-usagerecord
+    title: UsageRecord
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:47:54.422Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-ports-go-usagestore
+    title: UsageStore
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:00.522Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-ports-go-questionasked
+    title: QuestionAsked
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:06.744Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ports-go-questionsubject
+    title: QuestionSubject
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:13.028Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ports-go-questionruling
+    title: QuestionRuling
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:18.822Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-ports-go-questionstore
+    title: QuestionStore
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:25.071Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-router-go-refusalclass
+    title: refusalClass
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:31.318Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budget
+    title: Budget
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:37.351Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-newbudget
+    title: NewBudget
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:43.407Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budget-enabled
+    title: Budget.Enabled
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:49.345Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budget-exceeded
+    title: Budget.Exceeded
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:48:55.325Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budgetspenterror
+    title: BudgetSpentError
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:01.719Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-error
+    title: BudgetSpentError.Error
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:08.221Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-unwrap
+    title: BudgetSpentError.Unwrap
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:14.577Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-callcost
+    title: CallCost
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:21.402Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-budget-go-budgetday
+    title: BudgetDay
+    status: active
+    sourceFile: internal/modelrouter/budget.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:27.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-go-askservice-admitaskquestion
+    title: askService.AdmitAskQuestion
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:33.961Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof
+    title: usageOf
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:40.350Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof-spent
+    title: usageOf.Spent
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:46.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof-record
+    title: usageOf.Record
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:53.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-questionsof
+    title: questionsOf
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:49:59.635Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-questionsof-admit
+    title: questionsOf.Admit
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:06.160Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-slowprovider
+    title: slowProvider
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:12.418Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-slowprovider-generate
+    title: slowProvider.Generate
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:18.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask
+    title: guardedAsk
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:25.639Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-newguardedask
+    title: newGuardedAsk
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:32.379Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask-admit
+    title: guardedAsk.admit
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:38.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask-generate
+    title: guardedAsk.generate
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:44.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-budgetof
+    title: budgetOf
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:51.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testadmitaskquestionbydecision
+    title: TestAdmitAskQuestionByDecision
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:50:58.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testgenerateaskrefusedbythebudgetsayssoandwhen
+    title: TestGenerateAskRefusedByTheBudgetSaysSoAndWhen
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:04.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testgenerateaskrefusedasbusywhenthecallsatoncearetaken
+    title: TestGenerateAskRefusedAsBusyWhenTheCallsAtOnceAreTaken
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:11.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-decimal
+    title: decimal
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:17.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-currency
+    title: currency
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:23.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testcallcostpricesinputandoutputtokenspermillion
+    title: TestCallCostPricesInputAndOutputTokensPerMillion
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:29.770Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testbudgetexceededatthecap
+    title: TestBudgetExceededAtTheCap
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:36.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testnewbudget
+    title: TestNewBudget
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:43.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testbudgetdayendsatlocalmidnight
+    title: TestBudgetDayEndsAtLocalMidnight
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:49.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testbudgetspenterroriserrbudgetspent
+    title: TestBudgetSpentErrorIsErrBudgetSpent
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:51:56.812Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testquestionlimitsvalidate
+    title: TestQuestionLimitsValidate
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:04.341Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-guards-test-go-testdecidequestion
+    title: TestDecideQuestion
+    status: active
+    sourceFile: internal/modelrouter/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:11.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-domain-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-store-spent
+    title: Store.Spent
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:19.693Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-store-record
+    title: Store.Record
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:26.511Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-store-admit
+    title: Store.Admit
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:33.103Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-addresskey
+    title: addressKey
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:39.603Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-locksubject
+    title: lockSubject
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:46.092Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-questiontimes
+    title: questionTimes
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:52.557Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-guardsday
+    title: guardsDay
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:52:58.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-guardsdecimal
+    title: guardsDecimal
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:05.521Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-guardscurrency
+    title: guardsCurrency
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:11.934Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testusagesumsthedayscostspercurrencyandsurvivesanewstore
+    title: TestUsageSumsTheDaysCostsPerCurrencyAndSurvivesANewStore
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:17.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testusagerecordscallsatthesamemomentwithoutlosingany
+    title: TestUsageRecordsCallsAtTheSameMomentWithoutLosingAny
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:24.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitcountspersessionandperaddressandsayswhenitresets
+    title: TestAdmitCountsPerSessionAndPerAddressAndSaysWhenItResets
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:30.882Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitletsexactlythelimitthroughwhenquestionsarriveatonce
+    title: TestAdmitLetsExactlyTheLimitThroughWhenQuestionsArriveAtOnce
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:37.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitkeepsonlyasaltedhashoftheaddressandforgetsoldquestions
+    title: TestAdmitKeepsOnlyASaltedHashOfTheAddressAndForgetsOldQuestions
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:43.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-questions-go-questionlimits
+    title: QuestionLimits
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:49.655Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-questionlimits-enabled
+    title: QuestionLimits.Enabled
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:53:55.855Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-questionlimits-validate
+    title: QuestionLimits.Validate
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:02.244Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-questionverdict
+    title: QuestionVerdict
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:08.778Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-decidequestion
+    title: DecideQuestion
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:15.564Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig
+    title: ClientIPConfig
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:22.510Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-parseclientipconfig
+    title: ParseClientIPConfig
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:29.333Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-parseproxy
+    title: parseProxy
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:35.756Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-validheadername
+    title: validHeaderName
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:42.091Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig-resolve
+    title: ClientIPConfig.Resolve
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:48.872Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig-rightmostuntrusted
+    title: ClientIPConfig.rightmostUntrusted
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:54:55.479Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig-trusts
+    title: ClientIPConfig.trusts
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:02.060Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-go-peeraddr
+    title: peerAddr
+    status: active
+    sourceFile: internal/views/browserproxy/clientip.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:08.477Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testparseclientipconfig
+    title: TestParseClientIPConfig
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:14.579Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testresolvetheclientaddress
+    title: TestResolveTheClientAddress
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:20.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-mustconfig
+    title: mustConfig
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:26.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-proxiedto
+    title: proxiedTo
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:33.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testproxyhandstheplugintheaddressitfoundandnoothervalue
+    title: TestProxyHandsThePluginTheAddressItFoundAndNoOtherValue
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:39.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testproxywithturnstileallowscloudflaresscriptandframeandnothingelse
+    title: TestProxyWithoutTurnstileKeepsTheStrictPolicy
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:45.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-proxy-go-option
+    title: Option
+    status: active
+    sourceFile: internal/views/browserproxy/proxy.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:52.149Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-proxy-go-withclientip
+    title: WithClientIP
+    status: active
+    sourceFile: internal/views/browserproxy/proxy.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:55:59.436Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-proxy-go-withturnstile
+    title: WithTurnstile
+    status: active
+    sourceFile: internal/views/browserproxy/proxy.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:05.888Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-turnstile-csp
+  - id: SYM-m5-internal-views-browserproxy-proxy-go-proxy-setclientip
+    title: Proxy.setClientIP
+    status: active
+    sourceFile: internal/views/browserproxy/proxy.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:12.420Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+  - id: SYM-m5-internal-views-browserproxy-proxy-go-securityheaderswith
+    title: SecurityHeadersWith
+    status: active
+    sourceFile: internal/views/browserproxy/proxy.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:19.375Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-browserproxy-clientip
+      - type: implements
+        target: REQ-views-turnstile-csp
+  - id: SYM-m5-internal-views-ui-askguards-go-admitkind
+    title: admitKind
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:26.002Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-askadmission
+    title: askAdmission
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:32.484Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-clientaddress
+    title: clientAddress
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:38.984Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-humanwait
+    title: humanWait
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:44.956Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-resetsphrase
+    title: resetsPhrase
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:50.871Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-budgetspentanswer
+    title: budgetSpentAnswer
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:56:57.789Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-sessionlimitanswer
+    title: sessionLimitAnswer
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:04.516Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-addresslimitanswer
+    title: addressLimitAnswer
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:11.327Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-busyanswer
+    title: busyAnswer
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:19.157Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-admissionanswer
+    title: admissionAnswer
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:28.243Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-go-refusedbyaguard
+    title: refusedByAGuard
+    status: active
+    sourceFile: internal/views/ui/askguards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:36.918Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testhumanwaitroundsupandspeaksofhoursfromtwo
+    title: TestHumanWaitRoundsUpAndSpeaksOfHoursFromTwo
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:44.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testadmissionanswereachrefusalsayswhyandwhenandkeepsthecommands
+    title: TestAdmissionAnswerEachRefusalSaysWhyAndWhenAndKeepsTheCommands
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:52.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testaskboxbudgetandlimitsaresaidandcommandsstillwork
+    title: TestAskBoxBudgetAndLimitsAreSaidAndCommandsStillWork
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:57:58.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testaskboxasksforadmissiononceperquestionwiththebrowsersaddress
+    title: TestAskBoxAsksForAdmissionOncePerQuestionWithTheBrowsersAddress
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:05.191Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testaskboxwhenthecorecannotadmitfallsbacktothecommands
+    title: TestAskBoxWhenTheCoreCannotAdmitFallsBackToTheCommands
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:11.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askguards-test-go-testaskboxguardrefusalsmidquestionaresaid
+    title: TestAskBoxGuardRefusalsMidQuestionAreSaid
+    status: active
+    sourceFile: internal/views/ui/askguards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:18.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askmodel-go-modelanswerer-clock
+    title: modelAnswerer.clock
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:25.131Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askmodel-fakes-test-go-fakeaskmodel-admitaskquestion
+    title: fakeAskModel.AdmitAskQuestion
+    status: active
+    sourceFile: internal/views/ui/askmodel_fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:31.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askmodel-test-go-scriptedport-admit
+    title: scriptedPort.admit
+    status: active
+    sourceFile: internal/views/ui/askmodel_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:38.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-guards
+  - id: SYM-m5-internal-views-ui-askmodelclient-go-askmodelclient-admit
+    title: askModelClient.admit
+    status: active
+    sourceFile: internal/views/ui/askmodelclient.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:45.366Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-internal-views-ui-askrun-go-askmodelfunc-admit
+    title: askModelFunc.admit
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:52.175Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-plugins-ui-config-go-rawconfig
+    title: rawConfig
+    status: active
+    sourceFile: plugins/ui/config.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:58:59.081Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-config
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-m5-plugins-ui-config-go-rawconfig-asklimits
+    title: rawConfig.askLimits
+    status: active
+    sourceFile: plugins/ui/config.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:05.772Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-config
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-m5-plugins-ui-config-test-go-testasklimitsfromconfig
+    title: TestAskLimitsFromConfig
+    status: active
+    sourceFile: plugins/ui/config_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:12.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-config
+  - id: SYM-m5-plugins-ui-config-test-go-testasklimitsdefaultsared208s
+    title: TestAskLimitsDefaultsAreD208s
+    status: active
+    sourceFile: plugins/ui/config_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:18.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-config
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission
+    title: AskAdmission
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:24.029Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enum
+    title: AskAdmission.Enum
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:30.596Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-string
+    title: AskAdmission.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:37.406Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-descriptor
+    title: AskAdmission.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:44.702Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-type
+    title: AskAdmission.Type
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:51.843Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-number
+    title: AskAdmission.Number
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T20:59:58.989Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enumdescriptor
+    title: AskAdmission.EnumDescriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:05.777Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest
+    title: AdmitAskQuestionRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:11.492Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-reset
+    title: AdmitAskQuestionRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:18.167Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-string
+    title: AdmitAskQuestionRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:24.433Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-protomessage
+    title: AdmitAskQuestionRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:30.739Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-protoreflect
+    title: AdmitAskQuestionRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:37.106Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-descriptor
+    title: AdmitAskQuestionRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:43.567Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getorigin
+    title: AdmitAskQuestionRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:49.868Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getsessiontoken
+    title: AdmitAskQuestionRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:00:56.150Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getclientaddress
+    title: AdmitAskQuestionRequest.GetClientAddress
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:02.447Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse
+    title: AdmitAskQuestionResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:08.122Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-reset
+    title: AdmitAskQuestionResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:14.730Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-string
+    title: AdmitAskQuestionResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:21.076Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-protomessage
+    title: AdmitAskQuestionResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:27.408Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-protoreflect
+    title: AdmitAskQuestionResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:34.094Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-descriptor
+    title: AdmitAskQuestionResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:40.418Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-getadmission
+    title: AdmitAskQuestionResponse.GetAdmission
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:46.690Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-getresetsat
+    title: AdmitAskQuestionResponse.GetResetsAt
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/ask.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:53.133Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-modelsv1connect-ask-connect-go-askmodelserviceclient-admitaskquestion
+    title: askModelServiceClient.AdmitAskQuestion
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/modelsv1connect/ask.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:01:59.715Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-sdk-go-gen-openfief-models-v1-modelsv1connect-ask-connect-go-unimplementedaskmodelservicehandler-admitaskquestion
+    title: UnimplementedAskModelServiceHandler.AdmitAskQuestion
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/modelsv1connect/ask.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:02:06.067Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-ask-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-app-guards-go-budgetstatus
+    title: BudgetStatus
+    status: active
+    sourceFile: internal/modelrouter/app/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:43:30.576Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-wantonerefusalofclassbudget
+    title: routerFixture.wantOneRefusalOfClassBudget
+    status: active
+    sourceFile: internal/modelrouter/app/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:43:36.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-guards
+  - id: SYM-m5-internal-modelrouter-app-router-go-router-answered
+    title: Router.answered
+    status: active
+    sourceFile: internal/modelrouter/app/router.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:43:43.095Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-guards
+      - type: implements
+        target: REQ-models-daily-budget
+  - id: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testadmitaskquestionofnosessionisunauthenticated
+    title: TestAdmitAskQuestionOfNoSessionIsUnauthenticated
+    status: active
+    sourceFile: internal/modelrouter/connectapi/ask_guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:43:49.217Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-ask-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-admitin
+    title: admitIn
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:43:55.238Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-subjectquery
+    title: subjectQuery
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:01.270Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-go-rule
+    title: rule
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:07.072Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-wantaddresseskeyedashashes
+    title: wantAddressesKeyedAsHashes
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:12.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-testthemigrationmakesonesalthoweveroftenitruns
+    title: TestTheMigrationMakesOneSaltHoweverOftenItRuns
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:19.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-postgres-guards-test-go-addresskeysbysession
+    title: addressKeysBySession
+    status: active
+    sourceFile: internal/modelrouter/postgres/guards_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:25.813Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-guards
+  - id: SYM-m5-internal-modelrouter-questions-go-questionsinday
+    title: questionsInDay
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:31.753Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-questionwindow
+    title: questionWindow
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:37.638Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-modelrouter-questions-go-questionwindow-reacheduntil
+    title: questionWindow.reachedUntil
+    status: active
+    sourceFile: internal/modelrouter/questions.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:44.176Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-domain-guards
+      - type: implements
+        target: REQ-models-ask-question-limits
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-proxied
+    title: proxied
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:44:49.743Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testproxywithturnstileallowscloudflaresscriptandframeonitspagesandrefusals
+    title: TestProxyWithTurnstileAllowsCloudflaresScriptAndFrameOnItsPagesAndRefusals
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:51:03.991Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-testturnstilepolicynamesonehostandnoloosekeyword
+    title: TestTurnstilePolicyNamesOneHostAndNoLooseKeyword
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:45:01.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-guard
+    title: routedAnswerer.guard
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:45:07.046Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-guards
+      - type: implements
+        target: REQ-ui-ask-guard-messages
+  - id: SYM-m5-plugins-ui-config-go-rawconfig-deadline
+    title: rawConfig.deadline
+    status: active
+    sourceFile: plugins/ui/config.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:45:12.854Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-config
+      - type: implements
+        target: REQ-ui-ask-model-loop-limits
+  - id: SYM-m5-cmd-core-frontdoor-go-core-putfrontdoor
+    title: core.putFrontDoor
+    status: active
+    sourceFile: cmd/core/frontdoor.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T21:51:23.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-guards
+      - type: implements
+        target: REQ-views-client-address-trusted-proxy
+      - type: implements
+        target: REQ-views-turnstile-csp
+  - id: SYM-m5-internal-views-browserproxy-clientip-test-go-wantpolicyonpagesandrefusals
+    title: wantPolicyOnPagesAndRefusals
+    status: active
+    sourceFile: internal/views/browserproxy/clientip_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:22:16.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browserproxy-clientip

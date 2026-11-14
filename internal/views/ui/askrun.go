@@ -91,6 +91,11 @@ func (askModelFunc) available(context.Context, session) (bool, error) { return t
 
 func (askModelFunc) permits(context.Context, session, []string) (bool, error) { return true, nil }
 
+// admit lets every question go: a harness has no budget and no limit.
+func (askModelFunc) admit(context.Context, session, string) (askAdmission, error) {
+	return askAdmission{Kind: admitAllowed}, nil
+}
+
 func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
 	schema := ""
 	if answer {

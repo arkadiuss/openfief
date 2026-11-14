@@ -30,6 +30,10 @@ type Router struct {
 	attention AttentionRaiser
 	callIDs   CallIDs
 	now       func() time.Time
+	guards    Guards
+	// gate holds a token for each call of the Ask box's role in flight; nil
+	// when the guards set no limit on them.
+	gate chan struct{}
 
 	mu       sync.Mutex
 	catalogs map[string]catalog
@@ -55,14 +59,23 @@ type RouterPorts struct {
 	CallIDs CallIDs
 	// Now reads the time.
 	Now func() time.Time
+	// Guards are D-208's limits on the calls; the zero Guards limit nothing.
+	Guards Guards
 }
 
 // NewRouter returns a router over ports.
 func NewRouter(p *RouterPorts) *Router {
-	return &Router{
+	r := &Router{
 		settings: p.Settings, providers: p.Providers, audit: p.Audit, attention: p.Attention, callIDs: p.CallIDs, now: p.Now,
-		catalogs: map[string]catalog{},
+		guards: p.Guards, catalogs: map[string]catalog{},
 	}
+	if r.guards.Zone == nil {
+		r.guards.Zone = time.UTC
+	}
+	if r.guards.AskCalls > 0 {
+		r.gate = make(chan struct{}, r.guards.AskCalls)
+	}
+	return r
 }
 
 // Generate asks the models of role's route for an answer to req, on behalf
@@ -74,6 +87,15 @@ func NewRouter(p *RouterPorts) *Router {
 // provider. A request with an untagged piece of data, or for which no model
 // of the route is allowed for every tier it holds, is refused the same way
 // (modelrouter.ErrUntagged, modelrouter.ErrDataTierDenied, modelrouter.ErrNoCapableModel).
+//
+// D-208's guards come next, before any call and each recorded as a refusal
+// whose entry names its class: a day whose calls have cost the budget's cap
+// (a *modelrouter.BudgetSpentError, which is modelrouter.ErrBudgetSpent), a
+// candidate priced in another currency than the cap's
+// (modelrouter.ErrUnpriceable), and, for the Ask box's role, a wait for a free
+// one of its calls at once that ran out (ErrBusy). Each answered call adds
+// what it cost to the day, and an answer whose cost can't be recorded is
+// withheld (ErrUsageUnavailable).
 //
 // A call is two audit entries under one call ID (D-211). Before each call
 // the router writes the entry "sent"; if that fails the call is not made and
@@ -109,6 +131,17 @@ func (r *Router) Generate(ctx context.Context, role modelrouter.Role, actor Acto
 	if err != nil {
 		return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
 	}
+	if guardErr := r.checkBudget(ctx, plan.Candidates); guardErr != nil {
+		return modelrouter.Result{}, r.refuse(ctx, role, actor, guardErr)
+	}
+	release, err := r.acquire(ctx, role)
+	if err != nil {
+		if errors.Is(err, ErrBusy) {
+			return modelrouter.Result{}, r.refuse(ctx, role, actor, err)
+		}
+		return modelrouter.Result{}, err // the caller gave up while waiting
+	}
+	defer release()
 	return r.try(ctx, role, actor, plan.Candidates, req)
 }
 
@@ -187,11 +220,7 @@ func (r *Router) attempt(ctx context.Context, role modelrouter.Role, actor Actor
 	}
 	res, callErr := r.providers.Generate(ctx, m.Instance, m.Model, req)
 	if callErr == nil {
-		res.Model = m
-		if resErr := r.result(ctx, &sent, OutcomeOK, ""); resErr != nil {
-			return modelrouter.Result{}, ClassInternal, fmt.Errorf("%w: %w", ErrAuditUnavailable, resErr)
-		}
-		return res, "", nil
+		return r.answered(ctx, &sent, &res)
 	}
 	class := classify(callErr)
 	err := fmt.Errorf("model %s: %w", m, callErr)
@@ -204,6 +233,26 @@ func (r *Router) attempt(ctx context.Context, role modelrouter.Role, actor Actor
 		}
 	}
 	return modelrouter.Result{}, class, err
+}
+
+// answered ends a call a model answered: its cost goes to the day's budget, then
+// the entry of its result is written. A call that can't be counted, or whose
+// entry can't be written, withholds its answer.
+func (r *Router) answered(ctx context.Context, sent *CallSent, res *modelrouter.Result) (modelrouter.Result, ErrorClass, error) {
+	res.Model = sent.Model
+	if usageErr := r.recordUsage(ctx, sent.Model, res); usageErr != nil {
+		// The call was made and can't be counted: the answer is withheld
+		// like one whose result entry can't be written.
+		err := fmt.Errorf("model %s: %w", sent.Model, usageErr)
+		if resErr := r.result(ctx, sent, OutcomeFailed, ClassInternal); resErr != nil {
+			err = fmt.Errorf("%w (the failure could not be audited: %w)", err, resErr)
+		}
+		return modelrouter.Result{}, ClassInternal, err
+	}
+	if resErr := r.result(ctx, sent, OutcomeOK, ""); resErr != nil {
+		return modelrouter.Result{}, ClassInternal, fmt.Errorf("%w: %w", ErrAuditUnavailable, resErr)
+	}
+	return *res, "", nil
 }
 
 // classify returns the error class of a failed call, by the error's kind and
@@ -246,11 +295,27 @@ func (r *Router) refuse(ctx context.Context, role modelrouter.Role, actor Actor,
 	if idErr != nil {
 		return fmt.Errorf("%w (the refusal could not be audited: %w)", err, idErr)
 	}
-	res := CallResult{At: r.now(), Actor: actor, Role: role, CallID: id, Outcome: OutcomeRefused}
+	res := CallResult{At: r.now(), Actor: actor, Role: role, CallID: id, Outcome: OutcomeRefused, Class: refusalClass(err)}
 	if auditErr := r.audit.RecordResult(ctx, &res); auditErr != nil {
 		return fmt.Errorf("%w (the refusal could not be audited: %w)", err, auditErr)
 	}
 	return err
+}
+
+// refusalClass is the class a refusal's entry names when the refusal is one of
+// the guards' (D-208): the budget, a call that can't be priced, the calls at
+// once, or a day's usage that can't be read. The refusals of the switch, the
+// toggles and the data tiers name none.
+func refusalClass(err error) ErrorClass {
+	switch {
+	case errors.Is(err, modelrouter.ErrBudgetSpent), errors.Is(err, modelrouter.ErrUnpriceable):
+		return ClassBudget
+	case errors.Is(err, ErrBusy):
+		return ClassBusy
+	case errors.Is(err, ErrUsageUnavailable):
+		return ClassInternal
+	}
+	return ""
 }
 
 // result appends the entry that says how the call sent ended.

@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba44e11140ff
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwaitendswiththecallerscontext
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:48.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-343bf0440cd5

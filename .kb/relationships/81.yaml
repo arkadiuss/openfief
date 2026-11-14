@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffe35856dccb
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterbudgetkeepstextoutofrecordsanderrors
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:45:54.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62cac5c1bf51

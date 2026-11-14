@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ca90f0f4c86
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitcountspersessionandperaddressandsayswhenitresets
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:33.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672539e6aa56

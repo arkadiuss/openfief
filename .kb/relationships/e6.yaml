@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcb5edcbea50
+  - type: specified_by
+    from: REQ-models-daily-budget
+    to: SCEN-models-daily-budget
+    created_at: 2026-11-14T20:38:02.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da8e97df841e

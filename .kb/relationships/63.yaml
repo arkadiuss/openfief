@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e42a83d501b8
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-testparseclientipconfig
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:17.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a23c1d52d2

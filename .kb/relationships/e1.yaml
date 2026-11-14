@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f227c070b0
+  - type: verified_by
+    from: SCEN-views-client-address-trusted-proxy
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:38:07.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1088b9bccbfc
+  - type: verified_by
+    from: SCEN-views-client-address-trusted-proxy
+    to: TEST-core-guards
+    created_at: 2026-11-14T20:38:07.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de38ee09fccc
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-admissionanswer
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:57:32.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f01bebcfd099
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-admissionanswer
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:32.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d801927d8166

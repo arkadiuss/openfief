@@ -1203,3 +1203,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57dfe03a6a01
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-unwrap
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:49:17.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ae021ee3e08
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-unwrap
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:49:17.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93d5c700ed5b
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enumdescriptor
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:08.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62b7f0b3b56e
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enumdescriptor
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:08.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41b1a3539cf4

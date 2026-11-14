@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d8c9941c8d3
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-guardsdecimal
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:08.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9507be91be

@@ -1091,3 +1091,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-498b9f093124
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testroutercountseveryrolescallsandstartsthenextdayover
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:45:09.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59db6ee0e8e5
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionruling
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:48:21.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-754936cdefc5
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionruling
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:48:21.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dae711c39b28
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-proxy-go-withturnstile
+    to: REQ-views-turnstile-csp
+    created_at: 2026-11-14T20:56:09.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7e5ecb85ff8
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-proxy-go-withturnstile
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:56:09.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0565dd036a

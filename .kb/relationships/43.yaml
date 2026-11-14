@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b518edc9de20
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitcountsquestionspersessionandtellswhenitresets
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:47:19.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9df9be658ab

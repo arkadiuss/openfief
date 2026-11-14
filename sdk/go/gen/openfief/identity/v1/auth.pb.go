@@ -706,8 +706,10 @@ const (
 	// The ID that links a call to a model to its result, a 16-digit hex ID.
 	AuditRefKind_AUDIT_REF_KIND_MODEL_CALL AuditRefKind = 12
 	// The class a failed call to a model ended in: unavailable, rejected,
-	// canceled, misconfigured or internal; a maintainer run adds denied,
-	// invalid_output and no_figures.
+	// canceled, misconfigured or internal; a call the router refused for a guard
+	// (D-208) names budget (the day's budget is spent, or the call can't be
+	// priced against it) or busy (the Ask box's calls at once were all taken); a
+	// maintainer run adds denied, invalid_output and no_figures.
 	AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR AuditRefKind = 13
 	// A run of the model-portfolio maintainer and the proposal it made, by the
 	// run's 16-digit hex id.

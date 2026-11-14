@@ -979,3 +979,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-318f21121ac1
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask-generate
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:47.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e6a054453c6
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-testusagesumsthedayscostspercurrencyandsurvivesanewstore
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:20.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7eef6704495
+  - type: implements
+    from: SYM-m5-internal-modelrouter-questions-go-decidequestion
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:54:18.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-256f07627d23
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-questions-go-decidequestion
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:54:18.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dae027affdf
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-descriptor
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:01:43.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01385efc4a3
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-descriptor
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:01:43.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce7a973be98b

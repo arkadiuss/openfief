@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a4e258e7f50
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-clientip-go-peeraddr
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:55:11.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d70626e50a40
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-clientip-go-peeraddr
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:11.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a8827ef14b1
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-clientaddress
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:56:41.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c0bd07af5c
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-clientaddress
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:56:42.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9937b2fb89b2

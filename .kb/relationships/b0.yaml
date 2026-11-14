@@ -1140,3 +1140,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9680df644920
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ask-go-ask-admit
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:43:19.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3d0745bd665
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ask-go-ask-admit
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:43:19.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-900dbbb33c89
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-questionsof-admit
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:09.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97c917247cd8

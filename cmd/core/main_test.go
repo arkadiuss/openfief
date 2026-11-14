@@ -16,6 +16,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	modelsapp "github.com/arkadiuss/openfief/internal/modelrouter/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 )
 
@@ -53,6 +54,8 @@ func defaultServe(t *testing.T) serveConfig {
 		},
 		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
 		Authz: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
+		// D-208's guards are all off by default, an installation that sets none is limited by none.
+		Guards: guardConfig{QueueWait: modelsapp.DefaultQueueWait},
 	}
 }
 

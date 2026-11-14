@@ -6,8 +6,10 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"time"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
@@ -56,6 +58,35 @@ type fakeAskModel struct {
 	// them: a tool above what the route allows, as a fief's own data (TF)
 	// would be for a route that may receive T0.
 	denyChecks map[string]bool
+	// admission is the decision AskAdmission answers for every question (the
+	// zero value allows), resetsAt the time it names, admitErr the error
+	// AdmitAskQuestion returns instead, and admitted the client addresses of the
+	// questions it was asked about, in order.
+	admission modelsv1.AskAdmission
+	resetsAt  time.Time
+	admitErr  error
+	admitted  []string
+}
+
+// AdmitAskQuestion lets every question go unless the test says otherwise.
+func (f *fakeAskModel) AdmitAskQuestion(_ context.Context, r *connect.Request[modelsv1.AdmitAskQuestionRequest]) (*connect.Response[modelsv1.AdmitAskQuestionResponse], error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if err := f.admit(r.Header(), r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.admitted = append(f.admitted, r.Msg.GetClientAddress())
+	if f.admitErr != nil {
+		return nil, f.admitErr
+	}
+	out := &modelsv1.AdmitAskQuestionResponse{Admission: modelsv1.AskAdmission_ASK_ADMISSION_ALLOWED}
+	if f.admission != modelsv1.AskAdmission_ASK_ADMISSION_UNSPECIFIED {
+		out.Admission = f.admission
+	}
+	if !f.resetsAt.IsZero() {
+		out.ResetsAt = timestamppb.New(f.resetsAt)
+	}
+	return connect.NewResponse(out), nil
 }
 
 func (f *fakeAskModel) GetAskModel(_ context.Context, r *connect.Request[modelsv1.GetAskModelRequest]) (*connect.Response[modelsv1.GetAskModelResponse], error) {

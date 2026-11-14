@@ -114,6 +114,26 @@ func TestModelAuditRecordsCallsAsAuditEntries(t *testing.T) {
 			},
 		},
 		{
+			name: "a refusal for the day's budget says so (D-208)",
+			res: modelsapp.CallResult{
+				At: at, Actor: owner, Role: modelsdomain.RoleAsk, CallID: call, Outcome: modelsapp.OutcomeRefused, Class: modelsapp.ClassBudget,
+			},
+			want: identity.AuditEntry{
+				At: at, Actor: identity.Actor{Kind: identity.ActorOwner, ID: session}, Action: identity.ActionModelCallResult,
+				Outcome: identity.OutcomeRefused, Refs: []identity.Ref{roleAsk, callRef, {Kind: identity.RefModelError, ID: "budget"}},
+			},
+		},
+		{
+			name: "a refusal for too many calls at once says so (D-208)",
+			res: modelsapp.CallResult{
+				At: at, Actor: owner, Role: modelsdomain.RoleAsk, CallID: call, Outcome: modelsapp.OutcomeRefused, Class: modelsapp.ClassBusy,
+			},
+			want: identity.AuditEntry{
+				At: at, Actor: identity.Actor{Kind: identity.ActorOwner, ID: session}, Action: identity.ActionModelCallResult,
+				Outcome: identity.OutcomeRefused, Refs: []identity.Ref{roleAsk, callRef, {Kind: identity.RefModelError, ID: "busy"}},
+			},
+		},
+		{
 			name: "a refusal names the role and the call only",
 			res:  modelsapp.CallResult{At: at, Actor: core, Role: modelsdomain.RoleMaintainer, CallID: call, Outcome: modelsapp.OutcomeRefused},
 			want: identity.AuditEntry{

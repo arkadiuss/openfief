@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa4a4e5e0476
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-currency
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:26.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c75dca16bef

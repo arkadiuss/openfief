@@ -16,6 +16,26 @@ spec:
     browserPath: /
     configSchema:
       type: object
+      properties:
+        askToolRounds:
+          type: integer
+          minimum: 0
+          maximum: 10
+          description: The most rounds of one Ask box question that may call tools, before one last round without; 0 or unset is 5 (D-208)
+        askToolCalls:
+          type: integer
+          minimum: 0
+          maximum: 50
+          description: The most tool calls one Ask box question runs in all; 0 or unset is 10 (D-208)
+        askOutputTokens:
+          type: integer
+          minimum: 0
+          maximum: 4000
+          description: The most output tokens the model may write for one Ask box question, all its calls together; 0 or unset is 800 (D-208)
+        askDeadline:
+          type: string
+          pattern: ^([0-9]+([.][0-9]+)?(s|m))+$
+          description: The longest one Ask box question may take, from 10s to 5m; unset is 2m (D-208)
       additionalProperties: false
 ---
 apiVersion: openfief.io/v1alpha1

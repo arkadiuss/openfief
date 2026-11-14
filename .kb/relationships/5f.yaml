@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c281d0a10e6
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-askguards-test-go-testhumanwaitroundsupandspeaksofhoursfromtwo
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:48.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0cadd15790

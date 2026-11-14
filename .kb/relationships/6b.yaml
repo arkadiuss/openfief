@@ -1294,3 +1294,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-297fa1e50ee0
+  - type: verified_by
+    from: SCEN-ui-ask-loop-limits-config
+    to: TEST-plugins-ui-config
+    created_at: 2026-11-14T20:38:12.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2e886c22d34
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterqueuesathirdcallforafreedslot
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:36.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16f4533264a5

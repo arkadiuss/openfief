@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9170ccc837c8
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-blockingproviders-generate
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:09.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b69169f2431f
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testquestionlimitsvalidate
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:52:07.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc082545c067

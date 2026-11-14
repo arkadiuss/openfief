@@ -1119,3 +1119,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4aca3efa7ef3
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-budgetday
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:49:30.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbcaf81fbc9
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-budgetday
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:49:30.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98a345a68c8a
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:49:43.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41de30958d3d
+  - type: executable_for
+    from: SYM-m5-plugins-ui-config-test-go-testasklimitsdefaultsared208s
+    to: TEST-plugins-ui-config
+    created_at: 2026-11-14T20:59:21.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47f82d8139fd

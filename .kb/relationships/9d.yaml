@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e002d00e5317
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testadmitaskquestionofnosessionisunauthenticated
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:43:52.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83fb1a66f718
+  - type: implements
+    from: SYM-m5-cmd-core-frontdoor-go-core-putfrontdoor
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T21:51:26.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-456e49f66538
+  - type: implements
+    from: SYM-m5-cmd-core-frontdoor-go-core-putfrontdoor
+    to: REQ-views-turnstile-csp
+    created_at: 2026-11-14T21:51:26.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6a873aed67c
+  - type: covered_by
+    from: SYM-m5-cmd-core-frontdoor-go-core-putfrontdoor
+    to: TEST-core-guards
+    created_at: 2026-11-14T21:51:26.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2759878fa2ef

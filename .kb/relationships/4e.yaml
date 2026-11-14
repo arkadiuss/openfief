@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c92b81ed3b6c
+  - type: implements
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-locksubject
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:52:49.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a923fffceb7
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-locksubject
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:52:49.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2148d0aa4e15

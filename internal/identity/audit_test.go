@@ -87,6 +87,37 @@ func TestNewAuditEntry(t *testing.T) {
 			refs: []identity.Ref{{Kind: identity.RefModelRole, ID: "maintainer"}, {Kind: identity.RefModelCall, ID: callID}},
 		},
 		{
+			name: "a refusal for the day's budget names its class (D-208)", actor: owner,
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: callID}, {Kind: identity.RefModelError, ID: "budget"},
+			},
+		},
+		{
+			name: "a refusal for too many calls at once names its class (D-208)", actor: owner,
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: callID}, {Kind: identity.RefModelError, ID: "busy"},
+			},
+		},
+		{
+			name: "a refusal names at most one class", actor: owner,
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"},
+				{Kind: identity.RefModelCall, ID: callID},
+				{Kind: identity.RefModelError, ID: "budget"},
+				{Kind: identity.RefModelError, ID: "busy"},
+			}, wantErr: true,
+		},
+		{
+			name: "a refusal's class is one of the closed set", actor: owner,
+			action: identity.ActionModelCallResult, outcome: identity.OutcomeRefused,
+			refs: []identity.Ref{
+				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModelCall, ID: callID}, {Kind: identity.RefModelError, ID: "the budget of 12 dollars"},
+			}, wantErr: true,
+		},
+		{
 			name: "model reference that is a sentence", actor: owner, action: identity.ActionModelCall, outcome: identity.OutcomeSent,
 			refs: []identity.Ref{
 				{Kind: identity.RefModelRole, ID: "ask"}, {Kind: identity.RefModel, ID: "what is my net worth/x"}, {Kind: identity.RefModelCall, ID: callID},

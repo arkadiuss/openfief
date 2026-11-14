@@ -318,10 +318,8 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err != nil {
 		return nil, err
 	}
-	if cl != nil {
-		var proxy http.Handler
-		c.browser, proxy = newFrontDoor(cl, cfg.Sync.ServiceAccount, now, log)
-		c.browserPort = withFrontDoor(c.browserPort, proxy)
+	if err := c.putFrontDoor(cl, cfg, now, log); err != nil {
+		return nil, err
 	}
 	// The workers outlive ctx: shutdown stops them gracefully.
 	if err := c.river.Start(context.WithoutCancel(ctx)); err != nil {

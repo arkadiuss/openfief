@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb076596951f
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-wantaddresseskeyedashashes
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T21:44:15.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca4771108430

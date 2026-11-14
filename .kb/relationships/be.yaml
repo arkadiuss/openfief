@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d0f1faa5667
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testgenerateaskrefusedasbusywhenthecallsatoncearetaken
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:51:14.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb396ae2262

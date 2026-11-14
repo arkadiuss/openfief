@@ -43,6 +43,33 @@ func (m askModelClient) permits(ctx context.Context, sess session, tiers []strin
 	return resp.Msg.GetAllowed(), nil
 }
 
+// admit asks whether the core lets the question go to the model, with the
+// browser's address when it is known.
+func (m askModelClient) admit(ctx context.Context, sess session, address string) (askAdmission, error) {
+	resp, err := m.c.AdmitAskQuestion(ctx, connect.NewRequest(&modelsv1.AdmitAskQuestionRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, ClientAddress: address,
+	}))
+	if err != nil {
+		return askAdmission{}, fmt.Errorf("AdmitAskQuestion: %w", err)
+	}
+	out := askAdmission{}
+	if t := resp.Msg.GetResetsAt(); t != nil {
+		out.ResetsAt = t.AsTime()
+	}
+	switch resp.Msg.GetAdmission() {
+	case modelsv1.AskAdmission_ASK_ADMISSION_ALLOWED:
+		out.Kind = admitAllowed
+	case modelsv1.AskAdmission_ASK_ADMISSION_BUDGET_SPENT:
+		out.Kind = admitBudgetSpent
+	case modelsv1.AskAdmission_ASK_ADMISSION_SESSION_LIMIT:
+		out.Kind = admitSessionLimit
+	case modelsv1.AskAdmission_ASK_ADMISSION_ADDRESS_LIMIT:
+		out.Kind = admitAddressLimit
+	case modelsv1.AskAdmission_ASK_ADMISSION_UNSPECIFIED:
+	}
+	return out, nil
+}
+
 // generate asks the route's models for the next message of the conversation.
 func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
 	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens}

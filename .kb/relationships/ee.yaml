@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b660d9b37eca
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-newbudget
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:48:46.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7f9906c6ca2
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-newbudget
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:48:46.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c73cd924eb5

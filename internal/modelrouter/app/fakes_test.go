@@ -7,6 +7,7 @@ import (
 	"maps"
 	"slices"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/modelrouter"
@@ -111,6 +112,7 @@ type fakeProviders struct {
 	// nil, or none, for an instance that runs.
 	instances map[string]error
 	listErr   error
+	mu        sync.Mutex
 	called    []string
 }
 
@@ -130,7 +132,9 @@ func (f *fakeProviders) Models(_ context.Context, provider string) ([]modelroute
 func (f *fakeProviders) Generate(_ context.Context, provider, model string, _ *modelrouter.Request) (modelrouter.Result, error) {
 	key := provider + "/" + model
 	f.ev.add("generate " + key)
+	f.mu.Lock()
 	f.called = append(f.called, key)
+	f.mu.Unlock()
 	if err := f.answers[key]; err != nil {
 		return modelrouter.Result{}, err
 	}
@@ -141,6 +145,7 @@ func (f *fakeProviders) Generate(_ context.Context, provider, model string, _ *m
 // entries) or resultErr is (the result entry only).
 type fakeAudit struct {
 	ev        *events
+	mu        sync.Mutex
 	err       error
 	resultErr error
 	sent      []app.CallSent
@@ -151,6 +156,8 @@ type fakeAudit struct {
 }
 
 func (f *fakeAudit) RecordSent(_ context.Context, c *app.CallSent) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
 	if f.err != nil {
 		return f.err
 	}
@@ -160,6 +167,8 @@ func (f *fakeAudit) RecordSent(_ context.Context, c *app.CallSent) error {
 }
 
 func (f *fakeAudit) RecordResult(ctx context.Context, c *app.CallResult) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
 	if f.failsOnEndedContext && ctx.Err() != nil {
 		return fmt.Errorf("the context ended: %w", ctx.Err())
 	}
@@ -202,10 +211,9 @@ func (f *fakeAttention) Clear(_ context.Context, _, subject string) error {
 
 // callIDs returns IDs of 16 hex digits that count up from 1.
 func callIDs() app.CallIDs {
-	n := 0
+	var n atomic.Int64
 	return func() (string, error) {
-		n++
-		return fmt.Sprintf("%016x", n), nil
+		return fmt.Sprintf("%016x", n.Add(1)), nil
 	}
 }
 

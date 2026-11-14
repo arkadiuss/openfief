@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a92b7fb69c19
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-slowprovider-generate
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:22.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e779f77002cf

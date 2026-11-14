@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f87812724b6e
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-generateasync
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:23.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8cd71783d63

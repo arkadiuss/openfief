@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02d526d0d785
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesathirdcallatonceafterthequeuewait
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:29.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd17763fef4
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:28.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f5c7528f83

@@ -9,6 +9,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/modelrouter"
 )
 
@@ -49,6 +50,13 @@ var (
 	ErrAuditUnavailable = errors.New("the audit entry could not be written")
 	// ErrNoAnswer reports that every candidate model of the route failed.
 	ErrNoAnswer = errors.New("no model of the route answered")
+	// ErrBusy reports that the Ask box's calls at once are all taken and none
+	// freed within the queue wait (D-208): the router refused the call.
+	ErrBusy = errors.New("too many model calls at once")
+	// ErrUsageUnavailable reports that the day's usage could not be read or
+	// recorded, so the call was refused or its answer withheld: the budget
+	// fails closed like the audit log.
+	ErrUsageUnavailable = errors.New("the day's model usage could not be read or recorded")
 )
 
 // Owners checks that a session is the owner's (D-66, D-79); the identity
@@ -185,6 +193,12 @@ const (
 	ClassMisconfigured ErrorClass = "misconfigured"
 	// ClassInternal: anything else.
 	ClassInternal ErrorClass = "internal"
+	// ClassBudget: the router refused the call because the day's budget is
+	// spent (D-208), or because the call could not be priced against it.
+	ClassBudget ErrorClass = "budget"
+	// ClassBusy: the router refused the call because the Ask box's calls at
+	// once were all taken (D-208).
+	ClassBusy ErrorClass = "busy"
 )
 
 // CallSent is what the audit log keeps of a call about to be sent (D-211),
@@ -227,6 +241,71 @@ type Auditor interface {
 // CallIDs makes the ID that links a call's two audit entries: 16 lower-case
 // hex digits from a random source.
 type CallIDs func() (string, error)
+
+// UsageRecord is what one answered call used, for the day's budget (D-208):
+// the day it is counted in, the model entry, the tokens the provider reported
+// and what they cost at the entry's price. It holds no text (GR-12).
+type UsageRecord struct {
+	Day      kernel.Date
+	Model    modelrouter.Ref
+	Usage    modelrouter.Usage
+	Cost     kernel.Decimal
+	Currency kernel.Currency
+}
+
+// UsageStore keeps the day's usage across restarts and across the core's
+// replicas: the budget is the sum of what every call of the day cost.
+// *postgres.Store implements it.
+type UsageStore interface {
+	// Spent returns what the calls of day cost in currency.
+	Spent(ctx context.Context, day kernel.Date, currency kernel.Currency) (kernel.Decimal, error)
+	// Record adds one call's usage to its day, atomically.
+	Record(ctx context.Context, u *UsageRecord) error
+}
+
+// QuestionAsked is one question of the Ask box that goes to a model: when,
+// which session asked and, when it is known, from which address.
+type QuestionAsked struct {
+	At time.Time
+	// Session is the asking session's ID.
+	Session string
+	// Address is the asker's IP address as the core's front door found it
+	// (the trusted proxy's header, or the connection); empty when unknown,
+	// which leaves the address limit out.
+	Address string
+	Limits  modelrouter.QuestionLimits
+}
+
+// QuestionSubject is whom a limit counts: a session or an address.
+type QuestionSubject string
+
+// The subjects a limit counts.
+const (
+	SubjectSession QuestionSubject = "session"
+	SubjectAddress QuestionSubject = "address"
+)
+
+// QuestionRuling is a store's decision on one question.
+type QuestionRuling struct {
+	// Allowed is true when the question was recorded and may go on.
+	Allowed bool
+	// Subject is whose limit stopped it, when it was not allowed.
+	Subject QuestionSubject
+	// ResetsAt is when that subject may ask again.
+	ResetsAt time.Time
+}
+
+// QuestionStore counts the Ask box's questions to a model per session and per
+// address, in the database, so the counts survive a restart and every replica
+// of the core sees the same ones. *postgres.Store implements it.
+type QuestionStore interface {
+	// Admit decides, with the subjects' earlier questions of the last day and
+	// modelrouter.DecideQuestion, whether q may go to the model, and records q
+	// when it may, as one step that two questions of one subject at the same
+	// moment can't both pass the last place of. A question that is not allowed
+	// is not recorded.
+	Admit(ctx context.Context, q *QuestionAsked) (QuestionRuling, error)
+}
 
 // AttentionRaiser raises and clears the attention items of broken routes
 // (D-196), one condition at a time, with the kind and subject the

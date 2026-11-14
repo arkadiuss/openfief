@@ -1203,3 +1203,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40c2fa478826
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-fakeusage-spent
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:44:29.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4735d11f32
+  - type: implements
+    from: SYM-m5-plugins-ui-config-go-rawconfig
+    to: REQ-ui-ask-model-loop-limits
+    created_at: 2026-11-14T20:59:02.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c9f29573acd
+  - type: covered_by
+    from: SYM-m5-plugins-ui-config-go-rawconfig
+    to: TEST-plugins-ui-config
+    created_at: 2026-11-14T20:59:02.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2fea9b2967b

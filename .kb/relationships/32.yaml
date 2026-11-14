@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42935b9c5de6
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getorigin
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:52.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72094aeef473
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getorigin
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:52.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a64dd6826649
+  - type: implements
+    from: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-guard
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T21:45:09.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25bedc3b545c
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-guard
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T21:45:09.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1131a7bb074

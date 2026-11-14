@@ -1070,3 +1070,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-558d00aa0ba8
+  - type: implements
+    from: SYM-m5-cmd-core-guards-go-guardconfig-budget
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:42:08.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ff8451c610d
+  - type: covered_by
+    from: SYM-m5-cmd-core-guards-go-guardconfig-budget
+    to: TEST-core-guards
+    created_at: 2026-11-14T20:42:08.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1908bb83c40
+  - type: implements
+    from: SYM-m5-internal-modelrouter-questions-go-questionlimits-validate
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:54:05.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b53bdbfa2c1
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-questions-go-questionlimits-validate
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:54:05.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e567f3ca805

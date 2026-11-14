@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99b23a9e63de
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-budgetof
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:54.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e7fe559e806

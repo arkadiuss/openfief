@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ef665e966bf
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-guardsday
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:02.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25f098cd887f

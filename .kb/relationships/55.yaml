@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-714d8087c152
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testbudgetdayendsatlocalmidnight
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:53.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67f888c73080

@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb75190e6793
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-router-go-router-answered
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T21:43:45.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e43ef7ec4e
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-router-go-router-answered
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T21:43:46.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58f5f794c09e

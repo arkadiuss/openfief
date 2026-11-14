@@ -1126,3 +1126,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3a17101618c
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionsubject
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:48:15.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70fe938d79dc
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionsubject
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:48:15.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a26548aca17
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testgenerateaskrefusedbythebudgetsayssoandwhen
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:51:07.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd45bb617164

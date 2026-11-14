@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61cb27482fba
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof-record
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:49:56.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f1c672fe07

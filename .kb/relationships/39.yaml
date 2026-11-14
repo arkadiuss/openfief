@@ -888,3 +888,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae41ec36fc82
+  - type: verified_by
+    from: SCEN-models-ask-question-limits
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:38:03.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8de119a9e7cc
+  - type: verified_by
+    from: SCEN-models-ask-question-limits
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:38:03.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4018458bfef
+  - type: verified_by
+    from: SCEN-models-ask-question-limits
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:38:03.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac29b47268d
+  - type: verified_by
+    from: SCEN-models-ask-question-limits
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:38:03.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d2b3524a7f
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testadmitaskquestionbydecision
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:51:01.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43967f28c0f2
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-askmodel-fakes-test-go-fakeaskmodel-admitaskquestion
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:58:35.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7434d2efd586

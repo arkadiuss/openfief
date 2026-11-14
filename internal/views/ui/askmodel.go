@@ -131,6 +131,11 @@ type askModelPort interface {
 	// permits reports whether a model of the route may receive data of every
 	// tier together, with tools.
 	permits(ctx context.Context, sess session, tiers []string) (bool, error)
+	// admit asks, once for a question about to go to the model, whether the
+	// core lets it (D-208): the day's budget, and the limits per session and
+	// per address, which count the question when it is let go. address is the
+	// browser's, or "" when the core could not tell.
+	admit(ctx context.Context, sess session, address string) (askAdmission, error)
 	// generate asks the route's models for the next message, of at most
 	// maxTokens output tokens. With answer set the message is the structured
 	// answer (askAnswerSchemaJSON): strict structured output for a model
@@ -154,8 +159,18 @@ type modelAnswerer struct {
 	run   toolRunner
 	today func() kernel.Date
 	log   *slog.Logger
+	// now is the clock the card of a limit counts down by; nil is time.Now.
+	now func() time.Time
 	// limits are the limits of one question, with no zero field.
 	limits AskLimits
+}
+
+// clock returns the time now: the answerer's clock, or time.Now.
+func (a *modelAnswerer) clock() time.Time {
+	if a.now != nil {
+		return a.now()
+	}
+	return time.Now()
 }
 
 // ask answers question with the model: the tool loop of at most
@@ -451,6 +466,9 @@ func tierList(set map[string]bool) []string {
 // question or any answer (GR-12).
 func (a *modelAnswerer) failure(r *http.Request, question string, err error) (answerCard, error) {
 	code := connect.CodeOf(err)
+	if card, ok := refusedByAGuard(question, err, a.clock()); ok {
+		return card, nil
+	}
 	switch {
 	case code == connect.CodeUnauthenticated:
 		return answerCard{}, err
@@ -541,7 +559,29 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	if !ok {
 		return a.commands.answer(r, sess, question)
 	}
+	if card, stopped, err := a.guard(r, sess, question); stopped || err != nil {
+		return card, err
+	}
 	return a.model.ask(r, sess, question)
+}
+
+// guard runs what stands before a question that goes to the model (D-208): the
+// core counts it, once, before the first call of its loop, against its budget
+// for the day and its limits per session and per address. It returns the card
+// that says why the question stops, and true, or false for one that goes on;
+// an error ends the request, as a session that is no longer valid does.
+func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, error) {
+	adm, err := a.model.model.admit(r.Context(), sess, clientAddress(r))
+	if err != nil {
+		if connect.CodeOf(err) == connect.CodeUnauthenticated {
+			return answerCard{}, true, fmt.Errorf("admitting a question to the model: %w", err)
+		}
+		a.log.WarnContext(r.Context(), "ask admission failed", "code", connect.CodeOf(err).String())
+		return modelCard(question, "The model couldn't be checked",
+			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil
+	}
+	card, refused := admissionAnswer(question, adm, a.model.clock())
+	return card, refused, nil
 }
 
 // askHasModel reports whether the Ask box has a model for sess, so the box

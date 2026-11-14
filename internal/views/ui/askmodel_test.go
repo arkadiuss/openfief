@@ -54,6 +54,11 @@ func (p *scriptedPort) available(context.Context, session) (bool, error) {
 	return p.unavailable == nil, p.unavailable
 }
 
+// admit lets every question go, as a core with no budget and no limit does.
+func (p *scriptedPort) admit(context.Context, session, string) (askAdmission, error) {
+	return askAdmission{Kind: admitAllowed}, nil
+}
+
 func (p *scriptedPort) permits(_ context.Context, _ session, tiers []string) (bool, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()

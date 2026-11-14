@@ -18,7 +18,7 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags=
 
 FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
 # The plugin's manifest (D-42), signed with the image: written from manifest.json by `task plugins:labels`.
-LABEL io.openfief.plugin.manifest='{"browserPath":"/","capabilities":["view"],"configSchema":{"additionalProperties":false,"type":"object"}}'
+LABEL io.openfief.plugin.manifest='{"browserPath":"/","capabilities":["view"],"configSchema":{"additionalProperties":false,"properties":{"askDeadline":{"description":"The longest one Ask box question may take, from 10s to 5m; unset is 2m (D-208)","pattern":"^([0-9]+([.][0-9]+)?(s|m))+$","type":"string"},"askOutputTokens":{"description":"The most output tokens the model may write for one Ask box question, all its calls together; 0 or unset is 800 (D-208)","maximum":4000,"minimum":0,"type":"integer"},"askToolCalls":{"description":"The most tool calls one Ask box question runs in all; 0 or unset is 10 (D-208)","maximum":50,"minimum":0,"type":"integer"},"askToolRounds":{"description":"The most rounds of one Ask box question that may call tools, before one last round without; 0 or unset is 5 (D-208)","maximum":10,"minimum":0,"type":"integer"}},"type":"object"}}'
 COPY --from=build /out/plugin /plugin
 # Numeric, not nonroot:nonroot: the pods run with runAsNonRoot, and the kubelet refuses to start a container
 # whose image names its user, since it can't tell that a name isn't root (CreateContainerConfigError).

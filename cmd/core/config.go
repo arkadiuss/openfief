@@ -164,6 +164,9 @@ type serveConfig struct {
 	Auth authConfig
 	// Authz is who answers authorization (D-163, D-164).
 	Authz authzConfig
+	// Guards are D-208's limits on the model router and the Ask box, and how the
+	// front door reads the browser's address; all off by default.
+	Guards guardConfig
 }
 
 // syncConfig is the connector scheduler's configuration.
@@ -288,8 +291,12 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	syncFlags(fs, &c.Sync)
 	authFlags(fs, &c.Auth)
 	authzFlags(fs, &c.Authz)
+	guardFlags(fs, &c.Guards)
 	if err := fs.Parse(args); err != nil {
 		return serveConfig{}, fmt.Errorf("serve: %w", err)
+	}
+	if err := c.Guards.validate(); err != nil {
+		return serveConfig{}, err
 	}
 	if err := parseAuth(&c.Auth, getenv); err != nil {
 		return serveConfig{}, err

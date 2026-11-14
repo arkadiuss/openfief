@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d55795c20f79
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-testturnstilepolicynamesonehostandnoloosekeyword
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T21:45:04.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2fd0ac2593

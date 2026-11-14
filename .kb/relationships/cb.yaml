@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-203f6ddf941f
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-error
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:49:11.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc512285a214
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-error
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:49:11.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af65e14c77c

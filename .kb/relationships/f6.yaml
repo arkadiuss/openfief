@@ -1126,3 +1126,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0786ff3d65f4
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig-resolve
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:54:52.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b1c98fb2266
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-clientip-go-clientipconfig-resolve
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:54:52.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-605a0f5e6a08
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-type
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:59:55.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-678f2570083b
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-type
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:59:55.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e678bae5cd5

@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5356dde78ce6
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesacandidatepricedinanothercurrency
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:45:34.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45a1e6f250f7
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-humanwait
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:56:47.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-547063f6c073
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-humanwait
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:56:47.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d3432bc4fc9

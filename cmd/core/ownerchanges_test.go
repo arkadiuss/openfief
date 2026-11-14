@@ -396,6 +396,7 @@ func unauditedByDesign() map[string]string {
 		identityv1connect.AuthServiceBeginLoginProcedure:         "stores a ceremony that expires in minutes; FinishLogin is audited",
 		identityv1connect.AuthServiceBeginPasskeyCheckProcedure:  "stores a ceremony that expires in minutes; it changes nothing the owner keeps",
 		identityv1connect.AuthServiceFinishPasskeyCheckProcedure: "stamps the session as freshly checked, which changes no record the owner keeps; a refused check is no change",
+		modelsv1connect.AskModelServiceAdmitAskQuestionProcedure: "counts a question against the limits of a session and an address (D-208), a count of at most a day that is no record the owner keeps; the call it lets through is audited (model_call, model_call_result) and a refusal of the budget or of calls at once is audited as a refused call",
 	}
 }
 
