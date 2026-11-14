@@ -39,6 +39,8 @@ type memAuthStore struct {
 	auditFail error
 	grants    []identity.Grant
 	cutover   bool
+	// viewers are the people besides the owner.
+	viewers []identity.Person
 }
 
 func newMemAuthStore() *memAuthStore {
@@ -82,7 +84,7 @@ func (m *memAuthStore) SavePasskey(_ context.Context, p *identity.Passkey) error
 func (m *memAuthStore) Passkeys(context.Context) ([]identity.Passkey, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	return slices.Clone(m.passkeys), nil
+	return slices.DeleteFunc(slices.Clone(m.passkeys), func(p identity.Passkey) bool { return !p.DisabledAt.IsZero() }), nil
 }
 
 func (m *memAuthStore) UpdatePasskeyUse(_ context.Context, p *identity.Passkey) error {
@@ -103,6 +105,8 @@ func (m *memAuthStore) DeletePasskey(_ context.Context, id []byte, at time.Time)
 	i := slices.IndexFunc(m.passkeys, func(p identity.Passkey) bool { return bytes.Equal(p.CredentialID, id) })
 	switch {
 	case i < 0:
+		return app.ErrUnknownPasskey
+	case m.passkeys[i].Person() != identity.OwnerPersonID:
 		return app.ErrUnknownPasskey
 	case len(m.passkeys) == 1:
 		return app.ErrLastPasskey
@@ -157,10 +161,36 @@ func (m *memAuthStore) UseEnrollmentCode(_ context.Context, id identity.Enrollme
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	c, ok := m.codes[id]
-	if !ok || !c.code.UsedAt.IsZero() {
+	if !ok || !c.code.UsedAt.IsZero() || !c.code.CancelledAt.IsZero() {
 		return identity.ErrEnrollmentCodeUsed
 	}
 	c.code.UsedAt = at
+	m.codes[id] = c
+	return nil
+}
+
+func (m *memAuthStore) PendingInvites(_ context.Context, now time.Time) ([]identity.EnrollmentCode, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	var out []identity.EnrollmentCode
+	for id := range m.codes {
+		code := m.codes[id].code
+		if code.Pending(now) {
+			out = append(out, code)
+		}
+	}
+	slices.SortFunc(out, func(a, b identity.EnrollmentCode) int { return a.CreatedAt.Compare(b.CreatedAt) })
+	return out, nil
+}
+
+func (m *memAuthStore) CancelEnrollmentCode(_ context.Context, id identity.EnrollmentCodeID, at time.Time) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	c, ok := m.codes[id]
+	if !ok || !c.code.Pending(at) {
+		return app.ErrUnknownEnrollmentCode
+	}
+	c.code.CancelledAt = at
 	m.codes[id] = c
 	return nil
 }
@@ -252,6 +282,7 @@ type snapshot struct {
 	audit      []identity.AuditEntry
 	grants     []identity.Grant
 	cutover    bool
+	viewers    []identity.Person
 }
 
 // Atomically runs fn and, when it fails, puts every table back as it was
@@ -261,7 +292,7 @@ func (m *memAuthStore) Atomically(ctx context.Context, fn func(ctx context.Conte
 	before := snapshot{
 		owner: m.owner, passkeys: slices.Clone(m.passkeys), ceremonies: maps.Clone(m.ceremonies),
 		codes: maps.Clone(m.codes), sessions: maps.Clone(m.sessions), audit: slices.Clone(m.audit),
-		grants: slices.Clone(m.grants), cutover: m.cutover,
+		grants: slices.Clone(m.grants), cutover: m.cutover, viewers: slices.Clone(m.viewers),
 	}
 	m.mu.Unlock()
 	err := fn(ctx)
@@ -269,7 +300,7 @@ func (m *memAuthStore) Atomically(ctx context.Context, fn func(ctx context.Conte
 		m.mu.Lock()
 		m.owner, m.passkeys, m.ceremonies, m.codes, m.sessions, m.audit =
 			before.owner, before.passkeys, before.ceremonies, before.codes, before.sessions, before.audit
-		m.grants, m.cutover = before.grants, before.cutover
+		m.grants, m.cutover, m.viewers = before.grants, before.cutover, before.viewers
 		m.mu.Unlock()
 	}
 	return err

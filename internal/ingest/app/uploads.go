@@ -60,6 +60,8 @@ type Uploads struct {
 	// started from a statement of its whole history, and isn't seeded, takes
 	// transactions (D-136). Nil counts none.
 	History AccountHistory
+	// Audit keeps each upload with its audit entry; nil enters none.
+	Audit ChangeAuditor
 }
 
 // AccountHistory tells whether an account holds any transaction;
@@ -156,11 +158,15 @@ func (u *Uploads) Upload(ctx context.Context, origin, sessionToken string, accou
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
 	instance := p.instance
-	batch, err := u.Connectors.ImportFile(ctx, instance, u.NewBatchID(), p.mode, out, p.started)
+	var batch ingest.Batch
+	err = audited(ctx, u.Audit, origin, sessionToken, auditStatementUploaded, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
+		var importErr error
+		if batch, importErr = u.Connectors.ImportFile(ctx, instance, u.NewBatchID(), p.mode, out, p.started); importErr != nil {
+			return importErr
+		}
+		return u.Batches.RecordBatch(ctx, instance, &batch)
+	})
 	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
-	}
-	if err := u.Batches.RecordBatch(ctx, instance, &batch); err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
 	return batch, nil

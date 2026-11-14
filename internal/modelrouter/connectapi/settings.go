@@ -56,7 +56,53 @@ func (s *settingsService) GetModelSettings(ctx context.Context, req *connect.Req
 	for _, tier := range modelrouter.DataTiers() {
 		out.Tiers = append(out.Tiers, &modelsv1.TierModels{Tier: string(tier), Models: refStrings(got.Policy[tier])})
 	}
+	broken, err := s.settings.BrokenRoutes(ctx)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	for _, p := range broken {
+		out.Broken = append(out.Broken, &modelsv1.BrokenEntry{Role: string(p.Role), Model: p.Model.String(), Reason: string(p.Reason)})
+	}
 	return connect.NewResponse(out), nil
+}
+
+// ListModelProviders returns the model-provider instances with their terms
+// and models to the owner.
+func (s *settingsService) ListModelProviders(ctx context.Context, req *connect.Request[modelsv1.ListModelProvidersRequest]) (*connect.Response[modelsv1.ListModelProvidersResponse], error) {
+	got, err := s.settings.Providers(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &modelsv1.ListModelProvidersResponse{Providers: make([]*modelsv1.ModelProvider, 0, len(got))}
+	for i := range got {
+		out.Providers = append(out.Providers, providerTo(&got[i]))
+	}
+	return connect.NewResponse(out), nil
+}
+
+// providerTo translates a provider for the owner.
+func providerTo(p *app.Provider) *modelsv1.ModelProvider {
+	out := &modelsv1.ModelProvider{Instance: p.Instance, Available: p.Available}
+	if !p.Available {
+		return out
+	}
+	out.Location = modelsv1.Location_LOCATION_THIRD_PARTY_CLOUD
+	if p.Terms.Location == modelrouter.LocationOwnerHardware {
+		out.Location = modelsv1.Location_LOCATION_OWNER_HARDWARE
+	}
+	out.Retention = &modelsv1.Retention{Days: p.Terms.RetentionDays, MayTrain: p.Terms.MayTrain}
+	for i := range p.Models {
+		m := &p.Models[i]
+		e := &modelsv1.ModelEntry{
+			Id: m.ID, ContextTokens: m.ContextTokens, MaxOutputTokens: m.MaxOutputTokens,
+			ToolCalling: m.ToolCalling, StructuredOutput: m.StructuredOut,
+		}
+		if m.HasPrice {
+			e.InputPrice, e.OutputPrice, e.PriceCurrency = m.InputPrice.String(), m.OutputPrice.String(), m.PriceCurrency.String()
+		}
+		out.Models = append(out.Models, e)
+	}
+	return out
 }
 
 // SetAgentsEnabled turns the one switch on or off.
@@ -101,6 +147,8 @@ func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
+	case errors.Is(err, kernel.ErrAuditUnavailable):
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuditUnavailable)
 	case errors.Is(err, app.ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	}

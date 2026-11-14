@@ -727,3 +727,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-688e5f0a6d87
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-person
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:53.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce81c954fcd9
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-saveperson
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:12:05.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6842c2940f8
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-beginregistrationresponse-getinvitedname
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:19:09.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52bbfde1d6b3
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-beginregistrationresponse-getinvitedname
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:19:09.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9111cea974b
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-listpeople
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:25:24.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc2263a707f1
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-authserviceclient-listpeople
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:25:24.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20cdacea8ada
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:54.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cb8b2cfa56a
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:54.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c949ba8b15
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-test-maintainer-sessions-tell-who-may-read-the-whole-portfolio
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:22:09.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-060bf75226ca
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-new-maintainer
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:12.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b02b223e9993
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-new-maintainer
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:25:12.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a32e5c155076
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-code-of
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:50.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d8acf61ea7
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-decisions-raise
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:33.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121361ea39e0
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-type
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:17.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-798943a2abbd
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-type
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:17.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a00d52c37d82
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-type
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:17.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1a6d74d7c5

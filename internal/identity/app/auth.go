@@ -103,7 +103,10 @@ func NewAuth(store AuthStore, ceremonies Ceremonies, tokens *Tokens, demo DemoMa
 // Authenticated is what an authenticator proved: the owner, with the scope
 // the session gets.
 type Authenticated struct {
-	Owner         identity.Owner
+	Owner identity.Owner
+	// Person is the ID of the person who proved it: the owner's when empty.
+	// A viewer's session has read scope.
+	Person        string
 	Scope         identity.SessionScope
 	Authenticator identity.Authenticator
 	// Passkey is the credential ID of the passkey that proved it; nil for
@@ -205,15 +208,29 @@ func (a *Auth) Logout(ctx context.Context, origin, token string) error {
 
 // WhoAmI returns the owner and the session of token, of any scope.
 func (a *Auth) WhoAmI(ctx context.Context, origin, token string) (identity.Owner, identity.Session, error) {
+	owner, s, _, err := a.Identify(ctx, origin, token)
+	return owner, s, err
+}
+
+// Identify returns the owner, the session of token, of any scope, and the
+// person the session is of.
+func (a *Auth) Identify(ctx context.Context, origin, token string) (identity.Owner, identity.Session, identity.Person, error) {
 	_, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeRead)
 	if err != nil {
-		return identity.Owner{}, identity.Session{}, err
+		return identity.Owner{}, identity.Session{}, identity.Person{}, err
 	}
 	owner, err := a.store.Owner(ctx)
 	if err != nil {
-		return identity.Owner{}, identity.Session{}, fmt.Errorf("loading the owner: %w", err)
+		return identity.Owner{}, identity.Session{}, identity.Person{}, fmt.Errorf("loading the owner: %w", err)
 	}
-	return owner, s, nil
+	person := identity.OwnerPerson(&owner)
+	if s.OfViewer() {
+		if person, err = a.store.Person(ctx, s.Person()); err != nil {
+			return identity.Owner{}, identity.Session{}, identity.Person{}, fmt.Errorf("loading the session's person: %w", err)
+		}
+		person.Handle = nil
+	}
+	return owner, s, person, nil
 }
 
 // SignOutEverywhere revokes every session, on every host and of either
@@ -239,11 +256,14 @@ func (a *Auth) SignOutEverywhere(ctx context.Context, origin, token string) (int
 	return n, nil
 }
 
-// Principal is who a read API bearer token stands for: always the owner,
-// through a script token or a session.
+// Principal is who a read API bearer token stands for: the owner or a viewer
+// through a session, or a script token.
 type Principal struct {
 	// Session is the session's ID; empty for a script token.
 	Session identity.SessionID
+	// Viewer is the ID of the viewer whose session it is; empty for the
+	// owner's, a demo session and a script token.
+	Viewer string
 	// ScriptToken is the script token's ID; empty for a session.
 	ScriptToken identity.ScriptTokenID
 	// Demo is whether the session came from the demo authenticator.
@@ -251,10 +271,12 @@ type Principal struct {
 }
 
 // Caller returns who p is to the authorizer (D-163): a session from the
-// demo authenticator is a demo session, any other session the owner, and a
-// script token itself.
+// demo authenticator is a demo session, a viewer's session the viewer, any
+// other session the owner, and a script token itself.
 func (p Principal) Caller() identity.Caller {
 	switch {
+	case p.Session != "" && p.Viewer != "":
+		return identity.Caller{Holder: identity.HolderViewer, ID: p.Viewer}
 	case p.Session != "" && p.Demo:
 		return identity.Caller{Holder: identity.HolderDemoSession, ID: string(p.Session)}
 	case p.Session != "":
@@ -278,7 +300,11 @@ func (a *Auth) Authenticate(ctx context.Context, token string) (Principal, error
 		if err != nil {
 			return Principal{}, err
 		}
-		return Principal{Session: s.ID, Demo: s.Authenticator == identity.AuthenticatorDemo}, nil
+		p := Principal{Session: s.ID, Demo: s.Authenticator == identity.AuthenticatorDemo}
+		if s.OfViewer() {
+			p.Viewer = s.Person()
+		}
+		return p, nil
 	}
 	if err := a.tokens.Verify(ctx, token, identity.ScopeRead); err != nil {
 		return Principal{}, err
@@ -381,22 +407,42 @@ func (a *Auth) issueSession(ctx context.Context, got *Authenticated, o identity.
 	if err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
-	if got.Passkey != nil {
-		// A passkey signing the session in is its first passkey check (D-183).
-		if s, err = s.SignedInWithPasskey(got.Passkey); err != nil {
-			return NewSession{}, fmt.Errorf("issuing a session: %w", err)
-		}
+	if s, err = signedIn(&s, got); err != nil {
+		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
 	err = within(ctx, a.store, func(ctx context.Context) error {
 		if saveErr := a.store.SaveSession(ctx, &s, identity.HashKey(key)); saveErr != nil {
 			return fmt.Errorf("saving the session: %w", saveErr)
 		}
-		return a.record(ctx, ownerActor(&s), identity.ActionSignIn, identity.OutcomeOK, identity.Ref{Kind: identity.RefSession, ID: string(s.ID)})
+		refs := []identity.Ref{{Kind: identity.RefSession, ID: string(s.ID)}}
+		if s.OfViewer() {
+			refs = append(refs, identity.Ref{Kind: identity.RefPerson, ID: s.Person()})
+		}
+		return a.record(ctx, ownerActor(&s), identity.ActionSignIn, identity.OutcomeOK, refs...)
 	})
 	if err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
 	return NewSession{Session: s, Token: identity.FormatSessionToken(s.ID, key)}, nil
+}
+
+// signedIn returns s as what got proved: signed in by its passkey, which is
+// the session's first passkey check (D-183), and a viewer's when a viewer
+// proved it.
+func signedIn(s *identity.Session, got *Authenticated) (identity.Session, error) {
+	out := *s
+	var err error
+	if got.Passkey != nil {
+		if out, err = out.SignedInWithPasskey(got.Passkey); err != nil {
+			return identity.Session{}, fmt.Errorf("signing in with a passkey: %w", err)
+		}
+	}
+	if got.Person != "" && got.Person != identity.OwnerPersonID {
+		if out, err = out.ForViewer(got.Person); err != nil {
+			return identity.Session{}, fmt.Errorf("a viewer's session: %w", err)
+		}
+	}
+	return out, nil
 }
 
 // recentOwner checks the allowed origin text and the owner session of

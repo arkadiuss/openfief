@@ -986,3 +986,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53e3614014c5
+  - type: specified_by
+    from: REQ-ui-reads-as-signed-in-person
+    to: SCEN-ui-reads-as-signed-in-person
+    created_at: 2026-11-13T19:59:31.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af7370caa0e1
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-revokeperson
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:12:10.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b7e7d60eb22
+  - type: validates
+    from: TEST-portfolio-app-maintainer
+    to: REQ-models-switch-gates-calls
+    created_at: 2026-11-13T21:07:18.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-938d9abbcf88
+  - type: specified_by
+    from: REQ-maintainer-proposals-checked-whole
+    to: SCEN-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:07:47.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5646e2644bf
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-core-test-real-core-turn-on
+    to: TEST-core-maintainer-real-core
+    created_at: 2026-11-13T21:18:00.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ed0852f9509
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-holdings
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:45.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bca1575d27f2
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-holdings
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:23:45.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-894501add661
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-queued-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:46.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ba5622b91fd
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-queued-run
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:24:46.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44bacba00c3f
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-work
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:37.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482194516521
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-work
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:25:37.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-433fa8e5912a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-ask-is-the-owners-and-needs-the-maintainer-on
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:57.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d698886f3afd
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service-fail
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:16.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2dffe5b2b6f
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-maintainer-service-fail
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:16.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34095ad8c331
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-job
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:32.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77308be5c102
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:46.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76d714e7b3d
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:46.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc6fe5568cb
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:46.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a49849f44b6b
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-inviteid
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:40.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-572555af77ce

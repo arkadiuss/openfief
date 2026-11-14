@@ -916,3 +916,129 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6fe8d6d0dd9
+  - type: implements
+    from: SYM-viewers-internal-identity-app-passkeys-auth-loginpeople
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:34:47.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac00005173db
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-passkeys-auth-loginpeople
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:34:47.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-614bcf4c0530
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-passerr
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:35:13.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09ea7d5b127d
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-view-authz-may-act
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:42.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97cb8f0e9cb0
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:38.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9f086b57189
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-scan-run
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:46:38.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e1f1534be96
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-afinal-run-is-neither-finished-nor-started-again
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:27.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7259b7f82722
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:00:27.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1405678d35
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:00:27.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38711cffa64f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-enum
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:00:27.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1047b4142d78
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protomessage
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:38:17.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dd56c2c9f02
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-protomessage
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:38:17.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a7f1726206
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-descriptor
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:38:28.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-704654f5a793
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviteresponse-descriptor
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:38:28.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b201510ae9c
+  - type: implements
+    from: SYM-ui-server-plugins-page
+    to: REQ-ui-plugins-viewer-lists-installed
+    created_at: 2026-11-13T23:39:35.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aee16e03567
+  - type: covered_by
+    from: SYM-ms1-ui-models-tokens
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:58.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b9c7132872
+  - type: implements
+    from: SYM-ms1-ui-models-tokens
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:58.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b2e7b221f2
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-the-cores-refusal-shows-its-reason-on-the-page
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:11.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d60fe88fa8b

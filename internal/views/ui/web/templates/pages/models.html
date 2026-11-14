@@ -1,0 +1,134 @@
+{{define "content"}}
+{{template "settings-nav" .}}
+{{with .Data}}
+<p class="lede">Agents and models are off until you turn them on. A model never sees anything of yours that you did not allow for it below, and every call is written to the audit log with who asked and which model, never what was said.</p>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Notice}}<p class="alert alert-info" role="status">{{.Notice}}</p>{{end}}
+
+<section class="card" aria-labelledby="switch-title">
+  <h2 id="switch-title" class="eyebrow">Agents and models</h2>
+  <p>
+    {{if .Enabled}}<span class="pill pill-ok">On</span>{{else}}<span class="pill pill-neutral">Off</span>{{end}}
+    <span class="muted">{{if .Enabled}}A feature below calls a model only if its own toggle is on.{{else}}With this off nothing calls a model, whatever the toggles below say.{{end}}</span>
+  </p>
+  <form method="post" action="/settings/models/switch" class="actions">
+    {{if .Enabled}}<input type="hidden" name="enabled" value="0"><button type="submit">Turn agents and models off</button>
+    {{else}}<input type="hidden" name="enabled" value="1"><button type="submit" class="primary">Turn agents and models on</button>{{end}}
+  </form>
+  <h3>Features</h3>
+  <ul class="plain features">
+    {{range .Features}}
+    <li>
+      <div>
+        <strong>{{.Name}}</strong>
+        {{if .On}}<span class="pill pill-ok">On</span>{{else}}<span class="pill pill-neutral">Off</span>{{end}}
+        {{if .NotBuilt}}<span class="pill pill-warn">Not built yet</span>{{end}}
+        <p class="help">{{.Help}}</p>
+      </div>
+      <form method="post" action="{{.Action}}" class="inline">
+        {{if .On}}<input type="hidden" name="enabled" value="0"><button type="submit" aria-label="Turn off {{.Name}}">Turn off</button>
+        {{else}}<input type="hidden" name="enabled" value="1"><button type="submit" aria-label="Turn on {{.Name}}">Turn on</button>{{end}}
+      </form>
+    </li>
+    {{end}}
+  </ul>
+  {{if not .Enabled}}<p class="muted">The toggles are kept while the switch is off; they take effect when you turn it on.</p>{{end}}
+</section>
+
+<section class="card" aria-labelledby="providers-title">
+  <h2 id="providers-title" class="eyebrow">Model providers</h2>
+  <p class="muted">A model provider is a plugin that holds one provider's key and reaches only that provider. Where its models run and what it keeps are what the plugin declares; OpenFief can't check them. Install one on the <a href="/plugins">Plugins</a> page.</p>
+  {{range .Providers}}
+  <div class="provider">
+    <h3><span class="mono">{{.Instance}}</span> {{if .Available}}<span class="pill pill-ok">Answering</span>{{else}}<span class="pill pill-warn">Not answering now</span>{{end}}</h3>
+    {{if .Available}}
+    <p>{{.Location}} {{.Retention}}</p>
+    {{if .Models}}
+    <div class="table"><table>
+      <thead><tr><th scope="col">Model</th><th scope="col" class="num">Input per 1M tokens</th><th scope="col" class="num">Output per 1M tokens</th><th scope="col" class="num">Context</th><th scope="col" class="num">Max output</th><th scope="col">Tools</th><th scope="col">Structured output</th></tr></thead>
+      <tbody>
+      {{range .Models}}
+      <tr><th scope="row" class="mono ident">{{.ID}}</th><td class="num">{{.Input}}</td><td class="num">{{.Output}}</td><td class="num">{{.Context}}</td><td class="num">{{.MaxOutput}}</td><td>{{if .Tools}}Yes{{else}}No{{end}}</td><td>{{if .Structured}}Yes{{else}}No{{end}}</td></tr>
+      {{end}}
+      </tbody>
+    </table></div>
+    {{else}}<p class="muted">It lists no models.</p>{{end}}
+    {{else}}<p class="muted">It did not answer, so its models and terms are not shown. Models of it that you allowed or put on a route stay below.</p>{{end}}
+  </div>
+  {{else}}
+  <p class="muted">No model provider runs. Install one, such as <span class="mono">model-openai</span> for OpenAI, OpenRouter, Ollama or LM Studio, on the <a href="/plugins">Plugins</a> page.</p>
+  {{end}}
+</section>
+
+<section class="card" aria-labelledby="tiers-title">
+  <h2 id="tiers-title" class="eyebrow">Which model may receive what</h2>
+  <p class="muted">Every piece of data sent to a model has a data tier. A model gets a request only if you allowed it for every tier in it. Nothing is allowed until you tick it: a tier with nothing ticked goes to no model.</p>
+  <dl class="tiers">
+    {{range .Tiers}}<dt><span class="pill pill-neutral mono">{{.Tier}}</span> {{.Name}}</dt><dd>{{.Holds}}</dd>{{end}}
+  </dl>
+  {{if .Models}}
+  <form method="post" action="/settings/models/tiers">
+    <div class="table"><table class="tier-grid">
+      <thead><tr><th scope="col">Model</th>{{range .Tiers}}<th scope="col" class="center">{{.Tier}}</th>{{end}}</tr></thead>
+      <tbody>
+      {{range .Models}}
+      <tr>
+        <th scope="row"><span class="mono ident">{{.Ref}}</span>{{with .Note}}<br><span class="help">{{.}}</span>{{end}}</th>
+        {{range .Cells}}<td class="center"><input type="checkbox" name="allow" value="{{.Value}}" aria-label="{{.Label}}"{{if .Checked}} checked{{end}}></td>{{end}}
+      </tr>
+      {{end}}
+      </tbody>
+    </table></div>
+    <div class="actions"><button type="submit" class="primary">Save what each tier allows</button></div>
+  </form>
+  {{else}}<p class="muted">No model to allow yet.</p>{{end}}
+</section>
+
+<section class="card" aria-labelledby="routes-title">
+  <h2 id="routes-title" class="eyebrow">Routes</h2>
+  <p class="muted">Each role has a primary model and fallbacks, tried in order when the one before is down or too slow. A fallback is held to the same tiers as the primary.</p>
+  {{range .Routes}}
+  {{$route := .}}
+  <div class="route" id="route-{{.Role}}">
+    <h3>{{.Name}} {{if .On}}<span class="pill pill-ok">In use</span>{{else}}<span class="pill pill-neutral">Not in use</span>{{end}}</h3>
+    <p class="muted">{{.Does}}</p>
+    {{with .Warning}}<p class="alert alert-warn" role="note">{{.}}</p>{{end}}
+    {{if .Entries}}
+    <ol class="route-list">
+      {{range .Entries}}
+      <li>
+        <div class="route-entry">
+          <span class="label">{{.Position}}</span>
+          <span class="mono ident">{{.Ref}}</span>
+          {{if eq .Problem "broken"}}<span class="pill pill-danger">Broken</span>{{else if .Problem}}<span class="pill pill-warn">Check</span>{{end}}
+          {{range .Missing}}<span class="pill pill-neutral mono" title="This model may not receive {{.}}">not {{.}}</span>{{end}}
+        </div>
+        {{with .ProblemWords}}<p class="help">{{.}}</p>{{end}}
+        {{if eq .Problem "broken"}}<p class="help">Fix it: remove this entry and choose another model, or install the plugin on the <a href="/plugins">Plugins</a> page.</p>{{end}}
+        <div class="route-actions">
+          {{if not .First}}<form method="post" action="{{$route.Action}}" class="inline"><input type="hidden" name="op" value="up"><input type="hidden" name="index" value="{{.Index}}"><button type="submit" aria-label="Move {{.Ref}} up">Up</button></form>{{end}}
+          {{if not .Last}}<form method="post" action="{{$route.Action}}" class="inline"><input type="hidden" name="op" value="down"><input type="hidden" name="index" value="{{.Index}}"><button type="submit" aria-label="Move {{.Ref}} down">Down</button></form>{{end}}
+          <form method="post" action="{{$route.Action}}" class="inline"><input type="hidden" name="op" value="remove"><input type="hidden" name="index" value="{{.Index}}"><button type="submit" class="quiet" aria-label="Remove {{.Ref}}">Remove</button></form>
+        </div>
+      </li>
+      {{end}}
+    </ol>
+    {{else}}<p class="muted">No model yet: this role can't call one.</p>{{end}}
+    <form method="post" action="{{.Action}}" class="route-add">
+      <input type="hidden" name="op" value="add">
+      <div class="fields">
+        {{if .Choices}}
+        <div class="field"><label for="add-{{.Role}}">Add a model</label>
+          <select id="add-{{.Role}}" name="model"><option value="">Choose a model</option>{{range .Choices}}<option value="{{.}}">{{.}}</option>{{end}}</select></div>
+        {{end}}
+        <div class="field"><label for="ref-{{.Role}}">{{if .Choices}}Or type provider/model{{else}}Add provider/model{{end}}</label>
+          <input id="ref-{{.Role}}" name="ref" autocomplete="off" spellcheck="false" placeholder="openrouter/openai/gpt-oss-120b">
+          <p class="help">The provider instance's name, a slash and the model's id.</p></div>
+      </div>
+      <div class="actions"><button type="submit">Add to this route</button></div>
+    </form>
+  </div>
+  {{end}}
+</section>
+{{end}}
+{{end}}

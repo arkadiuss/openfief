@@ -1000,3 +1000,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-109a1443525c
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-testmigrationonanemptyinstallationhastheownerrow
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:15:46.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b85d27e2524c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-start-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:26.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-156d5150d0a0
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-entries-after
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:57.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-651fc13f626c
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-change-rules
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:12.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9675f77a9bb4
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-change-rules
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:12.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ad63bfeca7

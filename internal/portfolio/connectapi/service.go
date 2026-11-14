@@ -79,6 +79,8 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
+	case errors.Is(err, kernel.ErrAuditUnavailable):
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuditUnavailable)
 	case errors.Is(err, portfolio.ErrInvalidModel):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	}

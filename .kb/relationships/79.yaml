@@ -1280,3 +1280,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3919ffa7e43b
+  - type: implements
+    from: SYM-viewers-internal-identity-connectapi-people-authservice-revokeperson
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:12:40.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b292c6f61f68
+  - type: covered_by
+    from: SYM-viewers-internal-identity-connectapi-people-authservice-revokeperson
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:12:40.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4da1e57a05fc
+  - type: executable_for
+    from: SYM-people-internal-views-ui-fakes_test-fakeauth-revokeperson
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:39:48.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6204ae81f154
+  - type: specified_by
+    from: REQ-maintainer-weekly-and-on-ask
+    to: SCEN-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:07:44.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d842376afd6
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:46.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59800dd3bd23
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:46.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62dfae361913
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-get-started
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:46.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df30e590bea1
+  - type: covered_by
+    from: SYM-ms1-ui-models-provider-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:39.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c2b67a1e28a
+  - type: implements
+    from: SYM-ms1-ui-models-provider-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:40.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74178d29fd7e

@@ -1049,3 +1049,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f028578b8e1
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-queue
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:46.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97321156cb6b
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-queue
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:29:46.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f2f8de3a106
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-work
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:26.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ef1ed7b8381
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-noon-utc
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:45.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c97f9d11eb4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-apply-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:50:18.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5fdd34e829b
+  - type: implements
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:54:05.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-662ac3ca9e9c
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:54:05.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0250d9989e25

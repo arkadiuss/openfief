@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d759770135f9
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-asker-ask
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:12.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e6d9045ba0
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-asker-ask
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:16:12.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8537aa9b3fa4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-apply-of-aproposal-the-model-outgrew-is-refused-and-audited
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:07.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c11e722c588a
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-check-refused-without-the-log
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:24.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41b74e02678

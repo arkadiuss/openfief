@@ -71,6 +71,22 @@ type Passkey struct {
 	CreatedAt         time.Time
 	// LastUsedAt is the last login with it; zero if it was never used.
 	LastUsedAt time.Time
+	// PersonID is the person the passkey belongs to: OwnerPersonID, or a
+	// viewer's ID. Empty means the owner, as every passkey from before
+	// viewers does.
+	PersonID string
+	// DisabledAt is when revoking its person disabled it; zero while it
+	// works. A disabled passkey signs nobody in.
+	DisabledAt time.Time
+}
+
+// Person returns the ID of the person p belongs to: the owner's when none is
+// set.
+func (p *Passkey) Person() string {
+	if p.PersonID == "" {
+		return OwnerPersonID
+	}
+	return p.PersonID
 }
 
 // ID returns the credential ID in unpadded base64url, as the browser and

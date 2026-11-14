@@ -993,3 +993,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-322b0159322d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-descriptor
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:22:29.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3efdbb6e0e6
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personaccess-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:22:29.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccd3896b5b86
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-weekly-does-nothing-while-arun-is-active
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:34:09.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50144c7fd0a0
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:18.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33a85439371f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:18.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5680164a80cd
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-target
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:18.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc3bd682221
+  - type: executable_for
+    from: SYM-invites-internal-identity-connectapi-invites_test-invitestore-pendinginvites
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:32:31.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8745dddd50ba
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-auditrow
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:26.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dcf54301547
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-auditrow
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:26.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0db1a5b96ab6
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-sortedkeys
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:18:27.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ce0fd6d072
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-sortedkeys
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:18:27.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40c84d9205ce
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-audit_test-testaccesshistory
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:18:47.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afc79d514432
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-refused-weekly-attempts-count-as-failures
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:48:17.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b028650911d
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-providers
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:13.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b538ce4abcf4
+  - type: implements
+    from: SYM-ms1-app-settings-settings-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:13.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15a13c77bb10
+  - type: specified_by
+    from: REQ-identity-audit-plugin-installs
+    to: SCEN-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:39:49.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-302fde508e35
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-test-owner-sessions-refuse-to-audit-what-they-cannot
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:52:14.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4939da711252

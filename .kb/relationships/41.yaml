@@ -1021,3 +1021,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ebc963836b8
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-holdings-holdings
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:34.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a6691204849
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-holdings-holdings
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:16:35.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bcd2cb9c656
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-apply-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:13:30.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8f324c38c7b
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-apply-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:13:30.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32dc4fdb6064
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-apply-proposal
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:13:30.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019b698d4639
+  - type: covered_by
+    from: SYM-ms1-ui-models-grid-rows
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:04.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c64dbe95b0c
+  - type: implements
+    from: SYM-ms1-ui-models-grid-rows
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:35:04.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00abcaf01a7d
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-get-model-settings-response-get-broken
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:23:05.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f3dac5baeb
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-get-model-settings-response-get-broken
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:23:05.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1745f52c4604
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-test-covered-elsewhere-names-tests-that-exist
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:41.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0e83e11ae30

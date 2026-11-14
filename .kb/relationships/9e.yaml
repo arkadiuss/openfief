@@ -1126,3 +1126,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9aaeaa47569
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-newviewerworld
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:35:54.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e77c35136d28
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:09.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b036d084688a
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:09.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5d16a236733
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-created-at
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:09.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66ec121d4194
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-audit_test-testauditlogmalformedfilters
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:31.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ee89dde277d

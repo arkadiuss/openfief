@@ -1294,3 +1294,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce7e95812dfd
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:25.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c32debfa65d
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:07:25.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e8ed995632
+  - type: verified_by
+    from: SCEN-maintainer-note-and-proposals
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:07:25.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd2a3513cfad
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-new-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:34:40.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b6286931641
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-new-maintainer
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:34:40.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e5604404b7
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-fake-runner-work
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:26.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e32e148a171
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-testinvitelifetimedefaultstoanhour
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:49.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-603ea49b7b7d
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-reset
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:26.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ef1b74f32cc
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-reset
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:26.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dc3328385c6
+  - type: covered_by
+    from: SYM-ms1-core-modelrouter-provider-lister
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:26:33.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54789fdadce6
+  - type: implements
+    from: SYM-ms1-core-modelrouter-provider-lister
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:26:33.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3753f6ddcdd
+  - type: covered_by
+    from: SYM-ms1-kube-discovery-discovery-model-provider-instances
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-14T00:26:52.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10ce42578b66
+  - type: implements
+    from: SYM-ms1-kube-discovery-discovery-model-provider-instances
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:26:52.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbda6b676f7d
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-test-every-owner-procedure-is-classified-for-the-audit-log
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:30.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46c010db282d
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-is-positive-decimal
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:56:04.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d72da3c11e6
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-is-positive-decimal
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:56:04.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93364ae6c2ec

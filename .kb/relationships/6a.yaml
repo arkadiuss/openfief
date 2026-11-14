@@ -797,3 +797,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dbec7dab6bb
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-proposal-words
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T22:00:18.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c0b2d1badcf
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:32.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb022486c5d
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:32.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2106d7f7be80
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:32.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9512723cb92
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:11:32.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f29af46bdec4
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:11:32.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a234161cf065
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-response-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:11:32.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2640f175bac9
+  - type: implements
+    from: SYM-s8-internal-identity-postgres-plugins-store-plugin-generations
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:57:05.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a87169be80b1
+  - type: covered_by
+    from: SYM-s8-internal-identity-postgres-plugins-store-plugin-generations
+    to: TEST-identity-audit-change-postgres
+    created_at: 2026-11-14T02:57:05.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8063465a8541

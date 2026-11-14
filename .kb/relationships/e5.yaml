@@ -979,3 +979,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20b1bf38b948
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-testviewerseesonlywhattheyaregranted
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:08:06.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7ce2a676cc
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-sessions
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:12.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-876dfb9d52c2
+  - type: executable_for
+    from: SYM-invites-internal-views-ui-invites_test-testaccesspendinginvites
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:33:57.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48e8dab370db

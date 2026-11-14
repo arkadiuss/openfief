@@ -755,3 +755,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e22c065027d
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-grantpolicy-test-fakecover
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T21:14:09.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aba6e53de5d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-test-parse-answer-drops-aproposal-that-breaks-arule
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:45:27.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-060d4c3b4b3f
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-server-maintainer-view
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:01.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f028c38fc06a
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-server-maintainer-view
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:53:01.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb19a95e1640
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-ask-the-maintainer
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:35.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c52677a09ca8
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:41.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44c4ec911b05
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:41.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6b73b76e7d5
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:41.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b719635384a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-pending-proposals
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:36.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c35b2c927e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-pending-proposals
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:36.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-021a80d9b804
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-pending-proposals
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:36.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a003f6a192bb
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:52.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71c499dbf1e1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:52.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-753d215422b1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:52.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4236c5975754
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-operator-entry
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:34.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-860da65131a0

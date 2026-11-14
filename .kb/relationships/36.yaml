@@ -916,3 +916,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-431773604c08
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T19:57:55.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e1850b851fc
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:00:49.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de2b7372f689
+  - type: verified_by
+    from: SCEN-identity-revoke-viewer
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:00:49.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31215818d63d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protomessage
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:11.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5163c2682fdc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:11.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8edff64a2e0
+  - type: covered_by
+    from: SYM-ms1-postgres-store-store-in-tx
+    to: TEST-models-postgres-store
+    created_at: 2026-11-14T00:26:00.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-338fb34981a9
+  - type: implements
+    from: SYM-ms1-postgres-store-store-in-tx
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:26:00.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52d11e5303fb
+  - type: covered_by
+    from: SYM-ms1-ui-models-problem
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:32.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86bdc65e1ebc
+  - type: implements
+    from: SYM-ms1-ui-models-problem
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:37:32.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49558ae86c92

@@ -881,3 +881,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6a6c71fe681
+  - type: verified_by
+    from: SCEN-identity-people-listed
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T19:57:56.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea13bce9c471
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getorigin
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:51.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11b1eeb22621
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getorigin
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:52.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2718710e2fda
+  - type: implements
+    from: SYM-viewers-internal-identity-app-passkeys-auth-registrationperson
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:34:42.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebf1240fa16f
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-passkeys-auth-registrationperson
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:34:42.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8587e1d6cbf9
+  - type: implements
+    from: SYM-people-internal-views-ui-people-lifetime
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:27.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a09fdbb166b
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-lifetime
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:27.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb8921d9d1cb

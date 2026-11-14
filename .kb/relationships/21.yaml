@@ -874,3 +874,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e25619918b64
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protoreflect
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:40.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ac540e98258
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:40.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bcc32eac4fe
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-reset
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:37.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d4ea9d1e731
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:37.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1309816bf259
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-settle
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:34.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-886e53c9c0ee
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-settle
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:30:34.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ca398ce3ac
+  - type: covered_by
+    from: SYM-maintainer-portfolio-drift-drift
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:39:34.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cdd6dde9020
+  - type: implements
+    from: SYM-maintainer-portfolio-drift-drift
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:39:34.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3a2c141a04
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:52.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be6756a6d8a8
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:52.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9620f1b7117c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:52.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ab6a7928aa
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-server-loadhistory
+    to: REQ-ui-access-history
+    created_at: 2026-11-14T00:18:37.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48aae2a7b643
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-server-loadhistory
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:18:38.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6abea6f4be20
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-calls-to
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:40:35.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d14cccf0d1f

@@ -211,6 +211,9 @@ type Tickers struct {
 	// Assertions withdraws the holdings asserted under the ISIN a
 	// correction replaces; without it a correction to another ISIN fails.
 	Assertions AssertionWithdrawer
+	// Audit keeps each confirmation and correction with its audit entry;
+	// nil enters none.
+	Audit ChangeAuditor
 }
 
 // ErrNoAssertionWithdrawer reports a correction to another ISIN by a
@@ -262,16 +265,23 @@ func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c in
 	if err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
 	}
-	b, err := t.Store.ConfirmTicker(ctx, c)
+	var sum ingest.ImportSummary
+	err = audited(ctx, t.Audit, origin, sessionToken, auditTickerConfirmed, []string{auditInstrumentRefPrefix + c.ISIN.String()}, func(ctx context.Context) error {
+		b, confirmErr := t.Store.ConfirmTicker(ctx, c)
+		if confirmErr != nil {
+			return fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, confirmErr)
+		}
+		if nameErr := t.name(ctx, pending, c); nameErr != nil {
+			return fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, nameErr)
+		}
+		var bookErr error
+		if sum, bookErr = t.bookRows(ctx, &b); bookErr != nil {
+			return fmt.Errorf("booking %s of %s: %w", c.Symbol, c.Instance, bookErr)
+		}
+		return nil
+	})
 	if err != nil {
-		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
-	}
-	if err = t.name(ctx, pending, c); err != nil {
-		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
-	}
-	sum, err := t.bookRows(ctx, &b)
-	if err != nil {
-		return ingest.ImportSummary{}, fmt.Errorf("booking %s of %s: %w", c.Symbol, c.Instance, err)
+		return ingest.ImportSummary{}, err
 	}
 	return sum, nil
 }
@@ -290,13 +300,20 @@ func (t *Tickers) Correct(ctx context.Context, origin, sessionToken string, c in
 	if err := t.authorize(ctx, origin, sessionToken, &c, true); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("correcting a ticker: %w", err)
 	}
-	b, err := t.Store.CorrectTicker(ctx, c)
+	var sum ingest.ImportSummary
+	err := audited(ctx, t.Audit, origin, sessionToken, auditTickerCorrected, []string{auditInstrumentRefPrefix + c.ISIN.String()}, func(ctx context.Context) error {
+		b, correctErr := t.Store.CorrectTicker(ctx, c)
+		if correctErr != nil {
+			return fmt.Errorf("correcting %s of %s: %w", c.Symbol, c.Instance, correctErr)
+		}
+		var bookErr error
+		if sum, bookErr = t.bookRows(ctx, &b); bookErr != nil {
+			return fmt.Errorf("booking %s of %s anew: %w", c.Symbol, c.Instance, bookErr)
+		}
+		return nil
+	})
 	if err != nil {
-		return ingest.ImportSummary{}, fmt.Errorf("correcting %s of %s: %w", c.Symbol, c.Instance, err)
-	}
-	sum, err := t.bookRows(ctx, &b)
-	if err != nil {
-		return ingest.ImportSummary{}, fmt.Errorf("booking %s of %s anew: %w", c.Symbol, c.Instance, err)
+		return ingest.ImportSummary{}, err
 	}
 	return sum, nil
 }

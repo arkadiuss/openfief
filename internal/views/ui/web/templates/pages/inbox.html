@@ -74,6 +74,26 @@
 </form>
 {{end}}
 
+{{define "inbox-proposal"}}
+<div class="table"><table>
+  <thead><tr><th scope="col">Target</th><th scope="col" class="num">Target now</th><th scope="col" class="num">Proposed</th><th scope="col" class="num">Held now</th><th scope="col" class="num">Drift</th><th scope="col">Reason</th></tr></thead>
+  <tbody>
+  {{range .Changes}}
+  <tr>
+    <td class="mono">{{proposalTarget .Target}}</td>
+    <td class="num">{{.BeforePercent}}%</td>
+    <td class="num"><strong>{{.AfterPercent}}%</strong></td>
+    {{if .Held}}<td class="num">{{.CurrentPercent}}%</td><td class="num">{{driftPoints .DriftPoints}} pp</td>{{else}}<td class="num muted">not held</td><td class="num muted">none</td>{{end}}
+    <td>{{.Reason}}</td>
+  </tr>
+  {{end}}
+  </tbody>
+</table></div>
+<p class="muted">Weights are percent of the whole portfolio; drift is what you hold minus the target, in percentage points. Proposed by {{.Model}} on {{.CreatedAt}}. Applying changes the model portfolio's targets only: nothing is bought or sold.</p>
+{{with .Note}}<details class="change"><summary>The maintainer's note</summary><p class="model-text">{{.}}</p></details>{{end}}
+{{with proposalStatus .}}<p class="muted">{{.}}</p>{{end}}
+{{end}}
+
 {{define "inbox-item"}}
 <li class="item" id="item-{{.Item.Id}}">
   <div class="item-head">
@@ -92,7 +112,10 @@
   {{with .Transfer}}{{template "inbox-transfer" .}}{{end}}
   {{with .Suggestion}}{{template "inbox-transfer" .}}{{end}}
   {{if .Brokers}}{{template "inbox-map" .}}{{end}}
+  {{with .Proposal}}{{template "inbox-proposal" .}}{{end}}
   <div class="actions">
+    {{if .DecideProposal}}<form method="post" action="/inbox/proposals/apply" class="inline"><input type="hidden" name="id" value="{{.Proposal.Id}}"><button type="submit" class="primary">Apply</button></form>
+      <form method="post" action="/inbox/proposals/dismiss" class="inline"><input type="hidden" name="id" value="{{.Proposal.Id}}"><button type="submit">Dismiss</button></form>{{end}}
     {{with .PriceCheck}}{{if .Latest.Acknowledge}}{{template "price-check-acknowledge" .Latest}}{{end}}{{end}}
     {{if .Decide}}<form method="post" action="/inbox/transfers/confirm" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="primary">Confirm</button></form>
       <form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="danger">Not a transfer</button></form>{{else if .Waiting}}<span class="muted">Waiting for the owner.</span>{{end}}

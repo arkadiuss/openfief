@@ -47,6 +47,9 @@ type Settings struct {
 	// fees are the bonds' stored fees the owner confirms or overrides
 	// (WithBondFees); nil until set.
 	fees BondFees
+	// audit keeps each change with its audit entry (WithAudit); nil enters
+	// none.
+	audit ChangeAuditor
 }
 
 // NewSettings returns the settings use cases over store and recorder, with
@@ -54,6 +57,13 @@ type Settings struct {
 // owner's sessions checked by owners.
 func NewSettings(recorder *InputRecorder, store SettingsReader, owners Owners, pack jurisdiction.Pack, reporting kernel.Currency) *Settings {
 	return &Settings{recorder: recorder, store: store, owners: owners, pack: pack, reporting: reporting}
+}
+
+// WithAudit has every change of a setting entered in the audit log through
+// a (D-211), and returns s.
+func (s *Settings) WithAudit(a ChangeAuditor) *Settings {
+	s.audit = a
+	return s
 }
 
 // Display returns the reporting currency and the number format: the
@@ -100,7 +110,10 @@ func (s *Settings) SetNumberFormat(ctx context.Context, origin, sessionToken str
 	if err := s.checkOwner(ctx, origin, sessionToken); err != nil {
 		return err
 	}
-	if err := s.recorder.RecordNumberFormat(ctx, f); err != nil {
+	err := auditedSetting(ctx, s.audit, origin, sessionToken, settingNumberFormat, func(ctx context.Context) error {
+		return s.recorder.RecordNumberFormat(ctx, f)
+	})
+	if err != nil {
 		return fmt.Errorf("setting the number format: %w", err)
 	}
 	return nil
@@ -113,7 +126,10 @@ func (s *Settings) SetMarginalRate(ctx context.Context, origin, sessionToken str
 	if err := s.checkOwner(ctx, origin, sessionToken); err != nil {
 		return err
 	}
-	if err := s.recorder.RecordMarginalRate(ctx, rate); err != nil {
+	err := auditedSetting(ctx, s.audit, origin, sessionToken, settingMarginalRate, func(ctx context.Context) error {
+		return s.recorder.RecordMarginalRate(ctx, rate)
+	})
+	if err != nil {
 		return fmt.Errorf("setting the marginal rate: %w", err)
 	}
 	return nil

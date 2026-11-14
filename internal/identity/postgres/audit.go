@@ -96,9 +96,7 @@ func auditQuery(f *identity.AuditFilter) auditSQL {
 	if f.ActorID != "" {
 		add("actor_id = $$", f.ActorID)
 	}
-	if f.Action != "" {
-		add("action = $$", string(f.Action))
-	}
+	addWhat(f, add)
 	if !f.From.IsZero() {
 		add("at >= $$", f.From)
 	}
@@ -115,6 +113,24 @@ func auditQuery(f *identity.AuditFilter) auditSQL {
 	// One more than the page, to know whether another follows.
 	args = append(args, f.PageSize()+1)
 	return auditSQL{text: query + " ORDER BY id DESC LIMIT $" + strconv.Itoa(len(args)), args: args}
+}
+
+// addWhat adds, through add, the conditions of the action, the set of actions
+// and the outcome f selects.
+func addWhat(f *identity.AuditFilter, add func(cond string, v any)) {
+	if f.Action != "" {
+		add("action = $$", string(f.Action))
+	}
+	if len(f.Actions) > 0 {
+		names := make([]string, 0, len(f.Actions))
+		for _, a := range f.Actions {
+			names = append(names, string(a))
+		}
+		add("action = ANY($$)", names)
+	}
+	if f.Outcome != "" {
+		add("outcome = $$", string(f.Outcome))
+	}
 }
 
 // scanAudit reads a row of the audit_log columns AuditEntries selects.

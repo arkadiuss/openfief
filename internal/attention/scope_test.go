@@ -33,6 +33,8 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindInstrumentUnclassified, attention.GroupDecisions},
 		{attention.KindBondFeeAssumed, attention.GroupDecisions},
 		{"model-route-broken", attention.GroupDecisions},
+		{"model-target-proposal", attention.GroupDecisions},
+		{"maintainer-failing", attention.GroupDecisions},
 		{attention.KindViewPluginUngranted, attention.GroupDecisions},
 		{"some-later-check", attention.GroupDecisions},
 	}
@@ -105,6 +107,8 @@ func TestScopeOf(t *testing.T) {
 			want: attention.Scope{},
 		},
 		{name: "an ungranted view plugin is tied to no account or connector", kind: attention.KindViewPluginUngranted, subject: "ghostfolio"},
+		{name: "a maintainer's proposal is about the whole portfolio", kind: "model-target-proposal", subject: "00112233445566aa"},
+		{name: "a failing maintainer is about the whole portfolio", kind: "maintainer-failing", subject: "maintainer"},
 		{
 			name: "a ticker", kind: attention.KindTickerUnconfirmed, subject: "xtb-main/CDR.PL",
 			want: attention.Scope{Instance: "xtb-main"},

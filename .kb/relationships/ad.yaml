@@ -1322,3 +1322,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b5e3648fd9a
+  - type: verified_by
+    from: SCEN-views-ask-box-viewer-granted-only
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T19:58:03.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c29a4c29897d
+  - type: implements
+    from: SYM-viewers-cmd-core-grants-sleeveplacements
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:07:33.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fa0f2bada41
+  - type: covered_by
+    from: SYM-viewers-cmd-core-grants-sleeveplacements
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:07:33.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09d1de81660
+  - type: implements
+    from: SYM-viewers-internal-identity-person-viewerinvite
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T21:14:19.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61a51013330d
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-viewerinvite
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T21:14:19.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7f2effde254
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:07:27.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e400d1e01ec7
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:07:27.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdfe0d6cd2ed
+  - type: verified_by
+    from: SCEN-maintainer-sends-figures-through-router
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:07:27.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a22a57812ce
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-note
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:08.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26854a2efdaa
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-note
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:23:08.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b223bf2217
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-proposals-dismiss-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:12.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e0f2ccf172
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-testpendinginvitesandcancel
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:54.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8428263ef609
+  - type: implements
+    from: SYM-invites-internal-identity-connectapi-people-authservice-cancelinvite
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:33:13.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1fe702eaf13
+  - type: covered_by
+    from: SYM-invites-internal-identity-connectapi-people-authservice-cancelinvite
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:33:13.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1369262631f
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-scripted-plugins
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:51:51.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f20ce50f378
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-validate-change
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:29.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76de9df79f2
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-validate-change
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:29.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-110a651cb400
+  - type: implements
+    from: SYM-s8-internal-portfolio-app-audit-audited
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:42.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6819104cc050
+  - type: covered_by
+    from: SYM-s8-internal-portfolio-app-audit-audited
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:42.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29f375ba1d7f

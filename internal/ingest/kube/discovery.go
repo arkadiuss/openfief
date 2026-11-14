@@ -136,6 +136,31 @@ func (d *Discovery) ConnectorInstances(context.Context) ([]string, error) {
 	return names, nil
 }
 
+// ModelProviderInstances returns the names of the model-provider instances
+// that run now, in name order: Plugins whose running version may act as a
+// model provider and that are Ready, with a Service the core can call.
+func (d *Discovery) ModelProviderInstances(context.Context) ([]string, error) {
+	if !d.started {
+		return nil, ErrNotStarted
+	}
+	objs, err := d.plugins.Lister().List(labels.Everything())
+	if err != nil {
+		return nil, fmt.Errorf("listing plugins: %w", err)
+	}
+	var names []string
+	for _, o := range objs {
+		u, ok := o.(*unstructured.Unstructured)
+		if !ok || !runningAs(u, CapabilityModelProvider) {
+			continue
+		}
+		if _, err := d.BaseURL(u.GetName()); err == nil {
+			names = append(names, u.GetName())
+		}
+	}
+	slices.Sort(names)
+	return names, nil
+}
+
 // Declarations returns what the running version of instance declares in
 // its manifest (D-112, D-109, D-123): its Plugin resource's
 // status.deployed.manifest, the version the operator verified and runs,

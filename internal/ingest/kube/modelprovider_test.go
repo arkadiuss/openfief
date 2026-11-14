@@ -2,6 +2,7 @@ package kube_test
 
 import (
 	"errors"
+	"slices"
 	"testing"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -57,4 +58,34 @@ func unreconciled(name string) *unstructured.Unstructured {
 		"kind":       "Plugin",
 		"metadata":   map[string]any{"name": name, "namespace": "openfief"},
 	}}
+}
+
+// TestModelProviderInstances checks the list the settings page offers: the
+// model-provider instances that run now, in name order, with an address; a
+// connector, a view, one that is not ready and one without a Service are left
+// out; and before Start the list can't be made.
+func TestModelProviderInstances(t *testing.T) {
+	t.Parallel()
+	dyn := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(runtime.NewScheme(),
+		map[schema.GroupVersionResource]string{kube.PluginResource(): "PluginList"},
+		plugin("zeta", true, "model-provider"),
+		plugin("alpha", true, "model-provider"),
+		plugin("llm-down", false, "model-provider"),
+		plugin("no-service", true, "model-provider"),
+		plugin("xtb", true, "connector"),
+		plugin("ui", true, "view"),
+		unreconciled("unreconciled"),
+	)
+	client := fake.NewClientset(service("zeta", "192.0.2.20"), service("alpha", "192.0.2.21"), service("llm-down", "192.0.2.22"), service("xtb", "192.0.2.23"))
+	d := kube.NewDiscovery(dyn, client, "openfief", 0)
+	if _, err := d.ModelProviderInstances(t.Context()); !errors.Is(err, kube.ErrNotStarted) {
+		t.Errorf("before Start = %v, want ErrNotStarted", err)
+	}
+	if err := d.Start(t.Context()); err != nil {
+		t.Fatalf("Start: %v", err)
+	}
+	got, err := d.ModelProviderInstances(t.Context())
+	if err != nil || !slices.Equal(got, []string{"alpha", "zeta"}) {
+		t.Errorf("ModelProviderInstances = %v, %v; want alpha and zeta", got, err)
+	}
 }

@@ -1077,3 +1077,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f764b1f33cef
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T21:14:38.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc0b31116da5
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:38.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d55fa5251864
+  - type: executable_for
+    from: SYM-tooling-kibi-install-status-check-test
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:36.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1216099e6c2
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-after-percent
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:28.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37577090d721
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-after-percent
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:28.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b96073e1de2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-after-percent
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:28.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-422b7795491a
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:14.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64f9d5ddd4a9
+  - type: implements
+    from: SYM-ms1-ui-models-route-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:35:14.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f15fb81d36b7

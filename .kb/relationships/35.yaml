@@ -1000,3 +1000,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deb0e859b33a
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-nothingshared
+    to: REQ-ui-viewer-nothing-shared
+    created_at: 2026-11-13T22:13:30.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67012557a794
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-server-nothingshared
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:13:30.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40084a49f49f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-change
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:57.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf0feb36152
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-pending-proposal
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:54:24.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dd45266a6e2
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:00.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-078f452503c1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:00.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59ce0c936b22
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:00.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-febc4290f2e7

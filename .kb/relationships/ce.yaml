@@ -1084,3 +1084,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ade9f2ea4e42
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-grantfixture-checkrevocationentries
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:47:20.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d09656ddb9bf
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-grantpolicy-test-fakegrantreader
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T21:14:04.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9cef423e60
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-failure-words
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:16.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-096b3052bab7
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-failure-words
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:53:17.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d256f1897f34
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-fake-maintainer-locked
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:07.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a66f4a9eefcd
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:34:36.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91fd3003e848
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:34:36.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-273add0ef643
+  - type: covered_by
+    from: SYM-ms1-ui-models-model-tiers
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:00.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a5101ddbd8a
+  - type: implements
+    from: SYM-ms1-ui-models-model-tiers
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:34:00.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04e9fdf18f30

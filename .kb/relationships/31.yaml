@@ -888,3 +888,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f7989b0f8f2
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-testupdateviewergrants
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:46.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d36d2df8572
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-core-test-real-core-wait-for-failure
+    to: TEST-core-maintainer-real-core
+    created_at: 2026-11-13T21:18:11.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d0aa5b8b6d4
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-stored-proposal
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:19.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cdb2e0c2ce1
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-stored-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:23:19.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cfbef47bb30
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-audit-dropped
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:18.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17dfd6a06050
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-audit-dropped
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:30:18.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e02257d00e7d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-drift-test-drift-model
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:39:53.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c08dce6ee02
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-adecision-of-aread-session-is-refused-before-the-core
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:56:15.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd9b5c7ffc4a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:09:31.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7bb154018ad
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:09:31.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-309da90978ff
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-request-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:09:31.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af511385155b
+  - type: executable_for
+    from: SYM-ms1-kube-modelprovider-test-test-model-provider-instances
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-14T00:40:17.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b0994c25ef
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-outcome
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:07.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae6c6175dd6

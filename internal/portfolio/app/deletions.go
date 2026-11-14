@@ -32,7 +32,10 @@ func (s *Sleeves) DeleteSleeve(ctx context.Context, origin, sessionToken string,
 	if _, ok := sleeveOf(sleeves, id); !ok {
 		return fmt.Errorf("deleting sleeve %q: %w", id, ErrNotFound)
 	}
-	if err := s.Deletions.DeleteSleeve(ctx, id); err != nil {
+	err = audited(ctx, s.Audit, origin, sessionToken, auditSleeveDeleted, []string{"sleeve:" + string(id)}, func(ctx context.Context) error {
+		return s.Deletions.DeleteSleeve(ctx, id)
+	})
+	if err != nil {
 		return fmt.Errorf("deleting sleeve %s: %w", id, err)
 	}
 	return nil
@@ -52,7 +55,10 @@ func (s *Sleeves) DeleteKind(ctx context.Context, origin, sessionToken string, k
 	if _, ok := kindOf(kinds, key); !ok {
 		return fmt.Errorf("deleting sleeve kind %q: %w", key, ErrNotFound)
 	}
-	if err := s.Deletions.DeleteKind(ctx, key); err != nil {
+	err = audited(ctx, s.Audit, origin, sessionToken, auditSleeveKindDeleted, []string{"sleeve_kind:" + string(key)}, func(ctx context.Context) error {
+		return s.Deletions.DeleteKind(ctx, key)
+	})
+	if err != nil {
 		return fmt.Errorf("deleting sleeve kind %s: %w", key, err)
 	}
 	return nil

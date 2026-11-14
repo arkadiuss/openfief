@@ -937,3 +937,122 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f47b95f6492
+  - type: implements
+    from: SYM-viewers-internal-identity-person-personkind
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:13:04.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d79bf3a0a61
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-personkind
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:13:04.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-506148a6a0ab
+  - type: implements
+    from: SYM-viewers-internal-views-app-sleeves-views-sleevesofviewable
+    to: REQ-views-viewer-sleeves-and-kinds-of-granted-accounts
+    created_at: 2026-11-13T20:16:39.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03a931161057
+  - type: covered_by
+    from: SYM-viewers-internal-views-app-sleeves-views-sleevesofviewable
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:16:39.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fecb524132d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-proposal-store
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:35.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e2cd99f2f2c
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-proposal-store
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:23:35.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-940966ed334d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-late-set
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:41:09.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36afbc2879cf
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-late-set
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:41:09.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4cd98b3bf27
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-model-page-shows-targets-and-the-latest-note
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:19.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f93e2d54d58f
+  - type: implements
+    from: SYM-invites-internal-views-ui-people-server-cancelinvite
+    to: REQ-ui-access-pending-invites
+    created_at: 2026-11-13T23:34:27.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-013d23b8a380
+  - type: covered_by
+    from: SYM-invites-internal-views-ui-people-server-cancelinvite
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:34:27.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ba2cd363337
+  - type: verified_by
+    from: SCEN-ui-access-history
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:15:55.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fdaa313a517
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-proto-message
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:58.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a2b83c33f2
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-proto-message
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:58.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02488a6fa112
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-covered-elsewhere
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:53.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ee275e57055
+  - type: implements
+    from: SYM-s8-internal-ingest-app-audit-change-auditor
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:57:32.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-163f42767484
+  - type: covered_by
+    from: SYM-s8-internal-ingest-app-audit-change-auditor
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:57:32.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b0ffb249cc

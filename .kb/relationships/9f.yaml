@@ -762,3 +762,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4dec790c9d2c
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:09:18.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-806c563ed687
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T20:09:18.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f498b615d28
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grants-grants-vieweractive
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:10:14.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08c5b4e75bbc
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-grants-grants-vieweractive
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:10:15.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c3f153175f9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:33.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcda682de6b2
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-worker
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:41:15.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b676f419d306
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-worker
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:41:15.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef84b0b782ff
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-adecided-proposal-cannot-be-decided-again
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:50:44.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3e657b519d2
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-model-page-hides-what-it-may-not-show
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:30.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9fe66eaeef6
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-is-change-action
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:24.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a5d3bf1f371
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-is-change-action
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:24.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01b20d6b003a

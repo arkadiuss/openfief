@@ -1126,3 +1126,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d6dbb2693b7
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enum
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:25.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2541e7b0db6e
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-enum
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:25.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d895924d9dc
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-holdings
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:16:23.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8b4d5758cc8
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-maintainer-holdings
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:16:23.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb7c5e214755
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-maintainer-rig
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:25.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-673833740022
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-work-sends-the-figures-once-as-the-prompt-says
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:03.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8096694ceffb
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-weekly-time
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:40:25.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c61e61bc706f
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-weekly-time
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:40:25.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3265ecb80ec6
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-maintainer-changes-refuse-what-the-rules-forbid
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:51:06.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da0b5e316c9

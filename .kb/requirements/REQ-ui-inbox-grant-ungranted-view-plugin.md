@@ -27,10 +27,10 @@ The Inbox offers the owner, on the item of a view plugin that can't read anythin
 
 ## Context
 
-D-196 gives each item the actions that settle it, and the design session asked for one button on this item. The grant is the existing owner call, so the audit entry (D-211) and the SpiceDB write are the ones every grant has. The Access page that picks narrower grants is not built yet, so the item links nowhere.
+D-196 gives each item the actions that settle it, and the design session asked for one button on this item. The grant is the existing owner call, so the audit entry (D-211) and the SpiceDB write are the ones every grant has. The item also links to the View plugins section of the Access page, where the owner picks narrower grants.
 
 ## Source
 
 > S4c: attention item `view-plugin-ungranted` (decisions -> missing settings, D-196): "<instance> can't read anything until you grant it accounts"; one action: grant the whole household, or open Access to pick. Raised for every installed view plugin with no D-209 grant while authz=spicedb; cleared when a grant exists; same sweep as model-route-broken; built-in UI exempt. CLI install summary for a view plugin: "grant it accounts in Settings -> Access".
 
-Source: design-session answers for the permissions plan, 2026-11-13 (later)
+Source: design-session answers for the permissions plan, 2026-11-13 (later).

@@ -29,6 +29,16 @@ const (
 	// "<role>/<provider>/<model>", which names the route and the instance. It
 	// clears when the owner fixes the route or installs the plugin.
 	kindModelRouteBroken Kind = "model-route-broken"
+	// kindModelTargetProposal is a set of target changes the model-portfolio
+	// maintainer proposed, waiting for the owner to apply or dismiss it
+	// (D-196, D-204); the portfolio context raises it. Subject: the proposal's
+	// ID. It clears when the owner decides it or a later proposal replaces it.
+	kindModelTargetProposal Kind = "model-target-proposal"
+	// kindMaintainerFailing is a maintainer whose weekly run ended without a
+	// note several times in a row (D-196, D-204); the portfolio context raises
+	// it. Subject: "maintainer". It clears when a run leaves a note, or the
+	// maintainer is turned off.
+	kindMaintainerFailing Kind = "maintainer-failing"
 )
 
 // Group is what the owner does about an item, as the Inbox groups items
@@ -73,7 +83,7 @@ func GroupOf(k Kind) Group {
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
 	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified, KindBondFeeAssumed,
-		KindBondSeriesIncomplete, kindModelRouteBroken, KindViewPluginUngranted:
+		KindBondSeriesIncomplete, kindModelRouteBroken, kindModelTargetProposal, kindMaintainerFailing, KindViewPluginUngranted:
 	}
 	return GroupDecisions
 }
@@ -108,8 +118,9 @@ type Scope struct {
 //   - any other setting-missing, transfer-broken and transfer-suggested (a
 //     pair of transaction keys), model-route-broken (a role, a provider
 //     instance and a model, tied to no account), view-plugin-ungranted (a
-//     view plugin instance, which no account or connector is) and any other
-//     kind: nothing.
+//     view plugin instance, which no account or connector is),
+//     model-target-proposal (a proposal's ID) and maintainer-failing, which
+//     are about the whole portfolio, and any other kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
@@ -128,7 +139,7 @@ func ScopeOf(it *Item) Scope {
 		if len(parts) == 2 && parts[0] == earlierPaymentsSetting {
 			return Scope{Account: parts[1]}
 		}
-	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken, KindViewPluginUngranted:
+	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken, kindModelTargetProposal, kindMaintainerFailing, KindViewPluginUngranted:
 	}
 	return Scope{}
 }

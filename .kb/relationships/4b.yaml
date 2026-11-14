@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be76d8e84c8d
+  - type: executable_for
+    from: SYM-invites-internal-views-ui-fakes_test-fakeauth-listinvites
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:33:47.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ca8be14c7b

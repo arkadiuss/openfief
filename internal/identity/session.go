@@ -195,6 +195,10 @@ type Session struct {
 	// passkey signed it in, or last confirmed an action in it. Zero when
 	// none did.
 	PasskeyCheckedAt time.Time
+	// PersonID is the person the session is of: OwnerPersonID, or a
+	// viewer's ID. Empty means the owner. A viewer's session has read scope
+	// only, so every call that changes something refuses it.
+	PersonID string
 }
 
 // NewSession returns a session with id and scope, from authenticator a, on
@@ -221,6 +225,29 @@ func NewSession(id SessionID, a Authenticator, scope SessionScope, rpID string, 
 		ID: id, Scope: scope, Authenticator: a, RPID: rpID,
 		CreatedAt: now, LastSeenAt: now, ExpiresAt: now.Add(policy.Max), IdleTimeout: policy.Idle,
 	}, nil
+}
+
+// Person returns the ID of the person s is of: the owner's when none is set.
+func (s *Session) Person() string {
+	if s.PersonID == "" {
+		return OwnerPersonID
+	}
+	return s.PersonID
+}
+
+// OfViewer reports whether s is a viewer's session.
+func (s *Session) OfViewer() bool { return s.Person() != OwnerPersonID }
+
+// ForViewer returns s as the session of the viewer with ID person, which
+// can only read: a session of any other scope is refused with
+// ErrSessionScope.
+func (s *Session) ForViewer(person string) (Session, error) {
+	if s.Scope != SessionScopeRead || !isHexID(person) {
+		return Session{}, fmt.Errorf("%w: a viewer's session reads only", ErrSessionScope)
+	}
+	t := *s
+	t.PersonID = person
+	return t, nil
 }
 
 // SignedInWithPasskey returns s as signed in by the passkey with

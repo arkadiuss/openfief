@@ -1105,3 +1105,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53d16dde0693
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-no-raise-raise
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:19:40.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec6e28cabe72
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-clear-failing
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:00.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f40854cfad
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-clear-failing
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:31:00.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-200562006895
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getorigin
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:10.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b95fd1ce9efe
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getorigin
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:10.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2e43e858e7
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-getsessiontoken
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:37:50.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-629f8b0509a6
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-getsessiontoken
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:37:50.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcef7381a9cb
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-testcancelledandexpiredlinksarerefusedalike
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:47:10.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ab8be83e508
+  - type: executable_for
+    from: SYM-audit-internal-identity-app-auditview_test-testauditentriesfilterbyoutcomeandactions
+    to: TEST-identity-audit-filters-app
+    created_at: 2026-11-14T00:16:17.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d90ae751d29
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-string
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:23:19.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86a09ca74d3a
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-string
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:23:19.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d82e836b7e

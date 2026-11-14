@@ -888,3 +888,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cafb73411a89
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-run-maintainer-kind
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:40:46.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ab9c6283895
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-run-maintainer-kind
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:40:46.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61bfead78452
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:58.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96f6345b6240
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:58.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9850022a1993
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:58.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa7d64787f9

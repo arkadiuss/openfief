@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"maps"
 	"slices"
 	"strings"
 	"time"
@@ -29,6 +30,10 @@ const (
 	// ActorOwner is the owner in a session; the actor's ID is the session's
 	// ID, which says which sign-in acted.
 	ActorOwner ActorKind = "owner"
+	// ActorViewer is a viewer in a session; the actor's ID is the session's
+	// ID. The person is the session's: the audit entry of its sign-in names
+	// them.
+	ActorViewer ActorKind = "viewer"
 	// ActorEnrollmentCode is the holder of a one-time enrollment code, who
 	// is not signed in yet; the actor's ID is the code's ID.
 	ActorEnrollmentCode ActorKind = "enrollment_code"
@@ -38,10 +43,21 @@ const (
 	// ActorAnonymous is a caller that proved nothing, such as a refused
 	// sign-in; it has no ID.
 	ActorAnonymous ActorKind = "anonymous"
+	// ActorOperator is the operator, the controller that installs, upgrades
+	// and removes plugins from their Plugin resources (D-211): the core
+	// records what it observes the operator did, and the actor's ID is
+	// "operator". A script token and a plugin are no actor kinds: a script
+	// token only reads (D-6), and a plugin changes nothing with its own
+	// identity, since the built-in UI relays the owner's session and the core
+	// is what calls connectors and model providers.
+	ActorOperator ActorKind = "operator"
 )
 
 // SystemActorID is the ID of the system actor.
 const SystemActorID = "core"
+
+// OperatorActorID is the ID of the operator actor.
+const OperatorActorID = "operator"
 
 // Actor is who made the change an audit entry records.
 type Actor struct {
@@ -53,24 +69,28 @@ type Actor struct {
 // has, or none for an anonymous caller.
 func (a Actor) Validate() error {
 	switch a.Kind {
-	case ActorOwner:
+	case ActorOwner, ActorViewer:
 		if !isHexID(a.ID) {
-			return fmt.Errorf("%w: an owner actor is named by its session ID", ErrInvalidAuditEntry)
+			return fmt.Errorf("%w: an owner or viewer actor is named by its session ID", ErrInvalidAuditEntry)
 		}
 	case ActorEnrollmentCode:
 		if !isHexID(a.ID) {
 			return fmt.Errorf("%w: an enrollment code actor is named by the code's ID", ErrInvalidAuditEntry)
 		}
-	case ActorSystem:
-		if a.ID != SystemActorID {
-			return fmt.Errorf("%w: the system actor's ID is %q", ErrInvalidAuditEntry, SystemActorID)
-		}
-	case ActorAnonymous:
-		if a.ID != "" {
-			return fmt.Errorf("%w: an anonymous actor has no ID", ErrInvalidAuditEntry)
-		}
+	case ActorSystem, ActorOperator, ActorAnonymous:
+		return a.validateFixed()
 	default:
 		return fmt.Errorf("%w: unknown actor kind", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validateFixed checks the ID of an actor that has only one: the core's, the
+// operator's, and none for a caller that proved nothing.
+func (a Actor) validateFixed() error {
+	want := map[ActorKind]string{ActorSystem: SystemActorID, ActorOperator: OperatorActorID, ActorAnonymous: ""}[a.Kind]
+	if a.ID != want {
+		return fmt.Errorf("%w: the ID of a %s actor is %q", ErrInvalidAuditEntry, a.Kind, want)
 	}
 	return nil
 }
@@ -98,6 +118,9 @@ const (
 	// ActionEnrollmentLinkUsed is an enrollment link used up to create a
 	// passkey.
 	ActionEnrollmentLinkUsed AuditAction = "enrollment_link_used"
+	// ActionEnrollmentLinkCancelled is a viewer's invitation the owner
+	// cancelled before it was used.
+	ActionEnrollmentLinkCancelled AuditAction = "enrollment_link_cancelled"
 	// ActionScriptTokenCreated is a script token created. Its text is written
 	// as two parts only so gosec's G101 doesn't read the constant's name and
 	// the shape of its value as a hardcoded credential; the value is a word,
@@ -111,6 +134,14 @@ const (
 	// ActionGrantRevoked is a grant of access ended, by the owner or
 	// because its holder or its target is gone.
 	ActionGrantRevoked AuditAction = "grant_revoked"
+	// ActionPersonCreated is a viewer created, when they enroll their first
+	// passkey with the link the owner issued: the person by ID, the link by
+	// ID.
+	ActionPersonCreated AuditAction = "person_created"
+	// ActionPersonRevoked is a viewer revoked by the owner: their sessions
+	// end, their passkeys stop working and their grants end, each of the
+	// last two with an entry of its own. The person and their history stay.
+	ActionPersonRevoked AuditAction = "person_revoked"
 	// ActionModelCall is a call to a model about to be sent (D-205, D-211):
 	// who asked, for which role and which model, under a call ID, with the
 	// outcome "sent". It is written before the call, and the call is not
@@ -121,26 +152,59 @@ const (
 	// refused. A call the router refused before choosing a model (the
 	// switch, the data tiers) has only this entry, with no model.
 	ActionModelCallResult AuditAction = "model_call_result"
+	// ActionMaintainerRun is a run of the model-portfolio maintainer that
+	// ended without a note or with one (D-204, D-211): the role, the run's ID
+	// and, when it was refused or failed, the class it ended in. The model
+	// calls of the run are their own entries.
+	ActionMaintainerRun AuditAction = "maintainer_run"
+	// ActionMaintainerProposalDropped is a proposed set of target changes
+	// that broke a rule and was dropped whole, the run's note kept. It names
+	// the run, never what the model wrote.
+	ActionMaintainerProposalDropped AuditAction = "maintainer_proposal_dropped"
+	// ActionMaintainerProposalApplied is the owner applying a proposal: ok
+	// when the model portfolio's targets changed, refused when the model had
+	// changed since the proposal was made. It names the run.
+	ActionMaintainerProposalApplied AuditAction = "maintainer_proposal_applied"
+	// ActionMaintainerProposalDismissed is the owner dismissing a proposal.
+	// It names the run.
+	ActionMaintainerProposalDismissed AuditAction = "maintainer_proposal_dismissed"
+	// ActionModelSettingsChanged is the owner changing the agents-and-models
+	// settings (D-212, D-205, D-206): the switch, a feature's toggle, a
+	// role's route or a data tier's allowed models. It names the setting
+	// changed (RefModelSetting), never the models listed; the settings
+	// themselves hold those.
+	ActionModelSettingsChanged AuditAction = "model_settings_changed"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
 // A function, not a variable: the domain holds no package-level state.
 func actionKinds() map[AuditAction][]RefKind {
-	return map[AuditAction][]RefKind{
-		ActionSignIn:               {RefSession},
-		ActionSignOut:              {RefSession},
-		ActionSignOutEverywhere:    nil,
-		ActionPasskeyAdded:         {RefPasskey},
-		ActionPasskeyRemoved:       {RefPasskey},
-		ActionEnrollmentLinkIssued: {RefEnrollmentCode},
-		ActionEnrollmentLinkUsed:   {RefEnrollmentCode, RefPasskey},
-		ActionScriptTokenCreated:   {RefScriptToken},
-		ActionScriptTokenRevoked:   {RefScriptToken},
-		ActionGrantCreated:         grantRefKinds(),
-		ActionGrantRevoked:         grantRefKinds(),
-		ActionModelCall:            {RefModelRole, RefModel, RefModelCall},
-		ActionModelCallResult:      {RefModelRole, RefModel, RefModelCall, RefModelError},
+	out := map[AuditAction][]RefKind{
+		ActionSignIn:                  {RefSession, RefPerson},
+		ActionSignOut:                 {RefSession},
+		ActionSignOutEverywhere:       nil,
+		ActionPasskeyAdded:            {RefPasskey, RefPerson},
+		ActionPasskeyRemoved:          {RefPasskey, RefPerson},
+		ActionEnrollmentLinkIssued:    {RefEnrollmentCode},
+		ActionEnrollmentLinkUsed:      {RefEnrollmentCode, RefPasskey, RefPerson},
+		ActionEnrollmentLinkCancelled: {RefEnrollmentCode},
+		ActionPersonCreated:           {RefPerson, RefEnrollmentCode},
+		ActionPersonRevoked:           {RefPerson},
+		ActionScriptTokenCreated:      {RefScriptToken},
+		ActionScriptTokenRevoked:      {RefScriptToken},
+		ActionGrantCreated:            grantRefKinds(),
+		ActionGrantRevoked:            grantRefKinds(),
+		ActionModelCall:               {RefModelRole, RefModel, RefModelCall},
+		ActionModelCallResult:         {RefModelRole, RefModel, RefModelCall, RefModelError},
+
+		ActionMaintainerRun:               {RefModelRole, RefMaintainerRun, RefModelError},
+		ActionMaintainerProposalDropped:   {RefMaintainerRun},
+		ActionMaintainerProposalApplied:   {RefMaintainerRun},
+		ActionMaintainerProposalDismissed: {RefMaintainerRun},
+		ActionModelSettingsChanged:        {RefModelSetting},
 	}
+	maps.Copy(out, changeActionKinds())
+	return out
 }
 
 // grantRefKinds are the kinds of record a grant entry names: its holder and
@@ -234,6 +298,13 @@ const (
 	// RefModelError is the class a failed call to a model ended in, one of
 	// ModelErrorClasses; never the provider's message.
 	RefModelError RefKind = "model_error"
+	// RefMaintainerRun is a run of the model-portfolio maintainer, and the
+	// proposal it made, by the run's ID: 16 hex digits the core makes.
+	RefMaintainerRun RefKind = "maintainer_run"
+	// RefModelSetting is a models setting the owner changed, as one of
+	// ModelSettingRefs' shapes: "switch:on", "feature:ask:off", "route:ask"
+	// or "tier:T0". Names and words of a closed set, never a model list.
+	RefModelSetting RefKind = "model_setting"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -249,7 +320,7 @@ type Ref struct {
 // Validate returns nil when r's ID has the shape its kind's IDs have.
 func (r Ref) Validate() error {
 	switch r.Kind {
-	case RefSession, RefEnrollmentCode, RefScriptToken:
+	case RefSession, RefEnrollmentCode, RefScriptToken, RefMaintainerRun:
 		if !isHexID(r.ID) {
 			return fmt.Errorf("%w: a %s reference is its ID", ErrInvalidAuditEntry, r.Kind)
 		}
@@ -259,6 +330,12 @@ func (r Ref) Validate() error {
 		return r.validatePasskeyRef()
 	case RefModelRole, RefModel, RefModelCall, RefModelError:
 		return r.validateModel()
+	case RefModelSetting:
+		if !validModelSetting(r.ID) {
+			return fmt.Errorf("%w: a model setting reference is of the shape of a setting", ErrInvalidAuditEntry)
+		}
+	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+		return r.validateChangeRef()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
 	}
@@ -292,7 +369,8 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -308,14 +386,15 @@ func (r Ref) validateModel() error {
 	var ok bool
 	switch r.Kind {
 	case RefModelRole:
-		ok = r.ID == "ask" || r.ID == "maintainer"
+		ok = r.ID == roleAsk || r.ID == roleMaintainer
 	case RefModel:
 		ok = validModelRef(r.ID)
 	case RefModelCall:
 		ok = isHexID(r.ID)
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting,
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -328,9 +407,56 @@ func (r Ref) validateModel() error {
 // plugin's key ("unavailable"); the provider or its plugin rejected the
 // request ("rejected"); the caller gave up ("canceled"); the route names a
 // provider instance that is missing or is not a model provider
-// ("misconfigured"); anything else ("internal").
+// ("misconfigured"); anything else ("internal"). A maintainer run (D-204)
+// adds three of its own: the router refused the data, the route or the
+// feature's toggle ("denied"), the model's answer was no usable note
+// ("invalid_output"), and OpenFief had no portfolio figures to send
+// ("no_figures").
 func ModelErrorClasses() []string {
-	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal"}
+	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal", "denied", "invalid_output", "no_figures"}
+}
+
+// maintainerOutcomes are the outcomes the entries of each maintainer action
+// may have: a run ends ok, refused or failed; a dropped proposal is refused;
+// an applied one ok, refused (the model portfolio changed since) or failed;
+// a dismissed one ok.
+func maintainerOutcomes() map[AuditAction][]AuditOutcome {
+	return map[AuditAction][]AuditOutcome{
+		ActionMaintainerRun:               {OutcomeOK, OutcomeRefused, OutcomeFailed},
+		ActionMaintainerProposalDropped:   {OutcomeRefused},
+		ActionMaintainerProposalApplied:   {OutcomeOK, OutcomeRefused, OutcomeFailed},
+		ActionMaintainerProposalDismissed: {OutcomeOK},
+	}
+}
+
+// validateMaintainerEntry checks the references and the outcome of a
+// maintainer entry (D-204, D-211): every entry names its run once, with an
+// outcome its action allows. A run entry also names its role, "maintainer",
+// once, and a class (model_error) exactly when it was refused or failed; the
+// other three are about a proposal and name nothing else.
+func validateMaintainerEntry(e *AuditEntry) error {
+	if !slices.Contains(maintainerOutcomes()[e.Action], e.Outcome) || !maintainerRefsOK(e) {
+		return fmt.Errorf("%w: a %s entry names its run, and the role and class its outcome needs", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
+}
+
+// maintainerRefsOK reports whether e names the records a maintainer entry of
+// its action and outcome names, and nothing else.
+func maintainerRefsOK(e *AuditEntry) bool {
+	count := map[RefKind]int{}
+	for _, r := range e.Refs {
+		count[r.Kind]++
+	}
+	if count[RefMaintainerRun] != 1 {
+		return false
+	}
+	if e.Action != ActionMaintainerRun {
+		return len(e.Refs) == 1
+	}
+	classed := e.Outcome == OutcomeRefused || e.Outcome == OutcomeFailed
+	asMaintainer := slices.ContainsFunc(e.Refs, func(r Ref) bool { return r.Kind == RefModelRole && r.ID == roleMaintainer })
+	return asMaintainer && count[RefModelRole] == 1 && (count[RefModelError] == 1) == classed && len(e.Refs) == 2+count[RefModelError]
 }
 
 // validateModelEntry checks the references of a model call's entries
@@ -469,11 +595,24 @@ func (e *AuditEntry) Validate() error {
 	if err := validateRefs(e.Action, kinds, e.Refs); err != nil {
 		return err
 	}
+	return e.validateShape()
+}
+
+// validateShape checks what the entry's action asks of its references and
+// outcome beyond their kinds.
+func (e *AuditEntry) validateShape() error {
 	switch {
 	case isGrantAction(e.Action):
 		return validateGrantRefs(e.Refs)
 	case e.Action == ActionModelCall || e.Action == ActionModelCallResult:
 		return validateModelEntry(e)
+	case e.Action == ActionModelSettingsChanged:
+		return validateSettingsEntry(e)
+	case isChangeAction(e.Action):
+		return validateChange(e)
+	case e.Action == ActionMaintainerRun, e.Action == ActionMaintainerProposalDropped,
+		e.Action == ActionMaintainerProposalApplied, e.Action == ActionMaintainerProposalDismissed:
+		return validateMaintainerEntry(e)
 	}
 	return nil
 }
@@ -532,6 +671,12 @@ type AuditFilter struct {
 	ActorID   string
 	// Action selects one action; empty selects every action.
 	Action AuditAction
+	// Actions selects entries of any one of them, as the Access page's
+	// history does for the grants and the links; empty selects every action.
+	// With Action set, an entry must match both.
+	Actions []AuditAction
+	// Outcome selects entries that ended so; empty selects every outcome.
+	Outcome AuditOutcome
 	// From and To select entries at or after From and before To; a zero
 	// bound is open.
 	From, To time.Time
@@ -549,10 +694,8 @@ func (f *AuditFilter) Validate() error {
 	if err := f.validateActor(); err != nil {
 		return err
 	}
-	if f.Action != "" {
-		if _, ok := actionKinds()[f.Action]; !ok {
-			return fmt.Errorf("%w: unknown action", ErrInvalidAuditFilter)
-		}
+	if err := f.validateSelection(); err != nil {
+		return err
 	}
 	if !f.From.IsZero() && !f.To.IsZero() && !f.From.Before(f.To) {
 		return fmt.Errorf("%w: the range is empty", ErrInvalidAuditFilter)
@@ -577,19 +720,39 @@ func (f *AuditFilter) PageSize() int {
 // Matches reports whether e is selected by f's actor, action and time
 // range, and its cursor.
 func (f *AuditFilter) Matches(e *AuditEntry) bool {
-	if f.ActorKind != "" && e.Actor.Kind != f.ActorKind {
-		return false
-	}
-	if f.ActorID != "" && e.Actor.ID != f.ActorID {
-		return false
-	}
-	if f.Action != "" && e.Action != f.Action {
-		return false
-	}
 	if f.Before != 0 && e.Seq >= f.Before {
 		return false
 	}
-	return f.inRange(e.At)
+	return f.matchesActor(&e.Actor) && f.matchesWhat(e) && f.inRange(e.At)
+}
+
+// matchesActor reports whether a is the kind and the actor f selects.
+func (f *AuditFilter) matchesActor(a *Actor) bool {
+	return (f.ActorKind == "" || a.Kind == f.ActorKind) && (f.ActorID == "" || a.ID == f.ActorID)
+}
+
+// matchesWhat reports whether e is of the action, one of the actions and the
+// outcome f selects.
+func (f *AuditFilter) matchesWhat(e *AuditEntry) bool {
+	return (f.Action == "" || e.Action == f.Action) &&
+		(len(f.Actions) == 0 || slices.Contains(f.Actions, e.Action)) &&
+		(f.Outcome == "" || e.Outcome == f.Outcome)
+}
+
+// validateSelection checks the action, the set of actions and the outcome f
+// selects.
+func (f *AuditFilter) validateSelection() error {
+	for _, a := range append([]AuditAction{f.Action}, f.Actions...) {
+		if _, ok := actionKinds()[a]; a != "" && !ok {
+			return fmt.Errorf("%w: unknown action", ErrInvalidAuditFilter)
+		}
+	}
+	if f.Outcome != "" {
+		if _, err := ParseAuditOutcome(string(f.Outcome)); err != nil {
+			return fmt.Errorf("%w: unknown outcome", ErrInvalidAuditFilter)
+		}
+	}
+	return nil
 }
 
 // validateActor checks the actor kind and ID f selects.
@@ -617,8 +780,45 @@ func (f *AuditFilter) inRange(at time.Time) bool {
 // knownActorKind reports whether k is one of the actor kinds.
 func knownActorKind(k ActorKind) bool {
 	switch k {
-	case ActorOwner, ActorEnrollmentCode, ActorSystem, ActorAnonymous:
+	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAnonymous:
 		return true
 	}
 	return false
+}
+
+// Roles of a model call, as audit entries name them.
+const (
+	roleAsk        = "ask"
+	roleMaintainer = "maintainer"
+)
+
+// ModelSettings are the settings an ActionModelSettingsChanged entry may name,
+// a closed set: the switch turned "on" or "off", each feature's toggle turned
+// on or off, each role's route and each data tier's models.
+func ModelSettings() []string {
+	const count = 14 // two for the switch, six toggles, two routes and four tiers
+	out := make([]string, 0, count)
+	out = append(out, "switch:on", "switch:off")
+	for _, f := range []string{roleAsk, roleMaintainer, "mcp"} {
+		out = append(out, "feature:"+f+":on", "feature:"+f+":off")
+	}
+	for _, r := range []string{roleAsk, roleMaintainer} {
+		out = append(out, "route:"+r)
+	}
+	for _, t := range []string{"T0", "TF", "T1", "T2"} {
+		out = append(out, "tier:"+t)
+	}
+	return out
+}
+
+// validModelSetting reports whether id is one of ModelSettings.
+func validModelSetting(id string) bool { return slices.Contains(ModelSettings(), id) }
+
+// validateSettingsEntry checks an entry of a models setting changed (D-212):
+// ok, naming the one setting.
+func validateSettingsEntry(e *AuditEntry) error {
+	if e.Outcome != OutcomeOK || len(e.Refs) != 1 || e.Refs[0].Kind != RefModelSetting {
+		return fmt.Errorf("%w: a %s entry is ok and names the one setting", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
 }

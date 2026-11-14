@@ -1091,3 +1091,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0633af8ac6ac
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-number
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:47.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c401e0b2d68b
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-number
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:47.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ece5cb137673
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-string
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:19:32.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf7cd78e084
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:19:32.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cb944de08af
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-model-notice
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:52:49.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9adfc163a1c
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-model-notice
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:52:49.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1e6c525de0
+  - type: verified_by
+    from: SCEN-ui-models-routes-providers
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:24:12.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9193529b34b6
+  - type: verified_by
+    from: SCEN-ui-models-routes-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:24:12.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ac8a7273050

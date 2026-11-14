@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b24fa68874ec
+  - type: specified_by
+    from: REQ-ui-model-page-maintainer-note
+    to: SCEN-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:07:53.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f67b441393
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-test-proposal-apply-keeps-amodel-that-is-off-off
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:45:57.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-396a9ca2e4ab

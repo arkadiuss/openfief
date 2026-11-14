@@ -1070,3 +1070,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11ff4e816b2e
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-provider-fake-instance
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:18:38.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35a16db9f6b0
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-sixty-forty
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:20.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-458a34a1b37d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-run-stuck-for-half-an-hour-is-abandoned
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:33.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f986b512792
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:09:07.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a7a2f7f4971
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:09:07.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ac9f499b659
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:09:07.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea1f772dd5fc
+  - type: implements
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations-remove
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:54:33.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5978ba07498f
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations-remove
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:54:33.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc6c6a3b6c58
+  - type: executable_for
+    from: SYM-s8-internal-views-ui-audit-test-test-audit-log-names-every-value-of-the-contract
+    to: TEST-ui-audit-names-changes
+    created_at: 2026-11-14T03:00:49.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbaf97198957

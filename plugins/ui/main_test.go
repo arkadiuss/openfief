@@ -158,3 +158,31 @@ func TestReadClient(t *testing.T) {
 		t.Errorf("timeout = %v, want %v", c.Timeout, coreTimeout)
 	}
 }
+
+// TestReadClientKeepsThePersonsSession pins that the UI reads as the person
+// signed in (D-163): a read carries the session token its caller set,
+// untouched, and the client adds no identity of the plugin's, so a viewer's
+// reads are decided by their grants.
+func TestReadClientKeepsThePersonsSession(t *testing.T) {
+	t.Parallel()
+	var got []string
+	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
+		got = r.Header.Values("Authorization")
+	}))
+	defer srv.Close()
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, srv.URL, http.NoBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Authorization", "Bearer ofsess_synthetic")
+	resp, err := readClient().Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if diff := cmp.Diff([]string{"Bearer ofsess_synthetic"}, got); diff != "" {
+		t.Errorf("Authorization (-want +got):\n%s", diff)
+	}
+}

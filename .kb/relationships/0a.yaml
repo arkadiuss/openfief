@@ -1133,3 +1133,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c058710b73f4
+  - type: specified_by
+    from: REQ-identity-viewer-views-granted-accounts
+    to: SCEN-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T19:59:18.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9425a781b21a
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-passkeycounts
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:12:15.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe95c66d1551
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-descriptor
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:46.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd180c63293b
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:46.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0aac364b8a
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-sessions
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:57.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4d3b03a14ac
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-sessions
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T21:24:57.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d3fdae394a9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-queue
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:00.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6e94debf781
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-weekly-runs-on-the-schedule
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:58.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92fe4bbe9b9e
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-test-every-owner-change-writes-exactly-one-entry
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:13.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60f74ad5d0eb
+  - type: implements
+    from: SYM-s8-internal-identity-audit-actor-validate-fixed
+    to: REQ-identity-audit-entry-content
+    created_at: 2026-11-14T02:54:44.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc1c18598849
+  - type: covered_by
+    from: SYM-s8-internal-identity-audit-actor-validate-fixed
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:54:44.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45e9bc545c10

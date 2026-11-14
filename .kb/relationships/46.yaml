@@ -979,3 +979,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbbf94a3a744
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-testviewerlinkisspentandtheviewersignsinagain
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:35:24.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f77a89822c9
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-proposal
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:42.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5ce8ee5a7c7
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:25:42.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42e25fc13596
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-ask
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:21.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30d50116aa9a
+  - type: covered_by
+    from: SYM-maintainer-views-app-held-held-values
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:51:41.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1fd899ac7c4
+  - type: implements
+    from: SYM-maintainer-views-app-held-held-values
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:51:41.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dbdb8b1ee44
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-server-dismiss-proposal
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:48.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3c6c2095cec
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-server-dismiss-proposal
+    to: REQ-ui-inbox-proposal-card
+    created_at: 2026-11-13T21:53:48.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f68735f22e21
+  - type: covered_by
+    from: SYM-ms1-ui-models-build-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:32.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3dced5cea64
+  - type: implements
+    from: SYM-ms1-ui-models-build-models
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:34:32.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4fe14f13c5
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-broken-routes-count-every-route-in-use-or-not
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:34.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbb012df6169

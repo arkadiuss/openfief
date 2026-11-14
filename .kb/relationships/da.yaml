@@ -1014,3 +1014,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76cbcb5acf4c
+  - type: implements
+    from: SYM-viewers-internal-identity-spicedb-authorizer-subject
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:16:27.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf7e0a77117
+  - type: covered_by
+    from: SYM-viewers-internal-identity-spicedb-authorizer-subject
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-13T20:16:27.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9052f1614b46
+  - type: implements
+    from: SYM-viewers-internal-identity-app-people-auth-grantviewer
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:35:07.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc2504d33cd
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-people-auth-grantviewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:35:07.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d696d44feb2
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-provider-fake
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:18:33.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-926d218ebfc6
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:45.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51c6fb57b3b6
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:45.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af13eedf3149
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-request-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:45.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-067acd80b754
+  - type: specified_by
+    from: REQ-ui-audit-log-page
+    to: SCEN-ui-audit-log-page
+    created_at: 2026-11-14T00:15:54.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb6d80e54632
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-actionwords
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:16:38.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ac11d84ab3c
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-actionwords
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:16:38.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42dbd11c9d8

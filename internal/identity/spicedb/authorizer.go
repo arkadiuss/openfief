@@ -105,6 +105,9 @@ func subject(c identity.Caller) (*v1.SubjectReference, error) {
 	switch c.Holder {
 	case identity.HolderOwner:
 		typ, id = typePerson, ownerID
+	case identity.HolderViewer:
+		// A viewer is a person of their own, by their ID, holding only their grants (D-65, D-209).
+		typ = typePerson
 	case identity.HolderScriptToken:
 		typ = typeScriptToken
 	case identity.HolderViewPlugin:

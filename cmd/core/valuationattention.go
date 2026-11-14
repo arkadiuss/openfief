@@ -18,9 +18,10 @@ import (
 
 // revaluationClient returns the River client of the revaluation workers
 // (D-36), raising the attention items they find, such as a gap in a
-// series' market data (D-94), through attn.
+// series' market data (D-94), through attn, and the jobs of other contexts
+// that share its River client, such as the maintainer's (D-204).
 func revaluationClient(pool *pgxpool.Pool, vstore *valuationpg.Store, cfg *serveConfig, attn valuationapp.AttentionRaiser,
-	now func() time.Time, log *slog.Logger,
+	now func() time.Time, log *slog.Logger, jobs ...valuationpg.Job,
 ) (*river.Client[pgx.Tx], error) {
 	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
 		Concurrency: cfg.Workers,
@@ -30,6 +31,7 @@ func revaluationClient(pool *pgxpool.Pool, vstore *valuationpg.Store, cfg *serve
 		Logger:      log,
 		Attention:   attn,
 		Plugins:     jobTracing(),
+		Jobs:        jobs,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("revaluation workers: %w", err)

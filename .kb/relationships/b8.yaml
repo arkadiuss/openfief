@@ -1077,3 +1077,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d80444dd307
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-reset
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:10.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe91470e38e
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:10.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e8a71045dd3
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-outcome-of
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:28.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a644f7b2320
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-outcome-of
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:30:28.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05c657cd4f2d
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-model-target-row
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:52:20.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-144c123fa78d
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-model-target-row
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:52:20.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f765693e860c
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protomessage
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:37:27.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9147f4963b
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-cancelinviterequest-protomessage
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:37:27.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b3ca2e74be3
+  - type: executable_for
+    from: SYM-invites-internal-identity-postgres-invites_test-testcancelenrollmentcode
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:47:39.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a711837e7ec3
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-actorkindof
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:18:07.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-073480f03989
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-actorkindof
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:18:07.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcc316a5f773

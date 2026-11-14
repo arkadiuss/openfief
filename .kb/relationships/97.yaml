@@ -1077,3 +1077,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-172582939436
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-grantpolicy-test-testgrantpolicy
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T20:09:52.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b743907cf1
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-getpeople
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:28.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecd5145b5876
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-getpeople
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:28.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c92e19b2e9
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-changes-from
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:43:55.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2ba366ef19
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-changes-from
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:43:55.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32088d03aef0
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-string
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:32.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04df5716dffd
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-string
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:32.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b348262e7272
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-auditfakes_test-auditpage
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:40.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da0e4ef49b8f

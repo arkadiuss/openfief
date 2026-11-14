@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -56,6 +57,26 @@ type Config struct {
 	// Plugins are River plugins the client installs, such as the core's
 	// job tracing; none by default.
 	Plugins []rivertype.Plugin
+	// Jobs are other contexts' jobs that run on this client. River elects one
+	// leader among the clients of a schema, and only it enqueues periodic
+	// jobs, so a job that is periodic joins the client that runs the
+	// end-of-day one instead of starting a client of its own.
+	Jobs []Job
+}
+
+// Job is a job of another context that runs on the revaluation client: its
+// workers, its own queue so it never waits behind a revaluation, and its
+// periodic schedule, if any.
+type Job struct {
+	// Queue names the job's queue, which must differ from Queue and from
+	// every other job's.
+	Queue string
+	// MaxWorkers is how many of its jobs run at once.
+	MaxWorkers int
+	// Register adds the job's workers.
+	Register func(*river.Workers) error
+	// Periodic are the job's periodic inserts.
+	Periodic []*river.PeriodicJob
 }
 
 // DailyAt is a River schedule that fires once a day at Hour:Minute in
@@ -130,20 +151,47 @@ func NewClient(pool *pgxpool.Pool, store *Store, l Ledger, cfg *Config) (*river.
 	); err != nil {
 		return nil, fmt.Errorf("revaluation client: %w", err)
 	}
+	queues := map[string]river.QueueConfig{Queue: {MaxWorkers: cfg.Concurrency}}
+	periodic := []*river.PeriodicJob{river.NewPeriodicJob(cfg.EndOfDay,
+		func() (river.JobArgs, *river.InsertOpts) { return EndOfDay{}, nil },
+		&river.PeriodicJobOpts{ID: EndOfDay{}.Kind()})}
+	more, err := addJobs(cfg.Jobs, workers, queues)
+	if err != nil {
+		return nil, err
+	}
+	periodic = slices.Concat(periodic, more)
 	c, err := river.NewClient(riverpgxv5.New(pool), &river.Config{
-		Schema:  RiverSchema,
-		Logger:  cfg.Logger,
-		Queues:  map[string]river.QueueConfig{Queue: {MaxWorkers: cfg.Concurrency}},
-		Workers: workers,
-		Plugins: cfg.Plugins,
-		PeriodicJobs: []*river.PeriodicJob{river.NewPeriodicJob(cfg.EndOfDay,
-			func() (river.JobArgs, *river.InsertOpts) { return EndOfDay{}, nil },
-			&river.PeriodicJobOpts{ID: EndOfDay{}.Kind()})},
+		Schema:       RiverSchema,
+		Logger:       cfg.Logger,
+		Queues:       queues,
+		Workers:      workers,
+		Plugins:      cfg.Plugins,
+		PeriodicJobs: periodic,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("revaluation client: %w", err)
 	}
 	return c, nil
+}
+
+// addJobs registers the workers of jobs and adds each one's queue to queues,
+// and returns their periodic inserts. A job without a queue of its own, with
+// no workers or with nothing to register is an error wrapping
+// ErrInvalidConfig.
+func addJobs(jobs []Job, workers *river.Workers, queues map[string]river.QueueConfig) ([]*river.PeriodicJob, error) {
+	var periodic []*river.PeriodicJob
+	for i := range jobs {
+		j := &jobs[i]
+		if _, taken := queues[j.Queue]; taken || j.Queue == "" || j.MaxWorkers < 1 || j.Register == nil {
+			return nil, fmt.Errorf("revaluation client: a job on queue %q: %w", j.Queue, ErrInvalidConfig)
+		}
+		if err := j.Register(workers); err != nil {
+			return nil, fmt.Errorf("revaluation client: registering the workers of queue %s: %w", j.Queue, err)
+		}
+		queues[j.Queue] = river.QueueConfig{MaxWorkers: j.MaxWorkers}
+		periodic = append(periodic, j.Periodic...)
+	}
+	return periodic, nil
 }
 
 // RevalueWorker works RevalueAccount jobs: it revalues the account from its

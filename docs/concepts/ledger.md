@@ -240,6 +240,10 @@ Transfer links live in `ledger.transfer_links` ([0005_transfer_links.sql](../../
 
 With tracing on ([Send traces to a collector](../guides/tracing.md)), each import, seed and addition of opening lots runs in a span `ledger.import` that names which of the three it is, never the transactions, and each query in it is a child span named by its SQL operation alone. The revaluations it queues carry the trace in their job's metadata.
 
+### The owner's changes are audited
+
+The owner's decisions on a suggested transfer (`transfer_confirmed`, `transfer_rejected`, naming the accounts of the stored legs), the cash checkpoints entered and their differences booked (`cash_checkpoint_recorded`, `cash_difference_booked`, naming the account, never the amount) and an instrument's display name (`instrument_renamed`, naming the instrument by ISIN, never the name) each write an entry of the audit log, once, through the `ChangeAuditor` port of [audit.go](../../internal/ledger/app/audit.go), which `cmd/core` fills with the owner's sessions: the entry is kept only if the change succeeds, and a change the log can't record is not made ([Identity](identity.md#the-audit-log), D-211). A ledger with no auditor, as the tools that build it without a core have, enters nothing.
+
 ## Decisions
 
 - **GR-12**: its Connect services log a failure only through `kernel.LogSafe`: by the known errors in its chain, or else its innermost error's type, never its text, which may carry an amount, an ISIN or an account number; `TestFailuresLogNoValues` drives every sink with such failures against a deny-list.

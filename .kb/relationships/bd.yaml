@@ -944,3 +944,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8f2fb3d5c60
+  - type: implements
+    from: SYM-viewers-internal-identity-postgres-people-scanperson
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:14:44.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb8a8572a682
+  - type: covered_by
+    from: SYM-viewers-internal-identity-postgres-people-scanperson
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:14:44.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c53508c8df2
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-descriptor
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:58.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a4ab6793adc
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:59.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d3cf5b2f5cf
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-asked-router
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:20:04.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7a74805025
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:19.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e490da218c6
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:19.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-285bcbb9c7ea
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:19.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c79c7ee8b3
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-retry-delay
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:47:39.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8731d8aeea0c
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-retry-delay
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T23:47:39.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f01016c4bc6
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-instances-models
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:03.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f0172286b93
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-change-env
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:48:56.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b2459fd6a8

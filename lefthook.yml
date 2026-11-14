@@ -14,14 +14,26 @@ commit-msg:
     proto-breaking:
       run: PATH="$PWD/.bin:$PATH" task proto:breaking:commit MSG={1}
 
+# kibi-install runs before kibi-sync (priority), since the sync needs the kibi the branch pins. It reinstalls only when
+# the pins or patches changed between the old and the new HEAD; task kibi:install is itself a no-op when node_modules
+# is current (scripts/kibi-install-status.sh). A diff that fails (the all-zero old ref of a first checkout) counts as changed.
 post-checkout:
   commands:
+    kibi-install:
+      priority: 1
+      run: if [ "{3}" = "1" ] && ! git diff --quiet {1} {2} -- package.json package-lock.json patches 2>/dev/null; then PATH="$PWD/.bin:$PATH" task kibi:install; fi
     kibi-sync:
+      priority: 2
       run: if [ "{3}" = "1" ]; then PATH="$PWD/.bin:$PATH" task kibi:sync; fi
 
+# A merge sets ORIG_HEAD to the HEAD before it, fast-forwards included; without one, assume a change.
 post-merge:
   commands:
+    kibi-install:
+      priority: 1
+      run: if ! git rev-parse -q --verify ORIG_HEAD >/dev/null || ! git diff --quiet ORIG_HEAD HEAD -- package.json package-lock.json patches; then PATH="$PWD/.bin:$PATH" task kibi:install; fi
     kibi-sync:
+      priority: 2
       run: PATH="$PWD/.bin:$PATH" task kibi:sync
 
 post-rewrite:

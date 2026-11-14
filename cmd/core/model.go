@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strings"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
@@ -62,6 +63,59 @@ func (o *ownerSessions) CheckOwner(ctx context.Context, origin, sessionToken str
 	return err
 }
 
+// OwnerSession is CheckOwner that also returns the session's ID.
+func (o *ownerSessions) OwnerSession(ctx context.Context, origin, sessionToken string) (string, error) {
+	s, err := o.session(ctx, origin, sessionToken)
+	if err != nil {
+		return "", err
+	}
+	return string(s.ID), nil
+}
+
+// changeRecorder keeps a change of state together with its audit entry;
+// *identityapp.Auth implements it.
+type changeRecorder interface {
+	RecordOwnerChange(ctx context.Context, session identity.SessionID, action identity.AuditAction, refs []identity.Ref,
+		change func(context.Context) error) error
+}
+
+// Audited has change made as the owner's change, entered in the audit log
+// (D-211) as action naming refs, each "<kind>:<ID>", by the owner's session
+// that asked: the entry is kept with the change or neither is, and the change
+// is not made when the log can't take its entry (see
+// identityapp.Auth.RecordOwnerChange). It implements each context's Auditor
+// port. A session that is not the owner's is refused as CheckOwner refuses
+// it, an action or reference the identity context does not know is an error
+// wrapping identity.ErrInvalidAuditEntry, and an auth that can't record is a
+// log that is unavailable: in every case change is not called.
+func (o *ownerSessions) Audited(ctx context.Context, origin, sessionToken, action string, refs []string, change func(context.Context) error) error {
+	s, err := o.session(ctx, origin, sessionToken)
+	if err != nil {
+		return err
+	}
+	a, err := identity.ParseAuditAction(action)
+	if err != nil {
+		return fmt.Errorf("auditing a change: %w", err)
+	}
+	parsed := make([]identity.Ref, 0, len(refs))
+	for _, r := range refs {
+		kind, id, _ := strings.Cut(r, ":")
+		k, kindErr := identity.ParseRefKind(kind)
+		if kindErr != nil {
+			return fmt.Errorf("auditing %s: %w", a, kindErr)
+		}
+		parsed = append(parsed, identity.Ref{Kind: k, ID: id})
+	}
+	rec, ok := o.auth.(changeRecorder)
+	if !ok {
+		return fmt.Errorf("auditing %s: %w", a, kernel.ErrAuditUnavailable)
+	}
+	if err := rec.RecordOwnerChange(ctx, s.ID, a, parsed, change); err != nil {
+		return fmt.Errorf("auditing %s: %w", a, err)
+	}
+	return nil
+}
+
 // Changeable returns those of accounts the owner, by the owner-scoped
 // session token valid on origin, may change, as the authorizer answers
 // (D-163), in their order; it fails as CheckOwner does, and when the
@@ -111,11 +165,12 @@ func (o *ownerSessions) session(ctx context.Context, origin, sessionToken string
 // with the owner's sessions checked by auth on origins, in the reporting
 // currency reporting.
 func newModels(pool *pgxpool.Pool, vstore *valuationpg.Store, auth *identityapp.Auth, origins identity.Origins, reporting kernel.Currency) (*portfolioapp.Models, error) {
-	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, portfolioOwners(auth, origins), jurisdictionPack().ReportingCurrency(), reporting)
+	owners := portfolioOwners(auth, origins)
+	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, owners, jurisdictionPack().ReportingCurrency(), reporting)
 	if err != nil {
 		return nil, fmt.Errorf("model portfolio: %w", err)
 	}
-	return models, nil
+	return models.WithAudit(owners), nil
 }
 
 // withModelService returns h with the ModelPortfolioService mounted next to

@@ -43,6 +43,7 @@ type ChartStarts struct {
 	owners   AccountOwners
 	store    ChartStartStore
 	accounts AccountLister
+	audit    ChangeAuditor
 }
 
 // NewChartStarts returns the charts' start setting over store, with the
@@ -50,6 +51,13 @@ type ChartStarts struct {
 // the stored accounts listed by accounts.
 func NewChartStarts(owners AccountOwners, store ChartStartStore, accounts AccountLister) *ChartStarts {
 	return &ChartStarts{owners: owners, store: store, accounts: accounts}
+}
+
+// WithAudit has every change of a chart start entered in the audit log
+// through a (D-211), and returns c.
+func (c *ChartStarts) WithAudit(a ChangeAuditor) *ChartStarts {
+	c.audit = a
+	return c
 }
 
 // Set stores start as where account's charts start, or the portfolio's
@@ -72,7 +80,14 @@ func (c *ChartStarts) Set(ctx context.Context, origin, sessionToken string, acco
 			return fmt.Errorf("setting the charts' start: %w: %s", ErrUnknownAccount, account)
 		}
 	}
-	if err := c.store.SaveChartStart(ctx, account, start); err != nil {
+	setting, extra := settingPortfolioStart, []string(nil)
+	if account != "" {
+		setting, extra = settingChartStart, []string{auditAccountRef + string(account)}
+	}
+	err := auditedSetting(ctx, c.audit, origin, sessionToken, setting, func(ctx context.Context) error {
+		return c.store.SaveChartStart(ctx, account, start)
+	}, extra...)
+	if err != nil {
 		return fmt.Errorf("setting the charts' start: %w", err)
 	}
 	return nil

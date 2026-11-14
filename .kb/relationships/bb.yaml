@@ -1056,3 +1056,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b1a89031f0b
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-registerviewer
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:41:00.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a9b60e89623
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-test-maintainer-audit-writes-the-entries-of-d211
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:20.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eab71f58b993
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-sessions-by-token-session
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:53.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-568bccb3b093
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-audit
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:43.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ed39ba9f30f
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:47.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b21331a66cb1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:47.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d35f8bf099f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:47.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225d08eeef55
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-load-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:26.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee09170175cd
+  - type: implements
+    from: SYM-ms1-ui-models-server-load-models
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:34:26.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d17c713e2e56
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-change-model-route
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:08.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d4c3093d06f
+  - type: implements
+    from: SYM-ms1-ui-models-server-change-model-route
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:08.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d1c72a5e43
+  - type: executable_for
+    from: SYM-ms1-core-modelsettings-test-test-model-providers-wait-for-discovery
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:40:26.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-566377e68163
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-want-entries-of
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:02.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d206679374
+  - type: implements
+    from: SYM-s8-internal-identity-app-plugins-new-plugin-observations
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:54:11.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0a9af7e438a
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-plugins-new-plugin-observations
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:54:11.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cda1ceaa80d6

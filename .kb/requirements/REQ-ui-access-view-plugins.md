@@ -1,10 +1,10 @@
 ---
 title: The Access page lists the view plugins with their grants.
 status: open
-text_ref: design-decisions:D-210#3
+text_ref: design-decisions:D-210#4
 origin:
   kind: import
-  ref: design-decisions:D-210#3
+  ref: design-decisions:D-210#4
   recorded_at: '2026-11-13T18:00:00.000Z'
 firmness: firm
 required_evidence: asserted
@@ -35,4 +35,4 @@ D-210. The built-in UI is left out: it reads with the signed-in person's session
 
 > Settings has an Access page: the people (the owner, and each viewer with their grants and sessions, invited by a one-time link to enroll their own passkey and revoked from there), the script tokens (each with its grants, its expiry and whether it may use MCP), the view plugins with their grants, and the history of every grant and revocation.
 
-OpenFief author decisions (docs/DESIGN.md), design-decisions:D-210#3
+OpenFief author decisions (docs/DESIGN.md), design-decisions:D-210#4

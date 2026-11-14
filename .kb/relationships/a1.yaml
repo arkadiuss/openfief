@@ -951,3 +951,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf3a30f617db
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-testviewerenrolls
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:17.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e145fc74593
+  - type: verified_by
+    from: SCEN-ui-access-people-invite-grant-revoke
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:16.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8104c6b1ab3f
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-checkrevokedviewer
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:41:11.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42e125149f78
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-reader
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:51.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be62e492bc8f
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-reader
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T21:24:52.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4d2ce3debf6
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-dismiss-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:04.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846ded5ae895
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-dismiss-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:48:05.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-612777e3f05e
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-acore-refusal-of-adecision-shows-its-reason-in-the-inbox
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T22:00:07.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe4e7397d5e1
+  - type: specified_by
+    from: REQ-identity-invite-cancel
+    to: SCEN-identity-invite-cancel
+    created_at: 2026-11-13T23:29:44.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa47c945a15
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-an-owners-failed-run-does-not-count
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:48:06.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b7c9612611

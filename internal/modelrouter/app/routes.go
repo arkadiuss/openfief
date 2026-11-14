@@ -26,10 +26,16 @@ func RouteProblems(ctx context.Context, settings SettingsStore, instances Provid
 	if err != nil {
 		return nil, fmt.Errorf("loading the models settings: %w", err)
 	}
+	return routeProblems(ctx, &stored, instances, true)
+}
+
+// routeProblems finds the broken entries of stored's routes: of the roles in
+// use only when inUse is true, of every role otherwise.
+func routeProblems(ctx context.Context, stored *modelrouter.Settings, instances ProviderInstances, inUse bool) ([]modelrouter.RouteProblem, error) {
 	checked := map[string]error{}
 	var out []modelrouter.RouteProblem
 	for _, role := range modelrouter.Roles() {
-		if !stored.Switch.Enabled || !stored.Switch.Allows(role.Feature()) {
+		if inUse && (!stored.Switch.Enabled || !stored.Switch.Allows(role.Feature())) {
 			continue
 		}
 		for _, m := range stored.Routes[role].Models {

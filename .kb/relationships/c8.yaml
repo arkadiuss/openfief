@@ -972,3 +972,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd82556edf31
+  - type: implements
+    from: SYM-viewers-internal-identity-app-passkeys-auth-newviewer
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:10:24.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9b9218cb31
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-passkeys-auth-newviewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:10:24.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5a5780918d
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-before-percent
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:23.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b088610f7c2f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-before-percent
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:23.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06c057333e9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-before-percent
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:23.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0812db789096
+  - type: executable_for
+    from: SYM-invites-internal-identity-connectapi-invites_test-testlistandcancelinvites
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:33:03.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c08fadba31
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-descriptor
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:36:59.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db428913cd11
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesresponse-descriptor
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:36:59.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35fcea200372

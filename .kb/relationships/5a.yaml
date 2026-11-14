@@ -1077,3 +1077,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16885ae3c98d
+  - type: verified_by
+    from: SCEN-ui-reads-as-signed-in-person
+    to: TEST-ui-viewer
+    created_at: 2026-11-13T19:57:59.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0eddb49b202
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-viewerperson
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:15:35.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b8b61953b7
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-core-test-real-core-get
+    to: TEST-core-maintainer-real-core
+    created_at: 2026-11-13T21:18:05.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69882e266693
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-save-model
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:16.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c97ad85874
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-dismiss-proposal
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:30.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9d9352ece8a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-init
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:12.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cb61fa5b3dd
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-init
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:12.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54cea7d3e7fb
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-init
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:12.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4552042bbe0c

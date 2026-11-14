@@ -839,3 +839,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bf36f7b5115
+  - type: specified_by
+    from: REQ-identity-viewer-enrolls-own-passkey
+    to: SCEN-identity-viewer-enrolls
+    created_at: 2026-11-13T19:59:10.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e18a11228a0
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getname
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:51.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fac9cb767f7a
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getname
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:51.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-587ac128f0c6
+  - type: executable_for
+    from: SYM-people-internal-views-ui-people_test-harness-postsneedalogin
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:40:33.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e7a59779848
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-start-run
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:46:32.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13dfa8fad767
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-start-run
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:46:32.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbf0a26fec4a
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-applied-by
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:54.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc10f748d3d4
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:29:38.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ddb6da0979b
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:29:38.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a432ea58fd
+  - type: verified_by
+    from: SCEN-identity-invite-cancel
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:29:38.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9122e38fed
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-test-get-model-settings-names-the-broken-route-entries
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:39.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb2bd41e817
+  - type: specified_by
+    from: REQ-identity-audit-procedures-classified
+    to: SCEN-identity-audit-procedures-classified
+    created_at: 2026-11-14T02:39:50.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3250afdcda3

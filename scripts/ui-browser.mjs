@@ -2,7 +2,8 @@
 // Browser checks of the built-in UI over its in-memory fakes (task ui:browser). It starts them itself with
 // TestServeForBrowser (go test) on ADDR, default localhost:8099, and stops them when done: a screenshot of every main page at 390 px in light and dark and at desktop width; no page
 // scrolls sideways at 360 or 390 px; the menu folds the navigation away on a phone, with the Inbox's open count; the check
-// pages D-192 removed land on the Inbox at 360 px with its in-place forms, and an account's banner links there; the manifest makes the UI
+// pages D-192 removed land on the Inbox at 360 px with its in-place forms, and an account's banner links there; the Inbox shows the
+// maintainer's proposal with its figures, Apply and Dismiss, and the model portfolio's page its latest note (D-204); the manifest makes the UI
 // installable; the service worker caches only static files, serves the offline page instead of a page when the
 // network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
@@ -12,7 +13,8 @@
 // at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
-// session ends (D-151).
+// session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
+// granted nothing sees "Nothing has been shared with you yet" on every page (D-210).
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -58,7 +60,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', access: '/access', setup: '/setup',
+  settings: '/settings', models: '/settings/models', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -166,9 +168,23 @@ async function removedRedirect(browser) {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `phone: the Inbox from ${target} scrolls ${overflow} px sideways`);
   }
-  for (const form of ['/inbox/tickers/confirm', '/inbox/retry-sync', '/accounts/bind', '/inbox/price-checks/acknowledge']) {
+  for (const form of ['/inbox/tickers/confirm', '/inbox/retry-sync', '/accounts/bind', '/inbox/price-checks/acknowledge', '/inbox/proposals/apply', '/inbox/proposals/dismiss']) {
     check(await page.locator(`form[action="${form}"]`).count() > 0, `phone: the Inbox has no ${form} form`);
   }
+  // The maintainer's proposal card (D-204): the figures behind the change are in the page and the table fits the phone.
+  await page.goto(base + '/inbox', { waitUntil: 'networkidle' });
+  check((await page.textContent('#item-70')).includes('63.1%'), "phone: the proposal's card shows no current weight");
+  check(await page.locator('#item-70 form[action="/inbox/proposals/apply"] button').isVisible(), 'phone: the proposal has no visible Apply button');
+  const proposalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check(proposalOverflow <= 0, `phone: the proposal's card scrolls ${proposalOverflow} px sideways`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-inbox-proposal.png'), fullPage: true });
+  // The model portfolio's page: the maintainer's latest note and the owner's Ask button.
+  await page.goto(base + '/model', { waitUntil: 'networkidle' });
+  check(await page.isVisible('#maintainer-note'), "phone: the model portfolio's page shows no maintainer note");
+  check(await page.locator('form[action="/model/maintainer/ask"] button').isVisible(), 'phone: the owner has no Ask the maintainer button');
+  const modelOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check(modelOverflow <= 0, `phone: the model portfolio's page scrolls ${modelOverflow} px sideways`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-model.png'), fullPage: true });
   await page.goto(base + '/accounts/acc-synthetic-1', { waitUntil: 'networkidle' });
   check(await page.isVisible('.banner a[href^="/inbox#item-"]'), "phone: the account's banner doesn't link its items");
   await page.screenshot({ path: path.join(out, 'phone360-light-account-banner.png') });
@@ -337,6 +353,74 @@ async function passkeyCheck(browser) {
   const { credentials } = await cdp.send('WebAuthn.getCredentials', { authenticatorId });
   check(credentials.length === 1 && credentials[0].signCount > 0, 'passkey check: the virtual authenticator signed nothing');
   await ctx.close();
+}
+
+// people checks the Access page's People section (D-210): the invitation form asks for the passkey check like a new token
+// (the fake core's check was passed above), shows the one-time link, and Revoke asks for a confirmation first; the section
+// does not scroll sideways at 360 px.
+async function people(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
+  const section = await page.textContent('#people-title ~ .table');
+  check(section.includes('Alice') && section.includes('no access yet') && section.includes('revoked'), 'people: the section lacks Alice, Bob\'s "no access yet" or Carol\'s revoked mark');
+  check(await sideways(page) <= 0, 'people: the Access page scrolls sideways at 360 px');
+  const pending = await page.textContent('#pending-invites-title ~ .table');
+  check(pending.includes('Dana') && pending.includes('Cancel invitation') && !pending.includes('#code='), 'people: the pending invitation lacks Dana or its cancel button, or shows a link');
+  const history = await page.textContent('#history-title ~ .table');
+  check(history.includes('Access granted') && history.includes('Alice') && history.includes('Invitation cancelled'), 'history: the section lacks the grants, Alice or the cancelled invitation');
+  check(await page.locator('#history-title ~ p a[href="/settings/audit"]').count() === 1, 'history: no link to the whole audit log');
+  await page.fill('#viewer-name', 'Dana');
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/access/people"] button[type="submit"]')]);
+  let body = await page.textContent('body');
+  check(body.includes('Invitation for Dana created') && body.includes('/enroll#code='), 'people: no invitation link after inviting a viewer');
+  check(await sideways(page) <= 0, 'people: the invitation link scrolls the page sideways at 360 px');
+  await page.screenshot({ path: path.join(out, 'phone360-light-people-invited.png'), fullPage: true });
+  await page.goto(base + '/access', { waitUntil: 'networkidle' });
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action$="/revoke"] button.danger')]);
+  body = await page.textContent('body');
+  check(body.includes('Revoke Alice?') && body.includes('Yes, revoke Alice'), 'people: Revoke did not ask for a confirmation');
+  await page.screenshot({ path: path.join(out, 'phone360-light-people-revoke.png'), fullPage: true });
+  await ctx.close();
+}
+
+// auditLog checks Settings' Audit log (D-211) at phone and desktop width: the filter applies from its form, a viewer's
+// row is named, and the table does not scroll the page sideways.
+async function auditLog(browser) {
+  for (const [label, options] of [['phone', { viewport: { width: 360, height: 780 }, isMobile: true, hasTouch: true }], ['desktop', { viewport: { width: 1280, height: 800 } }]]) {
+    const ctx = await context(browser, options, true);
+    const page = await ctx.newPage();
+    await page.goto(base + '/settings/audit', { waitUntil: 'networkidle' });
+    const all = await page.locator('tbody tr').count();
+    check(all === 12, `audit ${label}: ${all} rows, want the fake log's 12`);
+    check((await page.textContent('tbody')).includes('Alice'), `audit ${label}: the viewer's sign-in is not named`);
+    await page.selectOption('#audit-outcome', 'refused');
+    await Promise.all([page.waitForLoadState('networkidle'), page.click('form[aria-label="Filter the audit log"] button[type="submit"]')]);
+    const refused = await page.locator('tbody tr').count();
+    check(refused === 2, `audit ${label}: ${refused} refused rows, want 2`);
+    check(await sideways(page) <= 0, `audit ${label}: scrolls sideways`);
+    await page.screenshot({ path: path.join(out, `${label}-audit-filtered-by-form.png`), fullPage: true });
+    await ctx.close();
+  }
+}
+
+// viewerEmpty checks a viewer the owner granted nothing yet (D-210): every page they have says plainly that nothing has
+// been shared with them, with no chart and no error, at phone and desktop width.
+async function viewerEmpty(browser) {
+  for (const [label, options] of [['phone', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }], ['desktop', { viewport: { width: 1280, height: 800 } }]]) {
+    const ctx = await browser.newContext(options);
+    const page = await ctx.newPage();
+    await page.goto(base + '/test/sign-in-viewer');
+    for (const target of ['/', '/accounts', '/sleeves', '/inbox']) {
+      const response = await page.goto(base + target, { waitUntil: 'networkidle' });
+      check(response && response.status() === 200, `viewer ${label} ${target}: status ${response && response.status()}`);
+      check((await page.textContent('body')).includes('Nothing has been shared with you yet'), `viewer ${label} ${target}: no empty state`);
+      check(await page.locator('canvas').count() === 0, `viewer ${label} ${target}: an empty chart`);
+      check(await sideways(page) <= 0, `viewer ${label} ${target}: scrolls sideways`);
+      await page.screenshot({ path: path.join(out, `${label}-viewer-empty${target === '/' ? '-overview' : target.replace('/', '-')}.png`), fullPage: true });
+    }
+    await ctx.close();
+  }
 }
 
 async function app() {
@@ -508,6 +592,9 @@ try {
   await askModelBox(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
+  await people(browser);
+  await auditLog(browser);
+  await viewerEmpty(browser);
   await app();
   await keptOverview();
 } finally {

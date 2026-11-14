@@ -47,7 +47,14 @@ func (s *Settings) SetExemptionClass(ctx context.Context, origin, sessionToken, 
 	if err := s.checkOwner(ctx, origin, sessionToken); err != nil {
 		return err
 	}
-	if err := s.recorder.RecordExemptionClass(ctx, isin, class); err != nil {
+	parsed, err := ledger.ParseISIN(isin)
+	if err != nil {
+		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+	}
+	err = auditedSetting(ctx, s.audit, origin, sessionToken, settingExemptionClass, func(ctx context.Context) error {
+		return s.recorder.RecordExemptionClass(ctx, isin, class)
+	}, auditInstrumentRef+parsed.String())
+	if err != nil {
 		return fmt.Errorf("setting the exemption class: %w", err)
 	}
 	return nil

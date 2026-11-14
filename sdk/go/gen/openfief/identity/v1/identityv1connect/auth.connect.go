@@ -141,6 +141,19 @@ const (
 	// AuthServiceListViewPluginsProcedure is the fully-qualified name of the AuthService's
 	// ListViewPlugins RPC.
 	AuthServiceListViewPluginsProcedure = "/openfief.identity.v1.AuthService/ListViewPlugins"
+	// AuthServiceInviteViewerProcedure is the fully-qualified name of the AuthService's InviteViewer
+	// RPC.
+	AuthServiceInviteViewerProcedure = "/openfief.identity.v1.AuthService/InviteViewer"
+	// AuthServiceListInvitesProcedure is the fully-qualified name of the AuthService's ListInvites RPC.
+	AuthServiceListInvitesProcedure = "/openfief.identity.v1.AuthService/ListInvites"
+	// AuthServiceCancelInviteProcedure is the fully-qualified name of the AuthService's CancelInvite
+	// RPC.
+	AuthServiceCancelInviteProcedure = "/openfief.identity.v1.AuthService/CancelInvite"
+	// AuthServiceListPeopleProcedure is the fully-qualified name of the AuthService's ListPeople RPC.
+	AuthServiceListPeopleProcedure = "/openfief.identity.v1.AuthService/ListPeople"
+	// AuthServiceRevokePersonProcedure is the fully-qualified name of the AuthService's RevokePerson
+	// RPC.
+	AuthServiceRevokePersonProcedure = "/openfief.identity.v1.AuthService/RevokePerson"
 )
 
 // AuthServiceClient is a client for the openfief.identity.v1.AuthService service.
@@ -247,6 +260,37 @@ type AuthServiceClient interface {
 	// which reads with the signed-in person's session. UNAVAILABLE when the core
 	// can't read the installed plugins now. Owner scope only.
 	ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error)
+	// InviteViewer issues a one-time, expiring link for a new viewer (D-65,
+	// D-210): the name the owner calls them and the grants they start with are
+	// chosen here and kept with the link. Whoever opens it enrolls their own
+	// passkey through BeginRegistration and FinishRegistration, which creates
+	// the person, binds the passkey, makes the grants and signs them in with a
+	// read session; the link is then spent. Every grant target must exist
+	// (NOT_FOUND). The link is audited when issued, when used (with the person
+	// and the passkey created) and when an expired or spent one is refused.
+	// Owner scope, with a recent passkey check (D-183).
+	InviteViewer(context.Context, *connect.Request[v1.InviteViewerRequest]) (*connect.Response[v1.InviteViewerResponse], error)
+	// ListInvites returns the viewer invitations still pending, oldest first:
+	// not used, not cancelled and not expired, each with the name and grants the
+	// owner chose and when its link stops working. Never the link: only a hash
+	// of its key is kept. Owner scope only.
+	ListInvites(context.Context, *connect.Request[v1.ListInvitesRequest]) (*connect.Response[v1.ListInvitesResponse], error)
+	// CancelInvite cancels a pending viewer invitation before it is used: its
+	// link is then refused like an expired one. The cancellation is an audit
+	// entry, written in the same transaction. An invitation unknown, used,
+	// cancelled or expired already is NOT_FOUND. Owner scope only; it only takes
+	// a way in away, so it needs no passkey check.
+	CancelInvite(context.Context, *connect.Request[v1.CancelInviteRequest]) (*connect.Response[v1.CancelInviteResponse], error)
+	// ListPeople returns the owner and every viewer, revoked ones included,
+	// each with the grants in force, the passkeys that work and the sessions
+	// not ended (D-210). Owner scope only.
+	ListPeople(context.Context, *connect.Request[v1.ListPeopleRequest]) (*connect.Response[v1.ListPeopleResponse], error)
+	// RevokePerson revokes a viewer: their sessions end, their passkeys stop
+	// working and their grants end, each with an audit entry. The person record
+	// stays, with their ID and the history that names them. Revoking a viewer
+	// already revoked is NOT_FOUND; the owner can't be revoked (INVALID_ARGUMENT).
+	// Owner scope only; it only takes access away, so it needs no passkey check.
+	RevokePerson(context.Context, *connect.Request[v1.RevokePersonRequest]) (*connect.Response[v1.RevokePersonResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the openfief.identity.v1.AuthService service. By
@@ -398,6 +442,36 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("ListViewPlugins")),
 			connect.WithClientOptions(opts...),
 		),
+		inviteViewer: connect.NewClient[v1.InviteViewerRequest, v1.InviteViewerResponse](
+			httpClient,
+			baseURL+AuthServiceInviteViewerProcedure,
+			connect.WithSchema(authServiceMethods.ByName("InviteViewer")),
+			connect.WithClientOptions(opts...),
+		),
+		listInvites: connect.NewClient[v1.ListInvitesRequest, v1.ListInvitesResponse](
+			httpClient,
+			baseURL+AuthServiceListInvitesProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ListInvites")),
+			connect.WithClientOptions(opts...),
+		),
+		cancelInvite: connect.NewClient[v1.CancelInviteRequest, v1.CancelInviteResponse](
+			httpClient,
+			baseURL+AuthServiceCancelInviteProcedure,
+			connect.WithSchema(authServiceMethods.ByName("CancelInvite")),
+			connect.WithClientOptions(opts...),
+		),
+		listPeople: connect.NewClient[v1.ListPeopleRequest, v1.ListPeopleResponse](
+			httpClient,
+			baseURL+AuthServiceListPeopleProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ListPeople")),
+			connect.WithClientOptions(opts...),
+		),
+		revokePerson: connect.NewClient[v1.RevokePersonRequest, v1.RevokePersonResponse](
+			httpClient,
+			baseURL+AuthServiceRevokePersonProcedure,
+			connect.WithSchema(authServiceMethods.ByName("RevokePerson")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -426,6 +500,11 @@ type authServiceClient struct {
 	listGrants           *connect.Client[v1.ListGrantsRequest, v1.ListGrantsResponse]
 	updateGrants         *connect.Client[v1.UpdateGrantsRequest, v1.UpdateGrantsResponse]
 	listViewPlugins      *connect.Client[v1.ListViewPluginsRequest, v1.ListViewPluginsResponse]
+	inviteViewer         *connect.Client[v1.InviteViewerRequest, v1.InviteViewerResponse]
+	listInvites          *connect.Client[v1.ListInvitesRequest, v1.ListInvitesResponse]
+	cancelInvite         *connect.Client[v1.CancelInviteRequest, v1.CancelInviteResponse]
+	listPeople           *connect.Client[v1.ListPeopleRequest, v1.ListPeopleResponse]
+	revokePerson         *connect.Client[v1.RevokePersonRequest, v1.RevokePersonResponse]
 }
 
 // GetLoginMethods calls openfief.identity.v1.AuthService.GetLoginMethods.
@@ -543,6 +622,31 @@ func (c *authServiceClient) ListViewPlugins(ctx context.Context, req *connect.Re
 	return c.listViewPlugins.CallUnary(ctx, req)
 }
 
+// InviteViewer calls openfief.identity.v1.AuthService.InviteViewer.
+func (c *authServiceClient) InviteViewer(ctx context.Context, req *connect.Request[v1.InviteViewerRequest]) (*connect.Response[v1.InviteViewerResponse], error) {
+	return c.inviteViewer.CallUnary(ctx, req)
+}
+
+// ListInvites calls openfief.identity.v1.AuthService.ListInvites.
+func (c *authServiceClient) ListInvites(ctx context.Context, req *connect.Request[v1.ListInvitesRequest]) (*connect.Response[v1.ListInvitesResponse], error) {
+	return c.listInvites.CallUnary(ctx, req)
+}
+
+// CancelInvite calls openfief.identity.v1.AuthService.CancelInvite.
+func (c *authServiceClient) CancelInvite(ctx context.Context, req *connect.Request[v1.CancelInviteRequest]) (*connect.Response[v1.CancelInviteResponse], error) {
+	return c.cancelInvite.CallUnary(ctx, req)
+}
+
+// ListPeople calls openfief.identity.v1.AuthService.ListPeople.
+func (c *authServiceClient) ListPeople(ctx context.Context, req *connect.Request[v1.ListPeopleRequest]) (*connect.Response[v1.ListPeopleResponse], error) {
+	return c.listPeople.CallUnary(ctx, req)
+}
+
+// RevokePerson calls openfief.identity.v1.AuthService.RevokePerson.
+func (c *authServiceClient) RevokePerson(ctx context.Context, req *connect.Request[v1.RevokePersonRequest]) (*connect.Response[v1.RevokePersonResponse], error) {
+	return c.revokePerson.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the openfief.identity.v1.AuthService service.
 type AuthServiceHandler interface {
 	// GetLoginMethods says which ways in the login page can offer at origin.
@@ -647,6 +751,37 @@ type AuthServiceHandler interface {
 	// which reads with the signed-in person's session. UNAVAILABLE when the core
 	// can't read the installed plugins now. Owner scope only.
 	ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error)
+	// InviteViewer issues a one-time, expiring link for a new viewer (D-65,
+	// D-210): the name the owner calls them and the grants they start with are
+	// chosen here and kept with the link. Whoever opens it enrolls their own
+	// passkey through BeginRegistration and FinishRegistration, which creates
+	// the person, binds the passkey, makes the grants and signs them in with a
+	// read session; the link is then spent. Every grant target must exist
+	// (NOT_FOUND). The link is audited when issued, when used (with the person
+	// and the passkey created) and when an expired or spent one is refused.
+	// Owner scope, with a recent passkey check (D-183).
+	InviteViewer(context.Context, *connect.Request[v1.InviteViewerRequest]) (*connect.Response[v1.InviteViewerResponse], error)
+	// ListInvites returns the viewer invitations still pending, oldest first:
+	// not used, not cancelled and not expired, each with the name and grants the
+	// owner chose and when its link stops working. Never the link: only a hash
+	// of its key is kept. Owner scope only.
+	ListInvites(context.Context, *connect.Request[v1.ListInvitesRequest]) (*connect.Response[v1.ListInvitesResponse], error)
+	// CancelInvite cancels a pending viewer invitation before it is used: its
+	// link is then refused like an expired one. The cancellation is an audit
+	// entry, written in the same transaction. An invitation unknown, used,
+	// cancelled or expired already is NOT_FOUND. Owner scope only; it only takes
+	// a way in away, so it needs no passkey check.
+	CancelInvite(context.Context, *connect.Request[v1.CancelInviteRequest]) (*connect.Response[v1.CancelInviteResponse], error)
+	// ListPeople returns the owner and every viewer, revoked ones included,
+	// each with the grants in force, the passkeys that work and the sessions
+	// not ended (D-210). Owner scope only.
+	ListPeople(context.Context, *connect.Request[v1.ListPeopleRequest]) (*connect.Response[v1.ListPeopleResponse], error)
+	// RevokePerson revokes a viewer: their sessions end, their passkeys stop
+	// working and their grants end, each with an audit entry. The person record
+	// stays, with their ID and the history that names them. Revoking a viewer
+	// already revoked is NOT_FOUND; the owner can't be revoked (INVALID_ARGUMENT).
+	// Owner scope only; it only takes access away, so it needs no passkey check.
+	RevokePerson(context.Context, *connect.Request[v1.RevokePersonRequest]) (*connect.Response[v1.RevokePersonResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -794,6 +929,36 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("ListViewPlugins")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceInviteViewerHandler := connect.NewUnaryHandler(
+		AuthServiceInviteViewerProcedure,
+		svc.InviteViewer,
+		connect.WithSchema(authServiceMethods.ByName("InviteViewer")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceListInvitesHandler := connect.NewUnaryHandler(
+		AuthServiceListInvitesProcedure,
+		svc.ListInvites,
+		connect.WithSchema(authServiceMethods.ByName("ListInvites")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceCancelInviteHandler := connect.NewUnaryHandler(
+		AuthServiceCancelInviteProcedure,
+		svc.CancelInvite,
+		connect.WithSchema(authServiceMethods.ByName("CancelInvite")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceListPeopleHandler := connect.NewUnaryHandler(
+		AuthServiceListPeopleProcedure,
+		svc.ListPeople,
+		connect.WithSchema(authServiceMethods.ByName("ListPeople")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceRevokePersonHandler := connect.NewUnaryHandler(
+		AuthServiceRevokePersonProcedure,
+		svc.RevokePerson,
+		connect.WithSchema(authServiceMethods.ByName("RevokePerson")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.identity.v1.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceGetLoginMethodsProcedure:
@@ -842,6 +1007,16 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceUpdateGrantsHandler.ServeHTTP(w, r)
 		case AuthServiceListViewPluginsProcedure:
 			authServiceListViewPluginsHandler.ServeHTTP(w, r)
+		case AuthServiceInviteViewerProcedure:
+			authServiceInviteViewerHandler.ServeHTTP(w, r)
+		case AuthServiceListInvitesProcedure:
+			authServiceListInvitesHandler.ServeHTTP(w, r)
+		case AuthServiceCancelInviteProcedure:
+			authServiceCancelInviteHandler.ServeHTTP(w, r)
+		case AuthServiceListPeopleProcedure:
+			authServiceListPeopleHandler.ServeHTTP(w, r)
+		case AuthServiceRevokePersonProcedure:
+			authServiceRevokePersonHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -941,4 +1116,24 @@ func (UnimplementedAuthServiceHandler) UpdateGrants(context.Context, *connect.Re
 
 func (UnimplementedAuthServiceHandler) ListViewPlugins(context.Context, *connect.Request[v1.ListViewPluginsRequest]) (*connect.Response[v1.ListViewPluginsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListViewPlugins is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) InviteViewer(context.Context, *connect.Request[v1.InviteViewerRequest]) (*connect.Response[v1.InviteViewerResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.InviteViewer is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ListInvites(context.Context, *connect.Request[v1.ListInvitesRequest]) (*connect.Response[v1.ListInvitesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListInvites is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) CancelInvite(context.Context, *connect.Request[v1.CancelInviteRequest]) (*connect.Response[v1.CancelInviteResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.CancelInvite is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ListPeople(context.Context, *connect.Request[v1.ListPeopleRequest]) (*connect.Response[v1.ListPeopleResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.ListPeople is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) RevokePerson(context.Context, *connect.Request[v1.RevokePersonRequest]) (*connect.Response[v1.RevokePersonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.RevokePerson is not implemented"))
 }

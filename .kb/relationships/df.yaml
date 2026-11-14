@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f178151ac07e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-proposal-calls
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:57.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b2682ecbd6
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-changes
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:07:52.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd06c81f26f6
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-changes
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:07:52.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-570530154547
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-get-changes
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:07:52.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-621d3a3b5c17

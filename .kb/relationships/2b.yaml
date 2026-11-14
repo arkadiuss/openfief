@@ -1056,3 +1056,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e83da86e5960
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:07:26.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d9fc5bc02bd
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:07:26.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d0b58ab9bd7
+  - type: verified_by
+    from: SCEN-maintainer-weights-computed-not-modelled
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:07:26.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67cf63f75f0d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-change
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:39.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a29612f934f2
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-change
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:40.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d1a092ec3a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-queue-run
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:36:07.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-176d306f0b52
+  - type: specified_by
+    from: REQ-ui-models-routes-providers
+    to: SCEN-ui-models-routes-providers
+    created_at: 2026-11-14T00:24:13.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-963e510a947a
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:24:18.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c14ffeb9d3f3
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:24:18.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-083c89908cc6
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-14T00:24:18.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0923b6f0884
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-confirm-ticker
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:47.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c511303d76b

@@ -14,8 +14,8 @@ import (
 
 // newCashCheckpoints returns the owner's cash checkpoints (D-158, D-79)
 // over the ledger, with the owner's sessions checked by owners.
-func newCashCheckpoints(l *ledgerapp.Ledger, owners ledgerapp.Owners) *ledgerapp.CashCheckpoints {
-	return &ledgerapp.CashCheckpoints{Owners: owners, Ledger: l}
+func newCashCheckpoints(l *ledgerapp.Ledger, owners *ownerSessions) *ledgerapp.CashCheckpoints {
+	return &ledgerapp.CashCheckpoints{Owners: owners, Ledger: l, Audit: owners}
 }
 
 // withCashCheckpointService returns h with the CashCheckpointService

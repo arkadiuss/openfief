@@ -136,6 +136,8 @@ func (s *sleeveService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
+	case errors.Is(err, kernel.ErrAuditUnavailable):
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuditUnavailable)
 	case errors.Is(err, portfolio.ErrInvalidKind), errors.Is(err, portfolio.ErrInvalidSleeve),
 		errors.Is(err, portfolio.ErrUnknownKind), errors.Is(err, portfolio.ErrKindRoleChange),
 		errors.Is(err, portfolio.ErrRoleOverride), errors.Is(err, portfolio.ErrNoKey):

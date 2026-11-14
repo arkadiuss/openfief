@@ -839,3 +839,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8169e8dad0fe
+  - type: verified_by
+    from: SCEN-views-viewer-sleeves-and-kinds
+    to: TEST-core-viewers
+    created_at: 2026-11-13T19:57:53.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb12d7f82cff
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-viewerworld-checksessionsafterrevocation
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:47:42.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e80acf952f35
+  - type: specified_by
+    from: REQ-maintainer-sends-figures-through-router
+    to: SCEN-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:07:41.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bf6ebb8729e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-worker-runs-the-run-or-the-weekly-turn
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:48.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c01ba4b6a358
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-auditnames-holderortarget
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:32:17.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c5c43512820
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-auditnames-holderortarget
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:17.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a8b34c7a9e9
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-models-routes
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:27:13.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f776471e557
+  - type: implements
+    from: SYM-ms1-ui-models-server-models-routes
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:27:13.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea2c9855fe24

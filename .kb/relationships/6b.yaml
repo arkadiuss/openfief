@@ -1175,3 +1175,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-774d6136549c
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-sessions-by-token
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:47.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8db73b35e6ca
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-apply-proposal
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:47:53.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86de846fd302
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-apply-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:47:53.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70ce319aa7ca
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:51.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c24fd1866466
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:51.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a8f8034dc1f
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:51.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c296ef0a6d6
+  - type: verified_by
+    from: SCEN-identity-audit-procedures-classified
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:39:47.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a1af7096cb0

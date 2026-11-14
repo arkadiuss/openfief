@@ -1014,3 +1014,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c3c0758bb34
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getkind
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:18:45.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90a0f184a7e3
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person-getkind
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:18:45.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f98b8a2d5056
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-checkolderdataistheowners
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:47:31.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46bdb2e688c0
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-inbox-shows-aviewer-no-figures-and-no-buttons
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:45.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13007e0d6378
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-get-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:09:17.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38075be24d63
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-get-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:09:17.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b24c14fb994e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-get-proposal
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:09:17.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4ccc5650934
+  - type: executable_for
+    from: SYM-invites-internal-views-ui-fakes_test-fakeauth-cancelinvite
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:33:52.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88dc49e85caa
+  - type: covered_by
+    from: SYM-ms1-ui-models-models-load
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:27.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4eafb2516fb
+  - type: implements
+    from: SYM-ms1-ui-models-models-load
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:37:27.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cff0855f5df
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-acore-that-is-down-is-abad-gateway-not-an-empty-page
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:16.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24c3c1c63f96

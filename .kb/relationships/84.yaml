@@ -1014,3 +1014,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ee62d5c4800
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getsessiontoken
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:57.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-535cc3e3f302
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-getsessiontoken
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:57.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1eed082d0f4
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-descriptor
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:24:07.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7221fb6ee0b3
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-descriptor
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:24:07.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c273ce661d43
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-store
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:30.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281d103df576
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-store
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:23:30.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058cdce01e56
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-new
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:41:44.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-131db2291645
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-new
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:41:44.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd777300bf30
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-model-page-offers-the-owner-to-ask
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:55:25.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c57f418ec9dc
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-recording-auditor-audited
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:10.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5622546a85ed
+  - type: implements
+    from: SYM-s8-internal-valuation-app-chartstart-chart-starts-with-audit
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T03:00:21.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79d74d1d35c7
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-chartstart-chart-starts-with-audit
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T03:00:21.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-791deb1e2c94

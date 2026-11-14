@@ -47,27 +47,41 @@ func (s *Store) Settings(ctx context.Context) (modelrouter.Settings, error) {
 	return out, nil
 }
 
-// SaveEnabled turns the one switch on or off.
-func (s *Store) SaveEnabled(ctx context.Context, on bool) error {
-	_, err := s.pool.Exec(ctx, `
-		INSERT INTO modelrouter.switch (enabled) VALUES ($1)
-		ON CONFLICT (singleton) DO UPDATE SET enabled = EXCLUDED.enabled, updated_at = now()`, on)
+// SaveEnabled turns the one switch on or off, running within before the
+// commit.
+func (s *Store) SaveEnabled(ctx context.Context, on bool, within func(context.Context) error) error {
+	err := s.inTx(ctx, within, func(tx pgx.Tx) error {
+		_, err := tx.Exec(ctx, `
+			INSERT INTO modelrouter.switch (enabled) VALUES ($1)
+			ON CONFLICT (singleton) DO UPDATE SET enabled = EXCLUDED.enabled, updated_at = now()`, on)
+		if err != nil {
+			return fmt.Errorf("writing the switch: %w", err)
+		}
+		return nil
+	})
 	if err != nil {
 		return fmt.Errorf("saving the models switch: %w", err)
 	}
 	return nil
 }
 
-// SaveToggle turns one feature's toggle on or off.
-func (s *Store) SaveToggle(ctx context.Context, f modelrouter.Feature, on bool) error {
-	var err error
-	if on {
-		_, err = s.pool.Exec(ctx, `
-			INSERT INTO modelrouter.feature_toggles (feature) VALUES ($1)
-			ON CONFLICT (feature) DO UPDATE SET updated_at = now()`, string(f))
-	} else {
-		_, err = s.pool.Exec(ctx, "DELETE FROM modelrouter.feature_toggles WHERE feature = $1", string(f))
-	}
+// SaveToggle turns one feature's toggle on or off, running within before the
+// commit.
+func (s *Store) SaveToggle(ctx context.Context, f modelrouter.Feature, on bool, within func(context.Context) error) error {
+	err := s.inTx(ctx, within, func(tx pgx.Tx) error {
+		var err error
+		if on {
+			_, err = tx.Exec(ctx, `
+				INSERT INTO modelrouter.feature_toggles (feature) VALUES ($1)
+				ON CONFLICT (feature) DO UPDATE SET updated_at = now()`, string(f))
+		} else {
+			_, err = tx.Exec(ctx, "DELETE FROM modelrouter.feature_toggles WHERE feature = $1", string(f))
+		}
+		if err != nil {
+			return fmt.Errorf("writing the toggle: %w", err)
+		}
+		return nil
+	})
 	if err != nil {
 		return fmt.Errorf("saving a feature toggle: %w", err)
 	}
@@ -75,9 +89,9 @@ func (s *Store) SaveToggle(ctx context.Context, f modelrouter.Feature, on bool) 
 }
 
 // SaveRoute replaces role's route with route in one transaction; no models
-// clear it.
-func (s *Store) SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref) error {
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+// clear it. within runs before the commit.
+func (s *Store) SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref, within func(context.Context) error) error {
+	err := s.inTx(ctx, within, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, "DELETE FROM modelrouter.routes WHERE role = $1", string(role)); err != nil {
 			return fmt.Errorf("clearing the route: %w", err)
 		}
@@ -97,9 +111,9 @@ func (s *Store) SaveRoute(ctx context.Context, role modelrouter.Role, route []mo
 }
 
 // SaveDataTierModels replaces tier's allowed models with allowed in one
-// transaction; none clear the list.
-func (s *Store) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref) error {
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+// transaction; none clear the list. within runs before the commit.
+func (s *Store) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref, within func(context.Context) error) error {
+	err := s.inTx(ctx, within, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, "DELETE FROM modelrouter.tier_models WHERE tier = $1", string(tier)); err != nil {
 			return fmt.Errorf("clearing the list: %w", err)
 		}
@@ -114,6 +128,24 @@ func (s *Store) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTie
 	})
 	if err != nil {
 		return fmt.Errorf("saving a tier's models: %w", err)
+	}
+	return nil
+}
+
+// inTx runs write in a transaction, then within when it is not nil, and
+// commits; a failure of either stores nothing.
+func (s *Store) inTx(ctx context.Context, within func(context.Context) error, write func(tx pgx.Tx) error) error {
+	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+		if err := write(tx); err != nil {
+			return err
+		}
+		if within == nil {
+			return nil
+		}
+		return within(ctx)
+	})
+	if err != nil {
+		return fmt.Errorf("storing a change in one transaction: %w", err)
 	}
 	return nil
 }

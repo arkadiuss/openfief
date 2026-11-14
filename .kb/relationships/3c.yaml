@@ -832,3 +832,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8ab1825998f
+  - type: implements
+    from: SYM-viewers-cmd-core-grants-targetcover-targetaccounts
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:07:47.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499edeaebcb2
+  - type: covered_by
+    from: SYM-viewers-cmd-core-grants-targetcover-targetaccounts
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:07:47.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-442e6ef2f644
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protoreflect
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:20:56.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2a6271e620
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse-protoreflect
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:20:56.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b10b5bf802fe
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-ask-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:40.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ff356281525
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-get-origin
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:39.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90eb4cbc3211
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-get-origin
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:39.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f6a43952b12
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request-get-origin
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:39.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbd0b65128a0
+  - type: covered_by
+    from: SYM-ms1-gen-settings-connect-model-settings-service-client-list-model-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:10.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d48cbf473851
+  - type: implements
+    from: SYM-ms1-gen-settings-connect-model-settings-service-client-list-model-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:10.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9581b1b371

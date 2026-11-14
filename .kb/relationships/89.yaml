@@ -1007,3 +1007,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4432f3b739a8
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-audit-outcome
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:31.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f98f72c4d7f
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-audit-outcome
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:24:31.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61893e8c2dc4
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-protomessage
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:38.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc30d788fc73
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-protomessage
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:38.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7e4b0c48635
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-malformed-forms-never-reach-the-core
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:07.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71ee8cd0e971

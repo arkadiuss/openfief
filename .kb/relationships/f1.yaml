@@ -1028,3 +1028,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd82c439629f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-new-needs-what-it-runs
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:43:09.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e816f5d3af3d
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:41.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d860032d035
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:41.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009a4d55ccd1
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:41.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b73f497eb8
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-notice-words
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:21.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a01ece96d5
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-string
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:30.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303cb8d55d23
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-string
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:30.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-727fe8eb370e
+  - type: executable_for
+    from: SYM-s8-internal-identity-auditchange-test-test-settings-and-reference-kinds-are-closed-sets
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:56:26.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de53f4832046

@@ -73,6 +73,8 @@ func unboundVisible(ctx context.Context) bool {
 	switch identityapp.CallerFrom(ctx).Holder {
 	case identity.HolderOwner, identity.HolderScriptToken, identity.HolderViewPlugin, identity.HolderDemoSession:
 		return true
+	case identity.HolderViewer:
+		return false
 	}
 	return false
 }

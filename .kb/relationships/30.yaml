@@ -860,3 +860,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b70f030adff5
+  - type: implements
+    from: SYM-viewers-internal-identity-app-people-personaccess
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:10:34.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25b242e5d51a
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-people-personaccess
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:10:34.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af545fd6cc6
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-whoamiresponse-getperson
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:19:15.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97dedaac61ef
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-whoamiresponse-getperson
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:19:15.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8655dcc5f31f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-proposal-call
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:46.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54edcf4c979c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-finish-stores-nothing-when-the-record-fails
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:56.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b682fef8d4
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-dismiss-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:13:35.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-966f8efc9617
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-dismiss-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:13:35.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8df9e3c6e81c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-portfoliov1connect-maintainer-connect-unimplemented-maintainer-service-handler-dismiss-proposal
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:13:35.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d958112d538a
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-with-audit
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:08.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e89a52dc3ec8
+  - type: implements
+    from: SYM-ms1-app-settings-settings-with-audit
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:08.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec950713a5da
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-reflect
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:23:29.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e11e578a7a0
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-reflect
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:23:29.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3bc042e25a2
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-plugins-save-plugin-generation
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:23.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8279d3e3588e
+  - type: implements
+    from: SYM-s8-internal-identity-postgres-plugins-store-save-plugin-generation
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:57:16.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df152352670d
+  - type: covered_by
+    from: SYM-s8-internal-identity-postgres-plugins-store-save-plugin-generation
+    to: TEST-identity-audit-change-postgres
+    created_at: 2026-11-14T02:57:16.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c09d8a6ec2b0

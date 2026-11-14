@@ -41,6 +41,8 @@ type Sleeves struct {
 	// Deletions deletes a sleeve with no accounts and a kind no sleeve
 	// uses (D-120).
 	Deletions SleeveDeletions
+	// Audit keeps each change with its audit entry; nil enters none.
+	Audit ChangeAuditor
 }
 
 // AddKind adds a sleeve kind named name with default role role, which
@@ -61,7 +63,10 @@ func (s *Sleeves) AddKind(ctx context.Context, origin, sessionToken, name string
 	if _, ok := kindOf(kinds, k.Key); ok {
 		return portfolio.Kind{}, fmt.Errorf("adding a sleeve kind: kind %s %w", k.Key, ErrExists)
 	}
-	if err := s.Store.SaveKind(ctx, k); err != nil {
+	err = audited(ctx, s.Audit, origin, sessionToken, auditSleeveKindAdded, []string{"sleeve_kind:" + string(k.Key)}, func(ctx context.Context) error {
+		return s.Store.SaveKind(ctx, k)
+	})
+	if err != nil {
 		return portfolio.Kind{}, fmt.Errorf("adding a sleeve kind: %w", err)
 	}
 	return k, nil
@@ -82,7 +87,10 @@ func (s *Sleeves) RenameKind(ctx context.Context, origin, sessionToken string, k
 		return portfolio.Kind{}, fmt.Errorf("renaming sleeve kind %q: %w", key, ErrNotFound)
 	}
 	k.Name = name
-	if err := s.Store.SaveKind(ctx, k); err != nil {
+	err = audited(ctx, s.Audit, origin, sessionToken, auditSleeveKindRenamed, []string{"sleeve_kind:" + string(key)}, func(ctx context.Context) error {
+		return s.Store.SaveKind(ctx, k)
+	})
+	if err != nil {
 		return portfolio.Kind{}, fmt.Errorf("renaming sleeve kind %s: %w", key, err)
 	}
 	return k, nil
@@ -107,7 +115,7 @@ func (s *Sleeves) AddSleeve(ctx context.Context, origin, sessionToken string, sl
 	if _, ok := sleeveOf(sleeves, sl.ID); ok {
 		return portfolio.Sleeve{}, fmt.Errorf("adding a sleeve: sleeve %s %w", sl.ID, ErrExists)
 	}
-	return s.save(ctx, sl)
+	return s.audited(ctx, origin, sessionToken, auditSleeveAdded, sl)
 }
 
 // UpdateSleeve replaces the stored sleeve with sl's ID by sl: a new name,
@@ -125,7 +133,21 @@ func (s *Sleeves) UpdateSleeve(ctx context.Context, origin, sessionToken string,
 	if _, ok := sleeveOf(sleeves, sl.ID); !ok {
 		return portfolio.Sleeve{}, fmt.Errorf("changing sleeve %q: %w", sl.ID, ErrNotFound)
 	}
-	return s.save(ctx, sl)
+	return s.audited(ctx, origin, sessionToken, auditSleeveChanged, sl)
+}
+
+// audited stores sl as save does, entered in the audit log as action.
+func (s *Sleeves) audited(ctx context.Context, origin, sessionToken, action string, sl portfolio.Sleeve) (portfolio.Sleeve, error) {
+	var stored portfolio.Sleeve
+	err := audited(ctx, s.Audit, origin, sessionToken, action, []string{"sleeve:" + string(sl.ID)}, func(ctx context.Context) error {
+		var saveErr error
+		stored, saveErr = s.save(ctx, sl)
+		return saveErr
+	})
+	if err != nil {
+		return portfolio.Sleeve{}, err
+	}
+	return stored, nil
 }
 
 // save stores sl and returns it as stored, its role filled in.

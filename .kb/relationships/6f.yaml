@@ -1000,3 +1000,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23d6f2ef2000
+  - type: verified_by
+    from: SCEN-tooling-kibi-install-tracks-pins
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:41:59.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd561d3e001
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:37.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bf76ae308ba
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:37.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57338bd5977d
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:37.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-330fb354c816
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:47.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c4943eb068
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:47.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa37950887ae
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-dismiss-proposal-request-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:47.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58766c014188
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protoreflect
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:34:59.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63c58d4acfb5
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-protoreflect
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:34:59.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84065022519f
+  - type: covered_by
+    from: SYM-ms1-ui-models-model-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:53.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d68946ed61
+  - type: implements
+    from: SYM-ms1-ui-models-model-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:53.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b8d9b5d3a9c
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-grid-lists-amodel-no-provider-offers-any-more-so-it-can-be-unticked
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:35.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1869a23e70

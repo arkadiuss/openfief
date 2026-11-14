@@ -1028,3 +1028,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61a39a3db539
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-job-error
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:41:32.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3438baf85407
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-job-error
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:41:32.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec81d1b315c
+  - type: verified_by
+    from: SCEN-ui-enroll-invite-no-longer-valid
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:29:39.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f72b21f55f6c
+  - type: verified_by
+    from: SCEN-ui-enroll-invite-no-longer-valid
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:29:40.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a782332cb8e
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-confirmation
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:41.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c27234e2ad0

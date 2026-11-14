@@ -33,16 +33,22 @@ func (m *memStore) Settings(context.Context) (modelrouter.Settings, error) {
 	return m.s, nil
 }
 
-func (m *memStore) SaveEnabled(_ context.Context, on bool) error {
+func (m *memStore) SaveEnabled(ctx context.Context, on bool, within func(context.Context) error) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	m.s.Switch = m.s.Switch.WithEnabled(on)
 	return nil
 }
 
-func (m *memStore) SaveToggle(_ context.Context, f modelrouter.Feature, on bool) error {
+func (m *memStore) SaveToggle(ctx context.Context, f modelrouter.Feature, on bool, within func(context.Context) error) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	sw, err := m.s.Switch.WithToggle(f, on)
 	if err != nil {
 		return fmt.Errorf("toggling a feature: %w", err)
@@ -51,22 +57,50 @@ func (m *memStore) SaveToggle(_ context.Context, f modelrouter.Feature, on bool)
 	return nil
 }
 
-func (m *memStore) SaveRoute(_ context.Context, role modelrouter.Role, refs []modelrouter.Ref) error {
+func (m *memStore) SaveRoute(ctx context.Context, role modelrouter.Role, refs []modelrouter.Ref, within func(context.Context) error) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	m.s.Routes = map[modelrouter.Role]modelrouter.Route{role: {Role: role, Models: refs}}
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
+	routes := map[modelrouter.Role]modelrouter.Route{role: {Role: role, Models: refs}}
+	for r, v := range m.s.Routes {
+		if r != role {
+			routes[r] = v
+		}
+	}
+	m.s.Routes = routes
 	return nil
 }
 
-func (m *memStore) SaveDataTierModels(_ context.Context, tier modelrouter.DataTier, refs []modelrouter.Ref) error {
+func (m *memStore) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, refs []modelrouter.Ref, within func(context.Context) error) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	m.s.Policy = modelrouter.DataTierPolicy{tier: refs}
 	return nil
 }
 
+// runWithin runs the hook a store runs inside its transaction, when there is
+// one.
+func runWithin(ctx context.Context, within func(context.Context) error) error {
+	if within == nil {
+		return nil
+	}
+	return within(ctx)
+}
+
 // owners admits the session token "owner" only.
 type owners struct{}
+
+func (o owners) OwnerSession(ctx context.Context, origin, token string) (string, error) {
+	if err := o.CheckOwner(ctx, origin, token); err != nil {
+		return "", err
+	}
+	return "session-owner", nil
+}
 
 func (owners) CheckOwner(_ context.Context, _, token string) error {
 	switch token {

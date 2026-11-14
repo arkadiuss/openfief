@@ -881,3 +881,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4772c8b5aea
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-grantpolicy-test-fakecover-targetaccounts
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T20:09:46.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-274b377a045e
+  - type: implements
+    from: SYM-people-internal-views-ui-people-inviteform
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:31.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7731f37a447
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-inviteform
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:31.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d168e6046d8
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-valid-changes
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:31:16.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af0ff5ee4777
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-only-view-plugins-may-call-the-maintainer
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:35.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd143faac9a5

@@ -811,3 +811,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5502d02eb1e
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-grantfixture-enrollviewer
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:12.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019e9ca8a5dc
+  - type: implements
+    from: SYM-viewers-internal-identity-connectapi-people-pbperson
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:12:45.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-651be87d12a4
+  - type: covered_by
+    from: SYM-viewers-internal-identity-connectapi-people-pbperson
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:12:45.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66eb18b9a36a
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-reset
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:01.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae1326b4e299
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:01.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-825a5b64e58e
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-latest-note
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:47:10.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7cc0713e41b
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-store-latest-note
+    to: REQ-decision-d204-2-note-and-proposals
+    created_at: 2026-11-13T21:47:10.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7584a508de49
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-owner-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:12.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75478c2e185d

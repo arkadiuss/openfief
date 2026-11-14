@@ -804,3 +804,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8acd1f5f631
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:05:32.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-711adb6aa70c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:05:32.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16a8d7e84aae
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-ask-maintainer-response-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:05:32.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4170825e54fe
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:03.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e9c621f7161
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:03.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae71a30be9b
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:03.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-466bd57fd4c8
+  - type: executable_for
+    from: SYM-invites-internal-identity-connectapi-invites_test-testinvitecallsareowneronly
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:32:57.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bebd0d8d767
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-test-record-owner-change-keeps-the-entry-with-the-change
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:52:51.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c187f1a96f0f

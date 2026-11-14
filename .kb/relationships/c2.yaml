@@ -965,3 +965,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e27f37c730a
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T21:14:44.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af455a910b8d
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerresponse
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:44.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffada55977a
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-one-run-is-queued-or-running-at-atime
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:49:21.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4089a22c58
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:04:31.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-899166ca474c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:04:31.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aec13ce9c4e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-get-last-failure
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:04:32.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80e0866894fd
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-named
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:12.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9918ac1a2fd9
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-named
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:12.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98c20fa0108f
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-instances-instance
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:38:53.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2de88d6f5e1f

@@ -881,3 +881,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a6713d7ce0a
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protomessage
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:21:35.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15f5b3a9f272
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeoplerequest-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:21:35.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a6456bb7d47
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-model
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:14.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db691d661636
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-model
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:14.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe8db2857421
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-get-model
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:14.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99b76d0bf13f
+  - type: verified_by
+    from: SCEN-ui-plugins-viewer-lists-installed
+    to: TEST-ui-viewer-nothing-shared
+    created_at: 2026-11-13T23:29:41.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da25068c996
+  - type: specified_by
+    from: REQ-ui-enroll-invite-no-longer-valid
+    to: SCEN-ui-enroll-invite-no-longer-valid
+    created_at: 2026-11-13T23:29:47.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c1cfc895af9
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-confirming-store-correct-ticker
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:31.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4835e97d6a91

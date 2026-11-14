@@ -20,6 +20,7 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestkube "github.com/arkadiuss/openfief/internal/ingest/kube"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	modelsdomain "github.com/arkadiuss/openfief/internal/modelrouter"
 	modelsapp "github.com/arkadiuss/openfief/internal/modelrouter/app"
@@ -35,10 +36,33 @@ import (
 // instances. Until then no provider is reachable, which the router treats
 // as an unavailable one.
 type modelProviderInstances struct {
-	client atomic.Pointer[modelsrpc.Client]
+	client    atomic.Pointer[modelsrpc.Client]
+	directory atomic.Pointer[providerLister]
 }
 
-var _ modelsapp.ProviderInstances = (*modelProviderInstances)(nil)
+// providerLister names the model-provider instances that run now;
+// *ingestkube.Discovery answers it.
+type providerLister func(ctx context.Context) ([]string, error)
+
+var (
+	_ modelsapp.ProviderInstances = (*modelProviderInstances)(nil)
+	_ modelsapp.ProviderDirectory = (*modelProviderInstances)(nil)
+)
+
+// ModelProviders lists the model-provider instances that run now. Until
+// discovery has found the plugins it can't, and the error wraps
+// modelsapp.ErrPluginsNotFound.
+func (p *modelProviderInstances) ModelProviders(ctx context.Context) ([]string, error) {
+	l := p.directory.Load()
+	if l == nil {
+		return nil, modelsapp.ErrPluginsNotFound
+	}
+	names, err := (*l)(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("listing the model-provider instances: %w", err)
+	}
+	return names, nil
+}
 
 // Instance reports whether instance is a running model-provider instance,
 // without calling it. Until discovery has found the plugins it can't say, and
@@ -92,6 +116,9 @@ func (p *modelProviderInstances) Generate(ctx context.Context, provider, model s
 	}
 	return got, nil
 }
+
+// setDirectory makes l the list of the instances that run.
+func (p *modelProviderInstances) setDirectory(l providerLister) { p.directory.Store(&l) }
 
 // set makes c the client of the providers.
 func (p *modelProviderInstances) set(c *modelsrpc.Client) { p.client.Store(c) }
@@ -193,6 +220,29 @@ func (a modelAudit) append(ctx context.Context, at time.Time, actor modelsapp.Ac
 	return nil
 }
 
+// settingsAudit is the settings' SettingsAuditor over the identity context's
+// audit log (D-211): each change of the agents-and-models settings is an
+// entry of the action model_settings_changed, naming the owner's session and
+// the setting, and written inside the transaction that stores the change.
+type settingsAudit struct {
+	log auditAppender
+}
+
+var _ modelsapp.SettingsAuditor = settingsAudit{}
+
+// RecordChange appends the entry of a change of the settings.
+func (a settingsAudit) RecordChange(ctx context.Context, c *modelsapp.SettingChange) error {
+	e, err := identity.NewAuditEntry(c.At, identity.Actor{Kind: identity.ActorOwner, ID: c.Session},
+		identity.ActionModelSettingsChanged, identity.OutcomeOK, identity.Ref{Kind: identity.RefModelSetting, ID: c.Setting})
+	if err != nil {
+		return fmt.Errorf("building the audit entry of a settings change: %w", err)
+	}
+	if err := a.log.AppendAudit(ctx, &e); err != nil {
+		return fmt.Errorf("writing the audit entry of a settings change: %w: %w", kernel.ErrAuditUnavailable, err)
+	}
+	return nil
+}
+
 // newCallID returns a random call ID, 16 lower-case hex digits.
 func newCallID() (string, error) {
 	var b [8]byte
@@ -251,9 +301,12 @@ type agentModels struct {
 func newAgentModels(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity.Origins, now func() time.Time) *agentModels {
 	store := modelspg.New(pool)
 	owners := &ownerSessions{auth: auth, origins: origins, noSession: modelsapp.ErrNoSession, notOwner: modelsapp.ErrNotOwner}
+	providers := &modelProviderInstances{}
+	settings := modelsapp.NewSettings(store, owners).WithProviders(providers, providers).
+		WithAudit(settingsAudit{log: identitypg.New(pool)}, now)
 	return &agentModels{
-		settings: modelsapp.NewSettings(store, owners), askers: askSessions{auth: auth, origins: origins},
-		providers: &modelProviderInstances{}, store: store, pool: pool, now: now,
+		settings: settings, askers: askSessions{auth: auth, origins: origins},
+		providers: providers, store: store, pool: pool, now: now,
 	}
 }
 

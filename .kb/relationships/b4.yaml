@@ -1035,3 +1035,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d175c710179
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-people-test-testownerpasskeycheckrefusesaviewerspasskey
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:37.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-790212501ccb
+  - type: implements
+    from: SYM-viewers-internal-identity-person-checkpersonname
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:13:30.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62d95b8b0e33
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-checkpersonname
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:13:30.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f0e82009cd8
+  - type: implements
+    from: SYM-viewers-internal-identity-person-person-active
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:13:40.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0c014d6a88d
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-person-active
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:13:40.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d173d9a785b9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-on-gate
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:17.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c583b4094122
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:10:31.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd411226cb27
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:10:31.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2067f9d9dce2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-apply-proposal-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:10:31.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e693aadec8b2
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-providers-mark-an-instance-that-does-not-answer-unavailable
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:23.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb9eeebd0666
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:20.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928bfb0e7625
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:20.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51d3259d6d34
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-model-provider-get-retention
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:33.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3c63d5a121
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-model-provider-get-retention
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:33.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cba66b30afa9

@@ -979,3 +979,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c766b79fe6f
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:02:24.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18e53bd783c8
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:02:24.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c96cf17afbe6
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-failure
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:02:24.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8776932fb47f
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-short
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:08.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3702dff62ce4
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-short
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:08.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68bd35635877
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-instances-describe
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:38:58.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff7131f58468
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-import-flagged-assertion
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:29.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d9aa05e29ba

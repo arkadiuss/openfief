@@ -909,3 +909,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79aa183ef22d
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-type
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:42.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b95237d89951
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-type
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:42.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b638a7ab1bb9
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-wrapped
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:38:52.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2babcc4d0e1c
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:57.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f97fdc3ad12b
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:57.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa63e23f563c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:57.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad7c6eebb4e
+  - type: implements
+    from: SYM-audit-internal-identity-postgres-audit-addwhat
+    to: REQ-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:31:56.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-629a8ea112b7
+  - type: covered_by
+    from: SYM-audit-internal-identity-postgres-audit-addwhat
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-14T00:31:56.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74a9159916e
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-outcomeword
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:32:01.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d77d70de0bd
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-outcomeword
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:01.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9359528130db
+  - type: implements
+    from: SYM-s8-internal-ledger-app-audit-audited
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:26.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec325a9f751b
+  - type: covered_by
+    from: SYM-s8-internal-ledger-app-audit-audited
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:26.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76879192e881

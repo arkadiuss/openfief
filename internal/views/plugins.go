@@ -67,13 +67,17 @@ type Condition struct {
 // (spec.manifest.marketData) and the grant approves it
 // (status.effective.marketData) (D-123).
 type PluginRecord struct {
-	Instance  string
-	Image     string
-	Deleting  bool
-	Requested []string
-	Effective []string
-	Ready     Condition
-	Signature Condition
+	Instance string
+	Image    string
+	Deleting bool
+	// Generation is metadata.generation: the spec's, which the operator's
+	// apply of a new spec raises, and which the audit log keeps as the
+	// generation of an install or an upgrade (D-211). Zero when unknown.
+	Generation int64
+	Requested  []string
+	Effective  []string
+	Ready      Condition
+	Signature  Condition
 	// BrowserPath is the browser path prefix the grant approves
 	// (status.effective.browserPaths, D-81): set for the view plugin the
 	// core proxies browsers to, which reads with the signed-in person's

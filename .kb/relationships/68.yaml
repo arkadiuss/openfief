@@ -839,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad37c0ae4ce1
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-testviewerpasskeysdonotcountfortheowner
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:36:00.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-872252381039
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-test-amalformed-proposal-idnever-reaches-the-core
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:56:20.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53c6092d3663
+  - type: implements
+    from: SYM-invites-internal-views-ui-people-inviterow
+    to: REQ-ui-access-pending-invites
+    created_at: 2026-11-13T23:34:12.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7562f3423d74
+  - type: covered_by
+    from: SYM-invites-internal-views-ui-people-inviterow
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:34:12.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b639e9f89a1
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-plugins-plugin-generations
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:18.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e8f2e23c193

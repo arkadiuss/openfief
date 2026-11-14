@@ -811,3 +811,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0afa4248ad9e
+  - type: executable_for
+    from: SYM-viewers-internal-identity-app-peoplestore-test-memauthstore-people
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:11:58.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6226b0d6a7
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-agents-enabled
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:55.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c87ae25a75c6
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-model
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:54.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8655ca96a7b
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-model
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:54.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12478867e105
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-test-observe-plugins-enters-what-the-operator-did
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:52:08.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4f1881b5984
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-test-plugin-observations-enter-what-the-operator-did
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:44.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35792d0af67d

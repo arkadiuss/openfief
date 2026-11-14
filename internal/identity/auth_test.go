@@ -384,6 +384,7 @@ func TestEnrollmentCode(t *testing.T) {
 	tests := []struct {
 		name    string
 		used    bool
+		cancel  bool
 		at      time.Duration
 		origin  identity.Origin
 		wantErr error
@@ -391,6 +392,8 @@ func TestEnrollmentCode(t *testing.T) {
 		{name: "fresh", at: time.Minute, origin: local},
 		{name: "at expiry", at: 15 * time.Minute, origin: local, wantErr: identity.ErrEnrollmentCodeExpired},
 		{name: "used", used: true, at: time.Minute, origin: local, wantErr: identity.ErrEnrollmentCodeUsed},
+		{name: "cancelled", cancel: true, at: time.Minute, origin: local, wantErr: identity.ErrEnrollmentCodeCancelled},
+		{name: "cancelled and expired", cancel: true, at: time.Hour, origin: local, wantErr: identity.ErrEnrollmentCodeCancelled},
 		{name: "another origin", at: time.Minute, origin: devOrigin, wantErr: identity.ErrEnrollmentCodeWrongOrigin},
 	}
 	for _, tt := range tests {
@@ -399,6 +402,9 @@ func TestEnrollmentCode(t *testing.T) {
 			code := c
 			if tt.used {
 				code.UsedAt = sessionAt()
+			}
+			if tt.cancel {
+				code.CancelledAt = sessionAt()
 			}
 			if err := code.Check(sessionAt().Add(tt.at), tt.origin); !errors.Is(err, tt.wantErr) {
 				t.Errorf("Check = %v, want %v", err, tt.wantErr)

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/identity"
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // Auditor keeps the append-only audit log (D-211). *identity/postgres.Store
@@ -33,6 +34,10 @@ type AuditPage struct {
 	// Next is the cursor for the page after this one (AuditFilter.Before);
 	// zero when this is the last.
 	Next int64
+	// Persons maps the ID of a viewer's session that is an actor on this
+	// page to the person it is of, so the log can name them; a session that
+	// is no longer known is left out. Only an ID, never a name.
+	Persons map[identity.SessionID]string
 }
 
 // record appends the entry for action by actor with outcome, naming refs, as
@@ -58,8 +63,11 @@ func within(ctx context.Context, store Atomic, fn func(ctx context.Context) erro
 	return nil
 }
 
-// ownerActor is the owner in session s.
+// ownerActor is whoever session s is of: the owner, or a viewer.
 func ownerActor(s *identity.Session) identity.Actor {
+	if s.OfViewer() {
+		return identity.Actor{Kind: identity.ActorViewer, ID: string(s.ID)}
+	}
 	return identity.Actor{Kind: identity.ActorOwner, ID: string(s.ID)}
 }
 
@@ -96,5 +104,53 @@ func (a *Auth) AuditEntries(ctx context.Context, origin, token string, f *identi
 	if err != nil {
 		return AuditPage{}, fmt.Errorf("listing audit entries: %w", err)
 	}
+	page.Persons = map[identity.SessionID]string{}
+	for i := range page.Entries {
+		actor := page.Entries[i].Actor
+		id := identity.SessionID(actor.ID)
+		if _, known := page.Persons[id]; actor.Kind != identity.ActorViewer || known {
+			continue
+		}
+		s, _, sessionErr := a.store.Session(ctx, id)
+		switch {
+		case errors.Is(sessionErr, ErrUnknownSession):
+		case sessionErr != nil:
+			return AuditPage{}, fmt.Errorf("naming the viewer of a session: %w", sessionErr)
+		default:
+			page.Persons[id] = s.Person()
+		}
+	}
 	return page, nil
+}
+
+// RecordOwnerChange has change, a change of state another context makes for
+// the owner of session, kept together with its audit entry (D-211): the entry
+// of action naming refs is appended first, in a transaction, then change runs,
+// and the entry is kept only if change returns nil. So a change the log can't
+// take an entry for is not made, and a change that fails leaves no entry.
+// change runs with the caller's context, on the connections of its own store;
+// the transaction opened here holds the entry alone, so a commit that fails
+// after change succeeded leaves a change with no entry, and returns an error.
+//
+// A failed append is an error wrapping kernel.ErrAuditUnavailable, and an
+// entry the domain refuses (an unknown action, a reference of the wrong shape)
+// one wrapping identity.ErrInvalidAuditEntry, either way with change not
+// called. An error of change is returned as it is, wrapped.
+func (a *Auth) RecordOwnerChange(ctx context.Context, session identity.SessionID, action identity.AuditAction, refs []identity.Ref,
+	change func(context.Context) error,
+) error {
+	e, err := identity.NewAuditEntry(a.now(), identity.Actor{Kind: identity.ActorOwner, ID: string(session)}, action, identity.OutcomeOK, refs...)
+	if err != nil {
+		return fmt.Errorf("building the audit entry of %s: %w", action, err)
+	}
+	err = a.store.Atomically(ctx, func(tx context.Context) error {
+		if appendErr := a.store.AppendAudit(tx, &e); appendErr != nil {
+			return fmt.Errorf("%w: %w", kernel.ErrAuditUnavailable, appendErr)
+		}
+		return change(ctx)
+	})
+	if err != nil {
+		return fmt.Errorf("recording the change %s: %w", action, err)
+	}
+	return nil
 }

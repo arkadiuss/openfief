@@ -43,6 +43,14 @@ func TestAuthorizerAsksTheAccountPermission(t *testing.T) {
 			},
 		},
 		{
+			name: "a viewer is a person of their own, by their ID", caller: identity.Caller{Holder: identity.HolderViewer, ID: "0123456789abcdef"},
+			action: identity.ActionView, account: "bonds",
+			want: &v1.CheckPermissionRequest{
+				Resource:   &v1.ObjectReference{ObjectType: "account", ObjectId: "bonds"},
+				Permission: "view", Subject: ref("person", "0123456789abcdef"),
+			},
+		},
+		{
 			name: "a script token by its ID", caller: identity.Caller{Holder: identity.HolderScriptToken, ID: "0123456789abcdef"},
 			action: identity.ActionView, account: "bonds",
 			want: &v1.CheckPermissionRequest{

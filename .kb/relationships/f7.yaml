@@ -902,3 +902,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eeed3afd571a
+  - type: executable_for
+    from: SYM-viewers-cmd-core-viewers-test-viewerenroll
+    to: TEST-core-viewers
+    created_at: 2026-11-13T20:07:53.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08d5f3c895d1
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-check-holdings
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:09.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc15ff3e52f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-overview-by-reader
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:37.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c73eea6b049f
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-figure-row
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:45:32.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1025d93ba3ab
+  - type: covered_by
+    from: SYM-ms1-ui-models-model-row
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:03.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c8fb361278c
+  - type: implements
+    from: SYM-ms1-ui-models-model-row
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:37:03.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59803b3c3ad
+  - type: implements
+    from: SYM-s8-cmd-core-model-change-recorder
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:48:42.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b735a22191e7
+  - type: covered_by
+    from: SYM-s8-cmd-core-model-change-recorder
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:48:42.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf4f1f94f089

@@ -1392,3 +1392,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-059a3f389b0a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:12.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a170d53cd69
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:13.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aed5062747c
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-proposal-status-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:13.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c98f438ce868
+  - type: implements
+    from: SYM-invites-internal-identity-app-people-auth-cancelinvite
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:32:19.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9980ad02604f
+  - type: covered_by
+    from: SYM-invites-internal-identity-app-people-auth-cancelinvite
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:32:19.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c93850150e8d
+  - type: implements
+    from: SYM-audit-internal-identity-audit-auditfilter-matcheswhat
+    to: REQ-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:31:40.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b807c22204c4
+  - type: covered_by
+    from: SYM-audit-internal-identity-audit-auditfilter-matcheswhat
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:31:40.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a34eb2f0229c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-weekly-turn-knows-its-last-attempt
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:48:37.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bba9614e6f5
+  - type: covered_by
+    from: SYM-ms1-identity-audit-valid-model-setting
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:27:00.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c062e6f8e05
+  - type: implements
+    from: SYM-ms1-identity-audit-valid-model-setting
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:27:00.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2eb56ab02c0d
+  - type: executable_for
+    from: SYM-ms1-core-modelsettings-test-test-settings-audit-records-achange-as-an-entry-naming-the-setting
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:40:22.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-813878006cbc
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-change
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:42:20.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e78712ab053
+  - type: implements
+    from: SYM-s8-internal-identity-app-plugins-observed-plugin
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:54:00.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e941bcd9b7
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-plugins-observed-plugin
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:54:00.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6819b4076b6

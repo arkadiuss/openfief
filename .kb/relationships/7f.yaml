@@ -678,3 +678,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af8a268f0cae
+  - type: implements
+    from: SYM-people-internal-views-ui-people-activeviewer
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:42.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90810a8580b8
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-activeviewer
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:42.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d54d0597e19
+  - type: implements
+    from: SYM-people-internal-views-ui-people-selectlifetime
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:58.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4fa0967876e
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-selectlifetime
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:58.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606b10fd43c0
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-state-active
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:22:57.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da64a762d5ec
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-state-active
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:22:57.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-045b768d8025
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-work-fails-closed-when-the-audit-log-cannot-be-written
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:43.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cdbb05bb476
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-apply-changes-the-targets-and-trades-nothing
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:01.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58cadaddad39
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-queue
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:54.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16772a70606
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-audit_test-testauditlogpages
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:19:07.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc8bdaa203a8
+  - type: covered_by
+    from: SYM-ms1-ui-models-posted-tiers
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:51.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c757ed1aa3b
+  - type: implements
+    from: SYM-ms1-ui-models-posted-tiers
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:35:51.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33ed57e09999
+  - type: implements
+    from: SYM-s8-cmd-core-pluginaudit-observe-plugins
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:51:46.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9979d1da8ef6
+  - type: covered_by
+    from: SYM-s8-cmd-core-pluginaudit-observe-plugins
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:51:46.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad449b289de6
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-setting-refs
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:35.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57f41a7840e1
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-setting-refs
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:35.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d44f96bdc0

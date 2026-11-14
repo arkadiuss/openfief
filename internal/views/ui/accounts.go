@@ -153,6 +153,10 @@ func (s *server) renderAccounts(w http.ResponseWriter, r *http.Request, sess ses
 		s.coreFailed(w, r, "ListAccounts", err)
 		return
 	}
+	if emptyForViewer(sess, len(data.Accounts)) {
+		s.nothingShared(w, r, sess, "Accounts")
+		return
+	}
 	data.Error = message
 	s.show(w, r, status, "accounts", page{Title: "Accounts", Session: &sess, Data: data})
 }

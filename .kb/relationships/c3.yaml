@@ -1084,3 +1084,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed5dea91bd90
+  - type: validates
+    from: TEST-valuation-postgres-jobs
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-11-13T21:07:23.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c13fd5d08686
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-drift-points
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:44.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b56e08947ec
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-drift-points
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:44.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9bb4bf7f349
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-get-drift-points
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:44.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c13442f0e710
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getexpiresat
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:36:24.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f81bec9e82be
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getexpiresat
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:36:24.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f7dc1b92d7

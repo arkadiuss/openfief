@@ -1,0 +1,13 @@
+{{define "audit-table"}}
+<div class="table"><table>
+  <thead><tr><th scope="col">When (UTC)</th><th scope="col">Who</th><th scope="col">What</th><th scope="col">Which</th><th scope="col">Outcome</th></tr></thead>
+  <tbody>
+  {{range .}}
+  <tr>
+    <td class="mono">{{.When}}</td><td>{{.Who}}</td><td>{{.What}}</td><td>{{if .Records}}{{.Records}}{{else}}<span class="muted">nothing</span>{{end}}</td>
+    <td><span class="pill pill-{{.Tone}}">{{.Outcome}}</span></td>
+  </tr>
+  {{end}}
+  </tbody>
+</table></div>
+{{end}}

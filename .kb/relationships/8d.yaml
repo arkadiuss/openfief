@@ -986,3 +986,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d831129f9d70
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getname
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:20:07.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c11f23623d09
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getname
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:20:07.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cbba6644a30
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-clock
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:10.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-842b5fc27aaf
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-facts
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:23.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7d60abeee9
+  - type: implements
+    from: SYM-ms1-ui-models-route-facts
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:37:23.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c54ea81be29
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-test-list-model-providers-is-the-owners-alone
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:33.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53fef070866e

@@ -986,3 +986,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd289d007b6d
+  - type: implements
+    from: SYM-viewers-internal-identity-app-passkeys-auth-verifiedpasskey
+    to: REQ-identity-viewer-enrolls-own-passkey
+    created_at: 2026-11-13T20:46:59.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8219d329873
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-passkeys-auth-verifiedpasskey
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T20:47:00.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fa4d90a796e
+  - type: covered_by
+    from: SYM-tooling-kibi-install-status-installed
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:09.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aff5d122445
+  - type: implements
+    from: SYM-tooling-kibi-install-status-installed
+    to: REQ-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:09.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22ecab6eb36
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-proposal-calls-are-the-owners-alone
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:39:23.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad3379f1fdd
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-signed
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:41.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-120f797faeda
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-signed
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:44:41.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fd2e4859adc
+  - type: implements
+    from: SYM-invites-internal-views-ui-inbox-server-inboxnothingshared
+    to: REQ-ui-inbox-viewer-nothing-shared
+    created_at: 2026-11-13T23:47:44.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df1184b6a594
+  - type: covered_by
+    from: SYM-invites-internal-views-ui-inbox-server-inboxnothingshared
+    to: TEST-ui-viewer-nothing-shared
+    created_at: 2026-11-13T23:47:44.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5c93cb3554b
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-error
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:56:34.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6af6d00355df
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-error
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T23:56:34.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fe3b3164d18
+  - type: covered_by
+    from: SYM-ms1-app-routes-route-problems
+    to: TEST-models-app-routes
+    created_at: 2026-11-14T00:25:41.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdeaf859acf7
+  - type: implements
+    from: SYM-ms1-app-routes-route-problems
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:42.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e030f4968af
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-achange-the-log-cannot-record-is-not-made
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:03.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4166a53eff1d
+  - type: executable_for
+    from: SYM-ms1-core-modelsettings-test-test-owner-session-names-the-owners-session-for-the-audit-entry
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:40:31.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4064fa5e15b4
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-plugins-delete-plugin-generation
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:29.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a24604127eb6

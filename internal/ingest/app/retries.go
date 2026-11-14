@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
+
+	"github.com/arkadiuss/openfief/internal/ingest"
 )
 
 // Errors of the owner's sync retries (D-196).
@@ -46,6 +48,8 @@ type Retries struct {
 	// DefaultRetryEvery.
 	Every time.Duration
 	Now   func() time.Time
+	// Audit keeps each retry with its audit entry; nil enters none.
+	Audit ChangeAuditor
 
 	mu   sync.Mutex
 	last map[string]time.Time
@@ -59,6 +63,9 @@ type Retries struct {
 func (r *Retries) RetrySync(ctx context.Context, origin, sessionToken, instance string) error {
 	if err := r.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return fmt.Errorf("retrying a sync: %w", err)
+	}
+	if err := ingest.ValidateInstanceName(instance); err != nil {
+		return fmt.Errorf("retrying a sync: %w: %w", ErrNoInstance, err)
 	}
 	bound, err := r.Bindings.BoundAccounts(ctx, instance)
 	if err != nil {
@@ -76,7 +83,10 @@ func (r *Retries) RetrySync(ctx context.Context, origin, sessionToken, instance 
 	if err != nil {
 		return err
 	}
-	if err := r.Trigger.Retry(ctx, instance); err != nil {
+	err = audited(ctx, r.Audit, origin, sessionToken, auditSyncRetried, []string{instanceRef(instance)}, func(ctx context.Context) error {
+		return r.Trigger.Retry(ctx, instance)
+	})
+	if err != nil {
 		r.release(instance, previous)
 		return fmt.Errorf("retrying a sync of %s: %w", instance, err)
 	}

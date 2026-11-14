@@ -43,6 +43,8 @@ func (s *syncs) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
 	case errors.Is(err, kernel.ErrAuthzUnavailable):
 		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuthzUnavailable)
+	case errors.Is(err, kernel.ErrAuditUnavailable):
+		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuditUnavailable)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
 	case errors.Is(err, app.ErrNoInstance):

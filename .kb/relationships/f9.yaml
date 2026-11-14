@@ -1056,3 +1056,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-869e43564596
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-reset
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:19:26.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-927b6c00ba7c
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-reset
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:19:26.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b5ed79c230
+  - type: covered_by
+    from: SYM-tooling-kibi-install-status-patches
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:14.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d47ac2db2c42
+  - type: implements
+    from: SYM-tooling-kibi-install-status-patches
+    to: REQ-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:14.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50ddb879812
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-held-fake
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:20:50.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0293fed9d3d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:57.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0543d62ef094
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-maintainer-rig-advance
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:36.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5667812967c
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-pending
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:56.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e11ed7a55c7e
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-maintainer-pending
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T21:30:56.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e3dc6b74d07
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-maintainer-fixture
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:46.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87159fd3444
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getsessiontoken
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:15.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4102843c15a
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-listinvitesrequest-getsessiontoken
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:16.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cb5e920c3e6
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-describe
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:18.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d173b3930b6
+  - type: implements
+    from: SYM-ms1-app-settings-settings-describe
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:18.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c55d431e84
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-audited-by-their-own
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:58.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a00fd5e548c3

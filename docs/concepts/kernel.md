@@ -131,6 +131,10 @@ flowchart TD
 
 **Errors.** Parse failures wrap sentinel errors (`ErrInvalidDecimal`, `ErrInvalidCurrency`, `ErrInvalidDate`), so callers test them with `errors.Is`. Division by zero is `ErrDivisionByZero`. Nothing in the kernel panics.
 
+### Unavailable, not refused
+
+`ErrAuthzUnavailable` and `ErrAuditUnavailable` ([unavailable.go](../../internal/kernel/unavailable.go)) say that the authorization model or the audit log could not answer now, so a change was refused for want of an answer and not on its merits (D-164, D-211). A Connect adapter answers either as "unavailable, try again", and `kernel.Unavailable` returns the one an error wraps, so the adapters share one rule.
+
 ## Decisions
 
 - **GR-12**: `LogSafe(err, known...)` describes an error for a log line by the known errors in its chain, which the caller vouches name a rule and never a value, or else only by its innermost error's Go type. Every context's log sinks use it with their own known errors; the kernel trusts none by itself.

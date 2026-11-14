@@ -853,3 +853,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fa315fdc242
+  - type: specified_by
+    from: REQ-identity-people-listed-with-access
+    to: SCEN-identity-people-listed
+    created_at: 2026-11-13T19:59:26.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af35543265c4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-new-rig
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:30.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10c075419a34
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-worker-waits-until-the-maintainer-is-built
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T21:42:54.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8639ed19d12b
+  - type: specified_by
+    from: REQ-models-providers-listed-to-owner
+    to: SCEN-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:24:19.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19503e78f0a3
+  - type: implements
+    from: SYM-s8-internal-attention-app-audit-change-auditor
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:52:19.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f7480c78b4
+  - type: covered_by
+    from: SYM-s8-internal-attention-app-audit-change-auditor
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:52:19.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9916e37f40f7
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-test-retry-of-an-instance-no-plugin-can-have-enters-nothing
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:59:10.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-146c9a60d0c0

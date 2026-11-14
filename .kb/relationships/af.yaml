@@ -1161,3 +1161,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37a8bef5c37e
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-peopleroutes
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:12:36.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a892728bf52e
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-server-peopleroutes
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:12:36.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc4e90df77d
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-latest-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:26:51.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27e14f444d4
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-an-unknown-proposal-is-not-found
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:39:16.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce4a130c31f
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-reset
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:08:07.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-795563faa31d
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-reset
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:08:07.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0de9c91e310
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-request-reset
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:08:07.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c691439a228

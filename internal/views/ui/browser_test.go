@@ -16,6 +16,9 @@ const (
 	serveMargin = 5 * time.Second
 	// browserSignIn is where the browser checks get the owner's session.
 	browserSignIn = "/test/sign-in"
+	// browserSignInViewer is where they get the session of a viewer the
+	// owner granted nothing yet (D-210).
+	browserSignInViewer = "/test/sign-in-viewer"
 	// browserEndedSession is where they get a session the core rejects.
 	browserEndedSession = "/test/ended-session"
 	// browserAskModel is where they set up the Ask box's model (D-203): the
@@ -32,6 +35,7 @@ func browserInboxItems(h *harness) {
 	tickerItems(h)
 	priceCheckItem(h)
 	syncItem(h, 40, "xtb-main")
+	h.attention.add(proposalItem(viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN))
 	h.attention.add(&viewsv1.AttentionItem{
 		Id: 60, Kind: kindBrokerUnmapped, Subject: "ibkr-main", Detail: "last seen 2026-03-31",
 		State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DATA_COMING_IN,
@@ -67,6 +71,10 @@ func TestServeForBrowser(t *testing.T) {
 	// from a Set-Cookie header, as the UI's own sign-in sends it.
 	mux.HandleFunc("GET "+browserSignIn, func(w http.ResponseWriter, r *http.Request) {
 		setSession(w, ownerSession, issued(identityv1.SessionScope_SESSION_SCOPE_OWNER))
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	mux.HandleFunc("GET "+browserSignInViewer, func(w http.ResponseWriter, r *http.Request) {
+		setSession(w, emptyViewerSession, issued(identityv1.SessionScope_SESSION_SCOPE_READ))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	// Here the browser gets a session the core no longer accepts, as one

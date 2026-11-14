@@ -255,11 +255,11 @@ func (g grantsServed) checkHolderRefusals(t *testing.T) {
 		id   string
 		want connect.Code
 	}{
-		"a plugin not installed":        {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, "gone", connect.CodeNotFound},
-		"a person, who can't exist yet": {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_PERSON, "0123456789abcdef", connect.CodeInvalidArgument},
-		"no holder kind":                {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED, "ui", connect.CodeInvalidArgument},
-		"an unknown holder kind":        {99, "ui", connect.CodeInvalidArgument},
-		"a plugin named by a sentence":  {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, "my plugin", connect.CodeInvalidArgument},
+		"a plugin not installed":       {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, "gone", connect.CodeNotFound},
+		"a person that does not exist": {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_PERSON, "0123456789abcdef", connect.CodeNotFound},
+		"no holder kind":               {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED, "ui", connect.CodeInvalidArgument},
+		"an unknown holder kind":       {99, "ui", connect.CodeInvalidArgument},
+		"a plugin named by a sentence": {identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN, "my plugin", connect.CodeInvalidArgument},
 	} {
 		_, err := g.client.CreateGrant(t.Context(), connect.NewRequest(&identityv1.CreateGrantRequest{
 			Origin: local, SessionToken: g.token, HolderKind: tc.kind, HolderId: tc.id, TargetKind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_HOUSEHOLD,

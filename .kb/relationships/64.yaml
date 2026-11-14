@@ -1056,3 +1056,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51b5be9c3959
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:01:46.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a77b34123e9
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:01:46.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31fe15329ca
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-note-proto-message
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:01:46.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5b81e04ae1
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:06:09.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f2c3d20f90
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:06:09.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-701a91c7586e
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-target-change-proto-reflect
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:06:09.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-862c0132423f
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-server-auditroutes
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:53.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-737162417d00
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-server-auditroutes
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:53.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d67857e5035
+  - type: covered_by
+    from: SYM-ms1-ui-models-swap-entries
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:20.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-790df6f81f3f
+  - type: implements
+    from: SYM-ms1-ui-models-swap-entries
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:36:20.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-489aa74bace5
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-model-provider-get-location
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:28.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f5d2df3ecd
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-model-provider-get-location
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:28.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a7388f35e2e
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-sleeve-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:27.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40e7f9be69e3

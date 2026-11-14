@@ -1098,3 +1098,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6c1b647acafe
+  - type: implements
+    from: SYM-people-internal-views-ui-people-server-inviteviewer
+    to: REQ-ui-access-people
+    created_at: 2026-11-13T22:13:03.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c39514d292f
+  - type: covered_by
+    from: SYM-people-internal-views-ui-people-server-inviteviewer
+    to: TEST-ui-people
+    created_at: 2026-11-13T22:13:03.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9027868a5e73
+  - type: executable_for
+    from: SYM-maintainer-views-ui-maintainer-test-fake-maintainer-apply-proposal
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:54:48.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2e3477b8667
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:00:37.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d845a5cb3901
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:00:37.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30ec8344b0bf
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-run-trigger-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:00:37.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846b45e78024
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-descriptor
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:51.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-545729ac30b3
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-descriptor
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:35:51.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35cc43f9c6fc
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-listinvites
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:38:45.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-694217a931a7
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-identityv1connect-auth-connect-unimplementedauthservicehandler-listinvites
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:38:45.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c08657df1f1
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-attention-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:43.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f282e6cc3d7b
+  - type: implements
+    from: SYM-s8-internal-ingest-app-audit-account-ref
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:57:43.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a88c8fde9541
+  - type: covered_by
+    from: SYM-s8-internal-ingest-app-audit-account-ref
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:57:43.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d6643233ac3

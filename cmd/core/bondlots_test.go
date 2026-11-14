@@ -11,6 +11,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
@@ -105,7 +106,7 @@ func TestBondLotService(t *testing.T) {
 	dsn := emptyDatabase(t)
 	out := enrollCmd(t, dsn)
 	code := enrollCode(t, out)
-	c, srv, _ := startCoreForUI(t, dsn, func(*serveConfig) {})
+	c, srv, pool := startCoreForUI(t, dsn, func(*serveConfig) {})
 	ac := authClient(srv.URL, srv.Client(), uiCaller)
 	session := passkeyLogin(t, ac, passkeyEnroll(t, ac, code))
 	saveDemoRegistry(t, dsn)
@@ -136,6 +137,10 @@ func TestBondLotService(t *testing.T) {
 	checkBondLotRefusals(t, lots, session)
 	checkBondValued(t, srv, session)
 	checkBondLotDeleted(t, lots, session)
+	// Each lot entered and each deletion made is an entry of the owner's (D-211); the entry before the core
+	// found a connector, and the refused calls, left none.
+	entered, deleted := identity.ActionBondLotAdded, identity.ActionBondLotDeleted
+	wantEntriesOf(t, pool, []identity.AuditAction{entered, deleted}, entered, entered, deleted, deleted)
 }
 
 // checkBondLotDeleted deletes the lot as a correction (D-100): a new version

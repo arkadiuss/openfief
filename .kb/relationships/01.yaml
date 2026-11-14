@@ -1147,3 +1147,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef9659a6bf85
+  - type: executable_for
+    from: SYM-tooling-kibi-install-status-fresh-test
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:23.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a32944fe07
+  - type: executable_for
+    from: SYM-maintainer-cmd-core-maintainer-test-accounts-fake-accounts
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:21:31.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b37ac7c8dde
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-ask-error
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:24:06.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cd8cf01e9ad
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-ask-error
+    to: REQ-maintainer-sends-figures-through-router
+    created_at: 2026-11-13T21:24:06.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cde7a9431fb
+  - type: executable_for
+    from: SYM-maintainer-views-app-held-test-held-fixture
+    to: TEST-views-held-values
+    created_at: 2026-11-13T21:51:50.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a094d4ecde31
+  - type: covered_by
+    from: SYM-ms1-identity-audit-validate-settings-entry
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:27:07.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8269d7519b69
+  - type: implements
+    from: SYM-ms1-identity-audit-validate-settings-entry
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:27:07.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c0a435e72f9
+  - type: covered_by
+    from: SYM-ms1-ui-models-provider-model
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:54.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6036f6d6f3b
+  - type: implements
+    from: SYM-ms1-ui-models-provider-model
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:54.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a39616452a
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-ingest-change
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:36.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-077af64d6e9f
+  - type: implements
+    from: SYM-s8-internal-valuation-app-audit-change-auditor
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:58.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e83c3c9b31fe
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-audit-change-auditor
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:58.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c5bbf6aa6f

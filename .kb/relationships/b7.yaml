@@ -993,3 +993,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afb77eaddbd9
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-string
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:23:06.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-283040255624
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-listpeopleresponse-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:06.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f846cc1f6a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-descriptor
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:09:12.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8a7596e062a
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-descriptor
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:09:12.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6a651da2f16
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-proposal-response-descriptor
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:09:12.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e1122d1141
+  - type: implements
+    from: SYM-invites-internal-views-ui-people-targetsinwords
+    to: REQ-ui-access-pending-invites
+    created_at: 2026-11-13T23:34:22.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-576006a815b1
+  - type: covered_by
+    from: SYM-invites-internal-views-ui-people-targetsinwords
+    to: TEST-ui-invites
+    created_at: 2026-11-13T23:34:22.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd37653df27
+  - type: covered_by
+    from: SYM-ms1-ui-models-unoffered-words
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:09.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abaf0948fee7
+  - type: implements
+    from: SYM-ms1-ui-models-unoffered-words
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:35:09.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abdcbaab7857
+  - type: covered_by
+    from: SYM-ms1-ui-models-role-info
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:30.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-369faa672513
+  - type: implements
+    from: SYM-ms1-ui-models-role-info
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:36:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4bdfd3fb7b5

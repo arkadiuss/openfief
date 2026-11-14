@@ -825,3 +825,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15e46615b620
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-string
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:23:50.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2303868eaa1
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:50.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3fe8757d74d
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:23:03.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e588b28500e5
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run
+    to: REQ-maintainer-one-run-at-a-time
+    created_at: 2026-11-13T21:23:03.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-602b97d2c147
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-on-gate-maintainer-on
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:22.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b23df440f948
+  - type: executable_for
+    from: SYM-maintainer-portfolio-postgres-maintainer-test-queue-and-start
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:48:26.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08f67817d628
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-arefused-change-writes-no-entry
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:08.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d28e50f3b97
+  - type: implements
+    from: SYM-s8-internal-identity-postgres-plugins-store-delete-plugin-generation
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:57:21.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ab17678aad9
+  - type: covered_by
+    from: SYM-s8-internal-identity-postgres-plugins-store-delete-plugin-generation
+    to: TEST-identity-audit-change-postgres
+    created_at: 2026-11-14T02:57:22.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1118acde2de

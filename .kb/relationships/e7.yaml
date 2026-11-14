@@ -1287,3 +1287,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b633e081444f
+  - type: verified_by
+    from: SCEN-identity-viewer-link-refused
+    to: TEST-identity-people-app
+    created_at: 2026-11-13T19:57:48.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa5181fa1c15
+  - type: covered_by
+    from: SYM-maintainer-portfolio-postgres-maintainer-lock-pending
+    to: TEST-portfolio-postgres-maintainer
+    created_at: 2026-11-13T21:47:40.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f707e2e557c
+  - type: implements
+    from: SYM-maintainer-portfolio-postgres-maintainer-lock-pending
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:47:41.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ccccf4b765c
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-proposal-form
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:31.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e324424b8f3e
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-proposal-form
+    to: REQ-ui-inbox-proposal-card
+    created_at: 2026-11-13T21:53:31.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faf3e457fb34
+  - type: implements
+    from: SYM-s8-internal-identity-app-audit-auth-record-owner-change
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:52:41.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-229394c28447
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-audit-auth-record-owner-change
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:52:41.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da6b8d54f81
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-ref-rule
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:54:49.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f042bb83c14
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-ref-rule
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:54:49.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051a4216100f

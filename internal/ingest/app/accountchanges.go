@@ -82,16 +82,19 @@ func (a *Accounts) Delete(ctx context.Context, origin, sessionToken string, id l
 	if id == "" {
 		return fmt.Errorf("deleting an account: %w", ErrNoAccount)
 	}
-	if err := a.Deletions.DeleteAccount(ctx, id); err != nil {
-		return fmt.Errorf("deleting account %s: %w", id, err)
-	}
-	if err := a.Connections.ForgetAccount(ctx, id); err != nil {
-		return fmt.Errorf("deleting account %s: %w", id, err)
-	}
-	if err := a.Forget.ForgetAccount(ctx, id); err != nil {
-		return fmt.Errorf("deleting account %s: %w", id, err)
-	}
-	if err := a.Sleeves.RemoveAccount(ctx, id); err != nil {
+	err := audited(ctx, a.Audit, origin, sessionToken, auditAccountDeleted, []string{accountRef(id)}, func(ctx context.Context) error {
+		if err := a.Deletions.DeleteAccount(ctx, id); err != nil {
+			return fmt.Errorf("deleting it: %w", err)
+		}
+		if err := a.Connections.ForgetAccount(ctx, id); err != nil {
+			return fmt.Errorf("forgetting its connections: %w", err)
+		}
+		if err := a.Forget.ForgetAccount(ctx, id); err != nil {
+			return fmt.Errorf("forgetting its terms: %w", err)
+		}
+		return a.Sleeves.RemoveAccount(ctx, id)
+	})
+	if err != nil {
 		return fmt.Errorf("deleting account %s: %w", id, err)
 	}
 	return nil
@@ -108,24 +111,31 @@ func (a *Accounts) Remap(ctx context.Context, origin, sessionToken, instance str
 	if err != nil {
 		return err
 	}
-	if err := a.checkRemappable(ctx, instance, old, account); err != nil {
-		return err
+	if checkErr := a.checkRemappable(ctx, instance, old, account); checkErr != nil {
+		return checkErr
 	}
 	if account != "" {
-		if _, err := a.stored(ctx, account); err != nil {
-			return err
+		if _, storedErr := a.stored(ctx, account); storedErr != nil {
+			return storedErr
 		}
 	}
-	if err := a.Connections.RemapBrokerAccount(ctx, instance, broker, account, a.Now()); err != nil {
-		return fmt.Errorf("remapping a broker account of %s: %w", instance, err)
+	refs := []string{instanceRef(instance)}
+	if account != "" {
+		refs = append([]string{accountRef(account)}, refs...)
 	}
-	if account == "" {
+	err = audited(ctx, a.Audit, origin, sessionToken, auditBrokerAccountRemapped, refs, func(ctx context.Context) error {
+		if remapErr := a.Connections.RemapBrokerAccount(ctx, instance, broker, account, a.Now()); remapErr != nil {
+			return fmt.Errorf("remapping a broker account of %s: %w", instance, remapErr)
+		}
+		if account == "" {
+			return nil
+		}
+		if bindErr := a.Bindings.Bind(ctx, instance, account, a.Now()); bindErr != nil {
+			return fmt.Errorf("binding %s: %w", instance, bindErr)
+		}
 		return nil
-	}
-	if err := a.Bindings.Bind(ctx, instance, account, a.Now()); err != nil {
-		return fmt.Errorf("binding %s: %w", instance, err)
-	}
-	return nil
+	})
+	return err
 }
 
 // authorizeRemap checks that the owner may change account, unless it is

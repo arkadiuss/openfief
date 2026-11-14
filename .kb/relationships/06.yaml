@@ -1063,3 +1063,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac2628acd220
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grantpolicy-newgrantpolicy
+    to: REQ-identity-viewer-views-granted-accounts
+    created_at: 2026-11-13T20:09:02.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf58757adb62
+  - type: covered_by
+    from: SYM-viewers-internal-identity-app-grantpolicy-newgrantpolicy
+    to: TEST-identity-grant-policy
+    created_at: 2026-11-13T20:09:02.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-209bf42d25f8
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-testviewerceremonyroundtrip
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:38:09.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17e49d4aec0e
+  - type: covered_by
+    from: SYM-tooling-kibi-install-status-pinned
+    to: TEST-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:03.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16e59f820b14
+  - type: implements
+    from: SYM-tooling-kibi-install-status-pinned
+    to: REQ-tooling-kibi-install-tracks-pins
+    created_at: 2026-11-13T21:42:03.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-789b9c5a30dd
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-queue-enqueue
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:59.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19d202380025
+  - type: executable_for
+    from: SYM-maintainer-portfolio-drift-test-test-drift-of-refusals
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:40:20.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d37c59d036a
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-string
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:58.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040d385f36c8
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-string
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:58.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a02ce61d91cc
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response-string
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:58.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa30bbcce061
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-invites_test-invitenames
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:47:05.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04002d12eb2
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-page-warns-when-no-model-of-aroute-may-receive-what-the-role-sends
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:40:49.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2cddc704dd7

@@ -63,12 +63,20 @@ type Rankings struct {
 	planner *Planner
 	store   RankingStore
 	owners  Owners
+	audit   ChangeAuditor
 }
 
 // NewRankings returns the ranking use cases over planner and store, with
 // the owner's sessions checked by owners.
 func NewRankings(planner *Planner, store RankingStore, owners Owners) *Rankings {
 	return &Rankings{planner: planner, store: store, owners: owners}
+}
+
+// WithAudit has every change of a ranking, a series' source and a gap
+// threshold entered in the audit log through a (D-211), and returns r.
+func (r *Rankings) WithAudit(a ChangeAuditor) *Rankings {
+	r.audit = a
+	return r
 }
 
 // SourceRankings returns the ranking of every kind, in the order of
@@ -107,7 +115,13 @@ func (r *Rankings) RankSources(ctx context.Context, origin, sessionToken string,
 	if err := valuation.ValidateRanking(kind, placed); err != nil {
 		return valuation.Ranking{}, fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	if _, saveErr := r.store.SaveSourceRanking(ctx, kind, placed, nil); saveErr != nil {
+	saveErr := auditedSetting(ctx, r.audit, origin, sessionToken, settingRankingPrefix+kind.String(), func(ctx context.Context) error {
+		if _, err := r.store.SaveSourceRanking(ctx, kind, placed, nil); err != nil {
+			return fmt.Errorf("saving: %w", err)
+		}
+		return nil
+	})
+	if saveErr != nil {
 		return valuation.Ranking{}, fmt.Errorf("ranking the sources of %s: %w", kind, saveErr)
 	}
 	ranking, err := r.store.SourceRanking(ctx, kind)

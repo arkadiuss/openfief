@@ -95,6 +95,9 @@ type BondLots struct {
 	Today func() kernel.Date
 	// NewBatchID returns a fresh import batch ID.
 	NewBatchID func() ingest.BatchID
+	// Audit keeps each entry and deletion of a lot with its audit entry;
+	// nil enters none.
+	Audit ChangeAuditor
 }
 
 // Add checks that the caller is the owner (an owner-scoped session on
@@ -119,11 +122,15 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}})
+	var batch ingest.Batch
+	err = audited(ctx, b.Audit, origin, sessionToken, auditBondLotAdded, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
+		var importErr error
+		if batch, importErr = b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}}); importErr != nil {
+			return importErr
+		}
+		return b.Batches.RecordBatch(ctx, instance, &batch)
+	})
 	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
-	}
-	if err := b.Batches.RecordBatch(ctx, instance, &batch); err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
 	return batch, nil
@@ -155,7 +162,12 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
-	batch, err := b.deleteClaimed(ctx, instance, account, key)
+	var batch ingest.Batch
+	err = audited(ctx, b.Audit, origin, sessionToken, auditBondLotDeleted, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
+		var deleteErr error
+		batch, deleteErr = b.deleteClaimed(ctx, instance, account, key)
+		return deleteErr
+	})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}

@@ -895,3 +895,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-442fc33cc34f
+  - type: executable_for
+    from: SYM-viewers-internal-identity-postgres-people-test-testviewerenrollmentcoderoundtrip
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:38:04.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9cb58dc542e
+  - type: executable_for
+    from: SYM-people-test-e2e-viewers_test-enrollment
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:40:55.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff3656507446
+  - type: covered_by
+    from: SYM-maintainer-portfolio-drift-percent-of
+    to: TEST-portfolio-domain-drift
+    created_at: 2026-11-13T21:39:46.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59e50600735
+  - type: implements
+    from: SYM-maintainer-portfolio-drift-percent-of
+    to: REQ-maintainer-weights-computed-not-modelled
+    created_at: 2026-11-13T21:39:46.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3271264aac
+  - type: covered_by
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:26.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf84633a15fc
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:44:26.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1538208f17bc
+  - type: implements
+    from: SYM-maintainer-portfolio-maintainer-target-index
+    to: REQ-maintainer-proposals-checked-whole
+    created_at: 2026-11-13T21:44:26.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d98c884311f
+  - type: implements
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getid
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:35:59.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06e3a430efc9
+  - type: covered_by
+    from: SYM-invites-sdk-go-gen-openfief-identity-v1-auth-pb-invite-getid
+    to: TEST-identity-invites-connectapi
+    created_at: 2026-11-13T23:36:00.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bbe6f1a6bd0
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-actionof
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:18:12.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b436204aed20
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-actionof
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:18:13.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceeddd5ee64f

@@ -21,6 +21,7 @@ const (
 	accessPath        = "/access"
 	viewPluginsAnchor = "#view-plugins-title"
 	tokensAnchor      = "#tokens-title"
+	peopleAnchor      = "#people-title"
 )
 
 // The kinds of a grant choice's value, "kind:id", as the forms post them.
@@ -31,6 +32,8 @@ const (
 	choiceSep       = ":"
 	// grantField is the name of every grant checkbox.
 	grantField = "grant"
+	// nameField is the name of the field that names a token or a viewer.
+	nameField = "name"
 	// maxChoiceChars caps one posted choice: a target's ID is at most 128
 	// characters, and its kind a few more.
 	maxChoiceChars = 160
@@ -75,7 +78,18 @@ type accessHolder struct {
 // view plugins with their grants, what can be granted, and once, right after
 // it was made, a new token's secret.
 type accessData struct {
-	Tokens []accessHolder
+	// People are the owner and the viewers (D-210), and Invite the form that
+	// invites a viewer.
+	People []personRow
+	// Pending are the invitations not used, cancelled or expired yet.
+	Pending []inviteRow
+	Invite  inviteForm
+	// History is the grants, revocations and links, newest first (D-210).
+	History historyView
+	// Confirm is the viewer the owner asked to revoke, shown with what
+	// revoking does until the owner confirms.
+	Confirm *personRow
+	Tokens  []accessHolder
 	// Plugins are the installed view plugins that read with their own
 	// identity; PluginsUnavailable says the core can't read them now.
 	Plugins            []accessHolder
@@ -108,6 +122,7 @@ type postedToken struct {
 // accessRoutes maps the Access page and its forms, every one the owner's.
 func (s *server) accessRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+accessPath, s.withOwner(s.accessPage))
+	s.peopleRoutes(mux)
 	mux.HandleFunc("POST "+accessPath+"/tokens", s.withOwner(s.createToken))
 	mux.HandleFunc("POST "+accessPath+"/tokens/{id}/revoke", s.withOwner(s.revokeToken))
 	mux.HandleFunc("POST "+accessPath+"/tokens/{id}/grants", s.withOwner(s.updateTokenGrants))
@@ -119,10 +134,10 @@ func (s *server) accessPage(w http.ResponseWriter, r *http.Request, sess session
 	s.renderAccess(w, r, sess, http.StatusOK, &accessData{})
 }
 
-// renderAccess loads the tokens, the view plugins and what can be granted, and
-// shows them with whatever the last action left in data.
+// renderAccess loads the people, the tokens, the view plugins and what can be
+// granted, and shows them with whatever the last action left in data.
 func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess session, status int, data *accessData) {
-	tokens, plugins, sleeves, accounts, err := s.loadAccessInputs(r, sess)
+	in, err := s.loadAccessInputs(r, sess)
 	if err != nil {
 		s.coreFailed(w, r, "access", err)
 		return
@@ -131,47 +146,73 @@ func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess sessi
 	if data.Posted != nil {
 		posted = data.Posted.Grants
 	}
-	data.Enforced = tokens.GetGrantsEnforced()
+	data.Enforced = in.Tokens.GetGrantsEnforced()
 	data.DefaultDays = defaultTokenDays
-	data.New = newChoices("new-token", sleeves, accounts, posted)
-	data.PluginsUnavailable = plugins == nil
-	for _, t := range tokens.GetTokens() {
-		data.Tokens = append(data.Tokens, tokenHolder(t, sleeves, accounts))
+	data.New = newChoices("new-token", in.Sleeves, in.Accounts, posted)
+	data.PluginsUnavailable = in.Plugins == nil
+	for _, t := range in.Tokens.GetTokens() {
+		data.Tokens = append(data.Tokens, tokenHolder(t, in.Sleeves, in.Accounts))
 	}
-	for _, p := range plugins.GetPlugins() {
-		data.Plugins = append(data.Plugins, pluginHolder(p, sleeves, accounts))
+	for _, p := range in.Plugins.GetPlugins() {
+		data.Plugins = append(data.Plugins, pluginHolder(p, in.Sleeves, in.Accounts))
 	}
+	data.People = peopleRows(in.People.GetPeople(), in.Sleeves, in.Accounts)
+	data.Pending = inviteRows(in.Invites.GetInvites(), in.Sleeves, in.Accounts)
+	data.History = s.loadHistory(r, sess, in)
+	data.Invite.Choices = newChoices("new-viewer", in.Sleeves, in.Accounts, data.Invite.Grants)
+	data.Invite.Lifetimes = selectLifetime(inviteLifetimes(), data.Invite.Minutes)
 	s.show(w, r, status, "access", page{Title: "Access", Session: &sess, Data: data})
 }
 
-// loadAccessInputs reads what the Access page shows: the script tokens, the
-// installed view plugins (nil when the core can't read them now), and the
-// sleeves and accounts that can be granted.
-func (s *server) loadAccessInputs(r *http.Request, sess session) (*identityv1.ListScriptTokensResponse, *identityv1.ListViewPluginsResponse, []*viewsv1.Sleeve, []*viewsv1.Account, error) {
+// accessInputs is what the Access page reads: the script tokens, the
+// installed view plugins (nil when the core can't read them now), the people,
+// the pending invitations, and the sleeves and accounts that can be granted.
+type accessInputs struct {
+	Tokens   *identityv1.ListScriptTokensResponse
+	Plugins  *identityv1.ListViewPluginsResponse
+	People   *identityv1.ListPeopleResponse
+	Invites  *identityv1.ListInvitesResponse
+	Sleeves  []*viewsv1.Sleeve
+	Accounts []*viewsv1.Account
+}
+
+// loadAccessInputs reads what the Access page shows.
+func (s *server) loadAccessInputs(r *http.Request, sess session) (*accessInputs, error) {
 	ctx := r.Context()
 	tokens, err := s.auth.ListScriptTokens(ctx, connect.NewRequest(&identityv1.ListScriptTokensRequest{Origin: sess.Origin, SessionToken: sess.Token}))
 	if err != nil {
-		return nil, nil, nil, nil, fmt.Errorf("ListScriptTokens: %w", err)
+		return nil, fmt.Errorf("ListScriptTokens: %w", err)
 	}
+	in := &accessInputs{Tokens: tokens.Msg}
 	plugins, err := s.auth.ListViewPlugins(ctx, connect.NewRequest(&identityv1.ListViewPluginsRequest{Origin: sess.Origin, SessionToken: sess.Token}))
-	var pluginList *identityv1.ListViewPluginsResponse
 	switch {
 	case connect.CodeOf(err) == connect.CodeUnavailable:
 		// The core can't read its cluster now; the page says so.
 	case err != nil:
-		return nil, nil, nil, nil, fmt.Errorf("ListViewPlugins: %w", err)
+		return nil, fmt.Errorf("ListViewPlugins: %w", err)
 	default:
-		pluginList = plugins.Msg
+		in.Plugins = plugins.Msg
 	}
+	people, err := s.auth.ListPeople(ctx, connect.NewRequest(&identityv1.ListPeopleRequest{Origin: sess.Origin, SessionToken: sess.Token}))
+	if err != nil {
+		return nil, fmt.Errorf("ListPeople: %w", err)
+	}
+	in.People = people.Msg
+	invites, err := s.auth.ListInvites(ctx, connect.NewRequest(&identityv1.ListInvitesRequest{Origin: sess.Origin, SessionToken: sess.Token}))
+	if err != nil {
+		return nil, fmt.Errorf("ListInvites: %w", err)
+	}
+	in.Invites = invites.Msg
 	sleeves, err := s.read.ListSleeves(ctx, bearer(&viewsv1.ListSleevesRequest{}, sess))
 	if err != nil {
-		return nil, nil, nil, nil, fmt.Errorf("ListSleeves: %w", err)
+		return nil, fmt.Errorf("ListSleeves: %w", err)
 	}
 	accounts, err := s.read.ListAccounts(ctx, bearer(&viewsv1.ListAccountsRequest{}, sess))
 	if err != nil {
-		return nil, nil, nil, nil, fmt.Errorf("ListAccounts: %w", err)
+		return nil, fmt.Errorf("ListAccounts: %w", err)
 	}
-	return tokens.Msg, pluginList, sleeves.Msg.GetSleeves(), accounts.Msg.GetAccounts(), nil
+	in.Sleeves, in.Accounts = sleeves.Msg.GetSleeves(), accounts.Msg.GetAccounts()
+	return in, nil
 }
 
 // choiceValue is the value a grants form posts for a target: "kind:id".
@@ -360,7 +401,7 @@ func (s *server) createToken(w http.ResponseWriter, r *http.Request, sess sessio
 func (s *server) createTokenFailed(w http.ResponseWriter, r *http.Request, sess session, err error, posted *postedToken) {
 	switch {
 	case passkeyCheckRequired(err):
-		fields := slices.Concat([]formField{{Name: "name", Value: posted.Name}, {Name: "days", Value: posted.Days}}, postedFields(r, "mcp", grantField))
+		fields := slices.Concat([]formField{{Name: nameField, Value: posted.Name}, {Name: "days", Value: posted.Days}}, postedFields(r, "mcp", grantField))
 		s.renderAccess(w, r, sess, http.StatusForbidden, &accessData{
 			PasskeyCheck: &pendingAction{What: "Creating a script token", Action: r.URL.Path, Fields: fields}, Posted: posted,
 		})
@@ -421,17 +462,17 @@ func (s *server) updateGrants(w http.ResponseWriter, r *http.Request, sess sessi
 		s.errorPage(w, r, http.StatusBadRequest, "The form is malformed.")
 		return
 	}
-	tokens, plugins, sleeves, accounts, err := s.loadAccessInputs(r, sess)
+	in, err := s.loadAccessInputs(r, sess)
 	if err != nil {
 		s.coreFailed(w, r, "access", err)
 		return
 	}
-	held, found := heldBy(kind, id, tokens, plugins)
+	held, found := heldBy(kind, id, in)
 	if !found {
-		s.errorPage(w, r, http.StatusNotFound, "No such script token or view plugin.")
+		s.errorPage(w, r, http.StatusNotFound, "No such viewer, script token or view plugin.")
 		return
 	}
-	offered := newChoices("", sleeves, accounts, nil)
+	offered := newChoices("", in.Sleeves, in.Accounts, nil)
 	diff := diffGrants(want, held, &offered)
 	if len(diff.Add) > 0 || len(diff.Remove) > 0 {
 		_, err = s.auth.UpdateGrants(r.Context(), connect.NewRequest(&identityv1.UpdateGrantsRequest{
@@ -458,21 +499,30 @@ func (s *server) updateGrantsFailed(w http.ResponseWriter, r *http.Request, sess
 	s.accessFailed(w, r, sess, "UpdateGrants", err, nil)
 }
 
-// heldBy returns the grants, as form values, of the token or view plugin id
-// among those listed, and false when it isn't listed.
-func heldBy(kind identityv1.GrantHolderKind, id string, tokens *identityv1.ListScriptTokensResponse, plugins *identityv1.ListViewPluginsResponse) ([]string, bool) {
-	if kind == identityv1.GrantHolderKind_GRANT_HOLDER_KIND_SCRIPT_TOKEN {
-		for _, t := range tokens.GetTokens() {
-			if t.GetId() == id && t.GetStatus() == identityv1.ScriptTokenStatus_SCRIPT_TOKEN_STATUS_ACTIVE {
-				return heldValues(t.GetGrants()), true
-			}
+// heldBy returns the grants, as form values, of the viewer, script token or
+// view plugin id among those listed, and false when it isn't listed or can't
+// change any more: a revoked viewer or token.
+func heldBy(kind identityv1.GrantHolderKind, id string, in *accessInputs) ([]string, bool) {
+	switch kind {
+	case identityv1.GrantHolderKind_GRANT_HOLDER_KIND_PERSON:
+		people := in.People.GetPeople()
+		if i := slices.IndexFunc(people, func(p *identityv1.PersonAccess) bool { return activeViewer(p) && p.GetPerson().GetId() == id }); i >= 0 {
+			return heldValues(people[i].GetGrants()), true
 		}
-		return nil, false
-	}
-	for _, p := range plugins.GetPlugins() {
-		if p.GetInstance() == id {
-			return heldValues(p.GetGrants()), true
+	case identityv1.GrantHolderKind_GRANT_HOLDER_KIND_SCRIPT_TOKEN:
+		tokens := in.Tokens.GetTokens()
+		active := func(t *identityv1.ScriptToken) bool {
+			return t.GetId() == id && t.GetStatus() == identityv1.ScriptTokenStatus_SCRIPT_TOKEN_STATUS_ACTIVE
 		}
+		if i := slices.IndexFunc(tokens, active); i >= 0 {
+			return heldValues(tokens[i].GetGrants()), true
+		}
+	case identityv1.GrantHolderKind_GRANT_HOLDER_KIND_VIEW_PLUGIN:
+		plugins := in.Plugins.GetPlugins()
+		if i := slices.IndexFunc(plugins, func(p *identityv1.ViewPlugin) bool { return p.GetInstance() == id }); i >= 0 {
+			return heldValues(plugins[i].GetGrants()), true
+		}
+	case identityv1.GrantHolderKind_GRANT_HOLDER_KIND_UNSPECIFIED:
 	}
 	return nil, false
 }

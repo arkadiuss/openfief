@@ -35,6 +35,19 @@ const dsnVar = "OPENFIEF_PG_DSN"
 // migrations leave it.
 func newPool(t *testing.T, appRole ...bool) *pgxpool.Pool {
 	t.Helper()
+	pool := emptyPool(t, appRole...)
+	for range 2 { // a second run applies nothing
+		if err := postgres.Migrate(t.Context(), pool); err != nil {
+			t.Fatalf("Migrate: %v", err)
+		}
+	}
+	return pool
+}
+
+// emptyPool returns a pool on a fresh database with nothing applied (see
+// newPool).
+func emptyPool(t *testing.T, appRole ...bool) *pgxpool.Pool {
+	t.Helper()
 	dsn := os.Getenv(dsnVar)
 	if dsn == "" {
 		t.Skip(dsnVar + " is not set: task test:pg runs this test on a disposable PostgreSQL")
@@ -68,11 +81,6 @@ func newPool(t *testing.T, appRole ...bool) *pgxpool.Pool {
 		pool.Close()
 		dropDatabase(context.WithoutCancel(ctx), t, dsn, name, role)
 	})
-	for range 2 { // a second run applies nothing
-		if err := postgres.Migrate(ctx, pool); err != nil {
-			t.Fatalf("Migrate: %v", err)
-		}
-	}
 	return pool
 }
 

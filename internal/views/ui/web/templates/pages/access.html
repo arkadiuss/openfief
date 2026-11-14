@@ -48,9 +48,92 @@
 </section>
 {{end}}
 
+{{with .Invite.Link}}
+<section class="card notice" aria-labelledby="invite-link-title">
+  <h2 id="invite-link-title">Invitation for {{$.Data.Invite.LinkName}} created</h2>
+  <p>Send {{$.Data.Invite.LinkName}} this link. They open it, create a passkey of their own and are signed in. It works once, until <span class="mono">{{.ExpiresAt.AsTime.Format "2006-01-02 15:04 MST"}}</span>, and it is shown only this once.</p>
+  <p><code class="secret">{{.Url}}</code></p>
+</section>
+{{end}}
+
+{{with .Confirm}}
+<section class="card notice" aria-labelledby="revoke-title">
+  <h2 id="revoke-title">Revoke {{.Name}}?</h2>
+  <p>This ends {{.Name}}'s {{.Sessions}} active session(s), stops their {{.Passkeys}} passkey(s) from working and ends their grants. {{.Name}} stays listed as revoked, and everything is recorded. It can't be undone: to let them back in, invite them again.</p>
+  <form method="post" action="{{.RevokeAction}}" class="inline">
+    <input type="hidden" name="confirm" value="yes">
+    <div class="actions"><button type="submit" class="danger">Yes, revoke {{.Name}}</button> <a href="/access#people-title">Keep {{.Name}}</a></div>
+  </form>
+</section>
+{{end}}
+
 {{if not .Enforced}}
 <p class="alert alert-warn" role="note">Grants take effect when SpiceDB authorization is on. Until then every script token and view plugin reads every account, whatever it is granted here. Grants you make now are stored and recorded, so they apply as they are when it is switched on.</p>
 {{end}}
+
+<section class="card" aria-labelledby="people-title">
+  <h2 id="people-title">People</h2>
+  <p class="muted">You, and the viewers you invited. A viewer signs in with a passkey of their own and views only what they are granted, whether or not SpiceDB authorization is on. They can change nothing but signing out. Revoking a viewer ends their sessions and passkeys and their grants.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Status</th><th scope="col">May view</th><th scope="col">Sessions</th><th scope="col">Passkeys</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody>
+    {{range .People}}
+    <tr>
+      <td>{{.Name}}{{if .Owner}} <span class="pill pill-gold">owner</span>{{end}}{{if .NoAccess}} <span class="pill pill-warn">no access yet</span>{{end}}</td>
+      <td>{{if .Revoked}}<span class="pill pill-neutral">revoked</span>{{else}}<span class="pill pill-ok">active</span>{{end}}</td>
+      <td>{{if .Owner}}Every account{{else}}{{template "holds" .}}
+        {{if .Editable}}<details class="change">
+          <summary>Change what they may view</summary>
+          <form method="post" action="{{.Action}}">
+            {{template "grant-choices" .Choices}}
+            <div class="actions"><button type="submit">Save access</button></div>
+          </form>
+        </details>{{end}}{{end}}</td>
+      <td class="num">{{.Sessions}}</td><td class="num">{{.Passkeys}}</td>
+      <td>{{if .Editable}}<form method="post" action="{{.RevokeAction}}" class="inline"><button type="submit" class="danger">Revoke</button></form>{{end}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="6" class="empty">No people.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <h3 id="pending-invites-title">Pending invitations</h3>
+  {{if .Pending}}
+  <div class="table"><table aria-labelledby="pending-invites-title">
+    <thead><tr><th scope="col">For</th><th scope="col">Will be able to view</th><th scope="col">Link works until</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody>
+    {{range .Pending}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{template "holds" .}}</td>
+      <td class="mono">{{.Expires}}</td>
+      <td><form method="post" action="{{.Cancel}}" class="inline"><button type="submit" class="danger">Cancel invitation</button></form></td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <p class="help">An invitation works once. Cancelling it, or letting it expire, makes its link say it is no longer valid.</p>
+  {{else}}
+  <p class="muted">No invitations are waiting to be used.</p>
+  {{end}}
+  <h3 id="invite-title">Invite a viewer</h3>
+  <form method="post" action="/access/people" aria-labelledby="invite-title">
+    <div class="fields">
+      <div class="field">
+        <label for="viewer-name">Name</label>
+        <input id="viewer-name" name="name" required maxlength="64" autocomplete="off" aria-describedby="viewer-name-help" value="{{.Invite.Name}}">
+        <p class="help" id="viewer-name-help">What you call them; they see it too.</p>
+      </div>
+      <div class="field">
+        <label for="viewer-minutes">Link valid for</label>
+        <select id="viewer-minutes" name="minutes">{{range .Invite.Lifetimes}}<option value="{{.Minutes}}"{{if .Selected}} selected{{end}}>{{.Label}}</option>{{end}}</select>
+      </div>
+    </div>
+    {{template "grant-choices" .Invite.Choices}}
+    <p class="help">Check nothing and they see nothing until you grant them something. Creating the link asks you to confirm with your passkey first.</p>
+    <div class="actions"><button type="submit" class="primary">Create invitation link</button></div>
+  </form>
+</section>
 
 <section class="card" aria-labelledby="tokens-title">
   <h2 id="tokens-title">Script tokens</h2>
@@ -129,6 +212,19 @@
     <p class="state-title">No view plugins installed.</p>
     <p class="muted">Install one with <code>openfief plugin install</code>; it appears here once the operator runs it, and you grant it accounts.</p>
   </div></div>
+  {{end}}
+</section>
+
+<section class="card" aria-labelledby="history-title">
+  <h2 id="history-title">History</h2>
+  <p class="muted">Every grant and revocation, of viewers, script tokens and view plugins, and every invitation link issued, used, cancelled or refused, newest first. It never shows an amount or a secret. <a href="{{.History.SeeAll}}">See the whole audit log</a>.</p>
+  {{if .History.Unavailable}}
+  <p class="alert alert-warn" role="status">The history can't be read now. Try again in a moment.</p>
+  {{else if .History.Rows}}
+  {{template "audit-table" .History.Rows}}
+  {{if .History.Older}}<p><a href="{{.History.Older}}" rel="next">Older entries</a></p>{{end}}
+  {{else}}
+  <p class="muted">Nothing has been granted or revoked yet.</p>
   {{end}}
 </section>
 {{end}}

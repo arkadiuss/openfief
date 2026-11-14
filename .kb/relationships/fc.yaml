@@ -867,3 +867,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7caac1a7ba1
+  - type: executable_for
+    from: SYM-viewers-internal-identity-spicedb-authorizer-test-testauthorizeraskstheaccountpermission
+    to: TEST-identity-spicedb-authorizer
+    created_at: 2026-11-13T20:16:33.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e759993c5c
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:28.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df45c5cb5d6
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:29.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1560bf9ab2e
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-decide-with
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:33:13.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e2a5ef966f1
+  - type: covered_by
+    from: SYM-maintainer-views-ui-maintainer-when-of
+    to: TEST-ui-maintainer
+    created_at: 2026-11-13T21:53:06.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f52fee3ba6
+  - type: implements
+    from: SYM-maintainer-views-ui-maintainer-when-of
+    to: REQ-ui-model-page-maintainer-note
+    created_at: 2026-11-13T21:53:06.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ef8bb9e3f2
+  - type: covered_by
+    from: SYM-ms1-ui-models-retention-words
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:46.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c42fdafc7ec1
+  - type: implements
+    from: SYM-ms1-ui-models-retention-words
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:46.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d70fd1e1d59
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-settings-clock
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:37:47.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acdf001201b7
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-reset
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:48.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82dc2a2fe8be
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-reset
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:48.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d50afaef621

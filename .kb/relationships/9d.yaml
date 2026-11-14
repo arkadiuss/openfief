@@ -846,3 +846,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6cd5b3c9778
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getgrants
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:20:13.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b35a44e360
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-inviteviewerrequest-getgrants
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:20:13.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66705c8a2bfa
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-work-stores-the-note-with-its-audit-entry
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:32:09.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b0adb53dd5
+  - type: covered_by
+    from: SYM-ms1-app-settings-on-off
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:33.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d75e11d0bfe
+  - type: implements
+    from: SYM-ms1-app-settings-on-off
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:33.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d014fdbed6cf

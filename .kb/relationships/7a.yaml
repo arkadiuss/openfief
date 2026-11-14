@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc1b78ae4399
+  - type: covered_by
+    from: SYM-maintainer-cmd-core-maintainer-new-maintainer
+    to: TEST-core-maintainer
+    created_at: 2026-11-13T21:17:31.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e196cc2da78a
+  - type: implements
+    from: SYM-maintainer-cmd-core-maintainer-new-maintainer
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:17:31.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d656bf88ad72
+  - type: implements
+    from: SYM-invites-internal-identity-app-people-auth-invites
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:32:14.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a56ab15c2240
+  - type: covered_by
+    from: SYM-invites-internal-identity-app-people-auth-invites
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:32:14.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1d29ab37191
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-tier-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:42:10.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8eafca14a82

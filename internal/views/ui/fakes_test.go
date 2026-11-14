@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -38,11 +39,16 @@ const (
 	ownerSession = "session-owner"
 	readSession  = "session-read"
 	demoSession  = "session-demo"
-	newSession   = "session-new"
-	accountID    = "acc-synthetic-1"
-	testHost     = "ui.example.com"
-	testOrigin   = "https://" + testHost
-	localOrigin  = "http://localhost:8080"
+	// viewerSession is a viewer's read session (D-65); grantedAccount is the one account they were granted.
+	viewerSession  = "session-viewer"
+	grantedAccount = "acc-granted-1"
+	// emptyViewerSession is a viewer's session who was granted nothing yet.
+	emptyViewerSession = "session-viewer-empty"
+	newSession         = "session-new"
+	accountID          = "acc-synthetic-1"
+	testHost           = "ui.example.com"
+	testOrigin         = "https://" + testHost
+	localOrigin        = "http://localhost:8080"
 )
 
 // codeErr is a Connect error with code, as the fake core returns it.
@@ -99,6 +105,77 @@ type fakeAuth struct {
 	pluginsDown bool
 	// enforced is the grants_enforced the lists answer.
 	enforced bool
+	// inviteReq is the last InviteViewer request, and inviteErr makes it fail
+	// as the core does.
+	inviteReq *identityv1.InviteViewerRequest
+	inviteErr error
+	// revokedPeople are the viewers RevokePerson revoked, and revokePersonErr
+	// makes it fail as the core does.
+	revokedPeople   []string
+	revokePersonErr error
+	// cancelledInvites are the invitations CancelInvite cancelled, and
+	// cancelInviteErr makes it fail as the core does.
+	cancelledInvites []string
+	cancelInviteErr  error
+	// auditReqs are the ListAuditEntries requests, and auditErr makes it fail as
+	// the core does.
+	auditReqs []*identityv1.ListAuditEntriesRequest
+	auditErr  error
+	// auditCap, when set, is the most entries a page of ListAuditEntries holds,
+	// as a smaller page than the page size asks for.
+	auditCap int
+	// codeRefused makes BeginRegistration refuse an enrollment code, as the
+	// core does one that expired, was cancelled or was used; its message here
+	// is one the page must never show.
+	codeRefused bool
+}
+
+// errCodeRefused is the fake core's refusal of an enrollment code, with words
+// no page may repeat.
+var errCodeRefused = errors.New("forbidden: the household's invite expired")
+
+// pendingInvite is the fake core's one pending invitation, for Dana, with a
+// sleeve and one account, until 2026-03-02 12:30 UTC.
+const pendingInvite = "00aa11bb22cc33dd"
+
+func (f *fakeAuth) ListInvites(_ context.Context, r *connect.Request[identityv1.ListInvitesRequest]) (*connect.Response[identityv1.ListInvitesResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if slices.Contains(f.cancelledInvites, pendingInvite) {
+		return connect.NewResponse(&identityv1.ListInvitesResponse{}), nil
+	}
+	return connect.NewResponse(&identityv1.ListInvitesResponse{Invites: []*identityv1.Invite{{
+		Id: pendingInvite, Name: "Dana",
+		Grants: []*identityv1.GrantTarget{
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, Id: "core"},
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, Id: accountID},
+			{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, Id: "acc-deleted-1"},
+		},
+		CreatedAt: timestamppb.New(time.Date(2026, 3, 2, 11, 30, 0, 0, time.UTC)),
+		ExpiresAt: timestamppb.New(time.Date(2026, 3, 2, 12, 30, 0, 0, time.UTC)),
+	}}}), nil
+}
+
+func (f *fakeAuth) CancelInvite(_ context.Context, r *connect.Request[identityv1.CancelInviteRequest]) (*connect.Response[identityv1.CancelInviteResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.cancelInviteErr != nil {
+		return nil, f.cancelInviteErr
+	}
+	f.cancelledInvites = append(f.cancelledInvites, r.Msg.GetInviteId())
+	return connect.NewResponse(&identityv1.CancelInviteResponse{}), nil
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -144,7 +221,11 @@ func (f *fakeAuth) BeginRegistration(_ context.Context, r *connect.Request[ident
 	}
 	f.mu.Lock()
 	f.enrollCode, f.regSession = r.Msg.GetEnrollmentCode(), r.Msg.GetSessionToken()
+	refused := f.codeRefused
 	f.mu.Unlock()
+	if r.Msg.GetEnrollmentCode() != "" && refused {
+		return nil, codeErr(connect.CodePermissionDenied, errCodeRefused)
+	}
 	if r.Msg.GetEnrollmentCode() == "" {
 		if err := owner(r.Msg.GetSessionToken()); err != nil {
 			return nil, err
@@ -188,7 +269,86 @@ func (f *fakeAuth) WhoAmI(_ context.Context, r *connect.Request[identityv1.WhoAm
 	if err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}), nil
+	out := &identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}
+	if r.Msg.GetSessionToken() == viewerSession {
+		out.Person = &identityv1.Person{Id: "0123456789abcdef", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Alice"}
+	}
+	if r.Msg.GetSessionToken() == emptyViewerSession {
+		out.Person = &identityv1.Person{Id: "fedcba9876543210", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Bob"}
+	}
+	return connect.NewResponse(out), nil
+}
+
+// The fake core's people: the owner, Alice with a sleeve and one account, Bob
+// with nothing granted yet, and Carol, revoked.
+const (
+	alicePerson = "0123456789abcdef"
+	bobPerson   = "fedcba9876543210"
+	carolPerson = "00112233445566ff"
+)
+
+func (f *fakeAuth) ListPeople(_ context.Context, r *connect.Request[identityv1.ListPeopleRequest]) (*connect.Response[identityv1.ListPeopleResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	created := timestamppb.New(time.Date(2026, 3, 1, 0, 0, 0, 0, time.UTC))
+	person := func(id, name string, kind identityv1.PersonKind) *identityv1.Person {
+		return &identityv1.Person{Id: id, Kind: kind, Name: name, CreatedAt: created}
+	}
+	grant := func(kind identityv1.GrantTargetKind, id string) *identityv1.Grant {
+		return &identityv1.Grant{HolderKind: identityv1.GrantHolderKind_GRANT_HOLDER_KIND_PERSON, HolderId: alicePerson, TargetKind: kind, TargetId: id}
+	}
+	carol := person(carolPerson, "Carol", identityv1.PersonKind_PERSON_KIND_VIEWER)
+	carol.RevokedAt = created
+	return connect.NewResponse(&identityv1.ListPeopleResponse{GrantsEnforced: f.flag(&f.enforced), People: []*identityv1.PersonAccess{
+		{Person: person("owner", "Owner", identityv1.PersonKind_PERSON_KIND_OWNER), Passkeys: 2, ActiveSessions: 3},
+		{
+			Person: person(alicePerson, "Alice", identityv1.PersonKind_PERSON_KIND_VIEWER), Passkeys: 1, ActiveSessions: 2,
+			Grants: []*identityv1.Grant{grant(identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, "core"), grant(identityv1.GrantTargetKind_GRANT_TARGET_KIND_ACCOUNT, accountID)},
+		},
+		{Person: person(bobPerson, "Bob", identityv1.PersonKind_PERSON_KIND_VIEWER), Passkeys: 1, ActiveSessions: 1},
+		{Person: carol},
+	}}), nil
+}
+
+func (f *fakeAuth) InviteViewer(_ context.Context, r *connect.Request[identityv1.InviteViewerRequest]) (*connect.Response[identityv1.InviteViewerResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if err := f.needsCheck(); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.inviteErr != nil {
+		return nil, f.inviteErr
+	}
+	f.inviteReq = r.Msg
+	return connect.NewResponse(&identityv1.InviteViewerResponse{
+		Url: testOrigin + "/enroll#code=synthetic-invite-code", ExpiresAt: timestamppb.New(time.Date(2026, 3, 2, 12, 30, 0, 0, time.UTC)),
+	}), nil
+}
+
+func (f *fakeAuth) RevokePerson(_ context.Context, r *connect.Request[identityv1.RevokePersonRequest]) (*connect.Response[identityv1.RevokePersonResponse], error) {
+	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
+		return nil, err
+	}
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.revokePersonErr != nil {
+		return nil, f.revokePersonErr
+	}
+	f.revokedPeople = append(f.revokedPeople, r.Msg.GetPersonId())
+	return connect.NewResponse(&identityv1.RevokePersonResponse{SessionsEnded: 2, PasskeysDisabled: 1, GrantsEnded: 2}), nil
 }
 
 func (f *fakeAuth) ListPasskeys(_ context.Context, r *connect.Request[identityv1.ListPasskeysRequest]) (*connect.Response[identityv1.ListPasskeysResponse], error) {
@@ -394,7 +554,7 @@ func scopeOf(token string) (identityv1.SessionScope, error) {
 	switch token {
 	case ownerSession, newSession:
 		return identityv1.SessionScope_SESSION_SCOPE_OWNER, nil
-	case readSession, demoSession:
+	case readSession, demoSession, viewerSession, emptyViewerSession:
 		return identityv1.SessionScope_SESSION_SCOPE_READ, nil
 	}
 	return identityv1.SessionScope_SESSION_SCOPE_UNSPECIFIED, codeErr(connect.CodeUnauthenticated, nil)
@@ -494,6 +654,14 @@ func syntheticInstrument() *viewsv1.Instrument {
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
+	}
+	if r.Header().Get("Authorization") == "Bearer "+emptyViewerSession {
+		// A viewer granted nothing is listed no account.
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
+	}
+	if r.Header().Get("Authorization") == "Bearer "+viewerSession {
+		// The core lists a viewer the accounts they were granted, and no other.
+		return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{{Id: grantedAccount, Institution: "synthetic-broker", Name: "Granted brokerage"}}}), nil
 	}
 	f.mu.Lock()
 	none, institution, ike := f.noAccounts, f.institution, f.ike
@@ -740,7 +908,7 @@ func (f *fakeRead) check(h http.Header) error {
 	f.mu.Lock()
 	f.bearers = append(f.bearers, h.Get("Authorization"))
 	f.mu.Unlock()
-	for _, s := range []string{ownerSession, readSession, demoSession, newSession} {
+	for _, s := range []string{ownerSession, readSession, demoSession, newSession, viewerSession, emptyViewerSession} {
 		if h.Get("Authorization") == "Bearer "+s {
 			return nil
 		}
@@ -775,9 +943,15 @@ type harness struct {
 	read        *fakeRead
 	// askModel is the core's router for the Ask box (D-203), off until a
 	// test turns it on.
-	askModel  *fakeAskModel
-	handler   http.Handler
-	tokenFile string
+	askModel *fakeAskModel
+	// maintainer is the core's model-portfolio maintainer (D-204), with a
+	// note and nothing proposed until a test says.
+	maintainer *fakeMaintainer
+	// modelSettings is the core's agents-and-models settings (D-212), with
+	// two providers and a broken route entry.
+	modelSettings *fakeModelSettings
+	handler       http.Handler
+	tokenFile     string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -805,7 +979,11 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	h.names = &fakeInstruments{}
 	h.read.transfers = h.transfers
 	h.askModel = &fakeAskModel{}
+	h.maintainer = newFakeMaintainer()
+	h.modelSettings = newFakeModelSettings()
 	mux := http.NewServeMux()
+	mux.Handle(modelsv1connect.NewModelSettingsServiceHandler(h.modelSettings))
+	mux.Handle(portfoliov1connect.NewMaintainerServiceHandler(h.maintainer))
 	mux.Handle(modelsv1connect.NewAskModelServiceHandler(h.askModel))
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
 	mux.Handle(portfoliov1connect.NewModelPortfolioServiceHandler(h.model))
@@ -837,6 +1015,8 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		MarketData:      valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		AskModel:        modelsv1connect.NewAskModelServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Maintainer:      portfoliov1connect.NewMaintainerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		ModelSettings:   modelsv1connect.NewModelSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),

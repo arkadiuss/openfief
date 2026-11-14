@@ -207,6 +207,8 @@ type Accounts struct {
 	// Payouts supersedes the payout withdrawals a changed payout setting no
 	// longer makes (D-162); nil supersedes none.
 	Payouts PayoutLedger
+	// Audit keeps each change with its audit entry; nil enters none.
+	Audit ChangeAuditor
 }
 
 // Create creates the account n names, records its tax wrapper, the pack's
@@ -249,7 +251,10 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	if entry.Payout, err = a.firstPayout(institution, n.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
-	if err := a.storeNew(ctx, &entry, n); err != nil {
+	err = audited(ctx, a.Audit, origin, sessionToken, auditAccountCreated, createdRefs(ledger.AccountID(id), n.Instance), func(ctx context.Context) error {
+		return a.storeNew(ctx, &entry, n)
+	})
+	if err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
 	return entry, nil
@@ -281,19 +286,11 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
-	if err := a.save(ctx, &entry, c.Payout != nil); err != nil {
+	err = audited(ctx, a.Audit, origin, sessionToken, auditAccountChanged, []string{accountRef(id)}, func(ctx context.Context) error {
+		return a.applyChange(ctx, &entry, c, newForm, from)
+	})
+	if err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
-	}
-	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
-		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
-	}
-	if err := a.recordTaxDetails(ctx, &entry, newForm, c.EarlierPayments); err != nil {
-		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
-	}
-	if c.Payout != nil {
-		if err := a.supersedePayouts(ctx, &entry, from); err != nil {
-			return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
-		}
 	}
 	return entry, nil
 }
@@ -314,8 +311,30 @@ func (a *Accounts) Bind(ctx context.Context, origin, sessionToken string, id led
 	if _, err := a.brokerAccount(ctx, instance, broker, id); err != nil {
 		return fmt.Errorf("binding account %s: %w", id, err)
 	}
-	if err := a.connect(ctx, id, instance, broker); err != nil {
+	err := audited(ctx, a.Audit, origin, sessionToken, auditAccountBound, []string{accountRef(id), instanceRef(instance)}, func(ctx context.Context) error {
+		return a.connect(ctx, id, instance, broker)
+	})
+	if err != nil {
 		return fmt.Errorf("binding account %s: %w", id, err)
+	}
+	return nil
+}
+
+// applyChange stores entry, the account as c changed it, with its terms and
+// tax details, and supersedes the payouts its new payout setting no longer
+// makes, from the day from.
+func (a *Accounts) applyChange(ctx context.Context, entry *AccountEntry, c *AccountChange, newForm jurisdiction.AccountForm, from kernel.Date) error {
+	if err := a.save(ctx, entry, c.Payout != nil); err != nil {
+		return err
+	}
+	if err := a.recordTerms(ctx, entry.ID, c.Wrapper, c.Fee); err != nil {
+		return err
+	}
+	if err := a.recordTaxDetails(ctx, entry, newForm, c.EarlierPayments); err != nil {
+		return err
+	}
+	if c.Payout != nil {
+		return a.supersedePayouts(ctx, entry, from)
 	}
 	return nil
 }

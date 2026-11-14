@@ -1112,3 +1112,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da3611aacbdf
+  - type: specified_by
+    from: REQ-identity-owner-enrolls-viewers
+    to: SCEN-identity-viewer-invite-link
+    created_at: 2026-11-13T20:00:31.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21af1c204b0b
+  - type: specified_by
+    from: REQ-identity-owner-enrolls-viewers
+    to: SCEN-identity-viewer-enrolls
+    created_at: 2026-11-13T20:00:31.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41ca8ec207d
+  - type: implements
+    from: SYM-viewers-internal-identity-person-viewerinvite-validate
+    to: REQ-identity-viewer-invite-link
+    created_at: 2026-11-13T20:14:06.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a130760d7d1
+  - type: covered_by
+    from: SYM-viewers-internal-identity-person-viewerinvite-validate
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:14:06.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0874926406d3
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-answer
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:44:52.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b8e97f6134
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:48.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6090e8ecefe
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:48.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a4bed6e7fdf
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-response
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:48.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74234e5fec64
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-raw-desc-gzip
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:12:02.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea4e590fd76d
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-raw-desc-gzip
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:12:02.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ea2246bbf2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-file-openfief-portfolio-v1-maintainer-proto-raw-desc-gzip
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:12:02.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ad7234a557b

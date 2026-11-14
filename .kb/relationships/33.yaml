@@ -937,3 +937,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e3902d984a2
+  - type: implements
+    from: SYM-viewers-internal-identity-passkey-passkey-person
+    to: REQ-identity-people-migration-owner
+    created_at: 2026-11-13T20:12:59.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-092374cbda80
+  - type: covered_by
+    from: SYM-viewers-internal-identity-passkey-passkey-person
+    to: TEST-identity-people-postgres
+    created_at: 2026-11-13T20:12:59.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c6a2e4b9477
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-gate-maintainer-on
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:52.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729ac1f88dc5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-new-fake-decisions
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:28:25.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d91ca7af460
+  - type: executable_for
+    from: SYM-invites-internal-identity-app-authstore_test-memauthstore-pendinginvites
+    to: TEST-identity-invites-app
+    created_at: 2026-11-13T23:31:29.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70385ede614a
+  - type: executable_for
+    from: SYM-invites-internal-identity-postgres-invites_test-seedinvites
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:47:21.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c8487c7fdf

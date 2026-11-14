@@ -278,7 +278,7 @@ func TestAttentionKindOf(t *testing.T) {
 		{"market-data-gap", attentionKind{"Market data stopped arriving", "/settings#series-sources-title", "Open the sources"}},
 		{"connector-sync-failing", attentionKind{"Sync keeps failing", "/plugins", "Open the plugins"}},
 		{"cash-checkpoint-mismatch", attentionKind{Label: "Cash balance differs"}},
-		{"model-route-broken", attentionKind{Label: "Model route names a missing provider instance"}},
+		{"model-route-broken", attentionKind{"Model route names a missing provider instance", "/settings/models#routes-title", "Fix the route"}},
 		{"view-plugin-ungranted", attentionKind{Label: "View plugin without access to any account", Page: "/access#view-plugins-title", Action: "Open Access"}},
 		{"cross-check-prices-undeclared", attentionKind{"Undeclared cross-check prices dropped", "/plugins", "Open the plugins"}},
 		{"some-later-check", attentionKind{Label: "some-later-check"}},

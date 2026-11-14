@@ -104,11 +104,12 @@ func (s *statements) ListStatementAccounts(ctx context.Context, req *connect.Req
 // fix it. Anything else is logged without the values it may carry
 // (app.LogSafe, GR-12).
 func (s *statements) fail(ctx context.Context, err error) *connect.Error {
+	if unavailable := kernel.Unavailable(err); unavailable != nil {
+		return connect.NewError(connect.CodeUnavailable, unavailable)
+	}
 	switch {
 	case errors.Is(err, app.ErrNoSession):
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
-	case errors.Is(err, kernel.ErrAuthzUnavailable):
-		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuthzUnavailable)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
 	case errors.Is(err, errReceive):

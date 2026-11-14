@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ccc4be4ff60
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protomessage
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:23:56.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d82bccaff04
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonrequest-protomessage
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:23:56.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-972683c2fa50
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getgrantsended
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:25:14.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d75ab8d29a24
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getgrantsended
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:25:14.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-221a1dcf6ff6

@@ -1098,3 +1098,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e10ba4f3e26
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T21:14:33.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c134cc57ac57
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-person
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T21:14:33.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe615fbd1b5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-proposal
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:27:11.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c01e598a7d5
+  - type: executable_for
+    from: SYM-maintainer-portfolio-connectapi-maintainer-test-quiet-decisions
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:37:28.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65c12cf98da
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-audit_test-testauditlogfilters
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:19:03.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe0f677efc5a
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-owner-change
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:48:51.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b848e315d253

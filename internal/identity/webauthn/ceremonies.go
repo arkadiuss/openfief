@@ -23,12 +23,11 @@ import (
 	"github.com/arkadiuss/openfief/internal/identity/app"
 )
 
-// errNotOwner reports an assertion whose user handle is not the owner's.
-var errNotOwner = errors.New("user handle is not the owner's")
+// errUnknownUser reports an assertion whose user handle is no person's.
+var errUnknownUser = errors.New("user handle is no person's")
 
 const (
-	// ownerName is the WebAuthn user name every passkey carries: there is
-	// one user, the owner (GR-2).
+	// ownerName is the WebAuthn user name the owner's passkeys carry.
 	ownerName = "owner"
 	// ownerDisplayName is what the browser shows for the user.
 	ownerDisplayName = "OpenFief owner"
@@ -45,29 +44,43 @@ var _ app.Ceremonies = (*Ceremonies)(nil)
 // browser's prompts, such as "OpenFief".
 func New(rpName string) *Ceremonies { return &Ceremonies{rpName: rpName} }
 
-// user is the owner as go-webauthn sees them, with their passkeys.
+// user is a person as go-webauthn sees them, with their passkeys.
 type user struct {
-	owner *identity.Owner
-	creds []gowebauthn.Credential
+	person *identity.Person
+	creds  []gowebauthn.Credential
 }
 
-// WebAuthnID returns the owner's random user handle.
-func (u *user) WebAuthnID() []byte { return u.owner.Handle }
+// WebAuthnID returns the person's random user handle.
+func (u *user) WebAuthnID() []byte { return u.person.Handle }
 
-// WebAuthnName returns "owner".
-func (*user) WebAuthnName() string { return ownerName }
+// WebAuthnName returns "owner" for the owner, and a viewer's name.
+func (u *user) WebAuthnName() string {
+	if u.person.IsViewer() {
+		return u.person.Name
+	}
+	return ownerName
+}
 
-// WebAuthnDisplayName returns "OpenFief owner".
-func (*user) WebAuthnDisplayName() string { return ownerDisplayName }
+// WebAuthnDisplayName returns "OpenFief owner" for the owner, and a viewer's
+// name.
+func (u *user) WebAuthnDisplayName() string {
+	if u.person.IsViewer() {
+		return u.person.Name
+	}
+	return ownerDisplayName
+}
 
-// WebAuthnCredentials returns the owner's passkeys on this host.
+// WebAuthnCredentials returns the person's passkeys on this host.
 func (u *user) WebAuthnCredentials() []gowebauthn.Credential { return u.creds }
 
-// newUser returns owner with passkeys as go-webauthn credentials.
-func newUser(owner *identity.Owner, passkeys []identity.Passkey) *user {
-	u := &user{owner: owner, creds: make([]gowebauthn.Credential, 0, len(passkeys))}
+// newUser returns person with passkeys as go-webauthn credentials, those
+// that are theirs.
+func newUser(person *identity.Person, passkeys []identity.Passkey) *user {
+	u := &user{person: person, creds: make([]gowebauthn.Credential, 0, len(passkeys))}
 	for i := range passkeys {
-		u.creds = append(u.creds, credential(&passkeys[i]))
+		if passkeys[i].Person() == person.ID {
+			u.creds = append(u.creds, credential(&passkeys[i]))
+		}
 	}
 	return u
 }
@@ -95,12 +108,12 @@ func credential(p *identity.Passkey) gowebauthn.Credential {
 // BeginRegistration implements app.Ceremonies: the creation options as
 // PublicKeyCredentialCreationOptionsJSON, excluding existing, and the
 // ceremony state as JSON.
-func (c *Ceremonies) BeginRegistration(origin identity.Origin, owner *identity.Owner, existing []identity.Passkey) (app.Begun, error) {
+func (c *Ceremonies) BeginRegistration(origin identity.Origin, person *identity.Person, existing []identity.Passkey) (app.Begun, error) {
 	wa, err := c.relyingParty(origin)
 	if err != nil {
 		return app.Begun{}, err
 	}
-	u := newUser(owner, existing)
+	u := newUser(person, existing)
 	creation, session, err := wa.BeginRegistration(u, gowebauthn.WithExclusions(gowebauthn.Credentials(u.creds).CredentialDescriptors()))
 	if err != nil {
 		return app.Begun{}, fmt.Errorf("beginning a registration: %w", err)
@@ -109,7 +122,7 @@ func (c *Ceremonies) BeginRegistration(origin identity.Origin, owner *identity.O
 }
 
 // FinishRegistration implements app.Ceremonies.
-func (c *Ceremonies) FinishRegistration(origin identity.Origin, owner *identity.Owner, state, credentialJSON []byte) (identity.Passkey, error) {
+func (c *Ceremonies) FinishRegistration(origin identity.Origin, person *identity.Person, state, credentialJSON []byte) (identity.Passkey, error) {
 	wa, err := c.relyingParty(origin)
 	if err != nil {
 		return identity.Passkey{}, err
@@ -122,7 +135,7 @@ func (c *Ceremonies) FinishRegistration(origin identity.Origin, owner *identity.
 	if err != nil {
 		return identity.Passkey{}, refused(err)
 	}
-	cred, err := wa.CreateCredential(newUser(owner, nil), session, parsed)
+	cred, err := wa.CreateCredential(newUser(person, nil), session, parsed)
 	if err != nil {
 		return identity.Passkey{}, refused(err)
 	}
@@ -163,7 +176,7 @@ func (c *Ceremonies) BeginLogin(origin identity.Origin) (app.Begun, error) {
 // FinishLogin implements app.Ceremonies. It returns the assertion's own
 // signature counter and backup state, for the caller to check the counter
 // against the stored one.
-func (c *Ceremonies) FinishLogin(origin identity.Origin, owner *identity.Owner, passkeys []identity.Passkey, state, credentialJSON []byte) (app.Assertion, error) {
+func (c *Ceremonies) FinishLogin(origin identity.Origin, people []identity.Person, passkeys []identity.Passkey, state, credentialJSON []byte) (app.Assertion, error) {
 	wa, err := c.relyingParty(origin)
 	if err != nil {
 		return app.Assertion{}, err
@@ -176,12 +189,13 @@ func (c *Ceremonies) FinishLogin(origin identity.Origin, owner *identity.Owner, 
 	if err != nil {
 		return app.Assertion{}, refused(err)
 	}
-	u := newUser(owner, passkeys)
 	handler := func(_, userHandle []byte) (gowebauthn.User, error) {
-		if !bytes.Equal(userHandle, owner.Handle) {
-			return nil, errNotOwner
+		for i := range people {
+			if people[i].Active() && len(people[i].Handle) > 0 && bytes.Equal(userHandle, people[i].Handle) {
+				return newUser(&people[i], passkeys), nil
+			}
 		}
-		return u, nil
+		return nil, errUnknownUser
 	}
 	_, cred, err := wa.ValidatePasskeyLogin(handler, session, parsed)
 	if err != nil {

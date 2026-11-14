@@ -755,3 +755,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df8a5b449a64
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-string
+    to: REQ-identity-people-listed-with-access
+    created_at: 2026-11-13T20:17:31.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88ce19c8a3dd
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-personkind-string
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:17:31.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0dac04c971
+  - type: implements
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getsessionsended
+    to: REQ-identity-revoke-viewer
+    created_at: 2026-11-13T20:25:04.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9c3fdb6f428
+  - type: covered_by
+    from: SYM-viewers-sdk-go-gen-openfief-identity-v1-auth-pb-revokepersonresponse-getsessionsended
+    to: TEST-identity-access-connectapi
+    created_at: 2026-11-13T20:25:04.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d752977e435
+  - type: verified_by
+    from: SCEN-e2e-viewers-read-only-their-grants
+    to: TEST-e2e-viewers
+    created_at: 2026-11-13T22:12:18.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a36b94b444bd
+  - type: implements
+    from: SYM-invites-internal-identity-postgres-auth-store-cancelenrollmentcode
+    to: REQ-identity-invite-cancel
+    created_at: 2026-11-13T23:33:36.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98ff689087c1
+  - type: covered_by
+    from: SYM-invites-internal-identity-postgres-auth-store-cancelenrollmentcode
+    to: TEST-identity-invites-postgres
+    created_at: 2026-11-13T23:33:36.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57d34384f183
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-afailed-attempt-reaches-river-as-its-class-alone
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:48:42.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6156d3ef5a0
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-get-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:25:13.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77a14d96aa47
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-get-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:25:13.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7fdd577c5ec
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-new-plugins
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:01.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-453fc8c9977a

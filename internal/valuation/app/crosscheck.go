@@ -47,6 +47,7 @@ type CrossCheckStore interface {
 type CrossChecks struct {
 	store  CrossCheckStore
 	owners Owners
+	audit  ChangeAuditor
 }
 
 // NewCrossChecks returns the cross-check use cases over store, with the
@@ -54,6 +55,13 @@ type CrossChecks struct {
 // connector commands need none.
 func NewCrossChecks(store CrossCheckStore, owners Owners) *CrossChecks {
 	return &CrossChecks{store: store, owners: owners}
+}
+
+// WithAudit has every threshold and acknowledgement of the owner entered in
+// the audit log through a (D-211), and returns c.
+func (c *CrossChecks) WithAudit(a ChangeAuditor) *CrossChecks {
+	c.audit = a
+	return c
 }
 
 // Threshold returns the relative difference beyond which a price check is
@@ -116,7 +124,10 @@ func (c *CrossChecks) SetThreshold(ctx context.Context, origin, sessionToken, in
 			return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 		}
 	}
-	if err := c.store.SavePriceCheckThreshold(ctx, instrument, threshold); err != nil {
+	err := auditedSetting(ctx, c.audit, origin, sessionToken, settingPriceCheck, func(ctx context.Context) error {
+		return c.store.SavePriceCheckThreshold(ctx, instrument, threshold)
+	}, auditInstrumentRef+isinOfInstrument(instrument))
+	if err != nil {
 		return fmt.Errorf("setting the price check threshold of %s: %w", instrument, err)
 	}
 	return nil
@@ -145,7 +156,9 @@ func (c *CrossChecks) Acknowledge(ctx context.Context, origin, sessionToken, ins
 		if err != nil {
 			return valuation.PriceCheck{}, fmt.Errorf("%w: %w", ErrInvalidInput, err)
 		}
-		if err := c.store.AppendPriceCheckAcknowledgement(ctx, &ack); err != nil {
+		err = audited(ctx, c.audit, origin, sessionToken, auditPriceCheckAcknowledge, []string{auditInstrumentRef + isinOfInstrument(instrument)},
+			func(ctx context.Context) error { return c.store.AppendPriceCheckAcknowledgement(ctx, &ack) })
+		if err != nil {
 			return valuation.PriceCheck{}, fmt.Errorf("acknowledging the price check: %w", err)
 		}
 		check.Acknowledged = true

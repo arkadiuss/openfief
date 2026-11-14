@@ -99,14 +99,14 @@ func TestSettingsRoundTrip(t *testing.T) {
 	store := postgres.New(newPool(t))
 	ctx := t.Context()
 	steps := []error{
-		store.SaveEnabled(ctx, true),
-		store.SaveToggle(ctx, modelrouter.FeatureAsk, true),
-		store.SaveToggle(ctx, modelrouter.FeatureMCP, true),
-		store.SaveToggle(ctx, modelrouter.FeatureMCP, false),
-		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b")),
-		store.SaveRoute(ctx, modelrouter.RoleMaintainer, refs(t, "ollama/qwen3:8b")),
-		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b")),
-		store.SaveDataTierModels(ctx, modelrouter.DataTierT0, refs(t, "ollama/qwen3:8b")),
+		store.SaveEnabled(ctx, true, nil),
+		store.SaveToggle(ctx, modelrouter.FeatureAsk, true, nil),
+		store.SaveToggle(ctx, modelrouter.FeatureMCP, true, nil),
+		store.SaveToggle(ctx, modelrouter.FeatureMCP, false, nil),
+		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b"), nil),
+		store.SaveRoute(ctx, modelrouter.RoleMaintainer, refs(t, "ollama/qwen3:8b"), nil),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "openrouter/openai/gpt-oss-120b", "ollama/qwen3:8b"), nil),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT0, refs(t, "ollama/qwen3:8b"), nil),
 	}
 	checkSteps(t, steps)
 	got, err := store.Settings(ctx)
@@ -143,8 +143,8 @@ func TestSettingsReplaceAndClear(t *testing.T) {
 	store := postgres.New(newPool(t))
 	ctx := t.Context()
 	steps := []error{
-		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/one", "a/two", "a/three")),
-		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/three", "a/one")),
+		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/one", "a/two", "a/three"), nil),
+		store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/three", "a/one"), nil),
 	}
 	checkSteps(t, steps)
 	got, err := store.Settings(ctx)
@@ -155,9 +155,9 @@ func TestSettingsReplaceAndClear(t *testing.T) {
 		t.Errorf("replaced route (-want +got):\n%s", diff)
 	}
 	steps = []error{
-		store.SaveRoute(ctx, modelrouter.RoleAsk, nil),
-		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "a/one")),
-		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, nil),
+		store.SaveRoute(ctx, modelrouter.RoleAsk, nil, nil),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "a/one"), nil),
+		store.SaveDataTierModels(ctx, modelrouter.DataTierT2, nil, nil),
 	}
 	checkSteps(t, steps)
 	cleared, err := store.Settings(ctx)
@@ -184,7 +184,7 @@ func TestSettingsSwitchTurnsOffAgain(t *testing.T) {
 	store := postgres.New(newPool(t))
 	ctx := t.Context()
 	for _, on := range []bool{true, false} {
-		if err := store.SaveEnabled(ctx, on); err != nil {
+		if err := store.SaveEnabled(ctx, on, nil); err != nil {
 			t.Fatal(err)
 		}
 		got, err := store.Settings(ctx)
@@ -194,5 +194,41 @@ func TestSettingsSwitchTurnsOffAgain(t *testing.T) {
 		if got.Switch.Enabled != on {
 			t.Errorf("after SaveEnabled(%v): enabled = %v", on, got.Switch.Enabled)
 		}
+	}
+}
+
+// TestSettingsAChangeWhoseHookFailsStoresNothing checks the audit hook of a
+// change: it runs inside the transaction that stores the change, and when it
+// fails the change is rolled back; when it succeeds it ran once per change.
+func TestSettingsAChangeWhoseHookFailsStoresNothing(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	ctx := t.Context()
+	fail := func(context.Context) error { return os.ErrInvalid }
+	errs := map[string]error{
+		"switch": store.SaveEnabled(ctx, true, fail),
+		"toggle": store.SaveToggle(ctx, modelrouter.FeatureAsk, true, fail),
+		"route":  store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/one"), fail),
+		"tier":   store.SaveDataTierModels(ctx, modelrouter.DataTierT2, refs(t, "a/one"), fail),
+	}
+	for name, err := range errs {
+		if err == nil {
+			t.Errorf("%s: a failing hook was no error", name)
+		}
+	}
+	got, err := store.Settings(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if diff := cmp.Diff(modelrouter.Settings{}, got, cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("a refused change was stored (-want +got):\n%s", diff)
+	}
+	calls := 0
+	count := func(context.Context) error { calls++; return nil }
+	if err := store.SaveRoute(ctx, modelrouter.RoleAsk, refs(t, "a/one"), count); err != nil || calls != 1 {
+		t.Errorf("SaveRoute with a hook = %v after %d calls, want one call and no error", err, calls)
+	}
+	if got, err := store.Settings(ctx); err != nil || len(got.Routes[modelrouter.RoleAsk].Models) != 1 {
+		t.Errorf("the route after a successful hook = %+v, %v", got.Routes, err)
 	}
 }

@@ -881,3 +881,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2178c602dee
+  - type: implements
+    from: SYM-viewers-internal-identity-session-session-forviewer
+    to: REQ-identity-viewer-session-reads-only
+    created_at: 2026-11-13T20:16:22.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6ee4dae50c
+  - type: covered_by
+    from: SYM-viewers-internal-identity-session-session-forviewer
+    to: TEST-identity-people-domain
+    created_at: 2026-11-13T20:16:22.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94564d4d145e
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-ask
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:25:27.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b5582e3b026
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-ask
+    to: REQ-maintainer-weekly-and-on-ask
+    created_at: 2026-11-13T21:25:27.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d30e446d750
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-maintainer-ask
+    to: REQ-maintainer-off-runs-nothing
+    created_at: 2026-11-13T21:25:27.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6264959b35f8
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-fake-queue-enqueue
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:29:06.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f07bf27bcb
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-run-off-class
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T21:30:02.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d87e1a827676
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-run-off-class
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T21:30:02.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45466e730980
+  - type: covered_by
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-proposal
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T21:35:34.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d49a878204ae
+  - type: implements
+    from: SYM-maintainer-portfolio-connectapi-maintainer-pb-proposal
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T21:35:34.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c01da2cfcca8
+  - type: executable_for
+    from: SYM-maintainer-portfolio-maintainer-test-test-proposal-apply-refuses-amodel-that-changed-since
+    to: TEST-portfolio-domain-maintainer
+    created_at: 2026-11-13T21:46:03.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9f0b15eb87
+  - type: covered_by
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request
+    to: TEST-portfolio-connectapi-maintainer
+    created_at: 2026-11-13T22:03:08.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f78ad1aadd2
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request
+    to: REQ-maintainer-apply-dismiss-owner-audited
+    created_at: 2026-11-13T22:03:08.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-348de10fd838
+  - type: implements
+    from: SYM-maintainer-gen-portfolio-v1-maintainer-pb-get-maintainer-request
+    to: REQ-maintainer-note-readers
+    created_at: 2026-11-13T22:03:08.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3e055445187
+  - type: covered_by
+    from: SYM-ms1-ui-models-posted-on
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:44.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3842be3dc2bc
+  - type: implements
+    from: SYM-ms1-ui-models-posted-on
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:35:44.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2de32f9fcb2a

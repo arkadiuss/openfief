@@ -25,11 +25,15 @@ func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 	store := ingestpg.New(d.pool)
 	connectors := entryConnectors(d, store)
 	connectors.Seeding, connectors.Starts = d.ledger, store
-	return &ingestapp.Uploads{
+	uploads := &ingestapp.Uploads{
 		Owners: owners, Bindings: store, Batches: store, Connectors: connectors, Instances: d.entries,
 		NewBatchID: newBatchID, History: d.ledger,
 		Sniff: http.DetectContentType,
 	}
+	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
+		uploads.Audit = a
+	}
+	return uploads
 }
 
 // newTickers returns the owner's ticker confirmations (D-116) over d: the
@@ -38,7 +42,11 @@ func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 // into the ledger.
 func newTickers(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Tickers {
 	l := ledgerImporter{ledger: d.ledger}
-	return &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: l, Assertions: l, Names: d.names}
+	tickers := &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: l, Assertions: l, Names: d.names}
+	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
+		tickers.Audit = a
+	}
+	return tickers
 }
 
 // withStatementService returns h with the StatementService, the

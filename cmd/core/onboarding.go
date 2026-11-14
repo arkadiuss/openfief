@@ -24,7 +24,8 @@ import (
 // portfolio registry r, which keeps sleeves and kinds, with the owner's
 // sessions checked by auth on origins.
 func newSleeves(r *portfolioapp.Registry, auth *identityapp.Auth, origins identity.Origins) *portfolioapp.Sleeves {
-	return &portfolioapp.Sleeves{Owners: portfolioOwners(auth, origins), Store: r, Deletions: r}
+	owners := portfolioOwners(auth, origins)
+	return &portfolioapp.Sleeves{Owners: owners, Store: r, Deletions: r, Audit: owners}
 }
 
 // newAccounts returns the owner's account entries (D-72, D-79) over d: the
@@ -34,11 +35,17 @@ func newSleeves(r *portfolioapp.Registry, auth *identityapp.Auth, origins identi
 // (D-120).
 func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms accountTerms) *ingestapp.Accounts {
 	store := ingestpg.New(d.pool)
-	return &ingestapp.Accounts{
+	accounts := &ingestapp.Accounts{
 		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
 		Deletions: d.ledger, Connections: store, Forget: terms, Payouts: ledgerImporter{ledger: d.ledger},
 		Sleeves: d.sleeves, PayoutSettings: store,
 	}
+	// The owners the core builds enter each change in the audit log; the tools that build the use cases
+	// without a core pass owners that can't, and enter none.
+	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
+		accounts.Audit = a
+	}
+	return accounts
 }
 
 // withOnboardingServices returns h with the SleeveService and the

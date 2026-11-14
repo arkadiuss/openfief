@@ -3,7 +3,10 @@ package app
 import (
 	"context"
 	"fmt"
+	"slices"
 
+	"github.com/arkadiuss/openfief/internal/identity"
+	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
@@ -68,7 +71,9 @@ func (v *Views) AccountSettings(ctx context.Context, account ledger.AccountID) (
 	return out, nil
 }
 
-// Sleeves returns every sleeve, in ID order.
+// Sleeves returns every sleeve, in ID order. A viewer (D-65) is shown only
+// the sleeves that hold an account they may view (D-163), so an empty sleeve,
+// and one of accounts they were not granted, say nothing to them.
 func (v *Views) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
 	if v.portfolio == nil {
 		return nil, nil
@@ -77,10 +82,34 @@ func (v *Views) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
 	if err != nil {
 		return nil, fmt.Errorf("loading sleeves: %w", err)
 	}
-	return s, nil
+	if identityapp.CallerFrom(ctx).Holder != identity.HolderViewer {
+		return s, nil
+	}
+	return v.sleevesOfViewable(ctx, s)
 }
 
-// SleeveKinds returns every sleeve kind, in key order (D-71).
+// sleevesOfViewable returns those of sleeves that hold an account the caller
+// may view, in their order.
+func (v *Views) sleevesOfViewable(ctx context.Context, sleeves []portfolio.Sleeve) ([]portfolio.Sleeve, error) {
+	viewable, err := v.Accounts(ctx)
+	if err != nil {
+		return nil, err
+	}
+	placed, err := v.accountSleeves(ctx)
+	if err != nil {
+		return nil, err
+	}
+	seen := map[portfolio.SleeveID]bool{}
+	for i := range viewable {
+		if id, ok := placed[viewable[i].ID]; ok {
+			seen[id] = true
+		}
+	}
+	return slices.DeleteFunc(slices.Clone(sleeves), func(s portfolio.Sleeve) bool { return !seen[s.ID] }), nil
+}
+
+// SleeveKinds returns every sleeve kind, in key order (D-71). A viewer
+// (D-65) is shown only the kinds of the sleeves Sleeves shows them.
 func (v *Views) SleeveKinds(ctx context.Context) ([]portfolio.Kind, error) {
 	if v.portfolio == nil {
 		return nil, nil
@@ -89,7 +118,18 @@ func (v *Views) SleeveKinds(ctx context.Context) ([]portfolio.Kind, error) {
 	if err != nil {
 		return nil, fmt.Errorf("loading sleeve kinds: %w", err)
 	}
-	return k, nil
+	if identityapp.CallerFrom(ctx).Holder != identity.HolderViewer {
+		return k, nil
+	}
+	sleeves, err := v.Sleeves(ctx)
+	if err != nil {
+		return nil, err
+	}
+	kinds := map[portfolio.KindKey]bool{}
+	for i := range sleeves {
+		kinds[sleeves[i].Kind] = true
+	}
+	return slices.DeleteFunc(k, func(kind portfolio.Kind) bool { return !kinds[kind.Key] }), nil
 }
 
 // accountSleeves returns the sleeve of every account in one.
