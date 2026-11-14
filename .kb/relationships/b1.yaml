@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-860da65131a0
+  - type: verified_by
+    from: SCEN-ui-audit-log-behind-banner
+    to: TEST-ui-audit-log-banner
+    created_at: 2026-11-14T06:30:06.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64a538ad565
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-counting-transport-round-trip
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:44:39.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff76e79e86a7

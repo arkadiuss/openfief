@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-703fd93c95e9
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-write-probe-add-opening-lots
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:48:05.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db675c945e7

@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7985510ed97c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-bond-lot-deletion-makes-no-network-call-inside-its-transaction
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:55:56.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c2d735f8062

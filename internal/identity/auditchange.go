@@ -130,9 +130,12 @@ const (
 )
 
 // SyncCountKinds are the kinds of record whose number a connector_synced
-// entry carries: the transaction versions the ledger stored, the prices and
-// the bond terms the sync recorded.
-func SyncCountKinds() []string { return []string{"transactions", "prices", "bond_terms"} }
+// entry carries: the transaction versions the ledger stored, and the prices,
+// FX rates, index readings, market index levels and bond terms the sync
+// recorded, all the market data it writes.
+func SyncCountKinds() []string {
+	return []string{"transactions", "prices", "fx_rates", "index_readings", "index_levels", "bond_terms"}
+}
 
 // maxSyncAccounts is the most accounts a connector_synced entry names, with
 // its instance, its batch and its counts within maxRefs; a sync that wrote

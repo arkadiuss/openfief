@@ -1385,5 +1385,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-4bb88c7d2beb
+      },
+    {
+        type: implements,
+        from: SYM-core-sync-trigger-retry,
+        to: REQ-identity-audit-no-network-in-change,
+        created_at: 2026-11-14T06:39:49.257Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3ed12d524e13
+      },
+    {
+        type: covered_by,
+        from: SYM-core-sync-trigger-retry,
+        to: TEST-core-no-network-in-change,
+        created_at: 2026-11-14T06:39:49.313Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-2ea56f4a56d9
       }
   ]

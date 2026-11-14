@@ -4,6 +4,8 @@ import (
 	"errors"
 	"net/http"
 	"os"
+	"slices"
+	"strconv"
 	"testing"
 	"time"
 
@@ -25,7 +27,33 @@ const (
 	// tiers query parameter lists the data tiers the model may receive, and
 	// "off" takes the model away again.
 	browserAskModel = "/test/ask-model"
+	// browserAuditBehind is where they put an audit-log-behind item among the
+	// open ones (the count of changes waiting is the n query parameter) and
+	// take it away again ("off"), for the banner on the Audit log page
+	// (D-211).
+	browserAuditBehind = "/test/audit-behind"
 )
+
+// auditBehindItem is the open attention item the core raises while n changes'
+// audit entries wait in the outbox, worded as the core words it.
+func auditBehindItem(n int) *viewsv1.AttentionItem {
+	return &viewsv1.AttentionItem{
+		Id: 70, Kind: kindAuditLogBehind, Subject: "audit-log",
+		Detail: strconv.Itoa(n) + " changes are waiting to enter the audit log; OpenFief keeps retrying. Check the database's health.",
+		State:  viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DATA_COMING_IN,
+	}
+}
+
+// setAuditBehind puts the audit-log-behind item among the fake's items, with n
+// changes waiting, or takes it away when n is zero.
+func (f *fakeAttention) setAuditBehind(n int) {
+	f.mu.Lock()
+	f.items = slices.DeleteFunc(f.items, func(it *viewsv1.AttentionItem) bool { return it.GetKind() == kindAuditLogBehind })
+	f.mu.Unlock()
+	if n > 0 {
+		f.add(auditBehindItem(n))
+	}
+}
 
 // browserInboxItems adds an item of each kind the Inbox settles in place
 // or shows evidence for (D-196): tickers to confirm, a flagged price check,
@@ -86,6 +114,14 @@ func TestServeForBrowser(t *testing.T) {
 	mux.HandleFunc("GET "+browserAskModel, func(w http.ResponseWriter, r *http.Request) {
 		browserSetUpAskModel(h.askModel, r.URL.Query().Get("tiers"))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	mux.HandleFunc("GET "+browserAuditBehind, func(w http.ResponseWriter, r *http.Request) {
+		n, err := strconv.Atoi(r.URL.Query().Get("n"))
+		if err != nil {
+			n = 0 // no count takes the item away
+		}
+		h.attention.setAuditBehind(n)
+		http.Redirect(w, r, "/settings/audit", http.StatusSeeOther)
 	})
 	srv := &http.Server{Addr: addr, Handler: mux, ReadHeaderTimeout: time.Second}
 	stop := 10 * time.Minute

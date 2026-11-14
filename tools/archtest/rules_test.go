@@ -139,6 +139,28 @@ func main() { _, _ = kernel.Money{}, openfief.Use }
 package openfief
 var Use = 1
 `, []string{"plugins/fx -> internal/kernel", "sdk/go/openfief -> internal/kernel"}},
+		{"no network in transactions: a PostgreSQL adapter imports no client", archtest.NoNetworkInTransactions, `
+-- internal/ledger/postgres/p.go --
+package postgres
+import "net/http"
+var _ = http.StatusOK
+-- internal/valuation/postgres/pgtest/t.go --
+package pgtest
+import "net/http"
+var _ = http.StatusOK
+-- internal/ingest/postgres/q.go --
+package postgres
+import "strings"
+var _ = strings.ToLower
+-- internal/views/ui/u.go --
+package ui
+import "net/http"
+var _ = http.StatusOK
+-- cmd/core/main.go --
+package main
+import "net/http"
+func main() { _ = http.StatusOK }
+`, []string{"internal/ledger/postgres -> net/http", "internal/valuation/postgres/pgtest -> net/http"}},
 		{"banned packages, test-only ones included", archtest.Banned, `
 -- internal/ledger/util/u.go --
 package util

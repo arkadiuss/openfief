@@ -272,7 +272,8 @@ type spicedbConn struct {
 
 // dialSpiceDB connects, lazily, to cfg's SpiceDB with cfg's key.
 func dialSpiceDB(cfg *authzConfig) (spicedbConn, error) {
-	var opts []grpc.DialOption
+	// SpiceDB is never called inside a change's transaction (ErrNetworkInChange).
+	opts := []grpc.DialOption{grpc.WithChainUnaryInterceptor(refuseUnaryInChange), grpc.WithChainStreamInterceptor(refuseStreamInChange())}
 	if cfg.Insecure {
 		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()), grpcutil.WithInsecureBearerToken(string(cfg.Key)))
 	} else {
@@ -302,18 +303,28 @@ type placementSync struct{ syncer accessSyncer }
 
 var _ portfolioapp.PlacementObserver = placementSync{}
 
+// AccountPlaced tells SpiceDB of a placement once the change that made it has
+// committed (afterChange): SpiceDB is never called inside a change's
+// transaction. A failure is the observer's to repair, as the registry's
+// ErrPlacementNotObserved says.
 func (p placementSync) AccountPlaced(ctx context.Context, account ledger.AccountID, sleeve portfolio.SleeveID) error {
-	if err := p.syncer.AccountPlaced(ctx, string(account), string(sleeve)); err != nil {
-		return fmt.Errorf("passing on a placement: %w", err)
-	}
-	return nil
+	return afterChange(ctx, func(ctx context.Context) error {
+		if err := p.syncer.AccountPlaced(ctx, string(account), string(sleeve)); err != nil {
+			return fmt.Errorf("%w: passing on a placement: %w", portfolioapp.ErrPlacementNotObserved, err)
+		}
+		return nil
+	})
 }
 
+// AccountRemoved tells SpiceDB of a removal once the change that made it has
+// committed.
 func (p placementSync) AccountRemoved(ctx context.Context, account ledger.AccountID) error {
-	if err := p.syncer.AccountUnplaced(ctx, string(account)); err != nil {
-		return fmt.Errorf("passing on a removal: %w", err)
-	}
-	return nil
+	return afterChange(ctx, func(ctx context.Context) error {
+		if err := p.syncer.AccountUnplaced(ctx, string(account)); err != nil {
+			return fmt.Errorf("%w: passing on a removal: %w", portfolioapp.ErrPlacementNotObserved, err)
+		}
+		return nil
+	})
 }
 
 // SleeveRemoved does nothing: only an empty sleeve is deleted, so no account

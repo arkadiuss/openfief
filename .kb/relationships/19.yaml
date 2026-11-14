@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91f12d8be23b
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-after-change-that-fails-leaves-the-change-committed
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:50.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1e5aa19333

@@ -1028,3 +1028,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35fcea200372
+  - type: implements
+    from: SYM-s9b-auditoutbox-refuse-unary-in-change
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:43:02.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73d1c09d9459
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-refuse-unary-in-change
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:43:02.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa70d25dde0b
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-grpcis-refused-inside-achange
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:44:58.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b36035ea1e

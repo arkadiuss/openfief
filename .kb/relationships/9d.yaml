@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4e097c95651
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:40:46.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4543144bf61
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots-delete
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:40:46.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63d3ea3d9325
+  - type: implements
+    from: SYM-s9-internal-identity-auditchange-synccountkinds
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:41:26.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e409a7e17758

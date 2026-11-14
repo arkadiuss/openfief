@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd5127fa22ae
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-in-change
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:47:25.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cdb3f6956d

@@ -1238,3 +1238,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-008470574e80
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-run
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:39:17.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d30c596bf42
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-run
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:39:17.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-364609cb9e4f
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-run
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:39:17.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0a33bdc0d45
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-run
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:39:17.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12abd34dc7cf
+  - type: implements
+    from: SYM-core-placement-sync-account-placed
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:39:28.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0417e8f41040
+  - type: covered_by
+    from: SYM-core-placement-sync-account-placed
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:39:28.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feeaead508c6

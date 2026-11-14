@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-26c6857f9c7e
+  - type: executable_for
+    from: SYM-s9b-dbtimeouts-test-test-idle-transaction-is-ended-by-the-database
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:44:29.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8a9d2ab1c61

@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-078260e7584b
+  - type: implements
+    from: SYM-s9b-auditoutbox-after-change
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:43:23.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-677e4da5c2d1
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-after-change
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:43:23.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d923b7c8962

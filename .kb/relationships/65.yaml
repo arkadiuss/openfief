@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d9aa05e29ba
+  - type: executable_for
+    from: SYM-s9b-changed-test-test-record-fxrates-changed-reports-the-stores-count
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:56:06.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c7751b47510

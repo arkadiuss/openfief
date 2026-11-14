@@ -9,6 +9,7 @@ import (
 	"io"
 	"log/slog"
 	"math/big"
+	"net/http"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -72,6 +73,9 @@ func inCluster() (*cluster, error) {
 	if err != nil {
 		return nil, fmt.Errorf("in-cluster configuration: %w", err)
 	}
+	// The cluster's API is never called inside a change's transaction
+	// (ErrNetworkInChange).
+	cfg.Wrap(func(next http.RoundTripper) http.RoundTripper { return noChangeTransport{next: next} })
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		return nil, fmt.Errorf("kubernetes client: %w", err)
@@ -200,7 +204,7 @@ func rekeyers(values, model, names, l ingestapp.InstrumentRekeyer) []ingestapp.I
 // deliver them undeclared (D-141, D-179).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
-	store := ingestpg.New(d.pool)
+	store := ingestpg.New(joined(d.pool))
 	caller := connectrpc.NewClient(pluginClient(), discovery.BaseURL, tokens)
 	inputs := valuationInputs{recorder: d.recorder}
 	held := &ingestapp.HoldingsScope{
@@ -439,28 +443,30 @@ func (v valuationInputs) StorePrices(ctx context.Context, _ ingest.BatchID, pric
 }
 
 // StoreFXRates records FX rates.
-func (v valuationInputs) StoreFXRates(ctx context.Context, _ ingest.BatchID, rates []valuation.FXRate) error {
-	if err := v.recorder.RecordFXRates(ctx, rates); err != nil {
-		return fmt.Errorf("valuation: %w", err)
+func (v valuationInputs) StoreFXRates(ctx context.Context, _ ingest.BatchID, rates []valuation.FXRate) (int, error) {
+	changed, err := v.recorder.RecordFXRatesChanged(ctx, rates)
+	if err != nil {
+		return 0, fmt.Errorf("valuation: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // StoreIndexReadings records index readings as valuation's monthly
 // readings: each for the month of its date.
-func (v valuationInputs) StoreIndexReadings(ctx context.Context, _ ingest.BatchID, readings []ingest.IndexReading) error {
+func (v valuationInputs) StoreIndexReadings(ctx context.Context, _ ingest.BatchID, readings []ingest.IndexReading) (int, error) {
 	out := make([]valuation.IndexReading, 0, len(readings))
 	for i := range readings {
 		r, err := monthlyReading(&readings[i])
 		if err != nil {
-			return err
+			return 0, err
 		}
 		out = append(out, r)
 	}
-	if err := v.recorder.RecordIndexReadings(ctx, out); err != nil {
-		return fmt.Errorf("valuation: %w", err)
+	changed, err := v.recorder.RecordIndexReadingsChanged(ctx, out)
+	if err != nil {
+		return 0, fmt.Errorf("valuation: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // crossCheckInputs records a delivery's cross-check prices through
@@ -478,11 +484,12 @@ func (c crossCheckInputs) StoreCrossCheckPrices(ctx context.Context, _ ingest.Ba
 }
 
 // StoreIndexLevels records market index levels.
-func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) error {
-	if err := v.recorder.RecordIndexLevels(ctx, levels); err != nil {
-		return fmt.Errorf("valuation: %w", err)
+func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) (int, error) {
+	changed, err := v.recorder.RecordIndexLevelsChanged(ctx, levels)
+	if err != nil {
+		return 0, fmt.Errorf("valuation: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // StoreBondTerms records treasury bond series terms (D-9), each for its

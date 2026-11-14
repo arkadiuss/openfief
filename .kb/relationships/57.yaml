@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd143faac9a5
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-after-change-never-runs-for-achange-that-rolls-back
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:45.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ab33af4e59

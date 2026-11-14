@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de2f8de90a5b
+  - type: implements
+    from: SYM-s9b-bondlots-deletion
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T07:04:24.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28aecc22048d
+  - type: covered_by
+    from: SYM-s9b-bondlots-deletion
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:25.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59c016f4e4f1

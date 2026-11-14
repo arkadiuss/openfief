@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-420db8268e58
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-call-probe-declarations
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:47:45.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17d34289822c

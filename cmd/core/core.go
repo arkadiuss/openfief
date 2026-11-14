@@ -216,6 +216,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
+	changes.deliveryTimeout = cfg.Sync.DeliveryTimeout
 	checks, err := valuationSettings(ctx, recorder, vstore, valuationOwners(auth, cfg.Auth.Origins))
 	if err != nil {
 		return nil, err

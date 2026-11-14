@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-466c4299f79c
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantcleanup-accountremoved
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:39:39.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a081b1a3cac8
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantcleanup-accountremoved
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:39:39.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-716cb68c6a11

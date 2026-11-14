@@ -2503,6 +2503,7 @@ components:
         - SYNC_ERROR_CLASS_BOOKING
         - SYNC_ERROR_CLASS_INTERRUPTED
         - SYNC_ERROR_CLASS_OTHER
+        - SYNC_ERROR_CLASS_DELIVERY_TIMEOUT
       description: |-
         SyncErrorClass says why a sync attempt failed, without the error's text
          (GR-12).

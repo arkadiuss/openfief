@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a47f0da789b
+  - type: implements
+    from: SYM-ingest-sync-error-class-string
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:41:06.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5613b949c10
+  - type: covered_by
+    from: SYM-ingest-sync-error-class-string
+    to: TEST-ingest-delivery-timeout-class
+    created_at: 2026-11-14T06:41:06.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbbdb2dbd0d0

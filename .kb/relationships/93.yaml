@@ -1343,3 +1343,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79ff6bef4ce3
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:39:12.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad1b9b47edc
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:39:12.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-715c94aa2067

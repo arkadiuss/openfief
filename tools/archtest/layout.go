@@ -20,6 +20,7 @@ const (
 	RuleBanned       = "banned-packages"
 	RuleStableTests  = "stable-tests"
 	RuleCatalogTests = "catalog-tests"
+	RuleNoNetwork    = "no-network-in-transactions"
 )
 
 // Violation is one break of a rule. Key identifies it stably across edits
@@ -50,6 +51,7 @@ func ruleTitle(rule string) string {
 		RuleBanned:       "Banned packages",
 		RuleStableTests:  "Stable tests",
 		RuleCatalogTests: "Catalog-independent tests",
+		RuleNoNetwork:    "No network in transactions",
 	}
 	if title, ok := titles[rule]; ok {
 		return title

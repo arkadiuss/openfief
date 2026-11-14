@@ -41,28 +41,28 @@ const (
 	SyncErrorInterrupted
 	// SyncErrorOther: any other failure, such as the database.
 	SyncErrorOther
+	// SyncErrorDeliveryTimeout: the delivery's database transaction ran
+	// past its timeout, so the core wrote nothing of it: a delivery is all
+	// or nothing, never split (D-18).
+	SyncErrorDeliveryTimeout
 )
 
 // String returns the class's name, as stored and served, such as
 // "timeout"; "" for the zero class, or a placeholder for an invalid one.
 func (c SyncErrorClass) String() string {
-	switch c {
-	case SyncErrorTimeout:
-		return "timeout"
-	case SyncErrorUnavailable:
-		return "unavailable"
-	case SyncErrorConnector:
-		return "connector-error"
-	case SyncErrorInvalidDelivery:
-		return "invalid-delivery"
-	case SyncErrorRefused:
-		return "refused"
-	case SyncErrorBooking:
-		return "booking"
-	case SyncErrorInterrupted:
-		return "interrupted"
-	case SyncErrorOther:
-		return "other"
+	names := [...]string{
+		SyncErrorTimeout:         "timeout",
+		SyncErrorUnavailable:     "unavailable",
+		SyncErrorConnector:       "connector-error",
+		SyncErrorInvalidDelivery: "invalid-delivery",
+		SyncErrorRefused:         "refused",
+		SyncErrorBooking:         "booking",
+		SyncErrorInterrupted:     "interrupted",
+		SyncErrorOther:           "other",
+		SyncErrorDeliveryTimeout: "delivery-timeout",
+	}
+	if c >= SyncErrorTimeout && int(c) < len(names) {
+		return names[c]
 	}
 	if c == 0 {
 		return ""
@@ -76,7 +76,7 @@ func ParseSyncErrorClass(s string) (SyncErrorClass, error) {
 	if s == "" {
 		return 0, nil
 	}
-	for c := SyncErrorTimeout; c <= SyncErrorOther; c++ {
+	for c := SyncErrorTimeout; c <= SyncErrorDeliveryTimeout; c++ {
 		if c.String() == s {
 			return c, nil
 		}

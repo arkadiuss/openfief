@@ -1145,6 +1145,9 @@ const (
 	SyncErrorClass_SYNC_ERROR_CLASS_INTERRUPTED SyncErrorClass = 7
 	// Any other failure, such as the database.
 	SyncErrorClass_SYNC_ERROR_CLASS_OTHER SyncErrorClass = 8
+	// The delivery's database transaction ran past its timeout, so nothing of
+	// the delivery was written: it is all or nothing, never split.
+	SyncErrorClass_SYNC_ERROR_CLASS_DELIVERY_TIMEOUT SyncErrorClass = 9
 )
 
 // Enum value maps for SyncErrorClass.
@@ -1159,6 +1162,7 @@ var (
 		6: "SYNC_ERROR_CLASS_BOOKING",
 		7: "SYNC_ERROR_CLASS_INTERRUPTED",
 		8: "SYNC_ERROR_CLASS_OTHER",
+		9: "SYNC_ERROR_CLASS_DELIVERY_TIMEOUT",
 	}
 	SyncErrorClass_value = map[string]int32{
 		"SYNC_ERROR_CLASS_UNSPECIFIED":      0,
@@ -1170,6 +1174,7 @@ var (
 		"SYNC_ERROR_CLASS_BOOKING":          6,
 		"SYNC_ERROR_CLASS_INTERRUPTED":      7,
 		"SYNC_ERROR_CLASS_OTHER":            8,
+		"SYNC_ERROR_CLASS_DELIVERY_TIMEOUT": 9,
 	}
 )
 
@@ -9597,7 +9602,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12ACTIVITY_KIND_SYNC\x10\x02\x12\x1d\n" +
 	"\x19ACTIVITY_KIND_SYNC_FAILED\x10\x03\x12\x18\n" +
 	"\x14ACTIVITY_KIND_COUPON\x10\x04\x12\x1c\n" +
-	"\x18ACTIVITY_KIND_CORRECTION\x10\x05*\xb9\x02\n" +
+	"\x18ACTIVITY_KIND_CORRECTION\x10\x05*\xe0\x02\n" +
 	"\x0eSyncErrorClass\x12 \n" +
 	"\x1cSYNC_ERROR_CLASS_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18SYNC_ERROR_CLASS_TIMEOUT\x10\x01\x12 \n" +
@@ -9607,7 +9612,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x18SYNC_ERROR_CLASS_REFUSED\x10\x05\x12\x1c\n" +
 	"\x18SYNC_ERROR_CLASS_BOOKING\x10\x06\x12 \n" +
 	"\x1cSYNC_ERROR_CLASS_INTERRUPTED\x10\a\x12\x1a\n" +
-	"\x16SYNC_ERROR_CLASS_OTHER\x10\b2\x81\"\n" +
+	"\x16SYNC_ERROR_CLASS_OTHER\x10\b\x12%\n" +
+	"!SYNC_ERROR_CLASS_DELIVERY_TIMEOUT\x10\t2\x81\"\n" +
 	"\vReadService\x12t\n" +
 	"\vListSleeves\x12%.openfief.views.v1.ListSleevesRequest\x1a&.openfief.views.v1.ListSleevesResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/sleeves\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListSleeveKinds\x12).openfief.views.v1.ListSleeveKindsRequest\x1a*.openfief.views.v1.ListSleeveKindsResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/sleeve-kinds\x90\x02\x01\x12u\n" +

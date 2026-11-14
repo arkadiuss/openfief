@@ -1070,3 +1070,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23dff696ee5a
+  - type: implements
+    from: SYM-s9b-dbtimeouts-parse-dbtimeout
+    to: REQ-core-db-session-timeouts
+    created_at: 2026-11-14T06:43:50.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21baeef65af9
+  - type: covered_by
+    from: SYM-s9b-dbtimeouts-parse-dbtimeout
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:43:50.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b226a04defe
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-call-probe
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:46.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c52afb216e4

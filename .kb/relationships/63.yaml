@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f09eeb6e991c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-plugin-client-is-refused-inside-achange
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:44:53.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a9c3146b44a

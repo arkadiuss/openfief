@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95d44f96bdc0
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-outside-change-leaves-no-transaction
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:30.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c835b347eb9

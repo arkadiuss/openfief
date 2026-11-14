@@ -16,8 +16,10 @@ type SyncChange struct {
 	Batch    ingest.BatchID
 	// Transactions counts the transaction versions the ledger stored.
 	Transactions int
-	// Prices and BondTerms count the prices and the bond terms recorded.
-	Prices, BondTerms int
+	// Prices, FXRates, IndexReadings, IndexLevels and BondTerms count the
+	// prices, the FX rates, the index readings, the market index levels and
+	// the bond terms recorded: all the market data a sync writes.
+	Prices, FXRates, IndexReadings, IndexLevels, BondTerms int
 	// Accounts are the accounts a new version of a transaction was stored in,
 	// in ID order.
 	Accounts []ledger.AccountID
@@ -25,7 +27,7 @@ type SyncChange struct {
 
 // Empty reports whether the sync changed no state.
 func (c *SyncChange) Empty() bool {
-	return c.Transactions == 0 && c.Prices == 0 && c.BondTerms == 0
+	return c.Transactions == 0 && c.Prices == 0 && c.FXRates == 0 && c.IndexReadings == 0 && c.IndexLevels == 0 && c.BondTerms == 0
 }
 
 // SyncAuditor keeps a sync's writes together with its audit entry (D-211).
@@ -39,11 +41,12 @@ type SyncAuditor interface {
 }
 
 // changeOf returns what a delivery wrote: the transaction versions imported,
-// by account, and tally's prices and bond terms.
+// by account, and tally's market data.
 func changeOf(instance string, id ingest.BatchID, imported *ingest.ImportSummary, tally marketTally) SyncChange {
 	c := SyncChange{
 		Instance: instance, Batch: id, Transactions: imported.New + imported.NewVersions,
-		Prices: tally.prices, BondTerms: tally.terms,
+		Prices: tally.prices, FXRates: tally.fxRates, IndexReadings: tally.readings, IndexLevels: tally.levels,
+		BondTerms: tally.terms,
 	}
 	for _, a := range imported.Accounts {
 		if a.New+a.NewVersions > 0 {

@@ -1231,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48af98facf5f
+  - type: specified_by
+    from: REQ-ingest-delivery-timeout
+    to: SCEN-ingest-delivery-timeout
+    created_at: 2026-11-14T06:30:08.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29bd4c40bef0

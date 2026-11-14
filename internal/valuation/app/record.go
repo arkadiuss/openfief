@@ -102,31 +102,39 @@ func (r *InputRecorder) RecordFXRatesChanged(ctx context.Context, rates []valuat
 // reading's month. Every reading must name the connector instance that
 // delivered it, which is stored with it (D-186), or nothing is stored.
 func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valuation.IndexReading) error {
+	_, err := r.RecordIndexReadingsChanged(ctx, readings)
+	return err
+}
+
+// RecordIndexReadingsChanged is RecordIndexReadings that also returns how many
+// readings were new or differed from the stored one (D-211).
+func (r *InputRecorder) RecordIndexReadingsChanged(ctx context.Context, readings []valuation.IndexReading) (int, error) {
 	var dates []kernel.Date
 	for i := range readings {
 		x := &readings[i]
 		switch x.Kind {
 		case valuation.CPI, valuation.ReferenceRate:
 		default:
-			return fmt.Errorf("%w: %w: %s", ErrInvalidInput, valuation.ErrUnknownIndexKind, x.Kind)
+			return 0, fmt.Errorf("%w: %w: %s", ErrInvalidInput, valuation.ErrUnknownIndexKind, x.Kind)
 		}
 		if x.Source == "" {
-			return fmt.Errorf("%w: %s reading for %d-%02d names no source", ErrInvalidInput, x.Kind, x.Year, int(x.Month))
+			return 0, fmt.Errorf("%w: %s reading for %d-%02d names no source", ErrInvalidInput, x.Kind, x.Year, int(x.Month))
 		}
 		first, err := kernel.NewDate(x.Year, x.Month, 1)
 		if err != nil {
-			return fmt.Errorf("%w: %s reading for %d-%02d: %w", ErrInvalidInput, x.Kind, x.Year, int(x.Month), err)
+			return 0, fmt.Errorf("%w: %s reading for %d-%02d: %w", ErrInvalidInput, x.Kind, x.Year, int(x.Month), err)
 		}
 		dates = append(dates, first)
 	}
 	revals, err := r.forAllFrom(ctx, dates)
 	if err != nil {
-		return fmt.Errorf("recording index readings: %w", err)
+		return 0, fmt.Errorf("recording index readings: %w", err)
 	}
-	if err := r.recorder.SaveIndexReadings(ctx, readings, revals); err != nil {
-		return fmt.Errorf("recording index readings: %w", err)
+	changed, err := r.recorder.SaveIndexReadingsChanged(ctx, readings, revals)
+	if err != nil {
+		return 0, fmt.Errorf("recording index readings: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // RecordIndexLevels stores market index levels (D-51) for the model
@@ -135,18 +143,26 @@ func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valu
 // name the connector instance that delivered it, which is stored with it
 // (D-179), or nothing is stored.
 func (r *InputRecorder) RecordIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
+	_, err := r.RecordIndexLevelsChanged(ctx, levels)
+	return err
+}
+
+// RecordIndexLevelsChanged is RecordIndexLevels that also returns how many
+// levels were new or differed from the stored one (D-211).
+func (r *InputRecorder) RecordIndexLevelsChanged(ctx context.Context, levels []valuation.IndexLevel) (int, error) {
 	for i := range levels {
 		if err := levels[i].Validate(); err != nil {
-			return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+			return 0, fmt.Errorf("%w: %w", ErrInvalidInput, err)
 		}
 		if levels[i].Source == "" {
-			return fmt.Errorf("%w: %s level on %s names no source", ErrInvalidInput, levels[i].Index, levels[i].Date)
+			return 0, fmt.Errorf("%w: %s level on %s names no source", ErrInvalidInput, levels[i].Index, levels[i].Date)
 		}
 	}
-	if err := r.recorder.SaveIndexLevels(ctx, levels); err != nil {
-		return fmt.Errorf("recording index levels: %w", err)
+	changed, err := r.recorder.SaveIndexLevelsChanged(ctx, levels)
+	if err != nil {
+		return 0, fmt.Errorf("recording index levels: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // RecordBondTerms stores the series terms of the retail treasury bond with

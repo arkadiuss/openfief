@@ -212,38 +212,61 @@ func (s *Store) SaveFXRatesChanged(ctx context.Context, rates []valuation.FXRate
 // SaveIndexLevels upserts market index levels in one transaction. They
 // cause no revaluation.
 func (s *Store) SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
+	_, err := s.SaveIndexLevelsChanged(ctx, levels)
+	return err
+}
+
+// SaveIndexLevelsChanged is SaveIndexLevels that also returns how many levels
+// were new or differed, in their level or their source, from the stored one:
+// levels sent again unchanged are none.
+func (s *Store) SaveIndexLevelsChanged(ctx context.Context, levels []valuation.IndexLevel) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, nil, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, l := range levels {
 			batch.Queue(`
-				INSERT INTO valuation.index_levels (index, date, level, source) VALUES ($1, $2, $3, $4)
-				ON CONFLICT (index, date) DO UPDATE SET level = EXCLUDED.level, source = EXCLUDED.source`,
+				INSERT INTO valuation.index_levels AS t (index, date, level, source) VALUES ($1, $2, $3, $4)
+				ON CONFLICT (index, date) DO UPDATE SET level = EXCLUDED.level, source = EXCLUDED.source
+				WHERE (t.level, t.source) IS DISTINCT FROM (EXCLUDED.level, EXCLUDED.source)`,
 				l.Index, l.Date.String(), l.Level.String(), l.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(levels))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving index levels: %w", err)
+		return 0, fmt.Errorf("saving index levels: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveIndexReadings upserts readings and enqueues revals in one transaction.
 func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error {
+	_, err := s.SaveIndexReadingsChanged(ctx, readings, revals)
+	return err
+}
+
+// SaveIndexReadingsChanged is SaveIndexReadings that also returns how many
+// readings were new or differed from the stored one.
+func (s *Store) SaveIndexReadingsChanged(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, r := range readings {
 			batch.Queue(`
-				INSERT INTO valuation.index_readings (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value`,
+				INSERT INTO valuation.index_readings AS t (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value
+				WHERE t.value IS DISTINCT FROM EXCLUDED.value`,
 				r.Kind.String(), r.Year, int(r.Month), r.Value.String(), r.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(readings))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving index readings: %w", err)
+		return 0, fmt.Errorf("saving index readings: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveBondTerms upserts the series terms of the bond with isin, with the

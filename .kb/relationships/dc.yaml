@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e4caf0f5da5
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-after-change-of-acommitted-savepoint-never-runs-when-the-outermost-rolls-back
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:55:20.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f849798a233

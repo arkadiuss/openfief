@@ -138,6 +138,41 @@ func Plugins(r *Repo) []Violation {
 	return out
 }
 
+// reachesNetwork reports whether the package imp is an HTTP, Connect, gRPC (and
+// so SpiceDB's) or Kubernetes client: one that reaches the network.
+func reachesNetwork(imp string) bool {
+	if imp == "net/http" || imp == "net/rpc" {
+		return true
+	}
+	for _, prefix := range []string{"connectrpc.com/", "google.golang.org/grpc", "github.com/authzed/", "k8s.io/"} {
+		if strings.HasPrefix(imp, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// NoNetworkInTransactions checks that no PostgreSQL adapter, the code that
+// runs in a change's transaction, imports a client that reaches the network:
+// the database's own driver is all it talks to. A change that needs an answer
+// from a connector, a model provider, SpiceDB or the cluster asks for it
+// before its transaction opens, in a use case, or defers it until the
+// transaction has committed (D-211).
+func NoNetworkInTransactions(r *Repo) []Violation {
+	var out []Violation
+	for _, p := range r.Packages {
+		if !strings.HasPrefix(p.Path, "internal/") || !slices.Contains(strings.Split(p.Path, "/"), "postgres") {
+			continue
+		}
+		for _, imp := range p.Imports {
+			if reachesNetwork(imp) {
+				out = append(out, Violation{RuleNoNetwork, edge(p.Path, imp), "a PostgreSQL adapter runs in a change's transaction and makes no network call: ask before the transaction opens, or defer until it commits"})
+			}
+		}
+	}
+	return out
+}
+
 // Banned checks that no package, test-only ones included, is named util,
 // common, helpers, models or types.
 func Banned(r *Repo) []Violation {

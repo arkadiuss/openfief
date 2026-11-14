@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f7b21890c49
+  - type: implements
+    from: SYM-s9b-connectors-connectors-prepare-file
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:46:41.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00ac94561936
+  - type: covered_by
+    from: SYM-s9b-connectors-connectors-prepare-file
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:46:42.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5eb4b305a6d

@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee36cd47b8e9
+  - type: executable_for
+    from: SYM-s9b-outbox-test-test-sync-delivery-that-runs-past-its-timeout-fails-whole
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:45:54.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c766832a9ed7

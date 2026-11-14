@@ -100,11 +100,14 @@ type Recorder interface {
 	// SaveFXRatesChanged upserts rates, keyed by currency, base, date and
 	// source, and returns how many were new or differed from the stored one.
 	SaveFXRatesChanged(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) (int, error)
-	// SaveIndexReadings upserts readings, keyed by kind, year and month.
-	SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error
-	// SaveIndexLevels upserts market index levels, keyed by index and date.
+	// SaveIndexReadingsChanged upserts readings, keyed by kind, year, month
+	// and source, and returns how many were new or differed from the stored
+	// one.
+	SaveIndexReadingsChanged(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) (int, error)
+	// SaveIndexLevelsChanged upserts market index levels, keyed by index and
+	// date, and returns how many were new or differed from the stored one.
 	// No holding is valued from them, so they cause no revaluation.
-	SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error
+	SaveIndexLevelsChanged(ctx context.Context, levels []valuation.IndexLevel) (int, error)
 	// SaveBondTermsChanged upserts the series terms of the bond with isin,
 	// with the connector instance that delivered them (D-179), and reports
 	// whether they were new or differed from those stored.

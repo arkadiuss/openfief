@@ -158,11 +158,17 @@ func (u *Uploads) Upload(ctx context.Context, origin, sessionToken string, accou
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
 	instance := p.instance
+	// The connector reads the file before the change's transaction opens: no
+	// network call is made inside it (D-211). Only its writes are the change.
+	prepared, err := u.Connectors.PrepareFile(ctx, instance, u.NewBatchID(), p.mode, out, p.started)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
+	}
 	var batch ingest.Batch
 	err = audited(ctx, u.Audit, origin, sessionToken, auditStatementUploaded, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
 		var importErr error
-		if batch, importErr = u.Connectors.ImportFile(ctx, instance, u.NewBatchID(), p.mode, out, p.started); importErr != nil {
-			return importErr
+		if batch, importErr = u.Connectors.Commit(ctx, prepared); importErr != nil {
+			return fmt.Errorf("import file into %s: %w", instance, importErr)
 		}
 		return u.Batches.RecordBatch(ctx, instance, &batch)
 	})

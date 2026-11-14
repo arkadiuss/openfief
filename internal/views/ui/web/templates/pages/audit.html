@@ -3,6 +3,7 @@
 {{with .Data}}
 <section class="card" aria-labelledby="audit-title">
   <h2 id="audit-title">Audit log</h2>
+  {{with .Behind}}<p class="alert alert-warn" role="status" data-audit-behind>{{.}} Entries of those changes will appear here, with the time of the change, once they are written.</p>{{end}}
   <p class="muted">Every change of state and every access event, newest first: who did it, what, which records and the outcome. It never holds an amount, a secret or the text of a question. It can't be changed or deleted.</p>
   <form method="get" action="/settings/audit" aria-label="Filter the audit log">
     <div class="fields">

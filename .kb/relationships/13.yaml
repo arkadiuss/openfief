@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca52f2a35534
+  - type: implements
+    from: SYM-s9-internal-ingest-app-syncaudit-syncchange-empty
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:41:16.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-607da1e1d14a
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-syncaudit-syncchange-empty
+    to: TEST-ingest-app-sync-counts-market-data
+    created_at: 2026-11-14T06:41:16.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f588239b3e

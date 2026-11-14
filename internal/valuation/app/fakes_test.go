@@ -204,12 +204,12 @@ func (f *fakeRecorder) SaveFXRatesChanged(_ context.Context, rates []valuation.F
 	return len(rates), f.record("fx", revals)
 }
 
-func (f *fakeRecorder) SaveIndexReadings(_ context.Context, _ []valuation.IndexReading, revals []valuation.Revaluation) error {
-	return f.record("index", revals)
+func (f *fakeRecorder) SaveIndexReadingsChanged(_ context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) (int, error) {
+	return len(readings), f.record("index", revals)
 }
 
-func (f *fakeRecorder) SaveIndexLevels(context.Context, []valuation.IndexLevel) error {
-	return f.record("levels", nil)
+func (f *fakeRecorder) SaveIndexLevelsChanged(_ context.Context, levels []valuation.IndexLevel) (int, error) {
+	return len(levels), f.record("levels", nil)
 }
 
 func (f *fakeRecorder) SaveBondTermsChanged(_ context.Context, _ ledger.ISIN, _ *pl.Terms, _ string, revals []valuation.Revaluation) (bool, error) {

@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5315de23052f
+  - type: executable_for
+    from: SYM-s9b-dbtimeouts-test-test-dbtimeouts-from-env
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:44:00.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5d9091cc2a

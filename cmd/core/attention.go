@@ -64,6 +64,7 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 		attentionapp.BrokenTransfers(l),
 		attentionapp.SuggestedTransfers(transferSuggestions{ledger: l}),
 		attentionapp.FailingSyncs(imports),
+		attentionapp.AuditLogBehind(auditBacklog{jobs: vstore}),
 		attentionapp.CashCheckpoints(l),
 		attentionapp.UnclassifiedInstruments(l, vstore, vstore, jurisdictionPack()),
 		attentionapp.AssumedBondFees(l, vstore, vstore),

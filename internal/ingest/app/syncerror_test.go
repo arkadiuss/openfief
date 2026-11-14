@@ -25,6 +25,7 @@ func TestSyncErrorClassOf(t *testing.T) {
 		want ingest.SyncErrorClass
 	}{
 		{name: "no error", err: nil, want: 0},
+		{name: "a delivery's transaction past its timeout", err: fmt.Errorf("deliver: %w: %w", app.ErrDeliveryTimeout, errDatabase), want: ingest.SyncErrorDeliveryTimeout},
 		{name: "past the timeout", err: fmt.Errorf("syncing: %w", context.DeadlineExceeded), want: ingest.SyncErrorTimeout},
 		{name: "a timeout reported as unreachable stays a timeout", err: fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, context.DeadlineExceeded), want: ingest.SyncErrorTimeout},
 		{name: "the core stopping", err: fmt.Errorf("waiting: %w", context.Canceled), want: ingest.SyncErrorInterrupted},

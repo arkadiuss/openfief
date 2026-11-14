@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef0d8f6eb4ab
+  - type: executable_for
+    from: SYM-s9b-changed-test-test-record-index-readings-changed-reports-the-stores-count
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:56:11.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-856f8767a8d2

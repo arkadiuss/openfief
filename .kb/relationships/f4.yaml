@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35792d0af67d
+  - type: implements
+    from: SYM-s9b-record-input-recorder-record-index-readings-changed
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:56:21.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db5452534442
+  - type: covered_by
+    from: SYM-s9b-record-input-recorder-record-index-readings-changed
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:56:21.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eca1101669cf

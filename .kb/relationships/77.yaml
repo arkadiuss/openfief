@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68fc108a857a
+  - type: implements
+    from: SYM-ui-attention-kind-of
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:41:57.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da432f693065
+  - type: covered_by
+    from: SYM-ui-attention-kind-of
+    to: TEST-ui-audit-log-banner
+    created_at: 2026-11-14T06:41:57.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729beb005409

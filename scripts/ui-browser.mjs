@@ -14,7 +14,8 @@
 // owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings; the overview is kept offline only
 // encrypted, under a key that can't be exported, shown offline marked as a copy, and wiped on sign-out and when the
 // session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
-// granted nothing sees "Nothing has been shared with you yet" on every page (D-210).
+// granted nothing sees "Nothing has been shared with you yet" on every page (D-210); Settings' Audit log filters by its form and, while
+// changes' entries wait to enter the log, shows the audit-log-behind item's words in a banner (D-211).
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -400,6 +401,15 @@ async function auditLog(browser) {
     check(refused === 2, `audit ${label}: ${refused} refused rows, want 2`);
     check(await sideways(page) <= 0, `audit ${label}: scrolls sideways`);
     await page.screenshot({ path: path.join(out, `${label}-audit-filtered-by-form.png`), fullPage: true });
+    // While changes' entries wait to enter the log, the page says so, in the item's words, without scrolling sideways.
+    check(await page.locator('[data-audit-behind]').count() === 0, `audit ${label}: a banner without an audit-log-behind item`);
+    await page.goto(base + '/test/audit-behind?n=3', { waitUntil: 'networkidle' });
+    const banner = await page.locator('[data-audit-behind]').allTextContents();
+    check(banner.length === 1 && banner[0].startsWith('3 changes are waiting to enter the audit log; OpenFief keeps retrying.'), `audit ${label}: the banner says ${JSON.stringify(banner)}`);
+    check(await sideways(page) <= 0, `audit ${label}: the banner scrolls sideways`);
+    await page.screenshot({ path: path.join(out, `${label}-audit-behind.png`), fullPage: true });
+    await page.goto(base + '/test/audit-behind?n=0', { waitUntil: 'networkidle' });
+    check(await page.locator('[data-audit-behind]').count() === 0, `audit ${label}: the banner stays after the item is gone`);
     await ctx.close();
   }
 }

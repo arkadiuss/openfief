@@ -1105,3 +1105,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36c47bee4fbe
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-recording-syncer-account-unplaced
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:12.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1985cf01518

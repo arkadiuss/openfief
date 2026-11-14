@@ -13,6 +13,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
 // The pages of the audit log (D-211): Settings' own page, which shows every
@@ -406,6 +407,9 @@ type auditView struct {
 	Older string
 	// Unavailable says the core couldn't be read for the entries.
 	Unavailable bool
+	// Behind is what the audit-log-behind attention item says while some
+	// changes' entries are waiting to enter the log; empty otherwise.
+	Behind string
 }
 
 // historyView is what the Access page's History section shows.
@@ -580,7 +584,27 @@ func (s *server) auditPage(w http.ResponseWriter, r *http.Request, sess session)
 			view.Older = auditPath + "?" + q.Encode()
 		}
 	}
+	view.Behind = s.auditBehind(r, sess)
 	s.show(w, r, http.StatusOK, "audit", page{Title: "Audit log", Session: &sess, Data: view})
+}
+
+// auditBehind returns what the open attention item of kind audit-log-behind
+// says, for the banner on the Audit log page (D-211, D-196): the entries of
+// some changes are waiting to enter the log, which shows fewer entries than
+// there were changes. It is "" while no item is open, and when the core can't
+// list items: the page still renders.
+func (s *server) auditBehind(r *http.Request, sess session) string {
+	resp, err := s.read.ListAttentionItems(r.Context(), bearer(&viewsv1.ListAttentionItemsRequest{View: viewsv1.AttentionView_ATTENTION_VIEW_OPEN}, sess))
+	if err != nil {
+		s.log.WarnContext(r.Context(), "listing the attention items for the audit log", "code", connect.CodeOf(err).String())
+		return ""
+	}
+	for _, it := range resp.Msg.GetItems() {
+		if it.GetKind() == kindAuditLogBehind {
+			return it.GetDetail()
+		}
+	}
+	return ""
 }
 
 // loadHistory reads the page of the Access page's history the request names:

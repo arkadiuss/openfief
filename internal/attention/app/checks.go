@@ -459,3 +459,45 @@ func liquidationUnknown(ctx context.Context, v Values, pack jurisdiction.Pack, a
 	}
 	return values.LiquidationUnknown, nil
 }
+
+// AuditLogSubject is the subject of the one audit-log-behind item: there is
+// one audit log.
+const AuditLogSubject = "audit-log"
+
+// AuditBacklog reads how far behind the audit log is (D-211); cmd/core
+// implements it over the outbox's job queue.
+type AuditBacklog interface {
+	// StuckEntries returns how many audit entries are waiting in the outbox
+	// after failing several attempts to enter the log, which the queue keeps
+	// retrying: none while the log keeps up.
+	StuckEntries(ctx context.Context) (int, error)
+}
+
+// AuditLogBehind is the check of the audit outbox (D-211, D-196): while any
+// audit entry has failed enough attempts to be written to the log, the log is
+// behind, a condition whose subject is AuditLogSubject and whose detail says
+// how many changes wait and that nothing is lost. The detail changes with the
+// count, so the owner sees it grow or shrink; the item clears when none is
+// stuck.
+func AuditLogBehind(b AuditBacklog) Check {
+	return Check{Kind: attention.KindAuditLogBehind, Find: func(ctx context.Context) ([]attention.Condition, error) {
+		n, err := b.StuckEntries(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("counting the audit entries that wait: %w", err)
+		}
+		if n <= 0 {
+			return nil, nil
+		}
+		return []attention.Condition{{Kind: attention.KindAuditLogBehind, Subject: AuditLogSubject, Detail: auditLogBehindDetail(n)}}, nil
+	}}
+}
+
+// auditLogBehindDetail words n stuck entries for the item and for the banner
+// on the audit log page: how many changes wait, that OpenFief keeps retrying,
+// and where to look.
+func auditLogBehindDetail(n int) string {
+	if n == 1 {
+		return "1 change is waiting to enter the audit log; OpenFief keeps retrying. Check the database's health."
+	}
+	return strconv.Itoa(n) + " changes are waiting to enter the audit log; OpenFief keeps retrying. Check the database's health."
+}

@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1cb69b4d989
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-index-levels
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:41:41.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1088c461049
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-index-levels
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:41:41.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7948ed79a75

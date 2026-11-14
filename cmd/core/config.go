@@ -77,6 +77,8 @@ var (
 	errNoDSN = errors.New(dsnEnv + " is not set")
 	// errSyncWorkers reports --sync-workers below one.
 	errSyncWorkers = errors.New("--sync-workers must be at least 1")
+	// errDeliveryTimeout reports a --sync-delivery-timeout of zero or less.
+	errDeliveryTimeout = errors.New("--sync-delivery-timeout must be positive")
 	// errNoInstance reports a connector command without --instance.
 	errNoInstance = errors.New("--instance is required")
 	// errNoAccount reports connector bind without --account.
@@ -169,11 +171,30 @@ type syncConfig struct {
 	Policy ingest.SyncPolicy
 	// Timeout bounds one sync attempt.
 	Timeout time.Duration
+	// DeliveryTimeout bounds each statement of the transaction that writes a
+	// sync's delivery (D-18, D-211): past it the delivery fails whole and
+	// the attempt is recorded as failed, never split.
+	DeliveryTimeout time.Duration
 	// Workers is how many syncs run at once (D-189).
 	Workers int
 	// ServiceAccount is the core's own ServiceAccount, whose tokens it
 	// presents to plugins (D-59).
 	ServiceAccount string
+}
+
+// validate reports a sync configuration the scheduler can't run: a policy that
+// breaks its rules, fewer than one worker or a delivery timeout of zero or less.
+func (c *syncConfig) validate() error {
+	if err := c.Policy.Validate(); err != nil {
+		return fmt.Errorf("policy: %w", err)
+	}
+	if c.Workers < 1 {
+		return errSyncWorkers
+	}
+	if c.DeliveryTimeout <= 0 {
+		return errDeliveryTimeout
+	}
+	return nil
 }
 
 // parseArgs reads the command line args and the environment through
@@ -279,11 +300,8 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	if fs.NArg() > 0 {
 		return serveConfig{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
 	}
-	if err := c.Sync.Policy.Validate(); err != nil {
+	if err := c.Sync.validate(); err != nil {
 		return serveConfig{}, fmt.Errorf("sync flags: %w", err)
-	}
-	if c.Sync.Workers < 1 {
-		return serveConfig{}, fmt.Errorf("sync flags: %w", errSyncWorkers)
 	}
 	var err error
 	if c.Reporting, err = kernel.ParseCurrency(*reporting); err != nil {
@@ -306,6 +324,7 @@ func syncFlags(fs *flag.FlagSet, c *syncConfig) {
 	fs.DurationVar(&c.Policy.RetryFirst, "sync-retry-first", defaultRetryFirst, "the first retry delay after a failed sync; it doubles per failure")
 	fs.DurationVar(&c.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
 	fs.DurationVar(&c.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
+	fs.DurationVar(&c.DeliveryTimeout, "sync-delivery-timeout", defaultDeliveryTimeout, "how long each statement of the transaction that writes a sync's delivery may run; past it the delivery fails whole and nothing of it is written")
 	fs.IntVar(&c.Workers, "sync-workers", defaultSyncWorkers, "connector syncs that run at once (D-189); raise it only together with the core's memory limit")
 	fs.StringVar(&c.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
 }

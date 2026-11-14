@@ -1210,3 +1210,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ebda89d2a5d
+  - type: implements
+    from: SYM-s9b-imports-reaches-network
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:57:28.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-759a220536dc
+  - type: covered_by
+    from: SYM-s9b-imports-reaches-network
+    to: TEST-archtest-no-network-in-transactions
+    created_at: 2026-11-14T06:57:28.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6533d03b23
+  - type: implements
+    from: SYM-s9b-dbtimeouts-db-timeouts
+    to: REQ-core-db-session-timeouts
+    created_at: 2026-11-14T07:03:40.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc52da7119e7
+  - type: covered_by
+    from: SYM-s9b-dbtimeouts-db-timeouts
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T07:03:40.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce4de67fdfd9

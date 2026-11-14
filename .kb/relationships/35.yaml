@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-febc4290f2e7
+  - type: executable_for
+    from: SYM-s9b-dbtimeouts-test-test-pool-starts-every-connection-with-the-timeouts
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:44:15.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c498eabf05b7

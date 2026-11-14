@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3b0ffb249cc
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings-changed
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-14T06:38:40.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec55423f7aba
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings-changed
+    to: TEST-valuation-app-revalue
+    created_at: 2026-11-14T06:38:40.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15b03e50d9c7

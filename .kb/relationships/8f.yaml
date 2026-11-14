@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b23a53c63473
+  - type: implements
+    from: SYM-ingest-app-connectors-store-market-data
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:40:32.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb960a4e8a3b
+  - type: covered_by
+    from: SYM-ingest-app-connectors-store-market-data
+    to: TEST-ingest-app-sync-counts-market-data
+    created_at: 2026-11-14T06:40:32.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf44d90db505
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-write-probe-seed
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:48:00.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78b4cae9cca

@@ -1091,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24c3c1c63f96
+  - type: implements
+    from: SYM-s9b-tracing-pool-config
+    to: REQ-core-db-session-timeouts
+    created_at: 2026-11-14T06:46:09.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-657ae1afbef4
+  - type: covered_by
+    from: SYM-s9b-tracing-pool-config
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:46:09.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-423e062e0afa

@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac58b11e980f
+  - type: executable_for
+    from: SYM-s9b-dbtimeouts-test-test-pool-config-sets-the-timeouts-on-every-connection
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:44:05.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0786ff3d65f4

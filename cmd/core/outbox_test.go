@@ -258,11 +258,25 @@ func syncCases() []syncCase {
 			name: "bond terms that changed", change: ingestapp.SyncChange{Instance: "bonds-main", Batch: "b-2", BondTerms: 2},
 			wantRefs: []string{"plugin:bonds-main", "import_batch:b-2", "sync_count:bond_terms:2"},
 		},
+		{
+			name: "FX rates that changed", change: ingestapp.SyncChange{Instance: "nbp-fx", Batch: "b-6", FXRates: 4},
+			wantRefs: []string{"plugin:nbp-fx", "import_batch:b-6", "sync_count:fx_rates:4"},
+		},
+		{
+			name: "index levels that changed", change: ingestapp.SyncChange{Instance: "indices", Batch: "b-7", IndexLevels: 250},
+			wantRefs: []string{"plugin:indices", "import_batch:b-7", "sync_count:index_levels:250"},
+		},
+		{
+			name: "index readings that changed", change: ingestapp.SyncChange{Instance: "gus-cpi", Batch: "b-8", IndexReadings: 1},
+			wantRefs: []string{"plugin:gus-cpi", "import_batch:b-8", "sync_count:index_readings:1"},
+		},
 		{name: "every kind", change: ingestapp.SyncChange{
-			Instance: "ibkr-main", Batch: "b-3", Transactions: 1, Prices: 2, BondTerms: 3, Accounts: []ledger.AccountID{"a", "b"},
+			Instance: "ibkr-main", Batch: "b-3", Transactions: 1, Prices: 2, FXRates: 3, IndexReadings: 4, IndexLevels: 5, BondTerms: 6,
+			Accounts: []ledger.AccountID{"a", "b"},
 		}, wantRefs: []string{
 			"plugin:ibkr-main", "import_batch:b-3", "account:a", "account:b",
-			"sync_count:transactions:1", "sync_count:prices:2", "sync_count:bond_terms:3",
+			"sync_count:transactions:1", "sync_count:prices:2", "sync_count:fx_rates:3", "sync_count:index_readings:4",
+			"sync_count:index_levels:5", "sync_count:bond_terms:6",
 		}},
 		{name: "more accounts than an entry names", change: ingestapp.SyncChange{
 			Instance: "ibkr-main", Batch: "b-4", Transactions: 30, Accounts: many,
@@ -340,8 +354,8 @@ func refTexts(refs []auditRef) []string {
 func TestSyncEntryIsAValidEntry(t *testing.T) {
 	t.Parallel()
 	c := ingestapp.SyncChange{
-		Instance: "ibkr-main", Batch: ingest.BatchID("b-0123456789abcdef"), Transactions: 1, Prices: 1, BondTerms: 1,
-		Accounts: []ledger.AccountID{"ibkr"},
+		Instance: "ibkr-main", Batch: ingest.BatchID("b-0123456789abcdef"), Transactions: 1, Prices: 1, FXRates: 1, IndexReadings: 1,
+		IndexLevels: 1, BondTerms: 1, Accounts: []ledger.AccountID{"ibkr"},
 	}
 	e, err := syncEntry(time.Date(2026, time.March, 2, 10, 0, 0, 0, time.UTC), "ibkr-main", &c)
 	if err != nil {
@@ -381,4 +395,59 @@ func trailOf(t *testing.T, dsn string) []string {
 		out = append(out, line)
 	}
 	return out
+}
+
+// TestSyncDeliveryThatRunsPastItsTimeoutFailsWhole checks over a real database
+// (D-18, D-198, D-211) that a delivery whose transaction has a statement that
+// runs past the delivery timeout fails, with an error that says so and that the
+// attempt records as the class delivery-timeout, and writes nothing: not the
+// rows its earlier statements wrote, and no entry.
+func TestSyncDeliveryThatRunsPastItsTimeoutFailsWhole(t *testing.T) {
+	t.Parallel()
+	f := newOutboxFixture(t)
+	f.out.deliveryTimeout = 200 * time.Millisecond
+	err := f.out.AuditedSync(t.Context(), "ibkr-main", f.delivery("slow-1", 5))
+	if !errors.Is(err, ingestapp.ErrDeliveryTimeout) {
+		t.Fatalf("AuditedSync = %v, want an error wrapping ErrDeliveryTimeout", err)
+	}
+	if class := ingestapp.SyncErrorClassOf(err); class != ingest.SyncErrorDeliveryTimeout {
+		t.Errorf("the attempt's class = %v, want delivery-timeout", class)
+	}
+	if n, jobs := f.accounts(t, "slow-"), f.jobs(t); n != 0 || len(jobs) != 0 {
+		t.Errorf("a delivery that timed out left %d accounts and entries %+v, want nothing", n, jobs)
+	}
+}
+
+// delivery returns a sync's writes that store the account name and then run a
+// statement for sleep seconds, reporting a change of one transaction.
+func (f *outboxFixture) delivery(name string, sleep float64) func(context.Context) (ingestapp.SyncChange, error) {
+	change := ingestapp.SyncChange{Instance: "ibkr-main", Batch: "b-0123456789abcdef", Transactions: 1, Accounts: []ledger.AccountID{"ibkr"}}
+	return func(ctx context.Context) (ingestapp.SyncChange, error) {
+		if err := insertAccount(ctx, f.pool, name); err != nil {
+			return ingestapp.SyncChange{}, err
+		}
+		if _, err := joined(f.pool).Exec(ctx, `SELECT pg_sleep($1)`, sleep); err != nil {
+			return ingestapp.SyncChange{}, fmt.Errorf("a statement that runs %vs: %w", sleep, err)
+		}
+		return change, nil
+	}
+}
+
+// TestSyncDeliveryInTimeCommitsAndLeavesNoTimeoutBehind checks that a delivery
+// whose statements finish in time commits as before, and that the timeout, set
+// for the transaction alone, does not outlive it.
+func TestSyncDeliveryInTimeCommitsAndLeavesNoTimeoutBehind(t *testing.T) {
+	t.Parallel()
+	f := newOutboxFixture(t)
+	f.out.deliveryTimeout = 5 * time.Second
+	if err := f.out.AuditedSync(t.Context(), "ibkr-main", f.delivery("quick-1", 0.01)); err != nil {
+		t.Fatalf("AuditedSync of a delivery in time: %v", err)
+	}
+	if n, jobs := f.accounts(t, "quick-"), len(f.jobs(t)); n != 1 || jobs != 1 {
+		t.Errorf("a delivery in time left %d accounts and %d entries, want one each", n, jobs)
+	}
+	var after string
+	if err := f.pool.QueryRow(t.Context(), `SHOW statement_timeout`).Scan(&after); err != nil || after != "0" {
+		t.Errorf("statement_timeout after the delivery = %q, %v; want the connection's own, 0", after, err)
+	}
 }

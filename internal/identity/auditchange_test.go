@@ -94,6 +94,23 @@ func TestChangeEntriesNameWhatChangedByID(t *testing.T) {
 			},
 		},
 		{
+			name: "a sync that wrote FX rates, index readings and index levels", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1"),
+				ref(identity.RefSyncCount, "fx_rates:4"), ref(identity.RefSyncCount, "index_readings:1"), ref(identity.RefSyncCount, "index_levels:250"),
+			},
+		},
+		{
+			name: "a sync of every kind of count", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1"),
+				ref(identity.RefSyncCount, "transactions:1"), ref(identity.RefSyncCount, "prices:2"), ref(identity.RefSyncCount, "fx_rates:3"),
+				ref(identity.RefSyncCount, "index_readings:4"), ref(identity.RefSyncCount, "index_levels:5"), ref(identity.RefSyncCount, "bond_terms:6"),
+			},
+		},
+		{
 			name: "a sync that names no count", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
 			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
 			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1")}, wantErr: true,

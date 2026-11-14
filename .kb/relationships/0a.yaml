@@ -1217,3 +1217,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-028036c7226e
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete-claimed
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:40:56.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63c7ad09e8c
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots-delete-claimed
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:40:56.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d806bf5f9ee8
+  - type: implements
+    from: SYM-s9b-auditoutbox-audit-backlog
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T07:03:34.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a262439a1c45
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-audit-backlog
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T07:03:34.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a81b17e9295

@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e4850977517
+  - type: implements
+    from: SYM-s9b-config-sync-flags
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:43:39.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7c3090ec42
+  - type: covered_by
+    from: SYM-s9b-config-sync-flags
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:43:39.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da43f751800c

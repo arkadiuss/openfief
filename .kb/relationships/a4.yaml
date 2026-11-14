@@ -1133,3 +1133,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbaf97198957
+  - type: implements
+    from: SYM-attention-scope-of
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:41:52.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39756a5409df
+  - type: covered_by
+    from: SYM-attention-scope-of
+    to: TEST-attention-scope-audit-log-behind
+    created_at: 2026-11-14T06:41:52.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4bcf96812b7
+  - type: implements
+    from: SYM-s9b-connectors-connectors-commit-unexported
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T07:15:22.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05680ac762c
+  - type: covered_by
+    from: SYM-s9b-connectors-connectors-commit-unexported
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:15:22.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9730f13f5d7

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/exaring/otelpgx"
@@ -40,18 +41,38 @@ func withTracing(ctx context.Context, fn func() error) error {
 	return errors.Join(runErr, tel.Shutdown(flush))
 }
 
-// newPool connects to dsn with queryTracer on every connection.
+// newPool connects to dsn with queryTracer on every connection and the
+// session timeouts of dbTimeouts, from the environment, on every connection
+// (D-211).
 func newPool(ctx context.Context, dsn string) (*pgxpool.Pool, error) {
-	cfg, err := pgxpool.ParseConfig(dsn)
+	timeouts, err := dbTimeoutsFromEnv(os.Getenv)
 	if err != nil {
 		return nil, fmt.Errorf("connecting: %w", err)
 	}
-	cfg.ConnConfig.Tracer = queryTracer()
+	cfg, err := poolConfig(dsn, timeouts)
+	if err != nil {
+		return nil, err
+	}
 	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, fmt.Errorf("connecting: %w", err)
 	}
 	return pool, nil
+}
+
+// poolConfig returns the pool configuration for dsn with queryTracer and the
+// timeouts on every connection.
+func poolConfig(dsn string, timeouts dbTimeouts) (*pgxpool.Config, error) {
+	cfg, err := pgxpool.ParseConfig(dsn)
+	if err != nil {
+		return nil, fmt.Errorf("connecting: %w", err)
+	}
+	cfg.ConnConfig.Tracer = queryTracer()
+	if cfg.ConnConfig.RuntimeParams == nil {
+		cfg.ConnConfig.RuntimeParams = map[string]string{}
+	}
+	timeouts.apply(cfg.ConnConfig.RuntimeParams)
+	return cfg, nil
 }
 
 // queryTracer records each query, batch and copy that runs inside a traced
@@ -79,9 +100,10 @@ func jobTracing() []rivertype.Plugin {
 
 // pluginClient is the HTTP client the core calls connector instances with
 // (D-49): HTTP/2 without TLS, each call in a client span that propagates
-// the core's trace to the plugin in a W3C traceparent header.
+// the core's trace to the plugin in a W3C traceparent header. It refuses a
+// call made inside a change's transaction (ErrNetworkInChange).
 func pluginClient() *http.Client {
 	c := connectrpc.H2CClient()
-	c.Transport = telemetry.Transport(c.Transport)
+	c.Transport = noChangeTransport{next: telemetry.Transport(c.Transport)}
 	return c
 }

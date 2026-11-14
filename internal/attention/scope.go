@@ -47,7 +47,8 @@ type Group int
 
 // The groups. The zero Group is none.
 const (
-	// GroupDataComingIn: tickers to confirm, unmapped broker accounts,
+	// GroupDataComingIn: tickers to confirm, unmapped broker accounts, an audit
+	// log that is behind,
 	// failing syncs, import problems and market data that stopped or was
 	// dropped.
 	GroupDataComingIn Group = iota + 1
@@ -78,7 +79,7 @@ func (g Group) String() string {
 func GroupOf(k Kind) Group {
 	switch k {
 	case KindTickerUnconfirmed, KindBrokerAccountUnmapped, KindSyncFailing, KindImportProblems,
-		kindUndeclared, kindUndeclaredCrossChecks, kindMarketDataGap:
+		kindUndeclared, kindUndeclaredCrossChecks, kindMarketDataGap, KindAuditLogBehind:
 		return GroupDataComingIn
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
@@ -120,7 +121,8 @@ type Scope struct {
 //     instance and a model, tied to no account), view-plugin-ungranted (a
 //     view plugin instance, which no account or connector is),
 //     model-target-proposal (a proposal's ID) and maintainer-failing, which
-//     are about the whole portfolio, and any other kind: nothing.
+//     are about the whole portfolio, audit-log-behind (the one log) and any
+//     other kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
@@ -139,7 +141,8 @@ func ScopeOf(it *Item) Scope {
 		if len(parts) == 2 && parts[0] == earlierPaymentsSetting {
 			return Scope{Account: parts[1]}
 		}
-	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken, kindModelTargetProposal, kindMaintainerFailing, KindViewPluginUngranted:
+	case KindTransferBroken, KindTransferSuggested, kindModelRouteBroken, kindModelTargetProposal, kindMaintainerFailing, KindViewPluginUngranted,
+		KindAuditLogBehind:
 	}
 	return Scope{}
 }

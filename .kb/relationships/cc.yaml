@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-396a9ca2e4ab
+  - type: executable_for
+    from: SYM-s9b-changed-test-test-save-index-levels-reports-only-what-was-new-or-different
+    to: TEST-valuation-postgres-market-data-changed
+    created_at: 2026-11-14T06:56:31.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21a611e57ea0

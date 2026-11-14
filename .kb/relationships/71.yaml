@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7acc066890f1
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:39:44.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67651c586c61
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:39:44.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96554f430830

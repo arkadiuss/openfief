@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d4f280246f5
+  - type: implements
+    from: SYM-s9b-auditoutbox-audit-backlog-stuck-entries
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:43:28.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c62d6342d7da
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-audit-backlog-stuck-entries
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T06:43:28.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f22d74acff54
+  - type: implements
+    from: SYM-s9b-checks-audit-log-behind-detail
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:46:36.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51788678263b
+  - type: covered_by
+    from: SYM-s9b-checks-audit-log-behind-detail
+    to: TEST-attention-app-audit-log-behind
+    created_at: 2026-11-14T06:46:36.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f58c5dd01b80

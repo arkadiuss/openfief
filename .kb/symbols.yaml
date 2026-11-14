@@ -14251,7 +14251,11 @@ symbols:
       recorded_at: 2026-10-28T07:36:02.874Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-app-changed-counts
+      - type: covered_by
         target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
       - type: implements
         target: REQ-valuation-index-readings-record-instance
       - type: implements
@@ -14537,18 +14541,6 @@ symbols:
       recorded_at: 2026-10-28T07:38:16.625Z
     symbol_role: type-shape
     granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
-    title: fakeRecorder.SaveIndexReadings
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:33.494Z
     relationships:
       - type: executable_for
         target: TEST-valuation-app-plan
@@ -15096,7 +15088,11 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-delivered-by
       - type: covered_by
+        target: TEST-valuation-postgres-market-data-changed
+      - type: covered_by
         target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
       - type: implements
@@ -21369,6 +21365,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-connector-batches
       - type: implements
@@ -21388,8 +21388,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-sync-counts-market-data
       - type: implements
         target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-ingest-conn-app-sourced-readings
     title: sourcedReadings
     sourceFile: internal/ingest/app/connectors.go
@@ -39689,6 +39693,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T17:23:12.346Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-core-unit
@@ -39744,8 +39749,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-connectors
+      - type: covered_by
+        target: TEST-core-no-network-in-change
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
   - id: SYM-core-conn-cluster-or-nil
     title: clusterOrNil
     sourceFile: cmd/core/connectors.go
@@ -39974,6 +39983,8 @@ symbols:
         target: TEST-core-connectors
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-core-conn-valuation-inputs-store-index-readings
     title: valuationInputs.StoreIndexReadings
     sourceFile: cmd/core/connectors.go
@@ -39987,6 +39998,8 @@ symbols:
         target: TEST-core-connectors
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-core-conn-monthly-reading
     title: monthlyReading
     sourceFile: cmd/core/connectors.go
@@ -59926,6 +59939,8 @@ symbols:
         target: TEST-core-connectors
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-ingest-app-index-level-store
     title: IndexLevelStore
     sourceFile: internal/ingest/app/connectors.go
@@ -59981,16 +59996,6 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-index-levels
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
-    title: fakeRecorder.SaveIndexLevels
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T22:46:45.153Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
   - id: SYM-valuation-app-input-recorder-record-index-levels
     title: InputRecorder.RecordIndexLevels
     sourceFile: internal/valuation/app/record.go
@@ -60001,7 +60006,11 @@ symbols:
       recorded_at: 2026-10-28T22:46:49.636Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-app-changed-counts
+      - type: covered_by
         target: TEST-valuation-app-plan
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
       - type: implements
         target: REQ-valuation-index-levels
       - type: implements
@@ -60064,6 +60073,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-postgres-index-levels
+      - type: covered_by
+        target: TEST-valuation-postgres-market-data-changed
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
       - type: implements
         target: REQ-valuation-index-levels
   - id: SYM-valuation-pg-store-index-levels
@@ -66455,6 +66468,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-bond-lot-handed-with-account
       - type: implements
@@ -71154,7 +71171,11 @@ symbols:
       recorded_at: 2026-10-29T05:10:02.794Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: covered_by
         target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-multi-account-upload-changes-every-bound
       - type: implements
@@ -85976,8 +85997,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-sync-counts-market-data
       - type: implements
         target: REQ-ingest-market-data-sources-recorded
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-ingest-app-connectors-store-sources
     title: Connectors.storeSources
     sourceFile: internal/ingest/app/connectors.go
@@ -102567,6 +102592,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-bond-lot-delete-deletes-coupons
       - type: implements
@@ -116996,6 +117025,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-audit-log-banner
+      - type: implements
+        target: REQ-attention-audit-log-behind
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
@@ -135301,7 +135334,11 @@ symbols:
       recorded_at: 2026-11-05T23:39:21.046Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-delivery-timeout-class
+      - type: covered_by
         target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-delivery-timeout
       - type: implements
         target: REQ-ingest-sync-attempt-history
   - id: SYM-ingest-parse-sync-error-class
@@ -135314,7 +135351,11 @@ symbols:
       recorded_at: 2026-11-05T23:39:25.217Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-delivery-timeout-class
+      - type: covered_by
         target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-delivery-timeout
       - type: implements
         target: REQ-ingest-sync-attempt-history
   - id: SYM-ingest-sync-attempt
@@ -135421,6 +135462,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-sync-errors
+      - type: covered_by
+        target: TEST-ingest-delivery-timeout-class
+      - type: implements
+        target: REQ-ingest-delivery-timeout
       - type: implements
         target: REQ-ingest-sync-attempt-history
   - id: SYM-ingest-app-is-booking-error
@@ -135891,6 +135936,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-attention-scope
+      - type: covered_by
+        target: TEST-attention-scope-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
       - type: implements
         target: REQ-attention-group-of-kind
       - type: implements
@@ -135919,6 +135968,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-attention-scope
+      - type: covered_by
+        target: TEST-attention-scope-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
       - type: implements
         target: REQ-attention-item-scope
   - id: SYM-attention-account-scope
@@ -142093,6 +142146,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-front-door
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-owner-retries-sync
   - id: SYM-core-sync-trigger-set
@@ -150983,6 +151040,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-bond-lot-delete-deletes-coupons
       - type: implements
@@ -151227,6 +151288,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-ingest-bond-lot-delete-deletes-coupons
   - id: SYM-core-test-helper-new-bond-race
@@ -151762,7 +151827,11 @@ symbols:
       recorded_at: 2026-11-02T03:13:23.795Z
     relationships:
       - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: covered_by
         target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-core-db-session-timeouts
       - type: implements
         target: REQ-telemetry-private-spans
   - id: SYM-core-tracing-query-tracer
@@ -151801,7 +151870,11 @@ symbols:
       recorded_at: 2026-11-02T03:13:44.983Z
     relationships:
       - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: covered_by
         target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-telemetry-trace-propagation
   - id: SYM-operator-traced
@@ -151832,36 +151905,6 @@ symbols:
         target: REQ-ingest-connector-batches
       - type: implements
         target: REQ-ingest-core-owns-schedules
-  - id: SYM-ingest-app-connectors-import-file-batch
-    title: Connectors.importFileBatch
-    sourceFile: internal/ingest/app/connectors.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T03:14:06.428Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-connectors
-      - type: implements
-        target: REQ-ingest-connector-batches
-      - type: implements
-        target: REQ-ingest-uploads-through-core
-  - id: SYM-ingest-app-connectors-import-bond-lots-batch
-    title: Connectors.importBondLotsBatch
-    sourceFile: internal/ingest/app/connectors.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T03:14:14.016Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-bondlots
-      - type: implements
-        target: REQ-ingest-bond-lot-handed-with-account
-      - type: implements
-        target: REQ-ingest-bond-lot-handoff
   - id: SYM-ledger-app-ledger-import-in-tx
     title: Ledger.importInTx
     sourceFile: internal/ledger/app/import.go
@@ -174932,6 +174975,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-authz-sync
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-identity-authz-spicedb-answers
   - id: SYM-core-placement-sync-account-removed
@@ -174945,6 +174992,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-authz-sync
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-identity-authz-spicedb-answers
   - id: SYM-plugins-egress-exemption
@@ -176474,6 +176525,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-grants
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-identity-grants-viewers-tokens-plugins
   - id: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
@@ -176487,6 +176542,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-grants
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-identity-grants-viewers-tokens-plugins
   - id: SYM-grants-cmd-core-grants-grantsonuninstall
@@ -213376,8 +213435,16 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-audit-outbox
+      - type: covered_by
+        target: TEST-core-delivery-timeout
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
       - type: implements
         target: REQ-identity-audit-outbox
+      - type: implements
+        target: REQ-ingest-delivery-timeout
   - id: SYM-s9-cmd-core-auditoutbox-outbox-enqueue
     title: outbox.enqueue
     status: active
@@ -213403,9 +213470,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-core-delivery-timeout
+      - type: covered_by
         target: TEST-core-sync-audit
       - type: implements
         target: REQ-identity-audit-sync-entries
+      - type: implements
+        target: REQ-ingest-delivery-timeout
   - id: SYM-s9-cmd-core-auditoutbox-outbox-enqueue-exported
     title: outbox.Enqueue
     status: active
@@ -213434,6 +213505,8 @@ symbols:
         target: TEST-core-sync-audit
       - type: implements
         target: REQ-identity-audit-sync-entries
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-s9-cmd-core-connectors-adminactor
     title: adminActor
     status: active
@@ -213764,6 +213837,8 @@ symbols:
         target: TEST-identity-audit-change-domain
       - type: implements
         target: REQ-identity-audit-sync-entries
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-s9-internal-identity-postgres-audit-store-appendauditonce
     title: Store.AppendAuditOnce
     status: active
@@ -213880,8 +213955,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-sync-audit
+      - type: covered_by
+        target: TEST-ingest-app-sync-counts-market-data
       - type: implements
         target: REQ-identity-audit-sync-entries
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-s9-internal-ingest-app-syncaudit-syncauditor
     title: SyncAuditor
     status: active
@@ -213909,8 +213988,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-sync-audit
+      - type: covered_by
+        target: TEST-ingest-app-sync-counts-market-data
       - type: implements
         target: REQ-identity-audit-sync-entries
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
   - id: SYM-s9-internal-ingest-postgres-store-db
     title: DB
     status: active
@@ -214043,7 +214126,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-valuation-app-changed-counts
+      - type: covered_by
         target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
       - type: implements
         target: REQ-valuation-inputs-report-changes
   - id: SYM-s9-internal-valuation-app-record-inputrecorder-recordbondtermschanged
@@ -214508,3 +214595,1608 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-changed
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-readings-changed
+    title: fakeRecorder.SaveIndexReadingsChanged
+    status: active
+    sourceFile: internal/valuation/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:54:34.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+      - type: executable_for
+        target: TEST-valuation-app-revalue
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-index-levels-changed
+    title: fakeRecorder.SaveIndexLevelsChanged
+    status: active
+    sourceFile: internal/valuation/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:54:43.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-ingest-app-connectors-prepare-file-batch
+    title: Connectors.prepareFileBatch
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:54:53.169Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-connectors-prepare-bond-lots-batch
+    title: Connectors.prepareBondLotsBatch
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:02.736Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+      - type: implements
+        target: REQ-ingest-bond-lot-handed-with-account
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-s9b-auditbehind-test-stick-audit-jobs
+    title: stickAuditJobs
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:09.138Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-finish
+    title: finish
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:13.926Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-behind-watch-items
+    title: behindWatch.items
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:18.712Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-behind-watch-want-none
+    title: behindWatch.wantNone
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:23.452Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-new-behind-watch
+    title: newBehindWatch
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:28.213Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-test-audit-log-behind-item-is-raised-at-five-failures
+    title: TestAuditLogBehindItemIsRaisedAtFiveFailures
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:33.029Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-test-audit-log-behind-item-clears-when-the-stuck-entries-get-through
+    title: TestAuditLogBehindItemClearsWhenTheStuckEntriesGetThrough
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:38.008Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditoutbox-is-statement-timeout
+    title: isStatementTimeout
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:43.472Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-delivery-timeout
+      - type: implements
+        target: REQ-ingest-delivery-timeout
+  - id: SYM-s9b-auditoutbox-refuse-in-change
+    title: refuseInChange
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:48.877Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-no-change-transport-round-trip
+    title: noChangeTransport.RoundTrip
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:54.201Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-refuse-unary-in-change
+    title: refuseUnaryInChange
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:42:59.524Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-refuse-stream-in-change
+    title: refuseStreamInChange
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:04.961Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-outside-change
+    title: outsideChange
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:10.492Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-after-commit-run
+    title: afterCommit.run
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:15.825Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-after-change
+    title: afterChange
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:21.188Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-audit-backlog-stuck-entries
+    title: auditBacklog.StuckEntries
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:26.343Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-config-sync-config-validate
+    title: syncConfig.validate
+    status: active
+    sourceFile: cmd/core/config.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:31.577Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-delivery-timeout
+      - type: implements
+        target: REQ-ingest-delivery-timeout
+  - id: SYM-s9b-config-sync-flags
+    title: syncFlags
+    status: active
+    sourceFile: cmd/core/config.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:36.832Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-delivery-timeout
+      - type: implements
+        target: REQ-ingest-delivery-timeout
+  - id: SYM-s9b-dbtimeouts-db-timeouts-from-env
+    title: dbTimeoutsFromEnv
+    status: active
+    sourceFile: cmd/core/dbtimeouts.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:42.366Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: implements
+        target: REQ-core-db-session-timeouts
+  - id: SYM-s9b-dbtimeouts-parse-dbtimeout
+    title: parseDBTimeout
+    status: active
+    sourceFile: cmd/core/dbtimeouts.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:47.992Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: implements
+        target: REQ-core-db-session-timeouts
+  - id: SYM-s9b-dbtimeouts-db-timeouts-apply
+    title: dbTimeouts.apply
+    status: active
+    sourceFile: cmd/core/dbtimeouts.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:53.476Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: implements
+        target: REQ-core-db-session-timeouts
+  - id: SYM-s9b-dbtimeouts-test-test-dbtimeouts-from-env
+    title: TestDBTimeoutsFromEnv
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:43:58.133Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-test-pool-config-sets-the-timeouts-on-every-connection
+    title: TestPoolConfigSetsTheTimeoutsOnEveryConnection
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:02.968Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-show
+    title: show
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:07.830Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-test-pool-starts-every-connection-with-the-timeouts
+    title: TestPoolStartsEveryConnectionWithTheTimeouts
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:12.635Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-idle-transaction
+    title: idleTransaction
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:17.437Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-ended-by-idle-timeout
+    title: endedByIdleTimeout
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:22.462Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-dbtimeouts-test-test-idle-transaction-is-ended-by-the-database
+    title: TestIdleTransactionIsEndedByTheDatabase
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:27.164Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-nonetwork-test-change-context
+    title: changeContext
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:32.054Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-counting-transport-round-trip
+    title: countingTransport.RoundTrip
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:36.780Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-httpis-refused-inside-achange
+    title: TestHTTPIsRefusedInsideAChange
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:41.528Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-send-through
+    title: sendThrough
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:46.203Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-plugin-client-is-refused-inside-achange
+    title: TestPluginClientIsRefusedInsideAChange
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:50.876Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-grpcis-refused-inside-achange
+    title: TestGRPCIsRefusedInsideAChange
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:44:55.674Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-spice-dbis-refused-inside-achange
+    title: TestSpiceDBIsRefusedInsideAChange
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:00.385Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-recording-syncer-account-placed
+    title: recordingSyncer.AccountPlaced
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:05.065Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-recording-syncer-account-unplaced
+    title: recordingSyncer.AccountUnplaced
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:09.707Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-placements-reach-spice-dbafter-the-change-commits
+    title: TestPlacementsReachSpiceDBAfterTheChangeCommits
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:14.433Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-placements-outside-achange-reach-spice-dbat-once
+    title: TestPlacementsOutsideAChangeReachSpiceDBAtOnce
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:19.004Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-placements-that-spice-dbrefuses-are-the-observers-to-repair
+    title: TestPlacementsThatSpiceDBRefusesAreTheObserversToRepair
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:23.571Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-outside-change-leaves-no-transaction
+    title: TestOutsideChangeLeavesNoTransaction
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:28.372Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-follow-ups-seen
+    title: followUps.seen
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:33.140Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-after-change-runs-only-once-the-outermost-change-commits
+    title: TestAfterChangeRunsOnlyOnceTheOutermostChangeCommits
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:37.919Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-after-change-never-runs-for-achange-that-rolls-back
+    title: TestAfterChangeNeverRunsForAChangeThatRollsBack
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:42.654Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-after-change-that-fails-leaves-the-change-committed
+    title: TestAfterChangeThatFailsLeavesTheChangeCommitted
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:47.479Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-outbox-test-test-sync-delivery-that-runs-past-its-timeout-fails-whole
+    title: TestSyncDeliveryThatRunsPastItsTimeoutFailsWhole
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:52.340Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-delivery-timeout
+  - id: SYM-s9b-outbox-test-outbox-fixture-delivery
+    title: outboxFixture.delivery
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:45:57.020Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-delivery-timeout
+  - id: SYM-s9b-outbox-test-test-sync-delivery-in-time-commits-and-leaves-no-timeout-behind
+    title: TestSyncDeliveryInTimeCommitsAndLeavesNoTimeoutBehind
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:01.716Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-delivery-timeout
+  - id: SYM-s9b-tracing-pool-config
+    title: poolConfig
+    status: active
+    sourceFile: cmd/core/tracing.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:07.180Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: implements
+        target: REQ-core-db-session-timeouts
+  - id: SYM-s9b-auditlog-test-fake-backlog-stuck-entries
+    title: fakeBacklog.StuckEntries
+    status: active
+    sourceFile: internal/attention/app/auditlog_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:12.008Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-audit-log-behind
+  - id: SYM-s9b-auditlog-test-test-audit-log-behind
+    title: TestAuditLogBehind
+    status: active
+    sourceFile: internal/attention/app/auditlog_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:17.012Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-audit-log-behind
+  - id: SYM-s9b-auditlog-test-check-valid
+    title: checkValid
+    status: active
+    sourceFile: internal/attention/app/auditlog_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:22.116Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-audit-log-behind
+  - id: SYM-s9b-checks-audit-log-behind
+    title: AuditLogBehind
+    status: active
+    sourceFile: internal/attention/app/checks.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:27.742Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-checks-audit-log-behind-detail
+    title: auditLogBehindDetail
+    status: active
+    sourceFile: internal/attention/app/checks.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:33.378Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-connectors-connectors-prepare-file
+    title: Connectors.PrepareFile
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:39.217Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-connectors-connectors-commit
+    title: Connectors.Commit
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:23.401Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-connectors-connectors-prepare-bond-lots
+    title: Connectors.PrepareBondLots
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:46:50.547Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-connectors-connectors-prepare
+    title: Connectors.prepare
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:07.251Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-connectors-test-fake-stores-counted
+    title: fakeStores.counted
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:17.726Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-counts-market-data
+  - id: SYM-s9b-nonetwork-test-in-change
+    title: inChange
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:22.872Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-transaction-auditor-audited
+    title: transactionAuditor.Audited
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:27.844Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-call-probe-import-file
+    title: callProbe.ImportFile
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:32.687Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-call-probe-import-bond-lots
+    title: callProbe.ImportBondLots
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:37.496Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-call-probe-declarations
+    title: callProbe.Declarations
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:42.419Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-call-probe-note
+    title: callProbe.note
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:47.613Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-write-probe-import
+    title: writeProbe.Import
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:52.638Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-write-probe-seed
+    title: writeProbe.Seed
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:47:57.566Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-write-probe-add-opening-lots
+    title: writeProbe.AddOpeningLots
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:48:02.494Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-batch-probe-record-batch
+    title: batchProbe.RecordBatch
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:48:07.483Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-auditoutbox-after-commit-adopt
+    title: afterCommit.adopt
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:07.911Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-after-change-follows-its-savepoint
+    title: TestAfterChangeFollowsItsSavepoint
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:12.810Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-after-change-of-acommitted-savepoint-never-runs-when-the-outermost-rolls-back
+    title: TestAfterChangeOfACommittedSavepointNeverRunsWhenTheOutermostRollsBack
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:17.660Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-new-probes
+    title: newProbes
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:28.503Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-probes-wire
+    title: probes.wire
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:33.545Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-probes-check
+    title: probes.check
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:38.551Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-statement-upload-makes-no-network-call-inside-its-transaction
+    title: TestStatementUploadMakesNoNetworkCallInsideItsTransaction
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:43.500Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-bond-lot-entry-makes-no-network-call-inside-its-transaction
+    title: TestBondLotEntryMakesNoNetworkCallInsideItsTransaction
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:48.614Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-test-bond-lot-deletion-makes-no-network-call-inside-its-transaction
+    title: TestBondLotDeletionMakesNoNetworkCallInsideItsTransaction
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:53.586Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-changed-test-changed-recorder
+    title: changedRecorder
+    status: active
+    sourceFile: internal/valuation/app/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:55:58.604Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-changed-counts
+  - id: SYM-s9b-changed-test-test-record-fxrates-changed-reports-the-stores-count
+    title: TestRecordFXRatesChangedReportsTheStoresCount
+    status: active
+    sourceFile: internal/valuation/app/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:03.597Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-changed-counts
+  - id: SYM-s9b-changed-test-test-record-index-readings-changed-reports-the-stores-count
+    title: TestRecordIndexReadingsChangedReportsTheStoresCount
+    status: active
+    sourceFile: internal/valuation/app/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:08.546Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-changed-counts
+  - id: SYM-s9b-changed-test-test-record-index-levels-changed-reports-the-stores-count
+    title: TestRecordIndexLevelsChangedReportsTheStoresCount
+    status: active
+    sourceFile: internal/valuation/app/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:13.470Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-changed-counts
+  - id: SYM-s9b-record-input-recorder-record-index-readings-changed
+    title: InputRecorder.RecordIndexReadingsChanged
+    status: active
+    sourceFile: internal/valuation/app/record.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:18.963Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-changed-counts
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
+  - id: SYM-s9b-record-input-recorder-record-index-levels-changed
+    title: InputRecorder.RecordIndexLevelsChanged
+    status: active
+    sourceFile: internal/valuation/app/record.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:24.347Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-changed-counts
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
+  - id: SYM-s9b-changed-test-test-save-index-levels-reports-only-what-was-new-or-different
+    title: TestSaveIndexLevelsReportsOnlyWhatWasNewOrDifferent
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:29.178Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-market-data-changed
+  - id: SYM-s9b-changed-test-test-save-index-readings-reports-only-what-was-new-or-different
+    title: TestSaveIndexReadingsReportsOnlyWhatWasNewOrDifferent
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:34.036Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-market-data-changed
+  - id: SYM-s9b-changed-test-test-jobs-failed-at-least-counts-the-jobs-that-keep-failing
+    title: TestJobsFailedAtLeastCountsTheJobsThatKeepFailing
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:38.861Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-jobs-failed
+  - id: SYM-s9b-queue-store-save-index-levels-changed
+    title: Store.SaveIndexLevelsChanged
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:44.195Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-market-data-changed
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
+  - id: SYM-s9b-queue-store-save-index-readings-changed
+    title: Store.SaveIndexReadingsChanged
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:49.604Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-market-data-changed
+      - type: implements
+        target: REQ-ingest-sync-counts-all-market-data
+  - id: SYM-s9b-status-store-jobs-failed-at-least
+    title: Store.JobsFailedAtLeast
+    status: active
+    sourceFile: internal/valuation/postgres/status.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:56:54.910Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-jobs-failed
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-audit-server-audit-behind
+    title: server.auditBehind
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:00.342Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit-log-banner
+      - type: implements
+        target: REQ-ui-audit-log-behind-banner
+  - id: SYM-s9b-audit-test-test-audit-log-banner-follows-the-behind-item
+    title: TestAuditLogBannerFollowsTheBehindItem
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:05.242Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-log-banner
+  - id: SYM-s9b-audit-test-test-audit-log-behind-item-is-in-the-inbox
+    title: TestAuditLogBehindItemIsInTheInbox
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:10.122Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-log-banner
+  - id: SYM-s9b-browser-test-audit-behind-item
+    title: auditBehindItem
+    status: active
+    sourceFile: internal/views/ui/browser_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:15.110Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-log-banner
+  - id: SYM-s9b-browser-test-fake-attention-set-audit-behind
+    title: fakeAttention.setAuditBehind
+    status: active
+    sourceFile: internal/views/ui/browser_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:20.019Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-log-banner
+  - id: SYM-s9b-imports-reaches-network
+    title: reachesNetwork
+    status: active
+    sourceFile: tools/archtest/imports.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:25.199Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-archtest-no-network-in-transactions
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-imports-no-network-in-transactions
+    title: NoNetworkInTransactions
+    status: active
+    sourceFile: tools/archtest/imports.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T06:57:30.693Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-archtest-no-network-in-transactions
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditbehind-test-behind-watch
+    title: behindWatch
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:02:56.218Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditbehind-test-behind-items
+    title: behindItems
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:02.379Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
+  - id: SYM-s9b-auditoutbox-no-change-transport
+    title: noChangeTransport
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:08.286Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-after-key
+    title: afterKey
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:13.921Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-after-commit
+    title: afterCommit
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:19.583Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-auditoutbox-job-counter
+    title: jobCounter
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:25.343Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-auditoutbox-audit-backlog
+    title: auditBacklog
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:31.267Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-dbtimeouts-db-timeouts
+    title: dbTimeouts
+    status: active
+    sourceFile: cmd/core/dbtimeouts.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:37.202Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-db-timeouts
+      - type: implements
+        target: REQ-core-db-session-timeouts
+  - id: SYM-s9b-dbtimeouts-test-idle-tx
+    title: idleTx
+    status: active
+    sourceFile: cmd/core/dbtimeouts_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:42.992Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-db-timeouts
+  - id: SYM-s9b-nonetwork-test-no-stream
+    title: noStream
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:49.006Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-counting-transport
+    title: countingTransport
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:54.603Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-recording-syncer
+    title: recordingSyncer
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:03:59.483Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-follow-ups
+    title: followUps
+    status: active
+    sourceFile: cmd/core/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:04.775Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-no-network-in-change
+  - id: SYM-s9b-auditlog-test-fake-backlog
+    title: fakeBacklog
+    status: active
+    sourceFile: internal/attention/app/auditlog_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:10.465Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-audit-log-behind
+  - id: SYM-s9b-checks-audit-backlog
+    title: AuditBacklog
+    status: active
+    sourceFile: internal/attention/app/checks.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:15.885Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-audit-log-behind
+      - type: implements
+        target: REQ-attention-audit-log-behind
+  - id: SYM-s9b-bondlots-deletion
+    title: deletion
+    status: active
+    sourceFile: internal/ingest/app/bondlots.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:21.677Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-connectors-prepared-delivery
+    title: PreparedDelivery
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:27.530Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-in-change-key
+    title: inChangeKey
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:33.218Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-transaction-auditor
+    title: transactionAuditor
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:38.536Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-call-probe
+    title: callProbe
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:43.883Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-write-probe
+    title: writeProbe
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:49.206Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-batch-probe
+    title: batchProbe
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:54.415Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-nonetwork-test-probes
+    title: probes
+    status: active
+    sourceFile: internal/ingest/app/nonetwork_test.go
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:04:59.800Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-no-network-in-change
+  - id: SYM-s9b-connectors-connectors-commit-unexported
+    title: Connectors.commit
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-14T07:15:19.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-no-network-in-change
+      - type: implements
+        target: REQ-identity-audit-no-network-in-change

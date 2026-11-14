@@ -923,3 +923,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1d60ffb2226
+  - type: implements
+    from: SYM-s9b-config-sync-config-validate
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:43:34.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a42a012e8e27
+  - type: covered_by
+    from: SYM-s9b-config-sync-config-validate
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:43:34.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b0a1a7bdac6
+  - type: implements
+    from: SYM-s9b-queue-store-save-index-readings-changed
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:56:52.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06084c8c12b
+  - type: covered_by
+    from: SYM-s9b-queue-store-save-index-readings-changed
+    to: TEST-valuation-postgres-market-data-changed
+    created_at: 2026-11-14T06:56:52.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e490f8da5c

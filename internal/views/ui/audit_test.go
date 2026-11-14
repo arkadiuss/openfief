@@ -114,6 +114,55 @@ func TestAuditLogPage(t *testing.T) {
 	wantNoBody(t, rec, "Older entries")
 }
 
+// TestAuditLogBannerFollowsTheBehindItem checks the banner on the Audit log
+// page (D-211, D-196): while the audit-log-behind attention item is open the
+// page shows what it says, the count of changes waiting, with a word on where
+// their entries will appear; with no such item, no banner; and a core that
+// can't list the items fails nothing, the page shows the log without a banner.
+func TestAuditLogBannerFollowsTheBehindItem(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		set  func(h *harness)
+		want string
+	}{
+		{name: "no item", set: func(*harness) {}},
+		{name: "an open item", set: func(h *harness) { h.attention.setAuditBehind(3) }, want: "3 changes are waiting to enter the audit log; OpenFief keeps retrying. Check the database&#39;s health."},
+		{name: "the items can't be listed", set: func(h *harness) {
+			h.attention.setAuditBehind(3)
+			h.attention.mu.Lock()
+			h.attention.unavailable = true
+			h.attention.mu.Unlock()
+		}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			tt.set(h)
+			rec := h.serve(t, withSession(request(http.MethodGet, auditPath, ""), ownerSession))
+			wantStatus(t, rec, http.StatusOK)
+			wantBody(t, rec, "Invitation cancelled")
+			if tt.want == "" {
+				wantNoBody(t, rec, "data-audit-behind")
+				return
+			}
+			wantBody(t, rec, "data-audit-behind", tt.want, "Entries of those changes will appear here")
+		})
+	}
+}
+
+// TestAuditLogBehindItemIsInTheInbox checks that the audit-log-behind item
+// shows in the Inbox by its own words and links to the Audit log, in the
+// group of data coming in.
+func TestAuditLogBehindItemIsInTheInbox(t *testing.T) {
+	t.Parallel()
+	k := attentionKindOf(kindAuditLogBehind)
+	if k.Label != "Audit log is behind" || k.Page != auditPath {
+		t.Errorf("attentionKindOf(audit-log-behind) = %+v, want its label and the Audit log page", k)
+	}
+}
+
 // TestAuditLogNamesEveryValueOfTheContract checks that the page has words for
 // every action, kind of actor and kind of record the contract has (D-211), the
 // owner's changes in every context and the operator's installs included, so a

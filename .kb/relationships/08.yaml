@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23a2802ec09c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-write-probe
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:52.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d372f6a7c2b6

@@ -122,11 +122,17 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
+	// The connector is asked before the change's transaction opens: no network
+	// call is made inside it (D-211). Only its writes are the change.
+	prepared, err := b.Connectors.PrepareBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}})
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
+	}
 	var batch ingest.Batch
 	err = audited(ctx, b.Audit, origin, sessionToken, auditBondLotAdded, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
 		var importErr error
-		if batch, importErr = b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}}); importErr != nil {
-			return importErr
+		if batch, importErr = b.Connectors.Commit(ctx, prepared); importErr != nil {
+			return fmt.Errorf("import bond lots into %s: %w", instance, importErr)
 		}
 		return b.Batches.RecordBatch(ctx, instance, &batch)
 	})
@@ -162,11 +168,8 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
-	var batch ingest.Batch
-	err = audited(ctx, b.Audit, origin, sessionToken, auditBondLotDeleted, []string{accountRef(account), instanceRef(instance)}, func(ctx context.Context) error {
-		var deleteErr error
-		batch, deleteErr = b.deleteClaimed(ctx, instance, account, key)
-		return deleteErr
+	batch, err := b.deleteClaimed(ctx, &deletion{
+		origin: origin, sessionToken: sessionToken, instance: instance, account: account, key: key,
 	})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
@@ -174,15 +177,26 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	return batch, nil
 }
 
-// deleteClaimed claims instance against its syncs, deletes the lot of
-// account that key names (deleteLot), and releases the claim; a failed
-// release fails the deletion too.
-func (b *BondLots) deleteClaimed(ctx context.Context, instance string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
+// deletion is a bond lot deletion the owner asked for: the lot key of account,
+// whose connector instance is instance.
+type deletion struct {
+	origin, sessionToken string
+	instance             string
+	account              ledger.AccountID
+	key                  ingest.BondLotKey
+}
+
+// deleteClaimed claims the instance against its syncs, deletes the lot
+// (deleteLot), and releases the claim; a failed release fails the deletion
+// too. The claim is not part of the change: it is held from before the
+// connector is asked to after the deletion's transaction commits.
+func (b *BondLots) deleteClaimed(ctx context.Context, d *deletion) (ingest.Batch, error) {
+	instance := d.instance
 	release, err := b.claim(ctx, instance)
 	if err != nil {
 		return ingest.Batch{}, err
 	}
-	batch, err := b.deleteLot(ctx, instance, account, key)
+	batch, err := b.deleteLot(ctx, d)
 	if rerr := release(); rerr != nil {
 		return ingest.Batch{}, errors.Join(err, rerr)
 	}
@@ -216,22 +230,36 @@ func (b *BondLots) claim(ctx context.Context, instance string) (func() error, er
 	}, nil
 }
 
-// deleteLot tells instance what it booked in account with key as a deleted
-// lot, and imports and records its delivery, within deleteTimeout.
-func (b *BondLots) deleteLot(ctx context.Context, instance string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
+// deleteLot tells the instance what it booked in the account with the key as a
+// deleted lot, and imports and records its delivery, within deleteTimeout.
+// The connector is asked first, outside any transaction, and only the import
+// and the record of the batch are the change, audited (D-211).
+func (b *BondLots) deleteLot(ctx context.Context, d *deletion) (ingest.Batch, error) {
 	ctx, cancel := context.WithTimeout(ctx, deleteTimeout)
 	defer cancel()
-	booked, err := b.booked(ctx, instance, account)
+	instance := d.instance
+	booked, err := b.booked(ctx, instance, d.account)
 	if err != nil {
 		return ingest.Batch{}, err
 	}
-	entries := &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}, Booked: booked}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, entries)
+	entries := &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{d.key}, Booked: booked}
+	prepared, err := b.Connectors.PrepareBondLots(ctx, instance, b.NewBatchID(), d.account, entries)
 	if err != nil {
 		return ingest.Batch{}, err
 	}
-	if err := b.Batches.RecordBatch(ctx, instance, &batch); err != nil {
-		return ingest.Batch{}, fmt.Errorf("recording the batch: %w", err)
+	var batch ingest.Batch
+	err = audited(ctx, b.Audit, d.origin, d.sessionToken, auditBondLotDeleted, []string{accountRef(d.account), instanceRef(instance)}, func(ctx context.Context) error {
+		var importErr error
+		if batch, importErr = b.Connectors.Commit(ctx, prepared); importErr != nil {
+			return fmt.Errorf("import bond lots into %s: %w", instance, importErr)
+		}
+		if recordErr := b.Batches.RecordBatch(ctx, instance, &batch); recordErr != nil {
+			return fmt.Errorf("recording the batch: %w", recordErr)
+		}
+		return nil
+	})
+	if err != nil {
+		return ingest.Batch{}, err
 	}
 	return batch, nil
 }

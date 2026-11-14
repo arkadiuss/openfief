@@ -24,6 +24,7 @@ func TestGroupOf(t *testing.T) {
 		{ingest.KindUndeclaredDeliveries, attention.GroupDataComingIn},
 		{ingest.KindUndeclaredCrossCheckPrices, attention.GroupDataComingIn},
 		{valuationapp.GapKind, attention.GroupDataComingIn},
+		{attention.KindAuditLogBehind, attention.GroupDataComingIn},
 		{attention.KindAssertionFlagged, attention.GroupNumbersToCheck},
 		{attention.KindCashCheckpointMismatch, attention.GroupNumbersToCheck},
 		{attention.KindPriceCheckFlagged, attention.GroupNumbersToCheck},
@@ -107,6 +108,7 @@ func TestScopeOf(t *testing.T) {
 			want: attention.Scope{},
 		},
 		{name: "an ungranted view plugin is tied to no account or connector", kind: attention.KindViewPluginUngranted, subject: "ghostfolio"},
+		{name: "an audit log that is behind is about the whole core", kind: attention.KindAuditLogBehind, subject: "audit-log"},
 		{name: "a maintainer's proposal is about the whole portfolio", kind: "model-target-proposal", subject: "00112233445566aa"},
 		{name: "a failing maintainer is about the whole portfolio", kind: "maintainer-failing", subject: "maintainer"},
 		{
