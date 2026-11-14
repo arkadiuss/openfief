@@ -1210,3 +1210,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbfcd5882a5d
+  - type: covered_by
+    from: SYM-askbench-rounds-round-report-fill-reply
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:20:35.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7850362b670
+  - type: implements
+    from: SYM-askbench-rounds-round-report-fill-reply
+    to: REQ-askbench-traces-each-model-round
+    created_at: 2026-11-14T23:20:35.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a740da74cb41

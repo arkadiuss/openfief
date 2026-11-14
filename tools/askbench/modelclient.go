@@ -113,6 +113,8 @@ type ModelCall struct {
 	// transport level; Retried is true for the failed first attempt, and
 	// Recovered for the one whose retry answered.
 	Retry, Retried, Recovered bool
+	// Round is what the call sent and got back, for the report's trace.
+	Round RoundReport
 }
 
 // meter counts what a run spends, across the runs that share it, and says when
@@ -239,7 +241,7 @@ func (r *modelRun) retryable(ctx context.Context) bool {
 // attempt makes one call to the model and records it. It fails with ErrBudget,
 // recording nothing, when the budget is spent.
 func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOffered int, retry bool) (ui.AskReply, error) {
-	call := ModelCall{ToolsOffered: toolsOffered, MaxTokens: req.MaxTokens, Retry: retry}
+	call := ModelCall{ToolsOffered: toolsOffered, MaxTokens: req.MaxTokens, Retry: retry, Round: sentRound(req, len(r.calls)+1, retry)}
 	if err := r.meter.allow(); err != nil {
 		r.budgetHit = true
 		return ui.AskReply{}, err
@@ -256,6 +258,7 @@ func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOf
 		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
 	}
 	call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
+	call.Round.fillReply(reply)
 	call.Cost, call.Measured = measuredCost(reply.Cost)
 	if !call.Measured {
 		call.Cost = costOf(r.model, reply.InputTokens, reply.OutputTokens)

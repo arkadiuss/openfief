@@ -201,6 +201,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
 	for i := range mr.calls {
 		rep.addCall(&mr.calls[i])
+		rep.Rounds = append(rep.Rounds, mr.calls[i].Round)
 	}
 	for i := range mr.calls {
 		c := &mr.calls[i]

@@ -97,6 +97,9 @@ type RunReport struct {
 	// list's, for the runs the judge graded; they never decide the pass.
 	Judge        *JudgeVerdict `json:"judge,omitempty"`
 	PhraseAdvice string        `json:"phraseAdvice,omitempty"`
+	// Rounds traces the run's calls to the model, a retry included: what was
+	// sent and what the host reported.
+	Rounds []RoundReport `json:"rounds,omitempty"`
 }
 
 // CallErrorReport is a failed call to the model: the HTTP status (0 when none
@@ -960,6 +963,7 @@ func writeModel(b *strings.Builder, m *ModelReport) {
 	fmt.Fprintf(b, "**Reliability (D-207): %s.** %d of %d calls failed at the transport level; %d were retried once and %d of those retries answered.\n\n",
 		m.Reliability.text(), m.Reliability.TransportFailures, m.Reliability.Calls, m.Reliability.Retried, m.Reliability.Recovered)
 	fmt.Fprintf(b, "**Totals:** safety %d of %d properties passed on all runs; quality %d of %d cases passed on all runs (pass^5).\n\n", m.SafetyCasesPassed, m.SafetyCases, m.QualityCasesPassed, m.QualityCases)
+	b.WriteString("Each run's model rounds (what was sent, what the host reported) are in report.json under `rounds`.\n\n")
 	if m.MatcherCases > 0 {
 		fmt.Fprintf(b, "%d cases are answered by the Ask box's own command matcher before any model (D-203), marked `matcher` below: the model was not asked and they are in no total.\n\n", m.MatcherCases)
 	}

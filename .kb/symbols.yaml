@@ -226561,3 +226561,155 @@ symbols:
         target: TEST-askbench-premise
       - type: implements
         target: REQ-askbench-false-premise-case
+  - id: SYM-askbench-rounds-round-report
+    title: RoundReport
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:14.926Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-sent-message
+    title: SentMessage
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:20.457Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-sent-round
+    title: sentRound
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:26.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-round-report-fill-reply
+    title: fillReply
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:32.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-truncate-chars
+    title: truncateChars
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:38.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-models-plugins-model-openai-chat-object-cached-tokens
+    title: cachedTokens
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:44.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-openaichat-cached-tokens
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-tools-askbench-finalround-test-go-testareporttraceseachroundofarunwithwhatwassentandwhatthehostreported
+    title: TestAReportTracesEachRoundOfARunWithWhatWasSentAndWhatTheHostReported
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:07.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-testaroundkeepsthecachedtokensandtoolnamesandcutslongtext
+    title: TestARoundKeepsTheCachedTokensAndToolNamesAndCutsLongText
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:12.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-plugins-model-openai-openaichat-cached-test-go-testcompletereadsthecachedtokensthehostreports
+    title: TestCompleteReadsTheCachedTokensTheHostReports
+    status: active
+    sourceFile: plugins/model-openai/openaichat/cached_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:18.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-openaichat-cached-tokens
+  - id: SYM-tools-askbench-finalround-test-go-checkfirstround
+    title: checkFirstRound
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:24:31.660Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-checksecondround
+    title: checkSecondRound
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:24:36.814Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-round-report-summary
+    title: summary
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:29:32.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds

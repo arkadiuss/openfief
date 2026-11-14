@@ -1385,3 +1385,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f6f22c8eb47
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-checksecondround
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:24:39.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb4441d410c9

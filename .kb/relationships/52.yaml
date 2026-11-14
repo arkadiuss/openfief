@@ -1224,3 +1224,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c427d7121b6
+  - type: covered_by
+    from: SYM-askbench-rounds-sent-round
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:20:29.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df5257df831c
+  - type: implements
+    from: SYM-askbench-rounds-sent-round
+    to: REQ-askbench-traces-each-model-round
+    created_at: 2026-11-14T23:20:29.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29de1f9c52af

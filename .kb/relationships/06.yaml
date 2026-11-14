@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dd7fa0a0911
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-testareporttraceseachroundofarunwithwhatwassentandwhatthehostreported
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:21:10.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9c4cba6717d

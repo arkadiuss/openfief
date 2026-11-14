@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea7032c8e05e
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-testaroundkeepsthecachedtokensandtoolnamesandcutslongtext
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:21:15.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0496c19ccde
