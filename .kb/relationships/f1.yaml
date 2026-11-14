@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15a3147dade6
+  - type: covered_by
+    from: SYM-openaichat-call-error
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T13:26:29.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e251c6247035
+  - type: implements
+    from: SYM-openaichat-call-error
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:26:29.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b4c601ff93

@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d75d26e29279
+  - type: executable_for
+    from: SYM-askbench-errors-test-status-labels
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:05.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465574601ba5

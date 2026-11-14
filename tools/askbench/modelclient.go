@@ -66,6 +66,11 @@ type ModelCall struct {
 	Latency                   time.Duration
 	// Error is the class of a failed call, "" for one that answered.
 	Error string
+	// Status is the HTTP status of a failed call, 0 when none came.
+	Status int
+	// Label is the short fixed label of a failed call's status or timeout:
+	// never any text of the provider's reply.
+	Label string
 }
 
 // meter counts what a run spends, across the runs that share it, and says when
@@ -159,6 +164,8 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 	call.Latency = r.now().Sub(started)
 	if err != nil {
 		call.Error = errorClass(err)
+		failure := callFailure(err)
+		call.Status, call.Label = failure.Status, failure.Label
 		r.calls = append(r.calls, call)
 		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
 	}
@@ -170,6 +177,57 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 		out.Calls = append(out.Calls, ui.AskCall{ID: tc.ID, Name: tc.Name, Args: tc.Arguments})
 	}
 	return out, nil
+}
+
+// The labels of a failed call, a fixed set: a status and one of these say what
+// went wrong, and nothing the provider wrote.
+const (
+	labelNoCredits     = "no credits"
+	labelKeyRefused    = "key refused"
+	labelRateLimited   = "rate limited"
+	labelProviderError = "provider error"
+	labelRejected      = "request rejected"
+	labelNoAnswer      = "no answer"
+	labelFailed        = "failed"
+)
+
+// statusLabel returns the fixed label of an HTTP status, "" when it has none.
+func statusLabel(status int) string {
+	switch {
+	case status == http.StatusPaymentRequired:
+		return labelNoCredits
+	case status == http.StatusUnauthorized:
+		return labelKeyRefused
+	case status == http.StatusTooManyRequests:
+		return labelRateLimited
+	case status >= http.StatusInternalServerError && status < statusCeiling:
+		return labelProviderError
+	case status >= http.StatusBadRequest && status < http.StatusInternalServerError:
+		return labelRejected
+	}
+	return ""
+}
+
+// statusCeiling is the first number that is no HTTP status.
+const statusCeiling = 600
+
+// callFailure returns the HTTP status of a failed call (0 when none came) and
+// its label, read from the chat client's CallError.
+func callFailure(err error) CallErrorReport {
+	var ce *openaichat.CallError
+	found := errors.As(err, &ce)
+	switch {
+	case found && ce.Status != 0:
+		if l := statusLabel(ce.Status); l != "" {
+			return CallErrorReport{Status: ce.Status, Label: l}
+		}
+		return CallErrorReport{Status: ce.Status, Label: labelFailed}
+	case found && ce.Timeout, errors.Is(err, context.DeadlineExceeded):
+		return CallErrorReport{Label: labelTimeout}
+	case found:
+		return CallErrorReport{Label: labelNoAnswer}
+	}
+	return CallErrorReport{Label: labelFailed}
 }
 
 // errorClass names why a call failed, never quoting the provider or the key.

@@ -12,6 +12,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +33,25 @@ var (
 	// ErrBadReply reports an answer that is not a chat completion.
 	ErrBadReply = errors.New("the provider's reply is not a chat completion")
 )
+
+// CallError is a failed call's error as a program reads it: errors.As finds
+// it in any error of Complete that came from the provider's HTTP status or from
+// no answer. Its text and its sentinel (ErrRejected, ErrUnavailable) are those
+// of the error it wraps, so what a user is shown does not change. It carries
+// the status code and nothing of the provider's reply or the request.
+type CallError struct {
+	// Status is the HTTP status the provider answered, 0 when it gave none.
+	Status int
+	// Timeout is true when the call ran out of time without an answer.
+	Timeout bool
+	err     error
+}
+
+// Error is the text of the wrapped error.
+func (e *CallError) Error() string { return e.err.Error() }
+
+// Unwrap returns the wrapped error, which wraps the sentinel.
+func (e *CallError) Unwrap() error { return e.err }
 
 // Client speaks the OpenAI-compatible chat completions protocol: the
 // first wire protocol (D-205), which OpenAI, OpenRouter, Ollama, vLLM, LM
@@ -228,7 +248,7 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	if err != nil {
 		// A transport error can quote the URL, never the body; the key and
 		// the request are not in it.
-		return nil, fmt.Errorf("%w: no answer from the provider", ErrUnavailable)
+		return nil, noAnswer(err)
 	}
 	raw, readErr := io.ReadAll(io.LimitReader(resp.Body, maxReplyBytes+1))
 	closeErr := resp.Body.Close()
@@ -239,6 +259,15 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 		return nil, fmt.Errorf("%w: the reply could not be read", ErrUnavailable)
 	}
 	return raw, nil
+}
+
+// noAnswer is the error of a call that got no HTTP answer, from the transport's
+// error cause, which is not quoted: it can name the URL. It says only whether
+// the call ran out of time.
+func noAnswer(cause error) error {
+	var netErr net.Error
+	timeout := errors.Is(cause, context.DeadlineExceeded) || (errors.As(cause, &netErr) && netErr.Timeout())
+	return &CallError{Timeout: timeout, err: fmt.Errorf("%w: no answer from the provider", ErrUnavailable)}
 }
 
 // parseReply reads the first choice and the usage of a chat completion.
@@ -288,7 +317,7 @@ func statusError(code int) error {
 		return nil
 	case code == http.StatusBadRequest, code == http.StatusNotFound, code == http.StatusRequestEntityTooLarge,
 		code == http.StatusUnprocessableEntity:
-		return fmt.Errorf("%w: HTTP %d", ErrRejected, code)
+		return &CallError{Status: code, err: fmt.Errorf("%w: HTTP %d", ErrRejected, code)}
 	}
-	return fmt.Errorf("%w: HTTP %d", ErrUnavailable, code)
+	return &CallError{Status: code, err: fmt.Errorf("%w: HTTP %d", ErrUnavailable, code)}
 }

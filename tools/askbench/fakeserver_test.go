@@ -25,6 +25,11 @@ type fakeModel struct {
 	firstRounds map[string]*atomic.Int64
 	// status, when not zero, is answered to every request instead of a completion.
 	status int
+	// failFirst is how many of the first requests answer failStatus; later ones
+	// are answered as usual.
+	failFirst, failStatus int
+	// seen counts the requests received.
+	seen int
 	// failureBody is the body of a failing answer.
 	failureBody string
 	// url is the server's base URL.
@@ -65,6 +70,10 @@ func (f *fakeModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	f.requests = append(f.requests, body)
 	f.auth = append(f.auth, r.Header.Get("Authorization"))
 	status, failure := f.status, f.failureBody
+	f.seen++
+	if f.seen <= f.failFirst {
+		status = f.failStatus
+	}
 	f.mu.Unlock()
 	w.Header().Set("Content-Type", "application/json")
 	if status != 0 {

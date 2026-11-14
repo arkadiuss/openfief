@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e5b566f66ee
+  - type: covered_by
+    from: SYM-askbench-report-error-count
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:22.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd4f4dcd20db
+  - type: implements
+    from: SYM-askbench-report-error-count
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:23.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-653941c550f3

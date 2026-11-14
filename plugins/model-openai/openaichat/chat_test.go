@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -273,6 +274,41 @@ func TestCompleteUnreachableProviderIsUnavailable(t *testing.T) {
 	}
 	if strings.Contains(err.Error(), addr) {
 		t.Errorf("error %q names the URL", err)
+	}
+}
+
+func TestCompleteErrorsCarryTheStatusAndNothingElse(t *testing.T) {
+	t.Parallel()
+	for _, status := range []int{400, 401, 402, 404, 429, 500, 503} {
+		t.Run(strconv.Itoa(status), func(t *testing.T) {
+			t.Parallel()
+			f, c := newFake(t, `{"error":"secret provider text `+fakeKey+`"}`)
+			f.status = status
+			_, err := c.Complete(t.Context(), &Request{Model: "m"})
+			var ce *CallError
+			if !errors.As(err, &ce) || ce.Status != status || ce.Timeout {
+				t.Fatalf("error = %#v, want a CallError of status %d", err, status)
+			}
+			if want := fmt.Sprintf("HTTP %d", status); !strings.HasSuffix(err.Error(), want) {
+				t.Errorf("error text %q does not end in %q: the text users see changed", err, want)
+			}
+			if strings.Contains(err.Error(), "secret provider text") || strings.Contains(err.Error(), fakeKey) {
+				t.Errorf("error %q quotes the provider's reply or the key", err)
+			}
+		})
+	}
+}
+
+func TestCompleteNoAnswerCarriesNoStatus(t *testing.T) {
+	t.Parallel()
+	srv := httptest.NewServer(http.NotFoundHandler())
+	addr := srv.URL
+	srv.Close()
+	c := &Client{HTTP: http.DefaultClient, BaseURL: addr, Key: func() (string, error) { return fakeKey, nil }}
+	_, err := c.Complete(t.Context(), &Request{Model: "m"})
+	var ce *CallError
+	if !errors.As(err, &ce) || ce.Status != 0 || ce.Timeout {
+		t.Fatalf("error = %#v, want a CallError with no status and no timeout", err)
 	}
 }
 

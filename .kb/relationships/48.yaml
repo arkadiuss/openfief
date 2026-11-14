@@ -1238,3 +1238,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29bd4c40bef0
+  - type: executable_for
+    from: SYM-askbench-errors-test-partial-outage-is-scored
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:59.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-937067777fd3

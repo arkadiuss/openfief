@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa093574071e
+  - type: executable_for
+    from: SYM-askbench-errors-test-check-says-could-not-run
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:47.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f8edeb39995

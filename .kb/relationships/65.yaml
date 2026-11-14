@@ -1098,3 +1098,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2744cb1a1511
+  - type: implements
+    from: SYM-askbench-report-write-model
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:29:48.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa56a3336796

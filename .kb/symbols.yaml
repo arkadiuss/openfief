@@ -217211,6 +217211,8 @@ symbols:
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
   - id: SYM-askbench-main-parse-args
     title: parseArgs
     status: active
@@ -217449,6 +217451,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-error-class
@@ -219272,6 +219276,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
@@ -219368,6 +219374,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
@@ -219415,6 +219423,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219626,6 +219636,8 @@ symbols:
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
   - id: SYM-askbench-runner-bench-grade
@@ -220940,6 +220952,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-errors-not-model-failures
+      - type: implements
         target: REQ-askbench-report
   - id: SYM-askbench-portfolio-test-changed-account-names
     title: changedAccountNames
@@ -220963,3 +220977,356 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-read-service
+  - id: SYM-openaichat-call-error
+    title: CallError
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:26.874Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-call-error-error
+    title: CallError.Error
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:32.891Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-call-error-unwrap
+    title: CallError.Unwrap
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:38.735Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-no-answer
+    title: noAnswer
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:44.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-openaichat-test-complete-errors-carry-the-status
+    title: TestCompleteErrorsCarryTheStatusAndNothingElse
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:50.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-openaichat-test-complete-no-answer-carries-no-status
+    title: TestCompleteNoAnswerCarriesNoStatus
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:26:56.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-askbench-modelclient-status-label
+    title: statusLabel
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:02.685Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-modelclient-call-failure
+    title: callFailure
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:09.018Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-call-error-report
+    title: CallErrorReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:14.401Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-count
+    title: ErrorCount
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:20.066Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-count-string
+    title: ErrorCount.String
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:26.235Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-tally-calls
+    title: tallyCalls
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:32.271Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-error-counts
+    title: errorCounts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:38.260Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-errors-text
+    title: errorsText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:44.276Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-report-could-not-run
+    title: Report.CouldNotRun
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:50.268Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-report-pass-cell
+    title: passCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:27:56.447Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-errors-not-model-failures
+  - id: SYM-askbench-errors-test-status-labels
+    title: TestStatusLabels
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:02.616Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-call-failure-is-status-and-label
+    title: TestACallFailureIsItsStatusAndALabel
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:08.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-timeout-label
+    title: TestACallThatTimesOutIsLabelledTimeoutWithNoStatus
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:14.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-unknown-error-is-failed
+    title: TestCallFailureOfAnUnknownErrorIsFailed
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:20.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-nothing-reaching-a-model
+    title: TestNothingReachingAModelCouldNotRunAndExitsTwo
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:26.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-could-not-run-report
+    title: checkCouldNotRunReport
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:32.830Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-all-errored
+    title: checkAllErrored
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:38.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-says-could-not-run
+    title: checkSaysCouldNotRun
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:44.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-no-provider-words
+    title: checkNoProviderWords
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:50.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-partial-outage-is-scored
+    title: TestAPartialOutageIsScoredAndItsErrorsAreListedNotCountedAsFailures
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:28:56.504Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-check-lists-errors
+    title: checkListsErrors
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:29:02.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-partial-outage-on-a-safety-case
+    title: TestAPartialOutageOnASafetyCaseIsNotAModelFailure
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
+      recorded_at: 2026-11-14T13:29:08.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors

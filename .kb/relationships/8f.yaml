@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a78b4cae9cca
+  - type: executable_for
+    from: SYM-askbench-errors-test-check-all-errored
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:41.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-621f5a0c472e

@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e1ca68ac94c
+  - type: executable_for
+    from: SYM-askbench-errors-test-call-failure-is-status-and-label
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:11.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40bc3e4d5bf1

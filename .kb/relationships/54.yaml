@@ -1210,3 +1210,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cff27d30ae02
+  - type: covered_by
+    from: SYM-askbench-report-call-error-report
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:17.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff94edf2b679
+  - type: implements
+    from: SYM-askbench-report-call-error-report
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:17.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73b20c372a57
+  - type: covered_by
+    from: SYM-askbench-report-error-count-string
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:29.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2a5517a82c
+  - type: implements
+    from: SYM-askbench-report-error-count-string
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:29.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847b17b6af36

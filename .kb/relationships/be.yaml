@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff221921fb95
+  - type: executable_for
+    from: SYM-askbench-errors-test-check-no-provider-words
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:53.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b578a2aa9bd

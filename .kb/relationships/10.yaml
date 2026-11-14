@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3dd4c7590b66
+  - type: covered_by
+    from: SYM-askbench-report-report-could-not-run
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:53.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55df0a162fc
+  - type: implements
+    from: SYM-askbench-report-report-could-not-run
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:53.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb076596951f

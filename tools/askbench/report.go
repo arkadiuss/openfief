@@ -45,10 +45,40 @@ type RunReport struct {
 	Cost      string `json:"cost"`
 	LatencyMs int64  `json:"latencyMs"`
 	Error     string `json:"error,omitempty"`
+	// Errored is true when a call to the model failed: the question is listed
+	// under the model's errors and is not scored, so it never reads as the
+	// model's failure.
+	Errored bool `json:"errored,omitempty"`
+	// Completions is how many calls to the model were answered, and
+	// CallErrors the calls that failed, each with its HTTP status and label.
+	Completions int               `json:"completions"`
+	CallErrors  []CallErrorReport `json:"callErrors,omitempty"`
 	// Judge and PhraseAdvice are the advice judge's grade and the phrase
 	// list's, for the runs the judge graded; they never decide the pass.
 	Judge        *JudgeVerdict `json:"judge,omitempty"`
 	PhraseAdvice string        `json:"phraseAdvice,omitempty"`
+}
+
+// CallErrorReport is a failed call to the model: the HTTP status (0 when none
+// came) and a short fixed label, never the provider's reply.
+type CallErrorReport struct {
+	Status int    `json:"status,omitempty"`
+	Label  string `json:"label"`
+}
+
+// ErrorCount is how many calls failed the same way.
+type ErrorCount struct {
+	Status int    `json:"status,omitempty"`
+	Label  string `json:"label"`
+	Calls  int    `json:"calls"`
+}
+
+// String reads like "402 no credits ×140", or "timeout ×3" with no status.
+func (e ErrorCount) String() string {
+	if e.Status == 0 {
+		return fmt.Sprintf("%s ×%d", e.Label, e.Calls)
+	}
+	return fmt.Sprintf("%d %s ×%d", e.Status, e.Label, e.Calls)
 }
 
 // CheckReport is the outcome of one scorer.
@@ -103,6 +133,9 @@ type CaseReport struct {
 	// Failures are the reasons runs failed, each with how many runs.
 	Failures []FailureCount `json:"failures,omitempty"`
 	Detail   []RunReport    `json:"runDetail"`
+	// Errored is how many runs hit a failed call to the model: they are
+	// neither passed nor failed, and Runs does not count them.
+	Errored int `json:"errored"`
 }
 
 // FailureCount is a reason some runs failed, and how many.
@@ -152,8 +185,18 @@ type ModelReport struct {
 	InputTokens  int64        `json:"inputTokens"`
 	OutputTokens int64        `json:"outputTokens"`
 	Cost         string       `json:"cost"`
-	// SafetyPassed is true when every safety case passed on all its runs.
+	// SafetyPassed is true when no safety case failed on a run the model
+	// answered; a run that hit a call error is not a failure (see ErroredRuns).
 	SafetyPassed bool `json:"safetyPassed"`
+	// Completions is how many calls to the model were answered, in all.
+	Completions int `json:"completions"`
+	// CouldNotRun is true when no call to the model was answered: the run says
+	// nothing of the model, and the bench exits as one that could not run.
+	CouldNotRun bool `json:"couldNotRun"`
+	// ErroredRuns is how many questions hit a failed call and were not scored,
+	// and Errors the failed calls by status.
+	ErroredRuns int          `json:"erroredRuns"`
+	Errors      []ErrorCount `json:"errors,omitempty"`
 }
 
 // BudgetReport is what the run spent against what it was allowed.
@@ -257,6 +300,7 @@ func (b *Bench) modelReport(mi int, tasks []task, results []RunReport) (ModelRep
 		Model: m.ID, ConfigHash: hash, Config: cfg, InputPrice: m.InputPrice.String(), OutputPrice: m.OutputPrice.String(), SafetyPassed: true,
 	}
 	var total kernel.Decimal
+	counts := map[CallErrorReport]int{}
 	for ci := range b.cases {
 		var runs []RunReport
 		for i := range tasks {
@@ -265,16 +309,33 @@ func (b *Bench) modelReport(mi int, tasks []task, results []RunReport) (ModelRep
 			}
 		}
 		cr := caseReport(&b.cases[ci], runs, b.opts.Runs)
+		mr.Completions += tallyCalls(runs, counts)
+		mr.ErroredRuns += cr.Errored
 		mr.Cases = append(mr.Cases, cr)
 		mr.InputTokens += cr.InputTokens
 		mr.OutputTokens += cr.OutputTokens
 		total = total.Add(decimalOf(cr.Cost))
-		if cr.Safety && !cr.PassAll {
+		if cr.Safety && !cr.PassAll && cr.Errored == 0 {
 			mr.SafetyPassed = false
 		}
 	}
+	mr.Errors = errorCounts(counts)
+	mr.CouldNotRun = mr.Completions == 0 && len(mr.Errors) > 0
 	mr.Cost = total.String()
 	return mr, nil
+}
+
+// tallyCalls adds the failed calls of runs to counts and returns how many calls
+// the runs had answered.
+func tallyCalls(runs []RunReport, counts map[CallErrorReport]int) int {
+	answered := 0
+	for i := range runs {
+		answered += runs[i].Completions
+		for _, ce := range runs[i].CallErrors {
+			counts[ce]++
+		}
+	}
+	return answered
 }
 
 // caseReport aggregates a case's runs.
@@ -288,11 +349,15 @@ func caseReport(c *Case, runs []RunReport, want int) CaseReport {
 		if r.NotRun || r.BudgetSpent {
 			continue
 		}
-		cr.Runs++
+		cost = cost.Add(decimalOf(r.Cost))
 		cr.InputTokens += r.InputTokens
 		cr.OutputTokens += r.OutputTokens
+		if r.Errored {
+			cr.Errored++
+			continue
+		}
+		cr.Runs++
 		latency += r.LatencyMs
-		cost = cost.Add(decimalOf(r.Cost))
 		if r.Passed {
 			cr.Passed++
 			continue
@@ -305,7 +370,7 @@ func caseReport(c *Case, runs []RunReport, want int) CaseReport {
 	if cr.Runs > 0 {
 		cr.LatencyMs = latency / int64(cr.Runs)
 	}
-	cr.PassAll = cr.Runs == want && cr.Passed == want
+	cr.PassAll = cr.Errored == 0 && cr.Runs == want && cr.Passed == want
 	cr.Failures = failureCounts(reasons)
 	return cr
 }
@@ -317,6 +382,33 @@ func decimalOf(text string) kernel.Decimal {
 		return kernel.Decimal{}
 	}
 	return d
+}
+
+// errorCounts lists the failed calls by status, the commonest first.
+func errorCounts(counts map[CallErrorReport]int) []ErrorCount {
+	out := make([]ErrorCount, 0, len(counts))
+	for ce, n := range counts {
+		out = append(out, ErrorCount{Status: ce.Status, Label: ce.Label, Calls: n})
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].Calls != out[j].Calls {
+			return out[i].Calls > out[j].Calls
+		}
+		if out[i].Status != out[j].Status {
+			return out[i].Status < out[j].Status
+		}
+		return out[i].Label < out[j].Label
+	})
+	return out
+}
+
+// errorsText lists failed calls like "402 no credits ×140, timeout ×3".
+func errorsText(errs []ErrorCount) string {
+	parts := make([]string, len(errs))
+	for i, e := range errs {
+		parts[i] = e.String()
+	}
+	return strings.Join(parts, ", ")
 }
 
 // failureCounts lists the reasons runs failed, the commonest first.
@@ -381,10 +473,15 @@ func hostOf(base string) string {
 	return u.Scheme + "://" + u.Host + u.Path
 }
 
-// Failed reports whether any model failed a safety case, and Aborted whether
-// the budget ended the run early.
+// Failed reports whether any model that answered failed a safety case.
 func (r *Report) Failed() bool {
-	return slices.ContainsFunc(r.Models, func(m ModelReport) bool { return !m.SafetyPassed })
+	return slices.ContainsFunc(r.Models, func(m ModelReport) bool { return !m.SafetyPassed && !m.CouldNotRun })
+}
+
+// CouldNotRun reports whether any model got no answered call at all, so the
+// run proves nothing of it.
+func (r *Report) CouldNotRun() bool {
+	return slices.ContainsFunc(r.Models, func(m ModelReport) bool { return m.CouldNotRun })
 }
 
 // WriteTo writes report.json and summary.md into dir.
@@ -430,10 +527,18 @@ func (r *Report) Summary() string {
 // writeModel writes one model's section of the summary.
 func writeModel(b *strings.Builder, m *ModelReport) {
 	verdict := "every safety case passed on all runs"
-	if !m.SafetyPassed {
+	switch {
+	case m.CouldNotRun:
+		verdict = "**could not run: no call reached the model, so nothing is scored**"
+	case !m.SafetyPassed:
 		verdict = "**a safety case did not pass on all runs**"
+	case m.ErroredRuns > 0:
+		verdict = "no safety case failed, but it is not proven: some questions hit call errors and were not scored"
 	}
 	fmt.Fprintf(b, "## %s\n\nConfiguration `%s`. %d input and %d output tokens, %s USD. Safety: %s.\n\n", m.Model, m.ConfigHash, m.InputTokens, m.OutputTokens, m.Cost, verdict)
+	if len(m.Errors) > 0 {
+		fmt.Fprintf(b, "Failed calls to the model (errors, not model failures): %s. %d questions hit one and are not scored.\n\n", errorsText(m.Errors), m.ErroredRuns)
+	}
 	b.WriteString("| Case | Lang | Kind | pass^5 | Runs passed | Tokens in/out | Cost USD | Latency ms | Failures |\n|---|---|---|---|---|---|---|---|---|\n")
 	for i := range m.Cases {
 		c := &m.Cases[i]
@@ -441,10 +546,20 @@ func writeModel(b *strings.Builder, m *ModelReport) {
 		if c.Safety {
 			kind += " (safety)"
 		}
-		fmt.Fprintf(b, "| %s | %s | %s | %s | %d/%d | %d/%d | %s | %d | %s |\n", c.ID, c.Lang, kind, passWord(c.PassAll), c.Passed, c.Runs,
+		fmt.Fprintf(b, "| %s | %s | %s | %s | %d/%d | %d/%d | %s | %d | %s |\n", c.ID, c.Lang, kind, passCell(c), c.Passed, c.Runs,
 			c.InputTokens, c.OutputTokens, c.Cost, c.LatencyMs, failureCell(c.Failures))
 	}
 	b.WriteString("\n")
+}
+
+// passCell is the pass^k cell of a case: "error" when a call failed and no
+// scored run failed, so a question the model never answered is not marked as
+// its failure.
+func passCell(c *CaseReport) string {
+	if c.Errored > 0 && c.Passed == c.Runs {
+		return fmt.Sprintf("error (%d not scored)", c.Errored)
+	}
+	return passWord(c.PassAll)
 }
 
 // passWord is the cell of a pass^k.

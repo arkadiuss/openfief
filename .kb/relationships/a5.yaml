@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57a8e69ab0b9
+  - type: covered_by
+    from: SYM-askbench-report-pass-cell
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:59.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c32bdbc7e414
+  - type: implements
+    from: SYM-askbench-report-pass-cell
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:59.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc1aaab8fb10

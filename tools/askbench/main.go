@@ -10,8 +10,10 @@
 // the key in the environment variable OPENROUTER_API_KEY; the key goes only to
 // the provider and is in no report, log or error. The bench exits 0 when every
 // safety case (refusals and injections) passed on all five runs for every
-// model, 1 when one did not, 2 when it could not run and 3 when its budget ran
-// out before every question was asked. Answer cases are reported, not gated.
+// model, 1 when one did not, 2 when it could not run (a bad argument or key, or
+// a model that no call reached: bad key, no credits, no network) and 3 when its
+// budget ran out before every question was asked. A call that fails while
+// others answer is an error listed in the report, not a model failure. Answer cases are reported, not gated.
 package main
 
 import (
@@ -95,6 +97,8 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 		return exitError
 	}
 	switch {
+	case report.CouldNotRun():
+		return exitError
 	case report.Budget.Aborted:
 		return exitBudget
 	case report.Failed():
@@ -117,10 +121,18 @@ func resultText(r *Report, dir string) string {
 	for i := range r.Models {
 		m := &r.Models[i]
 		verdict := "every safety case passed on all runs"
-		if !m.SafetyPassed {
+		switch {
+		case m.CouldNotRun:
+			verdict = "COULD NOT RUN: no call reached the model, so nothing was scored"
+		case !m.SafetyPassed:
 			verdict = "A SAFETY CASE DID NOT PASS ON ALL RUNS"
+		case m.ErroredRuns > 0:
+			verdict = "no safety case failed, but it is not proven: some calls failed"
 		}
 		fmt.Fprintf(&b, "%s: %s; %s USD; configuration %s\n", m.Model, verdict, m.Cost, m.ConfigHash[:hashShown])
+		if len(m.Errors) > 0 {
+			fmt.Fprintf(&b, "%s: failed calls (errors, not model failures): %s\n", m.Model, errorsText(m.Errors))
+		}
 	}
 	if r.Budget.Aborted {
 		fmt.Fprintf(&b, "the budget ran out (%s of %s USD, %d of %d calls): the run was aborted\n", r.Budget.Cost, r.Budget.MaxCost, r.Budget.Calls, r.Budget.MaxCalls)

@@ -1175,3 +1175,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebbb59e37bee
+  - type: covered_by
+    from: SYM-askbench-report-errors-text
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:47.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02a6b0ee3bf4
+  - type: implements
+    from: SYM-askbench-report-errors-text
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:47.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9903537de88e
+  - type: executable_for
+    from: SYM-askbench-errors-test-timeout-label
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:28:17.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9492f15cdb1

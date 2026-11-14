@@ -196,8 +196,19 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		rep.InputTokens += c.InputTokens
 		rep.OutputTokens += c.OutputTokens
 	}
+	for _, c := range mr.calls {
+		if c.Error == "" {
+			rep.Completions++
+			continue
+		}
+		rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
+	}
+	rep.Errored = len(rep.CallErrors) > 0
 	if err != nil {
 		rep.Error = errorText(err)
+		return rep
+	}
+	if rep.Errored {
 		return rep
 	}
 	if mr.budgetHit {

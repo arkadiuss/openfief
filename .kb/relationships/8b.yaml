@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b36dc035913
+  - type: covered_by
+    from: SYM-askbench-modelclient-status-label
+    to: TEST-askbench-errors
+    created_at: 2026-11-14T13:27:05.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39d0efb2616a
+  - type: implements
+    from: SYM-askbench-modelclient-status-label
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:27:05.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f281f8b4f565

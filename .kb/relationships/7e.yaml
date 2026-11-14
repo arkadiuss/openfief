@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-548af7a32f49
+  - type: implements
+    from: SYM-askbench-report-report-failed
+    to: REQ-askbench-errors-not-model-failures
+    created_at: 2026-11-14T13:29:42.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-545269f11328

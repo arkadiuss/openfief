@@ -172,7 +172,8 @@ github.com/cpuguy83/go-md2man/v2 v2.0.7/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6N
 github.com/cyberphone/json-canonicalization v0.0.0-20241213102144-19d51d7fe467 h1:uX1JmpONuD549D73r6cgnxyUu18Zb7yHAy5AYU0Pm4Q=
 github.com/cyberphone/json-canonicalization v0.0.0-20241213102144-19d51d7fe467/go.mod h1:uzvlm1mxhHkdfqitSA92i7Se+S9ksOn3a3qmv/kyOCw=
 github.com/datar-psa/goeval v0.1.1-0.20261114073905-618f6a04c840 h1:M67KKotcR9NnbeeBTfkBUCvkVVJFVFe/dI1XnFC8qLU=
-github.com/datar-psa/goeval v0.1.1-0.20261114073905-618f6a04c840/go.mod h1:t+GG+CEZ4Kktlx7jfPIIchp96uGGTUcL9a7opPdSlhQ=
+github.com/datar-psa/goeval v0.1.1-0.20261114114639-64d10bf3ced7 h1:L9Od/cnf5N3Pn7SOpsEHtKq2BhhK05GQddxNm9wGHAY=
+github.com/datar-psa/goeval v0.1.1-0.20261114114639-64d10bf3ced7/go.mod h1:t+GG+CEZ4Kktlx7jfPIIchp96uGGTUcL9a7opPdSlhQ=
 github.com/digitorus/pkcs7 v0.0.0-20230818184609-3a137a874352 h1:ge14PCmCvPjpMQMIAH7uKg0lrtNSOdpYsRXlwk3QbaE=
 github.com/digitorus/pkcs7 v0.0.0-20230818184609-3a137a874352/go.mod h1:SKVExuS+vpu2l9IoOc0RwqE7NYnb0JlcFHFnEJkVDzc=
 github.com/digitorus/timestamp v0.0.0-20231217203849-220c5c2851b7 h1:lxmTCgmHE1GUYL7P0MlNa00M67axePTq+9nBSGddR8I=
