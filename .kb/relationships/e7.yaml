@@ -1294,13 +1294,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa5181fa1c15
-  - type: executable_for
-    from: SYM-maintainer-portfolio-app-maintainer-test-test-refused-weekly-runs-count-as-failures
-    to: TEST-portfolio-app-maintainer
-    created_at: 2026-11-13T21:34:35.156Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b0195fd746db
   - type: covered_by
     from: SYM-maintainer-portfolio-postgres-maintainer-lock-pending
     to: TEST-portfolio-postgres-maintainer

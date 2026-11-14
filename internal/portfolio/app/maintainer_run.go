@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/portfolio"
@@ -169,8 +168,7 @@ func outcomeOf(s RunState) AuditOutcome {
 }
 
 // settle makes the Inbox say what the final run id left: its proposal's item
-// when it is still pending, and the failing item as the latest weekly runs
-// decide. A run that is not final, or unknown, changes nothing.
+// when it is still pending, and the failing item cleared when it left a note. A run that is not final, or unknown, changes nothing.
 func (m *Maintainer) settle(ctx context.Context, runID string) error {
 	run, ok, err := m.p.Runs.Run(ctx, runID)
 	if err != nil {
@@ -192,26 +190,41 @@ func (m *Maintainer) settle(ctx context.Context, runID string) error {
 	return m.settleFailing(ctx, &run)
 }
 
-// settleFailing raises the failing item when the latest FailingRuns weekly
-// runs all ended without a note, and clears it when a run left one.
+// settleFailing clears the failing item when a run left a note. Raising it is
+// the last attempt of a scheduled week's run (Weekly).
 func (m *Maintainer) settleFailing(ctx context.Context, run *Run) error {
 	if run.State == RunOK {
 		return m.clearFailing(ctx)
 	}
-	if run.Trigger != TriggerWeekly {
-		return nil
+	return nil
+}
+
+// worked works the weekly turn's run id and reports how it ended: nil for a
+// note, an *AttemptFailedError for a run that ended without one. On the final
+// attempt that also raises the failing item.
+func (m *Maintainer) worked(ctx context.Context, id string, final bool) error {
+	if err := m.Work(ctx, id); err != nil {
+		return err
 	}
-	recent, err := m.p.Runs.RecentWeekly(ctx, FailingRuns)
+	run, ok, err := m.p.Runs.Run(ctx, id)
 	if err != nil {
-		return fmt.Errorf("loading the latest weekly runs: %w", err)
+		return fmt.Errorf("loading the maintainer run: %w", err)
 	}
-	if len(recent) < FailingRuns {
+	if !ok || run.State == RunOK || run.State.Active() {
 		return nil
 	}
-	if slices.Contains(recent, RunOK) {
-		return nil
+	if final {
+		if err := m.raiseFailing(ctx, run.Class); err != nil {
+			return err
+		}
 	}
-	detail := fmt.Sprintf("The maintainer's weekly run has ended without a note %d times in a row; the last one ended as %q.", FailingRuns, run.Class)
+	return &AttemptFailedError{Class: run.Class, Final: final}
+}
+
+// raiseFailing raises the failing item: the scheduled week's run ended
+// without a note in every attempt, the last in class.
+func (m *Maintainer) raiseFailing(ctx context.Context, class string) error {
+	detail := fmt.Sprintf("The maintainer's scheduled run ended without a note in all %d attempts; the last one ended as %q.", WeeklyAttempts, class)
 	if err := m.p.Decisions.Raise(ctx, KindMaintainerFailing, FailingSubject, detail); err != nil {
 		return fmt.Errorf("raising the failing item: %w", err)
 	}

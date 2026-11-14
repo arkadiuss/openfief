@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -11,6 +12,7 @@ import (
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/rivertype"
 
+	"github.com/arkadiuss/openfief/internal/portfolio/app"
 	"github.com/arkadiuss/openfief/internal/portfolio/jobs"
 )
 
@@ -19,12 +21,14 @@ var errQuote = errors.New("a failure that quotes ETFA 63.1 and a note")
 // fakeRunner records the calls and fails with err.
 type fakeRunner struct {
 	weekly int
+	finals []bool
 	worked []string
 	err    error
 }
 
-func (f *fakeRunner) Weekly(context.Context) (string, error) {
+func (f *fakeRunner) Weekly(_ context.Context, final bool) (string, error) {
 	f.weekly++
+	f.finals = append(f.finals, final)
 	return "", f.err
 }
 
@@ -34,7 +38,15 @@ func (f *fakeRunner) Work(_ context.Context, id string) error {
 }
 
 func job(runID string) *river.Job[jobs.RunMaintainer] {
-	return &river.Job[jobs.RunMaintainer]{JobRow: &rivertype.JobRow{Attempt: 1}, Args: jobs.RunMaintainer{RunID: runID}}
+	return attemptJob(runID, 1)
+}
+
+// attemptJob is the job of runID at attempt n of the three the weekly turn gets.
+func attemptJob(runID string, n int) *river.Job[jobs.RunMaintainer] {
+	return &river.Job[jobs.RunMaintainer]{
+		JobRow: &rivertype.JobRow{Attempt: n, MaxAttempts: app.WeeklyAttempts},
+		Args:   jobs.RunMaintainer{RunID: runID},
+	}
 }
 
 func newWorker(t *testing.T) (*jobs.Worker, *jobs.Late) {
@@ -126,14 +138,61 @@ func TestWorkerHandsRiverNoText(t *testing.T) {
 	}
 }
 
-func TestPeriodicWeeklyJobHasOneAttemptAndNoRun(t *testing.T) {
+func TestPeriodicWeeklyJobHasTheWeeksAttemptsAndNoRun(t *testing.T) {
 	t.Parallel()
 	args, opts := jobs.WeeklyJob()
 	if args.RunID != "" {
 		t.Errorf("the schedule's job = %+v, want the weekly turn (no run ID)", args)
 	}
-	if opts == nil || opts.MaxAttempts != 1 {
-		t.Errorf("the schedule's insert options = %+v, want one attempt", opts)
+	if opts == nil || opts.MaxAttempts != app.WeeklyAttempts || app.WeeklyAttempts != 3 {
+		t.Errorf("the schedule's insert options = %+v, want %d attempts", opts, app.WeeklyAttempts)
+	}
+}
+
+func TestWeeklyTurnKnowsItsLastAttempt(t *testing.T) {
+	t.Parallel()
+	w, late := newWorker(t)
+	r := &fakeRunner{}
+	late.Set(r)
+	for n := 1; n <= app.WeeklyAttempts; n++ {
+		if err := w.Work(t.Context(), attemptJob("", n)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if want := []bool{false, false, true}; !slices.Equal(r.finals, want) {
+		t.Errorf("final flags = %v, want %v", r.finals, want)
+	}
+}
+
+func TestAFailedAttemptReachesRiverAsItsClassAlone(t *testing.T) {
+	t.Parallel()
+	w, late := newWorker(t)
+	late.Set(&fakeRunner{err: &app.AttemptFailedError{Class: "unavailable"}})
+	err := w.Work(t.Context(), attemptJob("", 1))
+	je, ok := errors.AsType[*jobs.JobError](err)
+	if !ok || !strings.Contains(je.Safe, "unavailable") {
+		t.Errorf("error = %v, want a *jobs.JobError naming the class", err)
+	}
+}
+
+func TestWeeklyRetriesWaitAQuarterOfAnHourThenAnHour(t *testing.T) {
+	t.Parallel()
+	w, _ := newWorker(t)
+	for _, tt := range []struct {
+		attempt int
+		want    time.Duration
+	}{{1, 15 * time.Minute}, {2, time.Hour}} {
+		before := time.Now()
+		got := w.NextRetry(attemptJob("", tt.attempt))
+		if d := got.Sub(before); d < tt.want || d > tt.want+time.Minute {
+			t.Errorf("retry after attempt %d in %v, want %v", tt.attempt, d, tt.want)
+		}
+		if jobs.RetryDelay(tt.attempt) != tt.want {
+			t.Errorf("RetryDelay(%d) = %v, want %v", tt.attempt, jobs.RetryDelay(tt.attempt), tt.want)
+		}
+	}
+	if got := w.NextRetry(attemptJob("00112233445566aa", 1)); !got.IsZero() {
+		t.Errorf("an owner's run is retried at %v, want River's default backoff", got)
 	}
 }
 

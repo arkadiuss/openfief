@@ -201008,16 +201008,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-app-maintainer
-  - id: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-recent-weekly
-    title: memStore.RecentWeekly
-    status: active
-    sourceFile: internal/portfolio/app/maintainer_fakes_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:26:55.135Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-app-maintainer
   - id: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-pending-proposals
     title: memStore.PendingProposals
     status: active
@@ -201847,46 +201837,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-app-maintainer
-  - id: SYM-maintainer-portfolio-app-maintainer-test-fail-weekly
-    title: failWeekly
-    status: active
-    sourceFile: internal/portfolio/app/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:34:17.213Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-app-maintainer
-  - id: SYM-maintainer-portfolio-app-maintainer-test-test-the-failing-item-needs-two-weekly-failures-in-arow
-    title: TestTheFailingItemNeedsTwoWeeklyFailuresInARow
-    status: active
-    sourceFile: internal/portfolio/app/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:34:22.411Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-app-maintainer
-  - id: SYM-maintainer-portfolio-app-maintainer-test-test-anote-clears-the-failing-item-and-ends-the-streak
-    title: TestANoteClearsTheFailingItemAndEndsTheStreak
-    status: active
-    sourceFile: internal/portfolio/app/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:34:27.596Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-app-maintainer
-  - id: SYM-maintainer-portfolio-app-maintainer-test-test-refused-weekly-runs-count-as-failures
-    title: TestRefusedWeeklyRunsCountAsFailures
-    status: active
-    sourceFile: internal/portfolio/app/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:34:32.803Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-app-maintainer
   - id: SYM-maintainer-portfolio-connectapi-maintainer-new-maintainer
     title: NewMaintainer
     status: active
@@ -202142,16 +202092,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T21:36:31.220Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-connectapi-maintainer
-  - id: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-recent-weekly
-    title: stubStore.RecentWeekly
-    status: active
-    sourceFile: internal/portfolio/connectapi/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:36:37.133Z
     relationships:
       - type: executable_for
         target: TEST-portfolio-connectapi-maintainer
@@ -202904,16 +202844,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-jobs-maintainer
-  - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-periodic-weekly-job-has-one-attempt-and-no-run
-    title: TestPeriodicWeeklyJobHasOneAttemptAndNoRun
-    status: active
-    sourceFile: internal/portfolio/jobs/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:43:02.675Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-jobs-maintainer
   - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-new-needs-what-it-runs
     title: TestNewNeedsWhatItRuns
     status: active
@@ -203475,19 +203405,6 @@ symbols:
         target: TEST-portfolio-postgres-maintainer
       - type: implements
         target: REQ-decision-d204-2-note-and-proposals
-  - id: SYM-maintainer-portfolio-postgres-maintainer-store-recent-weekly
-    title: Store.RecentWeekly
-    status: active
-    sourceFile: internal/portfolio/postgres/maintainer.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:47:18.429Z
-    relationships:
-      - type: covered_by
-        target: TEST-portfolio-postgres-maintainer
-      - type: implements
-        target: REQ-maintainer-failure-no-note-attention
   - id: SYM-maintainer-portfolio-postgres-maintainer-store-pending-proposals
     title: Store.PendingProposals
     status: active
@@ -203789,16 +203706,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-13T21:50:00.509Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-postgres-maintainer
-  - id: SYM-maintainer-portfolio-postgres-maintainer-test-test-recent-weekly-ignores-owner-runs-and-active-ones
-    title: TestRecentWeeklyIgnoresOwnerRunsAndActiveOnes
-    status: active
-    sourceFile: internal/portfolio/postgres/maintainer_test.go
-    origin:
-      kind: agent
-      recorded_at: 2026-11-13T21:50:07.451Z
     relationships:
       - type: executable_for
         target: TEST-portfolio-postgres-maintainer
@@ -209092,3 +208999,231 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-audit
+  - id: SYM-maintainer-portfolio-app-maintainer-run-maintainer-raise-failing
+    title: Maintainer.raiseFailing
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_run.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:24.745Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-maintainer-portfolio-jobs-maintainer-worker-next-retry
+    title: Worker.NextRetry
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:30.853Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-jobs-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-maintainer-portfolio-jobs-maintainer-retry-delay
+    title: RetryDelay
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:36.697Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-jobs-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-maintainer-portfolio-app-maintainer-test-fail-attempt
+    title: failAttempt
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:42.432Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-the-failing-item-needs-every-attempt-of-the-week-to-fail
+    title: TestTheFailingItemNeedsEveryAttemptOfTheWeekToFail
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:47.896Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-every-attempt-is-kept-with-its-class
+    title: TestEveryAttemptIsKeptWithItsClass
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:53.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-aweek-that-succeeds-on-alater-attempt-raises-nothing
+    title: TestAWeekThatSucceedsOnALaterAttemptRaisesNothing
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:47:58.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-an-owners-failed-run-does-not-count
+    title: TestAnOwnersFailedRunDoesNotCount
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:04.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-anote-clears-the-failing-item
+    title: TestANoteClearsTheFailingItem
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:09.405Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-refused-weekly-attempts-count-as-failures
+    title: TestRefusedWeeklyAttemptsCountAsFailures
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:14.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-test-test-aretry-after-the-maintainer-was-turned-off-runs-nothing-and-clears-the-item
+    title: TestARetryAfterTheMaintainerWasTurnedOffRunsNothingAndClearsTheItem
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:20.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-maintainer
+  - id: SYM-maintainer-portfolio-jobs-maintainer-test-attempt-job
+    title: attemptJob
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:25.051Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-jobs-maintainer
+  - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-periodic-weekly-job-has-the-weeks-attempts-and-no-run
+    title: TestPeriodicWeeklyJobHasTheWeeksAttemptsAndNoRun
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:29.977Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-jobs-maintainer
+  - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-weekly-turn-knows-its-last-attempt
+    title: TestWeeklyTurnKnowsItsLastAttempt
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:35.076Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-jobs-maintainer
+  - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-afailed-attempt-reaches-river-as-its-class-alone
+    title: TestAFailedAttemptReachesRiverAsItsClassAlone
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:40.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-jobs-maintainer
+  - id: SYM-maintainer-portfolio-jobs-maintainer-test-test-weekly-retries-wait-aquarter-of-an-hour-then-an-hour
+    title: TestWeeklyRetriesWaitAQuarterOfAnHourThenAnHour
+    status: active
+    sourceFile: internal/portfolio/jobs/maintainer_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:48:45.388Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-jobs-maintainer
+  - id: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-type
+    title: AttemptFailedError
+    status: active
+    sourceFile: internal/portfolio/app/maintainer.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:56:26.522Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-error
+    title: AttemptFailedError.Error
+    status: active
+    sourceFile: internal/portfolio/app/maintainer.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-13T23:56:31.973Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-maintainer-portfolio-app-maintainer-maintainer-worked
+    title: Maintainer.worked
+    status: active
+    sourceFile: internal/portfolio/app/maintainer_run.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:00:38.368Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-maintainer
+      - type: implements
+        target: REQ-maintainer-failure-no-note-attention

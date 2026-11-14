@@ -1441,3 +1441,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a34eb2f0229c
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-weekly-turn-knows-its-last-attempt
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:48:37.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bba9614e6f5

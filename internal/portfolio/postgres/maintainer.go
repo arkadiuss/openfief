@@ -232,26 +232,6 @@ func (s *Store) LatestRun(ctx context.Context) (app.Run, bool, error) {
 	return run, true, nil
 }
 
-// RecentWeekly returns the states of the latest limit final weekly runs,
-// newest first.
-func (s *Store) RecentWeekly(ctx context.Context, limit int) ([]app.RunState, error) {
-	rows, err := s.db.Query(ctx, `
-		SELECT state FROM portfolio.maintainer_runs
-		WHERE trigger = 'weekly' AND state IN ('ok', 'refused', 'failed') ORDER BY updated_at DESC, id DESC LIMIT $1`, limit)
-	if err != nil {
-		return nil, fmt.Errorf("loading the latest weekly runs: %w", err)
-	}
-	states, err := pgx.CollectRows(rows, pgx.RowTo[string])
-	if err != nil {
-		return nil, fmt.Errorf("loading the latest weekly runs: %w", err)
-	}
-	out := make([]app.RunState, 0, len(states))
-	for _, st := range states {
-		out = append(out, app.RunState(st))
-	}
-	return out, nil
-}
-
 // PendingProposals returns the IDs of the proposals waiting for the owner,
 // oldest first.
 func (s *Store) PendingProposals(ctx context.Context) ([]string, error) {

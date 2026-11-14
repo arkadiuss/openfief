@@ -561,7 +561,7 @@ func TestOverviewShowsRunningAndTheOwnersLastFailure(t *testing.T) {
 // weekly runs the schedule's turn and returns the run it worked.
 func weekly(t *testing.T, r *maintainerRig) string {
 	t.Helper()
-	id, err := r.m.Weekly(t.Context())
+	id, err := r.m.Weekly(t.Context(), true)
 	if err != nil {
 		t.Fatalf("Weekly: %v", err)
 	}
@@ -629,75 +629,151 @@ func TestWeeklyTakesOverARunThatWasLost(t *testing.T) {
 // failingItem is the key of the maintainer's failing item.
 const failingItem = app.KindMaintainerFailing + "/" + app.FailingSubject
 
-// failWeekly has the model fail and runs the schedule's turn a week on.
-func failWeekly(t *testing.T, r *maintainerRig) {
+// failAttempt has the model fail in class and runs one attempt of the
+// schedule's turn, which must report an *app.AttemptFailedError of that class.
+func failAttempt(t *testing.T, r *maintainerRig, class string, final bool) {
 	t.Helper()
-	r.advance(7 * 24 * time.Hour)
-	r.asker.err = &app.AskError{Class: "unavailable"}
-	weekly(t, r)
+	r.asker.err = &app.AskError{Class: class}
+	_, err := r.m.Weekly(t.Context(), final)
+	failed, ok := errors.AsType[*app.AttemptFailedError](err)
+	if !ok || failed.Class != class || failed.Final != final {
+		t.Fatalf("Weekly(final=%v) = %v, want an *AttemptFailedError of class %q", final, err, class)
+	}
 }
 
-func TestTheFailingItemNeedsTwoWeeklyFailuresInARow(t *testing.T) {
+func TestTheFailingItemNeedsEveryAttemptOfTheWeekToFail(t *testing.T) {
 	t.Parallel()
 	r := newRig(t)
-	failWeekly(t, r)
-	if _, open := r.decisions.open[failingItem]; open {
-		t.Fatal("one failed weekly run raised the item")
+	for attempt := 1; attempt < app.WeeklyAttempts; attempt++ {
+		failAttempt(t, r, "unavailable", false)
+		if _, open := r.decisions.open[failingItem]; open {
+			t.Fatalf("attempt %d of %d raised the item", attempt, app.WeeklyAttempts)
+		}
+		r.advance(time.Hour)
 	}
-	// An owner's failed ask doesn't count as a weekly one.
-	r.advance(time.Hour)
-	work(t, r, ask(t, r))
-	if _, open := r.decisions.open[failingItem]; open {
-		t.Fatal("an owner's failed run raised the item")
-	}
-	failWeekly(t, r)
+	failAttempt(t, r, "unavailable", true)
 	detail, open := r.decisions.open[failingItem]
 	if !open {
-		t.Fatal("two failed weekly runs in a row raised no item")
+		t.Fatal("a week whose every attempt failed raised no item")
 	}
 	if !strings.Contains(detail, "unavailable") || strings.Contains(detail, "ETF") {
 		t.Errorf("detail = %q, want the class and no figure or name", detail)
 	}
 }
 
-func TestANoteClearsTheFailingItemAndEndsTheStreak(t *testing.T) {
+func TestEveryAttemptIsKeptWithItsClass(t *testing.T) {
 	t.Parallel()
 	r := newRig(t)
-	failWeekly(t, r)
-	failWeekly(t, r)
-	if _, open := r.decisions.open[failingItem]; !open {
-		t.Fatal("two failed weekly runs in a row raised no item")
+	classes := []string{"unavailable", "rejected", "unavailable"}
+	for i, class := range classes {
+		failAttempt(t, r, class, i == len(classes)-1)
+		r.advance(time.Hour)
 	}
-	// The owner's good run clears it, and the weekly runs are counted on their own:
-	// a third failed one in a row raises it again.
+	if len(r.store.runs) != len(classes) {
+		t.Fatalf("%d runs kept, want one for each of the %d attempts", len(r.store.runs), len(classes))
+	}
+	for i, run := range r.store.runs {
+		if run.Trigger != app.TriggerWeekly || run.State != app.RunFailed || run.Class != classes[i] {
+			t.Errorf("attempt %d = %s/%s/%q, want weekly/failed/%q", i+1, run.Trigger, run.State, run.Class, classes[i])
+		}
+	}
+	for _, rec := range r.audit.records {
+		if rec.Event == app.AuditRun && rec.Class == "" {
+			t.Errorf("an attempt's audit entry has no class: %+v", rec)
+		}
+	}
+}
+
+func TestAWeekThatSucceedsOnALaterAttemptRaisesNothing(t *testing.T) {
+	t.Parallel()
+	r := newRig(t)
+	failAttempt(t, r, "unavailable", false)
+	r.advance(15 * time.Minute)
+	r.asker.err, r.asker.content = nil, answerJSON(t, "Second try.")
+	weekly(t, r)
+	if _, open := r.decisions.open[failingItem]; open {
+		t.Error("a week that left a note raised the failing item")
+	}
+	if ov := overviewOf(t, r, ownerToken); ov.Note == nil {
+		t.Error("the later attempt left no note")
+	}
+}
+
+func TestAnOwnersFailedRunDoesNotCount(t *testing.T) {
+	t.Parallel()
+	r := newRig(t)
+	r.asker.err = &app.AskError{Class: "unavailable"}
+	for range app.WeeklyAttempts + 1 {
+		work(t, r, ask(t, r))
+		r.advance(time.Hour)
+	}
+	if _, open := r.decisions.open[failingItem]; open {
+		t.Error("owner-asked failures raised the item")
+	}
+	// A scheduled week that fails in full still raises it, whatever the owner's runs did before.
+	for attempt := 1; attempt <= app.WeeklyAttempts; attempt++ {
+		failAttempt(t, r, "unavailable", attempt == app.WeeklyAttempts)
+		r.advance(time.Hour)
+	}
+	if _, open := r.decisions.open[failingItem]; !open {
+		t.Error("a failed week raised no item")
+	}
+}
+
+func TestANoteClearsTheFailingItem(t *testing.T) {
+	t.Parallel()
+	r := newRig(t)
+	failAttempt(t, r, "unavailable", true)
+	if _, open := r.decisions.open[failingItem]; !open {
+		t.Fatal("a failed week raised no item")
+	}
+	// The owner's good run clears it.
 	r.advance(time.Hour)
 	r.asker.err, r.asker.content = nil, answerJSON(t, "Back.")
 	work(t, r, ask(t, r))
 	if _, open := r.decisions.open[failingItem]; open {
 		t.Fatal("a run with a note left the failing item open")
 	}
-	failWeekly(t, r)
+	// The next failed week raises it again, and the next scheduled success clears it.
+	r.advance(7 * 24 * time.Hour)
+	failAttempt(t, r, "unavailable", true)
 	if _, open := r.decisions.open[failingItem]; !open {
-		t.Fatal("a third failed weekly run in a row did not raise the item again")
+		t.Fatal("a second failed week did not raise the item again")
 	}
-	// A weekly run with a note ends the streak: one failure after it raises nothing.
 	r.advance(7 * 24 * time.Hour)
 	r.asker.err = nil
 	weekly(t, r)
-	failWeekly(t, r)
 	if _, open := r.decisions.open[failingItem]; open {
-		t.Error("one failure after a weekly success raised the item")
+		t.Error("a scheduled run with a note left the failing item open")
 	}
 }
 
-func TestRefusedWeeklyRunsCountAsFailures(t *testing.T) {
+func TestRefusedWeeklyAttemptsCountAsFailures(t *testing.T) {
 	t.Parallel()
 	r := newRig(t)
-	r.asker.err = &app.AskError{Class: app.ClassDenied}
-	weekly(t, r)
-	r.advance(7 * 24 * time.Hour)
-	weekly(t, r)
+	for attempt := 1; attempt <= app.WeeklyAttempts; attempt++ {
+		failAttempt(t, r, app.ClassDenied, attempt == app.WeeklyAttempts)
+		r.advance(time.Hour)
+	}
 	if _, open := r.decisions.open[failingItem]; !open {
-		t.Error("two weekly runs refused by the router raised no item")
+		t.Error("a week whose every attempt the router refused raised no item")
+	}
+	if run := r.store.runs[0]; run.State != app.RunRefused {
+		t.Errorf("the first attempt = %s, want refused", run.State)
+	}
+}
+
+func TestARetryAfterTheMaintainerWasTurnedOffRunsNothingAndClearsTheItem(t *testing.T) {
+	t.Parallel()
+	r := newRig(t)
+	failAttempt(t, r, "unavailable", false)
+	r.gate.on = false
+	r.decisions.open[failingItem] = "stale"
+	calls := len(r.asker.calls)
+	if id, err := r.m.Weekly(t.Context(), true); id != "" || err != nil {
+		t.Errorf("Weekly with the maintainer off = %q, %v; want nothing", id, err)
+	}
+	if len(r.asker.calls) != calls || len(r.decisions.open) != 0 {
+		t.Errorf("a retry of an off maintainer called the model or left an item: %v", r.decisions.open)
 	}
 }

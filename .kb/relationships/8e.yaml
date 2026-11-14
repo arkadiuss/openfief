@@ -1154,13 +1154,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f0fc5b0cf8e
-  - type: executable_for
-    from: SYM-maintainer-portfolio-app-maintainer-fakes-test-mem-store-recent-weekly
-    to: TEST-portfolio-app-maintainer
-    created_at: 2026-11-13T21:26:57.976Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5fd60b6660cc
   - type: covered_by
     from: SYM-maintainer-portfolio-jobs-maintainer-weekly-job
     to: TEST-portfolio-jobs-maintainer

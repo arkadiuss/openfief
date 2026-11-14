@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30e2f7ba9c69
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-aretry-after-the-maintainer-was-turned-off-runs-nothing-and-clears-the-item
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:48:22.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c611e527dbe9

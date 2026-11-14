@@ -924,13 +924,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a057de7611d0
   - type: executable_for
-    from: SYM-maintainer-portfolio-connectapi-maintainer-test-stub-store-recent-weekly
-    to: TEST-portfolio-connectapi-maintainer
-    created_at: 2026-11-13T21:36:39.856Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e4ea1de86284
-  - type: executable_for
     from: SYM-maintainer-portfolio-connectapi-maintainer-test-test-apply-and-dismiss-map-the-use-cases-errors
     to: TEST-portfolio-connectapi-maintainer
     created_at: 2026-11-13T21:39:09.731Z

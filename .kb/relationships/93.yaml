@@ -1266,3 +1266,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1107576f2e8b
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-the-failing-item-needs-every-attempt-of-the-week-to-fail
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:47:50.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a1d639aeeb1

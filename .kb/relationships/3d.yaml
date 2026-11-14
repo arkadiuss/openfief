@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-751e8457c1c6
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-aweek-that-succeeds-on-alater-attempt-raises-nothing
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:48:01.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cc7aa58914

@@ -825,10 +825,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c11e722c588a
-  - type: executable_for
-    from: SYM-maintainer-portfolio-postgres-maintainer-test-test-recent-weekly-ignores-owner-runs-and-active-ones
-    to: TEST-portfolio-postgres-maintainer
-    created_at: 2026-11-13T21:50:10.828Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a658682930c

@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57d34384f183
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-afailed-attempt-reaches-river-as-its-class-alone
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:48:42.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6156d3ef5a0

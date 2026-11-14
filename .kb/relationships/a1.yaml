@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fa47c945a15
+  - type: executable_for
+    from: SYM-maintainer-portfolio-app-maintainer-test-test-an-owners-failed-run-does-not-count
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:48:06.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5b7c9612611

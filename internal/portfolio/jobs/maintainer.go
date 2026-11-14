@@ -34,8 +34,17 @@ const (
 	daysInWeek = 7
 	// weeklyHour and weeklyMinute are when the weekly run is due, Monday.
 	weeklyHour, weeklyMinute = 6, 30
-	// maxAttempts is how many times an owner's run is tried.
-	maxAttempts = 3
+	// maxAttempts is how many times a job is tried: an owner's run only when
+	// its worker fails, the weekly turn once for each of the week's attempts.
+	maxAttempts = app.WeeklyAttempts
+)
+
+// The delays before the weekly turn's retries (D-198's pattern): the second
+// attempt a quarter of an hour after the first ended, the third an hour after
+// the second.
+const (
+	firstRetryDelay  = 15 * time.Minute
+	secondRetryDelay = time.Hour
 )
 
 // WeeklyTime is when the maintainer's weekly run is due: Monday at 06:30 in
@@ -76,14 +85,15 @@ type RunMaintainer struct {
 func (RunMaintainer) Kind() string { return "portfolio.run_maintainer" }
 
 // InsertOpts puts the job on Queue, with three attempts: the retry of an
-// owner's run takes over the run its earlier attempt left running.
+// owner's run takes over the run its earlier attempt left running, and the
+// weekly turn's are its week's attempts.
 func (RunMaintainer) InsertOpts() river.InsertOpts {
 	return river.InsertOpts{Queue: Queue, MaxAttempts: maxAttempts}
 }
 
 // Runner is what a job calls: *app.Maintainer.
 type Runner interface {
-	Weekly(ctx context.Context) (string, error)
+	Weekly(ctx context.Context, final bool) (string, error)
 	Work(ctx context.Context, runID string) error
 }
 
@@ -118,7 +128,7 @@ func (w *Worker) Work(ctx context.Context, job *river.Job[RunMaintainer]) error 
 	r := *p
 	var err error
 	if job.Args.RunID == "" {
-		_, err = r.Weekly(ctx)
+		_, err = r.Weekly(ctx, job.Attempt >= job.MaxAttempts)
 	} else {
 		err = r.Work(ctx, job.Args.RunID)
 	}
@@ -126,8 +136,31 @@ func (w *Worker) Work(ctx context.Context, job *river.Job[RunMaintainer]) error 
 		return nil
 	}
 	safe := kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded, app.ErrRunInProgress, app.ErrMaintainerOff)
+	if failed, ok := errors.AsType[*app.AttemptFailedError](err); ok {
+		// The class is one of a fixed set and names no text of a note.
+		safe = failed.Error()
+	}
 	w.log.LogAttrs(ctx, slog.LevelError, "maintainer job failed", slog.String("error", safe), slog.Int("attempt", job.Attempt))
 	return &JobError{Safe: safe}
+}
+
+// NextRetry spaces the weekly turn's attempts: a quarter of an hour after the
+// first, an hour after the second. An owner's run keeps River's default
+// backoff, since it is retried only when the core failed to store it.
+func (*Worker) NextRetry(job *river.Job[RunMaintainer]) time.Time {
+	if job.Args.RunID != "" {
+		return time.Time{}
+	}
+	return time.Now().Add(RetryDelay(job.Attempt))
+}
+
+// RetryDelay is how long the weekly turn waits after attempt number attempt
+// (1 for the first) failed.
+func RetryDelay(attempt int) time.Duration {
+	if attempt <= 1 {
+		return firstRetryDelay
+	}
+	return secondRetryDelay
 }
 
 // JobError is what the worker hands River for a failed job: the failure
@@ -156,11 +189,11 @@ func New(late *Late, weekly river.PeriodicSchedule, log *slog.Logger) (*Worker, 
 	return &Worker{late: late, log: log}, periodic, nil
 }
 
-// WeeklyJob is what the schedule inserts: the weekly turn, with one attempt,
-// since the next week's turn is the retry and a run that failed is counted
-// (app.FailingRuns).
+// WeeklyJob is what the schedule inserts: the weekly turn, with the week's
+// attempts (app.WeeklyAttempts), the later ones after NextRetry's delays. A
+// week whose attempts all end without a note raises the failing item.
 func WeeklyJob() (RunMaintainer, *river.InsertOpts) {
-	return RunMaintainer{}, &river.InsertOpts{MaxAttempts: 1}
+	return RunMaintainer{}, &river.InsertOpts{MaxAttempts: app.WeeklyAttempts}
 }
 
 // Queued enqueues the job of a run the owner asked for: it is the

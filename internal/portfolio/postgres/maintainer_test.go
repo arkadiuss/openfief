@@ -294,34 +294,9 @@ func TestRefusedAndFailedRunsLeaveNoNote(t *testing.T) {
 	if hasNote(ctx, t, store) {
 		t.Error("a run that left no note has one")
 	}
-	got, err := store.RecentWeekly(ctx, 5)
-	if err != nil || cmp.Diff([]app.RunState{app.RunFailed, app.RunRefused}, got) != "" {
-		t.Errorf("RecentWeekly = %v, %v; want failed, refused (newest first)", got, err)
-	}
 	latest, ok, err := store.LatestRun(ctx)
 	if err != nil || !ok || latest.ID != run2 || latest.Class != "unavailable" {
 		t.Errorf("LatestRun = %+v, %v, %v", latest, ok, err)
-	}
-}
-
-func TestRecentWeeklyIgnoresOwnerRunsAndActiveOnes(t *testing.T) {
-	t.Parallel()
-	store, _ := sixtyForty(t)
-	ctx := t.Context()
-	triggers := map[string]app.RunTrigger{run1: app.TriggerWeekly, run2: app.TriggerOwner, run3: app.TriggerWeekly}
-	for i, id := range []string{run1, run2, run3} {
-		at := clock().Add(time.Duration(i) * time.Hour)
-		queueAndStart(ctx, t, store, id, triggers[id], at)
-		if id == run3 {
-			break // still running
-		}
-		if _, err := store.FinishRun(ctx, &app.RunFinish{RunID: id, State: app.RunFailed, Class: "internal", At: at.Add(time.Minute)}); err != nil {
-			t.Fatal(err)
-		}
-	}
-	got, err := store.RecentWeekly(ctx, 5)
-	if err != nil || cmp.Diff([]app.RunState{app.RunFailed}, got) != "" {
-		t.Errorf("RecentWeekly = %v, %v; want only the one final weekly run", got, err)
 	}
 }
 

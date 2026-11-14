@@ -30,12 +30,14 @@ var (
 	ErrProposalDecided = errors.New("the proposal is already decided")
 )
 
-// FailingRuns is how many weekly runs in a row must end without a note
-// before the Inbox says so (D-196). One is a hiccup of a provider the route's
-// fallbacks and next week's run cover; two is a fortnight with no note, which
-// is the owner's to look at: a route with no model that may receive the data,
-// a key that stopped working or a provider that is gone.
-const FailingRuns = 2
+// WeeklyAttempts is how many times a scheduled week's run is tried within its
+// window (D-198's pattern): the first at the slot, a second a quarter of an
+// hour later and a third an hour after that. One failed attempt is a hiccup of
+// a provider; a week whose every attempt ended without a note is the owner's
+// to look at: a route with no model that may receive the data, a key that
+// stopped working or a provider that is gone. The jobs package sets the
+// delays.
+const WeeklyAttempts = 3
 
 // Attention kinds the maintainer raises (D-196), both among the decisions.
 const (
@@ -43,8 +45,9 @@ const (
 	// owner to apply or dismiss (D-204). Subject: the proposal's ID, which is
 	// its run's.
 	KindTargetProposal = "model-target-proposal"
-	// KindMaintainerFailing is a maintainer whose weekly run has failed
-	// FailingRuns times in a row. Subject: "maintainer". It clears when a run
+	// KindMaintainerFailing is a maintainer whose scheduled week's run ended
+	// without a note in all of its WeeklyAttempts attempts; an owner's run
+	// that fails doesn't count. Subject: "maintainer". It clears when a run
 	// leaves a note, or when the maintainer is turned off.
 	KindMaintainerFailing = "maintainer-failing"
 )
@@ -177,9 +180,6 @@ type RunStore interface {
 	FinishRun(ctx context.Context, fin *RunFinish) (superseded []string, err error)
 	// LatestRun returns the latest run, active or final.
 	LatestRun(ctx context.Context) (Run, bool, error)
-	// RecentWeekly returns the states of the latest limit final weekly runs,
-	// newest first.
-	RecentWeekly(ctx context.Context, limit int) ([]RunState, error)
 }
 
 // ProposalStore keeps the notes the maintainer wrote and the proposals it
@@ -204,6 +204,20 @@ type ProposalStore interface {
 	// DismissProposal marks the pending proposal id dismissed at at, and
 	// runs within before it commits, with the same errors as ApplyProposal.
 	DismissProposal(ctx context.Context, id string, at time.Time, within func(ctx context.Context) error) error
+}
+
+// AttemptFailedError reports an attempt of the scheduled week's run that ended
+// without a note. It carries the class the run ended in and nothing the model
+// or the provider wrote (GR-12). Final is true for the last attempt, after
+// which the week has failed and the Inbox says so.
+type AttemptFailedError struct {
+	Class string
+	Final bool
+}
+
+// Error names the class.
+func (e *AttemptFailedError) Error() string {
+	return "the maintainer's weekly run ended without a note: " + e.Class
 }
 
 // ErrRunFinal reports a finish for a run that already ended.
@@ -446,12 +460,15 @@ func (m *Maintainer) Ask(ctx context.Context, origin, sessionToken string) (bool
 	return true, nil
 }
 
-// Weekly is the weekly schedule's turn: it queues a run of its own and
-// works it. With the maintainer off it does nothing at all, and clears a
-// standing "failing" item; while another run is queued or running it
-// does nothing either. It returns the ID of the run it worked, empty when
-// it ran none.
-func (m *Maintainer) Weekly(ctx context.Context) (string, error) {
+// Weekly is one attempt of the weekly schedule's turn: it queues a run of its
+// own and works it; each attempt is a run of its own, kept with its class.
+// With the maintainer off it does nothing at all, and clears a standing
+// "failing" item; while another run is queued or running it does nothing
+// either. It returns the ID of the run it worked, empty when it ran none.
+// A run that ended without a note is an *AttemptFailedError, so the job queue
+// tries again; final says this is the last attempt, and its failure raises
+// the failing item in the Inbox (D-196).
+func (m *Maintainer) Weekly(ctx context.Context, final bool) (string, error) {
 	on, err := m.available(ctx)
 	if err != nil {
 		return "", err
@@ -469,7 +486,7 @@ func (m *Maintainer) Weekly(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return id, m.Work(ctx, id)
+	return id, m.worked(ctx, id, final)
 }
 
 // Work works the queued run id: it computes the weights and drift, sends the

@@ -122,16 +122,6 @@ func (s *memStore) LatestRun(context.Context) (app.Run, bool, error) {
 	return s.runs[len(s.runs)-1].Run, true, nil
 }
 
-func (s *memStore) RecentWeekly(_ context.Context, limit int) ([]app.RunState, error) {
-	var out []app.RunState
-	for i := len(s.runs) - 1; i >= 0 && len(out) < limit; i-- {
-		if r := s.runs[i]; r.Trigger == app.TriggerWeekly && !r.State.Active() {
-			out = append(out, r.State)
-		}
-	}
-	return out, nil
-}
-
 func (s *memStore) PendingProposals(context.Context) ([]string, error) {
 	var out []string
 	for id, p := range s.proposals {

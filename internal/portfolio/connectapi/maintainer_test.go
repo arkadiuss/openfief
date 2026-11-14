@@ -79,9 +79,6 @@ func (s *stubStore) LatestNote(context.Context) (app.Note, bool, error) {
 	return app.Note{RunID: "00000000000000n1", Text: "ETFA drifted up.", Model: "local/synth", At: noonUTC(), Trigger: app.TriggerWeekly}, true, s.err
 }
 func (s *stubStore) LatestRun(context.Context) (app.Run, bool, error) { return s.run, true, nil }
-func (s *stubStore) RecentWeekly(context.Context, int) ([]app.RunState, error) {
-	return nil, nil
-}
 
 func (s *stubStore) PendingProposals(context.Context) ([]string, error) {
 	return []string{proposalID, "00000000000000p2"}, nil

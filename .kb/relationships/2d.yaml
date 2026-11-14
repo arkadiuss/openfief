@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1de01eb2ed7b
+  - type: covered_by
+    from: SYM-maintainer-portfolio-jobs-maintainer-worker-next-retry
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:47:33.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcb1ad82d896
+  - type: implements
+    from: SYM-maintainer-portfolio-jobs-maintainer-worker-next-retry
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T23:47:33.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04361e78372e

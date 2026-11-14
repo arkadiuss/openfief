@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbb4b64dc969
+  - type: covered_by
+    from: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-type
+    to: TEST-portfolio-app-maintainer
+    created_at: 2026-11-13T23:56:29.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20fdaa8ca90e
+  - type: implements
+    from: SYM-maintainer-portfolio-app-maintainer-attempt-failed-error-type
+    to: REQ-maintainer-failure-no-note-attention
+    created_at: 2026-11-13T23:56:29.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-145692ef6e06

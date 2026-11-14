@@ -1133,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbd8426a0aab
+  - type: executable_for
+    from: SYM-maintainer-portfolio-jobs-maintainer-test-test-periodic-weekly-job-has-the-weeks-attempts-and-no-run
+    to: TEST-portfolio-jobs-maintainer
+    created_at: 2026-11-13T23:48:32.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303f535cd994
