@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e6f8ef250ec
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-test-go-testthehistoryroundtripsandamissingfileisempty
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:38:27.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0190836cf85c

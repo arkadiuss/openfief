@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68c17cb8adda
+  - type: implements
+    from: SYM-ab6-tools-askbench-report-go-retryreport
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T19:58:28.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b295fa62e7
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-report-go-retryreport
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:58:28.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5b4715feb6d

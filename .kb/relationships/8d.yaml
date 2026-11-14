@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bd7eb3f8e13
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testtherankingleavesoutanunreliablehostwhateveritsverdict
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:50.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58d9e2e27bb

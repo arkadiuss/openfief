@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c42486ea33cf
+  - type: verified_by
+    from: SCEN-askbench-retry-and-reliability
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:56:42.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2da35dfd39b

@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e24dea2872e
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-streak-eligible
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T19:59:38.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a64d3a3eb91
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-streak-eligible
+    to: REQ-decision-d221-1-two-passes-before-the-demo-route
+    created_at: 2026-11-14T19:59:38.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3673684b91c5
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-streak-eligible
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:59:38.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3006d67b5504

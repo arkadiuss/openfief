@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3816f6934d1
+  - type: executable_for
+    from: SYM-ab6-internal-views-ui-askprompt-test-go-testpromptnamesvalueallocationandperformanceasinscopebeforethedeclinerule
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T20:37:30.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cd5a4626e3c

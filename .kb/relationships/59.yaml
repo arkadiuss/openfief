@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cd466c15da9
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    to: REQ-ask-prompt-names-value-allocation-performance-in-scope
+    created_at: 2026-11-14T20:03:42.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b80e4b19674

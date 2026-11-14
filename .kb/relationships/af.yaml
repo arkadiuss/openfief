@@ -1245,3 +1245,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ca88c086910
+  - type: implements
+    from: SYM-ab6-tools-askbench-modelclient-go-istransportfailure
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T19:57:56.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10a7f18db6f9
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-modelclient-go-istransportfailure
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:57:56.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91ae61ec573b

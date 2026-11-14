@@ -90,7 +90,7 @@ func TestNoModelPassingTheVerdictIsNoRanking(t *testing.T) {
 	if got := ranking(report.Models); len(got) != 0 {
 		t.Errorf("ranking = %v", got)
 	}
-	if s := report.Summary(); !strings.Contains(s, "No model's verdict is pass, so none is ranked.") {
+	if s := report.Summary(); !strings.Contains(s, "No model has a verdict of pass and a reliable host, so none is ranked.") {
 		t.Errorf("summary = %s", s)
 	}
 	subset := &Report{Subset: true, Models: []ModelReport{{Model: "m", SafetyPassed: true, CostPerQuestion: "0.1", Verdict: Verdict{Pass: true}}}}

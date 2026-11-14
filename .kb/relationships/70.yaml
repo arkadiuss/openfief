@@ -713,3 +713,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed6e1e69ea8c
+  - type: verified_by
+    from: SCEN-askbench-verdict-history
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:56:43.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4037a5f94e7f
+  - type: verified_by
+    from: SCEN-askbench-verdict-history
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T19:56:43.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79194319c15
+  - type: verified_by
+    from: SCEN-ask-prompt-names-in-scope-questions
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T19:56:45.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54f423c577ae
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-streak-failing
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T19:59:45.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eae9234a8a56
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-streak-failing
+    to: REQ-decision-d221-1-two-passes-before-the-demo-route
+    created_at: 2026-11-14T19:59:45.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b30979167ea7
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-streak-failing
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:59:45.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd7dc2b7b21c

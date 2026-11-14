@@ -202,12 +202,16 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	for i := range mr.calls {
 		rep.addCall(&mr.calls[i])
 	}
-	for _, c := range mr.calls {
-		if c.Error == "" {
+	for i := range mr.calls {
+		c := &mr.calls[i]
+		switch {
+		case c.Error == "":
 			rep.Completions++
-			continue
+		case !c.Retried:
+			// A failed call that was retried is told by its retry's outcome, and in
+			// the reliability counts: only the call that ended the attempt is an error.
+			rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
 		}
-		rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
 	}
 	rep.Errored = len(rep.CallErrors) > 0
 	if err != nil {
@@ -232,6 +236,13 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 func (r *RunReport) addCall(c *ModelCall) {
 	r.InputTokens += c.InputTokens
 	r.OutputTokens += c.OutputTokens
+	r.Attempts++
+	if c.Transport {
+		r.TransportFailures++
+	}
+	if c.Retried {
+		r.Retries = append(r.Retries, RetryReport{Status: c.Status, Label: c.Label, Recovered: c.Recovered})
+	}
 	if c.Error != "" {
 		return
 	}

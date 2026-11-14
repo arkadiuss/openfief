@@ -1161,3 +1161,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5e17298b47d
+  - type: implements
+    from: SYM-askbench-main-config
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T20:03:29.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c92275429946
+  - type: implements
+    from: SYM-askbench-main-config
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:03:29.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9491830bd96e
+  - type: covered_by
+    from: SYM-askbench-main-config
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:03:29.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52228fe2418e

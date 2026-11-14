@@ -1182,3 +1182,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-465574601ba5
+  - type: implements
+    from: SYM-ab6-tools-askbench-reliability-go-reliability
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:37:02.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c74fd998aedc
+  - type: implements
+    from: SYM-ab6-tools-askbench-reliability-go-reliability
+    to: REQ-askbench-routes-and-ranks-by-cost-v2
+    created_at: 2026-11-14T20:37:02.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e2bd31d9bcc
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-reliability-go-reliability
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:37:02.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-347234d94948
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-run-test-go-writetestroute
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T20:37:42.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89cf00117e3b

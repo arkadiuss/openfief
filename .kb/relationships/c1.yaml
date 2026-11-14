@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32af534edcc2
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-history-streakof
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T19:59:52.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-795614859e3c
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-history-streakof
+    to: REQ-decision-d221-1-two-passes-before-the-demo-route
+    created_at: 2026-11-14T19:59:52.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f72048b3a00e
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-history-streakof
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:59:52.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feefb5a9a2f8

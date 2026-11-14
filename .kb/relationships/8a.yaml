@@ -1035,3 +1035,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a96534065aa0
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T20:00:28.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1ea4a856353
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:00:28.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20e0ce3e4cd8
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    to: REQ-decision-d221-1-two-passes-before-the-demo-route
+    created_at: 2026-11-14T20:00:28.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7236bcd4e64
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:00:28.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f80bafebc2a
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T20:00:28.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76481770351c

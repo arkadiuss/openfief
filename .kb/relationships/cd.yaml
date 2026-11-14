@@ -1203,3 +1203,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b800c9ff8882
+  - type: specified_by
+    from: REQ-askbench-keeps-verdict-history
+    to: SCEN-askbench-verdict-history
+    created_at: 2026-11-14T19:56:49.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbfcd5882a5d

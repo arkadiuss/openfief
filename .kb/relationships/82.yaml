@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-019430008350
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testtherateistransportfailedcallsovercallsmade
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:45.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa9ae89cd4b3

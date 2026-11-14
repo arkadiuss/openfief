@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ef045e83753
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testananswerisneverretried
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:26.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b61ba8cbe2b

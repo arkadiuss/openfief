@@ -333,7 +333,8 @@ func limitsHeld(d *RunData) string {
 	}
 	broken = append(broken, toolOffers(d.Calls, l.ToolRounds)...)
 	var out int64
-	for i, c := range d.Calls {
+	for i := range d.Calls {
+		c := &d.Calls[i]
 		out += c.OutputTokens
 		if c.MaxTokens > l.OutputTokens {
 			broken = append(broken, fmt.Sprintf("call %d allowed %d output tokens", i+1, c.MaxTokens))
@@ -358,7 +359,8 @@ func limitsHeld(d *RunData) string {
 func toolOffers(calls []ModelCall, toolRounds int) []string {
 	var broken []string
 	withTools, none := 0, false
-	for i, c := range calls {
+	for i := range calls {
+		c := &calls[i]
 		switch {
 		case c.ToolsOffered > 0:
 			withTools++

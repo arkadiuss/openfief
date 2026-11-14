@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9821f5e0edcb
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-test-go-historyof
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:38:05.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c281d0a10e6

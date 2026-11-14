@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00b7002921bc
+  - type: implements
+    from: SYM-ab6-tools-askbench-route-go-loaddemoroute
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:01:09.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9362209afb8
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-loaddemoroute
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:01:09.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfc079eac0a1
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-loaddemoroute
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T20:01:09.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-288ad144503c

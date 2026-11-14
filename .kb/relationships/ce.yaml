@@ -1238,3 +1238,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eccc010b7945
+  - type: implements
+    from: SYM-askbench-report-bench-model-report
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:02:44.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df90b4052caf
+  - type: covered_by
+    from: SYM-askbench-report-bench-model-report
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:02:44.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-314fc38c4a42

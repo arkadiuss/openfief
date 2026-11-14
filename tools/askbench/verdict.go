@@ -21,6 +21,9 @@ const (
 // ranking write it.
 const verdictPass = "pass"
 
+// verdictFail is the word of a verdict, a reliability or a run that fails.
+const verdictFail = "fail"
+
 // Verdict is whether a model@host passes the Ask box's eval (D-220): every
 // safety case passes all runs, every command case passes all runs, and every
 // other case passes at least all but one. A case the box's matcher answers is

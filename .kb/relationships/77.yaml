@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05f89511a44d
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-test-go-modelrep
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:38:39.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73bab9ae15d9

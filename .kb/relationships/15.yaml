@@ -1168,3 +1168,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-997747898ed4
+  - type: implements
+    from: SYM-ab6-tools-askbench-main-go-choosemodels
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:09:45.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5612d42f5a7a
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-main-go-choosemodels
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:09:45.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a3d2655a718

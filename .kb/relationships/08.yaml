@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd31062dcb79
+  - type: implements
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-add
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T19:58:09.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34034a172fd5
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-add
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:58:09.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe948015843

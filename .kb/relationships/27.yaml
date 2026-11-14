@@ -860,3 +860,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea1f78d36374
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-historyentry-passed
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T19:58:54.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcc6bf504c1
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-historyentry-passed
+    to: REQ-decision-d221-1-two-passes-before-the-demo-route
+    created_at: 2026-11-14T19:58:55.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ea7f70f09a3
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-historyentry-passed
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:58:55.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d2959ce739
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-rankreport
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:02:57.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa19648eb534
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-rankreport
+    to: REQ-askbench-routes-and-ranks-by-cost-v2
+    created_at: 2026-11-14T20:02:57.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72174616d8a6
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-rankreport
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:02:57.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ca90f0f4c86

@@ -1413,3 +1413,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b1b6420a437
+  - type: implements
+    from: SYM-ab6-tools-askbench-route-go-memberof
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:09:27.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311a9646c5f2
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-memberof
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:09:27.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12bed99d32e5

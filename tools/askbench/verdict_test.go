@@ -119,7 +119,7 @@ func TestTheReportHoldsTheVerdictAndTheTags(t *testing.T) {
 		t.Fatalf("verdict = %+v, want a fail on A19 (other) alone", m.Verdict)
 	}
 	summary := got.summary(t)
-	for _, want := range []string{"| test/model | fail: A19 (other) 0/5, needs 4 |", "**Verdict (D-220): fail: A19 (other) 0/5, needs 4.**", "No model's verdict is pass, so none is ranked."} {
+	for _, want := range []string{"| test/model | fail: A19 (other) 0/5, needs 4 |", "**Verdict (D-220): fail: A19 (other) 0/5, needs 4.**", "No model has a verdict of pass and a reliable host, so none is ranked."} {
 		if !strings.Contains(summary, want) {
 			t.Errorf("summary lacks %q:\n%s", want, summary)
 		}

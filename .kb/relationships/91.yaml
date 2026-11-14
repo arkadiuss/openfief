@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bea630b7dd8c
+  - type: implements
+    from: SYM-ab4-tools-askbench-runner-go-runreport-addcall
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:02:13.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9c68afc956
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-runner-go-runreport-addcall
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:02:13.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c042443f9b1

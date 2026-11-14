@@ -6,13 +6,20 @@
 # (tools/askbench) run in `task check` against a fake model. The secret OPENROUTER_API_KEY is the same key the model
 # router's OpenRouter provider holds, and the bench sends it only to the provider; without the secret the run skips
 # with a notice, so a fork or a repository that never set it stays green. The report is uploaded, pass or fail.
+#
+# D-221: with no model ids the run asks the members of the demo route, read from deploy/demo/model (read-only), and
+# fails (the bench exits 4) when any member's run fails its verdict (D-220) or its host's reliability (D-207), so that
+# GitHub notifies the author; a model@host leaves the route after two consecutive failing weekly runs, and the bench
+# only reports that. The run adds itself to the history, tools/askbench/history.json, in the runner's checkout and
+# uploads the updated file beside the report. The workflow never commits or pushes: a person commits the history after
+# review, and changes the route, if the report says to, in a reviewed change.
 name: Ask box bench
 
 on:
   workflow_dispatch:
     inputs:
       model:
-        description: Comma-separated OpenRouter model ids; empty runs D-207's two candidates
+        description: Comma-separated OpenRouter model ids; empty runs the demo route's members (D-221)
         required: false
         default: ''
         type: string
@@ -72,12 +79,18 @@ jobs:
         run: |
           flags=()
           if [ "$BENCH_JUDGE" = true ]; then flags+=(-judge); fi
-          task ask:bench MODEL="$BENCH_MODEL" BUDGET="$BENCH_BUDGET" OUT="$RUNNER_TEMP/ask-bench" -- "${flags[@]}"
-          # a bench that exits non-zero fails the step, and the report below is uploaded either way
+          task ask:bench MODEL="$BENCH_MODEL" BUDGET="$BENCH_BUDGET" OUT="$RUNNER_TEMP/ask-bench" -- \
+            -demo-route deploy/demo/model -history tools/askbench/history.json "${flags[@]}"
+          # a bench that exits non-zero, a failing route member (exit 4) included, fails the step, and the report
+          # and the updated history below are uploaded either way
       - name: Summary
         if: always() && steps.key.outputs.present == 'true'
         run: |
           if [ -f "$RUNNER_TEMP/ask-bench/summary.md" ]; then cat "$RUNNER_TEMP/ask-bench/summary.md" >>"$GITHUB_STEP_SUMMARY"; fi
+      - name: Copy the updated history beside the report
+        if: always() && steps.key.outputs.present == 'true'
+        run: |
+          if [ -d "$RUNNER_TEMP/ask-bench" ] && [ -f tools/askbench/history.json ]; then cp tools/askbench/history.json "$RUNNER_TEMP/ask-bench/history.json"; fi
       - name: Upload the report
         if: always() && steps.key.outputs.present == 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

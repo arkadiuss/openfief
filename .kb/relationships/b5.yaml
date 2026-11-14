@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ac3c30c0af2
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-writeranking
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:03:04.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c1480103a75
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-writeranking
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:03:04.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-add9c8cfb2e6

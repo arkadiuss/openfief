@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21b3240f9a9a
+  - type: implements
+    from: SYM-ab6-tools-askbench-route-go-demoentry
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:01:02.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9fea4a6039f
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-demoentry
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:01:02.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e23cafcc1fa9
