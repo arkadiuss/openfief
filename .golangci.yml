@@ -1,5 +1,6 @@
 # Strict by design: lint is how agents get fast, unambiguous feedback.
-# Never weaken it (disable a linter, raise a threshold, add a //nolint or an exclusion) without the author's OK.
+# Never weaken it (disable a linter, raise a threshold, add a //nolint or an exclusion) without the author's OK,
+# which the design session gives on the author's behalf; the commit names who approved it and why.
 version: "2"
 
 run:
