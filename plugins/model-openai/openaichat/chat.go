@@ -76,6 +76,12 @@ type Client struct {
 	// nothing, the model's own default. Nothing sets it in the plugin; the Ask
 	// box bench does, to compare a model with its thinking off or turned down.
 	Reasoning string
+	// DataCollection, when not empty, sets OpenRouter's
+	// `provider.data_collection`: DataCollectionDeny lets no host serve a
+	// request that may store it or train on it, DataCollectionAllow refuses
+	// none. It joins whatever else the request's `provider` object holds
+	// (Route, require_parameters).
+	DataCollection string
 	// IncludeCost asks OpenRouter for the call's exact cost: `usage` with
 	// `include` true, which puts usage.cost (USD) and the serving `provider`
 	// in the reply. Nothing sets it in the plugin; the bench does.
@@ -89,6 +95,15 @@ const (
 	ReasoningMedium = "medium"
 	ReasoningHigh   = "high"
 )
+
+// The values of Client.DataCollection.
+const (
+	DataCollectionAllow = "allow"
+	DataCollectionDeny  = "deny"
+)
+
+// ValidDataCollection reports whether v is a value of Client.DataCollection.
+func ValidDataCollection(v string) bool { return v == DataCollectionAllow || v == DataCollectionDeny }
 
 // ValidReasoning reports whether v is a value of Client.Reasoning.
 func ValidReasoning(v string) bool {
@@ -267,14 +282,10 @@ const openRouterHost = "openrouter.ai"
 // set only when the client has a Route, which pins the hosts for every request.
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
-	switch {
-	case !c.OnOpenRouter():
-	case len(c.Route) > 0:
-		body["provider"] = map[string]any{"order": c.Route, "allow_fallbacks": false, "require_parameters": true}
-	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
-		body["provider"] = map[string]any{"require_parameters": true}
-	}
 	if c.OnOpenRouter() {
+		if provider := c.providerPreferences(req); len(provider) > 0 {
+			body["provider"] = provider
+		}
 		c.addOpenRouterOptions(body)
 	}
 	return body
@@ -292,6 +303,25 @@ func (c *Client) OnOpenRouter() bool {
 	}
 	host := strings.ToLower(u.Hostname())
 	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
+}
+
+// providerPreferences returns OpenRouter's `provider` object for req, one
+// object for every preference: the pinned hosts with no fallback and
+// require_parameters when the client has a Route, require_parameters alone for
+// a request that sends tools or a response format, and data_collection when
+// the client sets it, whatever else the request holds.
+func (c *Client) providerPreferences(req *Request) map[string]any {
+	provider := map[string]any{}
+	switch {
+	case len(c.Route) > 0:
+		provider["order"], provider["allow_fallbacks"], provider["require_parameters"] = c.Route, false, true
+	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
+		provider["require_parameters"] = true
+	}
+	if ValidDataCollection(c.DataCollection) {
+		provider["data_collection"] = c.DataCollection
+	}
+	return provider
 }
 
 // addOpenRouterOptions adds the reasoning and usage members the client's

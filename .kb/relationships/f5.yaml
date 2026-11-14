@@ -1203,3 +1203,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c12a6204305a
+  - type: executable_for
+    from: SYM-m5-scripts-tests-demo-secret-test-sh-check
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-14T19:53:40.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c58492df4b

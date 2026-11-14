@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7093dd87dbdb
+  - type: specified_by
+    from: REQ-models-entry-data-collection
+    to: SCEN-models-entry-data-collection
+    created_at: 2026-11-14T19:05:01.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-869c322e0acf

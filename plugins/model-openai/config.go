@@ -67,10 +67,13 @@ type rawModel struct {
 	StructuredOutput bool   `json:"structuredOutput"`
 	// Hosts pins the entry to OpenRouter's providers of these slugs, in this
 	// order and with no fallback to others; Reasoning sets OpenRouter's
-	// reasoning control (off, low, medium or high). Both are OpenRouter's,
-	// and a config that sets one for another server is refused.
-	Hosts     []string `json:"hosts"`
-	Reasoning string   `json:"reasoning"`
+	// reasoning control (off, low, medium or high); DataCollection sets
+	// OpenRouter's provider.data_collection (allow or deny: deny lets no host
+	// that may store the request or train on it serve it). All three are
+	// OpenRouter's, and a config that sets one for another server is refused.
+	Hosts          []string `json:"hosts"`
+	Reasoning      string   `json:"reasoning"`
+	DataCollection string   `json:"dataCollection"`
 }
 
 // config is the checked configuration of one provider instance (D-205).
@@ -84,11 +87,13 @@ type config struct {
 	routing map[string]routing
 }
 
-// routing is one entry's OpenRouter options: the hosts it is pinned to and
-// its reasoning setting, each empty when the entry sets none.
+// routing is one entry's OpenRouter options: the hosts it is pinned to, its
+// reasoning setting and its data collection setting, each empty when the entry
+// sets none.
 type routing struct {
-	hosts     []string
-	reasoning string
+	hosts          []string
+	reasoning      string
+	dataCollection string
 }
 
 // parse checks the raw config: a known location, a timeout in range, one
@@ -156,19 +161,19 @@ func (r *rawConfig) entries() ([]*modelsv1.ModelEntry, error) {
 	return out, nil
 }
 
-// routings checks the OpenRouter options of the entries: pinned hosts and a
-// reasoning setting are OpenRouter's, so they are refused on any other base
-// URL, where the plugin would never send them.
+// routings checks the OpenRouter options of the entries: pinned hosts, a
+// reasoning setting and a data collection setting are OpenRouter's, so they
+// are refused on any other base URL, where the plugin would never send them.
 func (r *rawConfig) routings() (map[string]routing, error) {
 	onOpenRouter := (&openaichat.Client{BaseURL: r.BaseURL}).OnOpenRouter()
 	var out map[string]routing
 	for i := range r.Models {
 		m := &r.Models[i]
-		if len(m.Hosts) == 0 && m.Reasoning == "" {
+		if len(m.Hosts) == 0 && m.Reasoning == "" && m.DataCollection == "" {
 			continue
 		}
 		if !onOpenRouter {
-			return nil, fmt.Errorf("%w: models[%d]: hosts and reasoning are OpenRouter's: the baseUrl's host is openrouter.ai", errBadConfig, i)
+			return nil, fmt.Errorf("%w: models[%d]: hosts, reasoning and dataCollection are OpenRouter's: the baseUrl's host is openrouter.ai", errBadConfig, i)
 		}
 		if err := m.checkRouting(); err != nil {
 			return nil, fmt.Errorf("%w: models[%d]: %w", errBadConfig, i, err)
@@ -176,7 +181,7 @@ func (r *rawConfig) routings() (map[string]routing, error) {
 		if out == nil {
 			out = make(map[string]routing)
 		}
-		out[m.ID] = routing{hosts: slices.Clone(m.Hosts), reasoning: m.Reasoning}
+		out[m.ID] = routing{hosts: slices.Clone(m.Hosts), reasoning: m.Reasoning, dataCollection: m.DataCollection}
 	}
 	return out, nil
 }
@@ -197,6 +202,9 @@ func (m *rawModel) checkRouting() error {
 	}
 	if m.Reasoning != "" && !openaichat.ValidReasoning(m.Reasoning) {
 		return fmt.Errorf("%w: reasoning is off, low, medium or high", errBadEntry)
+	}
+	if m.DataCollection != "" && !openaichat.ValidDataCollection(m.DataCollection) {
+		return fmt.Errorf("%w: dataCollection is allow or deny", errBadEntry)
 	}
 	return nil
 }
@@ -234,7 +242,7 @@ func (m *rawModel) pricedWrongly() bool {
 }
 
 // chatFor returns the chat client that serves the entry with id: base, with
-// the entry's pinned hosts and reasoning setting when it has them. base is
+// the entry's pinned hosts, reasoning and data collection settings when it has them. base is
 // not changed. The client sends them to OpenRouter only.
 func (c *config) chatFor(base *openaichat.Client, id string) *openaichat.Client {
 	r, ok := c.routing[id]
@@ -242,7 +250,7 @@ func (c *config) chatFor(base *openaichat.Client, id string) *openaichat.Client 
 		return base
 	}
 	out := *base
-	out.Route, out.Reasoning = r.hosts, r.reasoning
+	out.Route, out.Reasoning, out.DataCollection = r.hosts, r.reasoning, r.dataCollection
 	return &out
 }
 

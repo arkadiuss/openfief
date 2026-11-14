@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb33275138f9
+  - type: executable_for
+    from: SYM-m5-plugins-model-openai-openaichat-datacollection-test-go-testdatacollectionjoinstheproviderobjectonopenrouteronly
+    to: TEST-plugins-model-openai-chat-data-collection
+    created_at: 2026-11-14T19:53:27.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f87812724b6e

@@ -224171,12 +224171,15 @@ symbols:
     sourceFile: plugins/model-openai/config.go
     origin:
       kind: agent
-      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
-      recorded_at: 2026-11-14T17:59:37.604Z
+      recorded_at: 2026-11-14T19:05:18.221Z
     symbol_role: type-shape
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-config
+      - type: covered_by
+        target: TEST-plugins-model-openai-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
       - type: implements
         target: REQ-models-entry-hosts-reasoning
   - id: SYM-models-plugins-model-openai-config-routings
@@ -224185,12 +224188,15 @@ symbols:
     sourceFile: plugins/model-openai/config.go
     origin:
       kind: agent
-      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
-      recorded_at: 2026-11-14T17:59:43.566Z
+      recorded_at: 2026-11-14T19:05:24.749Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-config
+      - type: covered_by
+        target: TEST-plugins-model-openai-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
       - type: implements
         target: REQ-models-entry-hosts-reasoning
   - id: SYM-models-plugins-model-openai-config-check-routing
@@ -224199,12 +224205,15 @@ symbols:
     sourceFile: plugins/model-openai/config.go
     origin:
       kind: agent
-      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
-      recorded_at: 2026-11-14T17:59:49.385Z
+      recorded_at: 2026-11-14T19:05:31.148Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-config
+      - type: covered_by
+        target: TEST-plugins-model-openai-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
       - type: implements
         target: REQ-models-entry-hosts-reasoning
   - id: SYM-models-plugins-model-openai-config-chat-for
@@ -224213,12 +224222,15 @@ symbols:
     sourceFile: plugins/model-openai/config.go
     origin:
       kind: agent
-      ref: 'M4 prep brief from the design session: the demo''s model behind the switch (D-207 amended, D-205, D-208, D-212, D-203), 2026-11-14'
-      recorded_at: 2026-11-14T17:59:55.824Z
+      recorded_at: 2026-11-14T19:05:37.409Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-config
+      - type: covered_by
+        target: TEST-plugins-model-openai-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
       - type: implements
         target: REQ-models-entry-hosts-reasoning
   - id: SYM-models-plugins-model-openai-config-test-open-router-config
@@ -226713,3 +226725,171 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-rounds
+  - id: SYM-models-openaichat-provider-preferences
+    title: Client.providerPreferences
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:05:03.846Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
+  - id: SYM-models-openaichat-valid-data-collection
+    title: ValidDataCollection
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:05:10.685Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-chat-data-collection
+      - type: implements
+        target: REQ-models-entry-data-collection
+  - id: SYM-demo-secret-spec
+    title: demo_secret_spec
+    status: active
+    sourceFile: scripts/demo/secret.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:05:48.238Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-demo-secret-read
+    title: demo_secret_read
+    status: active
+    sourceFile: scripts/demo/secret.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:05:54.517Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-demo-secret-host
+    title: demo_secret_host
+    status: active
+    sourceFile: scripts/demo/secret.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:06:01.072Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-demo-secret-main
+    title: demo_secret_main
+    status: active
+    sourceFile: scripts/demo/secret.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:06:07.575Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-m5-plugins-model-openai-datacollection-test-go-datacollectionconfig
+    title: dataCollectionConfig
+    status: active
+    sourceFile: plugins/model-openai/datacollection_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:52:59.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-data-collection
+  - id: SYM-m5-plugins-model-openai-datacollection-test-go-testparseconfigdatacollectionofanentryonopenrouter
+    title: TestParseConfigDataCollectionOfAnEntryOnOpenRouter
+    status: active
+    sourceFile: plugins/model-openai/datacollection_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:04.953Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-data-collection
+  - id: SYM-m5-plugins-model-openai-datacollection-test-go-testparseconfigrefusesdatacollection
+    title: TestParseConfigRefusesDataCollection
+    status: active
+    sourceFile: plugins/model-openai/datacollection_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:10.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-data-collection
+  - id: SYM-m5-plugins-model-openai-datacollection-test-go-testanentrysdatacollectionreachesthebodyofitsownrequestsonly
+    title: TestAnEntrysDataCollectionReachesTheBodyOfItsOwnRequestsOnly
+    status: active
+    sourceFile: plugins/model-openai/datacollection_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:16.963Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-data-collection
+  - id: SYM-m5-plugins-model-openai-openaichat-datacollection-test-go-testdatacollectionjoinstheproviderobjectonopenrouteronly
+    title: TestDataCollectionJoinsTheProviderObjectOnOpenRouterOnly
+    status: active
+    sourceFile: plugins/model-openai/openaichat/datacollection_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:23.389Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat-data-collection
+  - id: SYM-m5-scripts-tests-demo-secret-test-sh-run-secret
+    title: run_secret
+    status: active
+    sourceFile: scripts/tests/demo-secret.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:30.152Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret
+  - id: SYM-m5-scripts-tests-demo-secret-test-sh-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/demo-secret.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:36.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret
+  - id: SYM-m5-scripts-tests-demo-secret-test-sh-yes-if
+    title: yes_if
+    status: active
+    sourceFile: scripts/tests/demo-secret.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:42.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret
+  - id: SYM-m5-scripts-tests-demo-secret-test-sh-nowhere
+    title: nowhere
+    status: active
+    sourceFile: scripts/tests/demo-secret.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T19:53:48.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret

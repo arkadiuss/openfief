@@ -771,6 +771,34 @@ tasks:
       - task: demo:run
         vars: {ACTION: recreate}
 
+  demo:model-secret:
+    desc: 'Create or replace the demo''s OpenRouter key, the Secret openrouter--api-key, over SSH: read locally with read -rs, never printed or stored; needs DEMO_SSH=keys, e.g. task demo:model-secret ENV=demo DEMO_SSH=keys'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:secret
+        vars: {WHICH: model}
+
+  demo:turnstile-secret:
+    desc: 'Create or replace the demo''s Turnstile secret key, the Secret ui--turnstile-secret, the same way as demo:model-secret, e.g. task demo:turnstile-secret ENV=demo DEMO_SSH=keys'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:secret
+        vars: {WHICH: turnstile}
+
+  demo:secret:
+    internal: true
+    deps: [tool:hcloud]
+    interactive: true
+    # OPENROUTER_API_KEY, TURNSTILE_SECRET_KEY and HCLOUD_TOKEN are inherited from the environment, or typed when asked
+    # (read -rs), and never templated here, so Task never prints them.
+    env:
+      ENV: '{{.ENV}}'
+      DEMO_SSH: '{{.DEMO_SSH}}'
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/demo/secret.sh '{{.WHICH}}'
+
   demo:run:
     internal: true
     deps: [tool:hcloud, tool:gojq]

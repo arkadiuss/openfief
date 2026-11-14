@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d68baba496cc
+  - type: verified_by
+    from: SCEN-tooling-demo-secret-over-ssh
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-14T19:06:14.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1947a5318646

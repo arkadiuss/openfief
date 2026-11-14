@@ -1105,3 +1105,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd1a2f92213d
+  - type: implements
+    from: SYM-demo-secret-read
+    to: REQ-tooling-demo-secret-over-ssh
+    created_at: 2026-11-14T19:05:58.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8523fff6a62
+  - type: covered_by
+    from: SYM-demo-secret-read
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-14T19:05:58.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aca3efa7ef3

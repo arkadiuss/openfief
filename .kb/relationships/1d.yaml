@@ -1392,3 +1392,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb4441d410c9
+  - type: implements
+    from: SYM-models-plugins-model-openai-config-check-routing
+    to: REQ-models-entry-data-collection
+    created_at: 2026-11-14T19:05:34.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf0be69ffcd6
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-config-check-routing
+    to: TEST-plugins-model-openai-data-collection
+    created_at: 2026-11-14T19:05:34.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f394ae910a33
