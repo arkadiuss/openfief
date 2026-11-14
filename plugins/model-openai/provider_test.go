@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"testing"
 
@@ -8,6 +9,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/protobuf/testing/protocmp"
 
+	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 )
 
@@ -232,4 +234,90 @@ func TestGenerateMapsProviderFailures(t *testing.T) {
 			}
 		})
 	}
+}
+
+// TestAnEntrysHostsAndReasoningReachOnlyItsOwnRequestsOnOpenRouter checks the
+// body of the request each entry of an OpenRouter instance sends: the pinned
+// hosts with no fallback, and the reasoning setting, of that entry only, and
+// require_parameters when the request needs it; an entry with none sends what
+// it always did, and an instance of another server sends neither.
+func TestAnEntrysHostsAndReasoningReachOnlyItsOwnRequestsOnOpenRouter(t *testing.T) {
+	t.Parallel()
+	const openRouter = "https://openrouter.ai/api/v1"
+	raw := openRouterConfig()
+	cfg, err := raw.parse()
+	if err != nil {
+		t.Fatal(err)
+	}
+	other := validConfig()
+	other.Models = []rawModel{{ID: "vendor/synthetic-26b"}}
+	otherCfg, err := other.parse()
+	if err != nil {
+		t.Fatal(err)
+	}
+	withTools := func(model string) *openaichat.Request {
+		return &openaichat.Request{Model: model, Messages: []openaichat.Message{{Role: "user", Content: "q"}}, Tools: []openaichat.Tool{{Name: "t"}}}
+	}
+	plain := func(model string) *openaichat.Request {
+		return &openaichat.Request{Model: model, Messages: []openaichat.Message{{Role: "user", Content: "q"}}}
+	}
+	tests := []struct {
+		name          string
+		cfg           config
+		base          string
+		req           *openaichat.Request
+		wantProvider  any
+		wantReasoning any
+	}{
+		{
+			name: "a pinned entry with tools", cfg: cfg, base: openRouter, req: withTools("vendor/synthetic-26b"),
+			wantProvider: map[string]any{"order": []any{"nextbit/bf16"}, "allow_fallbacks": false, "require_parameters": true},
+		},
+		{
+			name: "a pinned entry without tools is still pinned", cfg: cfg, base: openRouter, req: plain("vendor/synthetic-26b"),
+			wantProvider: map[string]any{"order": []any{"nextbit/bf16"}, "allow_fallbacks": false, "require_parameters": true},
+		},
+		{
+			name: "a pinned entry with reasoning", cfg: cfg, base: openRouter, req: withTools("vendor/synthetic-120b"),
+			wantProvider:  map[string]any{"order": []any{"groq", "crusoe"}, "allow_fallbacks": false, "require_parameters": true},
+			wantReasoning: map[string]any{"effort": "low"},
+		},
+		{
+			name: "an entry with no options keeps the usual body", cfg: cfg, base: openRouter, req: withTools("vendor/unpinned"),
+			wantProvider: map[string]any{"require_parameters": true},
+		},
+		{name: "an entry with no options and no tools sends nothing", cfg: cfg, base: openRouter, req: plain("vendor/unpinned")},
+		{name: "another server is told nothing", cfg: otherCfg, base: "https://models.example.org/v1", req: plain("vendor/synthetic-26b")},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			base := &openaichat.Client{BaseURL: tt.base}
+			client := tt.cfg.chatFor(base, tt.req.Model)
+			body := wireBody(t, client.RequestBody(tt.req))
+			if diff := cmp.Diff(tt.wantProvider, body["provider"]); diff != "" {
+				t.Errorf("provider (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tt.wantReasoning, body["reasoning"]); diff != "" {
+				t.Errorf("reasoning (-want +got):\n%s", diff)
+			}
+			if base.Route != nil || base.Reasoning != "" {
+				t.Errorf("the shared client was changed: %+v", base)
+			}
+		})
+	}
+}
+
+// wireBody returns body as the provider decodes it from the wire.
+func wireBody(t *testing.T, body map[string]any) map[string]any {
+	t.Helper()
+	raw, err := json.Marshal(body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var out map[string]any
+	if err := json.Unmarshal(raw, &out); err != nil {
+		t.Fatal(err)
+	}
+	return out
 }

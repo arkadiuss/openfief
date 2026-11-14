@@ -32,7 +32,8 @@ import (
 var errAlreadyLoaded = errors.New("the demo database holds a dataset of another day or seed: run with --reset-demo to replace it")
 
 // run connects to the database, waits for it to accept connections, at most
-// cfg.DBWait, and loads the demo dataset into it.
+// cfg.DBWait, and loads the demo dataset into it, then stores the demo's model
+// settings when cfg names a file of them.
 func run(ctx context.Context, cfg *config, log *slog.Logger) error {
 	pool, err := pgxpool.New(ctx, cfg.DSN)
 	if err != nil {
@@ -42,7 +43,13 @@ func run(ctx context.Context, cfg *config, log *slog.Logger) error {
 	if err := waitForDatabase(ctx, pool.Ping, sleepCtx, cfg.DBWait); err != nil {
 		return err
 	}
-	return load(ctx, pool, cfg, log)
+	if err := load(ctx, pool, cfg, log); err != nil {
+		return err
+	}
+	if cfg.ModelSettings == "" {
+		return nil
+	}
+	return applyModelSettings(ctx, pool, cfg.ModelSettings, log)
 }
 
 // loader holds the wired use cases of one load.

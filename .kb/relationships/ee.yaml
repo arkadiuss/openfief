@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdadcf7e8fa4
+  - type: executable_for
+    from: SYM-models-plugins-model-openai-config-test-hosts-and-reasoning
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-14T18:00:11.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-725bc56145db

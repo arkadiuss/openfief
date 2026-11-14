@@ -979,3 +979,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e547d36176de
+  - type: verified_by
+    from: SCEN-models-entry-hosts-reasoning
+    to: TEST-plugins-model-openai-config
+    created_at: 2026-11-14T17:59:30.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f819c5619561
+  - type: verified_by
+    from: SCEN-models-entry-hosts-reasoning
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T17:59:30.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00b7002921bc

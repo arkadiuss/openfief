@@ -63,6 +63,23 @@ func TestModelProviderConfig(t *testing.T) {
 			wantHosts: []plugins.ConfigHost{{Field: "baseUrl", Host: plugins.EgressHost{Host: "llm.example.org", Port: 8443}}},
 		},
 		{
+			name:      "an OpenRouter model pinned to a host, with reasoning",
+			config:    `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"vendor/synthetic","toolCalling":true,"structuredOutput":true,"hosts":["nextbit/bf16"],"reasoning":"low"}]}`,
+			wantHosts: []plugins.ConfigHost{{Field: "baseUrl", Host: plugins.EgressHost{Host: "openrouter.ai", Port: 443}}},
+		},
+		{
+			name: "a host that is not a slug", refused: true,
+			config: `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"m","hosts":["Next Bit"]}]}`,
+		},
+		{
+			name: "the same host twice", refused: true,
+			config: `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"m","hosts":["groq","groq"]}]}`,
+		},
+		{
+			name: "an unknown reasoning setting", refused: true,
+			config: `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"m","reasoning":"extreme"}]}`,
+		},
+		{
 			name: "plain http", refused: true,
 			config: `{"baseUrl":"http://models.example.org","location":"owner_hardware","retention":{"days":0,"mayTrain":false},"models":[{"id":"m"}]}`,
 		},

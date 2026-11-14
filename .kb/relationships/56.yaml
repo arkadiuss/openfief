@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2471ce161de
+  - type: specified_by
+    from: REQ-models-entry-hosts-reasoning
+    to: SCEN-models-entry-hosts-reasoning
+    created_at: 2026-11-14T17:59:31.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-430648b98499

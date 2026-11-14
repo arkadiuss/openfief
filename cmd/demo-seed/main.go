@@ -37,6 +37,12 @@ import (
 // string. In the cluster it comes from CloudNativePG's app secret.
 const dsnEnv = "OPENFIEF_DEMO_DSN"
 
+// modelSettingsEnv names the environment variable that gives --model-settings
+// its value when the flag is not set: the demo's model layer
+// (deploy/demo/model) sets it, so it adds no argument to a Job whose arguments
+// another patch replaces.
+const modelSettingsEnv = "OPENFIEF_DEMO_MODEL_SETTINGS"
+
 const (
 	// defaultSeed seeds the demo dataset unless --seed says otherwise.
 	defaultSeed = 20261028
@@ -79,6 +85,10 @@ type config struct {
 	DBWait time.Duration
 	// Wait bounds how long the revaluations may take.
 	Wait time.Duration
+	// ModelSettings is the file of the demo's model routes and tier lists
+	// (modelSettingsFile) to store when the database has none; empty stores
+	// nothing, as the demo does until its model is turned on.
+	ModelSettings string
 	// Loader names this build of the loader (loaderBuild): a marked
 	// database another build filled is reseeded (D-161). Empty never
 	// reseeds on its own.
@@ -91,6 +101,9 @@ func main() {
 	if err != nil {
 		log.Error("demo-seed: bad arguments", "error", err)
 		os.Exit(exitUsage)
+	}
+	if cfg.ModelSettings == "" {
+		cfg.ModelSettings = os.Getenv(modelSettingsEnv)
 	}
 	if cfg.Loader, err = loaderBuild(); err != nil {
 		log.Warn("demo-seed: unknown build, a demo another build loaded is not reseeded", "error", err)
@@ -116,6 +129,7 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	fxSource := fs.String("fx-source", defaultFXSource, "the NBP connector instance the FX rates are recorded as from")
 	wait := fs.Duration("wait", defaultWait, "how long to wait for the revaluations")
 	dbWait := fs.Duration("db-wait", defaultDBWait, "how long to wait for the database to accept connections")
+	modelSettings := fs.String("model-settings", "", "a JSON file of model routes and tier lists to store when the database has none; never turns a model on (default: $"+modelSettingsEnv+")")
 	if err := fs.Parse(args); err != nil {
 		return config{}, fmt.Errorf("parsing flags: %w", err)
 	}
@@ -125,7 +139,7 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	if *fxSource == "" {
 		return config{}, errNoFXSource
 	}
-	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, FXSource: *fxSource, Wait: *wait, DBWait: *dbWait}
+	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, FXSource: *fxSource, Wait: *wait, DBWait: *dbWait, ModelSettings: *modelSettings}
 	if *today == "" {
 		loc, err := time.LoadLocation("Europe/Warsaw")
 		if err != nil {

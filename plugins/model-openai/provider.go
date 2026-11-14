@@ -72,7 +72,7 @@ func (p *provider) Generate(ctx context.Context, req *connect.Request[modelsv1.G
 	}
 	ctx, cancel := context.WithTimeout(ctx, p.cfg.timeout)
 	defer cancel()
-	reply, err := p.chat.Complete(ctx, wire)
+	reply, err := p.cfg.chatFor(p.chat, req.Msg.GetModel()).Complete(ctx, wire)
 	switch {
 	case errors.Is(err, openaichat.ErrRejected), errors.Is(err, openaichat.ErrBadReply):
 		return nil, status(connect.CodeInvalidArgument, err)

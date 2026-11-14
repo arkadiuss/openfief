@@ -33,7 +33,12 @@
             "contextTokens": {"type": "integer", "minimum": 0},
             "maxOutputTokens": {"type": "integer", "minimum": 0},
             "toolCalling": {"type": "boolean"},
-            "structuredOutput": {"type": "boolean"}
+            "structuredOutput": {"type": "boolean"},
+            "hosts": {"type": "array", "maxItems": 8, "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z0-9][a-z0-9._/-]*$"},
+              "description": "OpenRouter only: pin this model to these OpenRouter providers (their slugs, such as groq or nextbit/bf16), tried in this order, with no fallback to other hosts"},
+            "reasoning": {"enum": ["off", "low", "medium", "high"],
+              "description": "OpenRouter only: the reasoning effort of the model, or off; unset leaves its own default"}
           },
           "required": ["id"],
           "additionalProperties": false

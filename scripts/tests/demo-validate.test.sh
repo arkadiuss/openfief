@@ -52,6 +52,23 @@ fresh
 sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/openfief.yaml"
 expect "a variable the demo settings don't define" fail "uses variables the demo settings don't define: DEMO_HOSTNAME"
 
+# The model layer (deploy/demo/model) is ready and off: a Component the live demo does not list.
+fresh
+sed -i 's#"openrouter/google/gemma-4-26b-a4b-it"#"openrouter/openai/gpt-oss-120b"#' "$work/repo/deploy/demo/model/settings.json"
+expect "a route to a model the provider instance does not list" fail "name openrouter/openai/gpt-oss-120b, which the instance openrouter does not list"
+
+fresh
+sed -i 's#"routes": {#"routes": {\n    "maintainer": ["openrouter/google/gemma-4-26b-a4b-it"],#' "$work/repo/deploy/demo/model/settings.json"
+expect "a route for the maintainer" fail "route something other than the Ask box"
+
+fresh
+printf '\ncomponents:\n  - ../model\n' >>"$work/repo/deploy/demo/openfief/kustomization.yaml"
+expect "the model layer listed by the live demo" fail "the live demo (deploy/demo/openfief) includes the model layer"
+
+fresh
+rm "$work/repo/deploy/demo/model/openrouter.yaml"
+expect "a model layer that does not build" fail "the model layer does not build with the demo"
+
 if [ "$failures" -ne 0 ]; then
   echo "demo-validate: $failures of $cases cases failed" >&2
   exit 1

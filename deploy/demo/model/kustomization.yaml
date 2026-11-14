@@ -1,0 +1,40 @@
+# The demo's model, ready and off (D-207, D-205, D-208, D-212): a kustomize Component that nothing lists, so the live demo
+# is unchanged by it. docs/dev/demo.md#turning-the-model-on says how to include it. It brings:
+#   - the OpenRouter provider instance and its grant (openrouter.yaml): the model-openai plugin, egress to openrouter.ai
+#     only, its key in the Secret openrouter--api-key that the operator creates out of band;
+#   - the ConfigMap demo-model-settings (settings.json), the route of the Ask box and the models allowed for each data
+#     tier (D-206), which the demo-seed Job stores when the database has none: through OPENFIEF_DEMO_MODEL_SETTINGS,
+#     an environment variable, since the Job's arguments are replaced by ../openfief's patch, which runs after a
+#     Component's. Seeding never turns anything on: the switch and the Ask box's toggle stay off until the owner turns
+#     them on in Settings, and the maintainer has no route.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+namespace: openfief
+resources:
+  - openrouter.yaml
+configMapGenerator:
+  - name: demo-model-settings
+    files:
+      - settings.json
+patches:
+  - target:
+      kind: Job
+      name: demo-seed
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: OPENFIEF_DEMO_MODEL_SETTINGS
+          value: /etc/openfief/demo-model/settings.json
+      - op: add
+        path: /spec/template/spec/containers/0/volumeMounts
+        value:
+          - name: demo-model-settings
+            mountPath: /etc/openfief/demo-model
+            readOnly: true
+      - op: add
+        path: /spec/template/spec/volumes
+        value:
+          - name: demo-model-settings
+            configMap:
+              name: demo-model-settings

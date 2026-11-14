@@ -42,10 +42,11 @@ write_label() {
   printf '%s\n' "$out" >"$dockerfile"
 }
 
-# demo_manifests prints "<image name> <compact sorted manifest>" for each Plugin under deploy/demo/plugins.
+# demo_manifests prints "<image name> <compact sorted manifest>" for each Plugin under deploy/demo/plugins, and under
+# deploy/demo/model, the demo's model layer, which is not applied until it is switched on.
 demo_manifests() {
   local root="$1" file
-  for file in "$root"/deploy/demo/plugins/*.yaml; do
+  for file in "$root"/deploy/demo/plugins/*.yaml "$root"/deploy/demo/model/*.yaml; do
     [ -f "$file" ] || continue
     gojq -r --yaml-input 'select(.kind == "Plugin") | "\(.spec.image | split("@")[0] | split("/")[-1]) \(.spec.manifest | tojson)"' "$file"
   done

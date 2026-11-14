@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c27234e2ad0
+  - type: implements
+    from: SYM-demo-seed-modelsettings-file
+    to: REQ-demo-model-prepared-off
+    created_at: 2026-11-14T18:00:35.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d277040b01a
+  - type: covered_by
+    from: SYM-demo-seed-modelsettings-file
+    to: TEST-demo-seed-model-settings
+    created_at: 2026-11-14T18:00:35.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34eef9a2bfeb

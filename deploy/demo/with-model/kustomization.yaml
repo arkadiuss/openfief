@@ -1,0 +1,13 @@
+# The demo with its model layer switched on, built only by `task demo:validate` (scripts/demo/validate.sh) to prove that
+# ../openfief and ../model build together, with every image pinned by digest, before the layer is switched on
+# (docs/dev/demo.md#turning-the-model-on). Nothing deploys it. It mirrors what that section has the owner add to
+# ../openfief/kustomization.yaml: the component and the plugin image's entry.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../openfief
+components:
+  - ../model
+images:
+  - name: ghcr.io/arkadiuss/openfief/model-openai
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5e6c9fc89af
+  - type: executable_for
+    from: SYM-ui-askmodel-down-test
+    to: TEST-ui-ask-model-down
+    created_at: 2026-11-14T18:02:22.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6865fc49d47f
