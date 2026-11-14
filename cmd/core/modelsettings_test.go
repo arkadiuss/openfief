@@ -26,7 +26,7 @@ func TestSettingsAuditRecordsAChangeAsAnEntryNamingTheSetting(t *testing.T) {
 		t.Run(setting, func(t *testing.T) {
 			t.Parallel()
 			log := &recordingLog{}
-			if err := (settingsAudit{log: log}).RecordChange(t.Context(), &modelsapp.SettingChange{At: at, Session: session, Setting: setting}); err != nil {
+			if err := (settingsAudit{out: log}).RecordChange(t.Context(), &modelsapp.SettingChange{At: at, Session: session, Setting: setting}); err != nil {
 				t.Fatalf("RecordChange: %v", err)
 			}
 			want := identity.AuditEntry{
@@ -41,7 +41,7 @@ func TestSettingsAuditRecordsAChangeAsAnEntryNamingTheSetting(t *testing.T) {
 	t.Run("a setting nobody knows", func(t *testing.T) {
 		t.Parallel()
 		log := &recordingLog{}
-		err := (settingsAudit{log: log}).RecordChange(t.Context(), &modelsapp.SettingChange{At: at, Session: session, Setting: "route:trader"})
+		err := (settingsAudit{out: log}).RecordChange(t.Context(), &modelsapp.SettingChange{At: at, Session: session, Setting: "route:trader"})
 		if !errors.Is(err, identity.ErrInvalidAuditEntry) || len(log.entries) != 0 {
 			t.Errorf("RecordChange = %v with %d entries, want ErrInvalidAuditEntry and none", err, len(log.entries))
 		}

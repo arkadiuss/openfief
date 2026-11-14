@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b5dd76e2a1d
+  - type: executable_for
+    from: SYM-askbench-runner-test-check-aborted
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:54.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdadcf7e8fa4

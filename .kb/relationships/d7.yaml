@@ -916,3 +916,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17da3f41d220
+  - type: implements
+    from: SYM-askbench-report-pass-word
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:51:14.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bae27724a04c
+  - type: implements
+    from: SYM-askbench-report-pass-word
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:51:14.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-845bb358bf63
+  - type: covered_by
+    from: SYM-askbench-report-pass-word
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:51:14.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8df6e5409ee

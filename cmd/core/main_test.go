@@ -45,10 +45,11 @@ func defaultServe(t *testing.T) serveConfig {
 		EndOfDay: valuationpg.DailyAt{Hour: 23, Minute: 30, Location: warsaw(t)},
 		Workers:  2, EnsureDefaults: true, ShutdownTimeout: 25 * time.Second,
 		Sync: syncConfig{
-			Policy:         ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
-			Timeout:        5 * time.Minute,
-			Workers:        1,
-			ServiceAccount: "openfief-core",
+			Policy:          ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
+			Timeout:         5 * time.Minute,
+			DeliveryTimeout: 5 * time.Minute,
+			Workers:         1,
+			ServiceAccount:  "openfief-core",
 		},
 		Auth:  authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
 		Authz: authzConfig{Mode: authzPolicy, KeyFile: defaultSpiceDBKeyFile, Timeout: defaultSpiceDBTimeout},
@@ -93,7 +94,7 @@ func TestParseArgs(t *testing.T) {
 	tuned.Connectors = false
 	tuned.Sync = syncConfig{
 		Policy:  ingest.SyncPolicy{Interval: time.Hour, Jitter: 0, RetryFirst: time.Minute, RetryMax: 2 * time.Minute},
-		Timeout: time.Minute, Workers: 3, ServiceAccount: "core-sa",
+		Timeout: time.Minute, DeliveryTimeout: 10 * time.Minute, Workers: 3, ServiceAccount: "core-sa",
 	}
 	authed := def
 	authed.Auth = authConfig{
@@ -126,7 +127,7 @@ func TestParseArgs(t *testing.T) {
 			name: "connector flags", pod: true, dsn: testDSN,
 			args: []string{
 				"--connectors=false", "--sync-every=1h", "--sync-jitter=0s",
-				"--sync-retry-first=1m", "--sync-retry-max=2m", "--sync-timeout=1m", "--sync-workers=3", "--service-account=core-sa",
+				"--sync-retry-first=1m", "--sync-retry-max=2m", "--sync-timeout=1m", "--sync-delivery-timeout=10m", "--sync-workers=3", "--service-account=core-sa",
 			},
 			want: command{Name: cmdServe, DSN: testDSN, Serve: tuned},
 		},
@@ -159,6 +160,7 @@ func TestParseArgs(t *testing.T) {
 		{name: "check balances with an argument", args: []string{"check", "balances", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "check something else", args: []string{"check", "lots"}, dsn: testDSN, wantErr: errUsage},
 		{name: "check balances with an unknown flag", args: []string{"check", "balances", "--json"}, dsn: testDSN, fail: true},
+		{name: "a delivery timeout of zero", args: []string{"--sync-delivery-timeout=0s"}, dsn: testDSN, wantErr: errDeliveryTimeout},
 		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{name: "zero sync interval", args: []string{"--sync-every=0s"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{name: "no sync worker", args: []string{"--sync-workers=0"}, dsn: testDSN, wantErr: errSyncWorkers},

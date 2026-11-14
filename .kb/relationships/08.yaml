@@ -1203,3 +1203,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44d258d3e5d1
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-testoutboxenqueueneedsthetransactionofachange
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:41.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23a2802ec09c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-write-probe
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:52.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d372f6a7c2b6
+  - type: implements
+    from: SYM-askbench-main-main
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:35:39.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8abb867f716
+  - type: covered_by
+    from: SYM-askbench-main-main
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:35:39.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a559a69d82e
+  - type: implements
+    from: SYM-askbench-readservice-in-memory-round-trip
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:45:07.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ba39e55e11
+  - type: covered_by
+    from: SYM-askbench-readservice-in-memory-round-trip
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:45:07.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99ea6054dab2

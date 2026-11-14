@@ -33,6 +33,30 @@ func (r *recordingLog) AppendAudit(_ context.Context, e *identity.AuditEntry) er
 	return nil
 }
 
+// Enqueue keeps e as the outbox would enqueue it, or fails.
+func (r *recordingLog) Enqueue(ctx context.Context, e *identity.AuditEntry) error {
+	return r.AppendAudit(ctx, e)
+}
+
+// TestModelAuditEntersAViewersQuestionAsTheViewers checks that the call a
+// viewer's question makes is entered as the viewer's, by the session's ID, and
+// never as the owner's (D-211).
+func TestModelAuditEntersAViewersQuestionAsTheViewers(t *testing.T) {
+	t.Parallel()
+	const session = "0123456789abcdef"
+	log := &recordingLog{}
+	sent := modelsapp.CallSent{
+		At: time.Date(2026, time.March, 2, 10, 0, 0, 0, time.UTC), Actor: modelsapp.Actor{Kind: modelsapp.ActorViewer, ID: session},
+		Role: modelsdomain.RoleAsk, Model: modelsdomain.Ref{Instance: "openrouter", Model: "vendor/synthetic-120b"}, CallID: "00112233445566aa",
+	}
+	if err := (modelAudit{log: log}).RecordSent(t.Context(), &sent); err != nil {
+		t.Fatalf("RecordSent: %v", err)
+	}
+	if len(log.entries) != 1 || log.entries[0].Actor != (identity.Actor{Kind: identity.ActorViewer, ID: session}) {
+		t.Errorf("entries = %+v, want one by the viewer, never recorded as the owner", log.entries)
+	}
+}
+
 // TestModelAuditRecordsCallsAsAuditEntries checks that a model call becomes
 // valid entries of the audit log (D-211): model_call before it, outcome sent,
 // and model_call_result after, linked by the call ID, with the actor, the
@@ -75,6 +99,17 @@ func TestModelAuditRecordsCallsAsAuditEntries(t *testing.T) {
 			res:  modelsapp.CallResult{At: at, Actor: owner, Role: modelsdomain.RoleAsk, Model: model, CallID: call, Outcome: modelsapp.OutcomeOK},
 			want: identity.AuditEntry{
 				At: at, Actor: identity.Actor{Kind: identity.ActorOwner, ID: session}, Action: identity.ActionModelCallResult,
+				Outcome: identity.OutcomeOK, Refs: []identity.Ref{roleAsk, modelRef, callRef},
+			},
+		},
+		{
+			name: "a viewer's call is the viewer's, not the owner's",
+			res: modelsapp.CallResult{
+				At: at, Actor: modelsapp.Actor{Kind: modelsapp.ActorViewer, ID: session}, Role: modelsdomain.RoleAsk, Model: model, CallID: call,
+				Outcome: modelsapp.OutcomeOK,
+			},
+			want: identity.AuditEntry{
+				At: at, Actor: identity.Actor{Kind: identity.ActorViewer, ID: session}, Action: identity.ActionModelCallResult,
 				Outcome: identity.OutcomeOK, Refs: []identity.Ref{roleAsk, modelRef, callRef},
 			},
 		},

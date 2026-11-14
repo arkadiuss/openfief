@@ -979,3 +979,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5c8487c7fdf
+  - type: implements
+    from: SYM-s9-internal-identity-auditchange-issynccount
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:50:30.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94f7e77cd4b1
+  - type: covered_by
+    from: SYM-s9-internal-identity-auditchange-issynccount
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T04:50:30.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07308d94d1b1

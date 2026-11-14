@@ -139,6 +139,28 @@ func main() { _, _ = kernel.Money{}, openfief.Use }
 package openfief
 var Use = 1
 `, []string{"plugins/fx -> internal/kernel", "sdk/go/openfief -> internal/kernel"}},
+		{"no network in transactions: a PostgreSQL adapter imports no client", archtest.NoNetworkInTransactions, `
+-- internal/ledger/postgres/p.go --
+package postgres
+import "net/http"
+var _ = http.StatusOK
+-- internal/valuation/postgres/pgtest/t.go --
+package pgtest
+import "net/http"
+var _ = http.StatusOK
+-- internal/ingest/postgres/q.go --
+package postgres
+import "strings"
+var _ = strings.ToLower
+-- internal/views/ui/u.go --
+package ui
+import "net/http"
+var _ = http.StatusOK
+-- cmd/core/main.go --
+package main
+import "net/http"
+func main() { _ = http.StatusOK }
+`, []string{"internal/ledger/postgres -> net/http", "internal/valuation/postgres/pgtest -> net/http"}},
 		{"banned packages, test-only ones included", archtest.Banned, `
 -- internal/ledger/util/u.go --
 package util
@@ -275,6 +297,68 @@ func names(t *testing.T) []string {
 	return out
 }
 `, []string{"cmd/op/main_test.go TestPinned calls verifier"}},
+		{"context map: a bench imports the demo dataset, another tool does not", archtest.ContextMap, ledgerDomain + `
+-- internal/demo/d.go --
+package demo
+var Use = 1
+-- tools/askbench/main.go --
+package main
+import "example.com/fix/internal/demo"
+func main() { _ = demo.Use }
+-- tools/other/main.go --
+package main
+import "example.com/fix/internal/demo"
+func main() { _ = demo.Use }
+`, []string{"tools/other -> internal/demo"}},
+		{"layering: a bench imports an adapter, another tool does not", archtest.Layering, ledgerDomain + ledgerPostgres + `
+-- tools/askbench/main.go --
+package main
+import "example.com/fix/internal/ledger/postgres"
+func main() { _ = postgres.Store{} }
+-- tools/other/main.go --
+package main
+import "example.com/fix/internal/ledger/postgres"
+func main() { _ = postgres.Store{} }
+`, []string{"tools/other -> internal/ledger/postgres"}},
+		{"bench: only the bench imports goeval's light packages", archtest.Bench, goevalFixture + `
+-- tools/askbench/main.go --
+package main
+import (
+	"github.com/datar-psa/goeval/api"
+	"github.com/datar-psa/goeval/heuristic"
+	"github.com/datar-psa/goeval/openai"
+)
+func main() { _, _, _ = api.Use, heuristic.Use, openai.Use }
+-- internal/ledger/l.go --
+package ledger
+import "github.com/datar-psa/goeval/api"
+var _ = api.Use
+-- cmd/core/main.go --
+package main
+func main() {}
+-- cmd/core/main_test.go --
+package main
+import "testing"
+import "github.com/datar-psa/goeval/heuristic"
+func TestX(t *testing.T) { _ = heuristic.Use }
+`, []string{
+			"cmd/core/main_test.go -> github.com/datar-psa/goeval/heuristic",
+			"internal/ledger -> github.com/datar-psa/goeval/api",
+		}},
+		{"bench: the bench imports no heavy package of goeval", archtest.Bench, goevalFixture + `
+-- tools/askbench/main.go --
+package main
+import "github.com/datar-psa/goeval/gemini"
+func main() { _ = gemini.Use }
+-- tools/askbench/main_test.go --
+package main
+import "github.com/datar-psa/goeval"
+import "testing"
+func TestX(t *testing.T) { _ = goeval.Use }
+`, []string{
+			"tools/askbench -> github.com/datar-psa/goeval/gemini",
+			"tools/askbench/main_test.go -> github.com/datar-psa/goeval",
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -290,6 +374,31 @@ func names(t *testing.T) []string {
 		})
 	}
 }
+
+// goevalFixture is a stand-in for goeval, which the fixtures reach through a
+// replace directive, since they load offline: its three light packages, its
+// Gemini package and its root.
+const goevalFixture = `require github.com/datar-psa/goeval v0.0.0
+replace github.com/datar-psa/goeval => ./goeval
+-- goeval/go.mod --
+module github.com/datar-psa/goeval
+go 1.26.0
+-- goeval/g.go --
+package goeval
+var Use = 1
+-- goeval/api/a.go --
+package api
+var Use = 1
+-- goeval/heuristic/h.go --
+package heuristic
+var Use = 1
+-- goeval/openai/o.go --
+package openai
+var Use = 1
+-- goeval/gemini/g.go --
+package gemini
+var Use = 1
+`
 
 // The fixtures' shared packages: a kernel with Money and LogSafe, a ledger
 // domain and app, a ledger adapter, and a catalog.

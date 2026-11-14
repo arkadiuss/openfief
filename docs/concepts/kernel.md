@@ -133,7 +133,18 @@ flowchart TD
 
 ### Unavailable, not refused
 
-`ErrAuthzUnavailable` and `ErrAuditUnavailable` ([unavailable.go](../../internal/kernel/unavailable.go)) say that the authorization model or the audit log could not answer now, so a change was refused for want of an answer and not on its merits (D-164, D-211). A Connect adapter answers either as "unavailable, try again", and `kernel.Unavailable` returns the one an error wraps, so the adapters share one rule.
+`ErrAuthzUnavailable` and `ErrAuditUnavailable` ([unavailable.go](../../internal/kernel/unavailable.go)) say that the authorization model or the audit log could not answer now, so a change was refused for want of an answer and not on its merits (D-164, D-211). A Connect adapter answers either as "unavailable, try again", and `kernel.Unavailable` returns the one an error wraps, so the adapters share one rule. An audit log is unavailable when its entry can't be enqueued in the outbox, in the transaction of the change ([Identity](identity.md#the-outbox)): the change is not made. Because the change's stores share that one transaction and connection, a statement of any of them that fails and is not handled inside a savepoint rolls the whole change back.
+
+### The database's session timeouts
+
+A change holds its transaction, and its locks, for as long as it runs, so the core bounds what a connection may hold up (D-211). `newPool` ([tracing.go](../../cmd/core/tracing.go), [dbtimeouts.go](../../cmd/core/dbtimeouts.go)) starts every connection of the core's pool with two session timeouts, as runtime parameters of the connection, so they hold for everything the core runs on its pool and for any database it runs on, the bundled one, the demo's and the owner's own, with no setting on the server or the role:
+
+| Timeout | Default | What it bounds | Set with |
+|---|---|---|---|
+| `statement_timeout` | 2 minutes | any one statement, such as one that waits on a lock for ever | `OPENFIEF_DB_STATEMENT_TIMEOUT` |
+| `idle_in_transaction_session_timeout` | 2 minutes | a transaction left idle between two statements, which the database ends and rolls back, so a change whose process hangs holds no lock beyond it | `OPENFIEF_DB_IDLE_IN_TRANSACTION_TIMEOUT` |
+
+Each is a Go duration such as `90s`, and `0` turns it off. A parameter the connection string itself names (`OPENFIEF_DSN` with `?statement_timeout=5000`, in milliseconds) wins over the environment and the default. The statement timeout also bounds the advisory lock a replica waits on while another applies a migration. A connector's delivery is bigger than any other statement of the core, so its transaction sets its own, each statement 5 minutes by default (`--sync-delivery-timeout`, `SET LOCAL`, which ends with the transaction), and a delivery that runs past it fails whole ([Identity](identity.md#syncs-and-the-command-line)). The demo's loader, `cmd/demo-seed`, which connects with its own connection string, sets neither: it is a one-off job that loads in long transactions.
 
 ## Decisions
 

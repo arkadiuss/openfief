@@ -1563,6 +1563,9 @@ enum SyncErrorClass {
   SYNC_ERROR_CLASS_INTERRUPTED = 7;
   // Any other failure, such as the database.
   SYNC_ERROR_CLASS_OTHER = 8;
+  // The delivery's database transaction ran past its timeout, so nothing of
+  // the delivery was written: it is all or nothing, never split.
+  SYNC_ERROR_CLASS_DELIVERY_TIMEOUT = 9;
 }
 
 // SyncAttempt is one attempt to sync a connector instance.

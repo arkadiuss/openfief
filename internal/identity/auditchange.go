@@ -93,6 +93,14 @@ const (
 	// ActionPluginRemoved is a Plugin the operator removed, seen by the core
 	// as the instance gone.
 	ActionPluginRemoved AuditAction = "plugin_removed"
+	// ActionConnectorSynced is a sync the core started, on a schedule or with
+	// `core connector sync`, that changed state: it names the connector
+	// instance, the import batch, the accounts whose transactions it wrote
+	// new versions of and how many of each kind of record it wrote, by
+	// count, never an amount (GR-12). A sync that changed nothing has no
+	// entry; the attempt records of its connector keep it (D-198). The actor
+	// is the system.
+	ActionConnectorSynced AuditAction = "connector_synced"
 )
 
 // The kinds of record the entries above name, beyond those of audit.go.
@@ -113,7 +121,29 @@ const (
 	RefPluginGeneration RefKind = "plugin_generation"
 	// RefSetting is a setting the owner changed, one of Settings.
 	RefSetting RefKind = "setting"
+	// RefImportBatch is an import batch, by its ID.
+	RefImportBatch RefKind = "import_batch"
+	// RefSyncCount is how many records of one kind a sync wrote, as
+	// "<kind>:<count>" with a kind of SyncCountKinds: a number and a word of
+	// a closed set, never an amount.
+	RefSyncCount RefKind = "sync_count"
 )
+
+// SyncCountKinds are the kinds of record whose number a connector_synced
+// entry carries: the transaction versions the ledger stored, and the prices,
+// FX rates, index readings, market index levels and bond terms the sync
+// recorded, all the market data it writes.
+func SyncCountKinds() []string {
+	return []string{"transactions", "prices", "fx_rates", "index_readings", "index_levels", "bond_terms"}
+}
+
+// maxSyncAccounts is the most accounts a connector_synced entry names, with
+// its instance, its batch and its counts within maxRefs; a sync that wrote
+// more names none of them, its counts say how much it wrote.
+const maxSyncAccounts = 24
+
+// maxSyncCountDigits is the most digits of a count of a sync.
+const maxSyncCountDigits = 9
 
 // maxGenerationDigits is the most digits of a generation: an int64's.
 const maxGenerationDigits = 19
@@ -175,6 +205,11 @@ func changeRules() map[AuditAction][]refRule {
 		ActionPluginInstalled:        {one(RefPlugin), one(RefPluginGeneration)},
 		ActionPluginUpgraded:         {one(RefPlugin), one(RefPluginGeneration)},
 		ActionPluginRemoved:          {one(RefPlugin), one(RefPluginGeneration)},
+		ActionConnectorSynced: {
+			one(RefPlugin), one(RefImportBatch),
+			{kind: RefAccount, min: 0, max: maxSyncAccounts},
+			{kind: RefSyncCount, min: 1, max: len(SyncCountKinds())},
+		},
 	}
 }
 
@@ -284,8 +319,8 @@ func (r Ref) validateChangeRef() error {
 	switch r.Kind {
 	case RefInstrument:
 		ok = isISINShape(r.ID)
-	case RefSleeveKind, RefBondLot:
-		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
+	case RefSleeveKind, RefBondLot, RefImportBatch:
+		ok = isPlainRecordID(r.ID)
 	case RefAttentionItem:
 		ok = isPositiveDecimal(r.ID, maxAttentionItemDigits)
 	case RefPlugin:
@@ -294,6 +329,8 @@ func (r Ref) validateChangeRef() error {
 		ok = isPositiveDecimal(r.ID, maxGenerationDigits)
 	case RefSetting:
 		ok = slices.Contains(Settings(), r.ID)
+	case RefSyncCount:
+		ok = isSyncCount(r.ID)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
 		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting:
 	}
@@ -301,6 +338,17 @@ func (r Ref) validateChangeRef() error {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
 	}
 	return nil
+}
+
+// isPlainRecordID reports whether s is a record's ID that doesn't look like a
+// secret.
+func isPlainRecordID(s string) bool { return isRecordID(s) && !looksLikeSecret(s) }
+
+// isSyncCount reports whether s is "<kind>:<count>" of a kind of
+// SyncCountKinds and a count above zero.
+func isSyncCount(s string) bool {
+	kind, count, found := strings.Cut(s, ":")
+	return found && slices.Contains(SyncCountKinds(), kind) && isPositiveDecimal(count, maxSyncCountDigits)
 }
 
 // isISINShape reports whether s has an ISIN's shape: two upper-case letters,
@@ -339,7 +387,7 @@ func ParseRefKind(s string) (RefKind, error) {
 	switch k {
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
 		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 		return k, nil
 	}
 	return "", fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)

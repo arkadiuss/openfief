@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bc4124705f3
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-safety-failures-exit-one
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:19.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9c7002e280c

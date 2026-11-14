@@ -43,13 +43,28 @@ type authConfig struct {
 	DemoSessions bool
 }
 
+// newAuthWithOutbox returns the auth use cases over pool, as newAuth makes
+// them, and the audit outbox they and the other contexts' changes enqueue their
+// entries in (D-211).
+func newAuthWithOutbox(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time, grants *identityapp.Grants) (*identityapp.Auth, *outbox, error) {
+	changes, err := newOutbox(pool, now)
+	if err != nil {
+		return nil, nil, err
+	}
+	auth, err := newAuth(pool, cfg, now, grants, changes)
+	if err != nil {
+		return nil, nil, err
+	}
+	return auth, changes, nil
+}
+
 // newAuth returns the auth use cases over pool, as cfg configures them, with
 // the owner's grants (D-209).
-func newAuth(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time, grants *identityapp.Grants) (*identityapp.Auth, error) {
+func newAuth(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time, grants *identityapp.Grants, outbox *outbox) (*identityapp.Auth, error) {
 	store := identitypg.New(pool)
 	auth, err := identityapp.NewAuth(store, webauthn.New(rpName), identityapp.NewTokens(store, now, nil), demoMarker{pool: pool},
 		identityapp.AuthConfig{Origins: cfg.Origins, Sessions: cfg.Sessions, DemoSessions: cfg.DemoSessions}, now, nil,
-		identityapp.WithGrants(grants))
+		identityapp.WithGrants(grants), identityapp.WithChangeOutbox(outbox))
 	if err != nil {
 		return nil, fmt.Errorf("auth: %w", err)
 	}
@@ -197,7 +212,7 @@ func (d demoMarker) DemoMarked(ctx context.Context) (bool, error) {
 // e.Origins, the setting serve reads too, is refused (D-126).
 func enrollLink(ctx context.Context, pool *pgxpool.Pool, e *enrollArgs, out io.Writer, now time.Time) error {
 	origin, ttl := e.Origin, e.TTL
-	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, e.Origins, origin, ttl, systemActor())
+	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, e.Origins, origin, ttl, adminActor())
 	if errors.Is(err, identity.ErrOriginNotAllowed) {
 		return fmt.Errorf("enroll-link: %w: add it to %s (docs/guides/expose.md)", err, authOriginsEnv)
 	}

@@ -590,6 +590,9 @@ enum AuditActorKind {
   // The operator, which installs, upgrades and removes plugins: the core
   // records what it sees the operator did; the id is "operator".
   AUDIT_ACTOR_KIND_OPERATOR = 6;
+  // The administrator at the core's command line, such as `core token issue`
+  // and `core connector bind`; the id is "admin".
+  AUDIT_ACTOR_KIND_ADMIN = 7;
 }
 
 // AuditAction is what an audit entry records, a closed set: it carries no
@@ -714,6 +717,11 @@ enum AuditAction {
   // A plugin the operator removed, seen by the core: names the instance and
   // the last generation seen.
   AUDIT_ACTION_PLUGIN_REMOVED = 63;
+  // A sync the core started that changed state, by the system actor: names
+  // the connector instance, the import batch, the accounts it wrote
+  // transactions in and how many of each kind of record it wrote, never an
+  // amount.
+  AUDIT_ACTION_CONNECTOR_SYNCED = 64;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -776,6 +784,11 @@ enum AuditRefKind {
   // A setting the owner changed, such as "tax:marginal_rate" or
   // "marketdata:ranking:prices", never its value.
   AUDIT_REF_KIND_SETTING = 38;
+  // An import batch, by its id.
+  AUDIT_REF_KIND_IMPORT_BATCH = 39;
+  // How many records of one kind a sync wrote, as "<kind>:<count>" with the
+  // kind "transactions", "prices" or "bond_terms".
+  AUDIT_REF_KIND_SYNC_COUNT = 40;
 }
 
 // AuditActor is who made the change.

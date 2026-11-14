@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db5d0c81d155
+  - type: implements
+    from: SYM-core-tracing-new-pool
+    to: REQ-core-db-session-timeouts
+    created_at: 2026-11-14T06:39:54.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc3c9841294d
+  - type: covered_by
+    from: SYM-core-tracing-new-pool
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:39:54.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-630a4bc3c3fc
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-behind-watch-want-none
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T06:42:26.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba813f34a8ca

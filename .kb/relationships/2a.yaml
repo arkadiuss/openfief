@@ -1105,3 +1105,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1c5b27cff82
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-outboxfixture-entry
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:27.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-340d255b54c4
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-call-probe-import-bond-lots
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:47:40.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d4b400695a1
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-gross-figure
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:41.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe538cdaf6cb
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-the-budget-aborts-the-run-cleanly
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:48.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4f89cd6c3f1

@@ -937,3 +937,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-517e7bd10854
+  - type: verified_by
+    from: SCEN-identity-audit-outbox
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:22:49.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3c344cc9bf
+  - type: verified_by
+    from: SCEN-identity-audit-outbox
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T04:22:49.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92bb9baa559f
+  - type: verified_by
+    from: SCEN-identity-audit-outbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:22:49.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b9a40ecc69f
+  - type: verified_by
+    from: SCEN-identity-audit-outbox
+    to: TEST-identity-audit-once-postgres
+    created_at: 2026-11-14T04:22:49.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2455c67fc8
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-the-cases-file-has-no-real-data
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:33:39.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb67ce0d0f29
+  - type: implements
+    from: SYM-askbench-numbers-iso-date-pattern
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:38:29.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81fcba61d5f6
+  - type: covered_by
+    from: SYM-askbench-numbers-iso-date-pattern
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:38:29.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b41540b7586
+  - type: implements
+    from: SYM-askbench-readservice-read-service-group-key
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:47:24.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d2913596c4
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-group-key
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:47:24.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24ab1e085432

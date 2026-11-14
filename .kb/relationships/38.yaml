@@ -1189,3 +1189,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9da0b5e316c9
+  - type: implements
+    from: SYM-s9-cmd-core-connectors-adminactor
+    to: REQ-identity-audit-admin-actor
+    created_at: 2026-11-14T04:26:43.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13b7e72fb343
+  - type: covered_by
+    from: SYM-s9-cmd-core-connectors-adminactor
+    to: TEST-core-admin-audit
+    created_at: 2026-11-14T04:26:43.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cca487a57670
+  - type: implements
+    from: SYM-askbench-scorers-gives-no-advice
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:42.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ec18a88f777
+  - type: implements
+    from: SYM-askbench-scorers-gives-no-advice
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:42.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af97c11247b
+  - type: covered_by
+    from: SYM-askbench-scorers-gives-no-advice
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:42.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46554eb49b87

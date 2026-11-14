@@ -1,4 +1,9 @@
-package main
+// Package openaichat is the OpenAI-compatible chat completions client of the
+// model-openai plugin (D-205): the request and reply wire format, the status
+// classes and OpenRouter's routing preference. The plugin serves the core with
+// it, and the Ask box bench (tools/askbench) sends its requests through the
+// same code, so both put the same bytes on the wire.
+package openaichat
 
 import (
 	"bytes"
@@ -18,63 +23,66 @@ const maxReplyBytes = 4 << 20
 // Errors of a call to the provider. None quotes the provider's reply or the
 // request: either may hold the owner's data (GR-12).
 var (
-	// errRejected reports a request the provider refused as malformed or
+	// ErrRejected reports a request the provider refused as malformed or
 	// unknown, such as a model it does not serve (HTTP 400, 404, 413, 422).
-	errRejected = errors.New("the provider rejected the request")
-	// errUnavailable reports a provider that could not answer: unreachable,
+	ErrRejected = errors.New("the provider rejected the request")
+	// ErrUnavailable reports a provider that could not answer: unreachable,
 	// slow, failing, rate-limiting, or refusing the key.
-	errUnavailable = errors.New("the provider is unavailable")
-	// errBadReply reports an answer that is not a chat completion.
-	errBadReply = errors.New("the provider's reply is not a chat completion")
+	ErrUnavailable = errors.New("the provider is unavailable")
+	// ErrBadReply reports an answer that is not a chat completion.
+	ErrBadReply = errors.New("the provider's reply is not a chat completion")
 )
 
-// chatClient speaks the OpenAI-compatible chat completions protocol: the
+// Client speaks the OpenAI-compatible chat completions protocol: the
 // first wire protocol (D-205), which OpenAI, OpenRouter, Ollama, vLLM, LM
-// Studio and others serve. hc must reach only the provider (the egress
-// proxy and the endpoint's confinement), and key is read per call so a
-// rotated Secret works at once; empty sends no Authorization header.
-type chatClient struct {
-	hc      *http.Client
-	baseURL string
-	key     func() (string, error)
+// Studio and others serve. HTTP must reach only the provider (the egress
+// proxy and the endpoint's confinement), and Key is read per call so a
+// rotated Secret works at once; an empty key sends no Authorization header.
+type Client struct {
+	// HTTP sends the requests.
+	HTTP *http.Client
+	// BaseURL is the provider's API root, such as https://api.openai.com/v1.
+	BaseURL string
+	// Key returns the API key of a call.
+	Key func() (string, error)
 }
 
-// chatMessage is a message of the conversation.
-type chatMessage struct {
+// Message is a message of the conversation.
+type Message struct {
 	Role       string
 	Content    string
-	ToolCalls  []chatToolCall
+	ToolCalls  []ToolCall
 	ToolCallID string
 }
 
-// chatToolCall is a call of a function the model asked for.
-type chatToolCall struct {
+// ToolCall is a call of a function the model asked for.
+type ToolCall struct {
 	ID        string
 	Name      string
 	Arguments string
 }
 
-// chatTool is a function the model may call, with its JSON Schema.
-type chatTool struct {
+// Tool is a function the model may call, with its JSON Schema.
+type Tool struct {
 	Name        string
 	Description string
 	Parameters  json.RawMessage
 }
 
-// chatRequest is what one POST /chat/completions asks.
-type chatRequest struct {
+// Request is what one POST /chat/completions asks.
+type Request struct {
 	Model    string
-	Messages []chatMessage
-	Tools    []chatTool
+	Messages []Message
+	Tools    []Tool
 	// ResponseSchema, when set, asks for a JSON answer of this JSON Schema.
 	ResponseSchema json.RawMessage
 	MaxTokens      int64
 }
 
-// chatReply is the part of a completion the plugin reads.
-type chatReply struct {
+// Reply is the part of a completion the plugin reads.
+type Reply struct {
 	Content      string
-	ToolCalls    []chatToolCall
+	ToolCalls    []ToolCall
 	FinishReason string
 	InputTokens  int64
 	OutputTokens int64
@@ -102,7 +110,7 @@ const (
 )
 
 // body returns the request as the JSON object the protocol takes.
-func (r *chatRequest) body() map[string]any {
+func (r *Request) body() map[string]any {
 	msgs := make([]map[string]any, 0, len(r.Messages))
 	for i := range r.Messages {
 		msgs = append(msgs, r.Messages[i].body())
@@ -128,7 +136,7 @@ func (r *chatRequest) body() map[string]any {
 }
 
 // body returns the message as the JSON object the protocol takes.
-func (m *chatMessage) body() map[string]any {
+func (m *Message) body() map[string]any {
 	out := map[string]any{"role": m.Role, "content": m.Content}
 	if m.ToolCallID != "" {
 		out["tool_call_id"] = m.ToolCallID
@@ -146,7 +154,7 @@ func (m *chatMessage) body() map[string]any {
 }
 
 // body returns the tool as the JSON object the protocol takes.
-func (t *chatTool) body() map[string]any {
+func (t *Tool) body() map[string]any {
 	fn := map[string]any{keyName: t.Name}
 	if t.Description != "" {
 		fn["description"] = t.Description
@@ -157,8 +165,8 @@ func (t *chatTool) body() map[string]any {
 	return map[string]any{keyType: typeFunction, "function": fn}
 }
 
-// complete sends req and returns the first choice.
-func (c *chatClient) complete(ctx context.Context, req *chatRequest) (*chatReply, error) {
+// Complete sends req and returns the first choice.
+func (c *Client) Complete(ctx context.Context, req *Request) (*Reply, error) {
 	raw, err := c.post(ctx, req)
 	if err != nil {
 		return nil, err
@@ -170,26 +178,13 @@ func (c *chatClient) complete(ctx context.Context, req *chatRequest) (*chatReply
 // server that takes routing preferences in a request's `provider` object.
 const openRouterHost = "openrouter.ai"
 
-// onOpenRouter reports whether the client's base URL is OpenRouter's: its
-// host is openrouter.ai or one of its subdomains. Other servers get no
-// `provider` object: OpenAI's own API refuses a request member it does not
-// know, so the member is sent only where it is part of the protocol.
-func (c *chatClient) onOpenRouter() bool {
-	u, err := url.Parse(c.baseURL)
-	if err != nil {
-		return false
-	}
-	host := strings.ToLower(u.Hostname())
-	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
-}
-
-// requestBody returns the JSON object req is sent as. On OpenRouter a
+// RequestBody returns the JSON object req is sent as. On OpenRouter a
 // request that sends tools also asks `provider.require_parameters`, so the
 // router only picks a host that supports every parameter of the request,
 // tools included: without it a host that silently drops them can answer
 // with no tool call, which the Ask box would read as an answer from data it
 // never read. Host pinning (`order`, `allow_fallbacks`) is not set here.
-func (c *chatClient) requestBody(req *chatRequest) map[string]any {
+func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
 	if len(req.Tools) > 0 && c.onOpenRouter() {
 		body["provider"] = map[string]any{"require_parameters": true}
@@ -197,30 +192,43 @@ func (c *chatClient) requestBody(req *chatRequest) map[string]any {
 	return body
 }
 
-// post sends req to the provider and returns the body of its 2xx answer.
-func (c *chatClient) post(ctx context.Context, req *chatRequest) ([]byte, error) {
-	body, err := json.Marshal(c.requestBody(req))
+// onOpenRouter reports whether the client's base URL is OpenRouter's: its
+// host is openrouter.ai or one of its subdomains. Other servers get no
+// `provider` object: OpenAI's own API refuses a request member it does not
+// know, so the member is sent only where it is part of the protocol.
+func (c *Client) onOpenRouter() bool {
+	u, err := url.Parse(c.BaseURL)
 	if err != nil {
-		return nil, fmt.Errorf("%w: encoding", errRejected)
+		return false
 	}
-	hr, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/chat/completions", bytes.NewReader(body))
+	host := strings.ToLower(u.Hostname())
+	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
+}
+
+// post sends req to the provider and returns the body of its 2xx answer.
+func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
+	body, err := json.Marshal(c.RequestBody(req))
 	if err != nil {
-		return nil, fmt.Errorf("%w: building the request", errUnavailable)
+		return nil, fmt.Errorf("%w: encoding", ErrRejected)
+	}
+	hr, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/chat/completions", bytes.NewReader(body))
+	if err != nil {
+		return nil, fmt.Errorf("%w: building the request", ErrUnavailable)
 	}
 	hr.Header.Set("Content-Type", "application/json")
 	hr.Header.Set("Accept", "application/json")
-	key, err := c.key()
+	key, err := c.Key()
 	if err != nil {
-		return nil, fmt.Errorf("%w: %w", errUnavailable, err)
+		return nil, fmt.Errorf("%w: %w", ErrUnavailable, err)
 	}
 	if key != "" {
 		hr.Header.Set("Authorization", "Bearer "+key)
 	}
-	resp, err := c.hc.Do(hr)
+	resp, err := c.HTTP.Do(hr)
 	if err != nil {
 		// A transport error can quote the URL, never the body; the key and
 		// the request are not in it.
-		return nil, fmt.Errorf("%w: no answer from the provider", errUnavailable)
+		return nil, fmt.Errorf("%w: no answer from the provider", ErrUnavailable)
 	}
 	raw, readErr := io.ReadAll(io.LimitReader(resp.Body, maxReplyBytes+1))
 	closeErr := resp.Body.Close()
@@ -228,22 +236,22 @@ func (c *chatClient) post(ctx context.Context, req *chatRequest) ([]byte, error)
 		return nil, statusErr
 	}
 	if readErr != nil || closeErr != nil || len(raw) > maxReplyBytes {
-		return nil, fmt.Errorf("%w: the reply could not be read", errUnavailable)
+		return nil, fmt.Errorf("%w: the reply could not be read", ErrUnavailable)
 	}
 	return raw, nil
 }
 
 // parseReply reads the first choice and the usage of a chat completion.
-func parseReply(raw []byte) (*chatReply, error) {
+func parseReply(raw []byte) (*Reply, error) {
 	var top object
 	var choices []object
 	if json.Unmarshal(raw, &top) != nil || !top.get("choices", &choices) || len(choices) == 0 {
-		return nil, errBadReply
+		return nil, ErrBadReply
 	}
-	var out chatReply
+	var out Reply
 	var message object
 	if !choices[0].get("message", &message) {
-		return nil, errBadReply
+		return nil, ErrBadReply
 	}
 	var content *string
 	if message.get("content", &content) && content != nil {
@@ -253,7 +261,7 @@ func parseReply(raw []byte) (*chatReply, error) {
 	message.get("tool_calls", &calls)
 	for _, c := range calls {
 		var fn object
-		var tc chatToolCall
+		var tc ToolCall
 		c.get("id", &tc.ID)
 		if c.get("function", &fn) {
 			fn.get("name", &tc.Name)
@@ -271,8 +279,8 @@ func parseReply(raw []byte) (*chatReply, error) {
 }
 
 // statusError classifies an HTTP status: a 2xx is nil, a refusal of the
-// request itself is errRejected, and anything else, a refused key, a rate
-// limit or a failing provider, is errUnavailable so the router tries the
+// request itself is ErrRejected, and anything else, a refused key, a rate
+// limit or a failing provider, is ErrUnavailable so the router tries the
 // route's next model.
 func statusError(code int) error {
 	switch {
@@ -280,7 +288,7 @@ func statusError(code int) error {
 		return nil
 	case code == http.StatusBadRequest, code == http.StatusNotFound, code == http.StatusRequestEntityTooLarge,
 		code == http.StatusUnprocessableEntity:
-		return fmt.Errorf("%w: HTTP %d", errRejected, code)
+		return fmt.Errorf("%w: HTTP %d", ErrRejected, code)
 	}
-	return fmt.Errorf("%w: HTTP %d", errUnavailable, code)
+	return fmt.Errorf("%w: HTTP %d", ErrUnavailable, code)
 }

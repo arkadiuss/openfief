@@ -11,11 +11,12 @@ import (
 // Askers checks the session of someone asking the Ask box a question (D-203):
 // any valid session on an allowed origin, a read-scoped one included, since
 // the demo's visitors ask too and what the model sees is limited by what the
-// session may read. It returns the session's ID, which the audit entries name
-// as the actor. cmd/core answers it over the identity context, with errors
-// wrapping ErrNoSession.
+// session may read. It returns who asked, as the audit entries name the actor:
+// the owner or a viewer, by the session's ID; a viewer's question is the
+// viewer's, never the owner's. cmd/core answers it over the identity context,
+// with errors wrapping ErrNoSession.
 type Askers interface {
-	Asker(ctx context.Context, origin, sessionToken string) (sessionID string, err error)
+	Asker(ctx context.Context, origin, sessionToken string) (Actor, error)
 }
 
 // Ask is the Ask box's door to the model router (D-203): for the Ask box's
@@ -86,24 +87,24 @@ func (a *Ask) Permits(ctx context.Context, origin, sessionToken string, tiers []
 // router's refusals, audit failures and the exhaustion of the route come back
 // as its own errors.
 func (a *Ask) Generate(ctx context.Context, origin, sessionToken string, req *modelrouter.Request) (modelrouter.Result, error) {
-	id, err := a.asker(ctx, origin, sessionToken)
+	who, err := a.asker(ctx, origin, sessionToken)
 	if err != nil {
 		return modelrouter.Result{}, err
 	}
-	res, err := a.router.Generate(ctx, modelrouter.RoleAsk, Actor{Kind: ActorOwner, ID: id}, req)
+	res, err := a.router.Generate(ctx, modelrouter.RoleAsk, who, req)
 	if err != nil {
 		return modelrouter.Result{}, fmt.Errorf("asking the Ask box's model: %w", err)
 	}
 	return res, nil
 }
 
-// asker returns the ID of the session of sessionToken on origin.
-func (a *Ask) asker(ctx context.Context, origin, sessionToken string) (string, error) {
-	id, err := a.askers.Asker(ctx, origin, sessionToken)
+// asker returns who asked with the session of sessionToken on origin.
+func (a *Ask) asker(ctx context.Context, origin, sessionToken string) (Actor, error) {
+	who, err := a.askers.Asker(ctx, origin, sessionToken)
 	if err != nil {
-		return "", fmt.Errorf("the Ask box: %w", err)
+		return Actor{}, fmt.Errorf("the Ask box: %w", err)
 	}
-	return id, nil
+	return who, nil
 }
 
 // refusal reports whether err is the router saying the data, not the

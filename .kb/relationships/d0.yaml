@@ -916,3 +916,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53f56c912156
+  - type: executable_for
+    from: SYM-s9b-dbtimeouts-test-ended-by-idle-timeout
+    to: TEST-core-db-timeouts
+    created_at: 2026-11-14T06:44:24.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d460b4f50d
+  - type: implements
+    from: SYM-askbench-numbers-date-texts
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:38:35.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8654be1fdb33
+  - type: covered_by
+    from: SYM-askbench-numbers-date-texts
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:38:35.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-128a66cab20d

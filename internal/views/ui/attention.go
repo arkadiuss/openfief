@@ -39,6 +39,9 @@ const (
 	// kindViewPluginUngranted is a view plugin that can't read anything until
 	// the owner grants it accounts (D-196, D-209).
 	kindViewPluginUngranted = "view-plugin-ungranted"
+	// kindAuditLogBehind is the audit entries waiting in the outbox through
+	// several failed attempts to enter the log (D-196, D-211).
+	kindAuditLogBehind = "audit-log-behind"
 )
 
 // openAccounts is the words of an item's link to the accounts page.
@@ -70,6 +73,7 @@ func attentionKindOf(kind string) attentionKind {
 		kindMaintainerFailing:                   {Label: "Maintainer's weekly run failing", Page: modelPath, Action: "Open the model portfolio"},
 		kindViewPluginUngranted:                 {Label: "View plugin without access to any account", Page: accessPath + viewPluginsAnchor, Action: "Open Access"},
 		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
+		kindAuditLogBehind:                      {Label: "Audit log is behind", Page: auditPath, Action: "Open the audit log"},
 	}
 	if k, ok := kinds[kind]; ok {
 		return k

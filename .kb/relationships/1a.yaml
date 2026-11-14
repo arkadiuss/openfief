@@ -923,3 +923,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03f03770c5b5
+  - type: verified_by
+    from: SCEN-ui-audit-log-owner-filters-viewer-refused
+    to: TEST-ui-audit
+    created_at: 2026-11-14T04:23:00.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf774eb6d280
+  - type: verified_by
+    from: SCEN-ui-audit-log-owner-filters-viewer-refused
+    to: TEST-ui-audit-names-changes
+    created_at: 2026-11-14T04:23:00.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08bc59673846
+  - type: verified_by
+    from: SCEN-ui-audit-log-owner-filters-viewer-refused
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-14T04:23:00.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32bbf0609c97
+  - type: implements
+    from: SYM-askbench-portfolio-holding-value
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:41:16.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-812e637c1da0
+  - type: covered_by
+    from: SYM-askbench-portfolio-holding-value
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:41:16.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-597cc98fa57c
+  - type: implements
+    from: SYM-askbench-portfolio-ledger-books
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:42:03.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86a3387bee14
+  - type: covered_by
+    from: SYM-askbench-portfolio-ledger-books
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:42:03.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f5d1d2b6d48
+  - type: executable_for
+    from: SYM-askbench-runner-test-read-out
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:40.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aaa7cba76a6
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-bad-flags-are-refused
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:34.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0bfe220dd30

@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ad1613effd8
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-joinedstore
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:24:19.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5830ffc8281
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-joinedstore
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:24:19.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dfd2a0ff400
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-statement-upload-makes-no-network-call-inside-its-transaction
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:55:46.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f824c59501c

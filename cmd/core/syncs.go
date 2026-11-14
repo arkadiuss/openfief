@@ -17,13 +17,16 @@ type syncTrigger struct {
 	scheduler atomic.Pointer[ingestapp.Scheduler]
 }
 
-// Retry starts one sync of instance on the scheduler.
+// Retry starts one sync of instance on the scheduler. The owner's retry is a
+// change with an audit entry, so ctx may carry its transaction; the sync it
+// starts runs on after that commits, in transactions of its own, and calls
+// the connector, so it starts outside the change's.
 func (t *syncTrigger) Retry(ctx context.Context, instance string) error {
 	s := t.scheduler.Load()
 	if s == nil {
 		return ingestapp.ErrSyncsNotRunning
 	}
-	if err := s.Retry(ctx, instance); err != nil {
+	if err := s.Retry(outsideChange(ctx), instance); err != nil {
 		return fmt.Errorf("retrying a sync: %w", err)
 	}
 	return nil
@@ -38,7 +41,7 @@ func (t *syncTrigger) set(s *ingestapp.Scheduler) { t.scheduler.Store(s) }
 // runs, each instance at most once a minute.
 func newRetries(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Retries {
 	retries := &ingestapp.Retries{
-		Owners: owners, Bindings: ingestpg.New(d.pool), Trigger: d.syncs, Every: ingestapp.DefaultRetryEvery, Now: d.now,
+		Owners: owners, Bindings: ingestpg.New(joined(d.pool)), Trigger: d.syncs, Every: ingestapp.DefaultRetryEvery, Now: d.now,
 	}
 	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
 		retries.Audit = a

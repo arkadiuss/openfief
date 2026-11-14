@@ -1007,3 +1007,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9faef7cbd666
+  - type: implements
+    from: SYM-askbench-phrases-sentences
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:59.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd3424ed1749
+  - type: covered_by
+    from: SYM-askbench-phrases-sentences
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:59.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cfd684b079
+  - type: implements
+    from: SYM-askbench-portfolio-add-to
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:42:20.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-093e226f53ba
+  - type: covered_by
+    from: SYM-askbench-portfolio-add-to
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:42:20.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93f5cc41fb40
+  - type: executable_for
+    from: SYM-askbench-runner-test-check-disagreements
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:58.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8444b9b1fe5d

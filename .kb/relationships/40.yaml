@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e85c28ec4ae
+  - type: verified_by
+    from: SCEN-askbench-phrase-list-decides-advice
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:24:35.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c83effc97b68
+  - type: verified_by
+    from: SCEN-askbench-phrase-list-decides-advice
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:24:35.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3083be014a2

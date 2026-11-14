@@ -1315,3 +1315,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f39b49a61713
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool-queryrow
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:24:08.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b4445613e0b
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool-queryrow
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:24:08.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0a00a173c7c
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:25:55.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd260ea8d904
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: TEST-core-sync-audit
+    created_at: 2026-11-14T04:25:55.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79ff6bef4ce3
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: REQ-ingest-delivery-timeout
+    created_at: 2026-11-14T06:39:12.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad1b9b47edc
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:39:12.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-715c94aa2067
+  - type: implements
+    from: SYM-askbench-portfolio-price-table
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:41:51.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2a55dc9de67
+  - type: covered_by
+    from: SYM-askbench-portfolio-price-table
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:41:51.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93e4c967b507
+  - type: implements
+    from: SYM-askbench-portfolio-flow-of
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:42:49.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e01dd675a08
+  - type: covered_by
+    from: SYM-askbench-portfolio-flow-of
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:42:49.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-438af0391c2c
+  - type: implements
+    from: SYM-askbench-report-budget-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:49:27.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30c758dae3ab
+  - type: implements
+    from: SYM-askbench-report-budget-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:49:27.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b35d2432973c
+  - type: covered_by
+    from: SYM-askbench-report-budget-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:49:27.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d69d0789ecf8

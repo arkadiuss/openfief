@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ee89dde277d
+  - type: implements
+    from: SYM-s9b-status-store-jobs-failed-at-least
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:56:57.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed6fe8d11483
+  - type: covered_by
+    from: SYM-s9b-status-store-jobs-failed-at-least
+    to: TEST-valuation-postgres-jobs-failed
+    created_at: 2026-11-14T06:56:57.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d75d26e29279

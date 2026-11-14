@@ -1098,3 +1098,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30ebbc46c2c5
+  - type: executable_for
+    from: SYM-s9-internal-identity-postgres-auditchange-test-testappendauditoncerefuseswhatthedomainrefusesandthetablekeepsthekeyunique
+    to: TEST-identity-audit-once-postgres
+    created_at: 2026-11-14T04:50:35.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a73789d70f1c
+  - type: executable_for
+    from: SYM-s9b-changed-test-test-save-index-readings-reports-only-what-was-new-or-different
+    to: TEST-valuation-postgres-market-data-changed
+    created_at: 2026-11-14T06:56:36.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3db72aac1b4
+  - type: implements
+    from: SYM-askbench-phrases-clarify-phrases
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:22.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e7bd5efb6a
+  - type: covered_by
+    from: SYM-askbench-phrases-clarify-phrases
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:22.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bd3b857fa70
+  - type: implements
+    from: SYM-askbench-scorers-shows-cards
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:56:43.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d043e1d78a
+  - type: implements
+    from: SYM-askbench-scorers-shows-cards
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:56:43.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dca92e4e4119
+  - type: covered_by
+    from: SYM-askbench-scorers-shows-cards
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:56:43.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-677b1d041fb9

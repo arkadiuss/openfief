@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2bdd1060347
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-test-audit-log-behind-item-is-raised-at-five-failures
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T06:42:35.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1610e26410c8
+  - type: implements
+    from: SYM-askbench-phrases-advice-limit-phrases
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:04.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ec3886b8e2
+  - type: covered_by
+    from: SYM-askbench-phrases-advice-limit-phrases
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:04.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99b0f473cae4

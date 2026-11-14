@@ -38,12 +38,12 @@ func TestAccessHistory(t *testing.T) {
 		`id="history-title"`, "Invitation cancelled", "Invitation for Dana",
 		"Access granted", "Alice → Sleeve Core", "Script token backup-script → Account acc-deleted-1 (removed)",
 		"Access ended", "View plugin ui-local → Whole household", "Viewer created", "Enrollment link issued",
-		"The core (command line)", `href="/settings/audit"`, "See the whole audit log",
+		"The core", `href="/settings/audit"`, "See the whole audit log",
 	)
 	want := []string{
 		"Owner | Invitation cancelled", "Enrollment link 99999999 | Enrollment link used", "Owner | Access ended", "Owner | Access granted",
 		"Enrollment link 99999999 | Access granted", "Enrollment link 99999999 | Viewer created", "Enrollment link 99999999 | Enrollment link used",
-		"Owner | Enrollment link issued", "The core (command line) | Enrollment link issued",
+		"Owner | Enrollment link issued", "The core | Enrollment link issued",
 	}
 	if diff := cmp.Diff(want, auditRows(rec.Body.String())[:len(want)]); diff != "" {
 		t.Errorf("history rows, newest first (-want +got):\n%s", diff)
@@ -108,10 +108,59 @@ func TestAuditLogPage(t *testing.T) {
 		"Sign-in",
 	)
 	rows := auditRows(rec.Body.String())
-	if len(rows) != 12 || rows[0] != "Owner | Invitation cancelled" || rows[11] != "The core (command line) | Enrollment link issued" {
+	if len(rows) != 12 || rows[0] != "Owner | Invitation cancelled" || rows[11] != "The core | Enrollment link issued" {
 		t.Errorf("rows = %q, want the 12 entries newest first", rows)
 	}
 	wantNoBody(t, rec, "Older entries")
+}
+
+// TestAuditLogBannerFollowsTheBehindItem checks the banner on the Audit log
+// page (D-211, D-196): while the audit-log-behind attention item is open the
+// page shows what it says, the count of changes waiting, with a word on where
+// their entries will appear; with no such item, no banner; and a core that
+// can't list the items fails nothing, the page shows the log without a banner.
+func TestAuditLogBannerFollowsTheBehindItem(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		set  func(h *harness)
+		want string
+	}{
+		{name: "no item", set: func(*harness) {}},
+		{name: "an open item", set: func(h *harness) { h.attention.setAuditBehind(3) }, want: "3 changes are waiting to enter the audit log; OpenFief keeps retrying. Check the database&#39;s health."},
+		{name: "the items can't be listed", set: func(h *harness) {
+			h.attention.setAuditBehind(3)
+			h.attention.mu.Lock()
+			h.attention.unavailable = true
+			h.attention.mu.Unlock()
+		}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			tt.set(h)
+			rec := h.serve(t, withSession(request(http.MethodGet, auditPath, ""), ownerSession))
+			wantStatus(t, rec, http.StatusOK)
+			wantBody(t, rec, "Invitation cancelled")
+			if tt.want == "" {
+				wantNoBody(t, rec, "data-audit-behind")
+				return
+			}
+			wantBody(t, rec, "data-audit-behind", tt.want, "Entries of those changes will appear here")
+		})
+	}
+}
+
+// TestAuditLogBehindItemIsInTheInbox checks that the audit-log-behind item
+// shows in the Inbox by its own words and links to the Audit log, in the
+// group of data coming in.
+func TestAuditLogBehindItemIsInTheInbox(t *testing.T) {
+	t.Parallel()
+	k := attentionKindOf(kindAuditLogBehind)
+	if k.Label != "Audit log is behind" || k.Page != auditPath {
+		t.Errorf("attentionKindOf(audit-log-behind) = %+v, want its label and the Audit log page", k)
+	}
 }
 
 // TestAuditLogNamesEveryValueOfTheContract checks that the page has words for
@@ -227,7 +276,7 @@ func TestAuditLogMalformedFilters(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	for _, q := range []string{
-		"actor=admin", "action=delete_everything", "outcome=maybe", "from=yesterday", "to=2026-13-45", "from=2026-03-03&to=2026-03-01", "before=abc", "before=-3",
+		"actor=nobody", "action=delete_everything", "outcome=maybe", "from=yesterday", "to=2026-13-45", "from=2026-03-03&to=2026-03-01", "before=abc", "before=-3",
 	} {
 		rec := h.serve(t, withSession(request(http.MethodGet, auditPath+"?"+q, ""), ownerSession))
 		if rec.Code != http.StatusBadRequest {
@@ -265,7 +314,7 @@ func TestAuditLogPages(t *testing.T) {
 		}
 		path = next
 	}
-	if len(seen) != 10 || seen[0] != "Owner | Invitation cancelled" || seen[9] != "The core (command line) | Enrollment link issued" {
+	if len(seen) != 10 || seen[0] != "Owner | Invitation cancelled" || seen[9] != "The core | Enrollment link issued" {
 		t.Errorf("paging saw %d rows %q, want the ten entries that ended ok, once each, newest first", len(seen), seen)
 	}
 }

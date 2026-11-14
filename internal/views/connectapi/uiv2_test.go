@@ -410,7 +410,7 @@ func TestUIv2EnumsMatch(t *testing.T) {
 		}[k]
 		checkEnum(t, viewsv1.ActivityKind(0).Descriptor(), "ACTIVITY_KIND_", int(k), name)
 	}
-	for c := ingest.SyncErrorTimeout; c <= ingest.SyncErrorOther; c++ {
+	for c := ingest.SyncErrorTimeout; c <= ingest.SyncErrorDeliveryTimeout; c++ {
 		checkEnum(t, viewsv1.SyncErrorClass(0).Descriptor(), "SYNC_ERROR_CLASS_", int(c), c.String())
 	}
 	for g := attention.GroupDataComingIn; g <= attention.GroupDecisions; g++ {

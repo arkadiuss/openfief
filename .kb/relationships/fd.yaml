@@ -1021,3 +1021,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e26bbe0e4ae8
+  - type: implements
+    from: SYM-s9b-queue-store-save-index-levels-changed
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:56:46.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43e6e3c3b99c
+  - type: covered_by
+    from: SYM-s9b-queue-store-save-index-levels-changed
+    to: TEST-valuation-postgres-market-data-changed
+    created_at: 2026-11-14T06:56:46.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-519b133cb628
+  - type: implements
+    from: SYM-askbench-readservice-read-service-list-sleeves
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:45:12.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1acf51d6274d
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-list-sleeves
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:45:12.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4615ce4397f7
+  - type: implements
+    from: SYM-askbench-report-tool-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:49:10.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b02c49b0478
+  - type: implements
+    from: SYM-askbench-report-tool-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:49:10.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7626b851847
+  - type: covered_by
+    from: SYM-askbench-report-tool-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:49:10.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ccf59542acf
+  - type: implements
+    from: SYM-askbench-scorers-run-data
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:55:03.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c8be1b24340
+  - type: implements
+    from: SYM-askbench-scorers-run-data
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:55:04.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e15d169ab36
+  - type: covered_by
+    from: SYM-askbench-scorers-run-data
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:55:04.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa093574071e

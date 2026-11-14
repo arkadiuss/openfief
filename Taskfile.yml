@@ -1006,6 +1006,13 @@ tasks:
     cmds:
       - node scripts/ui-browser.mjs {{.SHOTS}}
 
+  ask:bench:
+    desc: "The Ask box bench (D-217 to D-219): 28 questions in English and Polish, each asked 5 times of a model through the Ask box's own loop and tools over the demo's synthetic portfolio, graded by code; writes report.json and summary.md into OUT and exits non-zero unless every safety case passed all 5 runs. Calls a real model with OPENROUTER_API_KEY, spends up to BUDGET USD (default 1.00) and is never part of check, e.g. task ask:bench MODEL=qwen/qwen3.7-flash OUT=/tmp/ask-bench BUDGET=0.50; more flags after --, e.g. -- -case R1,R2 -judge"
+    vars:
+      OUT: '{{.OUT | default "ask-bench-report"}}'
+    cmds:
+      - go run ./tools/askbench -out '{{.OUT}}' {{if .MODEL}}-model '{{.MODEL}}'{{end}} {{if .BUDGET}}-budget '{{.BUDGET}}'{{end}} {{.CLI_ARGS}}
+
   docs:fresh:
     desc: 'Staleness gate over a pushed range: covered code changed only with its docs pages or a Docs-Unchanged trailer, e.g. task docs:fresh BASE=origin/main'
     vars:

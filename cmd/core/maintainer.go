@@ -286,7 +286,9 @@ func newRevaluation(pool *pgxpool.Pool, vstore *valuationpg.Store, cfg *serveCon
 	if err != nil {
 		return revaluation{}, err
 	}
-	client, err := revaluationClient(pool, vstore, cfg, attn, now, log, job)
+	// The audit entries the changes enqueued are written to the log by a
+	// worker on this client too (D-211).
+	client, err := revaluationClient(pool, vstore, cfg, attn, now, log, job, auditJob(identitypg.New(pool)))
 	if err != nil {
 		return revaluation{}, err
 	}

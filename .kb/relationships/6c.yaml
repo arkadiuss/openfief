@@ -1084,3 +1084,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7748168b24d
+  - type: implements
+    from: SYM-askbench-portfolio-price-table-close-on
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:43:00.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af6c9cc738c2
+  - type: covered_by
+    from: SYM-askbench-portfolio-price-table-close-on
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:43:00.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fde7159b59b8
+  - type: implements
+    from: SYM-askbench-report-model-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:49:22.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d2d591c14e2
+  - type: implements
+    from: SYM-askbench-report-model-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:49:22.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eb275b378a6
+  - type: covered_by
+    from: SYM-askbench-report-model-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:49:22.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f04d2e586b5d

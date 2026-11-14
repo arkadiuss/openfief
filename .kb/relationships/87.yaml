@@ -1112,3 +1112,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7886f674fdf6
+  - type: executable_for
+    from: SYM-s9-internal-identity-postgres-auditchange-test-testappendauditoncewritesanentryonceperkey
+    to: TEST-identity-audit-once-postgres
+    created_at: 2026-11-14T04:28:58.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c4eb846209c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-change-context
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:44:34.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-646967969be6
+  - type: implements
+    from: SYM-s9b-connectors-connectors-prepare
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:47:09.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdf197429d5e
+  - type: covered_by
+    from: SYM-s9b-connectors-connectors-prepare
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:47:09.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f4ebdef6117
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-probes
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:05:02.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0229674b5003

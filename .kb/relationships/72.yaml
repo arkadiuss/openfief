@@ -825,3 +825,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8bb6d62c8d2
+  - type: verified_by
+    from: SCEN-identity-audit-sync-entries
+    to: TEST-core-sync-audit
+    created_at: 2026-11-14T04:22:52.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62fdfa874f25
+  - type: verified_by
+    from: SCEN-identity-audit-sync-entries
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:22:52.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b04e7e83cab
+  - type: verified_by
+    from: SCEN-identity-audit-sync-entries
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:22:52.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e8bddaa253d
+  - type: verified_by
+    from: SCEN-identity-audit-viewer-actor
+    to: TEST-core-ask-actor
+    created_at: 2026-11-14T04:22:56.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-539b49d91861
+  - type: verified_by
+    from: SCEN-identity-audit-viewer-actor
+    to: TEST-identity-audit-viewer-person
+    created_at: 2026-11-14T04:22:56.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a796ba0990d
+  - type: executable_for
+    from: SYM-s9-internal-identity-app-ownerchange-test-testrecordownerchangefailsclosed
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:50:19.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-366c27993f36

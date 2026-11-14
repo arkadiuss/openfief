@@ -804,3 +804,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1cb69b4d989
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-index-levels
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:41:41.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1088c461049
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-index-levels
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:41:41.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7948ed79a75
+  - type: implements
+    from: SYM-askbench-portfolio-day-values
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:41:22.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cd5af5199ac
+  - type: covered_by
+    from: SYM-askbench-portfolio-day-values
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:41:22.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a8dcb005e6
+  - type: implements
+    from: SYM-askbench-report-one-line
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:51:31.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97e3027fa9c8
+  - type: implements
+    from: SYM-askbench-report-one-line
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:51:31.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ab0f6199474
+  - type: covered_by
+    from: SYM-askbench-report-one-line
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:51:31.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8f6a7172933

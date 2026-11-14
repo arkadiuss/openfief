@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d0315e6615f
+  - type: executable_for
+    from: SYM-s9b-auditlog-test-fake-backlog-stuck-entries
+    to: TEST-attention-app-audit-log-behind
+    created_at: 2026-11-14T06:46:14.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfa2f548cb80

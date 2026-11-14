@@ -776,3 +776,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8efae6806176
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-txof
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:23:47.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee67f7e233e7
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-txof
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:23:47.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f09eeb6e991c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-plugin-client-is-refused-inside-achange
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:44:53.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a9c3146b44a
+  - type: implements
+    from: SYM-askbench-phrases-poem-like
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:41:11.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67ed424e84a1
+  - type: covered_by
+    from: SYM-askbench-phrases-poem-like
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:41:11.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01211265874
+  - type: implements
+    from: SYM-askbench-scorers-vocabulary-of
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:58:18.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86060ef99fa7
+  - type: implements
+    from: SYM-askbench-scorers-vocabulary-of
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:58:18.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faf8bb48a776
+  - type: covered_by
+    from: SYM-askbench-scorers-vocabulary-of
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:18.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06872050b747

@@ -1133,3 +1133,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f15fb81d36b7
+  - type: implements
+    from: SYM-s9-internal-valuation-postgres-queue-store-savebondtermschanged
+    to: REQ-valuation-inputs-report-changes
+    created_at: 2026-11-14T04:31:06.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d19e8d28b8d6
+  - type: covered_by
+    from: SYM-s9-internal-valuation-postgres-queue-store-savebondtermschanged
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:31:06.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4a2d2c0a80
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-index-levels-changed
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-14T06:38:49.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fecd0dff2283
+  - type: implements
+    from: SYM-ingest-app-uploads-upload
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:40:37.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e92e855907f1
+  - type: covered_by
+    from: SYM-ingest-app-uploads-upload
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:40:37.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e5e2bf25622

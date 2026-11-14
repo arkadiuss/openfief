@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02d26152c687
+  - type: executable_for
+    from: SYM-s9-internal-identity-app-ownerchange-test-testrecordownerchangeenterstheentryintheoutbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:44.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c107fffe5eab
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-testoutboxstepofonestorethatfailsrollsthewholechangeback
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:38.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f952ada145b1
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-every-check-anamed-case-lists-exists
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:33:23.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dacb69694c5e

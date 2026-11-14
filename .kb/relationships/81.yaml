@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e2a709b1c4c
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-transaction-auditor-audited
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:47:30.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d1f9db3c28
+  - type: specified_by
+    from: REQ-decision-d217-2-eval-graded-by-code-five-runs
+    to: SCEN-askbench-five-runs-and-safety
+    created_at: 2026-11-14T08:24:49.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05fa6c682fd4

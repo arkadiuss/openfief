@@ -17,6 +17,9 @@ kibi-report/
 dist/
 /.claude/worktrees/
 
+# The Ask box bench writes its report here (task ask:bench)
+/ask-bench-report/
+
 # Docs site build output (task docs:build)
 /site/.gen/
 /site/public/
@@ -28,6 +31,7 @@ dist/
 /demo-seed
 /egress-proxy
 /model-openai
+/askbench
 /openfief
 /operator
 .kb/.symbol-compiler.lock/

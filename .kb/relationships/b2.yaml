@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d084c4ca2c5
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-testoutboxenqueuethatisrefusedfailsthechange
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:47.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0f4d38aef41
+  - type: executable_for
+    from: SYM-askbench-portfolio-test-test-portfolio-is-valued-on-every-day-and-moves-with-prices
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:44:14.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c81d492d195d

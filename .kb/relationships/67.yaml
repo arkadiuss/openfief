@@ -1238,3 +1238,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e2b7f84b450
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-placements-outside-achange-reach-spice-dbat-once
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:21.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9147e44df3ac
+  - type: implements
+    from: SYM-askbench-cases-polish-months
+    to: REQ-decision-d219-1-ask-eval-cases
+    created_at: 2026-11-14T08:31:56.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63df78474587
+  - type: covered_by
+    from: SYM-askbench-cases-polish-months
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:31:56.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef6c803a092
+  - type: implements
+    from: SYM-askbench-judge-advice-judge-scorer
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:35:16.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7deaadd4ddd2
+  - type: covered_by
+    from: SYM-askbench-judge-advice-judge-scorer
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:35:16.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8fdf1da8bf7

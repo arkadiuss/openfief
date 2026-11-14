@@ -916,3 +916,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd143faac9a5
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-after-change-never-runs-for-achange-that-rolls-back
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:45.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ab33af4e59
+  - type: implements
+    from: SYM-internal-askrun-ask-system-prompt
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:30:40.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e02022590b4b
+  - type: covered_by
+    from: SYM-internal-askrun-ask-system-prompt
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:30:40.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e41188f60b8c
+  - type: implements
+    from: SYM-askbench-readservice-money
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:46:33.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d0b2aa2b3c0
+  - type: covered_by
+    from: SYM-askbench-readservice-money
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:46:33.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79706f60914

@@ -986,3 +986,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-991d989cd25c
+  - type: implements
+    from: SYM-internal-askrun-ask-command
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:30:45.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e826be4ba91
+  - type: covered_by
+    from: SYM-internal-askrun-ask-command
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:30:45.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0b31e882067
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-text-reply
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:35.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e165bf98bc45
+  - type: implements
+    from: SYM-askbench-portfolio-month-key
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:44:03.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66183896ae94
+  - type: covered_by
+    from: SYM-askbench-portfolio-month-key
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:44:03.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c6d2c773d4
+  - type: implements
+    from: SYM-askbench-readservice-read-service-valuation
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:47:02.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c535aca0f57a
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-valuation
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:47:02.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43cce7e416bc
+  - type: executable_for
+    from: SYM-askbench-scorers-test-answered
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:57.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aed19b10e167

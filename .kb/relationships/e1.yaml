@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2a68312003f
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-follow-ups
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T07:04:08.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bd491be2c64
+  - type: executable_for
+    from: SYM-askbench-cases-test-check-a19-alternatives
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:33:18.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64435f1e4132

@@ -1091,3 +1091,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94ca8be14c7b
+  - type: executable_for
+    from: SYM-s9b-auditlog-test-test-audit-log-behind
+    to: TEST-attention-app-audit-log-behind
+    created_at: 2026-11-14T06:46:19.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5fb57583ec2
+  - type: implements
+    from: SYM-s9b-checks-audit-log-behind
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:46:30.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4900739df663
+  - type: covered_by
+    from: SYM-s9b-checks-audit-log-behind
+    to: TEST-attention-app-audit-log-behind
+    created_at: 2026-11-14T06:46:30.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45f1b33a8af0
+  - type: implements
+    from: SYM-askbench-scorers-causes-from-cards
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:36.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae3bc66290b
+  - type: implements
+    from: SYM-askbench-scorers-causes-from-cards
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:36.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-861cea713346
+  - type: covered_by
+    from: SYM-askbench-scorers-causes-from-cards
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:36.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59742857690a

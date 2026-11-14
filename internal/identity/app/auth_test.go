@@ -42,7 +42,7 @@ type demoConfig struct {
 	on, marked bool
 }
 
-func newAuthFixture(t *testing.T, demo demoConfig) *authFixture {
+func newAuthFixture(t *testing.T, demo demoConfig, opts ...app.AuthOption) *authFixture {
 	t.Helper()
 	origins, err := identity.NewOrigins([]string{local, devo})
 	if err != nil {
@@ -51,7 +51,7 @@ func newAuthFixture(t *testing.T, demo demoConfig) *authFixture {
 	clk := &clock{t: authStart()}
 	store := newMemAuthStore()
 	cfg := app.AuthConfig{Origins: origins, Sessions: identity.DefaultSessionPolicy(), DemoSessions: demo.on}
-	auth, err := app.NewAuth(store, webauthn.New("OpenFief"), app.NewTokens(newMemStore(), clk.now, nil), demoMarker(demo.marked), cfg, clk.now, nil)
+	auth, err := app.NewAuth(store, webauthn.New("OpenFief"), app.NewTokens(newMemStore(), clk.now, nil), demoMarker(demo.marked), cfg, clk.now, nil, opts...)
 	if err != nil {
 		t.Fatalf("NewAuth: %v", err)
 	}

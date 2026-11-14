@@ -1455,3 +1455,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29f375ba1d7f
+  - type: implements
+    from: SYM-s9-internal-valuation-app-record-inputrecorder-recordfxrateschanged
+    to: REQ-valuation-inputs-report-changes
+    created_at: 2026-11-14T04:30:36.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea41d8dd2069
+  - type: covered_by
+    from: SYM-s9-internal-valuation-app-record-inputrecorder-recordfxrateschanged
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:30:36.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a83e6ec04c3
+  - type: implements
+    from: SYM-s9-internal-valuation-app-record-inputrecorder-recordfxrateschanged
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:41:31.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c21d4251c46
+  - type: covered_by
+    from: SYM-s9-internal-valuation-app-record-inputrecorder-recordfxrateschanged
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:41:31.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58435cf81c5f
+  - type: implements
+    from: SYM-askbench-modelclient-model-run-generate
+    to: REQ-askbench-requests-like-the-plugin
+    created_at: 2026-11-14T08:37:41.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e3a25047f25
+  - type: covered_by
+    from: SYM-askbench-modelclient-model-run-generate
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:37:41.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbd953f1bc2e

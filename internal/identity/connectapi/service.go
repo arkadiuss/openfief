@@ -319,6 +319,7 @@ func pbActorKinds() map[identity.ActorKind]identityv1.AuditActorKind {
 		identity.ActorEnrollmentCode: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ENROLLMENT_CODE,
 		identity.ActorSystem:         identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM,
 		identity.ActorOperator:       identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR,
+		identity.ActorAdmin:          identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ADMIN,
 		identity.ActorAnonymous:      identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS,
 	}
 }
@@ -378,6 +379,7 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionPluginInstalled:        identityv1.AuditAction_AUDIT_ACTION_PLUGIN_INSTALLED,
 		identity.ActionPluginUpgraded:         identityv1.AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED,
 		identity.ActionPluginRemoved:          identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED,
+		identity.ActionConnectorSynced:        identityv1.AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED,
 	}
 }
 
@@ -416,6 +418,8 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefPlugin:           identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN,
 		identity.RefPluginGeneration: identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
 		identity.RefSetting:          identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING,
+		identity.RefImportBatch:      identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
+		identity.RefSyncCount:        identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT,
 	}
 }
 

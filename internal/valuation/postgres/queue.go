@@ -134,75 +134,139 @@ func (s *Store) ImportHook() ledgerapp.ImportHook {
 
 // SavePrices upserts prices and enqueues revals in one transaction.
 func (s *Store) SavePrices(ctx context.Context, prices []valuation.Price, revals []valuation.Revaluation) error {
+	_, err := s.SavePricesChanged(ctx, prices, revals)
+	return err
+}
+
+// execBatch sends batch, whose n statements are upserts, and returns how many
+// rows they inserted or actually changed: an upsert whose row already holds
+// the incoming values changes nothing and counts for none.
+func execBatch(ctx context.Context, tx pgx.Tx, batch *pgx.Batch, n int) (int, error) {
+	results := tx.SendBatch(ctx, batch)
+	changed := 0
+	for range n {
+		tag, err := results.Exec()
+		if err != nil {
+			return 0, errors.Join(fmt.Errorf("upserting: %w", err), results.Close())
+		}
+		changed += int(tag.RowsAffected())
+	}
+	if err := results.Close(); err != nil {
+		return 0, fmt.Errorf("upserting: %w", err)
+	}
+	return changed, nil
+}
+
+// SavePricesChanged is SavePrices that also returns how many prices were new
+// or differed from the stored one: prices sent again unchanged are none.
+func (s *Store) SavePricesChanged(ctx context.Context, prices []valuation.Price, revals []valuation.Revaluation) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, p := range prices {
 			batch.Queue(`
-				INSERT INTO valuation.prices (instrument, date, close, currency, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (instrument, date, source) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency`,
+				INSERT INTO valuation.prices AS t (instrument, date, close, currency, source) VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (instrument, date, source) DO UPDATE SET close = EXCLUDED.close, currency = EXCLUDED.currency
+				WHERE (t.close, t.currency) IS DISTINCT FROM (EXCLUDED.close, EXCLUDED.currency)`,
 				p.Instrument, p.Date.String(), p.Close.Amount().String(), p.Close.Currency().String(), p.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(prices))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving prices: %w", err)
+		return 0, fmt.Errorf("saving prices: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveFXRates upserts rates and enqueues revals in one transaction.
 func (s *Store) SaveFXRates(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) error {
+	_, err := s.SaveFXRatesChanged(ctx, rates, revals)
+	return err
+}
+
+// SaveFXRatesChanged is SaveFXRates that also returns how many rates were new
+// or differed from the stored one.
+func (s *Store) SaveFXRatesChanged(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, r := range rates {
 			batch.Queue(`
-				INSERT INTO valuation.fx_rates (currency, base, date, rate, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (currency, base, date, source) DO UPDATE SET rate = EXCLUDED.rate`,
+				INSERT INTO valuation.fx_rates AS t (currency, base, date, rate, source) VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (currency, base, date, source) DO UPDATE SET rate = EXCLUDED.rate
+				WHERE t.rate IS DISTINCT FROM EXCLUDED.rate`,
 				r.Currency.String(), r.Base.String(), r.Date.String(), r.Rate.String(), r.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(rates))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving FX rates: %w", err)
+		return 0, fmt.Errorf("saving FX rates: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveIndexLevels upserts market index levels in one transaction. They
 // cause no revaluation.
 func (s *Store) SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
+	_, err := s.SaveIndexLevelsChanged(ctx, levels)
+	return err
+}
+
+// SaveIndexLevelsChanged is SaveIndexLevels that also returns how many levels
+// were new or differed, in their level or their source, from the stored one:
+// levels sent again unchanged are none.
+func (s *Store) SaveIndexLevelsChanged(ctx context.Context, levels []valuation.IndexLevel) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, nil, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, l := range levels {
 			batch.Queue(`
-				INSERT INTO valuation.index_levels (index, date, level, source) VALUES ($1, $2, $3, $4)
-				ON CONFLICT (index, date) DO UPDATE SET level = EXCLUDED.level, source = EXCLUDED.source`,
+				INSERT INTO valuation.index_levels AS t (index, date, level, source) VALUES ($1, $2, $3, $4)
+				ON CONFLICT (index, date) DO UPDATE SET level = EXCLUDED.level, source = EXCLUDED.source
+				WHERE (t.level, t.source) IS DISTINCT FROM (EXCLUDED.level, EXCLUDED.source)`,
 				l.Index, l.Date.String(), l.Level.String(), l.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(levels))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving index levels: %w", err)
+		return 0, fmt.Errorf("saving index levels: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveIndexReadings upserts readings and enqueues revals in one transaction.
 func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error {
+	_, err := s.SaveIndexReadingsChanged(ctx, readings, revals)
+	return err
+}
+
+// SaveIndexReadingsChanged is SaveIndexReadings that also returns how many
+// readings were new or differed from the stored one.
+func (s *Store) SaveIndexReadingsChanged(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) (int, error) {
+	changed := 0
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		batch := &pgx.Batch{}
 		for _, r := range readings {
 			batch.Queue(`
-				INSERT INTO valuation.index_readings (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
-				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value`,
+				INSERT INTO valuation.index_readings AS t (kind, year, month, value, source) VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (kind, year, month, source) DO UPDATE SET value = EXCLUDED.value
+				WHERE t.value IS DISTINCT FROM EXCLUDED.value`,
 				r.Kind.String(), r.Year, int(r.Month), r.Value.String(), r.Source)
 		}
-		return tx.SendBatch(ctx, batch).Close()
+		var err error
+		changed, err = execBatch(ctx, tx, batch, len(readings))
+		return err
 	})
 	if err != nil {
-		return fmt.Errorf("saving index readings: %w", err)
+		return 0, fmt.Errorf("saving index readings: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveBondTerms upserts the series terms of the bond with isin, with the
@@ -211,10 +275,19 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 // revals in one transaction. The latest terms replace the row whole, so
 // terms the owner entered after published ones drop the attribution.
 func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error {
+	_, err := s.SaveBondTermsChanged(ctx, isin, terms, source, revals)
+	return err
+}
+
+// SaveBondTermsChanged is SaveBondTerms that also reports whether the terms
+// were new or differed in anything from those stored: the same terms from the
+// same source, sent again, change nothing.
+func (s *Store) SaveBondTermsChanged(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) (bool, error) {
 	att := attributionColumns(terms.Attribution)
+	changed := false
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
-		_, err := tx.Exec(ctx, `
-			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee, source,
+		tag, err := tx.Exec(ctx, `
+			INSERT INTO valuation.bond_terms AS t (isin, series, first_period_rate, margin, early_redemption_fee, source,
 			    source_publisher, source_dataset, source_license, source_url, source_made, source_fetched, source_processing,
 			    fee_source)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::date, $12, $13, $14)
@@ -224,7 +297,13 @@ func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.T
 			    source_publisher = EXCLUDED.source_publisher, source_dataset = EXCLUDED.source_dataset,
 			    source_license = EXCLUDED.source_license, source_url = EXCLUDED.source_url,
 			    source_made = EXCLUDED.source_made, source_fetched = EXCLUDED.source_fetched,
-			    source_processing = EXCLUDED.source_processing`,
+			    source_processing = EXCLUDED.source_processing
+			WHERE (t.series, t.first_period_rate, t.margin, t.early_redemption_fee, t.source, t.fee_source,
+			    t.source_publisher, t.source_dataset, t.source_license, t.source_url, t.source_made, t.source_fetched,
+			    t.source_processing) IS DISTINCT FROM (EXCLUDED.series, EXCLUDED.first_period_rate, EXCLUDED.margin,
+			    EXCLUDED.early_redemption_fee, EXCLUDED.source, EXCLUDED.fee_source,
+			    EXCLUDED.source_publisher, EXCLUDED.source_dataset, EXCLUDED.source_license, EXCLUDED.source_url,
+			    EXCLUDED.source_made, EXCLUDED.source_fetched, EXCLUDED.source_processing)`,
 			isin.String(), terms.Series.String(), terms.FirstPeriodRate.String(), terms.Margin.String(),
 			terms.EarlyRedemptionFee.Amount().String(), source,
 			att.publisher, att.dataset, att.license, att.url, att.made, att.fetched, att.processing,
@@ -232,12 +311,13 @@ func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.T
 		if err != nil {
 			return fmt.Errorf("upserting: %w", err)
 		}
+		changed = tag.RowsAffected() > 0
 		return nil
 	})
 	if err != nil {
-		return fmt.Errorf("saving bond terms of %s: %w", isin, err)
+		return false, fmt.Errorf("saving bond terms of %s: %w", isin, err)
 	}
-	return nil
+	return changed, nil
 }
 
 // SaveBondFee stores fee as the early-redemption fee of the bond with

@@ -1168,3 +1168,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a329f74f7eb7
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-outboxfixture-refuseauditjobs
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:25.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd778d5e8337
+  - type: verified_by
+    from: SCEN-tooling-archtest-bench
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-14T08:24:45.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2568d29e35d6
+  - type: implements
+    from: SYM-askbench-phrases-cause-words
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:34.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df705ccc4814
+  - type: covered_by
+    from: SYM-askbench-phrases-cause-words
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:34.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49858b01c63e

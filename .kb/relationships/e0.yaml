@@ -1259,3 +1259,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-165d70a00dc2
+  - type: specified_by
+    from: REQ-askbench-drives-the-boxs-loop
+    to: SCEN-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:24:59.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e30f2fdbe63f

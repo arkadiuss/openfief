@@ -1126,3 +1126,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62f7dc1b92d7
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool-exec
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:23:58.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25290fc5d401
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool-exec
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:23:58.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d07118c981
+  - type: executable_for
+    from: SYM-askbench-runner-test-bench-run-summary
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:57.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b31ef346f088

@@ -1084,3 +1084,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f1869a23e70
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-outboxfixture
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:08.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1dbbcd8a77b
+  - type: specified_by
+    from: REQ-core-db-session-timeouts
+    to: SCEN-core-db-session-timeouts
+    created_at: 2026-11-14T06:30:10.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f5ce4bb149
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-behind-items
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T07:03:05.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a3e7e03d63b

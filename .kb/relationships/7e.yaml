@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e03307c1f363
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-follow-ups-seen
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:35.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-094d080be6f4
+  - type: implements
+    from: SYM-askbench-report-report-failed
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:50:50.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a4de6854262
+  - type: implements
+    from: SYM-askbench-report-report-failed
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:50:50.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5399be97d6
+  - type: covered_by
+    from: SYM-askbench-report-report-failed
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:50:50.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-548af7a32f49

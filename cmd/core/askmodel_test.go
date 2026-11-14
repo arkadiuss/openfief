@@ -32,6 +32,8 @@ func (s *scopeSessions) Session(_ context.Context, _ identity.Origin, token stri
 		have = identity.SessionScopeOwner
 	case "read":
 		have = identity.SessionScopeRead
+	case "viewer":
+		return identity.Session{ID: "viewer-id", Scope: identity.SessionScopeRead, PersonID: "0123456789abcdef0123456789abcdef"}, nil
 	default:
 		return identity.Session{}, fmt.Errorf("%w: unknown", identityapp.ErrInvalidSession)
 	}
@@ -54,11 +56,12 @@ func TestAskSessionsAdmitAnyValidSession(t *testing.T) {
 	const local = "http://localhost:8080"
 	tests := []struct {
 		name, origin, token string
-		want                string
+		want                modelsapp.Actor
 		wantErr             error
 	}{
-		{name: "the owner", origin: local, token: "owner", want: "owner-id"},
-		{name: "a read-scoped session", origin: local, token: "read", want: "read-id"},
+		{name: "the owner", origin: local, token: "owner", want: modelsapp.Actor{Kind: modelsapp.ActorOwner, ID: "owner-id"}},
+		{name: "a read-scoped session of the owner", origin: local, token: "read", want: modelsapp.Actor{Kind: modelsapp.ActorOwner, ID: "read-id"}},
+		{name: "a viewer is the viewer, not the owner", origin: local, token: "viewer", want: modelsapp.Actor{Kind: modelsapp.ActorViewer, ID: "viewer-id"}},
 		{name: "no session", origin: local, token: "nope", wantErr: modelsapp.ErrNoSession},
 		{name: "an origin off the list", origin: "https://other.example.com", token: "owner", wantErr: modelsapp.ErrNoSession},
 	}
@@ -71,7 +74,7 @@ func TestAskSessionsAdmitAnyValidSession(t *testing.T) {
 				t.Fatalf("Asker error = %v, want %v", err, tt.wantErr)
 			}
 			if got != tt.want {
-				t.Errorf("Asker = %q, want %q", got, tt.want)
+				t.Errorf("Asker = %+v, want %+v", got, tt.want)
 			}
 			for _, scope := range sessions.asked {
 				if scope != identity.SessionScopeRead {
@@ -104,11 +107,11 @@ func (uiCallers) VerifyCaller(_ context.Context, token string) (string, error) {
 // onlySession admits the session token "s" only.
 type onlySession struct{}
 
-func (onlySession) Asker(_ context.Context, _, token string) (string, error) {
+func (onlySession) Asker(_ context.Context, _, token string) (modelsapp.Actor, error) {
 	if token == "s" {
-		return "session-s", nil
+		return modelsapp.Actor{Kind: modelsapp.ActorOwner, ID: "session-s"}, nil
 	}
-	return "", modelsapp.ErrNoSession
+	return modelsapp.Actor{}, modelsapp.ErrNoSession
 }
 
 // TestAskModelServiceIsMountedForViewPluginsOnly checks that the core serves

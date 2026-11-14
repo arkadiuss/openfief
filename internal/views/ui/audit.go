@@ -13,6 +13,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
 // The pages of the audit log (D-211): Settings' own page, which shows every
@@ -108,6 +109,7 @@ func actionWords(a identityv1.AuditAction) string {
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_INSTALLED:              "Plugin installed",
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED:               "Plugin upgraded",
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED:                "Plugin removed",
+		identityv1.AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED:              "Connector synced",
 	}
 	if w, ok := words[a]; ok {
 		return w
@@ -128,6 +130,8 @@ func actorKindWords(k identityv1.AuditActorKind) string {
 		return "The core"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR:
 		return "The operator"
+	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ADMIN:
+		return "The administrator"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
 		return "Nobody signed in"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED:
@@ -243,7 +247,8 @@ func (n *auditNames) ref(r *identityv1.AuditRef) string {
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_INSTRUMENT, identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:
 		return changeRef(r)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_UNSPECIFIED:
 	}
@@ -263,6 +268,8 @@ func changeRef(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN:            "Plugin ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION: "Generation ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:           "Setting ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH:      "Batch ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:        "Wrote ",
 	}
 	return prefixes[r.GetKind()] + r.GetId()
 }
@@ -313,7 +320,8 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_INSTRUMENT, identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:
 	}
 	return "Record " + short(id)
 }
@@ -322,7 +330,8 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 func (n *auditNames) actor(a *identityv1.AuditActor) string {
 	fixed := map[identityv1.AuditActorKind]string{
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER:     "Owner",
-		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM:    "The core (command line)",
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM:    "The core",
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ADMIN:     "The administrator (core command line)",
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR:  "The operator",
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS: "Nobody signed in",
 	}
@@ -342,7 +351,7 @@ func (n *auditNames) actor(a *identityv1.AuditActor) string {
 		return "Enrollment link " + short(a.GetId())
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER,
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR,
-		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ADMIN, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
 	}
 	return unknownWord
 }
@@ -398,6 +407,9 @@ type auditView struct {
 	Older string
 	// Unavailable says the core couldn't be read for the entries.
 	Unavailable bool
+	// Behind is what the audit-log-behind attention item says while some
+	// changes' entries are waiting to enter the log; empty otherwise.
+	Behind string
 }
 
 // historyView is what the Access page's History section shows.
@@ -572,7 +584,27 @@ func (s *server) auditPage(w http.ResponseWriter, r *http.Request, sess session)
 			view.Older = auditPath + "?" + q.Encode()
 		}
 	}
+	view.Behind = s.auditBehind(r, sess)
 	s.show(w, r, http.StatusOK, "audit", page{Title: "Audit log", Session: &sess, Data: view})
+}
+
+// auditBehind returns what the open attention item of kind audit-log-behind
+// says, for the banner on the Audit log page (D-211, D-196): the entries of
+// some changes are waiting to enter the log, which shows fewer entries than
+// there were changes. It is "" while no item is open, and when the core can't
+// list items: the page still renders.
+func (s *server) auditBehind(r *http.Request, sess session) string {
+	resp, err := s.read.ListAttentionItems(r.Context(), bearer(&viewsv1.ListAttentionItemsRequest{View: viewsv1.AttentionView_ATTENTION_VIEW_OPEN}, sess))
+	if err != nil {
+		s.log.WarnContext(r.Context(), "listing the attention items for the audit log", "code", connect.CodeOf(err).String())
+		return ""
+	}
+	for _, it := range resp.Msg.GetItems() {
+		if it.GetKind() == kindAuditLogBehind {
+			return it.GetDetail()
+		}
+	}
+	return ""
 }
 
 // loadHistory reads the page of the Access page's history the request names:

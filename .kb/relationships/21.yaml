@@ -972,3 +972,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d14cccf0d1f
+  - type: executable_for
+    from: SYM-s9-cmd-core-ownerchanges-test-waitingsettingsentry
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T04:50:15.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f7aaeb8e52
+  - type: implements
+    from: SYM-s9-internal-ingest-app-connectors-deliverywrites
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:50:44.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da680d5edf1
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-connectors-deliverywrites
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:50:44.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f06d8e531ea
+  - type: verified_by
+    from: SCEN-askbench-ask-cases
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:24:31.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e9e3af2c5c5
+  - type: implements
+    from: SYM-askbench-phrases-command-words
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:28.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c172975a11b5
+  - type: covered_by
+    from: SYM-askbench-phrases-command-words
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:28.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23c19648da17
+  - type: implements
+    from: SYM-askbench-report-write-judge
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:51:26.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9249887debc2
+  - type: implements
+    from: SYM-askbench-report-write-judge
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:51:26.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e82bdc2b2c7c
+  - type: covered_by
+    from: SYM-askbench-report-write-judge
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:51:26.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e1c2aa03efb
+  - type: implements
+    from: SYM-askbench-runner-new-bench
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs
+    created_at: 2026-11-14T08:51:55.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0d938ed85af
+  - type: implements
+    from: SYM-askbench-runner-new-bench
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:51:55.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-672b7cde8d96
+  - type: covered_by
+    from: SYM-askbench-runner-new-bench
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:51:55.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61964e6aa075

@@ -1,4 +1,4 @@
-package main
+package openaichat
 
 import (
 	"encoding/json"
@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
@@ -50,12 +48,12 @@ func (f *fakeProvider) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // newFake starts a fake provider that answers 200 with reply.
-func newFake(t *testing.T, reply string) (*fakeProvider, *chatClient) {
+func newFake(t *testing.T, reply string) (*fakeProvider, *Client) {
 	t.Helper()
 	f := &fakeProvider{status: http.StatusOK, reply: reply}
 	srv := httptest.NewServer(f)
 	t.Cleanup(srv.Close)
-	return f, &chatClient{hc: srv.Client(), baseURL: srv.URL + "/v1", key: func() (string, error) { return fakeKey, nil }}
+	return f, &Client{HTTP: srv.Client(), BaseURL: srv.URL + "/v1", Key: func() (string, error) { return fakeKey, nil }}
 }
 
 const textReply = `{"choices":[{"message":{"role":"assistant","content":"synthetic answer"},"finish_reason":"stop"}],
@@ -64,14 +62,14 @@ const textReply = `{"choices":[{"message":{"role":"assistant","content":"synthet
 func TestCompleteSendsTheChatProtocol(t *testing.T) {
 	t.Parallel()
 	f, c := newFake(t, textReply)
-	req := &chatRequest{
+	req := &Request{
 		Model:          "synthetic-8b",
-		Messages:       []chatMessage{{Role: "system", Content: "be brief"}, {Role: "user", Content: "hi"}},
-		Tools:          []chatTool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}},
+		Messages:       []Message{{Role: "system", Content: "be brief"}, {Role: "user", Content: "hi"}},
+		Tools:          []Tool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}},
 		ResponseSchema: json.RawMessage(`{"type":"object"}`),
 		MaxTokens:      64,
 	}
-	reply, err := c.complete(t.Context(), req)
+	reply, err := c.Complete(t.Context(), req)
 	if err != nil {
 		t.Fatalf("complete: %v", err)
 	}
@@ -107,11 +105,11 @@ func TestCompleteSendsTheChatProtocol(t *testing.T) {
 // OpenAI's own, never sees the member.
 func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
 	t.Parallel()
-	tools := []chatTool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}}
+	tools := []Tool{{Name: "lookup", Parameters: json.RawMessage(`{"type":"object"}`)}}
 	tests := []struct {
 		name    string
 		baseURL string
-		tools   []chatTool
+		tools   []Tool
 		want    bool
 	}{
 		{name: "OpenRouter with tools", baseURL: "https://openrouter.ai/api/v1", tools: tools, want: true},
@@ -126,8 +124,8 @@ func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			c := &chatClient{baseURL: tt.baseURL}
-			body := c.requestBody(&chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}, Tools: tt.tools})
+			c := &Client{BaseURL: tt.baseURL}
+			body := c.RequestBody(&Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}, Tools: tt.tools})
 			got, has := body["provider"]
 			if has != tt.want {
 				t.Fatalf("provider member present = %v, want %v", has, tt.want)
@@ -150,10 +148,10 @@ func TestRequestBodyRequiresParametersOnOpenRouterWithTools(t *testing.T) {
 func TestCompleteSendsRequireParametersToOpenRouterOnTheWire(t *testing.T) {
 	t.Parallel()
 	f, c := newFake(t, textReply)
-	c.hc = &http.Client{Transport: rewriteHost{to: c.baseURL, rt: c.hc.Transport}}
-	c.baseURL = "https://openrouter.ai/api/v1"
-	req := &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}, Tools: []chatTool{{Name: "lookup"}}}
-	if _, err := c.complete(t.Context(), req); err != nil {
+	c.HTTP = &http.Client{Transport: rewriteHost{to: c.BaseURL, rt: c.HTTP.Transport}}
+	c.BaseURL = "https://openrouter.ai/api/v1"
+	req := &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}, Tools: []Tool{{Name: "lookup"}}}
+	if _, err := c.Complete(t.Context(), req); err != nil {
 		t.Fatalf("complete: %v", err)
 	}
 	want := map[string]any{"require_parameters": true}
@@ -184,12 +182,12 @@ func TestCompleteReadsToolCalls(t *testing.T) {
 	_, c := newFake(t, `{"choices":[{"message":{"content":null,"tool_calls":[
 		{"id":"call-1","type":"function","function":{"name":"lookup","arguments":"{\"q\":1}"}}]},"finish_reason":"tool_calls"}],
 		"usage":{"prompt_tokens":5,"completion_tokens":2}}`)
-	reply, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}})
+	reply, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}})
 	if err != nil {
 		t.Fatalf("complete: %v", err)
 	}
-	want := &chatReply{
-		ToolCalls: []chatToolCall{{ID: "call-1", Name: "lookup", Arguments: `{"q":1}`}}, FinishReason: "tool_calls", InputTokens: 5, OutputTokens: 2,
+	want := &Reply{
+		ToolCalls: []ToolCall{{ID: "call-1", Name: "lookup", Arguments: `{"q":1}`}}, FinishReason: "tool_calls", InputTokens: 5, OutputTokens: 2,
 	}
 	if diff := cmp.Diff(want, reply); diff != "" {
 		t.Errorf("reply (-want +got):\n%s", diff)
@@ -199,8 +197,8 @@ func TestCompleteReadsToolCalls(t *testing.T) {
 func TestCompleteSendsToolCallsAndResults(t *testing.T) {
 	t.Parallel()
 	f, c := newFake(t, textReply)
-	_, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{
-		{Role: "assistant", ToolCalls: []chatToolCall{{ID: "c0", Name: "lookup", Arguments: "{}"}}},
+	_, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{
+		{Role: "assistant", ToolCalls: []ToolCall{{ID: "c0", Name: "lookup", Arguments: "{}"}}},
 		{Role: "tool", Content: "result", ToolCallID: "c0"},
 	}})
 	if err != nil {
@@ -220,8 +218,8 @@ func TestCompleteSendsToolCallsAndResults(t *testing.T) {
 func TestCompleteWithoutAKeySendsNoAuthorization(t *testing.T) {
 	t.Parallel()
 	f, c := newFake(t, textReply)
-	c.key = func() (string, error) { return "", nil }
-	if _, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}}); err != nil {
+	c.Key = func() (string, error) { return "", nil }
+	if _, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}}); err != nil {
 		t.Fatalf("complete: %v", err)
 	}
 	if f.auth != "" {
@@ -237,22 +235,22 @@ func TestCompleteErrors(t *testing.T) {
 		reply  string
 		want   error
 	}{
-		{name: "bad request", status: 400, reply: `{"error":"bad"}`, want: errRejected},
-		{name: "unknown model", status: 404, reply: `{}`, want: errRejected},
-		{name: "unprocessable", status: 422, reply: `{}`, want: errRejected},
-		{name: "key refused", status: 401, reply: `{}`, want: errUnavailable},
-		{name: "forbidden", status: 403, reply: `{}`, want: errUnavailable},
-		{name: "rate limited", status: 429, reply: `{}`, want: errUnavailable},
-		{name: "provider failing", status: 502, reply: `{}`, want: errUnavailable},
-		{name: "not JSON", status: 200, reply: `<html>`, want: errBadReply},
-		{name: "no choices", status: 200, reply: `{"choices":[]}`, want: errBadReply},
+		{name: "bad request", status: 400, reply: `{"error":"bad"}`, want: ErrRejected},
+		{name: "unknown model", status: 404, reply: `{}`, want: ErrRejected},
+		{name: "unprocessable", status: 422, reply: `{}`, want: ErrRejected},
+		{name: "key refused", status: 401, reply: `{}`, want: ErrUnavailable},
+		{name: "forbidden", status: 403, reply: `{}`, want: ErrUnavailable},
+		{name: "rate limited", status: 429, reply: `{}`, want: ErrUnavailable},
+		{name: "provider failing", status: 502, reply: `{}`, want: ErrUnavailable},
+		{name: "not JSON", status: 200, reply: `<html>`, want: ErrBadReply},
+		{name: "no choices", status: 200, reply: `{"choices":[]}`, want: ErrBadReply},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			f, c := newFake(t, tt.reply)
 			f.status = tt.status
-			_, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "synthetic question"}}})
+			_, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{{Role: "user", Content: "synthetic question"}}})
 			if !errors.Is(err, tt.want) {
 				t.Fatalf("error = %v, want %v", err, tt.want)
 			}
@@ -268,56 +266,24 @@ func TestCompleteUnreachableProviderIsUnavailable(t *testing.T) {
 	srv := httptest.NewServer(http.NotFoundHandler())
 	addr := srv.URL
 	srv.Close()
-	c := &chatClient{hc: http.DefaultClient, baseURL: addr, key: func() (string, error) { return fakeKey, nil }}
-	_, err := c.complete(t.Context(), &chatRequest{Model: "m", Messages: []chatMessage{{Role: "user", Content: "hi"}}})
-	if !errors.Is(err, errUnavailable) {
-		t.Fatalf("error = %v, want %v", err, errUnavailable)
+	c := &Client{HTTP: http.DefaultClient, BaseURL: addr, Key: func() (string, error) { return fakeKey, nil }}
+	_, err := c.Complete(t.Context(), &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}})
+	if !errors.Is(err, ErrUnavailable) {
+		t.Fatalf("error = %v, want %v", err, ErrUnavailable)
 	}
 	if strings.Contains(err.Error(), addr) {
 		t.Errorf("error %q names the URL", err)
 	}
 }
 
+// errKeyUnreadable stands for a key the caller could not read.
+var errKeyUnreadable = errors.New("the key is unreadable")
+
 func TestCompleteKeyErrorIsUnavailable(t *testing.T) {
 	t.Parallel()
 	_, c := newFake(t, textReply)
-	c.key = func() (string, error) { return "", errNoKey }
-	if _, err := c.complete(t.Context(), &chatRequest{Model: "m"}); !errors.Is(err, errUnavailable) || !errors.Is(err, errNoKey) {
+	c.Key = func() (string, error) { return "", errKeyUnreadable }
+	if _, err := c.Complete(t.Context(), &Request{Model: "m"}); !errors.Is(err, ErrUnavailable) || !errors.Is(err, errKeyUnreadable) {
 		t.Fatalf("error = %v, want unavailable for the key", err)
-	}
-}
-
-func TestKeyFromMount(t *testing.T) {
-	t.Parallel()
-	write := func(t *testing.T, content string) string {
-		t.Helper()
-		dir := t.TempDir()
-		if err := os.WriteFile(filepath.Join(dir, keyFile), []byte(content), 0o600); err != nil {
-			t.Fatal(err)
-		}
-		return dir
-	}
-	tests := []struct {
-		name    string
-		dir     func(t *testing.T) string
-		want    string
-		wantErr bool
-	}{
-		{name: "the key, trimmed", dir: func(t *testing.T) string { t.Helper(); return write(t, fakeKey+"\n") }, want: fakeKey},
-		{name: "no Secret mounted", dir: func(t *testing.T) string { t.Helper(); return filepath.Join(t.TempDir(), "absent") }},
-		{name: "an empty mount", dir: func(t *testing.T) string { t.Helper(); return t.TempDir() }},
-		{name: "an empty key", dir: func(t *testing.T) string { t.Helper(); return write(t, " \n") }, wantErr: true},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			got, err := keyFromMount(tt.dir(t))()
-			if (err != nil) != tt.wantErr || got != tt.want {
-				t.Errorf("key = %q, %v; want %q, error %v", got, err, tt.want, tt.wantErr)
-			}
-			if err != nil && strings.Contains(err.Error(), fakeKey) {
-				t.Errorf("error %q holds the key", err)
-			}
-		})
 	}
 }

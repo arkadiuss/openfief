@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd627a0378a8
+  - type: executable_for
+    from: SYM-s9-internal-valuation-app-fakes-test-fakerecorder-savepriceschanged
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:30:16.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9fd37ec68d1
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-placements-that-spice-dbrefuses-are-the-observers-to-repair
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:26.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae92d1d647f1
+  - type: implements
+    from: SYM-s9b-auditoutbox-after-key
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T07:03:17.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-525b46605042
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-after-key
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T07:03:17.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1c481c90f9

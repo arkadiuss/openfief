@@ -1098,3 +1098,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a24604127eb6
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-auditlog
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:24:56.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3da858aee674
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-auditlog
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:24:56.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7acc066890f1
+  - type: implements
+    from: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:39:44.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67651c586c61
+  - type: covered_by
+    from: SYM-grants-cmd-core-grants-grantcleanup-sleeveremoved
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:39:44.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96554f430830
+  - type: executable_for
+    from: SYM-plugins-fakeprovider-test-fake-provider
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T08:30:56.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aaf816d7453
+  - type: implements
+    from: SYM-askbench-portfolio-value-day
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:43:06.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c930362f0e7
+  - type: covered_by
+    from: SYM-askbench-portfolio-value-day
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:43:06.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caeb34c270e3
+  - type: implements
+    from: SYM-askbench-report-bench-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:49:44.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49d40c50ed41
+  - type: implements
+    from: SYM-askbench-report-bench-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:49:44.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2594e8cc8c53
+  - type: covered_by
+    from: SYM-askbench-report-bench-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:49:44.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-362a31bba4c3
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-the-judge-is-only-reported-and-its-disagreements-are-listed
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:52.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15f5e08f38c4

@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f1a6d74d7c5
+  - type: implements
+    from: SYM-attention-group-of
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T06:41:47.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9640f4f5bf99
+  - type: covered_by
+    from: SYM-attention-group-of
+    to: TEST-attention-scope-audit-log-behind
+    created_at: 2026-11-14T06:41:47.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83da04a601c6

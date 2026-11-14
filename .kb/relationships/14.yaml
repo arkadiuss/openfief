@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-669eab0a0d00
+  - type: implements
+    from: SYM-s9b-auditoutbox-job-counter
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-14T07:03:28.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2da7046431e5
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-job-counter
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T07:03:28.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7ad3253f1f9

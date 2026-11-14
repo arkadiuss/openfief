@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d72cfa3608f
+  - type: executable_for
+    from: SYM-s9b-changed-test-changed-recorder
+    to: TEST-valuation-app-changed-counts
+    created_at: 2026-11-14T06:56:01.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff221921fb95

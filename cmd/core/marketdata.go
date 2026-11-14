@@ -30,7 +30,7 @@ func valuationOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // over pool, l and vstore, with the owner's sessions checked by owners;
 // nil owners serves no owner, as the connector commands need none.
 func newRankings(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, owners *ownerSessions) *valuationapp.Rankings {
-	planner := valuationapp.NewPlanner(l, ledgerpg.New(pool))
+	planner := valuationapp.NewPlanner(l, ledgerpg.New(joined(pool)))
 	if owners == nil {
 		return valuationapp.NewRankings(planner, vstore, nil)
 	}

@@ -895,3 +895,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea2c9855fe24
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-auditworker
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:25:02.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bcd36b0a012
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-auditworker
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:25:02.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d354c8aef554
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-index-levels
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:40:13.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-110dffe32385
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-behind-watch-items
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T06:42:21.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d5a19c2c98b

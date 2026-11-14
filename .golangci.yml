@@ -72,6 +72,15 @@ linters:
       enable-all: true
       disable:
         - fieldalignment  # memory layout over readability; not worth it for domain types
+    ireturn:
+      # The defaults, plus pgx (author's OK, 2026-11-14): pgx's API is interfaces (Rows, Row, Tx), so any adapter
+      # implementing the stores' pgx-shaped DB port must return them. ireturn still catches our own interfaces.
+      allow:
+        - anon
+        - error
+        - empty
+        - stdlib
+        - 'github\.com/jackc/pgx/v5\.'
     nolintlint:
       require-explanation: true
       require-specific: true

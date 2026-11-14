@@ -1028,3 +1028,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2de88d6f5e1f
+  - type: implements
+    from: SYM-s9-internal-identity-app-auth-withchangeoutbox
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:28:30.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a16cc423ea
+  - type: covered_by
+    from: SYM-s9-internal-identity-app-auth-withchangeoutbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:30.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c85dcefe190a
+  - type: implements
+    from: SYM-askbench-readservice-read-service-get-allocation
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:45:47.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b7784a501f
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-get-allocation
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:45:47.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9566eb2b7f3f
+  - type: executable_for
+    from: SYM-askbench-scorers-test-test-alternatives-are-judged-by-what-the-model-went-for
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:59:18.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6547f3136ffe

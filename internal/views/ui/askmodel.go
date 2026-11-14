@@ -169,10 +169,25 @@ type modelAnswerer struct {
 // so it is T0 like a tool's result (D-206): a route whose models may not
 // receive T0 is refused by the router before anything is sent.
 func (a *modelAnswerer) ask(r *http.Request, sess session, question string) (answerCard, error) {
+	card, _, err := a.converse(r, sess, question)
+	return card, err
+}
+
+// converse is ask with the conversation it ran, whose trace the Ask box
+// bench reads (RunAsk): the calls the model made, the rounds it took and the
+// tokens it used.
+func (a *modelAnswerer) converse(r *http.Request, sess session, question string) (answerCard, *askConversation, error) {
+	conv := &askConversation{}
+	card, err := a.loop(r, sess, question, conv)
+	return card, conv, err
+}
+
+// loop runs the question's tool loop in conv.
+func (a *modelAnswerer) loop(r *http.Request, sess session, question string, conv *askConversation) (answerCard, error) {
 	ctx, cancel := context.WithTimeout(r.Context(), a.limits.Deadline)
 	defer cancel()
 	r = r.WithContext(ctx)
-	conv := &askConversation{
+	*conv = askConversation{
 		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
 		msgs: []askMessage{
 			{Role: "system", Content: askSystemPrompt + a.today().String() + ".", Tier: tierT2},
@@ -187,6 +202,7 @@ func (a *modelAnswerer) ask(r *http.Request, sess session, question string) (ans
 		if conv.tokens >= a.limits.OutputTokens {
 			return overBudgetAnswer(question), nil
 		}
+		conv.rounds++
 		reply, err := conv.generate(ctx, tools)
 		if err != nil {
 			return a.failure(r, question, err)
@@ -220,6 +236,29 @@ type askConversation struct {
 	tokens   int64
 	used     []answerCard
 	withheld []withheldCard
+	// rounds are the calls made to the model so far, and trace the calls it
+	// asked its tools for, in order, for the Ask box bench.
+	rounds int
+	trace  []askTrace
+}
+
+// How a tool call of the model ended, for its trace.
+const (
+	callRan         = "ran"
+	callUnknownTool = "unknown-tool"
+	callOverLimit   = "over-limit"
+	callBadArgs     = "bad-arguments"
+	callReadFailed  = "read-failed"
+	callWithheld    = "withheld"
+)
+
+// askTrace is one tool call the model asked for: the tool, its arguments as
+// the model wrote them, how it ended, and, when it ran, the index of its card
+// among those the answer shows.
+type askTrace struct {
+	Name, Args, Outcome string
+	// Card is the index of the card in askConversation.used; -1 when none.
+	Card int
 }
 
 // generate asks the router for the next message, offering tools and no more
@@ -239,16 +278,16 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	c.calls++
 	tool, ok := c.a.tool(call.Name)
 	if !ok {
-		c.addResult(&call, toolFailure("there is no tool called %s", call.Name), tierT2)
+		c.addResult(&call, callUnknownTool, toolFailure("there is no tool called %s", call.Name), tierT2)
 		return nil
 	}
 	if c.calls > c.a.limits.ToolCalls {
-		c.addResult(&call, toolFailure("too many tool calls for one question; answer with what you have"), tierT2)
+		c.addResult(&call, callOverLimit, toolFailure("too many tool calls for one question; answer with what you have"), tierT2)
 		return nil
 	}
 	q, err := tool.query(call.Args, c.a.today())
 	if err != nil {
-		c.addResult(&call, toolFailure("%s", err.Error()), tierT2)
+		c.addResult(&call, callBadArgs, toolFailure("%s", err.Error()), tierT2)
 		return nil
 	}
 	toolCtx, cancel := context.WithTimeout(ctx, askToolTimeout)
@@ -260,7 +299,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		}
 		// What failed is not the model's to see: its result says only that
 		// the read did not work.
-		c.addResult(&call, toolFailure("the data could not be read"), tierT2)
+		c.addResult(&call, callReadFailed, toolFailure("the data could not be read"), tierT2)
 		return nil
 	}
 	tiers := c.tiers
@@ -274,17 +313,23 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	}
 	if !allowed {
 		c.withheld = append(c.withheld, withheldCard{Label: tool.Label, Tier: tool.Tier, Data: tierWords(tool.Tier)})
-		c.addResult(&call, toolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
+		c.addResult(&call, callWithheld, toolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
 		return nil
 	}
 	c.tiers = next
 	c.used = append(c.used, card)
-	c.addResult(&call, cardResult(&card), tool.Tier)
+	c.addResult(&call, callRan, cardResult(&card), tool.Tier)
 	return nil
 }
 
-// addResult appends the result of call to the conversation.
-func (c *askConversation) addResult(call *askCall, content, tier string) {
+// addResult appends the result of call, which ended as outcome, to the
+// conversation and to its trace.
+func (c *askConversation) addResult(call *askCall, outcome, content, tier string) {
+	card := -1
+	if outcome == callRan {
+		card = len(c.used) - 1
+	}
+	c.trace = append(c.trace, askTrace{Name: call.Name, Args: call.Args, Outcome: outcome, Card: card})
 	c.msgs = append(c.msgs, askMessage{Role: "tool", Content: content, CallID: call.ID, Tier: tier})
 }
 

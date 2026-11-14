@@ -1035,3 +1035,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7ad63bfeca7
+  - type: executable_for
+    from: SYM-s9-internal-valuation-postgres-changed-test-testsavepricesreportsonlywhatwasnewordifferent
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:51:03.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7b21890c49
+  - type: implements
+    from: SYM-s9b-connectors-connectors-prepare-file
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:46:41.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00ac94561936
+  - type: covered_by
+    from: SYM-s9b-connectors-connectors-prepare-file
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:46:42.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5eb4b305a6d
+  - type: implements
+    from: SYM-askbench-runner-bench-ask
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs
+    created_at: 2026-11-14T08:52:23.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44b76d33ab9b
+  - type: implements
+    from: SYM-askbench-runner-bench-ask
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:52:23.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533f2a57c3b3
+  - type: covered_by
+    from: SYM-askbench-runner-bench-ask
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:23.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56f41b184cdb

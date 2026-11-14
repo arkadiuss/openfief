@@ -13,7 +13,7 @@ import (
 )
 
 // tokenAdmin is the script token use cases of the core's own commands. It
-// issues and revokes as the system actor, so each change is in the audit log
+// issues and revokes as the admin actor, so each change is in the audit log
 // with the change itself (D-211).
 type tokenAdmin struct {
 	store  identityapp.AuthStore
@@ -58,9 +58,9 @@ func (a tokenAdmin) Issue(ctx context.Context, name string, ttl time.Duration, h
 			return identity.ScriptToken{}, "", err
 		}
 	}
-	tok, secret, err := a.grants.IssueToken(ctx, systemActor(), name, ttl, household)
+	tok, secret, err := a.grants.IssueToken(ctx, adminActor(), name, ttl, household)
 	if err != nil {
-		return identity.ScriptToken{}, "", fmt.Errorf("issuing as the core: %w", err)
+		return identity.ScriptToken{}, "", fmt.Errorf("issuing as the administrator: %w", err)
 	}
 	return tok, secret, nil
 }
@@ -87,8 +87,8 @@ func waitForSpiceDB(ctx context.Context, ping func(context.Context) error, wait,
 
 // Revoke revokes a token, ends its grants and writes the audit entries.
 func (a tokenAdmin) Revoke(ctx context.Context, id identity.ScriptTokenID) error {
-	if err := a.grants.RevokeToken(ctx, systemActor(), id); err != nil {
-		return fmt.Errorf("revoking as the core: %w", err)
+	if err := a.grants.RevokeToken(ctx, adminActor(), id); err != nil {
+		return fmt.Errorf("revoking as the administrator: %w", err)
 	}
 	return nil
 }

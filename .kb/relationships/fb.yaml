@@ -1182,3 +1182,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7188ddc30c79
+  - type: executable_for
+    from: SYM-s9-internal-valuation-app-fakes-test-fakerecorder-savebondtermschanged
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:30:25.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0dfd4db8853
+  - type: implements
+    from: SYM-askbench-report-run-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:48:31.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87e57495f8ff
+  - type: implements
+    from: SYM-askbench-report-run-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:48:31.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14a01d0d1d76
+  - type: covered_by
+    from: SYM-askbench-report-run-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:48:31.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88a9a6b9f1ac
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-the-routing-member-follows-the-host
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:29.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92e9869391ce
+  - type: implements
+    from: SYM-askbench-scorers-tools-run
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:56:37.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bafa1ad5c022
+  - type: implements
+    from: SYM-askbench-scorers-tools-run
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:56:37.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa714b7dd2e9
+  - type: covered_by
+    from: SYM-askbench-scorers-tools-run
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:56:37.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa1b19946b96

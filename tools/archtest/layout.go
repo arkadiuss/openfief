@@ -20,6 +20,8 @@ const (
 	RuleBanned       = "banned-packages"
 	RuleStableTests  = "stable-tests"
 	RuleCatalogTests = "catalog-tests"
+	RuleNoNetwork    = "no-network-in-transactions"
+	RuleBench        = "bench"
 )
 
 // Violation is one break of a rule. Key identifies it stably across edits
@@ -50,6 +52,8 @@ func ruleTitle(rule string) string {
 		RuleBanned:       "Banned packages",
 		RuleStableTests:  "Stable tests",
 		RuleCatalogTests: "Catalog-independent tests",
+		RuleNoNetwork:    "No network in transactions",
+		RuleBench:        "Ask box bench",
 	}
 	if title, ok := titles[rule]; ok {
 		return title
@@ -143,6 +147,31 @@ func contextMap() map[string][]string {
 // domain and that only cmd and tests import.
 func datasets() []string {
 	return []string{"demo"}
+}
+
+// benches are the harnesses under tools/ that drive the product's own code
+// and its demo dataset, to grade it (docs/dev/code-organization.md, "Support
+// packages"): the Ask box bench. Like cmd they may import adapters and the
+// datasets, and nothing imports them.
+func benches() []string {
+	return []string{"tools/askbench"}
+}
+
+// isBench says whether a repository path is a bench or below one.
+func isBench(path string) bool {
+	return slices.ContainsFunc(benches(), func(b string) bool { return under(path, b) })
+}
+
+// goevalModule is the module of the eval scorer library (D-218). Only the
+// benches import it, and only its packages that depend on the standard library
+// alone.
+const goevalModule = "github.com/datar-psa/goeval"
+
+// lightGoeval are goeval's packages that depend on the standard library alone:
+// the scorer interface, the tool-call scorer and the OpenAI-compatible judge.
+// Its other packages bring the Gemini and Google Cloud client libraries.
+func lightGoeval() []string {
+	return []string{goevalModule + "/api", goevalModule + "/heuristic", goevalModule + "/openai"}
 }
 
 // mayImport says whether context from may import context to.

@@ -48,20 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2619be7e4ad3
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:38:34.141Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec680ef79cdb
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:38:34.162Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b0f6d37cc4c9
   - type: verified_by
     from: SCEN-tooling-demo-pin-signed
     to: TEST-tooling-demo-pin-images
@@ -685,3 +671,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b36671ef6d9
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-conversation-of
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:18.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e69d47aaf643
+  - type: implements
+    from: SYM-askbench-portfolio-round2
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:43:17.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65a1712e6866
+  - type: covered_by
+    from: SYM-askbench-portfolio-round2
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:43:17.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09859cf63da0
+  - type: implements
+    from: SYM-askbench-readservice-read-service-add-listing
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:47:47.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4725f0445de0
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-add-listing
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:47:47.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3948345fe25

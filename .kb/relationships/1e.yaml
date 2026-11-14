@@ -1091,3 +1091,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7434ea23873b
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-insertaccount
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:31.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3bd7a40fa4b
+  - type: implements
+    from: SYM-core-conn-in-cluster
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:40:17.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2e059590824
+  - type: covered_by
+    from: SYM-core-conn-in-cluster
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:40:17.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da04e71501fd
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-transaction-auditor
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:41.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60447df77352
+  - type: implements
+    from: SYM-askbench-judge-judge-verdict
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:35:04.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-809cf2001dde
+  - type: covered_by
+    from: SYM-askbench-judge-judge-verdict
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:35:04.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f40764d64d

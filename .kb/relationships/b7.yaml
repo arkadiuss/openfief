@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4bdfd3fb7b5
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:40:22.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165f71c7b542
+  - type: covered_by
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:40:22.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb70bedc855b

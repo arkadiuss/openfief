@@ -12,14 +12,14 @@ import (
 	"github.com/arkadiuss/openfief/internal/modelrouter/app"
 )
 
-// fakeAskers accepts the session tokens it knows, by their session ID.
-type fakeAskers map[string]string
+// fakeAskers accepts the session tokens it knows, as the actor of each.
+type fakeAskers map[string]app.Actor
 
-func (f fakeAskers) Asker(_ context.Context, _, token string) (string, error) {
-	if id, ok := f[token]; ok {
-		return id, nil
+func (f fakeAskers) Asker(_ context.Context, _, token string) (app.Actor, error) {
+	if who, ok := f[token]; ok {
+		return who, nil
 	}
-	return "", app.ErrNoSession
+	return app.Actor{}, app.ErrNoSession
 }
 
 const (
@@ -30,7 +30,10 @@ const (
 func newAskFixture(t *testing.T) (*routerFixture, *app.Ask) {
 	t.Helper()
 	f := newRouterFixture(t)
-	askers := fakeAskers{askerToken: "session-owner", readerToken: "session-read"}
+	askers := fakeAskers{
+		askerToken:  {Kind: app.ActorOwner, ID: "session-owner"},
+		readerToken: {Kind: app.ActorViewer, ID: "session-read"},
+	}
 	return f, app.NewAsk(askers, f.store, f.router)
 }
 
@@ -165,7 +168,8 @@ func TestAskGenerateIsTheAskRolesCallForTheSession(t *testing.T) {
 	if res.Model != f.cloud {
 		t.Errorf("answered by %s, want the primary %s", res.Model, f.cloud)
 	}
-	wantActor := app.Actor{Kind: app.ActorOwner, ID: "session-read"}
+	// A viewer's question is the viewer's, never the owner's (D-211).
+	wantActor := app.Actor{Kind: app.ActorViewer, ID: "session-read"}
 	if len(f.audit.sent) != 1 || len(f.audit.results) != 1 {
 		t.Fatalf("audit entries: %d sent, %d results; want one pair", len(f.audit.sent), len(f.audit.results))
 	}

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/riverdriver/riverpgxv5"
@@ -33,7 +34,7 @@ var ErrNoBondTerms = errors.New("no stored terms of the bond")
 // revaluations. Every write of an input enqueues its revaluations in the same
 // database transaction, through River (D-36).
 type Store struct {
-	pool *pgxpool.Pool
+	pool DB
 	// insert is an insert-only River client: it enqueues jobs, never works
 	// them.
 	insert *river.Client[pgx.Tx]
@@ -44,6 +45,16 @@ var (
 	_ app.Recorder = (*Store)(nil)
 )
 
+// DB is what Store runs its statements on: a *pgxpool.Pool, or anything that
+// answers as one, such as the core's pool that joins the transaction a
+// context carries (see Store.On).
+type DB interface {
+	Begin(ctx context.Context) (pgx.Tx, error)
+	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
+}
+
 // NewStore returns the store over pool. Run Migrate first. Its River
 // client, which only enqueues, installs plugins, such as the core's job
 // tracing.
@@ -53,6 +64,12 @@ func NewStore(pool *pgxpool.Pool, plugins ...rivertype.Plugin) (*Store, error) {
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
 	return &Store{pool: pool, insert: c}, nil
+}
+
+// On returns the store running its statements on db, which must be over the
+// pool the store was made with, sharing its River client.
+func (s *Store) On(db DB) *Store {
+	return &Store{pool: db, insert: s.insert}
 }
 
 // Prices returns the prices of instrument dated on or before through from

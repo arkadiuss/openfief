@@ -96,6 +96,12 @@ const (
 	// anything (D-196). It resolves once the owner grants it accounts, or
 	// the plugin is uninstalled. Subject: the instance.
 	KindViewPluginUngranted Kind = "view-plugin-ungranted"
+	// KindAuditLogBehind is a change whose audit entry has waited in the
+	// outbox through several failed attempts to write it to the log (D-211,
+	// D-196): the database is unwell, and the entries are only delayed, never
+	// dropped, since River keeps retrying. It clears when no entry is that
+	// stuck. Subject: "audit-log", the one log.
+	KindAuditLogBehind Kind = "audit-log-behind"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

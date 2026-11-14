@@ -1140,3 +1140,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff8b5616954b
+  - type: implements
+    from: SYM-s9-internal-identity-app-audit-changeoutbox
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:28:15.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-636e9f572d8c
+  - type: covered_by
+    from: SYM-s9-internal-identity-app-audit-changeoutbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:15.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1b32c39da99
+  - type: executable_for
+    from: SYM-s9b-connectors-test-fake-stores-counted
+    to: TEST-ingest-app-sync-counts-market-data
+    created_at: 2026-11-14T06:47:20.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1868b2094d6c
+  - type: implements
+    from: SYM-s9b-audit-server-audit-behind
+    to: REQ-ui-audit-log-behind-banner
+    created_at: 2026-11-14T06:57:02.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03f8e4a9df15
+  - type: covered_by
+    from: SYM-s9b-audit-server-audit-behind
+    to: TEST-ui-audit-log-banner
+    created_at: 2026-11-14T06:57:02.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ebb3c6caa4d
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-fake-model-reply
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:59.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-332e98576199
+  - type: implements
+    from: SYM-askbench-report-report-summary
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:51:02.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8bd4a651198
+  - type: implements
+    from: SYM-askbench-report-report-summary
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:51:02.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f1d43134d61
+  - type: covered_by
+    from: SYM-askbench-report-report-summary
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:51:02.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f45d5706f67

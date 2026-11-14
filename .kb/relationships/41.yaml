@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0e83e11ae30
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-new-behind-watch
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-14T06:42:30.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491fa7680e4c

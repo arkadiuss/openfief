@@ -3,6 +3,7 @@ package archtest
 import (
 	"path"
 	"slices"
+	"strconv"
 	"strings"
 )
 
@@ -64,8 +65,8 @@ func datasetBreak(from string, fp, to Place) string {
 	switch {
 	case fp.Context == to.Context:
 		return ""
-	case slices.Contains(datasets(), to.Context) && !under(from, "cmd"):
-		return "only cmd imports the " + to.Context + " dataset"
+	case slices.Contains(datasets(), to.Context) && !under(from, "cmd") && !isBench(from):
+		return "only cmd and the benches import the " + to.Context + " dataset"
 	case slices.Contains(datasets(), fp.Context) && to.Layer != LayerDomain && to.Layer != LayerKernel:
 		return "the " + fp.Context + " dataset reads only domain packages"
 	}
@@ -103,7 +104,7 @@ func layeringBreak(from string, fp Place, imp string) string {
 		return "only cmd imports cmd"
 	case fp.Layer == LayerDomain && to.Layer != LayerDomain && to.Layer != LayerKernel:
 		return "a domain package imports only the kernel and domain packages"
-	case to.Layer != LayerAdapter || under(from, "cmd") || fp.Adapter == to.Adapter:
+	case to.Layer != LayerAdapter || under(from, "cmd") || isBench(from) || fp.Adapter == to.Adapter:
 		return ""
 	}
 	return adapterBreak(fp, to)
@@ -136,6 +137,73 @@ func Plugins(r *Repo) []Violation {
 		}
 	}
 	return out
+}
+
+// reachesNetwork reports whether the package imp is an HTTP, Connect, gRPC (and
+// so SpiceDB's) or Kubernetes client: one that reaches the network.
+func reachesNetwork(imp string) bool {
+	if imp == "net/http" || imp == "net/rpc" {
+		return true
+	}
+	for _, prefix := range []string{"connectrpc.com/", "google.golang.org/grpc", "github.com/authzed/", "k8s.io/"} {
+		if strings.HasPrefix(imp, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// NoNetworkInTransactions checks that no PostgreSQL adapter, the code that
+// runs in a change's transaction, imports a client that reaches the network:
+// the database's own driver is all it talks to. A change that needs an answer
+// from a connector, a model provider, SpiceDB or the cluster asks for it
+// before its transaction opens, in a use case, or defers it until the
+// transaction has committed (D-211).
+func NoNetworkInTransactions(r *Repo) []Violation {
+	var out []Violation
+	for _, p := range r.Packages {
+		if !strings.HasPrefix(p.Path, "internal/") || !slices.Contains(strings.Split(p.Path, "/"), "postgres") {
+			continue
+		}
+		for _, imp := range p.Imports {
+			if reachesNetwork(imp) {
+				out = append(out, Violation{RuleNoNetwork, edge(p.Path, imp), "a PostgreSQL adapter runs in a change's transaction and makes no network call: ask before the transaction opens, or defer until it commits"})
+			}
+		}
+	}
+	return out
+}
+
+// Bench checks that only the Ask box bench imports goeval (D-218), and only
+// the packages of it that depend on the standard library alone: the root
+// package and the Gemini, judge and embedding ones would bring the Gemini and
+// Google Cloud client libraries into the module's builds.
+func Bench(r *Repo) []Violation {
+	var out []Violation
+	check := func(key, from string, imports []string) {
+		for _, imp := range imports {
+			switch {
+			case !under(imp, goevalModule):
+			case !isBench(from):
+				out = append(out, Violation{RuleBench, key + " -> " + imp, "only the Ask box bench imports goeval"})
+			case !slices.Contains(lightGoeval(), imp):
+				out = append(out, Violation{RuleBench, key + " -> " + imp, "the bench imports only goeval/api, goeval/heuristic and goeval/openai, which need only the standard library"})
+			}
+		}
+	}
+	for _, p := range r.Packages {
+		check(p.Path, p.Path, p.Imports)
+	}
+	for _, f := range r.Tests {
+		var imports []string
+		for _, spec := range f.Syntax.Imports {
+			if imp, err := strconv.Unquote(spec.Path.Value); err == nil {
+				imports = append(imports, imp)
+			}
+		}
+		check(f.Path, path.Dir(f.Path), imports)
+	}
+	return dedupe(out)
 }
 
 // Banned checks that no package, test-only ones included, is named util,

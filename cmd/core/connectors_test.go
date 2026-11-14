@@ -197,6 +197,23 @@ func TestConnectorBindAndSync(t *testing.T) {
 		t.Errorf("sync outside a cluster = %v, want errNoCluster", syncErr)
 	}
 	checkSynced(t, dsn)
+	checkBindAndSyncTrail(t, dsn)
+}
+
+// checkBindAndSyncTrail checks the audit log of TestConnectorBindAndSync
+// (D-198, D-211): the bind that worked is the administrator's account_bound,
+// the one before it that was refused left nothing, the first sync, which wrote
+// a transaction, is one connector_synced entry of the system, and the second,
+// which brought nothing new, and the two that failed leave none.
+func checkBindAndSyncTrail(t *testing.T, dsn string) {
+	t.Helper()
+	trail := trailOf(t, dsn)
+	if len(trail) != 2 || !strings.HasPrefix(trail[0], "admin account_bound ") || !strings.HasPrefix(trail[1], "system connector_synced ") {
+		t.Fatalf("the audit log = %v, want the administrator's bind and the system's one changing sync", trail)
+	}
+	if !strings.Contains(trail[0], `"ibkr-main"`) || !strings.Contains(trail[1], `"transactions:1"`) || !strings.Contains(trail[1], `"ibkr-main"`) {
+		t.Errorf("the entries = %v, want the instance in both and the one transaction in the sync's", trail)
+	}
 }
 
 // saveDemoRegistry saves the demo dataset's sleeves and accounts in dsn.

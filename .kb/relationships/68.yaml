@@ -874,3 +874,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e8f2e23c193
+  - type: executable_for
+    from: SYM-s9-internal-valuation-postgres-changed-test-testsavefxratesreportsonlywhatwasnewordifferent
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:51:08.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c455a4863e40
+  - type: implements
+    from: SYM-s9b-auditoutbox-no-change-transport-round-trip
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:42:56.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a44721b48b9
+  - type: covered_by
+    from: SYM-s9b-auditoutbox-no-change-transport-round-trip
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:42:56.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d0809fe56ea
+  - type: executable_for
+    from: SYM-askbench-scorers-test-test-card-numbers-are-read-in-the-owners-format
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:40.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ca8008b93e7

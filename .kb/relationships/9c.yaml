@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a473b560db5
+  - type: implements
+    from: SYM-s9-internal-ingest-app-connectors-markettally
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:29:04.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3739b76f3d35
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-connectors-markettally
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:29:04.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c47bee4fbe
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-recording-syncer-account-unplaced
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:12.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1985cf01518

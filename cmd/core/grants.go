@@ -178,22 +178,29 @@ func (grantCleanup) AccountPlaced(context.Context, ledger.AccountID, portfolio.S
 	return nil
 }
 
-// AccountRemoved ends the grants of the deleted account.
+// AccountRemoved ends the grants of the deleted account, once the change that
+// deleted it has committed (afterChange): ending a grant calls SpiceDB, which
+// no change's transaction does.
 func (c grantCleanup) AccountRemoved(ctx context.Context, account ledger.AccountID) error {
-	_, err := c.grants.RevokeTarget(ctx, systemActor(), identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: string(account)})
-	if err != nil {
-		return fmt.Errorf("ending the grants of an account: %w", err)
-	}
-	return nil
+	return afterChange(ctx, func(ctx context.Context) error {
+		_, err := c.grants.RevokeTarget(ctx, systemActor(), identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: string(account)})
+		if err != nil {
+			return fmt.Errorf("%w: ending the grants of an account: %w", portfolioapp.ErrPlacementNotObserved, err)
+		}
+		return nil
+	})
 }
 
-// SleeveRemoved ends the grants of the deleted sleeve.
+// SleeveRemoved ends the grants of the deleted sleeve, once the change that
+// deleted it has committed.
 func (c grantCleanup) SleeveRemoved(ctx context.Context, sleeve portfolio.SleeveID) error {
-	_, err := c.grants.RevokeTarget(ctx, systemActor(), identity.GrantTarget{Kind: identity.GrantTargetSleeve, ID: string(sleeve)})
-	if err != nil {
-		return fmt.Errorf("ending the grants of a sleeve: %w", err)
-	}
-	return nil
+	return afterChange(ctx, func(ctx context.Context) error {
+		_, err := c.grants.RevokeTarget(ctx, systemActor(), identity.GrantTarget{Kind: identity.GrantTargetSleeve, ID: string(sleeve)})
+		if err != nil {
+			return fmt.Errorf("%w: ending the grants of a sleeve: %w", portfolioapp.ErrPlacementNotObserved, err)
+		}
+		return nil
+	})
 }
 
 // grantsOnUninstall returns what the core does when a plugin instance is

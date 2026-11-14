@@ -1343,3 +1343,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74178d29fd7e
+  - type: executable_for
+    from: SYM-askbench-runner-test-bench-run
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:34.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7661bd61a1c8

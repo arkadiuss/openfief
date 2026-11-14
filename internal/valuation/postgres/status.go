@@ -92,3 +92,24 @@ func scanStatus(row pgx.CollectableRow) (app.ValuationStatus, error) {
 		Pending: changed || waiting || (dirty && !running), Running: running,
 	}, nil
 }
+
+// jobsFailedSQL counts the jobs of a kind that have not finished and have
+// already failed at least $2 attempts: River keeps the error of each failed
+// attempt in river_job.errors.
+const jobsFailedSQL = `
+SELECT count(*) FROM river.river_job
+WHERE kind = $1 AND state IN ('available', 'pending', 'scheduled', 'retryable', 'running')
+  AND coalesce(array_length(errors, 1), 0) >= $2`
+
+// JobsFailedAtLeast returns how many jobs of kind are still waiting to run
+// again after failing at least failures attempts: a job that River keeps
+// retrying and that has not got through. It reads the job queue valuation owns
+// (D-36) for the audit outbox's check (D-211); a finished job, completed,
+// cancelled or discarded, counts for none.
+func (s *Store) JobsFailedAtLeast(ctx context.Context, kind string, failures int) (int, error) {
+	var n int
+	if err := s.pool.QueryRow(ctx, jobsFailedSQL, kind, failures).Scan(&n); err != nil {
+		return 0, fmt.Errorf("counting the jobs of kind %s that failed %d times: %w", kind, failures, err)
+	}
+	return n, nil
+}

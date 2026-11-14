@@ -137,6 +137,9 @@ const (
 	// ActorOwner is a call made for the owner in a session, such as an Ask
 	// box question; the actor's ID is the session's ID.
 	ActorOwner ActorKind = "owner"
+	// ActorViewer is a call made for a viewer in a session, such as an Ask
+	// box question the viewer asked; the actor's ID is the session's ID.
+	ActorViewer ActorKind = "viewer"
 	// ActorSystem is a call the core makes on its own, such as the
 	// maintainer's weekly note.
 	ActorSystem ActorKind = "system"

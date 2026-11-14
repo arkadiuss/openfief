@@ -138,7 +138,7 @@ type core struct {
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and
 // valuation's input use cases over pool.
 func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledger, *valuationapp.InputRecorder) {
-	store := ledgerpg.New(pool)
+	store := ledgerpg.New(joined(pool))
 	l := ledgerapp.New(store, vstore.ImportHook())
 	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack())
 }
@@ -146,7 +146,7 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 // ledgerNames returns the instruments' display names (D-197) over the ledger l,
 // the owner's renames checked by owners and entered in the audit log.
 func ledgerNames(pool *pgxpool.Pool, l *ledgerapp.Ledger, owners *ownerSessions) *ledgerapp.Names {
-	return &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: owners, Postings: l, Audit: owners}
+	return &ledgerapp.Names{Store: ledgerpg.New(joined(pool)), Owners: owners, Postings: l, Audit: owners}
 }
 
 // jurisdictionPack returns the jurisdiction pack (D-70): the Polish one,
@@ -170,7 +170,7 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // (D-193, D-195, D-196).
 func historyOptions(pool *pgxpool.Pool, vstore *valuationpg.Store) viewsapp.Option {
 	opts := []viewsapp.Option{
-		viewsapp.WithSyncHistory(ingestpg.New(pool)), viewsapp.WithRecordedChanges(ledgerpg.New(pool)),
+		viewsapp.WithSyncHistory(ingestpg.New(joined(pool))), viewsapp.WithRecordedChanges(ledgerpg.New(joined(pool))),
 		viewsapp.WithInstrumentPrices(vstore),
 		viewsapp.WithBondTerms(vstore),
 	}
@@ -201,9 +201,9 @@ func historyOptions(pool *pgxpool.Pool, vstore *valuationpg.Store) viewsapp.Opti
 func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger,
 	callers identityconnect.Callers, installed *viewskube.Plugins,
 ) (*core, error) {
-	vstore, err := valuationpg.NewStore(pool, jobTracing()...)
+	vstore, err := joinedStore(pool)
 	if err != nil {
-		return nil, fmt.Errorf("valuation store: %w", err)
+		return nil, err
 	}
 	l, recorder := ingestDeps(pool, vstore)
 	// authz, below, is the one authorizer every read path asks (D-163).
@@ -212,15 +212,16 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	authz := acc.authorizer
-	auth, err := newAuth(pool, &cfg.Auth, now, acc.grants)
+	auth, changes, err := newAuthWithOutbox(pool, &cfg.Auth, now, acc.grants)
 	if err != nil {
 		return nil, err
 	}
+	changes.deliveryTimeout = cfg.Sync.DeliveryTimeout
 	checks, err := valuationSettings(ctx, recorder, vstore, valuationOwners(auth, cfg.Auth.Origins))
 	if err != nil {
 		return nil, err
 	}
-	agents, attn := newAgentsAndAttention(pool, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
+	agents, attn := newAgentsAndAttention(pool, changes, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
 		ungrantedViewPluginsIn(cfg, installed, acc.grants))
 	rv, err := newRevaluation(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
@@ -231,23 +232,19 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	names := ledgerNames(pool, l, ledgerOwners(auth, cfg.Auth.Origins, authz))
-	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(joined(pool))), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
-		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
-	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
-	if err != nil {
-		return nil, fmt.Errorf("views: %w", err)
-	}
-	apis, err := readAPIs(views, auth, callers, log)
+		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(joined(pool))), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
+	views, apis, err := newViews(l, vstore, cfg, auth, callers, log, opts)
 	if err != nil {
 		return nil, err
 	}
 	deps := &connectorDeps{
-		pool: pool, ledger: l, sleeves: acc.sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
+		pool: pool, outbox: changes, ledger: l, sleeves: acc.sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
-		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(pool), names, l),
+		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(joined(pool)), names, l),
 		providers: agents.providers,
 	}
 	plugin := withPortfolioServices(withAuthService(apis.plugin, auth, callers, log), models, newMaintainer(pool, rv, agents, attn, views, auth, cfg.Auth.Origins, l, authz, now), callers, log)
@@ -260,6 +257,22 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
 	return &core{agents: agents, browserPort: apis.browser, pluginPort: plugin, river: rv.client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
+}
+
+// newViews returns the views over the ledger l and vstore with opts, and the
+// read APIs they serve, with sessions checked by auth.
+func newViews(l *ledgerapp.Ledger, vstore *valuationpg.Store, cfg *serveConfig, auth *identityapp.Auth, callers identityconnect.Callers,
+	log *slog.Logger, opts []viewsapp.Option,
+) (*viewsapp.Views, portAPIs, error) {
+	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
+	if err != nil {
+		return nil, portAPIs{}, fmt.Errorf("views: %w", err)
+	}
+	apis, err := readAPIs(views, auth, callers, log)
+	if err != nil {
+		return nil, portAPIs{}, err
+	}
+	return views, apis, nil
 }
 
 // withIngestServices returns h with the services that feed the ledger and
@@ -305,7 +318,7 @@ func newAccess(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, l *led
 	}
 	grants := newGrants(store, identityapp.NewTokens(store, now, nil), dir, az, now)
 	opts := append(az.registryOptions(), portfolioapp.WithPlacementObserver(grantCleanup{grants}))
-	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l, opts...)
+	sleeves := portfolioapp.NewRegistry(portfoliopg.New(joined(pool)), l, opts...)
 	dir.sleeves = sleeves
 	if az.syncer == nil {
 		// Under the policy a viewer views what their grants cover (D-65, D-209); SpiceDB decides that when it answers.

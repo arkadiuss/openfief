@@ -68,8 +68,15 @@ func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id inges
 
 // fakeStores records what each valuation input store was given.
 type fakeStores struct {
-	err      error
-	calls    int
+	err   error
+	calls int
+	// unchanged makes the price, FX rate, index and bond terms stores answer that nothing
+	// they were given differed from what they held.
+	unchanged bool
+	// counts sets, by kind ("prices", "fx_rates", "index_readings",
+	// "index_levels", "bond_terms"), how many of the values given the store
+	// answers were new or different, in place of unchanged's all or none.
+	counts   map[string]int
 	prices   []valuation.Price
 	rates    []valuation.FXRate
 	readings []ingest.IndexReading
@@ -92,34 +99,52 @@ func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, 
 	return f.err
 }
 
-func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
+func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) (int, error) {
 	f.calls++
 	f.terms = terms
-	return f.err
+	return f.counted("bond_terms", len(terms)), f.err
 }
 
-func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) error {
+func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) (int, error) {
 	f.calls++
 	f.prices = prices
-	return f.err
+	return f.counted("prices", len(prices)), f.err
 }
 
-func (f *fakeStores) StoreFXRates(_ context.Context, _ ingest.BatchID, rates []valuation.FXRate) error {
+func (f *fakeStores) StoreFXRates(_ context.Context, _ ingest.BatchID, rates []valuation.FXRate) (int, error) {
 	f.calls++
 	f.rates = rates
-	return f.err
+	return f.counted("fx_rates", len(rates)), f.err
 }
 
-func (f *fakeStores) StoreIndexReadings(_ context.Context, _ ingest.BatchID, readings []ingest.IndexReading) error {
+func (f *fakeStores) StoreIndexReadings(_ context.Context, _ ingest.BatchID, readings []ingest.IndexReading) (int, error) {
 	f.calls++
 	f.readings = readings
-	return f.err
+	return f.counted("index_readings", len(readings)), f.err
 }
 
-func (f *fakeStores) StoreIndexLevels(_ context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) error {
+func (f *fakeStores) StoreIndexLevels(_ context.Context, _ ingest.BatchID, levels []valuation.IndexLevel) (int, error) {
 	f.calls++
 	f.levels = levels
-	return f.err
+	return f.counted("index_levels", len(levels)), f.err
+}
+
+// counted is how many of n stored values of kind the fake counts as new or
+// changed: what counts says, else changed's.
+func (f *fakeStores) counted(kind string, n int) int {
+	if c, ok := f.counts[kind]; ok {
+		return c
+	}
+	return f.changed(n)
+}
+
+// changed is how many of n stored values the fake counts as new or changed:
+// all of them, unless unchanged says they were stored before.
+func (f *fakeStores) changed(n int) int {
+	if f.unchanged {
+		return 0
+	}
+	return n
 }
 
 // delivery returns a synthetic delivery from xtb: mapping(t) plus one price,
@@ -209,6 +234,116 @@ func TestConnectorsSync(t *testing.T) {
 	}
 	if diff := cmp.Diff(wantSources, stores.sources); diff != "" {
 		t.Errorf("recorded sources (-want +got):\n%s", diff)
+	}
+}
+
+// fakeSyncAudit runs a sync's writes as the real auditor does, in order, and
+// keeps what it reports.
+type fakeSyncAudit struct {
+	calls   int
+	changes []app.SyncChange
+}
+
+func (f *fakeSyncAudit) AuditedSync(ctx context.Context, _ string, write func(context.Context) (app.SyncChange, error)) error {
+	f.calls++
+	c, err := write(ctx)
+	f.changes = append(f.changes, c)
+	return err
+}
+
+// TestConnectorsSyncReportsOnlyWhatChangedState checks what a sync hands the
+// auditor (D-198, D-211): the transaction versions the ledger stored, and the
+// prices, FX rates, index readings, index levels and bond terms that were new
+// or different, one count for each kind of market data a sync writes, with the
+// accounts the transactions were stored in; a sync that re-sends what is stored
+// reports an empty change, so the auditor writes no entry, and one that brings
+// only one kind of market data new reports that kind alone.
+func TestConnectorsSyncReportsOnlyWhatChangedState(t *testing.T) {
+	t.Parallel()
+	same := ingest.ImportSummary{Unchanged: 5, Accounts: []ingest.AccountCounts{{Account: "acc-1", Unchanged: 5}}}
+	base := app.SyncChange{Instance: "xtb-main", Batch: "b-1"}
+	only := func(kind string, n int) fakeStores {
+		return fakeStores{unchanged: true, counts: map[string]int{kind: n}}
+	}
+	tests := []struct {
+		name    string
+		summary ingest.ImportSummary
+		stores  fakeStores
+		want    app.SyncChange
+	}{
+		{
+			name:    "everything is new",
+			summary: ingest.ImportSummary{New: 2, NewVersions: 1, Accounts: []ingest.AccountCounts{{Account: "acc-1", New: 2, NewVersions: 1}, {Account: "acc-2", Unchanged: 4}}},
+			want: app.SyncChange{
+				Instance: "xtb-main", Batch: "b-1", Transactions: 3, Prices: 1, FXRates: 1, IndexReadings: 1, IndexLevels: 1, BondTerms: 1,
+				Accounts: []ledger.AccountID{"acc-1"},
+			},
+		},
+		{name: "the same again", summary: same, stores: fakeStores{unchanged: true}, want: base},
+		{
+			name: "only the transactions are new", summary: ingest.ImportSummary{New: 1, Accounts: []ingest.AccountCounts{{Account: "acc-1", New: 1}}},
+			stores: fakeStores{unchanged: true},
+			want:   app.SyncChange{Instance: "xtb-main", Batch: "b-1", Transactions: 1, Accounts: []ledger.AccountID{"acc-1"}},
+		},
+		{name: "only a price is new", summary: same, stores: only("prices", 1), want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", Prices: 1}},
+		{name: "only an FX rate is new", summary: same, stores: only("fx_rates", 1), want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", FXRates: 1}},
+		{name: "only an index level is new", summary: same, stores: only("index_levels", 1), want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", IndexLevels: 1}},
+		{name: "only an index reading is new", summary: same, stores: only("index_readings", 1), want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", IndexReadings: 1}},
+		{name: "only bond terms are new", summary: same, stores: only("bond_terms", 1), want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", BondTerms: 1}},
+		{
+			name: "some of the rates and levels are new", summary: same,
+			stores: fakeStores{unchanged: true, counts: map[string]int{"fx_rates": 3, "index_levels": 2}},
+			want:   app.SyncChange{Instance: "xtb-main", Batch: "b-1", FXRates: 3, IndexLevels: 2},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := syncChangeOf(t, &tt.summary, &tt.stores)
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("the change (-want +got):\n%s", diff)
+			}
+			wantEmpty := tt.want.Transactions+tt.want.Prices+tt.want.FXRates+tt.want.IndexReadings+tt.want.IndexLevels+tt.want.BondTerms == 0
+			if got.Empty() != wantEmpty {
+				t.Errorf("Empty = %v, want %v", got.Empty(), wantEmpty)
+			}
+		})
+	}
+}
+
+// syncChangeOf runs a sync of a delivery with a price, an FX rate, an index
+// reading, an index level and bond terms, whose import was summary and whose
+// stores answer as stores says, and returns the one change the auditor was
+// handed.
+func syncChangeOf(t *testing.T, summary *ingest.ImportSummary, stores *fakeStores) app.SyncChange {
+	t.Helper()
+	d := delivery(t)
+	d.BondTerms = []ingest.BondTerms{{}}
+	audit := &fakeSyncAudit{}
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{summary: *summary}, stores)
+	c.Audit = audit
+	if _, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions, Watermark: "w-1"}); err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	if audit.calls != 1 || len(audit.changes) != 1 {
+		t.Fatalf("the auditor was asked %d times, want once", audit.calls)
+	}
+	return audit.changes[0]
+}
+
+// TestConnectorsUploadIsNotAuditedAsASync checks that only a sync is handed to
+// the auditor: the owner's upload has its own entry.
+func TestConnectorsUploadIsNotAuditedAsASync(t *testing.T) {
+	t.Parallel()
+	audit := &fakeSyncAudit{}
+	c := connectors(t, &fakeCaller{delivery: delivery(t)}, &fakeLedger{summary: ingest.ImportSummary{New: 1}}, &fakeStores{})
+	c.Audit = audit
+	file := app.NamedFile{Name: "s.csv", Contents: strings.NewReader("x")}
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, file, nil); err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	if audit.calls != 0 {
+		t.Errorf("the auditor was asked %d times for an upload, want none", audit.calls)
 	}
 }
 

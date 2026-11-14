@@ -958,3 +958,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf4f1f94f089
+  - type: specified_by
+    from: REQ-identity-audit-no-network-in-change
+    to: SCEN-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:30:09.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14ec09523755
+  - type: verified_by
+    from: SCEN-askbench-requests-like-the-plugin
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:24:38.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7061d4299e57
+  - type: verified_by
+    from: SCEN-askbench-requests-like-the-plugin
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T08:24:38.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9437543b7d3
+  - type: specified_by
+    from: REQ-decision-d217-1-model-serves-after-eval
+    to: SCEN-askbench-model-serves-after-eval
+    created_at: 2026-11-14T08:24:47.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c32a53054445
+  - type: implements
+    from: SYM-askbench-phrases-normalize
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:40:40.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bcb0112c94e
+  - type: covered_by
+    from: SYM-askbench-phrases-normalize
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:40:40.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad33baa6a5e
+  - type: implements
+    from: SYM-askbench-seed-bench-today
+    to: REQ-decision-d219-2-injections-in-eval-only-seed
+    created_at: 2026-11-14T08:59:35.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dd7f09dbcbe
+  - type: covered_by
+    from: SYM-askbench-seed-bench-today
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:59:35.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e02d7eb5b0e

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/fs"
 	"net/http/httptest"
@@ -8,6 +9,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -631,6 +633,7 @@ func recordDemoInputs(t *testing.T, pool *pgxpool.Pool) *demo.Dataset {
 // entriesAfter returns the audit entries after seq, oldest first.
 func entriesAfter(t *testing.T, pool *pgxpool.Pool, seq int64) []identity.AuditEntry {
 	t.Helper()
+	drainAudit(t, pool)
 	page, err := identitypg.New(pool).AuditEntries(t.Context(), &identity.AuditFilter{Limit: identity.MaxAuditPage})
 	if err != nil {
 		t.Fatalf("AuditEntries: %v", err)
@@ -663,6 +666,7 @@ func wantEntriesOf(t *testing.T, pool *pgxpool.Pool, kinds []identity.AuditActio
 // lastSeq returns the sequence number of the newest audit entry.
 func lastSeq(t *testing.T, pool *pgxpool.Pool) int64 {
 	t.Helper()
+	drainAudit(t, pool)
 	page, err := identitypg.New(pool).AuditEntries(t.Context(), &identity.AuditFilter{Limit: 1})
 	if err != nil {
 		t.Fatalf("AuditEntries: %v", err)
@@ -690,12 +694,74 @@ func TestEveryOwnerChangeWritesExactlyOneEntry(t *testing.T) {
 		}
 		owner = checkOneEntry(t, &c, entriesAfter(t, e.pool, before), owner)
 	}
+	// The entry is enqueued in the change's own transaction, so with the
+	// outbox gone nothing can be changed: the enqueue fails, the change rolls
+	// back and the owner is answered as unavailable.
+	if _, err := e.pool.Exec(t.Context(), "ALTER TABLE river.river_job ADD CONSTRAINT no_audit_jobs CHECK (kind <> 'identity.audit_entry') NOT VALID"); err != nil {
+		t.Fatalf("taking the outbox away: %v", err)
+	}
+	for _, c := range ownerChanges() {
+		checkRefusedWithoutTheOutbox(t, &c, c.drive(e))
+	}
+}
+
+// TestOwnerChangesWaitForTheLogInTheOutbox checks that a log that is down does
+// not stop the owner's changes, and loses no entry: the entry waits in the
+// outbox, and the worker writes it, once, when the log is back, with the time
+// of the change (D-211).
+func TestOwnerChangesWaitForTheLogInTheOutbox(t *testing.T) {
+	t.Parallel()
+	e := newChangeEnv(t)
+	drainAudit(t, e.pool)
 	if _, err := e.pool.Exec(t.Context(), "ALTER TABLE identity.audit_log RENAME TO audit_log_away"); err != nil {
 		t.Fatalf("taking the audit log away: %v", err)
 	}
-	for _, c := range ownerChanges() {
-		checkRefusedWithoutTheLog(t, &c, c.drive(e))
+	if err := ownerChanges()[0].drive(e); err != nil {
+		t.Fatalf("a change with the log down: %v, want it made: its entry waits in the outbox", err)
 	}
+	// The core's River client retries the job meanwhile, as it would in
+	// production, and fails while the log is gone.
+	id, args := waitingSettingsEntry(t, e.pool)
+	w := &auditWorker{log: identitypg.New(e.pool)}
+	if err := w.write(t.Context(), id, &args); err == nil {
+		t.Fatal("the worker wrote an entry with the log gone")
+	}
+	if _, err := e.pool.Exec(t.Context(), "ALTER TABLE identity.audit_log_away RENAME TO audit_log"); err != nil {
+		t.Fatalf("bringing the log back: %v", err)
+	}
+	for range 2 {
+		if err := w.write(t.Context(), id, &args); err != nil {
+			t.Fatalf("the worker with the log back: %v", err)
+		}
+	}
+	var n int
+	var at time.Time
+	if err := e.pool.QueryRow(t.Context(), `SELECT count(*), max(at) FROM identity.audit_log WHERE outbox_job_id = $1`, id).Scan(&n, &at); err != nil || n != 1 {
+		t.Fatalf("entries of the job = %d, %v; want one even though the worker ran twice", n, err)
+	}
+	if !at.Equal(args.At) {
+		t.Errorf("the entry's time = %s, want the change's, %s: not the worker's", at, args.At)
+	}
+}
+
+// waitingSettingsEntry returns the ID and the entry of the newest settings
+// change the outbox holds.
+func waitingSettingsEntry(t *testing.T, pool *pgxpool.Pool) (int64, auditEntryArgs) {
+	t.Helper()
+	var (
+		id  int64
+		raw []byte
+	)
+	if err := pool.QueryRow(t.Context(), `
+		SELECT id, args FROM river.river_job WHERE kind = $1 AND args->>'action' = 'settings_changed' ORDER BY id DESC LIMIT 1`,
+		auditEntryArgs{}.Kind()).Scan(&id, &raw); err != nil {
+		t.Fatalf("reading the entry waiting in the outbox: %v", err)
+	}
+	var args auditEntryArgs
+	if err := json.Unmarshal(raw, &args); err != nil {
+		t.Fatalf("decoding the job: %v", err)
+	}
+	return id, args
 }
 
 // checkOneEntry fails t unless got is the one ok entry of c's action by the
@@ -713,15 +779,15 @@ func checkOneEntry(t *testing.T, c *ownerChange, got []identity.AuditEntry, owne
 	return got[0].Actor.ID
 }
 
-// checkRefusedWithoutTheLog fails t when err, c's answer with the audit log
+// checkRefusedWithoutTheOutbox fails t when err, c's answer with the outbox
 // gone, is a success, or, for an idempotent change, is not unavailable.
-func checkRefusedWithoutTheLog(t *testing.T, c *ownerChange, err error) {
+func checkRefusedWithoutTheOutbox(t *testing.T, c *ownerChange, err error) {
 	t.Helper()
 	switch {
 	case err == nil:
-		t.Errorf("%s succeeded with the audit log gone: a change was made without its entry", c.procedure)
+		t.Errorf("%s succeeded with the outbox gone: a change was made without its entry", c.procedure)
 	case c.idempotent && connect.CodeOf(err) != connect.CodeUnavailable:
-		t.Errorf("%s with the audit log gone = %v, want unavailable", c.procedure, err)
+		t.Errorf("%s with the outbox gone = %v, want unavailable", c.procedure, err)
 	}
 }
 

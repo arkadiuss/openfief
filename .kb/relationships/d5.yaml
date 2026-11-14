@@ -266,13 +266,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e90a5bbe0e8a
   - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-index-levels
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T22:46:46.429Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-44d2623d00bb
-  - type: executable_for
     from: SYM-ingest-test-bond-lot-cost
     to: TEST-ingest-bondlot
     created_at: 2026-10-29T01:17:42.479Z
@@ -832,3 +825,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-453fc8c9977a
+  - type: covered_by
+    from: SYM-ingest-app-connectors-prepare-file-batch
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-14T06:38:57.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ca7f3bf5664
+  - type: implements
+    from: SYM-ingest-app-connectors-prepare-file-batch
+    to: REQ-ingest-connector-batches
+    created_at: 2026-11-14T06:38:57.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9dae533657
+  - type: implements
+    from: SYM-ingest-app-connectors-prepare-file-batch
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-11-14T06:38:57.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81712af71370
+  - type: implements
+    from: SYM-ingest-app-connectors-prepare-file-batch
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T06:38:57.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e28b288b418
+  - type: covered_by
+    from: SYM-ingest-app-connectors-prepare-file-batch
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T06:38:57.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba71651e4fcb
+  - type: implements
+    from: SYM-core-conn-valuation-inputs-store-index-readings
+    to: REQ-ingest-sync-counts-all-market-data
+    created_at: 2026-11-14T06:40:08.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7592a730c136
+  - type: implements
+    from: SYM-askbench-cases-case-checks-of
+    to: REQ-decision-d219-1-ask-eval-cases
+    created_at: 2026-11-14T08:32:41.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98e2f2bfc28d
+  - type: covered_by
+    from: SYM-askbench-cases-case-checks-of
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:32:41.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b791eefa8a69

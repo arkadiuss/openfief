@@ -33,12 +33,12 @@ var errSecret = errors.New(secretText)
 // askers admits the session tokens "owner" and "read".
 type askers struct{}
 
-func (askers) Asker(_ context.Context, _, token string) (string, error) {
+func (askers) Asker(_ context.Context, _, token string) (app.Actor, error) {
 	switch token {
 	case "owner", "read":
-		return "session-" + token, nil
+		return app.Actor{Kind: app.ActorOwner, ID: "session-" + token}, nil
 	}
-	return "", app.ErrNoSession
+	return app.Actor{}, app.ErrNoSession
 }
 
 // provider is the model provider the router calls: it answers with a script

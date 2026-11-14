@@ -1126,3 +1126,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47831aa850e4
+  - type: implements
+    from: SYM-s9-internal-ingest-app-connectors-connectors-write
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:50:49.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8df680b4319f
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-connectors-connectors-write
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:50:49.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72e5cc8aa446
+  - type: implements
+    from: SYM-askbench-judge-advice-judge-verdict
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:35:28.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f40ea5bcd5e
+  - type: covered_by
+    from: SYM-askbench-judge-advice-judge-verdict
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:35:28.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dec190ca884

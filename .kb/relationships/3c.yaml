@@ -902,3 +902,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a9581b1b371
+  - type: executable_for
+    from: SYM-s9-cmd-core-connectors-test-checkbindandsynctrail
+    to: TEST-core-sync-audit
+    created_at: 2026-11-14T04:26:53.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbf887855d1
+  - type: executable_for
+    from: SYM-s9-cmd-core-modelrouter-test-recordinglog-enqueue
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:03.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e658f395a0e2
+  - type: executable_for
+    from: SYM-s9b-outbox-test-outbox-fixture-delivery
+    to: TEST-core-delivery-timeout
+    created_at: 2026-11-14T06:45:59.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcb2fecddc71
+  - type: implements
+    from: SYM-s9b-connectors-prepared-delivery
+    to: REQ-identity-audit-no-network-in-change
+    created_at: 2026-11-14T07:04:30.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cef2610456
+  - type: covered_by
+    from: SYM-s9b-connectors-prepared-delivery
+    to: TEST-ingest-app-no-network-in-change
+    created_at: 2026-11-14T07:04:30.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4805d5a0e03a
+  - type: implements
+    from: SYM-internal-askrun-asker-config
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:29:22.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e8575e9183
+  - type: covered_by
+    from: SYM-internal-askrun-asker-config
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:29:22.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0d7be57bfc2
+  - type: implements
+    from: SYM-internal-askrun-ask-run-row
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:30:12.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26abeba62505
+  - type: covered_by
+    from: SYM-internal-askrun-ask-run-row
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:30:12.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a403f8ff4143
+  - type: implements
+    from: SYM-askbench-report-failure-counts
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:50:26.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba70a067bd03
+  - type: implements
+    from: SYM-askbench-report-failure-counts
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:50:26.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35388b9dd0db
+  - type: covered_by
+    from: SYM-askbench-report-failure-counts
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:50:26.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-906b153b010d

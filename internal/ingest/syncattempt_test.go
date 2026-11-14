@@ -23,6 +23,7 @@ func TestSyncErrorClassNames(t *testing.T) {
 		{ingest.SyncErrorBooking, "booking"},
 		{ingest.SyncErrorInterrupted, "interrupted"},
 		{ingest.SyncErrorOther, "other"},
+		{ingest.SyncErrorDeliveryTimeout, "delivery-timeout"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

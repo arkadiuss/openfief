@@ -1084,3 +1084,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e3dd31863b8
+  - type: executable_for
+    from: SYM-s9b-nonetwork-test-test-spice-dbis-refused-inside-achange
+    to: TEST-core-no-network-in-change
+    created_at: 2026-11-14T06:45:02.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09b27f27459a
+  - type: implements
+    from: SYM-askbench-phrases-advice-in
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:41:05.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d822461d7d02
+  - type: covered_by
+    from: SYM-askbench-phrases-advice-in
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:41:05.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f48ba041ebc5
+  - type: implements
+    from: SYM-askbench-scorers-declines-to-write
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:48.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87a86afd6af5
+  - type: implements
+    from: SYM-askbench-scorers-declines-to-write
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:48.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0e7dab783bf
+  - type: covered_by
+    from: SYM-askbench-scorers-declines-to-write
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:48.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea4e4e4909eb

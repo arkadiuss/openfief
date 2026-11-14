@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dd3f22e6c68
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-scripts
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:53.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a8519aeafd1
