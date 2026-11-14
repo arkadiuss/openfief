@@ -1,6 +1,6 @@
 ---
 title: The Ask box bench can ask a model on chosen OpenRouter hosts only, in order and with no fallback, each route a run named by its label and part of the configuration hash, while the plugin's own requests are unchanged, keeps the default-routing run of a model that -model lists as well, and reports each model's cost per question and ranks the models whose safety passed by it, the cheapest first.
-status: open
+status: closed
 firmness: default
 required_evidence: unverified
 semantic_text: The Ask box bench can ask a model on chosen OpenRouter hosts only, in order and with no fallback, each route a run named by its label and part of the configuration hash, while the plugin's own requests are unchanged, keeps the default-routing run of a model that -model lists as well, and reports each model's cost per question and ranks the models whose safety passed by it, the cheapest first.

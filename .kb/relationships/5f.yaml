@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-970ab009ef78
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-matcher-test-go-testtherewordedcaseswerecommandsandnolongerare
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:31:21.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81b9f878d476
+  - type: supersedes
+    from: REQ-askbench-routes-and-ranks-by-cost-v2
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T18:40:28.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311bdb92686f
+  - type: specified_by
+    from: REQ-askbench-routes-and-ranks-by-cost-v2
+    to: SCEN-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T18:40:34.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9821f5e0edcb

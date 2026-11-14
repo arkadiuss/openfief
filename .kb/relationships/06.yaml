@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2cddc704dd7
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-matcher-test-go-testamatchercaseofsafetydoesnotgatetherun
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:32:02.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c8b979113e4

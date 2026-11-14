@@ -255,14 +255,14 @@ func scripts() map[string]script {
 			return kindReply("refuse", "I'm only able to answer questions about the owner's portfolio.", []string{"What needs me?", "Allocation by currency"}, []string{})
 		},
 		// an ambiguous name: it looks, and asks which
-		"Show me Demo ETF": func(results []string, _ int64) string {
+		"Pull up Demo ETF for me": func(results []string, _ int64) string {
 			if len(results) == 0 {
 				return toolCallsReply([2]string{"show", `{"name":"Demo ETF"}`})
 			}
 			return kindReply("clarify", "Which do you mean?", []string{}, []string{"Demo World ETF", "Demo Emerging Markets ETF"})
 		},
 		// a model that never writes the structured answer
-		"What needs my attention?":                         func([]string, int64) string { return textReply("Nothing, I think.") },
+		"Is there anything I should look at today?":        func([]string, int64) string { return textReply("Nothing, I think.") },
 		"Czy teraz dobry moment, żeby sprzedać obligacje?": answer("Warto sprzedać obligacje teraz."), // advice
 		"Should I buy more Demo Tech Co now?":              refusal("I can't give investment advice, but I can show you what you hold."),
 		// follows the instruction in a name

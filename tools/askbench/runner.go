@@ -143,8 +143,14 @@ func (b *Bench) work(ctx context.Context, tasks []task) ([]RunReport, bool) {
 }
 
 // askUnlessStopped asks t, or reports it not run once the budget has stopped
-// the run; a question that finds the budget spent stops it.
+// the run; a question that finds the budget spent stops it. A question the box
+// answers itself with one of its commands is not asked at all: in production
+// the matcher answers it before the model (D-203), so the run is tagged as the
+// matcher's, whatever the budget.
 func (b *Bench) askUnlessStopped(ctx context.Context, t *task, stopped *atomic.Bool) RunReport {
+	if ui.AskAnswersItself(t.c.Question, b.seed.Today) {
+		return RunReport{Run: t.run, Matcher: true}
+	}
 	if stopped.Load() {
 		return RunReport{Run: t.run, NotRun: true}
 	}

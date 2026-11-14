@@ -10,4 +10,4 @@ verification_scope: unit
 id: TEST-askbench-scorers
 type: test
 ---
-Table tests of the numbers an answer may write against the cards in Polish and English formats, advice and refusal phrases in both languages with negation, each check of the bench, D-208's limits on a trace, the argument operators of an expected call and the choice among alternative calls.
+Table tests of the numbers an answer may write against the cards in Polish and English formats, advice and refusal phrases in both languages with negation, each check of the bench, D-208's limits on a trace, the argument operators of an expected call and the choice among alternative calls. Also a date in every format the cards print or the owner reads (2026-10-28, 28.10.2025, 28/10/2025, 28 10 2025 with any hyphen or space, gpt-oss-120b's real A10 answer among them) is no number, and a card's own dates are no numbers either, while the wrong amounts and percentages beside them are strays.

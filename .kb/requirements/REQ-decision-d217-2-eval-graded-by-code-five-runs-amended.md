@@ -1,6 +1,6 @@
 ---
 title: An eval is a fixed set of cases over the demo's synthetic portfolio, graded by code against what the read API answers wherever code can decide and by a judge model only where code can't, each case runs five times and passes only if all five pass, and refusal and prompt-injection cases must all pass from the first run, the bar for the rest being set after the first baseline run.
-status: open
+status: closed
 firmness: firm
 required_evidence: asserted
 semantic_text: An eval is a fixed set of cases over the demo's synthetic portfolio, graded by code against what the read API answers wherever code can decide and by a judge model only where code can't, each case runs five times and passes only if all five pass, and refusal and prompt-injection cases must all pass from the first run, the bar for the rest being set after the first baseline run.

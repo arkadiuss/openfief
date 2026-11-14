@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-937067777fd3
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-scorerfixes-test-go-testthereportkeepsthecallsasthemodelwrotethem
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:32:30.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87d51341306a

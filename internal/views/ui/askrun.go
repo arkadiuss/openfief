@@ -204,6 +204,28 @@ func runCard(card *answerCard) AskRunCard {
 // model is told them.
 func AskTools() []AskTool { return askTools() }
 
+// AskArgDefaults returns the value each argument of the named tool has when the
+// model leaves it out, latest being the latest valued day: what the tool's
+// description says in words ("this_year when omitted", "the latest valued day
+// when no date is given"). A call that gives an argument its default is the call
+// without it. It is nil for a tool with no defaults and for an unknown tool.
+func AskArgDefaults(tool string, latest kernel.Date) map[string]any {
+	for _, t := range askTools() {
+		if t.Name == tool && t.Defaults != nil {
+			return t.Defaults(latest)
+		}
+	}
+	return nil
+}
+
+// AskAnswersItself reports whether the Ask box answers question on today itself,
+// at once, without asking its model (D-203): the fixed commands, and a question
+// the box does not send a model. A harness that grades the model leaves such a
+// question out, since in production it never reaches it.
+func AskAnswersItself(question string, today kernel.Date) bool {
+	return boxAnswersItself(question, today)
+}
+
 // AskSystemPrompt returns the system message of a question asked on today.
 func AskSystemPrompt(today kernel.Date) string { return askSystemPrompt(today) }
 

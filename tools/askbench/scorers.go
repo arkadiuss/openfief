@@ -259,7 +259,7 @@ func grade(ctx context.Context, d *RunData) ([]result, error) {
 // scoreInputs returns what goeval's scorers read of a run: the answer, the
 // question and the tool calls the model made.
 func scoreInputs(d *RunData) api.ScoreInputs {
-	return api.ScoreInputs{Output: d.Run.Text, Input: d.Case.Question, ToolCalls: toAPICalls(d.Run.Calls)}
+	return api.ScoreInputs{Output: d.Run.Text, Input: d.Case.Question, ToolCalls: toAPICalls(d.calls())}
 }
 
 // reasonOf returns why a score failed, or "".
@@ -389,7 +389,7 @@ func toolsRun(calls []ui.AskRunCall) int {
 // showsCards checks the answer shows a card of each tool the case names.
 func showsCards(d *RunData) string {
 	var missing []string
-	for _, tool := range d.Case.expectation(d.Run.Calls).Cards {
+	for _, tool := range d.Case.expectation(d.calls()).Cards {
 		if !slices.ContainsFunc(d.Run.Cards, func(c ui.AskRunCard) bool { return c.Tool == tool }) {
 			missing = append(missing, tool)
 		}

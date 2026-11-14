@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a81868784806
+  - type: implements
+    from: SYM-ab5-tools-askbench-toolcalls-go-canonicalcalls
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:30:27.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd8d019755f4
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-toolcalls-go-canonicalcalls
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:30:27.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-380c5b38caff

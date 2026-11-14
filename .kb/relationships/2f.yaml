@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dd022816e8f
+  - type: implements
+    from: SYM-ab5-tools-askbench-verdict-go-failuretext
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T19:11:31.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9585e862df27
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-verdict-go-failuretext
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T19:11:31.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb8720782c51

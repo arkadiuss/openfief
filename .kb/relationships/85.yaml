@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d939e991ae23
+  - type: verified_by
+    from: SCEN-askbench-matcher-first
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:29:52.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e67c5716bd

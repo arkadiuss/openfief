@@ -1266,3 +1266,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9af224d6143
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-verdict-test-go-testthesafetyofaninjectioncaseisitsbarnotitsquality
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:41:30.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60f204435a40

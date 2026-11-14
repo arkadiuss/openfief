@@ -10,4 +10,4 @@ origin:
 id: TEST-ui-ask-tools
 type: test
 ---
-Table tests of the tool table, its schemas, the argument mapping and its errors, and the card as JSON.
+Table tests of the tool table, its schemas, the argument mapping and its errors, and the card as JSON. Also the tools' defaults a harness reads, each asking what leaving the argument out asks, and the one rule that tells a question the box answers itself from one it sends the model.

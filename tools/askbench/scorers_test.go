@@ -334,3 +334,61 @@ func TestAlternativesAreJudgedByWhatTheModelWentFor(t *testing.T) {
 		})
 	}
 }
+
+// A model writes a date back the way the owner's format reads it, so a date is
+// no amount in any format the cards print or the owner reads: the cards print
+// ISO dates, and gpt-oss-120b wrote "od 28 10 2025 do 28 10 2026" for them in
+// the bench run ask-bench-6 (synthetic data), whose spaces the number scorer read
+// as the grouped amount "10 202".
+func TestADateInAnyFormatIsNoAmount(t *testing.T) {
+	t.Parallel()
+	card := decimals(t, "106238.29", "56363.17", "11.9")
+	tests := []struct {
+		name   string
+		answer string
+		stray  []string
+	}{
+		{name: "gpt-oss's real A10 answer, narrow no-break spaces", answer: "Stopą zwrotu w ostatnich 12 miesiącach była +11,9 % (od 28 10 2025 do 28 10 2026)."},
+		{name: "the same with plain spaces", answer: "Stopa zwrotu +11,9 % (od 28 10 2025 do 28 10 2026)."},
+		{name: "the same with no-break spaces", answer: "Stopa zwrotu +11,9 % (od 28 10 2025 do 28 10 2026)."},
+		{name: "ISO, as the cards print it", answer: "From 2025-10-28 to 2026-10-28 it returned +11.9%."},
+		{name: "ISO with a non-breaking hyphen", answer: "From 2025‑10‑28 to 2026‑10‑28 it returned +11.9%."},
+		{name: "ISO with an en dash", answer: "From 2025–10–28 to 2026–10–28 it returned +11.9%."},
+		{name: "ISO with spaces", answer: "From 2025 10 28 to 2026 10 28 it returned +11.9%."},
+		{name: "dotted", answer: "Od 28.10.2025 do 28.10.2026: +11,9 %."},
+		{name: "dotted with one digit", answer: "Od 8.1.2026: +11,9 %."},
+		{name: "slashed", answer: "From 28/10/2025 to 28/10/2026: +11.9%."},
+		{name: "an ISO time stamp", answer: "The last sync was at 2026-10-28T06:00:00Z and the value 106 238,29."},
+		{name: "a date beside a real amount", answer: "Na 28 10 2026 masz 106 238,29 zł."},
+		// What must still fail.
+		{name: "a wrong amount beside the dates", answer: "Stopa +11,9 % (od 28 10 2025 do 28 10 2026), czyli 12 345,67 zł.", stray: []string{"12 345,67"}},
+		{name: "a wrong percentage beside the dates", answer: "Stopa +12,3 % (od 28 10 2025 do 28 10 2026).", stray: []string{"12,3"}},
+		{name: "an amount that reads like a date's tail", answer: "Masz 10 202 zł.", stray: []string{"10 202"}},
+		{name: "a grouped amount after a day and month", answer: "28 10 202 zł", stray: []string{"10 202"}},
+		{name: "a run of digits is not a date", answer: "That is 128 10 2025 PLN.", stray: []string{"128", "10 202"}},
+		{name: "a year is not an amount but its neighbours are", answer: "W 2025 zarobiłeś 777,00 zł.", stray: []string{"777,00"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var stray []string
+			for _, n := range numbersIn(tt.answer) {
+				if !grounded(&n, card) {
+					stray = append(stray, n.text)
+				}
+			}
+			if diff := cmp.Diff(tt.stray, stray); diff != "" {
+				t.Errorf("numbers in no card (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestACardsDatesAreNoNumbersEither(t *testing.T) {
+	t.Parallel()
+	got := cardNumbers([]string{"From 2025-10-28 to 2026-10-28.", "Start 28.10.2025 56 363,17"})
+	want := decimals(t, "56363.17")
+	if len(got) != len(want) || !got[0].Equal(want[0]) {
+		t.Errorf("card numbers = %v, want only the amount %v", got, want)
+	}
+}

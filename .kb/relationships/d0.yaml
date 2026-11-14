@@ -951,3 +951,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e34dc2e8c51
+  - type: implements
+    from: SYM-askbench-numbers-date-texts
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:34:05.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3d27a6d6b0

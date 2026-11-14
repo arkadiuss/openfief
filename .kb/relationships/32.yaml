@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92d07e364e36
+  - type: supersedes
+    from: REQ-decision-d217-2-eval-graded-by-code-five-runs-d220
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
+    created_at: 2026-11-14T18:40:20.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d9b80b4f7b3
+  - type: specified_by
+    from: REQ-decision-d217-2-eval-graded-by-code-five-runs-d220
+    to: SCEN-askbench-five-runs-and-safety
+    created_at: 2026-11-14T18:40:25.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42935b9c5de6

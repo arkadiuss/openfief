@@ -510,15 +510,23 @@ type routedAnswerer struct {
 	log      *slog.Logger
 }
 
+// boxAnswersItself reports whether the box answers question on today without its
+// model (D-203): it is one of the fixed commands, or it is empty or longer than
+// a model is asked, so it gets the commands the box understands.
+func boxAnswersItself(question string, today kernel.Date) bool {
+	if _, isCommand := parseAsk(question, today); isCommand {
+		return true
+	}
+	q := normalizeQuestion(question)
+	return q == "" || utf8.RuneCountInString(q) > maxModelQuestionRunes
+}
+
 // answer answers question with its command, or with the model.
 func (a routedAnswerer) answer(r *http.Request, sess session, question string) (answerCard, error) {
 	if a.model == nil {
 		return a.commands.answer(r, sess, question)
 	}
-	if _, isCommand := parseAsk(question, a.today()); isCommand {
-		return a.commands.answer(r, sess, question)
-	}
-	if q := normalizeQuestion(question); q == "" || utf8.RuneCountInString(q) > maxModelQuestionRunes {
+	if boxAnswersItself(question, a.today()) {
 		return a.commands.answer(r, sess, question)
 	}
 	ok, err := a.model.model.available(r.Context(), sess)

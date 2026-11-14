@@ -965,3 +965,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50e88c7afff5
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-scorers-test-go-testacardsdatesarenonumberseither
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T18:32:57.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19051d13a78a
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-modelreport-addtotals
+    to: REQ-askbench-matcher-first
+    created_at: 2026-11-14T18:33:19.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45175468fdd4
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-modelreport-addtotals
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:33:19.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb56876a129
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhoseverdictispass
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T18:52:22.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-717d0d356611
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-cost-test-go-testnomodelpassingtheverdictisnoranking
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T18:52:27.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bce2cdd60e7b

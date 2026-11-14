@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6dfa3eb9df9d
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-scorerfixes-test-go-defaultproblem
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:32:44.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e228a8d7d74

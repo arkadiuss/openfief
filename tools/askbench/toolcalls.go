@@ -10,11 +10,68 @@ import (
 	"github.com/datar-psa/goeval/api"
 	"github.com/datar-psa/goeval/heuristic"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
+// canonicalCalls returns the calls with each one's arguments in their canonical
+// form, today being the latest valued day: an argument the model left out, gave
+// as null or gave as an empty text holds its documented default, so a call that
+// gives an argument its default is the call without it (ui.AskArgDefaults, the
+// tools' own description of what leaving an argument out means). The report
+// keeps the calls as the model wrote them; only the comparison with a case's
+// expected calls reads these. Arguments that are not a JSON object are kept.
+func canonicalCalls(calls []ui.AskRunCall, today kernel.Date) []ui.AskRunCall {
+	out := make([]ui.AskRunCall, len(calls))
+	for i, c := range calls {
+		out[i] = c
+		out[i].Args = canonicalArgs(c.Name, c.Args, today)
+	}
+	return out
+}
+
+// canonicalArgs returns raw, a tool's arguments, with each argument the tool
+// has a default for set to it where it is missing, null or empty text.
+func canonicalArgs(tool, raw string, today kernel.Date) string {
+	defaults := ui.AskArgDefaults(tool, today)
+	if len(defaults) == 0 {
+		return raw
+	}
+	args, ok := argsObject(raw)
+	if !ok {
+		return raw
+	}
+	for key, def := range defaults {
+		if got, has := args[key]; !has || got == nil || got == "" {
+			args[key] = def
+		}
+	}
+	out, err := json.Marshal(args)
+	if err != nil {
+		return raw
+	}
+	return string(out)
+}
+
+// argsObject reads raw as a JSON object of arguments; no text and null are the
+// empty object, and ok is false for anything else that is no object.
+func argsObject(raw string) (map[string]any, bool) {
+	if text := strings.TrimSpace(raw); text == "" || text == "null" {
+		return map[string]any{}, true
+	}
+	var args map[string]any
+	if err := json.Unmarshal([]byte(raw), &args); err != nil || args == nil {
+		return nil, false
+	}
+	return args, true
+}
+
+// calls returns the run's tool calls in their canonical form, which the
+// expected calls are compared with.
+func (d *RunData) calls() []ui.AskRunCall { return canonicalCalls(d.Run.Calls, d.Today) }
+
 // toAPICalls maps the loop's trace to goeval's tool calls, keeping each call's
-// arguments as the model wrote them.
+// arguments as given.
 func toAPICalls(calls []ui.AskRunCall) []api.ToolCall {
 	out := make([]api.ToolCall, 0, len(calls))
 	for _, c := range calls {
@@ -31,7 +88,8 @@ func toAPICalls(calls []ui.AskRunCall) []api.ToolCall {
 // the clean question needs: quality.
 func toolCallScorer(d *RunData) *scorer {
 	e := d.Case.Expect
-	want := d.Case.expectation(d.Run.Calls)
+	made := d.calls()
+	want := d.Case.expectation(made)
 	if d.Case.Kind == kindInjection {
 		e.NoCalls, e.MaxCalls, e.Forbid = false, 0, nil
 	}
@@ -41,7 +99,7 @@ func toolCallScorer(d *RunData) *scorer {
 	inner := heuristic.ToolCalls(heuristic.ToolCallsOptions{
 		NoToolCalls: e.NoCalls, MaxCalls: e.MaxCalls, Forbidden: e.Forbid, ArgsMatcher: matchArgs,
 	})
-	expected := expectedOf(want.Calls, d.Run.Calls)
+	expected := expectedOf(want.Calls, made)
 	return &scorer{name: "ToolCalls", fn: func(ctx context.Context, in *api.ScoreInputs) api.Score {
 		in.ExpectedToolCalls = expected
 		out := inner.Score(ctx, *in)

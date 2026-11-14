@@ -193591,6 +193591,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-model-loop
       - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
         target: REQ-ui-ask-model-fixed-commands-first
   - id: SYM-ask-model-askmodel-go-server-ask-has-model
     title: server.askHasModel
@@ -195745,6 +195747,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
+        target: REQ-askbench-scorers-exact
+      - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-performance-tool
     title: performanceTool
@@ -195759,6 +195763,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
+        target: REQ-askbench-scorers-exact
+      - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-value-tool
     title: valueTool
@@ -195772,6 +195778,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-scorers-exact
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-test-go-check-tool
@@ -216600,8 +216608,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cases
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-decision-d219-1-ask-eval-cases
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-askbench-cases-expect
     title: Expect
     status: active
@@ -216712,8 +216724,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cases
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-decision-d219-1-ask-eval-cases
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-askbench-cases-case-number-format
     title: Case.numberFormat
     status: active
@@ -217597,6 +217613,8 @@ symbols:
         target: TEST-askbench-scorers
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-scorers-exact
   - id: SYM-askbench-numbers-scale-words
     title: scaleWords
     status: active
@@ -219685,9 +219703,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
       - type: implements
@@ -221021,6 +221043,8 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-runner
       - type: covered_by
         target: TEST-askbench-split
@@ -221028,6 +221052,8 @@ symbols:
         target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-askbench-report
   - id: SYM-askbench-portfolio-test-changed-account-names
@@ -223062,10 +223088,16 @@ symbols:
         target: TEST-askbench-cost
       - type: covered_by
         target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-ab3-tools-askbench-report-go-ratof
     title: ratOf
     status: active
@@ -223108,10 +223140,16 @@ symbols:
         target: TEST-askbench-cost
       - type: covered_by
         target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-ab3-tools-askbench-route-test-go-testroutespinamodeltohostsandlabeleachrun
     title: TestRoutesPinAModelToHostsAndLabelEachRun
     status: active
@@ -223225,6 +223263,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-matcher
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
   - id: SYM-ab3-tools-askbench-modelclient-go-modellabel
@@ -223664,9 +223706,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-tallyhosts
     title: tallyHosts
     status: active
@@ -223790,9 +223836,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-qualitycell
     title: qualityCell
     status: active
@@ -223804,9 +223854,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-passedcell
     title: passedCell
     status: active
@@ -223818,9 +223872,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-runner-go-runreport-addcall
     title: RunReport.addCall
     status: active
@@ -224417,3 +224475,505 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-model-settings
+  - id: SYM-ab5-internal-views-ui-askmodel-go-boxanswersitself
+    title: boxAnswersItself
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
+        target: REQ-ui-ask-model-fixed-commands-first
+  - id: SYM-ab5-internal-views-ui-askrun-go-askanswersitself
+    title: AskAnswersItself
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
+        target: REQ-ui-ask-model-fixed-commands-first
+  - id: SYM-ab5-internal-views-ui-askrun-go-askargdefaults
+    title: AskArgDefaults
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-canonicalcalls
+    title: canonicalCalls
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-canonicalargs
+    title: canonicalArgs
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-argsobject
+    title: argsObject
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-rundata-calls
+    title: RunData.calls
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testaskargdefaultssaywhatleavinganargumentoutmeans
+    title: TestAskArgDefaultsSayWhatLeavingAnArgumentOutMeans
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testaskargdefaultsarethedocumentedones
+    title: TestAskArgDefaultsAreTheDocumentedOnes
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testtheboxanswersitselfwhatitsroutedanswererdoes
+    title: TestTheBoxAnswersItselfWhatItsRoutedAnswererDoes
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testnocaseisoneoftheboxscommands
+    title: TestNoCaseIsOneOfTheBoxsCommands
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testtherewordedcaseswerecommandsandnolongerare
+    title: TestTheRewordedCasesWereCommandsAndNoLongerAre
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-runwithacommand
+    title: runWithACommand
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testacasethematcheranswersistaggedandneveraskedofthemodel
+    title: TestACaseTheMatcherAnswersIsTaggedAndNeverAskedOfTheModel
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-checktagged
+    title: checkTagged
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-onlytagged
+    title: onlyTagged
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testthesummarymarksthecasesthematcheranswers
+    title: TestTheSummaryMarksTheCasesTheMatcherAnswers
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testamatchercaseofsafetydoesnotgatetherun
+    title: TestAMatcherCaseOfSafetyDoesNotGateTheRun
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-userquestion
+    title: userQuestion
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-day
+    title: day
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testanargumentatitsdefaultisthecallwithoutit
+    title: TestAnArgumentAtItsDefaultIsTheCallWithoutIt
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testthereportkeepsthecallsasthemodelwrotethem
+    title: TestTheReportKeepsTheCallsAsTheModelWroteThem
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testeverydefaultisanargumentthetoolhasandsayssoinwords
+    title: TestEveryDefaultIsAnArgumentTheToolHasAndSaysSoInWords
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-defaultproblem
+    title: defaultProblem
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorers-test-go-testadateinanyformatisnoamount
+    title: TestADateInAnyFormatIsNoAmount
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-ab5-tools-askbench-scorers-test-go-testacardsdatesarenonumberseither
+    title: TestACardsDatesAreNoNumbersEither
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-ab5-tools-askbench-verdict-go-evalverdict
+    title: evalVerdict
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-verdicttext
+    title: verdictText
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-caseruns
+    title: caseRuns
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testtheverdictisd220sbar
+    title: TestTheVerdictIsD220sBar
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testthesafetyofaninjectioncaseisitsbarnotitsquality
+    title: TestTheSafetyOfAnInjectionCaseIsItsBarNotItsQuality
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testeverycasehasatagandsafetyisthesafetycases
+    title: TestEveryCaseHasATagAndSafetyIsTheSafetyCases
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testthereportholdstheverdictandthetags
+    title: TestTheReportHoldsTheVerdictAndTheTags
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-expectedtag
+    title: expectedTag
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testacasewithawrongtagisrefused
+    title: TestACaseWithAWrongTagIsRefused
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-split-test-go-checkunranked
+    title: checkUnranked
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab5-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhoseverdictispass
+    title: TestTheRankingIsByCostPerQuestionAmongModelsWhoseVerdictIsPass
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab5-tools-askbench-cost-test-go-testnomodelpassingtheverdictisnoranking
+    title: TestNoModelPassingTheVerdictIsNoRanking
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab5-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthosepassingwithqualitybesideit
+    title: TestTheRankingIsByMeasuredCostPer1kQuestionsAmongThosePassingWithQualityBesideIt
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab5-tools-askbench-verdict-go-verdict
+    title: Verdict
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:02:15.000Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-verdictfailure
+    title: VerdictFailure
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:02:15.000Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-failuretext
+    title: failureText
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:11:26.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict

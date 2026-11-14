@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8372facfd9b2
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-scorers-test-go-testadateinanyformatisnoamount
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T18:32:50.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fda2b131dcf6
+  - type: implements
+    from: SYM-ab5-tools-askbench-verdict-go-verdictfailure
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T18:52:43.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c5ae88a9f5e
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-verdict-go-verdictfailure
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:52:44.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019430008350

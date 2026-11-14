@@ -35,10 +35,18 @@ func numberPattern() *regexp.Regexp {
 // isoDatePattern matches a whole ISO date.
 func isoDatePattern() *regexp.Regexp { return regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`) }
 
-// dateTexts are the dates a text can hold, which are not amounts: 2026-10-28
-// and 28.10.2026.
+// dateTexts are the dates a text can hold, which are not amounts. The cards print
+// ISO dates (2026-10-28, also as the day of a time stamp), and a model writes them
+// back in the owner's way: 2026-10-28, with a hyphen of any kind, 28.10.2026,
+// 28/10/2026, and "28 10 2026" with spaces of any kind, a no-break one and a narrow
+// no-break one among them, since the owner's number format groups with one. A date
+// is a year of 19xx or 20xx, a month and a day of one or two digits, in either
+// order of year first or last, and neither end of it touches another digit, so the
+// tail of a longer number is not read as a date.
 func dateTexts() *regexp.Regexp {
-	return regexp.MustCompile(`\d{4}-\d{2}-\d{2}|\d{1,2}[./]\d{1,2}[./]\d{4}`)
+	const sep = `[-\x{2010}-\x{2013}./ \x{00a0}\x{202f}]`
+	const year = `(?:19|20)\d{2}`
+	return regexp.MustCompile(`\b` + year + sep + `\d{1,2}` + sep + `\d{1,2}\b|\b\d{1,2}` + sep + `\d{1,2}` + sep + year + `\b`)
 }
 
 // The powers of ten a scale word gives.

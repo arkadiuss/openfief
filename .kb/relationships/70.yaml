@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3948345fe25
+  - type: implements
+    from: SYM-ask-model-asktools-go-value-tool
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:34:30.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed6e1e69ea8c

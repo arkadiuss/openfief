@@ -64,7 +64,7 @@ func TestTheHostsThatServedTheCallsAreListedWithTheirCounts(t *testing.T) {
 		t.Errorf("the run's providers = %v, want Nextbit twice", run.Providers)
 	}
 	summary := got.summary(t)
-	for _, want := range []string{"measured cost", "Served by: Nextbit ×10.", "| 1 | test/model | 2.00000 | measured |"} {
+	for _, want := range []string{"measured cost", "Served by: Nextbit ×10.", "| 1 | test/model | pass | 2.00000 | measured |"} {
 		if !strings.Contains(summary, want) {
 			t.Errorf("summary.md lacks %q", want)
 		}
@@ -81,7 +81,7 @@ func TestACostFromTheTokenPricesIsSaidSoWhenTheReplyHasNone(t *testing.T) {
 			m.CostSource, m.MeasuredCalls, m.EstimatedCalls, m.Cost, m.Providers)
 	}
 	summary := got.summary(t)
-	for _, want := range []string{"estimated from the token prices: the replies held no cost", "| 1 | test/model | 2.34000 | estimated |"} {
+	for _, want := range []string{"estimated from the token prices: the replies held no cost", "| 1 | test/model | pass | 2.34000 | estimated |"} {
 		if !strings.Contains(summary, want) {
 			t.Errorf("summary.md lacks %q", want)
 		}
@@ -124,26 +124,26 @@ func TestTheBudgetCountsTheMeasuredCost(t *testing.T) {
 	}
 }
 
-func TestTheRankingIsByMeasuredCostPer1kQuestionsAmongTheSafeWithQualityBesideIt(t *testing.T) {
+func TestTheRankingIsByMeasuredCostPer1kQuestionsAmongThosePassingWithQualityBesideIt(t *testing.T) {
 	t.Parallel()
 	models := []ModelReport{
-		{Model: "dear and good", ConfigHash: "h1", CostPerQuestion: "0.00100000", CostSource: "measured", SafetyPassed: true, QualityCases: 28, QualityCasesPassed: 27},
-		{Model: "cheapest, unsafe", ConfigHash: "h2", CostPerQuestion: "0.00001000", CostSource: "measured", SafetyPassed: false, QualityCases: 28, QualityCasesPassed: 28},
-		{Model: "cheap and weak", ConfigHash: "h3", CostPerQuestion: "0.00020000", CostSource: "mixed", SafetyPassed: true, QualityCases: 28, QualityCasesPassed: 9},
+		{Model: "dear and good", ConfigHash: "h1", CostPerQuestion: "0.00100000", CostSource: "measured", SafetyPassed: true, Verdict: Verdict{Pass: true}, QualityCases: 28, QualityCasesPassed: 27},
+		{Model: "cheapest, unsafe", ConfigHash: "h2", CostPerQuestion: "0.00001000", CostSource: "measured", SafetyPassed: false, Verdict: Verdict{Failing: []VerdictFailure{{Case: "R1", Tag: tagSafety, Passed: 0, Need: 5, Runs: 5}}}, QualityCases: 28, QualityCasesPassed: 28},
+		{Model: "cheap and weak", ConfigHash: "h3", CostPerQuestion: "0.00020000", CostSource: "mixed", SafetyPassed: true, Verdict: Verdict{Pass: true}, QualityCases: 28, QualityCasesPassed: 9},
 	}
 	report := &Report{Models: models, Ranking: ranking(models)}
 	want := []RankReport{
-		{Model: "cheap and weak", CostPerQuestion: "0.00020000", CostPer1kQuestions: "0.20000", CostSource: "mixed", QualityCasesPassed: 9, QualityCases: 28, ConfigHash: "h3"},
-		{Model: "dear and good", CostPerQuestion: "0.00100000", CostPer1kQuestions: "1.00000", CostSource: "measured", QualityCasesPassed: 27, QualityCases: 28, ConfigHash: "h1"},
+		{Verdict: "pass", Model: "cheap and weak", CostPerQuestion: "0.00020000", CostPer1kQuestions: "0.20000", CostSource: "mixed", QualityCasesPassed: 9, QualityCases: 28, ConfigHash: "h3"},
+		{Verdict: "pass", Model: "dear and good", CostPerQuestion: "0.00100000", CostPer1kQuestions: "1.00000", CostSource: "measured", QualityCasesPassed: 27, QualityCases: 28, ConfigHash: "h1"},
 	}
 	if diff := cmp.Diff(want, report.Ranking); diff != "" {
 		t.Errorf("ranking (-want +got):\n%s", diff)
 	}
 	summary := report.Summary()
 	for _, s := range []string{
-		"| Rank | Model | USD per 1k questions | Cost source | Quality pass^5 | Configuration |",
-		"| 1 | cheap and weak | 0.20000 | mixed | 9/28 | `h3` |",
-		"| 2 | dear and good | 1.00000 | measured | 27/28 | `h1` |",
+		"| Rank | Model | Verdict | USD per 1k questions | Cost source | Quality pass^5 | Configuration |",
+		"| 1 | cheap and weak | pass | 0.20000 | mixed | 9/28 | `h3` |",
+		"| 2 | dear and good | pass | 1.00000 | measured | 27/28 | `h1` |",
 	} {
 		if !strings.Contains(summary, s) {
 			t.Errorf("the summary lacks %q:\n%s", s, summary)
