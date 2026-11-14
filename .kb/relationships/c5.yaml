@@ -979,3 +979,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17333e0d5acd
+  - type: implements
+    from: SYM-tools-layout-light-goeval
+    to: REQ-tooling-archtest-bench
+    created_at: 2026-11-14T08:31:29.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c7371101774
+  - type: covered_by
+    from: SYM-tools-layout-light-goeval
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-14T08:31:29.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-310b1943206d
+  - type: implements
+    from: SYM-askbench-scorers-run-data-answer
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:55:09.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a4037b23e1
+  - type: implements
+    from: SYM-askbench-scorers-run-data-answer
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:55:09.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afff13f69d7e
+  - type: covered_by
+    from: SYM-askbench-scorers-run-data-answer
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:55:09.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-132fc318609a

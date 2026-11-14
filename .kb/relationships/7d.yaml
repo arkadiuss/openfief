@@ -1196,3 +1196,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c2d735f8062
+  - type: implements
+    from: SYM-askbench-report-bench-config
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:50:38.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cac443dcbaf4
+  - type: implements
+    from: SYM-askbench-report-bench-config
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:50:38.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d7cf0e5ab76
+  - type: covered_by
+    from: SYM-askbench-report-bench-config
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:50:38.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2302d165a7b3
+  - type: implements
+    from: SYM-askbench-runner-bench-work
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs
+    created_at: 2026-11-14T08:52:06.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c0d0472690
+  - type: implements
+    from: SYM-askbench-runner-bench-work
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:52:06.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a7a81008f6
+  - type: covered_by
+    from: SYM-askbench-runner-bench-work
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:06.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3979a5b5e68b

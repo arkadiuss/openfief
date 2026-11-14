@@ -1049,3 +1049,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5b36035ea1e
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-a19-asks-about-the-month-the-seed-drops
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:33:13.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb055d79fd9
+  - type: implements
+    from: SYM-askbench-modelclient-meter-allow
+    to: REQ-askbench-requests-like-the-plugin
+    created_at: 2026-11-14T08:37:05.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdc09f843a13
+  - type: covered_by
+    from: SYM-askbench-modelclient-meter-allow
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:37:05.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d83851784f61
+  - type: implements
+    from: SYM-askbench-readservice-read-service-get-instrument
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:46:16.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09819895fc30
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-get-instrument
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:46:16.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e343ecc9aa4

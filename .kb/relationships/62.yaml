@@ -1406,3 +1406,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e89d1e1dc58a
+  - type: implements
+    from: SYM-askbench-portfolio-new-books
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:42:08.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e35e661bb519
+  - type: covered_by
+    from: SYM-askbench-portfolio-new-books
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:42:08.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b2d75d4d8a7
+  - type: implements
+    from: SYM-askbench-scorers-any-stem
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:25.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a6f3ddbeea5
+  - type: implements
+    from: SYM-askbench-scorers-any-stem
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:25.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d734b6b1b2d2
+  - type: covered_by
+    from: SYM-askbench-scorers-any-stem
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:25.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba12fe5e28f

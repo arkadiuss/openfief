@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4b27661db1f
+  - type: executable_for
+    from: SYM-plugins-fakeprovider-test-new-fake
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T08:31:07.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abd68b65041a

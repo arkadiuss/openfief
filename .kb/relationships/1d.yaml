@@ -1287,3 +1287,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2075354113d
+  - type: implements
+    from: SYM-askbench-main-parse-args
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:36:08.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0382d6aceac9
+  - type: covered_by
+    from: SYM-askbench-main-parse-args
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:36:08.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0761c1e6cec
+  - type: implements
+    from: SYM-askbench-numbers-separator-readings
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:39:28.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac5236609000
+  - type: covered_by
+    from: SYM-askbench-numbers-separator-readings
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:39:28.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c611d25af58

@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-363fbc916628
+  - type: implements
+    from: SYM-askbench-toolcalls-date-between
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T09:01:25.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70ffd867a2ae
+  - type: covered_by
+    from: SYM-askbench-toolcalls-date-between
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T09:01:25.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ca810c492fe

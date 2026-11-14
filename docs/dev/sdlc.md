@@ -34,6 +34,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 
 - CI runs on GitHub Actions **(P)**: the same checks as the hook, in full, end-to-end tests on k3s plus kind (D-12), and multi-arch images with an SBOM, signed with cosign (D-17).
 - CI builds, signs and publishes only the images whose binary's dependency closure, Dockerfile or shared build inputs changed; an unchanged image keeps the digest signed for an earlier commit, tagged for the new one once its signature verifies **(P)**, so the demo always deploys a signed digest. A pull request of docs or requirements alone skips the end-to-end and PostgreSQL jobs. Every push to `main` runs the whole suite, and a release builds every image.
+- The Ask box bench (D-217) runs outside `task check` and CI's pull-request jobs: by hand and every Monday on `main`, within a fixed budget, with the secret `OPENROUTER_API_KEY` ([pipeline.md](pipeline.md#the-ask-box-bench)).
 - Demo and test environment: a Hetzner machine running k3s, deployed by the pipeline from `main` and from beta releases. It holds synthetic data only: never real broker credentials or portfolio data (GR-12).
 - Deploy credentials live in a protected GitHub Environment, never in the repository **(P)**.
 - Creating, reaching, deploying to and destroying the demo machine: [demo.md](demo.md).

@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f833d11a6ab
+  - type: specified_by
+    from: REQ-decision-d218-1-go-harness-goeval-scorers
+    to: SCEN-askbench-scorers-implement-goeval
+    created_at: 2026-11-14T08:24:50.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbc303b9a3d4
+  - type: implements
+    from: SYM-askbench-scorers-names-top-row
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:07.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-744cc0c025b2
+  - type: implements
+    from: SYM-askbench-scorers-names-top-row
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:07.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df2b08ec7530
+  - type: covered_by
+    from: SYM-askbench-scorers-names-top-row
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:07.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cff2f0efc5b4

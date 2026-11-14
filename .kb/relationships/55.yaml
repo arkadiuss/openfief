@@ -944,3 +944,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6625df2c1d7
+  - type: implements
+    from: SYM-askbench-toolcalls-pick-alternative
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T09:00:37.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255fe6975bc5
+  - type: covered_by
+    from: SYM-askbench-toolcalls-pick-alternative
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T09:00:37.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1490a28f513
+  - type: implements
+    from: SYM-askbench-toolcalls-contains-any
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T09:01:20.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3b2cf3501b9
+  - type: covered_by
+    from: SYM-askbench-toolcalls-contains-any
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T09:01:20.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c78cb93831b1

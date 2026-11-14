@@ -1049,3 +1049,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3aae1fe472e
+  - type: implements
+    from: SYM-askbench-cases-clock
+    to: REQ-decision-d219-1-ask-eval-cases
+    created_at: 2026-11-14T08:32:46.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01a744661427
+  - type: covered_by
+    from: SYM-askbench-cases-clock
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:32:46.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55f0f81cce0a
+  - type: implements
+    from: SYM-askbench-scorers-result
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:55:21.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-001d55c8ec15
+  - type: implements
+    from: SYM-askbench-scorers-result
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:55:21.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fdbcc19bf68
+  - type: covered_by
+    from: SYM-askbench-scorers-result
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:55:21.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b71d36b118e

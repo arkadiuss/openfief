@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8a9d2ab1c61
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-too-many-tool-calls-fail-the-case-but-the-loop-holds-d208s-limits
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:36.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b322db26a30

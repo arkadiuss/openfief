@@ -1140,3 +1140,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3d872af40a3
+  - type: implements
+    from: SYM-askbench-scorers-error-class-stems
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:13.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e78d1076f10c
+  - type: implements
+    from: SYM-askbench-scorers-error-class-stems
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:13.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a75ac224a60a
+  - type: covered_by
+    from: SYM-askbench-scorers-error-class-stems
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:13.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dd4c7590b66

@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd32650ace8a
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-passing-safety-cases-exit-zero-and-answer-cases-are-only-reported
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:02.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d87e4a2cb74
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-the-judge-is-off-by-default-and-costs-no-call-then
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:46.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1edce1291bea

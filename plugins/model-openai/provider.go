@@ -11,6 +11,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 )
@@ -41,7 +42,7 @@ type provider struct {
 	modelsv1connect.UnimplementedModelProviderServiceHandler
 
 	cfg  config
-	chat *chatClient
+	chat *openaichat.Client
 }
 
 var _ modelsv1connect.ModelProviderServiceHandler = (*provider)(nil)
@@ -71,9 +72,9 @@ func (p *provider) Generate(ctx context.Context, req *connect.Request[modelsv1.G
 	}
 	ctx, cancel := context.WithTimeout(ctx, p.cfg.timeout)
 	defer cancel()
-	reply, err := p.chat.complete(ctx, wire)
+	reply, err := p.chat.Complete(ctx, wire)
 	switch {
-	case errors.Is(err, errRejected), errors.Is(err, errBadReply):
+	case errors.Is(err, openaichat.ErrRejected), errors.Is(err, openaichat.ErrBadReply):
 		return nil, status(connect.CodeInvalidArgument, err)
 	case err != nil:
 		return nil, status(connect.CodeUnavailable, err)
@@ -83,7 +84,7 @@ func (p *provider) Generate(ctx context.Context, req *connect.Request[modelsv1.G
 
 // wireRequest checks req against the entry it names and the contract's
 // rules, and returns the chat request. Its errors never quote the request.
-func (p *provider) wireRequest(req *modelsv1.GenerateRequest) (*chatRequest, error) {
+func (p *provider) wireRequest(req *modelsv1.GenerateRequest) (*openaichat.Request, error) {
 	entry, ok := p.cfg.entry(req.GetModel())
 	if !ok {
 		return nil, fmt.Errorf("%w: the model is not one of the plugin's entries", errInvalidRequest)
@@ -91,7 +92,7 @@ func (p *provider) wireRequest(req *modelsv1.GenerateRequest) (*chatRequest, err
 	if err := checkAgainstEntry(req, entry); err != nil {
 		return nil, err
 	}
-	out := &chatRequest{Model: entry.GetId(), MaxTokens: req.GetMaxOutputTokens()}
+	out := &openaichat.Request{Model: entry.GetId(), MaxTokens: req.GetMaxOutputTokens()}
 	if out.MaxTokens == 0 {
 		out.MaxTokens = entry.GetMaxOutputTokens()
 	}
@@ -103,7 +104,7 @@ func (p *provider) wireRequest(req *modelsv1.GenerateRequest) (*chatRequest, err
 		out.Messages = append(out.Messages, wm)
 	}
 	for _, t := range req.GetTools() {
-		tool := chatTool{Name: t.GetName(), Description: t.GetDescription()}
+		tool := openaichat.Tool{Name: t.GetName(), Description: t.GetDescription()}
 		if s := t.GetParametersSchemaJson(); s != "" {
 			tool.Parameters = []byte(s)
 		}
@@ -155,7 +156,7 @@ func checkCapabilities(req *modelsv1.GenerateRequest, entry *modelsv1.ModelEntry
 }
 
 // wireMessage translates one message.
-func wireMessage(m *modelsv1.Message) (chatMessage, error) {
+func wireMessage(m *modelsv1.Message) (openaichat.Message, error) {
 	roles := map[modelsv1.MessageRole]string{
 		modelsv1.MessageRole_MESSAGE_ROLE_SYSTEM:    "system",
 		modelsv1.MessageRole_MESSAGE_ROLE_USER:      "user",
@@ -164,17 +165,17 @@ func wireMessage(m *modelsv1.Message) (chatMessage, error) {
 	}
 	role, ok := roles[m.GetRole()]
 	if !ok {
-		return chatMessage{}, fmt.Errorf("%w: a message of an unknown role", errInvalidRequest)
+		return openaichat.Message{}, fmt.Errorf("%w: a message of an unknown role", errInvalidRequest)
 	}
-	out := chatMessage{Role: role, Content: m.GetContent(), ToolCallID: m.GetToolCallId()}
+	out := openaichat.Message{Role: role, Content: m.GetContent(), ToolCallID: m.GetToolCallId()}
 	for _, tc := range m.GetToolCalls() {
-		out.ToolCalls = append(out.ToolCalls, chatToolCall{ID: tc.GetId(), Name: tc.GetName(), Arguments: tc.GetArgumentsJson()})
+		out.ToolCalls = append(out.ToolCalls, openaichat.ToolCall{ID: tc.GetId(), Name: tc.GetName(), Arguments: tc.GetArgumentsJson()})
 	}
 	return out, nil
 }
 
 // responseFrom translates a reply.
-func responseFrom(reply *chatReply) *modelsv1.GenerateResponse {
+func responseFrom(reply *openaichat.Reply) *modelsv1.GenerateResponse {
 	out := &modelsv1.GenerateResponse{
 		Content: reply.Content,
 		Usage:   &modelsv1.Usage{InputTokens: reply.InputTokens, OutputTokens: reply.OutputTokens},

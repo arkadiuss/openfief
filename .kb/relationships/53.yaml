@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b1f569d4df5
+  - type: executable_for
+    from: SYM-askbench-scorers-test-test-every-box-command-has-words-to-offer-it-by
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:51.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af2c1b45c545

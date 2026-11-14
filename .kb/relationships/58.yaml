@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f58c5dd01b80
+  - type: implements
+    from: SYM-askbench-portfolio-price-table-of
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:42:54.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2213e59299e
+  - type: covered_by
+    from: SYM-askbench-portfolio-price-table-of
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:42:54.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db6669acbeb

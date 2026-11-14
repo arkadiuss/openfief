@@ -44,6 +44,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
 )
 
@@ -86,7 +87,7 @@ func run(ctx context.Context, log *slog.Logger) error {
 	// The per-call timeout is the context's, so a slow model is cut off
 	// where the config says; the client's own bounds only the headers.
 	log.Info("model-openai serving", "models", len(cfg.models), "extra_ca", len(ep.CABundle) > 0)
-	svc := &provider{cfg: cfg, chat: &chatClient{hc: hc, baseURL: ep.BaseURL, key: keyFromMount(keyMount)}}
+	svc := &provider{cfg: cfg, chat: &openaichat.Client{HTTP: hc, BaseURL: ep.BaseURL, Key: keyFromMount(keyMount)}}
 	if err := openfief.ServeModelProvider(ctx, svc); err != nil {
 		return fmt.Errorf("model-openai: %w", err)
 	}

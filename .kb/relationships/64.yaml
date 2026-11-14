@@ -1168,3 +1168,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-685b48662318
+  - type: executable_for
+    from: SYM-askbench-portfolio-test-test-variant-plants-only-the-payloads
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:44:29.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d23b88fcb089

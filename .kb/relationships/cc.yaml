@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21a611e57ea0
+  - type: implements
+    from: SYM-tools-layout-is-bench
+    to: REQ-tooling-archtest-bench
+    created_at: 2026-11-14T08:31:23.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17722e370cd3
+  - type: covered_by
+    from: SYM-tools-layout-is-bench
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-14T08:31:23.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fdd8a213126

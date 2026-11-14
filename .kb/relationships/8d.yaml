@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53fef070866e
+  - type: specified_by
+    from: REQ-decision-d219-1-ask-eval-cases
+    to: SCEN-askbench-ask-cases
+    created_at: 2026-11-14T08:24:52.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb2bb55aba00
+  - type: implements
+    from: SYM-askbench-report-config-report
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:49:04.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80f865ff78bb
+  - type: implements
+    from: SYM-askbench-report-config-report
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:49:04.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e2c271f17d8
+  - type: covered_by
+    from: SYM-askbench-report-config-report
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:49:04.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2a6be83f9c5

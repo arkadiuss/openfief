@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f952ada145b1
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-every-check-anamed-case-lists-exists
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:33:23.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dacb69694c5e

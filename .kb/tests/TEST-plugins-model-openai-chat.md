@@ -1,11 +1,12 @@
 ---
 title: The chat client speaks the OpenAI-compatible protocol
 status: active
-sourceFile: plugins/model-openai/chat_test.go
+sourceFile: plugins/model-openai/openaichat/chat_test.go
 verification_scope: integration
 origin:
   kind: agent
-  recorded_at: '2026-11-13T11:28:02.715Z'
+  ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+  recorded_at: '2026-11-14T08:24:04.529Z'
 id: TEST-plugins-model-openai-chat
 type: test
 ---

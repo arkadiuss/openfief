@@ -951,3 +951,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-542ced8d2c60
+  - type: implements
+    from: SYM-askbench-main-parse-price
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:36:25.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b95ce69fe01
+  - type: covered_by
+    from: SYM-askbench-main-parse-price
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:36:25.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab823bb76e59
+  - type: implements
+    from: SYM-askbench-modelclient-new-meter
+    to: REQ-askbench-requests-like-the-plugin
+    created_at: 2026-11-14T08:36:59.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-905e86efde04
+  - type: covered_by
+    from: SYM-askbench-modelclient-new-meter
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:36:59.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eba26cbeb17
+  - type: implements
+    from: SYM-askbench-portfolio-price-point
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:41:57.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffa34163cee
+  - type: covered_by
+    from: SYM-askbench-portfolio-price-point
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:41:57.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f304bd05e87b
+  - type: implements
+    from: SYM-askbench-seed-instruments-of
+    to: REQ-decision-d219-2-injections-in-eval-only-seed
+    created_at: 2026-11-14T08:59:59.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19d2caefba02
+  - type: covered_by
+    from: SYM-askbench-seed-instruments-of
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:59:59.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11563b405784

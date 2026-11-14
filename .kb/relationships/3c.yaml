@@ -937,3 +937,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4805d5a0e03a
+  - type: implements
+    from: SYM-internal-askrun-asker-config
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:29:22.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e8575e9183
+  - type: covered_by
+    from: SYM-internal-askrun-asker-config
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:29:22.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0d7be57bfc2
+  - type: implements
+    from: SYM-internal-askrun-ask-run-row
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:30:12.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26abeba62505
+  - type: covered_by
+    from: SYM-internal-askrun-ask-run-row
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:30:12.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a403f8ff4143
+  - type: implements
+    from: SYM-askbench-report-failure-counts
+    to: REQ-askbench-report
+    created_at: 2026-11-14T08:50:26.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba70a067bd03
+  - type: implements
+    from: SYM-askbench-report-failure-counts
+    to: REQ-decision-d217-1-model-serves-after-eval
+    created_at: 2026-11-14T08:50:26.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35388b9dd0db
+  - type: covered_by
+    from: SYM-askbench-report-failure-counts
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:50:26.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-906b153b010d

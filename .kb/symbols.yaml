@@ -184982,9 +184982,9 @@ symbols:
       - type: executable_for
         target: TEST-operator-model-provider-manifest
   - id: SYM-models-plugins-model-openai-chat-chat-client
-    title: chatClient
+    title: Client
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -184996,9 +184996,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-message
-    title: chatMessage
+    title: Message
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185010,9 +185010,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-tool-call
-    title: chatToolCall
+    title: ToolCall
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185024,9 +185024,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-tool
-    title: chatTool
+    title: Tool
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185038,9 +185038,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-request
-    title: chatRequest
+    title: Request
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185052,9 +185052,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-reply
-    title: chatReply
+    title: Reply
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185068,7 +185068,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-object
     title: object
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: type-shape
     granularity_reason: module-level-behavior
     origin:
@@ -185082,7 +185082,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-object-get
     title: object.get
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185093,9 +185093,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-request-body
-    title: chatRequest.body
+    title: Request.body
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185106,9 +185106,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-message-body
-    title: chatMessage.body
+    title: Message.body
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185119,9 +185119,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-tool-body
-    title: chatTool.body
+    title: Tool.body
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185132,9 +185132,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-client-complete
-    title: chatClient.complete
+    title: Client.Complete
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185145,9 +185145,9 @@ symbols:
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-chat-client-post
-    title: chatClient.post
+    title: Client.post
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185160,7 +185160,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-parse-reply
     title: parseReply
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185173,7 +185173,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-status-error
     title: statusError
     status: active
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -185186,7 +185186,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-fake-provider
     title: fakeProvider
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     granularity_reason: module-level-behavior
     origin:
       kind: agent
@@ -185197,7 +185197,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-fake-provider-serve-http
     title: fakeProvider.ServeHTTP
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:46:54.935Z
@@ -185207,7 +185207,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-new-fake
     title: newFake
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:00.288Z
@@ -185217,7 +185217,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-sends-the-chat-protocol
     title: TestCompleteSendsTheChatProtocol
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:05.534Z
@@ -185227,7 +185227,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-reads-tool-calls
     title: TestCompleteReadsToolCalls
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:11.075Z
@@ -185237,7 +185237,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-sends-tool-calls-and-results
     title: TestCompleteSendsToolCallsAndResults
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:16.485Z
@@ -185247,7 +185247,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-without-a-key-sends-no-authorization
     title: TestCompleteWithoutAKeySendsNoAuthorization
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:21.886Z
@@ -185257,7 +185257,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-errors
     title: TestCompleteErrors
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:27.305Z
@@ -185267,7 +185267,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-unreachable-provider-is-unavailable
     title: TestCompleteUnreachableProviderIsUnavailable
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:32.555Z
@@ -185277,7 +185277,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-complete-key-error-is-unavailable
     title: TestCompleteKeyErrorIsUnavailable
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:37.979Z
@@ -185287,7 +185287,7 @@ symbols:
   - id: SYM-models-plugins-model-openai-chat-test-test-key-from-mount
     title: TestKeyFromMount
     status: active
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/key_test.go
     origin:
       kind: agent
       recorded_at: 2026-11-13T12:47:43.229Z
@@ -195944,13 +195944,13 @@ symbols:
       - type: implements
         target: REQ-models-ask-box-model-through-router
   - id: SYM-ask-limits-on-openrouter
-    title: chatClient.onOpenRouter
+    title: Client.onOpenRouter
     status: active
     origin:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:01:55.457Z
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     relationships:
       - type: covered_by
@@ -195958,13 +195958,13 @@ symbols:
       - type: implements
         target: REQ-models-openrouter-require-parameters
   - id: SYM-ask-limits-request-body
-    title: chatClient.requestBody
+    title: Client.RequestBody
     status: active
     origin:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:02:00.486Z
-    sourceFile: plugins/model-openai/chat.go
+    sourceFile: plugins/model-openai/openaichat/chat.go
     symbol_role: behavioral
     relationships:
       - type: covered_by
@@ -195978,7 +195978,7 @@ symbols:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:02:05.648Z
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     symbol_role: behavioral
     relationships:
       - type: executable_for
@@ -195990,7 +195990,7 @@ symbols:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:02:10.627Z
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     symbol_role: behavioral
     relationships:
       - type: executable_for
@@ -196002,7 +196002,7 @@ symbols:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:02:16.005Z
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     symbol_role: behavioral
     relationships:
       - type: executable_for
@@ -196014,7 +196014,7 @@ symbols:
       kind: agent
       ref: EV1 brief from the author's M2 corrections and D-208, 2026-11-13
       recorded_at: 2026-11-13T20:02:20.558Z
-    sourceFile: plugins/model-openai/chat_test.go
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
     symbol_role: type-shape
     granularity_reason: test-suite
     relationships:
@@ -216200,3 +216200,4766 @@ symbols:
         target: TEST-ingest-app-no-network-in-change
       - type: implements
         target: REQ-identity-audit-no-network-in-change
+  - id: SYM-internal-askmodel-model-answerer-converse
+    title: modelAnswerer.converse
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:28:56.704Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askmodel-model-answerer-loop
+    title: modelAnswerer.loop
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:02.472Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askmodel-ask-trace
+    title: askTrace
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:08.190Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-model
+    title: AskModel
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:13.964Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-asker-config
+    title: AskerConfig
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:19.666Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-asker
+    title: Asker
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:25.293Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-new-asker
+    title: NewAsker
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:30.757Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-model-func
+    title: askModelFunc
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:36.403Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-model-func-available
+    title: askModelFunc.available
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:42.083Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-model-func-permits
+    title: askModelFunc.permits
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:47.685Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-model-func-generate
+    title: askModelFunc.generate
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:53.415Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-run
+    title: AskRun
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:29:59.039Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-run-card
+    title: AskRunCard
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:04.606Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-run-row
+    title: AskRunRow
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:10.061Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-run-call
+    title: AskRunCall
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:15.718Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-asker-ask
+    title: Asker.Ask
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:21.247Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-run-card
+    title: runCard
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:26.911Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-tools
+    title: AskTools
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:32.256Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-system-prompt
+    title: AskSystemPrompt
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:37.607Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-command
+    title: AskCommand
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:43.043Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-internal-askrun-ask-commands
+    title: AskCommands
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:48.526Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-plugins-fakeprovider-test-fake-provider
+    title: fakeProvider
+    status: active
+    sourceFile: plugins/model-openai/fakeprovider_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:53.956Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-plugins-fakeprovider-test-fake-provider-serve-http
+    title: fakeProvider.ServeHTTP
+    status: active
+    sourceFile: plugins/model-openai/fakeprovider_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:30:59.506Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-plugins-fakeprovider-test-new-fake
+    title: newFake
+    status: active
+    sourceFile: plugins/model-openai/fakeprovider_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:04.949Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-provider
+  - id: SYM-tools-imports-bench
+    title: Bench
+    status: active
+    sourceFile: tools/archtest/imports.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:10.034Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-bench
+  - id: SYM-tools-layout-benches
+    title: benches
+    status: active
+    sourceFile: tools/archtest/layout.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:15.649Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-bench
+  - id: SYM-tools-layout-is-bench
+    title: isBench
+    status: active
+    sourceFile: tools/archtest/layout.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:21.129Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-bench
+  - id: SYM-tools-layout-light-goeval
+    title: lightGoeval
+    status: active
+    sourceFile: tools/archtest/layout.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:26.568Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-bench
+  - id: SYM-askbench-cases-case
+    title: Case
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:31.999Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-expect
+    title: Expect
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:37.449Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-expected-call
+    title: ExpectedCall
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:43.019Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-template-vars
+    title: templateVars
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:48.484Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-polish-months
+    title: polishMonths
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:54.196Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-vars-for
+    title: varsFor
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:31:59.605Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-load-cases
+    title: LoadCases
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:04.993Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-parse-cases
+    title: parseCases
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:10.331Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-case-check
+    title: Case.check
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:15.969Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-case-number-format
+    title: Case.numberFormat
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:21.618Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-number-style
+    title: numberStyle
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:27.283Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-default-checks
+    title: defaultChecks
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:32.877Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-case-checks-of
+    title: Case.checksOf
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:38.498Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-clock
+    title: Clock
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:44.163Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cases
+      - type: implements
+        target: REQ-decision-d219-1-ask-eval-cases
+  - id: SYM-askbench-cases-test-load-cases
+    title: loadCases
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:49.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-case-by-id
+    title: caseByID
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:54.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-the-cases-are-d219s-set
+    title: TestTheCasesAreD219sSet
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:32:59.844Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-the-authors-amendments-are-in
+    title: TestTheAuthorsAmendmentsAreIn
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:05.219Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-a19-asks-about-the-month-the-seed-drops
+    title: TestA19AsksAboutTheMonthTheSeedDrops
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:10.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-check-a19-alternatives
+    title: checkA19Alternatives
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:15.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-every-check-anamed-case-lists-exists
+    title: TestEveryCheckANamedCaseListsExists
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:20.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-cases-reject-contradictions
+    title: TestCasesRejectContradictions
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:26.478Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-the-number-format-follows-the-language
+    title: TestTheNumberFormatFollowsTheLanguage
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:31.625Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-the-cases-file-has-no-real-data
+    title: TestTheCasesFileHasNoRealData
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:36.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-fakeserver-test-fake-model
+    title: fakeModel
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:42.354Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-new-fake-model
+    title: newFakeModel
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:47.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-say
+    title: say
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:53.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-fake-model-serve-http
+    title: fakeModel.ServeHTTP
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:33:59.208Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-fake-model-counter-for
+    title: fakeModel.counterFor
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:04.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-conversation
+    title: conversation
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:10.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-conversation-of
+    title: conversationOf
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:16.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-json-text
+    title: jsonText
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:21.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-tool-calls-reply
+    title: toolCallsReply
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:27.647Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-text-reply
+    title: textReply
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:33.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-gross-figure
+    title: grossFigure
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:39.191Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-script
+    title: script
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:44.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-scripts
+    title: scripts
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:50.624Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-fakeserver-test-fake-model-reply
+    title: fakeModel.reply
+    status: active
+    sourceFile: tools/askbench/fakeserver_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:34:56.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-judge-judge-verdict
+    title: JudgeVerdict
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:02.083Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-judge-advice-judge
+    title: adviceJudge
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:07.822Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-judge-advice-judge-scorer
+    title: adviceJudge.scorer
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:13.672Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-judge-advice-judge-score
+    title: adviceJudge.score
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:19.579Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-judge-advice-judge-verdict
+    title: adviceJudge.verdict
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:25.379Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-judge-error-text
+    title: errorText
+    status: active
+    sourceFile: tools/askbench/judge.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:31.017Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-main-main
+    title: main
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:36.811Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-config
+    title: config
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:42.555Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-run
+    title: run
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:48.307Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-failed
+    title: failed
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:54.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-result-text
+    title: resultText
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:35:59.819Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-parse-args
+    title: parseArgs
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:05.520Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-split-list
+    title: splitList
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:11.156Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-models-from
+    title: modelsFrom
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:16.724Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-main-parse-price
+    title: parsePrice
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:22.422Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+  - id: SYM-askbench-modelclient-model
+    title: Model
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:28.098Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-candidate-models
+    title: candidateModels
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:33.872Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-priced
+    title: priced
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:39.724Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-model-call
+    title: ModelCall
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:45.623Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-meter
+    title: meter
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:51.371Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-new-meter
+    title: newMeter
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:36:57.092Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-meter-allow
+    title: meter.allow
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:02.936Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-meter-charge
+    title: meter.charge
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:08.723Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-spent
+    title: spent
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:14.486Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-meter-snapshot
+    title: meter.snapshot
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:20.597Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-cost-of
+    title: costOf
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:26.508Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-model-run
+    title: modelRun
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:32.397Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-model-run-generate
+    title: modelRun.Generate
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:38.464Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-error-class
+    title: errorClass
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:44.728Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-request-of
+    title: requestOf
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:50.774Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-new-chat-client
+    title: newChatClient
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:37:56.621Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-modelclient-routing-probe
+    title: routingProbe
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:02.481Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-requests-like-the-plugin
+  - id: SYM-askbench-numbers-reading
+    title: reading
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:08.569Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-found-number
+    title: foundNumber
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:14.599Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-number-pattern
+    title: numberPattern
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:20.344Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-iso-date-pattern
+    title: isoDatePattern
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:26.335Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-date-texts
+    title: dateTexts
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:32.289Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-scale-words
+    title: scaleWords
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:38.144Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-numbers-in
+    title: numbersIn
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:44.002Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-touches-letter
+    title: touchesLetter
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:50.105Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-is-scale-start
+    title: isScaleStart
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:38:56.338Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-scale-after
+    title: scaleAfter
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:02.373Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-percent-after
+    title: percentAfter
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:08.157Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-exempt-whole
+    title: exemptWhole
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:14.078Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-readings-of
+    title: readingsOf
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:19.886Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-separator-readings
+    title: separatorReadings
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:25.819Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-grounded
+    title: grounded
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:31.595Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-abs-decimal
+    title: absDecimal
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:37.449Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-numbers-card-numbers
+    title: cardNumbers
+    status: active
+    sourceFile: tools/askbench/numbers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:43.236Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+  - id: SYM-askbench-phrases-advice-verdicts
+    title: adviceVerdicts
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:49.223Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-decline-phrases
+    title: declinePhrases
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:39:55.174Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-advice-limit-phrases
+    title: adviceLimitPhrases
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:01.233Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-action-done-phrases
+    title: actionDonePhrases
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:07.289Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-off-topic-phrases
+    title: offTopicPhrases
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:13.279Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-clarify-phrases
+    title: clarifyPhrases
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:19.385Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-command-words
+    title: commandWords
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:25.351Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-cause-words
+    title: causeWords
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:31.667Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-normalize
+    title: normalize
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:37.849Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-has-phrase
+    title: hasPhrase
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:43.960Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-any-phrase
+    title: anyPhrase
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:50.107Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-sentences
+    title: sentences
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:40:56.251Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-advice-in
+    title: adviceIn
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:02.236Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-phrases-poem-like
+    title: poemLike
+    status: active
+    sourceFile: tools/askbench/phrases.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:08.223Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d219-3-phrase-list-decides-advice
+  - id: SYM-askbench-portfolio-holding-value
+    title: holdingValue
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:14.070Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-day-values
+    title: dayValues
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:19.959Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-day-values-string
+    title: dayValues.String
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:25.680Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-day-values-gross
+    title: dayValues.Gross
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:31.584Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-day-values-account-gross
+    title: dayValues.AccountGross
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:37.258Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-portfolio
+    title: Portfolio
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:43.010Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-price-table
+    title: priceTable
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:48.805Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-price-point
+    title: pricePoint
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:41:54.637Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-ledger-books
+    title: ledgerBooks
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:00.486Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-new-books
+    title: newBooks
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:06.217Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-ledger-books-apply
+    title: ledgerBooks.apply
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:11.852Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-add-to
+    title: addTo
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:17.502Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-fx-rate
+    title: fxRate
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:23.231Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-parse-constant
+    title: parseConstant
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:29.033Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-new-portfolio
+    title: NewPortfolio
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:34.663Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-chain
+    title: chain
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:40.514Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-flow-of
+    title: flowOf
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:46.245Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-price-table-of
+    title: priceTableOf
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:52.004Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-price-table-close-on
+    title: priceTable.closeOn
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:42:57.670Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-value-day
+    title: valueDay
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:03.460Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-value-holding
+    title: valueHolding
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:09.126Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-round2
+    title: round2
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:14.775Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-sorted-account-ids
+    title: sortedAccountIDs
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:20.572Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-sorted-keys
+    title: sortedKeys
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:26.448Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-portfolio-on
+    title: Portfolio.On
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:32.250Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-net
+    title: Net
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:37.950Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-liquidation
+    title: Liquidation
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:43.665Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-share2
+    title: share2
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:49.417Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-portfolio-drop-month
+    title: Portfolio.DropMonth
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:43:55.114Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-month-key
+    title: monthKey
+    status: active
+    sourceFile: tools/askbench/portfolio.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:00.764Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-portfolio-test-build-portfolio
+    title: buildPortfolio
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:06.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-test-portfolio-is-valued-on-every-day-and-moves-with-prices
+    title: TestPortfolioIsValuedOnEveryDayAndMovesWithPrices
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:11.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-test-portfolio-is-deterministic
+    title: TestPortfolioIsDeterministic
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:16.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-test-the-seed-drops-in-amonth
+    title: TestTheSeedDropsInAMonth
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:21.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-test-variant-plants-only-the-payloads
+    title: TestVariantPlantsOnlyThePayloads
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:26.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-changed-comments
+    title: changedComments
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:32.024Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-portfolio-test-changed-names
+    title: changedNames
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:37.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-readservice-read-service
+    title: readService
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:42.837Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-client
+    title: readClient
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:48.350Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-new-read-client
+    title: newReadClient
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:53.964Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-in-memory
+    title: inMemory
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:44:59.439Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-in-memory-round-trip
+    title: inMemory.RoundTrip
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:04.902Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-sleeves
+    title: readService.ListSleeves
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:10.310Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-accounts
+    title: readService.ListAccounts
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:15.831Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-valuation-statuses
+    title: readService.ListValuationStatuses
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:21.520Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-holdings
+    title: readService.ListHoldings
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:27.254Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-account-valuations
+    title: readService.ListAccountValuations
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:32.991Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-valuation-totals
+    title: readService.ListValuationTotals
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:38.800Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-get-allocation
+    title: readService.GetAllocation
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:44.580Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-get-performance
+    title: readService.GetPerformance
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:50.440Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-attention-items
+    title: readService.ListAttentionItems
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:45:56.234Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-sync-statuses
+    title: readService.ListSyncStatuses
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:02.138Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-sync-attempts
+    title: readService.ListSyncAttempts
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:07.888Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-get-instrument
+    title: readService.GetInstrument
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:13.521Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-list-instrument-holdings
+    title: readService.ListInstrumentHoldings
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:19.332Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-fail
+    title: fail
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:25.156Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-money
+    title: money
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:30.995Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-amount-of
+    title: amountOf
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:36.736Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-last-day
+    title: readService.lastDay
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:42.264Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-day
+    title: readService.day
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:47.994Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-instrument
+    title: readService.instrument
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:53.711Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-valuation
+    title: readService.valuation
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:46:59.492Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-total
+    title: readService.total
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:05.171Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-days-between
+    title: readService.daysBetween
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:10.924Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-group-sums
+    title: readService.groupSums
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:16.512Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-group-key
+    title: readService.groupKey
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:22.181Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-institution
+    title: readService.institution
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:27.830Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-symbol-isin
+    title: readService.symbolISIN
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:33.374Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-statuses
+    title: readService.statuses
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:38.954Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-read-service-add-listing
+    title: readService.addListing
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:44.502Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-drives-the-boxs-loop
+  - id: SYM-askbench-readservice-test-scripted
+    title: scripted
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:50.019Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-scripted-generate
+    title: scripted.Generate
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:47:55.735Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-card-of
+    title: cardOf
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:01.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-text
+    title: text
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:06.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-test-every-tool-of-the-bench-reads-the-seed
+    title: TestEveryToolOfTheBenchReadsTheSeed
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:12.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-test-the-variants-instrument-name-reaches-the-account-card
+    title: TestTheVariantsInstrumentNameReachesTheAccountCard
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:18.025Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-readservice-test-test-allocations-add-up-to-the-value
+    title: TestAllocationsAddUpToTheValue
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:23.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service
+  - id: SYM-askbench-report-run-report
+    title: RunReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:28.706Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-check-report
+    title: CheckReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:34.172Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-call-report
+    title: CallReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:39.599Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-run-report-fill
+    title: RunReport.fill
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:45.104Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-case-report
+    title: CaseReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:19:41.725Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-failure-count
+    title: FailureCount
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:48:56.180Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-config-report
+    title: ConfigReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:01.987Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-tool-report
+    title: ToolReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:07.690Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-limits-report
+    title: LimitsReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:13.473Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-model-report
+    title: ModelReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:19.318Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-budget-report
+    title: BudgetReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:25.084Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-disagreement
+    title: Disagreement
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:30.690Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-report
+    title: Report
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:36.326Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-bench-report
+    title: Bench.report
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:41.986Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-disagreements
+    title: disagreements
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:47.920Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-phrase-word
+    title: phraseWord
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:53.853Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-judge-word
+    title: judgeWord
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:49:59.820Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-bench-model-report
+    title: Bench.modelReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:05.790Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-decimal-of
+    title: decimalOf
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:17.320Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-failure-counts
+    title: failureCounts
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:23.440Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-failure-reasons
+    title: failureReasons
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:29.627Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-bench-config
+    title: Bench.config
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:35.541Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-host-of
+    title: hostOf
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:41.552Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-report-failed
+    title: Report.Failed
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:47.694Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-report-write-to
+    title: Report.WriteTo
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:53.535Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-report-summary
+    title: Report.Summary
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:50:59.173Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-write-model
+    title: writeModel
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:05.194Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-pass-word
+    title: passWord
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:11.243Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-failure-cell
+    title: failureCell
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:17.161Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-write-judge
+    title: writeJudge
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:23.287Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-report-one-line
+    title: oneLine
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:29.136Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval
+  - id: SYM-askbench-runner-options
+    title: Options
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:35.011Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-task
+    title: task
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:40.778Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench
+    title: Bench
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:46.459Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-new-bench
+    title: NewBench
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:52.344Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench-run
+    title: Bench.Run
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:51:58.147Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench-work
+    title: Bench.work
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:03.891Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench-ask-unless-stopped
+    title: Bench.askUnlessStopped
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:09.702Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-resolve-limits
+    title: resolveLimits
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:15.245Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench-ask
+    title: Bench.ask
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:20.945Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-bench-grade
+    title: Bench.grade
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:26.248Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+  - id: SYM-askbench-runner-test-bench-run
+    title: benchRun
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:31.885Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-read-out
+    title: readOut
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:37.497Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-run-bench
+    title: runBench
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:43.241Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-bench-run-case-of
+    title: benchRun.caseOf
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:48.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-bench-run-summary
+    title: benchRun.summary
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:52:54.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-passing-safety-cases-exit-zero-and-answer-cases-are-only-reported
+    title: TestPassingSafetyCasesExitZeroAndAnswerCasesAreOnlyReported
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:00.158Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-aflaky-case-is-four-of-five-and-does-not-pass
+    title: TestAFlakyCaseIsFourOfFiveAndDoesNotPass
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:05.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-awrong-argument-fails-the-tool-call-check
+    title: TestAWrongArgumentFailsTheToolCallCheck
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:11.293Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-safety-failures-exit-one
+    title: TestSafetyFailuresExitOne
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:16.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-an-injection-that-calls-another-tool-fails-on-the-call
+    title: TestAnInjectionThatCallsAnotherToolFailsOnTheCall
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:22.698Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-failed-check
+    title: failedCheck
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:28.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-too-many-tool-calls-fail-the-case-but-the-loop-holds-d208s-limits
+    title: TestTooManyToolCallsFailTheCaseButTheLoopHoldsD208sLimits
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:34.058Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-amodel-that-never-stops-asking-for-tools-gets-no-answer-and-holds-the-rounds
+    title: TestAModelThatNeverStopsAskingForToolsGetsNoAnswerAndHoldsTheRounds
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:39.985Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-budget-aborts-the-run-cleanly
+    title: TestTheBudgetAbortsTheRunCleanly
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:45.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-check-aborted
+    title: checkAborted
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:51.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-key-goes-only-to-the-provider-and-is-in-no-output
+    title: TestTheKeyGoesOnlyToTheProviderAndIsInNoOutput
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:53:57.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-without-akey-the-bench-says-so-and-makes-no-call
+    title: TestWithoutAKeyTheBenchSaysSoAndMakesNoCall
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:03.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-report-holds-the-costs
+    title: TestTheReportHoldsTheCosts
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:09.120Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-report-holds-the-configuration
+    title: TestTheReportHoldsTheConfiguration
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:14.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-configuration-hash-follows-what-the-results-depend-on
+    title: TestTheConfigurationHashFollowsWhatTheResultsDependOn
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:20.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-routing-member-follows-the-host
+    title: TestTheRoutingMemberFollowsTheHost
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:26.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-bad-flags-are-refused
+    title: TestBadFlagsAreRefused
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:32.188Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-flags-are-read
+    title: TestFlagsAreRead
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:37.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-judge-is-off-by-default-and-costs-no-call-then
+    title: TestTheJudgeIsOffByDefaultAndCostsNoCallThen
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:43.572Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-test-the-judge-is-only-reported-and-its-disagreements-are-listed
+    title: TestTheJudgeIsOnlyReportedAndItsDisagreementsAreListed
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:49.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-runner-test-check-disagreements
+    title: checkDisagreements
+    status: active
+    sourceFile: tools/askbench/runner_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:54:55.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-askbench-scorers-run-data
+    title: RunData
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:01.241Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-run-data-answer
+    title: RunData.answer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:06.982Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-run-data-card-texts
+    title: RunData.cardTexts
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:12.831Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-result
+    title: result
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:18.644Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-score-of
+    title: scoreOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:24.212Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-check-func
+    title: checkFunc
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:29.997Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-scorer
+    title: scorer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:35.781Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-scorer-score
+    title: scorer.Score
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:41.775Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-check-scorer
+    title: checkScorer
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:47.668Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-checks
+    title: checks
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:53.666Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-scorers-for
+    title: scorersFor
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:55:59.565Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-grade
+    title: grade
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:05.198Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-score-inputs
+    title: scoreInputs
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:10.788Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-reason-of
+    title: reasonOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:16.640Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-was-answered
+    title: wasAnswered
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:22.420Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-limits-held
+    title: limitsHeld
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:28.513Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-tools-run
+    title: toolsRun
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:34.517Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-shows-cards
+    title: showsCards
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:40.370Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-numbers-grounded
+    title: numbersGrounded
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:46.263Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-no-digits
+    title: noDigits
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:52.108Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-entities-grounded
+    title: entitiesGrounded
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:56:58.164Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-names-top-row
+    title: namesTopRow
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:04.258Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-error-class-stems
+    title: errorClassStems
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:10.466Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-names-error-class
+    title: namesErrorClass
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:16.358Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-any-stem
+    title: anyStem
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:22.252Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-asks-which-one
+    title: asksWhichOne
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:28.238Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-causes-from-cards
+    title: causesFromCards
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:34.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-gives-no-advice
+    title: givesNoAdvice
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:39.965Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-declines-to-write
+    title: declinesToWrite
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:45.817Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-declines-advice
+    title: declinesAdvice
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:51.940Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-declines-scope
+    title: declinesScope
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:57:57.956Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-offers-commands
+    title: offersCommands
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:03.915Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-echoes-no-prompt
+    title: echoesNoPrompt
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:09.735Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-vocabulary-of
+    title: vocabularyOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:15.505Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-prompt-texts
+    title: promptTexts
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:21.422Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-scorers-test-decimals
+    title: decimals
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:27.046Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-numbers-are-grounded-within-rounding-in-polish-and-english-formats
+    title: TestNumbersAreGroundedWithinRoundingInPolishAndEnglishFormats
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:32.591Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-card-numbers-are-read-in-the-owners-format
+    title: TestCardNumbersAreReadInTheOwnersFormat
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:37.999Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-advice-is-decided-by-the-phrase-list
+    title: TestAdviceIsDecidedByThePhraseList
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:43.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-every-box-command-has-words-to-offer-it-by
+    title: TestEveryBoxCommandHasWordsToOfferItBy
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:49.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-answered
+    title: answered
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:54.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-checks
+    title: TestChecks
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:58:59.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-limits-held
+    title: TestLimitsHeld
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:05.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-match-args
+    title: TestMatchArgs
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:10.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-scorers-test-test-alternatives-are-judged-by-what-the-model-went-for
+    title: TestAlternativesAreJudgedByWhatTheModelWentFor
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:15.480Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-askbench-seed-holding-info
+    title: holdingInfo
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:21.304Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-seed
+    title: Seed
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:27.178Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-bench-today
+    title: benchToday
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:32.895Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-build-seed
+    title: BuildSeed
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:38.649Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-all-transactions
+    title: allTransactions
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:44.628Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-statement
+    title: statement
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:50.593Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-instruments-of
+    title: instrumentsOf
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T08:59:56.355Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-seed-plant
+    title: Seed.plant
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:01.938Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-holds
+    title: holds
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:07.683Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-seed-payloads
+    title: payloads
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:13.555Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-askbench-toolcalls-to-apicalls
+    title: toAPICalls
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:18.872Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-tool-call-scorer
+    title: toolCallScorer
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:24.311Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-expected-of
+    title: expectedOf
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:29.652Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-pick-alternative
+    title: pickAlternative
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:35.003Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-args-match-raw
+    title: argsMatchRaw
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:40.396Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-match-args
+    title: matchArgs
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:45.526Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-match-key
+    title: matchKey
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:50.827Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-has-operator
+    title: hasOperator
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:00:56.064Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-operators
+    title: operators
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:01:01.378Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-match-operator
+    title: matchOperator
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:01:06.640Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-one-of
+    title: oneOf
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:01:11.734Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-contains-any
+    title: containsAny
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:01:17.222Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-toolcalls-date-between
+    title: dateBetween
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:01:22.745Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorers
+      - type: implements
+        target: REQ-decision-d218-1-go-harness-goeval-scorers
+  - id: SYM-askbench-report-case-report-func
+    title: caseReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T09:19:47.321Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-report
+  - id: SYM-askbench-portfolio-test-changed-account-names
+    title: changedAccountNames
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T10:41:42.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-askbench-readservice-test-test-the-variants-account-name-reaches-the-account-card
+    title: TestTheVariantsAccountNameReachesTheAccountCard
+    status: active
+    sourceFile: tools/askbench/readservice_test.go
+    origin:
+      kind: agent
+      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
+      recorded_at: 2026-11-14T10:41:50.304Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-read-service

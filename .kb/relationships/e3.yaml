@@ -1042,3 +1042,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b54698766be
+  - type: executable_for
+    from: SYM-plugins-fakeprovider-test-fake-provider-serve-http
+    to: TEST-plugins-model-openai-provider
+    created_at: 2026-11-14T08:31:02.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc4d455160b5
+  - type: implements
+    from: SYM-askbench-scorers-declines-scope
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:58:00.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c420681199f7
+  - type: implements
+    from: SYM-askbench-scorers-declines-scope
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:58:00.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a58367959c2
+  - type: covered_by
+    from: SYM-askbench-scorers-declines-scope
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:00.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58fd814de4d8

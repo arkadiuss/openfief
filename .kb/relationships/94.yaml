@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7d15cc3b83d
+  - type: implements
+    from: SYM-askbench-cases-template-vars
+    to: REQ-decision-d219-1-ask-eval-cases
+    created_at: 2026-11-14T08:31:51.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fae23024939
+  - type: covered_by
+    from: SYM-askbench-cases-template-vars
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:31:51.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f280c9a61f8

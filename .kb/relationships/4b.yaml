@@ -1112,3 +1112,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45f1b33a8af0
+  - type: implements
+    from: SYM-askbench-scorers-causes-from-cards
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:57:36.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae3bc66290b
+  - type: implements
+    from: SYM-askbench-scorers-causes-from-cards
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:57:36.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-861cea713346
+  - type: covered_by
+    from: SYM-askbench-scorers-causes-from-cards
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:57:36.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59742857690a

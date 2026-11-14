@@ -55,7 +55,7 @@ func ParseList(data string) ([]Entry, error) {
 func Rules() []string {
 	return []string{
 		RuleContextMap, RuleLayering, RulePlugins, RuleSchemas, RuleMoney, RulePureDomain,
-		RulePrivacy, RuleBanned, RuleStableTests, RuleCatalogTests, RuleNoNetwork,
+		RulePrivacy, RuleBanned, RuleStableTests, RuleCatalogTests, RuleNoNetwork, RuleBench,
 	}
 }
 
@@ -64,7 +64,7 @@ func Rules() []string {
 func Check(r *Repo, digests []string) []Violation {
 	out := slices.Concat(
 		ContextMap(r), Layering(r), Plugins(r), Schemas(r), Money(r), PureDomain(r),
-		Privacy(r), Banned(r), StableTests(r), CatalogTests(r, digests), NoNetworkInTransactions(r),
+		Privacy(r), Banned(r), StableTests(r), CatalogTests(r, digests), NoNetworkInTransactions(r), Bench(r),
 	)
 	slices.SortFunc(out, func(a, b Violation) int {
 		return cmp.Or(cmp.Compare(a.Rule, b.Rule), cmp.Compare(a.Key, b.Key))

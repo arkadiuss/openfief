@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb3cc6176247
+  - type: implements
+    from: SYM-askbench-report-case-report-func
+    to: REQ-askbench-report
+    created_at: 2026-11-14T09:19:50.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18af9a59b28c
+  - type: covered_by
+    from: SYM-askbench-report-case-report-func
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T09:19:50.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0274304c783c

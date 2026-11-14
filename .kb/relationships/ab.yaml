@@ -1063,3 +1063,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea695c709dc5
+  - type: specified_by
+    from: REQ-tooling-archtest-bench
+    to: SCEN-tooling-archtest-bench
+    created_at: 2026-11-14T08:25:09.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de9191ae9cbb
+  - type: implements
+    from: SYM-askbench-scorers-offers-commands
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T08:58:06.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e3f3b0df895
+  - type: implements
+    from: SYM-askbench-scorers-offers-commands
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:58:06.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62c0bbf6bc6c
+  - type: covered_by
+    from: SYM-askbench-scorers-offers-commands
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:58:06.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5d57281f3c

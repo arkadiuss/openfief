@@ -1350,3 +1350,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ea6f14512b2
+  - type: implements
+    from: SYM-askbench-runner-resolve-limits
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs
+    created_at: 2026-11-14T08:52:17.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-157099be835e
+  - type: implements
+    from: SYM-askbench-runner-resolve-limits
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:52:18.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c9ff80e7419
+  - type: covered_by
+    from: SYM-askbench-runner-resolve-limits
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:52:18.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-930910b7c124

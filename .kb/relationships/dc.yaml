@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f849798a233
+  - type: executable_for
+    from: SYM-askbench-fakeserver-test-script
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:34:47.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28eceb59dcc6
+  - type: implements
+    from: SYM-askbench-numbers-scale-words
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:38:40.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9add923c6e9c
+  - type: covered_by
+    from: SYM-askbench-numbers-scale-words
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:38:41.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac126757e660

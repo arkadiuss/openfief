@@ -1245,3 +1245,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a81b17e9295
+  - type: implements
+    from: SYM-internal-askrun-asker-ask
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:30:23.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a1ebd768b8
+  - type: covered_by
+    from: SYM-internal-askrun-asker-ask
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:30:23.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20cff71dcdc5
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-amodel-that-never-stops-asking-for-tools-gets-no-answer-and-holds-the-rounds
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:53:42.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ec45e9ae959

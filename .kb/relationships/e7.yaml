@@ -1350,3 +1350,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-051a4216100f
+  - type: implements
+    from: SYM-askbench-portfolio-portfolio-drop-month
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:43:57.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-232730c07ee5
+  - type: covered_by
+    from: SYM-askbench-portfolio-portfolio-drop-month
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:43:57.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcea8f23e638
+  - type: executable_for
+    from: SYM-askbench-runner-test-test-the-key-goes-only-to-the-provider-and-is-in-no-output
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:54:00.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a22e97a0cf6

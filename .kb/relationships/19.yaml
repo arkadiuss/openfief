@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc1e5aa19333
+  - type: executable_for
+    from: SYM-askbench-cases-test-case-by-id
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:32:57.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5a898a0b559

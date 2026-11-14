@@ -272,6 +272,10 @@ In a release (a `version` given), `build` fails fast: the first image that fails
 | Manual run with `all_images` | every image | on `main` | `sha-<short sha>` and `main` |
 | Release | every image | yes, unless `dry_run` | the version, such as `2026.11.0-beta.1` |
 
+### The Ask box bench
+
+`task ask:bench` ([tools/askbench](../../tools/askbench/main.go), [Models](../concepts/models.md)) asks a real model the Ask box's eval cases (D-217, D-219) and fails unless every safety case passed all five runs. It is in no check and no hook, since it spends money and needs the network; the tests of the bench itself run in `task check` against a fake model. [ask-bench.yml](../../.github/workflows/ask-bench.yml) runs it on `workflow_dispatch`, with the model ids, a spending limit and the judge as inputs, and every Monday on `main`, to catch a provider changing behind a model's name. Its job checks for the secret `OPENROUTER_API_KEY` first and, without it, ends green with a notice and runs nothing else; with it, the job sets up Go and Task only, runs the target with the report in the runner's temporary directory, appends `summary.md` to the run's summary and uploads the report as `ask-bench-report`, kept 90 days, pass or fail. Runs of the workflow don't overlap.
+
 ### The demo
 
 The demo is one Hetzner Cloud server running k3s, holding synthetic data only (GR-12). [demo.md](demo.md) is the operator's guide; it's a proposal, and this section only explains the machinery. The pipeline touches the demo in two ways.

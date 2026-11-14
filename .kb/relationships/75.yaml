@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adba0ac4f81e
+  - type: implements
+    from: SYM-askbench-toolcalls-operators
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T09:01:04.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f14fe186f91e
+  - type: covered_by
+    from: SYM-askbench-toolcalls-operators
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T09:01:04.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-266783919a8c
+  - type: implements
+    from: SYM-askbench-toolcalls-match-operator
+    to: REQ-decision-d218-1-go-harness-goeval-scorers
+    created_at: 2026-11-14T09:01:09.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee7fa0505ac8
+  - type: covered_by
+    from: SYM-askbench-toolcalls-match-operator
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T09:01:09.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a74b0671317

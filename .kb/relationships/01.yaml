@@ -1252,3 +1252,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb587ea4428a
+  - type: implements
+    from: SYM-askbench-judge-advice-judge
+    to: REQ-decision-d219-3-phrase-list-decides-advice
+    created_at: 2026-11-14T08:35:10.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b105a8d3c4c0
+  - type: covered_by
+    from: SYM-askbench-judge-advice-judge
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:35:10.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1f846742dd0

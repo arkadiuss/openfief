@@ -1238,3 +1238,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce4de67fdfd9
+  - type: implements
+    from: SYM-askbench-numbers-touches-letter
+    to: REQ-askbench-answers-grounded-in-cards
+    created_at: 2026-11-14T08:38:53.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b9d999d4704
+  - type: covered_by
+    from: SYM-askbench-numbers-touches-letter
+    to: TEST-askbench-scorers
+    created_at: 2026-11-14T08:38:53.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541225d2fc94
+  - type: executable_for
+    from: SYM-askbench-portfolio-test-changed-names
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:44:39.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7259d746c728

@@ -895,3 +895,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8dfa23bf2ac1
+  - type: implements
+    from: SYM-askbench-main-split-list
+    to: REQ-askbench-budget-and-exit-codes
+    created_at: 2026-11-14T08:36:13.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f502b06b2b2b
+  - type: covered_by
+    from: SYM-askbench-main-split-list
+    to: TEST-askbench-runner
+    created_at: 2026-11-14T08:36:13.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-152211dd97aa
+  - type: implements
+    from: SYM-askbench-portfolio-share2
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:43:52.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e6c1d505dd
+  - type: covered_by
+    from: SYM-askbench-portfolio-share2
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:43:52.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3547ce447a28

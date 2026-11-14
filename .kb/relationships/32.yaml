@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a2b6e5c9442
+  - type: implements
+    from: SYM-askbench-cases-vars-for
+    to: REQ-decision-d219-1-ask-eval-cases
+    created_at: 2026-11-14T08:32:02.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbacc9d12aa3
+  - type: covered_by
+    from: SYM-askbench-cases-vars-for
+    to: TEST-askbench-cases
+    created_at: 2026-11-14T08:32:02.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf10bae2a009
+  - type: implements
+    from: SYM-askbench-portfolio-portfolio
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:41:45.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72170fcf3a4b
+  - type: covered_by
+    from: SYM-askbench-portfolio-portfolio
+    to: TEST-askbench-portfolio
+    created_at: 2026-11-14T08:41:45.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e1ca68ac94c

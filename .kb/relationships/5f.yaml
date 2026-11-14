@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2067e492da8f
+  - type: implements
+    from: SYM-askbench-readservice-read-service-institution
+    to: REQ-askbench-drives-the-boxs-loop
+    created_at: 2026-11-14T08:47:30.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a4c54eb43ac
+  - type: covered_by
+    from: SYM-askbench-readservice-read-service-institution
+    to: TEST-askbench-read-service
+    created_at: 2026-11-14T08:47:30.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-843ca5fc8602
