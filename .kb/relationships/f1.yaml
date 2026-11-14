@@ -1056,3 +1056,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9b73f497eb8
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-notice-words
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:21.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53a01ece96d5
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-string
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:30.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-303cb8d55d23
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-string
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:30.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-727fe8eb370e

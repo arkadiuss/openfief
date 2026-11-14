@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca9122e38fed
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-test-get-model-settings-names-the-broken-route-entries
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:39.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb2bd41e817

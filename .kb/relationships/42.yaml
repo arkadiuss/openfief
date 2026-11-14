@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f15521a2f3a5
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-set-models-feature
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:38.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce9c1ec6b083
+  - type: implements
+    from: SYM-ms1-ui-models-server-set-models-feature
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:35:39.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9136db25548e

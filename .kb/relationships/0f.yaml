@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d5eedfc29ec
+  - type: covered_by
+    from: SYM-ms1-connectapi-settings-provider-to
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:26:11.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-627415eb825b
+  - type: implements
+    from: SYM-ms1-connectapi-settings-provider-to
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:26:11.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a38ae247780a

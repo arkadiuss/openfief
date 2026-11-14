@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65f24f313e5d
+  - type: covered_by
+    from: SYM-ms1-ui-models-same-set
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:02.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf91646883d
+  - type: implements
+    from: SYM-ms1-ui-models-same-set
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:36:02.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2469b8f57c93

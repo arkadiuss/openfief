@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1025d93ba3ab
+  - type: covered_by
+    from: SYM-ms1-ui-models-model-row
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:03.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c8fb361278c
+  - type: implements
+    from: SYM-ms1-ui-models-model-row
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:37:03.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59803b3c3ad

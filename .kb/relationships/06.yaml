@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b04002d12eb2
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-page-warns-when-no-model-of-aroute-may-receive-what-the-role-sends
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:40:49.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2cddc704dd7

@@ -923,3 +923,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d958112d538a
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-with-audit
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:08.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e89a52dc3ec8
+  - type: implements
+    from: SYM-ms1-app-settings-settings-with-audit
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:08.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec950713a5da
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-reflect
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:23:29.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e11e578a7a0
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-reflect
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:23:29.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3bc042e25a2

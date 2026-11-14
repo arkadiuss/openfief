@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3b0adb53dd5
+  - type: covered_by
+    from: SYM-ms1-app-settings-on-off
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:33.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d75e11d0bfe
+  - type: implements
+    from: SYM-ms1-app-settings-on-off
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:33.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d014fdbed6cf

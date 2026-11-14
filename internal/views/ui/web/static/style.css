@@ -456,3 +456,25 @@ a.bar:hover .bar-head > :first-child { text-decoration: underline; }
 .facts dt { color: var(--label); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .facts dd { margin: 0; overflow-wrap: anywhere; }
 ul.lots { list-style: none; margin: 0; padding: 0; }
+
+/* Settings, Models: the switch and its toggles, the providers, the tier grid and the routes (D-212, D-205, D-206). */
+.features > li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
+.features > li:last-child { border-bottom: 0; }
+.features > li > div { flex: 1 1 18rem; min-width: 0; }
+.features strong { margin-right: var(--space-2); }
+.provider { margin: var(--space-4) 0; }
+.provider h3 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.tiers { margin: 0 0 var(--space-4); }
+.tiers dt { font-weight: 600; margin-top: var(--space-2); }
+.tiers dd { margin: 0 0 0 var(--space-1); color: var(--muted); }
+.tier-grid th.center, .tier-grid td.center { text-align: center; }
+.tier-grid td.center input { margin: 0; }
+.route { margin: var(--space-4) 0 var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border); }
+.route:first-of-type { border-top: 0; padding-top: 0; }
+.route-list { list-style: none; padding: 0; margin: 0 0 var(--space-3); }
+.route-list > li { padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
+.route-entry { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.route-entry .label { min-width: 5.5rem; color: var(--muted); }
+.route-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }
+.route-actions button { min-width: 44px; }
+.route-add .fields { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }

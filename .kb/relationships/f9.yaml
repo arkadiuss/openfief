@@ -1140,3 +1140,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cb5e920c3e6
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-describe
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:18.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d173b3930b6
+  - type: implements
+    from: SYM-ms1-app-settings-settings-describe
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:18.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2c55d431e84

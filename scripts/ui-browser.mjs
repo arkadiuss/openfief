@@ -60,7 +60,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
+  settings: '/settings', models: '/settings/models', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];

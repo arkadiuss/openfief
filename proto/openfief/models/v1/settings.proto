@@ -24,12 +24,23 @@ syntax = "proto3";
 
 package openfief.models.v1;
 
+import "openfief/models/v1/provider.proto";
+
 // ModelSettingsService reads and changes the owner's agents-and-models
 // settings.
 service ModelSettingsService {
   // GetModelSettings returns the switch, the toggles, the routes and the
   // tiers' allowed models to the owner.
   rpc GetModelSettings(GetModelSettingsRequest) returns (GetModelSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ListModelProviders returns the model-provider plugin instances the core
+  // found, each with where its models run, its retention terms and its
+  // models, for the owner to choose routes and tier lists from (D-205). An
+  // instance that can't be reached now is listed as unavailable, with no
+  // models.
+  rpc ListModelProviders(ListModelProvidersRequest) returns (ListModelProvidersResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
 
@@ -76,11 +87,47 @@ message TierModels {
   repeated string models = 2;
 }
 
+// BrokenEntry is a route entry the router can't use: its provider instance is
+// missing or is no model provider (D-196, the model-route-broken state).
+message BrokenEntry {
+  // "ask" or "maintainer".
+  string role = 1;
+  // The "provider/model" reference of the entry.
+  string model = 2;
+  // "missing" (no plugin has that name) or "not-model-provider".
+  string reason = 3;
+}
+
 message GetModelSettingsResponse {
   bool agents_enabled = 1;
   repeated FeatureToggle features = 2;
   repeated Route routes = 3;
   repeated TierModels tiers = 4;
+  // The entries of every route, whether or not it is in use, that name a
+  // provider instance that is missing or is no model provider. Empty when
+  // the core can't tell yet.
+  repeated BrokenEntry broken = 5;
+}
+
+message ListModelProvidersRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// ModelProvider is one model-provider plugin instance as the owner sees it.
+message ModelProvider {
+  // The instance name, the first part of a "provider/model" reference.
+  string instance = 1;
+  // False when the instance didn't answer: location, retention and models
+  // are then unset.
+  bool available = 2;
+  Location location = 3;
+  Retention retention = 4;
+  repeated ModelEntry models = 5;
+}
+
+message ListModelProvidersResponse {
+  repeated ModelProvider providers = 1;
 }
 
 message SetAgentsEnabledRequest {

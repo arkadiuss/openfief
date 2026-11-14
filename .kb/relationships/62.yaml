@@ -1399,3 +1399,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c7e6066b7af
+  - type: specified_by
+    from: REQ-models-settings-changes-audited
+    to: SCEN-models-settings-changes-audited
+    created_at: 2026-11-14T00:24:16.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e89d1e1dc58a

@@ -241,6 +241,7 @@ func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncC
 	if d.providers != nil {
 		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 		d.providers.set(modelsrpc.NewClient(pluginClient(), providerAddress(discovery.ModelProviderBaseURL), tokens))
+		d.providers.setDirectory(discovery.ModelProviderInstances)
 	}
 	ticker := time.NewTicker(schedulerTick)
 	defer ticker.Stop()

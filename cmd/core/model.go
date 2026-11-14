@@ -62,6 +62,15 @@ func (o *ownerSessions) CheckOwner(ctx context.Context, origin, sessionToken str
 	return err
 }
 
+// OwnerSession is CheckOwner that also returns the session's ID.
+func (o *ownerSessions) OwnerSession(ctx context.Context, origin, sessionToken string) (string, error) {
+	s, err := o.session(ctx, origin, sessionToken)
+	if err != nil {
+		return "", err
+	}
+	return string(s.ID), nil
+}
+
 // Changeable returns those of accounts the owner, by the owner-scoped
 // session token valid on origin, may change, as the authorizer answers
 // (D-163), in their order; it fails as CheckOwner does, and when the

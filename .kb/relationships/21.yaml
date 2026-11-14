@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6abea6f4be20
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-calls-to
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:40:35.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d14cccf0d1f

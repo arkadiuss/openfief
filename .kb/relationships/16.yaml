@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc3d94aa2eb6
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-route
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:42:06.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d822a27a1584

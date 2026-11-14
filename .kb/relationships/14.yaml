@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07ed386b5e2f
+  - type: covered_by
+    from: SYM-ms1-core-modelrouter-settings-audit-record-change
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:26:27.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bec2e60f0fd
+  - type: implements
+    from: SYM-ms1-core-modelrouter-settings-audit-record-change
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:26:27.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbb1625044a
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-entry
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:18.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90bc5091d70
+  - type: implements
+    from: SYM-ms1-ui-models-route-entry
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:37:18.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ed009a3ffa8

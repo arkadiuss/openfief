@@ -1063,3 +1063,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fe3b3164d18
+  - type: covered_by
+    from: SYM-ms1-app-routes-route-problems
+    to: TEST-models-app-routes
+    created_at: 2026-11-14T00:25:41.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdeaf859acf7
+  - type: implements
+    from: SYM-ms1-app-routes-route-problems
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:42.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e030f4968af
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-achange-the-log-cannot-record-is-not-made
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:03.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4166a53eff1d
+  - type: executable_for
+    from: SYM-ms1-core-modelsettings-test-test-owner-session-names-the-owners-session-for-the-audit-entry
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:40:31.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4064fa5e15b4

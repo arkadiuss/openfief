@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b0aadc96b64
+  - type: covered_by
+    from: SYM-ms1-identity-audit-audit-entry-validate-shape
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:33:49.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14bb6383277c
+  - type: implements
+    from: SYM-ms1-identity-audit-audit-entry-validate-shape
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:33:49.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b10de821cd

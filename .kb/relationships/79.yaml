@@ -1329,3 +1329,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df30e590bea1
+  - type: covered_by
+    from: SYM-ms1-ui-models-provider-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:39.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c2b67a1e28a
+  - type: implements
+    from: SYM-ms1-ui-models-provider-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:40.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74178d29fd7e

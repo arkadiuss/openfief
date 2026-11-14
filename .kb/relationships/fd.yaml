@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5672e349fc91
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-descriptor
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:44.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeed324bc5a9
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-descriptor
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:44.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1623dd8cd70

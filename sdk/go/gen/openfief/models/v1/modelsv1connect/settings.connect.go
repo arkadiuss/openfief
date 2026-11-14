@@ -59,6 +59,9 @@ const (
 	// ModelSettingsServiceGetModelSettingsProcedure is the fully-qualified name of the
 	// ModelSettingsService's GetModelSettings RPC.
 	ModelSettingsServiceGetModelSettingsProcedure = "/openfief.models.v1.ModelSettingsService/GetModelSettings"
+	// ModelSettingsServiceListModelProvidersProcedure is the fully-qualified name of the
+	// ModelSettingsService's ListModelProviders RPC.
+	ModelSettingsServiceListModelProvidersProcedure = "/openfief.models.v1.ModelSettingsService/ListModelProviders"
 	// ModelSettingsServiceSetAgentsEnabledProcedure is the fully-qualified name of the
 	// ModelSettingsService's SetAgentsEnabled RPC.
 	ModelSettingsServiceSetAgentsEnabledProcedure = "/openfief.models.v1.ModelSettingsService/SetAgentsEnabled"
@@ -78,6 +81,12 @@ type ModelSettingsServiceClient interface {
 	// GetModelSettings returns the switch, the toggles, the routes and the
 	// tiers' allowed models to the owner.
 	GetModelSettings(context.Context, *connect.Request[v1.GetModelSettingsRequest]) (*connect.Response[v1.GetModelSettingsResponse], error)
+	// ListModelProviders returns the model-provider plugin instances the core
+	// found, each with where its models run, its retention terms and its
+	// models, for the owner to choose routes and tier lists from (D-205). An
+	// instance that can't be reached now is listed as unavailable, with no
+	// models.
+	ListModelProviders(context.Context, *connect.Request[v1.ListModelProvidersRequest]) (*connect.Response[v1.ListModelProvidersResponse], error)
 	// SetAgentsEnabled turns the one switch on or off (D-212). Off, nothing
 	// calls a model and no MCP endpoint answers, whatever the toggles say.
 	SetAgentsEnabled(context.Context, *connect.Request[v1.SetAgentsEnabledRequest]) (*connect.Response[v1.SetAgentsEnabledResponse], error)
@@ -106,6 +115,13 @@ func NewModelSettingsServiceClient(httpClient connect.HTTPClient, baseURL string
 			httpClient,
 			baseURL+ModelSettingsServiceGetModelSettingsProcedure,
 			connect.WithSchema(modelSettingsServiceMethods.ByName("GetModelSettings")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listModelProviders: connect.NewClient[v1.ListModelProvidersRequest, v1.ListModelProvidersResponse](
+			httpClient,
+			baseURL+ModelSettingsServiceListModelProvidersProcedure,
+			connect.WithSchema(modelSettingsServiceMethods.ByName("ListModelProviders")),
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
@@ -138,16 +154,22 @@ func NewModelSettingsServiceClient(httpClient connect.HTTPClient, baseURL string
 
 // modelSettingsServiceClient implements ModelSettingsServiceClient.
 type modelSettingsServiceClient struct {
-	getModelSettings  *connect.Client[v1.GetModelSettingsRequest, v1.GetModelSettingsResponse]
-	setAgentsEnabled  *connect.Client[v1.SetAgentsEnabledRequest, v1.SetAgentsEnabledResponse]
-	setFeatureEnabled *connect.Client[v1.SetFeatureEnabledRequest, v1.SetFeatureEnabledResponse]
-	setRoute          *connect.Client[v1.SetRouteRequest, v1.SetRouteResponse]
-	setTierModels     *connect.Client[v1.SetTierModelsRequest, v1.SetTierModelsResponse]
+	getModelSettings   *connect.Client[v1.GetModelSettingsRequest, v1.GetModelSettingsResponse]
+	listModelProviders *connect.Client[v1.ListModelProvidersRequest, v1.ListModelProvidersResponse]
+	setAgentsEnabled   *connect.Client[v1.SetAgentsEnabledRequest, v1.SetAgentsEnabledResponse]
+	setFeatureEnabled  *connect.Client[v1.SetFeatureEnabledRequest, v1.SetFeatureEnabledResponse]
+	setRoute           *connect.Client[v1.SetRouteRequest, v1.SetRouteResponse]
+	setTierModels      *connect.Client[v1.SetTierModelsRequest, v1.SetTierModelsResponse]
 }
 
 // GetModelSettings calls openfief.models.v1.ModelSettingsService.GetModelSettings.
 func (c *modelSettingsServiceClient) GetModelSettings(ctx context.Context, req *connect.Request[v1.GetModelSettingsRequest]) (*connect.Response[v1.GetModelSettingsResponse], error) {
 	return c.getModelSettings.CallUnary(ctx, req)
+}
+
+// ListModelProviders calls openfief.models.v1.ModelSettingsService.ListModelProviders.
+func (c *modelSettingsServiceClient) ListModelProviders(ctx context.Context, req *connect.Request[v1.ListModelProvidersRequest]) (*connect.Response[v1.ListModelProvidersResponse], error) {
+	return c.listModelProviders.CallUnary(ctx, req)
 }
 
 // SetAgentsEnabled calls openfief.models.v1.ModelSettingsService.SetAgentsEnabled.
@@ -176,6 +198,12 @@ type ModelSettingsServiceHandler interface {
 	// GetModelSettings returns the switch, the toggles, the routes and the
 	// tiers' allowed models to the owner.
 	GetModelSettings(context.Context, *connect.Request[v1.GetModelSettingsRequest]) (*connect.Response[v1.GetModelSettingsResponse], error)
+	// ListModelProviders returns the model-provider plugin instances the core
+	// found, each with where its models run, its retention terms and its
+	// models, for the owner to choose routes and tier lists from (D-205). An
+	// instance that can't be reached now is listed as unavailable, with no
+	// models.
+	ListModelProviders(context.Context, *connect.Request[v1.ListModelProvidersRequest]) (*connect.Response[v1.ListModelProvidersResponse], error)
 	// SetAgentsEnabled turns the one switch on or off (D-212). Off, nothing
 	// calls a model and no MCP endpoint answers, whatever the toggles say.
 	SetAgentsEnabled(context.Context, *connect.Request[v1.SetAgentsEnabledRequest]) (*connect.Response[v1.SetAgentsEnabledResponse], error)
@@ -200,6 +228,13 @@ func NewModelSettingsServiceHandler(svc ModelSettingsServiceHandler, opts ...con
 		ModelSettingsServiceGetModelSettingsProcedure,
 		svc.GetModelSettings,
 		connect.WithSchema(modelSettingsServiceMethods.ByName("GetModelSettings")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	modelSettingsServiceListModelProvidersHandler := connect.NewUnaryHandler(
+		ModelSettingsServiceListModelProvidersProcedure,
+		svc.ListModelProviders,
+		connect.WithSchema(modelSettingsServiceMethods.ByName("ListModelProviders")),
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
@@ -231,6 +266,8 @@ func NewModelSettingsServiceHandler(svc ModelSettingsServiceHandler, opts ...con
 		switch r.URL.Path {
 		case ModelSettingsServiceGetModelSettingsProcedure:
 			modelSettingsServiceGetModelSettingsHandler.ServeHTTP(w, r)
+		case ModelSettingsServiceListModelProvidersProcedure:
+			modelSettingsServiceListModelProvidersHandler.ServeHTTP(w, r)
 		case ModelSettingsServiceSetAgentsEnabledProcedure:
 			modelSettingsServiceSetAgentsEnabledHandler.ServeHTTP(w, r)
 		case ModelSettingsServiceSetFeatureEnabledProcedure:
@@ -250,6 +287,10 @@ type UnimplementedModelSettingsServiceHandler struct{}
 
 func (UnimplementedModelSettingsServiceHandler) GetModelSettings(context.Context, *connect.Request[v1.GetModelSettingsRequest]) (*connect.Response[v1.GetModelSettingsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.ModelSettingsService.GetModelSettings is not implemented"))
+}
+
+func (UnimplementedModelSettingsServiceHandler) ListModelProviders(context.Context, *connect.Request[v1.ListModelProvidersRequest]) (*connect.Response[v1.ListModelProvidersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.ModelSettingsService.ListModelProviders is not implemented"))
 }
 
 func (UnimplementedModelSettingsServiceHandler) SetAgentsEnabled(context.Context, *connect.Request[v1.SetAgentsEnabledRequest]) (*connect.Response[v1.SetAgentsEnabledResponse], error) {

@@ -635,6 +635,10 @@ enum AuditAction {
   // A viewer's invitation cancelled by the owner before it was used; the
   // entry names the link.
   AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED = 16;
+  // The owner changing the agents-and-models settings (D-212): the switch, a
+  // feature's toggle, a role's route or a data tier's models; names the
+  // setting changed, never the models.
+  AUDIT_ACTION_MODEL_SETTINGS_CHANGED = 34;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -679,6 +683,9 @@ enum AuditRefKind {
   // A run of the model-portfolio maintainer and the proposal it made, by the
   // run's 16-digit hex id.
   AUDIT_REF_KIND_MAINTAINER_RUN = 30;
+  // A models setting the owner changed: "switch:on", "feature:ask:off",
+  // "route:ask" or "tier:T0".
+  AUDIT_REF_KIND_MODEL_SETTING = 31;
 }
 
 // AuditActor is who made the change.

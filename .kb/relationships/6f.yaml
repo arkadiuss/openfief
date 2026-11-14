@@ -1063,3 +1063,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84065022519f
+  - type: covered_by
+    from: SYM-ms1-ui-models-model-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:53.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d68946ed61
+  - type: implements
+    from: SYM-ms1-ui-models-model-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:53.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b8d9b5d3a9c
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-grid-lists-amodel-no-provider-offers-any-more-so-it-can-be-unticked
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:35.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1869a23e70

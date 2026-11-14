@@ -389,6 +389,10 @@ const (
 	// A viewer's invitation cancelled by the owner before it was used; the
 	// entry names the link.
 	AuditAction_AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED AuditAction = 16
+	// The owner changing the agents-and-models settings (D-212): the switch, a
+	// feature's toggle, a role's route or a data tier's models; names the
+	// setting changed, never the models.
+	AuditAction_AUDIT_ACTION_MODEL_SETTINGS_CHANGED AuditAction = 34
 )
 
 // Enum value maps for AuditAction.
@@ -415,6 +419,7 @@ var (
 		32: "AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED",
 		33: "AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED",
 		16: "AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED",
+		34: "AUDIT_ACTION_MODEL_SETTINGS_CHANGED",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":                   0,
@@ -438,6 +443,7 @@ var (
 		"AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED":   32,
 		"AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED": 33,
 		"AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED":     16,
+		"AUDIT_ACTION_MODEL_SETTINGS_CHANGED":        34,
 	}
 )
 
@@ -559,6 +565,9 @@ const (
 	// A run of the model-portfolio maintainer and the proposal it made, by the
 	// run's 16-digit hex id.
 	AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN AuditRefKind = 30
+	// A models setting the owner changed: "switch:on", "feature:ask:off",
+	// "route:ask" or "tier:T0".
+	AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING AuditRefKind = 31
 )
 
 // Enum value maps for AuditRefKind.
@@ -579,6 +588,7 @@ var (
 		12: "AUDIT_REF_KIND_MODEL_CALL",
 		13: "AUDIT_REF_KIND_MODEL_ERROR",
 		30: "AUDIT_REF_KIND_MAINTAINER_RUN",
+		31: "AUDIT_REF_KIND_MODEL_SETTING",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":     0,
@@ -596,6 +606,7 @@ var (
 		"AUDIT_REF_KIND_MODEL_CALL":      12,
 		"AUDIT_REF_KIND_MODEL_ERROR":     13,
 		"AUDIT_REF_KIND_MAINTAINER_RUN":  30,
+		"AUDIT_REF_KIND_MODEL_SETTING":   31,
 	}
 )
 
@@ -5473,7 +5484,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
 	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04\x12\x1b\n" +
-	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05*\x82\x06\n" +
+	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05*\xab\x06\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5496,13 +5507,14 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"(AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED\x10\x1f\x12,\n" +
 	"(AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED\x10 \x12.\n" +
 	"*AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED\x10!\x12*\n" +
-	"&AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED\x10\x10*\x90\x01\n" +
+	"&AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED\x10\x10\x12'\n" +
+	"#AUDIT_ACTION_MODEL_SETTINGS_CHANGED\x10\"*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xd6\x03\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xf8\x03\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5519,7 +5531,8 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x14AUDIT_REF_KIND_MODEL\x10\v\x12\x1d\n" +
 	"\x19AUDIT_REF_KIND_MODEL_CALL\x10\f\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r\x12!\n" +
-	"\x1dAUDIT_REF_KIND_MAINTAINER_RUN\x10\x1e*\x99\x01\n" +
+	"\x1dAUDIT_REF_KIND_MAINTAINER_RUN\x10\x1e\x12 \n" +
+	"\x1cAUDIT_REF_KIND_MODEL_SETTING\x10\x1f*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

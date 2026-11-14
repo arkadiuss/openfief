@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56552da7e923
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-page-is-the-owners-alone-and-no-other-session-sees-its-link
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:40:53.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17da3f41d220

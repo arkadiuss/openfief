@@ -895,3 +895,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cfec5caaae7
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-audited-settings
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:37:53.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dacfda7ef811
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:42:39.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f2622a7b556

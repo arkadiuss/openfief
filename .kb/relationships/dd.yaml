@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c545ed6080d8
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-set-models-switch
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:32.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e49ffe928db
+  - type: implements
+    from: SYM-ms1-ui-models-server-set-models-switch
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:35:32.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b42b709e85c1
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-instances
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:44.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a20ea21dcaa

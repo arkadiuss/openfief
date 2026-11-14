@@ -209227,3 +209227,2198 @@ symbols:
         target: TEST-portfolio-app-maintainer
       - type: implements
         target: REQ-maintainer-failure-no-note-attention
+  - id: SYM-ms1-app-settings-settings-with-providers
+    title: Settings.WithProviders
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:01.770Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-settings-settings-with-audit
+    title: Settings.WithAudit
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:06.455Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-app-settings-settings-providers
+    title: Settings.Providers
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:11.066Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-settings-settings-describe
+    title: Settings.describe
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:15.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-settings-settings-broken-routes
+    title: Settings.BrokenRoutes
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:21.014Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-settings-settings-recording
+    title: Settings.recording
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:25.783Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-app-settings-on-off
+    title: onOff
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:30.803Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-app-settings-provider
+    title: Provider
+    status: active
+    sourceFile: internal/modelrouter/app/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:35.148Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-routes-route-problems
+    title: routeProblems
+    status: active
+    sourceFile: internal/modelrouter/app/routes.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:39.767Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-routes
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-app-ports-setting-change
+    title: SettingChange
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:43.939Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-app-ports-settings-auditor
+    title: SettingsAuditor
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:48.243Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-app-ports-provider-directory
+    title: ProviderDirectory
+    status: active
+    sourceFile: internal/modelrouter/app/ports.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:52.285Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-app-settings-audit
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-postgres-store-store-in-tx
+    title: Store.inTx
+    status: active
+    sourceFile: internal/modelrouter/postgres/store.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:25:57.757Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-postgres-store
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-connectapi-settings-settings-service-list-model-providers
+    title: settingsService.ListModelProviders
+    status: active
+    sourceFile: internal/modelrouter/connectapi/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:03.169Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-connectapi-settings-provider-to
+    title: providerTo
+    status: active
+    sourceFile: internal/modelrouter/connectapi/settings.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:08.729Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-core-modelrouter-model-provider-instances-model-providers
+    title: modelProviderInstances.ModelProviders
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:13.931Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-core-modelrouter-model-provider-instances-set-directory
+    title: modelProviderInstances.setDirectory
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:18.972Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-core-modelrouter-settings-audit-record-change
+    title: settingsAudit.RecordChange
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:24.288Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-core-modelrouter-provider-lister
+    title: providerLister
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:30.335Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-core-modelrouter-settings-audit
+    title: settingsAudit
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:35.914Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-core-model-owner-sessions-owner-session
+    title: ownerSessions.OwnerSession
+    status: active
+    sourceFile: cmd/core/model.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:42.431Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-model-settings
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-kube-discovery-discovery-model-provider-instances
+    title: Discovery.ModelProviderInstances
+    status: active
+    sourceFile: internal/ingest/kube/discovery.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:48.838Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-kube-model-provider
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-identity-audit-valid-model-setting
+    title: validModelSetting
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:26:57.862Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-identity-audit-validate-settings-entry
+    title: validateSettingsEntry
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:27:04.601Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-ui-models-server-models-routes
+    title: server.modelsRoutes
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:27:11.278Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-server-models-page
+    title: server.modelsPage
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:27:17.344Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-identity-audit-audit-entry-validate-shape
+    title: AuditEntry.validateShape
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:33:47.302Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-identity-audit-model-settings
+    title: ModelSettings
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:33:52.652Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-models-settings-changes-audited
+  - id: SYM-ms1-ui-models-model-tiers
+    title: modelTiers
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:33:57.948Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-model-roles
+    title: modelRoles
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:03.203Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-model-features
+    title: modelFeatures
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:08.544Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-models-notice
+    title: modelsNotice
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:13.737Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-server-render-models
+    title: server.renderModels
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:18.941Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-server-load-models
+    title: server.loadModels
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:24.306Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-build-models
+    title: buildModels
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:29.638Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-provider-of
+    title: providerOf
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:34.919Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-retention-words
+    title: retentionWords
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:43.998Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-model-of
+    title: modelOf
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:50.293Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-tokens
+    title: tokens
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:34:56.145Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-grid-rows
+    title: gridRows
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:01.349Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-unoffered-words
+    title: unofferedWords
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:06.948Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-route-of
+    title: routeOf
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:12.265Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-route-entry-of
+    title: routeEntryOf
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:17.569Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-route-problem
+    title: routeProblem
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:23.672Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-server-set-models-switch
+    title: server.setModelsSwitch
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:29.787Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-server-set-models-feature
+    title: server.setModelsFeature
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:36.129Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-posted-on
+    title: postedOn
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:42.234Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-posted-tiers
+    title: postedTiers
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:48.357Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-server-set-model-tiers
+    title: server.setModelTiers
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:35:54.130Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-same-set
+    title: sameSet
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:00.126Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-server-change-model-route
+    title: server.changeModelRoute
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:06.032Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-edit-route
+    title: editRoute
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:12.784Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-swap-entries
+    title: swapEntries
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:18.379Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-server-after-models-form
+    title: server.afterModelsForm
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:23.521Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-role-info
+    title: roleInfo
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:28.239Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-feature-info
+    title: featureInfo
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:32.829Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-models-data
+    title: modelsData
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:37.304Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-feature-row
+    title: featureRow
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:42.135Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-provider-row
+    title: providerRow
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:47.056Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-provider-model
+    title: providerModel
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:51.537Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-tier-row
+    title: tierRow
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:36:56.447Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-model-row
+    title: modelRow
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:01.350Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-tier-cell
+    title: tierCell
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:06.021Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-tier-lists
+  - id: SYM-ms1-ui-models-route-row
+    title: routeRow
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:10.577Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-route-entry
+    title: routeEntry
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:16.158Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-route-facts
+    title: routeFacts
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:20.816Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-routes-providers
+  - id: SYM-ms1-ui-models-models-load
+    title: modelsLoad
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:25.380Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-ui-models-problem
+    title: problem
+    status: active
+    sourceFile: internal/views/ui/models.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:29.927Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-models
+      - type: implements
+        target: REQ-ui-models-page-owner-only
+  - id: SYM-ms1-app-settings-audit-test-fake-settings-audit-record-change
+    title: fakeSettingsAudit.RecordChange
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:34.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-fake-directory-model-providers
+    title: fakeDirectory.ModelProviders
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:39.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-settings-clock
+    title: settingsClock
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:45.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-audited-settings
+    title: auditedSettings
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:50.581Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-every-change-is-audited-with-the-owners-session
+    title: TestSettingsEveryChangeIsAuditedWithTheOwnersSession
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:37:56.084Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-achange-the-log-cannot-record-is-not-made
+    title: TestSettingsAChangeTheLogCannotRecordIsNotMade
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:01.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-arefused-change-writes-no-entry
+    title: TestSettingsARefusedChangeWritesNoEntry
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:06.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-dec
+    title: dec
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:11.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-providers-list-terms-and-models-for-the-owner
+    title: TestSettingsProvidersListTermsAndModelsForTheOwner
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:16.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-providers-mark-an-instance-that-does-not-answer-unavailable
+    title: TestSettingsProvidersMarkAnInstanceThatDoesNotAnswerUnavailable
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:21.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-providers-are-the-owners-and-empty-before-the-plugins-are-found
+    title: TestSettingsProvidersAreTheOwnersAndEmptyBeforeThePluginsAreFound
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:26.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-test-settings-broken-routes-count-every-route-in-use-or-not
+    title: TestSettingsBrokenRoutesCountEveryRouteInUseOrNot
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:32.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-fake-settings-audit
+    title: fakeSettingsAudit
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:38.773Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-app-settings-audit-test-fake-directory
+    title: fakeDirectory
+    status: active
+    sourceFile: internal/modelrouter/app/settings_audit_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:45.483Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings-audit
+  - id: SYM-ms1-connectapi-providers-test-instances-instance
+    title: instances.Instance
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:51.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-instances-describe
+    title: instances.Describe
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:38:56.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-instances-models
+    title: instances.Models
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:01.583Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-instances-generate
+    title: instances.Generate
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:07.377Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-directory-model-providers
+    title: directory.ModelProviders
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:13.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-new-provider-client
+    title: newProviderClient
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:19.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-test-list-model-providers-shows-terms-and-models
+    title: TestListModelProvidersShowsTermsAndModels
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:25.442Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-test-list-model-providers-is-the-owners-alone
+    title: TestListModelProvidersIsTheOwnersAlone
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:31.325Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-test-get-model-settings-names-the-broken-route-entries
+    title: TestGetModelSettingsNamesTheBrokenRouteEntries
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:36.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-instances
+    title: instances
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:41.900Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-providers-test-directory
+    title: directory
+    status: active
+    sourceFile: internal/modelrouter/connectapi/providers_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:47.363Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-providers
+  - id: SYM-ms1-connectapi-settings-test-run-within
+    title: runWithin
+    status: active
+    sourceFile: internal/modelrouter/connectapi/settings_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:52.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-settings
+  - id: SYM-ms1-connectapi-settings-test-owners-owner-session
+    title: owners.OwnerSession
+    status: active
+    sourceFile: internal/modelrouter/connectapi/settings_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:39:56.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-connectapi-settings
+  - id: SYM-ms1-app-fakes-test-run-within
+    title: runWithin
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:01.623Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings
+  - id: SYM-ms1-app-fakes-test-fake-owners-owner-session
+    title: fakeOwners.OwnerSession
+    status: active
+    sourceFile: internal/modelrouter/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:06.396Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-app-settings
+  - id: SYM-ms1-postgres-store-test-test-settings-achange-whose-hook-fails-stores-nothing
+    title: TestSettingsAChangeWhoseHookFailsStoresNothing
+    status: active
+    sourceFile: internal/modelrouter/postgres/store_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:11.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-models-postgres-store
+  - id: SYM-ms1-kube-modelprovider-test-test-model-provider-instances
+    title: TestModelProviderInstances
+    status: active
+    sourceFile: internal/ingest/kube/modelprovider_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:15.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-kube-model-provider
+  - id: SYM-ms1-core-modelsettings-test-test-settings-audit-records-achange-as-an-entry-naming-the-setting
+    title: TestSettingsAuditRecordsAChangeAsAnEntryNamingTheSetting
+    status: active
+    sourceFile: cmd/core/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:20.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-settings
+  - id: SYM-ms1-core-modelsettings-test-test-model-providers-wait-for-discovery
+    title: TestModelProvidersWaitForDiscovery
+    status: active
+    sourceFile: cmd/core/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:24.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-settings
+  - id: SYM-ms1-core-modelsettings-test-test-owner-session-names-the-owners-session-for-the-audit-entry
+    title: TestOwnerSessionNamesTheOwnersSessionForTheAuditEntry
+    status: active
+    sourceFile: cmd/core/modelsettings_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:28.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-model-settings
+  - id: SYM-ms1-ui-models-test-calls-to
+    title: callsTo
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:33.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-page-shows-the-switch-the-providers-the-tiers-and-the-routes
+    title: TestModelsPageShowsTheSwitchTheProvidersTheTiersAndTheRoutes
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:38.110Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-page-shows-abroken-route-entry-with-afix
+    title: TestModelsPageShowsABrokenRouteEntryWithAFix
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:42.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-page-warns-when-no-model-of-aroute-may-receive-what-the-role-sends
+    title: TestModelsPageWarnsWhenNoModelOfARouteMayReceiveWhatTheRoleSends
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:47.018Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-page-is-the-owners-alone-and-no-other-session-sees-its-link
+    title: TestModelsPageIsTheOwnersAloneAndNoOtherSessionSeesItsLink
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:51.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-forms-reach-the-core-with-the-owners-session
+    title: TestModelsFormsReachTheCoreWithTheOwnersSession
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:40:55.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-tier-grid-changes-only-the-tiers-that-changed
+    title: TestModelsTierGridChangesOnlyTheTiersThatChanged
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:00.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-malformed-forms-never-reach-the-core
+    title: TestModelsMalformedFormsNeverReachTheCore
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:04.817Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-the-cores-refusal-shows-its-reason-on-the-page
+    title: TestModelsTheCoresRefusalShowsItsReasonOnThePage
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:09.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-acore-that-is-down-is-abad-gateway-not-an-empty-page
+    title: TestModelsACoreThatIsDownIsABadGatewayNotAnEmptyPage
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:14.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-notice-words
+    title: TestModelsNoticeWords
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:18.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-edit-route
+    title: TestEditRoute
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:23.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-retention-words
+    title: TestRetentionWords
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:28.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-test-test-models-grid-lists-amodel-no-provider-offers-any-more-so-it-can-be-unticked
+    title: TestModelsGridListsAModelNoProviderOffersAnyMoreSoItCanBeUnticked
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:32.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-new-fake-model-settings
+    title: newFakeModelSettings
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:37.956Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-get-model-settings
+    title: fakeModelSettings.GetModelSettings
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:42.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-list-model-providers
+    title: fakeModelSettings.ListModelProviders
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:47.814Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-agents-enabled
+    title: fakeModelSettings.SetAgentsEnabled
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:53.108Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-feature-enabled
+    title: fakeModelSettings.SetFeatureEnabled
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:41:58.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-route
+    title: fakeModelSettings.SetRoute
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:03.592Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-tier-models
+    title: fakeModelSettings.SetTierModels
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:08.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-admit
+    title: fakeModelSettings.admit
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:13.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-change
+    title: fakeModelSettings.change
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:18.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings-locked
+    title: fakeModelSettings.locked
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:22.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-on-word
+    title: onWord
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:27.521Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-join-refs
+    title: joinRefs
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:32.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-ui-models-fakes-test-fake-model-settings
+    title: fakeModelSettings
+    status: active
+    sourceFile: internal/views/ui/models_fakes_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T00:42:37.129Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models
+  - id: SYM-ms1-gen-settings-connect-model-settings-service-client-list-model-providers
+    title: modelSettingsServiceClient.ListModelProviders
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/modelsv1connect/settings.connect.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:08.623Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-connect-unimplemented-model-settings-service-handler-list-model-providers
+    title: UnimplementedModelSettingsServiceHandler.ListModelProviders
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/modelsv1connect/settings.connect.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:13.380Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry
+    title: BrokenEntry
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:17.738Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-reset
+    title: BrokenEntry.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:22.699Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-string
+    title: BrokenEntry.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:27.722Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-proto-message
+    title: BrokenEntry.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:32.782Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-proto-reflect
+    title: BrokenEntry.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:37.565Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-descriptor
+    title: BrokenEntry.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:42.498Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-get-role
+    title: BrokenEntry.GetRole
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:47.494Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-get-model
+    title: BrokenEntry.GetModel
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:52.487Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-broken-entry-get-reason
+    title: BrokenEntry.GetReason
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:22:57.508Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-get-model-settings-response-get-broken
+    title: GetModelSettingsResponse.GetBroken
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:02.682Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request
+    title: ListModelProvidersRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:07.090Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-reset
+    title: ListModelProvidersRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:12.236Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-string
+    title: ListModelProvidersRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:17.072Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-message
+    title: ListModelProvidersRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:22.007Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-proto-reflect
+    title: ListModelProvidersRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:26.905Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-descriptor
+    title: ListModelProvidersRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:31.960Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-get-origin
+    title: ListModelProvidersRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:37.052Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-request-get-session-token
+    title: ListModelProvidersRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:42.397Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider
+    title: ModelProvider
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:46.976Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-reset
+    title: ModelProvider.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:52.015Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-string
+    title: ModelProvider.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:23:56.966Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-proto-message
+    title: ModelProvider.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:01.928Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-proto-reflect
+    title: ModelProvider.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:06.820Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-descriptor
+    title: ModelProvider.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:11.772Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-get-instance
+    title: ModelProvider.GetInstance
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:16.762Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-get-available
+    title: ModelProvider.GetAvailable
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:21.567Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-get-location
+    title: ModelProvider.GetLocation
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:26.546Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-get-retention
+    title: ModelProvider.GetRetention
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:31.461Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-model-provider-get-models
+    title: ModelProvider.GetModels
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:36.280Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response
+    title: ListModelProvidersResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:40.685Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-reset
+    title: ListModelProvidersResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:45.835Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-string
+    title: ListModelProvidersResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:50.867Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-proto-message
+    title: ListModelProvidersResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:24:55.817Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-proto-reflect
+    title: ListModelProvidersResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:25:00.863Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-descriptor
+    title: ListModelProvidersResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:25:05.913Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-gen-settings-pb-list-model-providers-response-get-providers
+    title: ListModelProvidersResponse.GetProviders
+    status: active
+    sourceFile: sdk/go/gen/openfief/models/v1/settings.pb.go
+    origin:
+      kind: agent
+      ref: MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:25:10.850Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-models-connectapi-providers
+      - type: implements
+        target: REQ-models-providers-listed-to-owner
+  - id: SYM-ms1-ui-models-test-test-audit-log-names-asettings-change-and-its-setting
+    title: TestAuditLogNamesASettingsChangeAndItsSetting
+    status: active
+    sourceFile: internal/views/ui/models_test.go
+    origin:
+      kind: agent
+      ref: M3a/MS1 brief, 2026-11-13
+      recorded_at: 2026-11-14T01:37:56.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-models

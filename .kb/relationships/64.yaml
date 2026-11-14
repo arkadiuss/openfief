@@ -1112,3 +1112,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d67857e5035
+  - type: covered_by
+    from: SYM-ms1-ui-models-swap-entries
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:20.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-790df6f81f3f
+  - type: implements
+    from: SYM-ms1-ui-models-swap-entries
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:36:20.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-489aa74bace5
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-model-provider-get-location
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:28.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f5d2df3ecd
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-model-provider-get-location
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:28.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a7388f35e2e

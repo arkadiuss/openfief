@@ -1070,3 +1070,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88dc49e85caa
+  - type: covered_by
+    from: SYM-ms1-ui-models-models-load
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:37:27.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4eafb2516fb
+  - type: implements
+    from: SYM-ms1-ui-models-models-load
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:37:27.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cff0855f5df
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-acore-that-is-down-is-abad-gateway-not-an-empty-page
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:16.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24c3c1c63f96

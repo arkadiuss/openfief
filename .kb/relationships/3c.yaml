@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbd0b65128a0
+  - type: covered_by
+    from: SYM-ms1-gen-settings-connect-model-settings-service-client-list-model-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:10.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d48cbf473851
+  - type: implements
+    from: SYM-ms1-gen-settings-connect-model-settings-service-client-list-model-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:10.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9581b1b371

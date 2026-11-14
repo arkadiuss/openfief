@@ -56,6 +56,9 @@ var (
 // ErrNotOwner.
 type Owners interface {
 	CheckOwner(ctx context.Context, origin, sessionToken string) error
+	// OwnerSession checks the same and returns the session's ID, which the
+	// audit entry of a change names as its actor.
+	OwnerSession(ctx context.Context, origin, sessionToken string) (string, error)
 }
 
 // SettingsStore keeps the owner's agents-and-models settings.
@@ -64,14 +67,44 @@ type SettingsStore interface {
 	// Settings returns the stored settings; the zero Settings, everything
 	// off, when none was ever saved.
 	Settings(ctx context.Context) (modelrouter.Settings, error)
+	//
+	// Each Save runs within, when it is not nil, inside the transaction that
+	// stores the change, before it commits: the audit entry of the change.
+	// When within fails nothing is stored.
+	//
 	// SaveEnabled turns the one switch on or off.
-	SaveEnabled(ctx context.Context, on bool) error
+	SaveEnabled(ctx context.Context, on bool, within func(context.Context) error) error
 	// SaveToggle turns one feature's toggle on or off.
-	SaveToggle(ctx context.Context, f modelrouter.Feature, on bool) error
+	SaveToggle(ctx context.Context, f modelrouter.Feature, on bool, within func(context.Context) error) error
 	// SaveRoute replaces role's route; no models clear it.
-	SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref) error
+	SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref, within func(context.Context) error) error
 	// SaveDataTierModels replaces tier's allowed models; none clears it.
-	SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref) error
+	SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref, within func(context.Context) error) error
+}
+
+// SettingChange is what the audit log keeps of a change to the settings
+// (D-211, D-212): who made it, when, and which setting, as the identity
+// context spells it ("switch:on", "feature:ask:off", "route:ask",
+// "tier:T0"). It holds no model list.
+type SettingChange struct {
+	At time.Time
+	// Session is the owner's session that made the change.
+	Session string
+	Setting string
+}
+
+// SettingsAuditor appends the entry of a change to the settings to the
+// audit log. cmd/core implements it over the identity context's log. A
+// change whose entry can't be written is not made.
+type SettingsAuditor interface {
+	RecordChange(ctx context.Context, c *SettingChange) error
+}
+
+// ProviderDirectory lists the model-provider plugin instances that run now,
+// in name order. cmd/core answers it over the plugin discovery; before the
+// core has found the plugins it returns an error wrapping ErrPluginsNotFound.
+type ProviderDirectory interface {
+	ModelProviders(ctx context.Context) ([]string, error)
 }
 
 // ProviderInstances reaches the model-provider plugins by their instance name, the

@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca198b4f8ff0
+  - type: covered_by
+    from: SYM-ms1-app-ports-settings-auditor
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:50.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c202403ef7
+  - type: implements
+    from: SYM-ms1-app-ports-settings-auditor
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:50.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48a60036864

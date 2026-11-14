@@ -78,6 +78,7 @@ func actionWords(a identityv1.AuditAction) string {
 		identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DROPPED:   "Maintainer proposal dropped",
 		identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED:   "Maintainer proposal applied",
 		identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED: "Maintainer proposal dismissed",
+		identityv1.AuditAction_AUDIT_ACTION_MODEL_SETTINGS_CHANGED:        "Models settings changed",
 	}
 	if w, ok := words[a]; ok {
 		return w
@@ -206,7 +207,7 @@ func (n *auditNames) ref(r *identityv1.AuditRef) string {
 		return "Session " + short(id)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING:
 		return modelRef(r)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_UNSPECIFIED:
 	}
@@ -221,6 +222,7 @@ func modelRef(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE: "Role ", identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL: "Model ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL: "Call ", identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR: "Error ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN: "Maintainer run ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING:  "Setting ",
 	}
 	id := r.GetId()
 	if k := r.GetKind(); k == identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL || k == identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN {
@@ -254,7 +256,7 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PASSKEY, identityv1.AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING:
 	}
 	return "Record " + short(id)
 }

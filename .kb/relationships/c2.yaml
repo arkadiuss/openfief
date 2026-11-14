@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98c20fa0108f
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-instances-instance
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:38:53.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2de88d6f5e1f

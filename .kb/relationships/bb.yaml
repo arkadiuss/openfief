@@ -1105,3 +1105,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-225d08eeef55
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-load-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:26.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee09170175cd
+  - type: implements
+    from: SYM-ms1-ui-models-server-load-models
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:34:26.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d17c713e2e56
+  - type: covered_by
+    from: SYM-ms1-ui-models-server-change-model-route
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:08.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d4c3093d06f
+  - type: implements
+    from: SYM-ms1-ui-models-server-change-model-route
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:08.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d1c72a5e43
+  - type: executable_for
+    from: SYM-ms1-core-modelsettings-test-test-model-providers-wait-for-discovery
+    to: TEST-core-model-settings
+    created_at: 2026-11-14T00:40:26.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-566377e68163

@@ -1189,3 +1189,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32229171d290
+  - type: covered_by
+    from: SYM-ms1-app-ports-setting-change
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:46.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c35d71ca5259
+  - type: implements
+    from: SYM-ms1-app-ports-setting-change
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:25:46.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0762673e380
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:23:09.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55dad8ad32c5
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-request
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:23:09.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d489d3e9063
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-model-provider-get-models
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:38.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97726f83f73
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-model-provider-get-models
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:38.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3781416e3cd

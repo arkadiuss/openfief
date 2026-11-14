@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57ef8bb9e3f2
+  - type: covered_by
+    from: SYM-ms1-ui-models-retention-words
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:46.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c42fdafc7ec1
+  - type: implements
+    from: SYM-ms1-ui-models-retention-words
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:46.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d70fd1e1d59
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-settings-clock
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:37:47.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acdf001201b7
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-reset
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:48.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82dc2a2fe8be
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-reset
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:48.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d50afaef621

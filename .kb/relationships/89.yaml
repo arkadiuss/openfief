@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7e4b0c48635
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-malformed-forms-never-reach-the-core
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:07.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71ee8cd0e971

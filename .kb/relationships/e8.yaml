@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-740012205f2d
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-test-list-model-providers-shows-terms-and-models
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:27.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-238a7625a841

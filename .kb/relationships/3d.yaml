@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5cc7aa58914
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-descriptor
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:25:08.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bcb7cec07ff
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-descriptor
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:25:08.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a6ca8c7b5b0

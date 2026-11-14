@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af511385155b
+  - type: executable_for
+    from: SYM-ms1-kube-modelprovider-test-test-model-provider-instances
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-14T00:40:17.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b0994c25ef

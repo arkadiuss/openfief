@@ -1182,3 +1182,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a094d4ecde31
+  - type: covered_by
+    from: SYM-ms1-identity-audit-validate-settings-entry
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:27:07.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8269d7519b69
+  - type: implements
+    from: SYM-ms1-identity-audit-validate-settings-entry
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:27:07.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c0a435e72f9
+  - type: covered_by
+    from: SYM-ms1-ui-models-provider-model
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:54.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6036f6d6f3b
+  - type: implements
+    from: SYM-ms1-ui-models-provider-model
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:54.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a39616452a

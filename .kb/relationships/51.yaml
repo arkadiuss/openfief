@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc2fb9da339f
+  - type: executable_for
+    from: SYM-ms1-app-fakes-test-run-within
+    to: TEST-models-app-settings
+    created_at: 2026-11-14T00:40:03.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db5d0c81d155

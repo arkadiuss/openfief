@@ -1035,3 +1035,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f68735f22e21
+  - type: covered_by
+    from: SYM-ms1-ui-models-build-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:32.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3dced5cea64
+  - type: implements
+    from: SYM-ms1-ui-models-build-models
+    to: REQ-ui-models-page-owner-only
+    created_at: 2026-11-14T00:34:32.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4fe14f13c5
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-broken-routes-count-every-route-in-use-or-not
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:34.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbb012df6169

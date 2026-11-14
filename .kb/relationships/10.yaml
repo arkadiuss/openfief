@@ -1091,3 +1091,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44122513cd99
+  - type: covered_by
+    from: SYM-ms1-ui-models-edit-route
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:15.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2f02c03d6f0
+  - type: implements
+    from: SYM-ms1-ui-models-edit-route
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:15.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9de53fbb53ce
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-get-model-settings
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:45.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac68e7c7f81c
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-role
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:49.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e25aecd340df
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-role
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:49.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d96024eb2f

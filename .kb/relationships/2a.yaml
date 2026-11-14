@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d75cce275909
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-new-fake-model-settings
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:40.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-283e7dcd05ab

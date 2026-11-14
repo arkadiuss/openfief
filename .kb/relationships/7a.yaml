@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1d29ab37191
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-set-tier-models
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:42:10.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8eafca14a82

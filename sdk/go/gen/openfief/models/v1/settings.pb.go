@@ -259,19 +259,88 @@ func (x *TierModels) GetModels() []string {
 	return nil
 }
 
+// BrokenEntry is a route entry the router can't use: its provider instance is
+// missing or is no model provider (D-196, the model-route-broken state).
+type BrokenEntry struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// "ask" or "maintainer".
+	Role string `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	// The "provider/model" reference of the entry.
+	Model string `protobuf:"bytes,2,opt,name=model,proto3" json:"model,omitempty"`
+	// "missing" (no plugin has that name) or "not-model-provider".
+	Reason        string `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BrokenEntry) Reset() {
+	*x = BrokenEntry{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BrokenEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BrokenEntry) ProtoMessage() {}
+
+func (x *BrokenEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BrokenEntry.ProtoReflect.Descriptor instead.
+func (*BrokenEntry) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *BrokenEntry) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *BrokenEntry) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *BrokenEntry) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
 type GetModelSettingsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AgentsEnabled bool                   `protobuf:"varint,1,opt,name=agents_enabled,json=agentsEnabled,proto3" json:"agents_enabled,omitempty"`
 	Features      []*FeatureToggle       `protobuf:"bytes,2,rep,name=features,proto3" json:"features,omitempty"`
 	Routes        []*Route               `protobuf:"bytes,3,rep,name=routes,proto3" json:"routes,omitempty"`
 	Tiers         []*TierModels          `protobuf:"bytes,4,rep,name=tiers,proto3" json:"tiers,omitempty"`
+	// The entries of every route, whether or not it is in use, that name a
+	// provider instance that is missing or is no model provider. Empty when
+	// the core can't tell yet.
+	Broken        []*BrokenEntry `protobuf:"bytes,5,rep,name=broken,proto3" json:"broken,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetModelSettingsResponse) Reset() {
 	*x = GetModelSettingsResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[4]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -283,7 +352,7 @@ func (x *GetModelSettingsResponse) String() string {
 func (*GetModelSettingsResponse) ProtoMessage() {}
 
 func (x *GetModelSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[4]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -296,7 +365,7 @@ func (x *GetModelSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetModelSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{4}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetModelSettingsResponse) GetAgentsEnabled() bool {
@@ -327,6 +396,189 @@ func (x *GetModelSettingsResponse) GetTiers() []*TierModels {
 	return nil
 }
 
+func (x *GetModelSettingsResponse) GetBroken() []*BrokenEntry {
+	if x != nil {
+		return x.Broken
+	}
+	return nil
+}
+
+type ListModelProvidersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListModelProvidersRequest) Reset() {
+	*x = ListModelProvidersRequest{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListModelProvidersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListModelProvidersRequest) ProtoMessage() {}
+
+func (x *ListModelProvidersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListModelProvidersRequest.ProtoReflect.Descriptor instead.
+func (*ListModelProvidersRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListModelProvidersRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *ListModelProvidersRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+// ModelProvider is one model-provider plugin instance as the owner sees it.
+type ModelProvider struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The instance name, the first part of a "provider/model" reference.
+	Instance string `protobuf:"bytes,1,opt,name=instance,proto3" json:"instance,omitempty"`
+	// False when the instance didn't answer: location, retention and models
+	// are then unset.
+	Available     bool          `protobuf:"varint,2,opt,name=available,proto3" json:"available,omitempty"`
+	Location      Location      `protobuf:"varint,3,opt,name=location,proto3,enum=openfief.models.v1.Location" json:"location,omitempty"`
+	Retention     *Retention    `protobuf:"bytes,4,opt,name=retention,proto3" json:"retention,omitempty"`
+	Models        []*ModelEntry `protobuf:"bytes,5,rep,name=models,proto3" json:"models,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ModelProvider) Reset() {
+	*x = ModelProvider{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModelProvider) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModelProvider) ProtoMessage() {}
+
+func (x *ModelProvider) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModelProvider.ProtoReflect.Descriptor instead.
+func (*ModelProvider) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ModelProvider) GetInstance() string {
+	if x != nil {
+		return x.Instance
+	}
+	return ""
+}
+
+func (x *ModelProvider) GetAvailable() bool {
+	if x != nil {
+		return x.Available
+	}
+	return false
+}
+
+func (x *ModelProvider) GetLocation() Location {
+	if x != nil {
+		return x.Location
+	}
+	return Location_LOCATION_UNSPECIFIED
+}
+
+func (x *ModelProvider) GetRetention() *Retention {
+	if x != nil {
+		return x.Retention
+	}
+	return nil
+}
+
+func (x *ModelProvider) GetModels() []*ModelEntry {
+	if x != nil {
+		return x.Models
+	}
+	return nil
+}
+
+type ListModelProvidersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Providers     []*ModelProvider       `protobuf:"bytes,1,rep,name=providers,proto3" json:"providers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListModelProvidersResponse) Reset() {
+	*x = ListModelProvidersResponse{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListModelProvidersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListModelProvidersResponse) ProtoMessage() {}
+
+func (x *ListModelProvidersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListModelProvidersResponse.ProtoReflect.Descriptor instead.
+func (*ListModelProvidersResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ListModelProvidersResponse) GetProviders() []*ModelProvider {
+	if x != nil {
+		return x.Providers
+	}
+	return nil
+}
+
 type SetAgentsEnabledRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -338,7 +590,7 @@ type SetAgentsEnabledRequest struct {
 
 func (x *SetAgentsEnabledRequest) Reset() {
 	*x = SetAgentsEnabledRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[5]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -350,7 +602,7 @@ func (x *SetAgentsEnabledRequest) String() string {
 func (*SetAgentsEnabledRequest) ProtoMessage() {}
 
 func (x *SetAgentsEnabledRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[5]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -363,7 +615,7 @@ func (x *SetAgentsEnabledRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAgentsEnabledRequest.ProtoReflect.Descriptor instead.
 func (*SetAgentsEnabledRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{5}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SetAgentsEnabledRequest) GetOrigin() string {
@@ -395,7 +647,7 @@ type SetAgentsEnabledResponse struct {
 
 func (x *SetAgentsEnabledResponse) Reset() {
 	*x = SetAgentsEnabledResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[6]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -407,7 +659,7 @@ func (x *SetAgentsEnabledResponse) String() string {
 func (*SetAgentsEnabledResponse) ProtoMessage() {}
 
 func (x *SetAgentsEnabledResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[6]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -420,7 +672,7 @@ func (x *SetAgentsEnabledResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAgentsEnabledResponse.ProtoReflect.Descriptor instead.
 func (*SetAgentsEnabledResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{6}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{10}
 }
 
 type SetFeatureEnabledRequest struct {
@@ -435,7 +687,7 @@ type SetFeatureEnabledRequest struct {
 
 func (x *SetFeatureEnabledRequest) Reset() {
 	*x = SetFeatureEnabledRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[7]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -447,7 +699,7 @@ func (x *SetFeatureEnabledRequest) String() string {
 func (*SetFeatureEnabledRequest) ProtoMessage() {}
 
 func (x *SetFeatureEnabledRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[7]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -460,7 +712,7 @@ func (x *SetFeatureEnabledRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetFeatureEnabledRequest.ProtoReflect.Descriptor instead.
 func (*SetFeatureEnabledRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{7}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SetFeatureEnabledRequest) GetOrigin() string {
@@ -499,7 +751,7 @@ type SetFeatureEnabledResponse struct {
 
 func (x *SetFeatureEnabledResponse) Reset() {
 	*x = SetFeatureEnabledResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[8]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -511,7 +763,7 @@ func (x *SetFeatureEnabledResponse) String() string {
 func (*SetFeatureEnabledResponse) ProtoMessage() {}
 
 func (x *SetFeatureEnabledResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[8]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -524,7 +776,7 @@ func (x *SetFeatureEnabledResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetFeatureEnabledResponse.ProtoReflect.Descriptor instead.
 func (*SetFeatureEnabledResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{8}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{12}
 }
 
 type SetRouteRequest struct {
@@ -539,7 +791,7 @@ type SetRouteRequest struct {
 
 func (x *SetRouteRequest) Reset() {
 	*x = SetRouteRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[9]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -551,7 +803,7 @@ func (x *SetRouteRequest) String() string {
 func (*SetRouteRequest) ProtoMessage() {}
 
 func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[9]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -564,7 +816,7 @@ func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteRequest.ProtoReflect.Descriptor instead.
 func (*SetRouteRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{9}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SetRouteRequest) GetOrigin() string {
@@ -603,7 +855,7 @@ type SetRouteResponse struct {
 
 func (x *SetRouteResponse) Reset() {
 	*x = SetRouteResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[10]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -615,7 +867,7 @@ func (x *SetRouteResponse) String() string {
 func (*SetRouteResponse) ProtoMessage() {}
 
 func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[10]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -628,7 +880,7 @@ func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteResponse.ProtoReflect.Descriptor instead.
 func (*SetRouteResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{10}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{14}
 }
 
 type SetTierModelsRequest struct {
@@ -643,7 +895,7 @@ type SetTierModelsRequest struct {
 
 func (x *SetTierModelsRequest) Reset() {
 	*x = SetTierModelsRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[11]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -655,7 +907,7 @@ func (x *SetTierModelsRequest) String() string {
 func (*SetTierModelsRequest) ProtoMessage() {}
 
 func (x *SetTierModelsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[11]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -668,7 +920,7 @@ func (x *SetTierModelsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetTierModelsRequest.ProtoReflect.Descriptor instead.
 func (*SetTierModelsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{11}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SetTierModelsRequest) GetOrigin() string {
@@ -707,7 +959,7 @@ type SetTierModelsResponse struct {
 
 func (x *SetTierModelsResponse) Reset() {
 	*x = SetTierModelsResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[12]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -719,7 +971,7 @@ func (x *SetTierModelsResponse) String() string {
 func (*SetTierModelsResponse) ProtoMessage() {}
 
 func (x *SetTierModelsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[12]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -732,14 +984,14 @@ func (x *SetTierModelsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetTierModelsResponse.ProtoReflect.Descriptor instead.
 func (*SetTierModelsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{12}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{16}
 }
 
 var File_openfief_models_v1_settings_proto protoreflect.FileDescriptor
 
 const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\n" +
-	"!openfief/models/v1/settings.proto\x12\x12openfief.models.v1\"V\n" +
+	"!openfief/models/v1/settings.proto\x12\x12openfief.models.v1\x1a!openfief/models/v1/provider.proto\"V\n" +
 	"\x17GetModelSettingsRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"C\n" +
@@ -752,12 +1004,28 @@ const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\n" +
 	"TierModels\x12\x12\n" +
 	"\x04tier\x18\x01 \x01(\tR\x04tier\x12\x16\n" +
-	"\x06models\x18\x02 \x03(\tR\x06models\"\xe9\x01\n" +
+	"\x06models\x18\x02 \x03(\tR\x06models\"O\n" +
+	"\vBrokenEntry\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\x12\x14\n" +
+	"\x05model\x18\x02 \x01(\tR\x05model\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\"\xa2\x02\n" +
 	"\x18GetModelSettingsResponse\x12%\n" +
 	"\x0eagents_enabled\x18\x01 \x01(\bR\ragentsEnabled\x12=\n" +
 	"\bfeatures\x18\x02 \x03(\v2!.openfief.models.v1.FeatureToggleR\bfeatures\x121\n" +
 	"\x06routes\x18\x03 \x03(\v2\x19.openfief.models.v1.RouteR\x06routes\x124\n" +
-	"\x05tiers\x18\x04 \x03(\v2\x1e.openfief.models.v1.TierModelsR\x05tiers\"p\n" +
+	"\x05tiers\x18\x04 \x03(\v2\x1e.openfief.models.v1.TierModelsR\x05tiers\x127\n" +
+	"\x06broken\x18\x05 \x03(\v2\x1f.openfief.models.v1.BrokenEntryR\x06broken\"X\n" +
+	"\x19ListModelProvidersRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"\xf8\x01\n" +
+	"\rModelProvider\x12\x1a\n" +
+	"\binstance\x18\x01 \x01(\tR\binstance\x12\x1c\n" +
+	"\tavailable\x18\x02 \x01(\bR\tavailable\x128\n" +
+	"\blocation\x18\x03 \x01(\x0e2\x1c.openfief.models.v1.LocationR\blocation\x12;\n" +
+	"\tretention\x18\x04 \x01(\v2\x1d.openfief.models.v1.RetentionR\tretention\x126\n" +
+	"\x06models\x18\x05 \x03(\v2\x1e.openfief.models.v1.ModelEntryR\x06models\"]\n" +
+	"\x1aListModelProvidersResponse\x12?\n" +
+	"\tproviders\x18\x01 \x03(\v2!.openfief.models.v1.ModelProviderR\tproviders\"p\n" +
 	"\x17SetAgentsEnabledRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x18\n" +
@@ -780,9 +1048,10 @@ const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
 	"\x04tier\x18\x03 \x01(\tR\x04tier\x12\x16\n" +
 	"\x06models\x18\x04 \x03(\tR\x06models\"\x17\n" +
-	"\x15SetTierModelsResponse2\xa8\x04\n" +
+	"\x15SetTierModelsResponse2\xa2\x05\n" +
 	"\x14ModelSettingsService\x12r\n" +
-	"\x10GetModelSettings\x12+.openfief.models.v1.GetModelSettingsRequest\x1a,.openfief.models.v1.GetModelSettingsResponse\"\x03\x90\x02\x01\x12m\n" +
+	"\x10GetModelSettings\x12+.openfief.models.v1.GetModelSettingsRequest\x1a,.openfief.models.v1.GetModelSettingsResponse\"\x03\x90\x02\x01\x12x\n" +
+	"\x12ListModelProviders\x12-.openfief.models.v1.ListModelProvidersRequest\x1a..openfief.models.v1.ListModelProvidersResponse\"\x03\x90\x02\x01\x12m\n" +
 	"\x10SetAgentsEnabled\x12+.openfief.models.v1.SetAgentsEnabledRequest\x1a,.openfief.models.v1.SetAgentsEnabledResponse\x12p\n" +
 	"\x11SetFeatureEnabled\x12,.openfief.models.v1.SetFeatureEnabledRequest\x1a-.openfief.models.v1.SetFeatureEnabledResponse\x12U\n" +
 	"\bSetRoute\x12#.openfief.models.v1.SetRouteRequest\x1a$.openfief.models.v1.SetRouteResponse\x12d\n" +
@@ -801,41 +1070,55 @@ func file_openfief_models_v1_settings_proto_rawDescGZIP() []byte {
 	return file_openfief_models_v1_settings_proto_rawDescData
 }
 
-var file_openfief_models_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_openfief_models_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_openfief_models_v1_settings_proto_goTypes = []any{
-	(*GetModelSettingsRequest)(nil),   // 0: openfief.models.v1.GetModelSettingsRequest
-	(*FeatureToggle)(nil),             // 1: openfief.models.v1.FeatureToggle
-	(*Route)(nil),                     // 2: openfief.models.v1.Route
-	(*TierModels)(nil),                // 3: openfief.models.v1.TierModels
-	(*GetModelSettingsResponse)(nil),  // 4: openfief.models.v1.GetModelSettingsResponse
-	(*SetAgentsEnabledRequest)(nil),   // 5: openfief.models.v1.SetAgentsEnabledRequest
-	(*SetAgentsEnabledResponse)(nil),  // 6: openfief.models.v1.SetAgentsEnabledResponse
-	(*SetFeatureEnabledRequest)(nil),  // 7: openfief.models.v1.SetFeatureEnabledRequest
-	(*SetFeatureEnabledResponse)(nil), // 8: openfief.models.v1.SetFeatureEnabledResponse
-	(*SetRouteRequest)(nil),           // 9: openfief.models.v1.SetRouteRequest
-	(*SetRouteResponse)(nil),          // 10: openfief.models.v1.SetRouteResponse
-	(*SetTierModelsRequest)(nil),      // 11: openfief.models.v1.SetTierModelsRequest
-	(*SetTierModelsResponse)(nil),     // 12: openfief.models.v1.SetTierModelsResponse
+	(*GetModelSettingsRequest)(nil),    // 0: openfief.models.v1.GetModelSettingsRequest
+	(*FeatureToggle)(nil),              // 1: openfief.models.v1.FeatureToggle
+	(*Route)(nil),                      // 2: openfief.models.v1.Route
+	(*TierModels)(nil),                 // 3: openfief.models.v1.TierModels
+	(*BrokenEntry)(nil),                // 4: openfief.models.v1.BrokenEntry
+	(*GetModelSettingsResponse)(nil),   // 5: openfief.models.v1.GetModelSettingsResponse
+	(*ListModelProvidersRequest)(nil),  // 6: openfief.models.v1.ListModelProvidersRequest
+	(*ModelProvider)(nil),              // 7: openfief.models.v1.ModelProvider
+	(*ListModelProvidersResponse)(nil), // 8: openfief.models.v1.ListModelProvidersResponse
+	(*SetAgentsEnabledRequest)(nil),    // 9: openfief.models.v1.SetAgentsEnabledRequest
+	(*SetAgentsEnabledResponse)(nil),   // 10: openfief.models.v1.SetAgentsEnabledResponse
+	(*SetFeatureEnabledRequest)(nil),   // 11: openfief.models.v1.SetFeatureEnabledRequest
+	(*SetFeatureEnabledResponse)(nil),  // 12: openfief.models.v1.SetFeatureEnabledResponse
+	(*SetRouteRequest)(nil),            // 13: openfief.models.v1.SetRouteRequest
+	(*SetRouteResponse)(nil),           // 14: openfief.models.v1.SetRouteResponse
+	(*SetTierModelsRequest)(nil),       // 15: openfief.models.v1.SetTierModelsRequest
+	(*SetTierModelsResponse)(nil),      // 16: openfief.models.v1.SetTierModelsResponse
+	(Location)(0),                      // 17: openfief.models.v1.Location
+	(*Retention)(nil),                  // 18: openfief.models.v1.Retention
+	(*ModelEntry)(nil),                 // 19: openfief.models.v1.ModelEntry
 }
 var file_openfief_models_v1_settings_proto_depIdxs = []int32{
 	1,  // 0: openfief.models.v1.GetModelSettingsResponse.features:type_name -> openfief.models.v1.FeatureToggle
 	2,  // 1: openfief.models.v1.GetModelSettingsResponse.routes:type_name -> openfief.models.v1.Route
 	3,  // 2: openfief.models.v1.GetModelSettingsResponse.tiers:type_name -> openfief.models.v1.TierModels
-	0,  // 3: openfief.models.v1.ModelSettingsService.GetModelSettings:input_type -> openfief.models.v1.GetModelSettingsRequest
-	5,  // 4: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:input_type -> openfief.models.v1.SetAgentsEnabledRequest
-	7,  // 5: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:input_type -> openfief.models.v1.SetFeatureEnabledRequest
-	9,  // 6: openfief.models.v1.ModelSettingsService.SetRoute:input_type -> openfief.models.v1.SetRouteRequest
-	11, // 7: openfief.models.v1.ModelSettingsService.SetTierModels:input_type -> openfief.models.v1.SetTierModelsRequest
-	4,  // 8: openfief.models.v1.ModelSettingsService.GetModelSettings:output_type -> openfief.models.v1.GetModelSettingsResponse
-	6,  // 9: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:output_type -> openfief.models.v1.SetAgentsEnabledResponse
-	8,  // 10: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:output_type -> openfief.models.v1.SetFeatureEnabledResponse
-	10, // 11: openfief.models.v1.ModelSettingsService.SetRoute:output_type -> openfief.models.v1.SetRouteResponse
-	12, // 12: openfief.models.v1.ModelSettingsService.SetTierModels:output_type -> openfief.models.v1.SetTierModelsResponse
-	8,  // [8:13] is the sub-list for method output_type
-	3,  // [3:8] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	4,  // 3: openfief.models.v1.GetModelSettingsResponse.broken:type_name -> openfief.models.v1.BrokenEntry
+	17, // 4: openfief.models.v1.ModelProvider.location:type_name -> openfief.models.v1.Location
+	18, // 5: openfief.models.v1.ModelProvider.retention:type_name -> openfief.models.v1.Retention
+	19, // 6: openfief.models.v1.ModelProvider.models:type_name -> openfief.models.v1.ModelEntry
+	7,  // 7: openfief.models.v1.ListModelProvidersResponse.providers:type_name -> openfief.models.v1.ModelProvider
+	0,  // 8: openfief.models.v1.ModelSettingsService.GetModelSettings:input_type -> openfief.models.v1.GetModelSettingsRequest
+	6,  // 9: openfief.models.v1.ModelSettingsService.ListModelProviders:input_type -> openfief.models.v1.ListModelProvidersRequest
+	9,  // 10: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:input_type -> openfief.models.v1.SetAgentsEnabledRequest
+	11, // 11: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:input_type -> openfief.models.v1.SetFeatureEnabledRequest
+	13, // 12: openfief.models.v1.ModelSettingsService.SetRoute:input_type -> openfief.models.v1.SetRouteRequest
+	15, // 13: openfief.models.v1.ModelSettingsService.SetTierModels:input_type -> openfief.models.v1.SetTierModelsRequest
+	5,  // 14: openfief.models.v1.ModelSettingsService.GetModelSettings:output_type -> openfief.models.v1.GetModelSettingsResponse
+	8,  // 15: openfief.models.v1.ModelSettingsService.ListModelProviders:output_type -> openfief.models.v1.ListModelProvidersResponse
+	10, // 16: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:output_type -> openfief.models.v1.SetAgentsEnabledResponse
+	12, // 17: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:output_type -> openfief.models.v1.SetFeatureEnabledResponse
+	14, // 18: openfief.models.v1.ModelSettingsService.SetRoute:output_type -> openfief.models.v1.SetRouteResponse
+	16, // 19: openfief.models.v1.ModelSettingsService.SetTierModels:output_type -> openfief.models.v1.SetTierModelsResponse
+	14, // [14:20] is the sub-list for method output_type
+	8,  // [8:14] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_openfief_models_v1_settings_proto_init() }
@@ -843,13 +1126,14 @@ func file_openfief_models_v1_settings_proto_init() {
 	if File_openfief_models_v1_settings_proto != nil {
 		return
 	}
+	file_openfief_models_v1_provider_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_models_v1_settings_proto_rawDesc), len(file_openfief_models_v1_settings_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -1021,3 +1021,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1aee16e03567
+  - type: covered_by
+    from: SYM-ms1-ui-models-tokens
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:34:58.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b9c7132872
+  - type: implements
+    from: SYM-ms1-ui-models-tokens
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:34:58.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b2e7b221f2
+  - type: executable_for
+    from: SYM-ms1-ui-models-test-test-models-the-cores-refusal-shows-its-reason-on-the-page
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:11.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d60fe88fa8b

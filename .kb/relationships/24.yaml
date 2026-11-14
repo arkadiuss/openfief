@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-928e2bdb01da
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-problem
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:26.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ea57db51ac1
+  - type: implements
+    from: SYM-ms1-ui-models-route-problem
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:35:26.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad9fbcefae31
+  - type: executable_for
+    from: SYM-ms1-connectapi-settings-test-owners-owner-session
+    to: TEST-models-connectapi-settings
+    created_at: 2026-11-14T00:39:59.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c164a6034eb1

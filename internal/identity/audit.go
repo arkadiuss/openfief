@@ -152,6 +152,12 @@ const (
 	// ActionMaintainerProposalDismissed is the owner dismissing a proposal.
 	// It names the run.
 	ActionMaintainerProposalDismissed AuditAction = "maintainer_proposal_dismissed"
+	// ActionModelSettingsChanged is the owner changing the agents-and-models
+	// settings (D-212, D-205, D-206): the switch, a feature's toggle, a
+	// role's route or a data tier's allowed models. It names the setting
+	// changed (RefModelSetting), never the models listed; the settings
+	// themselves hold those.
+	ActionModelSettingsChanged AuditAction = "model_settings_changed"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -179,6 +185,7 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionMaintainerProposalDropped:   {RefMaintainerRun},
 		ActionMaintainerProposalApplied:   {RefMaintainerRun},
 		ActionMaintainerProposalDismissed: {RefMaintainerRun},
+		ActionModelSettingsChanged:        {RefModelSetting},
 	}
 }
 
@@ -276,6 +283,10 @@ const (
 	// RefMaintainerRun is a run of the model-portfolio maintainer, and the
 	// proposal it made, by the run's ID: 16 hex digits the core makes.
 	RefMaintainerRun RefKind = "maintainer_run"
+	// RefModelSetting is a models setting the owner changed, as one of
+	// ModelSettingRefs' shapes: "switch:on", "feature:ask:off", "route:ask"
+	// or "tier:T0". Names and words of a closed set, never a model list.
+	RefModelSetting RefKind = "model_setting"
 )
 
 // maxPasskeyRefLen is the longest base64url credential ID: 1023 bytes.
@@ -301,6 +312,10 @@ func (r Ref) Validate() error {
 		return r.validatePasskeyRef()
 	case RefModelRole, RefModel, RefModelCall, RefModelError:
 		return r.validateModel()
+	case RefModelSetting:
+		if !validModelSetting(r.ID) {
+			return fmt.Errorf("%w: a model setting reference is of the shape of a setting", ErrInvalidAuditEntry)
+		}
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
 	}
@@ -334,7 +349,7 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -350,14 +365,14 @@ func (r Ref) validateModel() error {
 	var ok bool
 	switch r.Kind {
 	case RefModelRole:
-		ok = r.ID == "ask" || r.ID == "maintainer"
+		ok = r.ID == roleAsk || r.ID == roleMaintainer
 	case RefModel:
 		ok = validModelRef(r.ID)
 	case RefModelCall:
 		ok = isHexID(r.ID)
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -418,7 +433,7 @@ func maintainerRefsOK(e *AuditEntry) bool {
 		return len(e.Refs) == 1
 	}
 	classed := e.Outcome == OutcomeRefused || e.Outcome == OutcomeFailed
-	asMaintainer := slices.ContainsFunc(e.Refs, func(r Ref) bool { return r.Kind == RefModelRole && r.ID == "maintainer" })
+	asMaintainer := slices.ContainsFunc(e.Refs, func(r Ref) bool { return r.Kind == RefModelRole && r.ID == roleMaintainer })
 	return asMaintainer && count[RefModelRole] == 1 && (count[RefModelError] == 1) == classed && len(e.Refs) == 2+count[RefModelError]
 }
 
@@ -558,11 +573,19 @@ func (e *AuditEntry) Validate() error {
 	if err := validateRefs(e.Action, kinds, e.Refs); err != nil {
 		return err
 	}
+	return e.validateShape()
+}
+
+// validateShape checks what the entry's action asks of its references and
+// outcome beyond their kinds.
+func (e *AuditEntry) validateShape() error {
 	switch {
 	case isGrantAction(e.Action):
 		return validateGrantRefs(e.Refs)
 	case e.Action == ActionModelCall || e.Action == ActionModelCallResult:
 		return validateModelEntry(e)
+	case e.Action == ActionModelSettingsChanged:
+		return validateSettingsEntry(e)
 	case e.Action == ActionMaintainerRun, e.Action == ActionMaintainerProposalDropped,
 		e.Action == ActionMaintainerProposalApplied, e.Action == ActionMaintainerProposalDismissed:
 		return validateMaintainerEntry(e)
@@ -737,4 +760,41 @@ func knownActorKind(k ActorKind) bool {
 		return true
 	}
 	return false
+}
+
+// Roles of a model call, as audit entries name them.
+const (
+	roleAsk        = "ask"
+	roleMaintainer = "maintainer"
+)
+
+// ModelSettings are the settings an ActionModelSettingsChanged entry may name,
+// a closed set: the switch turned "on" or "off", each feature's toggle turned
+// on or off, each role's route and each data tier's models.
+func ModelSettings() []string {
+	const count = 14 // two for the switch, six toggles, two routes and four tiers
+	out := make([]string, 0, count)
+	out = append(out, "switch:on", "switch:off")
+	for _, f := range []string{roleAsk, roleMaintainer, "mcp"} {
+		out = append(out, "feature:"+f+":on", "feature:"+f+":off")
+	}
+	for _, r := range []string{roleAsk, roleMaintainer} {
+		out = append(out, "route:"+r)
+	}
+	for _, t := range []string{"T0", "TF", "T1", "T2"} {
+		out = append(out, "tier:"+t)
+	}
+	return out
+}
+
+// validModelSetting reports whether id is one of ModelSettings.
+func validModelSetting(id string) bool { return slices.Contains(ModelSettings(), id) }
+
+// validateSettingsEntry checks an entry of a models setting changed (D-212):
+// ok, naming the one setting.
+func validateSettingsEntry(e *AuditEntry) error {
+	if e.Outcome != OutcomeOK || len(e.Refs) != 1 || e.Refs[0].Kind != RefModelSetting {
+		return fmt.Errorf("%w: a %s entry is ok and names the one setting", ErrInvalidAuditEntry, e.Action)
+	}
+	return nil
 }

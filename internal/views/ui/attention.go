@@ -65,7 +65,7 @@ func attentionKindOf(kind string) attentionKind {
 		kindCashCheckpoint:                      {Label: "Cash balance differs"},
 		kindBondFeeAssumed:                      {Label: "Bond fee to confirm"},
 		kindBondSeries:                          {Label: "Bond series still without its ISIN or terms"},
-		"model-route-broken":                    {Label: "Model route names a missing provider instance"},
+		"model-route-broken":                    {Label: "Model route names a missing provider instance", Page: modelsPath + "#routes-title", Action: "Fix the route"},
 		kindTargetProposal:                      {Label: "Target weights proposed by the maintainer", Page: modelPath, Action: "Open the model portfolio"},
 		kindMaintainerFailing:                   {Label: "Maintainer's weekly run failing", Page: modelPath, Action: "Open the model portfolio"},
 		kindViewPluginUngranted:                 {Label: "View plugin without access to any account", Page: accessPath + viewPluginsAnchor, Action: "Open Access"},

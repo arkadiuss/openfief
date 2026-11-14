@@ -224,6 +224,65 @@ func TestNewAuditEntry(t *testing.T) {
 			name: "a proposal applied that also names a model", actor: owner, action: identity.ActionMaintainerProposalApplied, outcome: identity.OutcomeOK,
 			refs: []identity.Ref{{Kind: identity.RefMaintainerRun, ID: callID}, {Kind: identity.RefModelRole, ID: "maintainer"}}, wantErr: true,
 		},
+		{
+			name: "a models setting changed: switch:on", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "switch:on"}},
+		},
+		{
+			name: "a models setting changed: switch:off", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "switch:off"}},
+		},
+		{
+			name: "a models setting changed: feature:ask:on", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "feature:ask:on"}},
+		},
+		{
+			name: "a models setting changed: feature:mcp:off", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "feature:mcp:off"}},
+		},
+		{
+			name: "a models setting changed: route:maintainer", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "route:maintainer"}},
+		},
+		{
+			name: "a models setting changed: tier:TF", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "tier:TF"}},
+		},
+		{
+			name: "a models setting named wrongly: switch:maybe", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "switch:maybe"}}, wantErr: true,
+		},
+		{
+			name: "a models setting named wrongly: feature:trade:on", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "feature:trade:on"}}, wantErr: true,
+		},
+		{
+			name: "a models setting named wrongly: feature:ask", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "feature:ask"}}, wantErr: true,
+		},
+		{
+			name: "a models setting named wrongly: route:trader", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "route:trader"}}, wantErr: true,
+		},
+		{
+			name: "a models setting named wrongly: tier:T9", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "tier:T9"}}, wantErr: true,
+		},
+		{
+			name: "a models setting named wrongly: route:ask with openrouter/gpt", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "route:ask with openrouter/gpt"}}, wantErr: true,
+		},
+		{
+			name: "a settings change that failed", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "switch:on"}}, wantErr: true,
+		},
+		{
+			name: "a settings change naming no setting", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK, wantErr: true,
+		},
+		{
+			name: "a settings change naming a model besides", actor: owner, action: identity.ActionModelSettingsChanged, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{{Kind: identity.RefModelSetting, ID: "route:ask"}, {Kind: identity.RefModel, ID: "p/m"}}, wantErr: true,
+		},
 		{name: "unknown action", actor: owner, action: "transfer 100 PLN", outcome: identity.OutcomeOK, wantErr: true},
 		{name: "empty action", actor: owner, outcome: identity.OutcomeOK, wantErr: true},
 		{name: "unknown outcome", actor: owner, action: identity.ActionSignOut, outcome: "ok, with a note", wantErr: true},

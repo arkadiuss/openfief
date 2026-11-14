@@ -1119,3 +1119,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-422b7795491a
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:14.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64f9d5ddd4a9
+  - type: implements
+    from: SYM-ms1-ui-models-route-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:35:14.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f15fb81d36b7

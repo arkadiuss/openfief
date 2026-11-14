@@ -1098,3 +1098,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e693aadec8b2
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-test-settings-providers-mark-an-instance-that-does-not-answer-unavailable
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:23.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb9eeebd0666
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:20.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928bfb0e7625
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:20.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51d3259d6d34
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-model-provider-get-retention
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:33.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3c63d5a121
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-model-provider-get-retention
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:33.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cba66b30afa9

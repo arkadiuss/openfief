@@ -1119,3 +1119,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b480ea78aba2
+  - type: covered_by
+    from: SYM-ms1-app-settings-settings-with-providers
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:25:03.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d447ef621e26
+  - type: implements
+    from: SYM-ms1-app-settings-settings-with-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:25:04.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f334fad31f49
+  - type: covered_by
+    from: SYM-ms1-identity-audit-model-settings
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:33:55.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f877494a6bc
+  - type: implements
+    from: SYM-ms1-identity-audit-model-settings
+    to: REQ-models-settings-changes-audited
+    created_at: 2026-11-14T00:33:55.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfa322d3d60e

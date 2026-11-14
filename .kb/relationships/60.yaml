@@ -902,3 +902,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94b7977110a6
+  - type: covered_by
+    from: SYM-ms1-ui-models-provider-row
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:36:49.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e54ece20997
+  - type: implements
+    from: SYM-ms1-ui-models-provider-row
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:36:49.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2980ebfa261
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-reason
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:59.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c1b2bccc56c
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-get-reason
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:59.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-336bfeb61cc0

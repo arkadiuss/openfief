@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30f69f5f8a1d
+  - type: executable_for
+    from: SYM-ms1-app-settings-audit-test-fake-directory
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:38:47.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91a2db7c02e9

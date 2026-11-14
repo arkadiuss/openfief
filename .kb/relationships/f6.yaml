@@ -1063,3 +1063,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcc530debacd
+  - type: executable_for
+    from: SYM-ms1-ui-models-fakes-test-fake-model-settings-list-model-providers
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:41:50.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b56a83520fbf
+  - type: covered_by
+    from: SYM-ms1-gen-settings-connect-unimplemented-model-settings-service-handler-list-model-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:15.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c36a9e3374
+  - type: implements
+    from: SYM-ms1-gen-settings-connect-unimplemented-model-settings-service-handler-list-model-providers
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:15.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac8dd24c21cf
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-broken-entry-reset
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:22:25.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e534f5116df8
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-broken-entry-reset
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:22:25.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28f8095df9ce
+  - type: covered_by
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-string
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T01:24:53.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cdd25963d21
+  - type: implements
+    from: SYM-ms1-gen-settings-pb-list-model-providers-response-string
+    to: REQ-models-providers-listed-to-owner
+    created_at: 2026-11-14T01:24:53.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03554a95fd72

@@ -99,6 +99,10 @@ type Config struct {
 	// optional: without it the model portfolio's page shows no note and the
 	// Inbox no proposals.
 	Maintainer portfoliov1connect.MaintainerServiceClient
+	// ModelSettings calls the core's ModelSettingsService (D-212) like Auth: with
+	// the plugin's own token, the owner's session in each request. It is
+	// optional: without it the Models page answers 404.
+	ModelSettings modelsv1connect.ModelSettingsServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -154,6 +158,9 @@ type server struct {
 	// maintainer is the core's model-portfolio maintainer (D-204); nil
 	// without Config.Maintainer.
 	maintainer portfoliov1connect.MaintainerServiceClient
+	// modelSettings is the core's agents-and-models settings (D-212); nil
+	// without Config.ModelSettings.
+	modelSettings modelsv1connect.ModelSettingsServiceClient
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -180,7 +187,7 @@ func New(cfg *Config) (http.Handler, error) {
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
 		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention, syncs: cfg.Syncs,
 		instruments: cfg.Instruments, checkpoints: cfg.CashCheckpoints,
-		pages: p, pwa: app, today: cfg.Today, log: cfg.Log, maintainer: cfg.Maintainer,
+		pages: p, pwa: app, today: cfg.Today, log: cfg.Log, maintainer: cfg.Maintainer, modelSettings: cfg.ModelSettings,
 	}
 	if s.today == nil {
 		s.today = utcToday
@@ -229,6 +236,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	s.maintainerRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
+	s.modelsRoutes(mux)
 	s.accessRoutes(mux)
 	s.auditRoutes(mux)
 	s.onboardingRoutes(mux)

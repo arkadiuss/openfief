@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8639ed19d12b
+  - type: specified_by
+    from: REQ-models-providers-listed-to-owner
+    to: SCEN-models-providers-listed-to-owner
+    created_at: 2026-11-14T00:24:19.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19503e78f0a3

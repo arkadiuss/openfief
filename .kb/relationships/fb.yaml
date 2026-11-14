@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6546a81a4455
+  - type: executable_for
+    from: SYM-ms1-connectapi-providers-test-directory-model-providers
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:39:15.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7188ddc30c79

@@ -44,16 +44,22 @@ func (f *fakeStore) Settings(context.Context) (modelrouter.Settings, error) {
 	return f.settings, f.err
 }
 
-func (f *fakeStore) SaveEnabled(_ context.Context, on bool) error {
+func (f *fakeStore) SaveEnabled(ctx context.Context, on bool, within func(context.Context) error) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	f.settings.Switch = f.settings.Switch.WithEnabled(on)
 	return f.err
 }
 
-func (f *fakeStore) SaveToggle(_ context.Context, ft modelrouter.Feature, on bool) error {
+func (f *fakeStore) SaveToggle(ctx context.Context, ft modelrouter.Feature, on bool, within func(context.Context) error) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	sw, err := f.settings.Switch.WithToggle(ft, on)
 	if err != nil {
 		return fmt.Errorf("toggling a feature: %w", err)
@@ -62,9 +68,12 @@ func (f *fakeStore) SaveToggle(_ context.Context, ft modelrouter.Feature, on boo
 	return f.err
 }
 
-func (f *fakeStore) SaveRoute(_ context.Context, role modelrouter.Role, route []modelrouter.Ref) error {
+func (f *fakeStore) SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref, within func(context.Context) error) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	routes := map[modelrouter.Role]modelrouter.Route{}
 	maps.Copy(routes, f.settings.Routes)
 	if len(route) == 0 {
@@ -76,9 +85,12 @@ func (f *fakeStore) SaveRoute(_ context.Context, role modelrouter.Role, route []
 	return f.err
 }
 
-func (f *fakeStore) SaveDataTierModels(_ context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref) error {
+func (f *fakeStore) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTier, allowed []modelrouter.Ref, within func(context.Context) error) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
 	policy := modelrouter.DataTierPolicy{}
 	maps.Copy(policy, f.settings.Policy)
 	if len(allowed) == 0 {
@@ -197,6 +209,15 @@ func callIDs() app.CallIDs {
 	}
 }
 
+// runWithin runs the hook a store runs inside its transaction, when there is
+// one.
+func runWithin(ctx context.Context, within func(context.Context) error) error {
+	if within == nil {
+		return nil
+	}
+	return within(ctx)
+}
+
 // fakeOwners accepts one session token as the owner's.
 type fakeOwners struct{ token string }
 
@@ -208,6 +229,14 @@ func (f fakeOwners) CheckOwner(_ context.Context, _, token string) error {
 		return app.ErrNotOwner
 	}
 	return app.ErrNoSession
+}
+
+// OwnerSession returns the owner's session ID, "session-" and the token.
+func (f fakeOwners) OwnerSession(ctx context.Context, origin, token string) (string, error) {
+	if err := f.CheckOwner(ctx, origin, token); err != nil {
+		return "", err
+	}
+	return "session-" + token, nil
 }
 
 var errBoom = errors.New("boom")

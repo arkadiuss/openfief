@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcd204ceb524
+  - type: covered_by
+    from: SYM-ms1-ui-models-route-entry-of
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:20.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9330727f0799
+  - type: implements
+    from: SYM-ms1-ui-models-route-entry-of
+    to: REQ-ui-models-routes-providers
+    created_at: 2026-11-14T00:35:20.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5316de2bfa39

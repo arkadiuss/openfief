@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc8bdaa203a8
+  - type: covered_by
+    from: SYM-ms1-ui-models-posted-tiers
+    to: TEST-ui-models
+    created_at: 2026-11-14T00:35:51.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c757ed1aa3b
+  - type: implements
+    from: SYM-ms1-ui-models-posted-tiers
+    to: REQ-ui-models-tier-lists
+    created_at: 2026-11-14T00:35:51.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33ed57e09999

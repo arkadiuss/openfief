@@ -1098,3 +1098,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-176d306f0b52
+  - type: specified_by
+    from: REQ-ui-models-routes-providers
+    to: SCEN-ui-models-routes-providers
+    created_at: 2026-11-14T00:24:13.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-963e510a947a
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-models-connectapi-providers
+    created_at: 2026-11-14T00:24:18.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c14ffeb9d3f3
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-models-app-settings-audit
+    created_at: 2026-11-14T00:24:18.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-083c89908cc6
+  - type: verified_by
+    from: SCEN-models-providers-listed-to-owner
+    to: TEST-ingest-kube-model-provider
+    created_at: 2026-11-14T00:24:18.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0923b6f0884
