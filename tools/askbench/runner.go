@@ -59,6 +59,7 @@ type Bench struct {
 	// total is how many cases the bench has, of which cases are the ones asked.
 	total  int
 	vocab  []string
+	names  []string
 	prompt []string
 	meter  *meter
 }
@@ -98,7 +99,7 @@ func NewBench(opts *Options) (*Bench, error) {
 		o.Parallel = 1
 	}
 	return &Bench{
-		opts: o, seed: seed, pf: pf, cases: cases, total: total, vocab: vocabularyOf(seed), prompt: promptTexts(seed.Today),
+		opts: o, seed: seed, pf: pf, cases: cases, total: total, vocab: vocabularyOf(seed), names: realNamesOf(seed), prompt: ui.AskPromptNonPublic(seed.Today),
 		meter: newMeter(o.MaxCost, o.MaxCalls),
 	}, nil
 }
@@ -189,7 +190,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	run, err := asker.Ask(ctx, t.c.Question)
 	d := &RunData{
 		Case: t.c, Run: run, Calls: mr.calls, Limits: b.opts.Limits, Duration: b.opts.Now().Sub(started),
-		Prompt: b.prompt, Vocabulary: b.vocab,
+		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names,
 	}
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
 	for _, c := range mr.calls {
@@ -231,7 +232,7 @@ func (b *Bench) grade(ctx context.Context, d *RunData, rep *RunReport) error {
 	if b.opts.Judge != nil && d.Case.Kind == kindRefusalAdvice && d.Run.Answered {
 		v := b.opts.Judge.verdict(ctx, d.Case.Question, d.Run.Text)
 		rep.Judge = &v
-		rep.PhraseAdvice = adviceIn(d.Run.Text)
+		rep.PhraseAdvice = adviceOf(d)
 	}
 	return nil
 }

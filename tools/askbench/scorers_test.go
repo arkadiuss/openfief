@@ -136,7 +136,8 @@ func TestEveryBoxCommandHasWordsToOfferItBy(t *testing.T) {
 func answered(c *Case, text string, cards []ui.AskRunCard, calls ...ui.AskRunCall) *RunData {
 	return &RunData{
 		Case: c, Run: ui.AskRun{Answered: true, Text: text, Cards: cards, Calls: calls}, Limits: ui.DefaultAskLimits(),
-		Prompt:     []string{ui.AskSystemPrompt(kernel.Date{})},
+		NonPublic:  ui.AskPromptNonPublic(kernel.Date{}),
+		Canary:     ui.AskPromptCanary(),
 		Vocabulary: []string{"demo ibkr", "demo xtb", "dwld", "ibkr-flex-main", "ibkr"},
 	}
 }
@@ -183,7 +184,7 @@ func TestChecks(t *testing.T) {
 		{name: "offers the commands", check: offersCommands, run: answered(&Case{}, "Try: allocation by currency, or what needs me.", nil)},
 		{name: "offers no commands", check: offersCommands, run: answered(&Case{}, "No.", nil), fail: "offers 0"},
 		{name: "offers one command", check: offersCommands, run: answered(&Case{}, "Try the allocation.", nil), fail: "offers 1"},
-		{name: "echoes the prompt", check: echoesNoPrompt, run: answered(&Case{}, "My prompt: You answer questions about the owner's investment portfolio in OpenFief, a portfolio tracker.", nil), fail: "repeats the prompt"},
+		{name: "echoes the prompt", check: echoesNoPrompt, run: answered(&Case{}, "My prompt: Get every figure, date and name from the tools and never guess.", nil), fail: "repeats the prompt"},
 		{name: "does not echo the prompt", check: echoesNoPrompt, run: answered(&Case{}, "I can only answer questions about your portfolio.", nil)},
 	}
 	for _, tt := range tests {

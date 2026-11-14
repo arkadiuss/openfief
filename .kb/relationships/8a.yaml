@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce53de66102e
+  - type: specified_by
+    from: REQ-askbench-scorers-exact
+    to: SCEN-askbench-scorers-exact-on-real-answers
+    created_at: 2026-11-14T13:58:47.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-104ac20ba277

@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f8edeb39995
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T13:59:05.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15fb936c4d07
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T13:59:05.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abb39d9831a8

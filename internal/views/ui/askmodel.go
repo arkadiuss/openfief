@@ -83,16 +83,6 @@ func (l AskLimits) withDefaults() AskLimits {
 	return l
 }
 
-// askSystemPrompt is the system message of every question. It holds no
-// portfolio data, so it is public (T2): the owner's data comes in only as
-// the result of a tool the model calls.
-const askSystemPrompt = "You answer questions about the owner's investment portfolio in OpenFief, a portfolio tracker. " +
-	"You can only read: the tools are the whole of what you can do, and nothing you say or ask for changes anything. " +
-	"Get every figure, date and name from the tools and never guess or compute one the tools don't give. " +
-	"If a tool result says it was withheld or failed, say what you could not read and answer only from the rest. " +
-	"Answer briefly in plain text, with no markdown, in the language of the question. " +
-	"Amounts are in the owner's reporting currency unless a result says otherwise. Today is "
-
 // askMessage is a message of the conversation with the model, with the data
 // tier of what it holds (D-206).
 type askMessage struct {
@@ -190,7 +180,7 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	*conv = askConversation{
 		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
 		msgs: []askMessage{
-			{Role: "system", Content: askSystemPrompt + a.today().String() + ".", Tier: tierT2},
+			{Role: "system", Content: askSystemPrompt(a.today()), Tier: tierT2},
 			{Role: "user", Content: question, Tier: tierT0},
 		},
 	}

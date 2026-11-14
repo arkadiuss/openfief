@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d37d439601d
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-lastrune
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:24.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-828b4ba63285
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-lastrune
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:00:24.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5575091ae2b9

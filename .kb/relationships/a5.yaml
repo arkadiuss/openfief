@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc1aaab8fb10
+  - type: verified_by
+    from: SCEN-askbench-scorers-exact-on-real-answers
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T13:58:46.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a4cc266552
+  - type: verified_by
+    from: SCEN-askbench-scorers-exact-on-real-answers
+    to: TEST-ui-ask-prompt
+    created_at: 2026-11-14T13:58:46.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34689e7af804

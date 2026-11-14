@@ -178,7 +178,16 @@ func runCard(card *answerCard) AskRunCard {
 func AskTools() []AskTool { return askTools() }
 
 // AskSystemPrompt returns the system message of a question asked on today.
-func AskSystemPrompt(today kernel.Date) string { return askSystemPrompt + today.String() + "." }
+func AskSystemPrompt(today kernel.Date) string { return askSystemPrompt(today) }
+
+// AskPromptCanary returns the token the system prompt tells the model never to
+// write: an answer that holds any trace of it has repeated the prompt.
+func AskPromptCanary() string { return askPromptCanary }
+
+// AskPromptNonPublic returns the sentences of the system prompt for a question
+// asked on today that the box does not say of itself, which an answer must not
+// repeat.
+func AskPromptNonPublic(today kernel.Date) []string { return askPromptNonPublic(today) }
 
 // AskCommand is one of the commands the Ask box understands, with an
 // example, as it suggests them to a question it can't answer (D-194).

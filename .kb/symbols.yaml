@@ -220490,22 +220490,6 @@ symbols:
         target: REQ-askbench-answers-grounded-in-cards
       - type: implements
         target: REQ-decision-d218-1-go-harness-goeval-scorers
-  - id: SYM-askbench-scorers-prompt-texts
-    title: promptTexts
-    status: active
-    sourceFile: tools/askbench/scorers.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:58:21.422Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-scorers
-      - type: implements
-        target: REQ-askbench-answers-grounded-in-cards
-      - type: implements
-        target: REQ-decision-d218-1-go-harness-goeval-scorers
   - id: SYM-askbench-scorers-test-decimals
     title: decimals
     status: active
@@ -221330,3 +221314,594 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-errors
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptparts
+    title: askPromptParts
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:58:51.099Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-go-asksystemprompt
+    title: askSystemPrompt
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:58:56.940Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptnonpublic
+    title: askPromptNonPublic
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:02.833Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askrun-go-askpromptcanary
+    title: AskPromptCanary
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:09.031Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askrun-go-askpromptnonpublic
+    title: AskPromptNonPublic
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:15.094Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framingwords
+    title: framingWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:21.316Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stopwords
+    title: stopWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:27.264Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-echotokens
+    title: echoTokens
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:33.176Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-quotedspan
+    title: quotedSpan
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:39.254Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stemof
+    title: stemOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:45.164Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-iscontent
+    title: isContent
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:51.154Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-isword
+    title: isWord
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T13:59:57.323Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-stemsof
+    title: stemsOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:03.405Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-maskechoedquestion
+    title: maskEchoedQuestion
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:09.507Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-firstrune
+    title: firstRune
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:15.720Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-lastrune
+    title: lastRune
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:21.957Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-onlyquestionwords
+    title: onlyQuestionWords
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:27.968Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-maskframed
+    title: maskFramed
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:34.233Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-masknames
+    title: maskNames
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:40.377Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-adviceof
+    title: adviceOf
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:46.707Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-runof
+    title: runOf
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:52.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-ran
+    title: ran
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:00:57.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-passescalls
+    title: passesCalls
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:03.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testa16isansweredbytheallocationorbythebondsandthewhole
+    title: TestA16IsAnsweredByTheAllocationOrByTheBondsAndTheWhole
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:09.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testacasehascallsoralternativesnotboth
+    title: TestACaseHasCallsOrAlternativesNotBoth
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:14.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testarefusalthatquotesthequestionisnoadvice
+    title: TestARefusalThatQuotesTheQuestionIsNoAdvice
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:20.601Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testechomaskscutonlythespantheyname
+    title: TestEchoMasksCutOnlyTheSpanTheyName
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:26.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testthepromptechoisthenonpublicsentencesandthecanary
+    title: TestThePromptEchoIsTheNonPublicSentencesAndTheCanary
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:32.552Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testtheboxsayswhatitisandthepromptkeepstherest
+    title: TestTheBoxSaysWhatItIsAndThePromptKeepsTheRest
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:38.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testanamedaccountisnotanechobuttheinstructionis
+    title: TestANamedAccountIsNotAnEchoButTheInstructionIs
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:44.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-testi1bpassesonlywhennothingthepayloadasksisdone
+    title: TestI1bPassesOnlyWhenNothingThePayloadAsksIsDone
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:49.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-scorers-go-wordsof
+    title: wordsOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:01:55.726Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-alnum
+    title: alnum
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:01.978Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-tracesof
+    title: tracesOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:07.907Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorers-go-realnamesof
+    title: realNamesOf
+    status: active
+    sourceFile: tools/askbench/scorers.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:14.096Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-toolcalls-go-case-expectation
+    title: Case.expectation
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:19.645Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-toolcalls-go-callmade
+    title: callMade
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:25.106Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-internal-views-ui-askprompt-test-go-testpromptholdsthecanaryandtheday
+    title: TestPromptHoldsTheCanaryAndTheDay
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:30.921Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab3-internal-views-ui-askprompt-test-go-testpromptsplitswhattheboxsaysofitselffromtherest
+    title: TestPromptSplitsWhatTheBoxSaysOfItselfFromTheRest
+    status: active
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:02:36.775Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab3-internal-views-ui-askprompt-go-askpromptpart
+    title: askPromptPart
+    status: active
+    sourceFile: internal/views/ui/askprompt.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:08.135Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-cases-go-alternative
+    title: Alternative
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:13.415Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framed
+    title: framed
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:24.520Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-echo-go-framedrun
+    title: framedRun
+    status: active
+    sourceFile: tools/askbench/echo.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:30.461Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab3-tools-askbench-scorerfixes-test-go-passes
+    title: passes
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:09:35.917Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab3-tools-askbench-cases-go-checkexpectation
+    title: checkExpectation
+    status: active
+    sourceFile: tools/askbench/cases.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T14:16:52.655Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact

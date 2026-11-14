@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c718b46ba432
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-testa16isansweredbytheallocationorbythebondsandthewhole
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:01:11.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d01f6a7da44

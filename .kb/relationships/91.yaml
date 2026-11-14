@@ -1147,3 +1147,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a5c8cb3ef31
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-onlyquestionwords
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:30.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07967e906f61
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-onlyquestionwords
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:00:31.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e223f9b66749

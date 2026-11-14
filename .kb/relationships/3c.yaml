@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-906b153b010d
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-scorerfixes-test-go-testacasehascallsoralternativesnotboth
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:01:17.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5c95105f5a6

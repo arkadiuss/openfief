@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4f40764d64d
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-echo-go-stemsof
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T14:00:06.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de42d51176de
+  - type: implements
+    from: SYM-ab3-tools-askbench-echo-go-stemsof
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T14:00:06.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7caaff885d6e
