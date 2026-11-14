@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9bebd0d8d767
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-test-record-owner-change-keeps-the-entry-with-the-change
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:52:51.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c187f1a96f0f

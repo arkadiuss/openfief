@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/attention"
@@ -17,6 +18,14 @@ type Items struct {
 	owners Owners
 	now    func() time.Time
 	checks []Check
+	audit  ChangeAuditor
+}
+
+// WithAudit has every acknowledgement and resolution of the owner entered in
+// the audit log through a (D-211), and returns s.
+func (s *Items) WithAudit(a ChangeAuditor) *Items {
+	s.audit = a
+	return s
 }
 
 // New returns the use cases over store, with the owner's sessions checked
@@ -71,7 +80,7 @@ func (s *Items) Clear(ctx context.Context, kind attention.Kind, subject string) 
 // fails with ErrUnknownItem, a resolved one with
 // attention.ErrInvalidTransition.
 func (s *Items) Acknowledge(ctx context.Context, origin, sessionToken string, id int64) (attention.Item, error) {
-	return s.ownerAction(ctx, origin, sessionToken, id, attention.Acknowledge)
+	return s.ownerAction(ctx, origin, sessionToken, id, auditAcknowledged, attention.Acknowledge)
 }
 
 // Resolve records, for the owner, that the owner resolved item id
@@ -79,17 +88,40 @@ func (s *Items) Acknowledge(ctx context.Context, origin, sessionToken string, id
 // ErrUnknownItem; an item of a kind that resolves only when its check
 // clears with attention.ErrNotOwnerResolvable.
 func (s *Items) Resolve(ctx context.Context, origin, sessionToken string, id int64) (attention.Item, error) {
-	return s.ownerAction(ctx, origin, sessionToken, id, attention.Resolve)
+	return s.ownerAction(ctx, origin, sessionToken, id, auditResolved, attention.Resolve)
 }
 
 // ownerAction checks the owner, then applies action to item id in one
-// transaction and returns the item as it stands after it.
-func (s *Items) ownerAction(ctx context.Context, origin, sessionToken string, id int64,
+// transaction, entered in the audit log as audit, and returns the item as it
+// stands after it. A number no item can have, which only an unknown item
+// answers, enters nothing.
+func (s *Items) ownerAction(ctx context.Context, origin, sessionToken string, id int64, audit string,
 	action func(*attention.Item, time.Time) (attention.Change, bool, error),
 ) (attention.Item, error) {
 	if err := s.owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return attention.Item{}, fmt.Errorf("attention item %d: %w", id, err)
 	}
+	var out attention.Item
+	apply := func(ctx context.Context) error {
+		var err error
+		out, err = s.decide(ctx, id, action)
+		return err
+	}
+	var err error
+	if id > 0 {
+		err = audited(ctx, s.audit, origin, sessionToken, audit, []string{"attention_item:" + strconv.FormatInt(id, 10)}, apply)
+	} else {
+		err = apply(ctx)
+	}
+	if err != nil {
+		return attention.Item{}, fmt.Errorf("attention item %d: %w", id, err)
+	}
+	return out, nil
+}
+
+// decide applies action to item id in one transaction and returns the item as
+// it stands after it. An unknown item fails with ErrUnknownItem.
+func (s *Items) decide(ctx context.Context, id int64, action func(*attention.Item, time.Time) (attention.Change, bool, error)) (attention.Item, error) {
 	var out attention.Item
 	err := s.store.InTx(ctx, func(tx Store) error {
 		if err := tx.Lock(ctx); err != nil {
@@ -117,7 +149,7 @@ func (s *Items) ownerAction(ctx context.Context, origin, sessionToken string, id
 		return nil
 	})
 	if err != nil {
-		return attention.Item{}, fmt.Errorf("attention item %d: %w", id, err)
+		return attention.Item{}, fmt.Errorf("deciding: %w", err)
 	}
 	return out, nil
 }

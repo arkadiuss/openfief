@@ -1112,3 +1112,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea1f772dd5fc
+  - type: implements
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations-remove
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:54:33.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5978ba07498f
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-plugins-plugin-observations-remove
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:54:33.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc6c6a3b6c58
+  - type: executable_for
+    from: SYM-s8-internal-views-ui-audit-test-test-audit-log-names-every-value-of-the-contract
+    to: TEST-ui-audit-names-changes
+    created_at: 2026-11-14T03:00:49.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbaf97198957

@@ -209,6 +209,10 @@ The owner adds and renames kinds and adds and changes sleeves in the built-in UI
 
 The [built-in UI](ui.md) draws it as the second line of the value-over-time chart, from go-live, both lines at 100 (D-106 moves it to a separate performance chart, not built yet), with the drawdowns in a table, and offers the form on its settings page.
 
+### The owner's entries are audited
+
+Each sleeve and sleeve kind the owner adds, changes, renames or deletes (`sleeve_added`, `sleeve_changed`, `sleeve_deleted`, `sleeve_kind_added`, `sleeve_kind_renamed`, `sleeve_kind_deleted`, naming the sleeve or the kind by its key) and each save of the model portfolio (`settings_changed`, naming `model_portfolio` and none of its targets or weights) writes one entry of the audit log through the `ChangeAuditor` port of [audit.go](../../internal/portfolio/app/audit.go), kept only if the store then succeeds, so a change the log can't record is not made (D-211, [Identity](identity.md#the-audit-log)). The maintainer's own entries are the maintainer's, as above.
+
 ## Decisions
 
 - **GR-12**: its Connect services log a failure only through `kernel.LogSafe`: by the known errors in its chain, or else its innermost error's type, never its text, which may carry an amount, an ISIN or an account number; `TestFailuresLogNoValues` drives every sink with such failures against a deny-list.

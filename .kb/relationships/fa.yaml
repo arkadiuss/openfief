@@ -965,3 +965,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c2eb69738c2
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-scripted-plugins-installed-plugins
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:52:02.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-516bc767614a
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-ref-validate-change-ref
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:52.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6ab2ade4afa
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-ref-validate-change-ref
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:52.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf24847a7f16
+  - type: implements
+    from: SYM-s8-internal-valuation-app-audit-audited
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T03:00:04.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e90c409b1b7
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-audit-audited
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T03:00:04.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd91711dcee

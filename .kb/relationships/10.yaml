@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1d96024eb2f
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-is-isinshape
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:58.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdc2491b2ec2
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-is-isinshape
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:58.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3d872af40a3

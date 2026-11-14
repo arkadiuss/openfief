@@ -1154,3 +1154,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c611e527dbe9
+  - type: implements
+    from: SYM-s8-cmd-core-pluginaudit-start-plugin-audit
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:51:40.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee7d4de73681
+  - type: covered_by
+    from: SYM-s8-cmd-core-pluginaudit-start-plugin-audit
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:51:41.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad75ec600fff

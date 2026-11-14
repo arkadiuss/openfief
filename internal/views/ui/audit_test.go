@@ -114,6 +114,73 @@ func TestAuditLogPage(t *testing.T) {
 	wantNoBody(t, rec, "Older entries")
 }
 
+// TestAuditLogNamesEveryValueOfTheContract checks that the page has words for
+// every action, kind of actor and kind of record the contract has (D-211), the
+// owner's changes in every context and the operator's installs included, so a
+// value added to the contract without its words fails here.
+func TestAuditLogNamesEveryValueOfTheContract(t *testing.T) {
+	t.Parallel()
+	for n, name := range identityv1.AuditAction_name {
+		if n != 0 && actionWords(identityv1.AuditAction(n)) == "Unknown action" {
+			t.Errorf("%s has no words on the Audit log page", name)
+		}
+	}
+	names := &auditNames{accounts: map[string]string{"xtb-main": "XTB main"}}
+	for n, name := range identityv1.AuditRefKind_name {
+		got := names.ref(&identityv1.AuditRef{Kind: identityv1.AuditRefKind(n), Id: "xtb-main"})
+		if n != 0 && strings.HasPrefix(got, "Record ") {
+			t.Errorf("%s has no words on the Audit log page: %q", name, got)
+		}
+	}
+}
+
+// TestAuditLogNamesEveryKindOfActor checks that the page has words for every
+// kind of actor the contract has, in the filter and in the table.
+func TestAuditLogNamesEveryKindOfActor(t *testing.T) {
+	t.Parallel()
+	for n, name := range identityv1.AuditActorKind_name {
+		if n != 0 && actorKindWords(identityv1.AuditActorKind(n)) == unknownWord {
+			t.Errorf("%s has no words in the actor filter", name)
+		}
+		actor := &identityv1.AuditActor{Kind: identityv1.AuditActorKind(n), Id: "0123456789abcdef"}
+		if n != 0 && (&auditNames{}).actor(actor) == unknownWord {
+			t.Errorf("%s is no one the page can name", name)
+		}
+	}
+}
+
+// TestAuditLogReadsChangesAsSentencesOfIDs checks that an owner's change and
+// the operator's install read as who, what and the records by ID or name,
+// never a value.
+func TestAuditLogReadsChangesAsSentencesOfIDs(t *testing.T) {
+	t.Parallel()
+	names := &auditNames{accounts: map[string]string{"xtb-main": "XTB main"}}
+	operator := &identityv1.AuditEntry{
+		Actor:   &identityv1.AuditActor{Kind: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR, Id: "operator"},
+		Action:  identityv1.AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED,
+		Outcome: identityv1.AuditOutcome_AUDIT_OUTCOME_OK,
+		Refs: []*identityv1.AuditRef{
+			{Kind: identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, Id: "xtb-main"},
+			{Kind: identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION, Id: "4"},
+		},
+	}
+	if row := names.row(operator); row.Who != "The operator" || row.What != "Plugin upgraded" || row.Records != "Plugin xtb-main, Generation 4" {
+		t.Errorf("the operator's entry reads %+v", row)
+	}
+	change := &identityv1.AuditEntry{
+		Actor:   &identityv1.AuditActor{Kind: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER, Id: "0123456789abcdef"},
+		Action:  identityv1.AuditAction_AUDIT_ACTION_SETTINGS_CHANGED,
+		Outcome: identityv1.AuditOutcome_AUDIT_OUTCOME_OK,
+		Refs: []*identityv1.AuditRef{
+			{Kind: identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, Id: "chart:start"},
+			{Kind: identityv1.AuditRefKind_AUDIT_REF_KIND_ACCOUNT, Id: "xtb-main"},
+		},
+	}
+	if row := names.row(change); row.Who != "Owner" || row.What != "Setting changed" || row.Records != "Setting chart:start, Account XTB main" {
+		t.Errorf("the owner's change reads %+v", row)
+	}
+}
+
 // TestAuditLogFilters checks the filters of D-211 reach the core as the owner
 // set them, by actor kind, action, outcome and range of days (the last day
 // included), alone and together, and show the matching entries; and that a

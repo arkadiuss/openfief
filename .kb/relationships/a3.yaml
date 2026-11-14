@@ -1385,3 +1385,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b502a437766a
+  - type: implements
+    from: SYM-s8-internal-identity-postgres-plugins-pair
+    to: REQ-identity-audit-plugin-installs
+    created_at: 2026-11-14T02:57:10.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ae516466787
+  - type: covered_by
+    from: SYM-s8-internal-identity-postgres-plugins-pair
+    to: TEST-identity-audit-change-postgres
+    created_at: 2026-11-14T02:57:10.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce47b8affb5a

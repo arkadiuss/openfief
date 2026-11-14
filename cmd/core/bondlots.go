@@ -142,7 +142,7 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 	store := ingestpg.New(d.pool)
 	connectors := entryConnectors(d, store)
 	connectors.Seeding, connectors.Starts = d.ledger, store
-	return &ingestapp.BondLots{
+	lots := &ingestapp.BondLots{
 		Owners: owners, Bindings: store, Batches: store, Connectors: connectors,
 		Booked:     ledgerImporter{ledger: d.ledger},
 		Claims:     store,
@@ -150,6 +150,10 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 		Today:      d.today,
 		NewBatchID: newBatchID,
 	}
+	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
+		lots.Audit = a
+	}
+	return lots
 }
 
 // entryConnectors returns the connector use case the owner's entries and

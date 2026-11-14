@@ -332,6 +332,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	// a holder that is to be given the household grant views nothing under SpiceDB.
 	go c.settleGrants(ctx, cfg.Authz.Mode == authzSpiceDB, log)
 	startCluster(ctx, c, cfg, cl, log)
+	startPluginAudit(ctx, pool, installed, now, log)
 	return c, nil
 }
 

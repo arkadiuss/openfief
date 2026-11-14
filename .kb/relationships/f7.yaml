@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f59803b3c3ad
+  - type: implements
+    from: SYM-s8-cmd-core-model-change-recorder
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:48:42.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b735a22191e7
+  - type: covered_by
+    from: SYM-s8-cmd-core-model-change-recorder
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:48:42.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf4f1f94f089

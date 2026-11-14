@@ -68,6 +68,8 @@ func (l *Ledger) DecideTransfer(ctx context.Context, pair ledger.TransferPair, d
 type Transfers struct {
 	Owners Owners
 	Ledger TransferDecider
+	// Audit keeps each decision with its audit entry; nil enters none.
+	Audit ChangeAuditor
 }
 
 // TransferDecider records decisions on transfers; *Ledger implements it.
@@ -118,7 +120,19 @@ func (t *Transfers) Decide(ctx context.Context, origin, sessionToken string, pai
 	if authErr := mayChange(ctx, t.Owners, origin, sessionToken, accounts); authErr != nil {
 		return ledger.TransferLink{}, fmt.Errorf("deciding a transfer: %w", authErr)
 	}
-	link, err := t.Ledger.DecideTransfer(ctx, pair, decision)
+	action := auditTransferConfirmed
+	if decision == ledger.TransferRejected {
+		action = auditTransferRejected
+	}
+	var link ledger.TransferLink
+	err = audited(ctx, t.Audit, origin, sessionToken, action, accountRefs(accounts...), func(ctx context.Context) error {
+		var decideErr error
+		link, decideErr = t.Ledger.DecideTransfer(ctx, pair, decision)
+		if decideErr != nil {
+			return fmt.Errorf("deciding: %w", decideErr)
+		}
+		return nil
+	})
 	if err != nil {
 		return ledger.TransferLink{}, fmt.Errorf("deciding a transfer: %w", err)
 	}

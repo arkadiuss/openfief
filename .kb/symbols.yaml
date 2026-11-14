@@ -211422,3 +211422,1711 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-models
+  - id: SYM-s8-cmd-core-core-ledger-names
+    title: ledgerNames
+    status: active
+    sourceFile: cmd/core/core.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:35.187Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-cmd-core-model-change-recorder
+    title: changeRecorder
+    status: active
+    sourceFile: cmd/core/model.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:39.684Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-cmd-core-model-owner-sessions-audited
+    title: ownerSessions.Audited
+    status: active
+    sourceFile: cmd/core/model.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:44.984Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-cmd-core-ownerchanges-test-owner-change
+    title: ownerChange
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:49.536Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-change-env
+    title: changeEnv
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:54.122Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-change-env-with-clients
+    title: changeEnv.withClients
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:48:59.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-outcome
+    title: outcome
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:04.682Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-owner-changes
+    title: ownerChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:09.868Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-setting-changes
+    title: settingChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:15.056Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-market-data-changes
+    title: marketDataChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:20.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-sleeve-changes
+    title: sleeveChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:25.377Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-account-changes
+    title: accountChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:30.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-ledger-changes
+    title: ledgerChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:35.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-attention-changes
+    title: attentionChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:40.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-agent-changes
+    title: agentChanges
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:46.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-covered-elsewhere
+    title: coveredElsewhere
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:51.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-audited-by-their-own
+    title: auditedByTheirOwn
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:49:56.634Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-unaudited-by-design
+    title: unauditedByDesign
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:01.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-read-only-procedures
+    title: readOnlyProcedures
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:07.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-owner-services
+    title: ownerServices
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:12.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-procedures
+    title: procedures
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:17.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-lists-of
+    title: listsOf
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:22.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-test-every-owner-procedure-is-classified-for-the-audit-log
+    title: TestEveryOwnerProcedureIsClassifiedForTheAuditLog
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:28.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-declared-tests
+    title: declaredTests
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:33.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-test-covered-elsewhere-names-tests-that-exist
+    title: TestCoveredElsewhereNamesTestsThatExist
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:38.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-new-change-env
+    title: newChangeEnv
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:44.240Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-record-demo-inputs
+    title: recordDemoInputs
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:49.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-entries-after
+    title: entriesAfter
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:50:54.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-want-entries-of
+    title: wantEntriesOf
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:00.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-last-seq
+    title: lastSeq
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:05.403Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-test-every-owner-change-writes-exactly-one-entry
+    title: TestEveryOwnerChangeWritesExactlyOneEntry
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:10.696Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-check-one-entry
+    title: checkOneEntry
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:16.155Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-check-refused-without-the-log
+    title: checkRefusedWithoutTheLog
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:21.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-ownerchanges-test-import-flagged-assertion
+    title: importFlaggedAssertion
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:27.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s8-cmd-core-pluginaudit-observed-plugins
+    title: observedPlugins
+    status: active
+    sourceFile: cmd/core/pluginaudit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:32.674Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-audit
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-cmd-core-pluginaudit-start-plugin-audit
+    title: startPluginAudit
+    status: active
+    sourceFile: cmd/core/pluginaudit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:38.328Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-audit
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-cmd-core-pluginaudit-observe-plugins
+    title: observePlugins
+    status: active
+    sourceFile: cmd/core/pluginaudit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:43.963Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-audit
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-cmd-core-pluginaudit-test-scripted-plugins
+    title: scriptedPlugins
+    status: active
+    sourceFile: cmd/core/pluginaudit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:49.083Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-audit
+  - id: SYM-s8-cmd-core-pluginaudit-test-plugins-step
+    title: pluginsStep
+    status: active
+    sourceFile: cmd/core/pluginaudit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:54.143Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-audit
+  - id: SYM-s8-cmd-core-pluginaudit-test-scripted-plugins-installed-plugins
+    title: scriptedPlugins.InstalledPlugins
+    status: active
+    sourceFile: cmd/core/pluginaudit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:51:59.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-audit
+  - id: SYM-s8-cmd-core-pluginaudit-test-test-observe-plugins-enters-what-the-operator-did
+    title: TestObservePluginsEntersWhatTheOperatorDid
+    status: active
+    sourceFile: cmd/core/pluginaudit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:05.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-audit
+  - id: SYM-s8-cmd-core-pluginaudit-test-test-owner-sessions-refuse-to-audit-what-they-cannot
+    title: TestOwnerSessionsRefuseToAuditWhatTheyCannot
+    status: active
+    sourceFile: cmd/core/pluginaudit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:11.452Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-audit
+  - id: SYM-s8-internal-attention-app-audit-change-auditor
+    title: ChangeAuditor
+    status: active
+    sourceFile: internal/attention/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:16.420Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-attention-app-audit-audited
+    title: audited
+    status: active
+    sourceFile: internal/attention/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:22.043Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-attention-app-items-items-with-audit
+    title: Items.WithAudit
+    status: active
+    sourceFile: internal/attention/app/items.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:27.663Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-attention-app-items-items-decide
+    title: Items.decide
+    status: active
+    sourceFile: internal/attention/app/items.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:33.568Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-app-audit-auth-record-owner-change
+    title: Auth.RecordOwnerChange
+    status: active
+    sourceFile: internal/identity/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:39.091Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-app-ownerchange-test-test-record-owner-change-keeps-the-entry-with-the-change
+    title: TestRecordOwnerChangeKeepsTheEntryWithTheChange
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:48.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins
+    title: plugins
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:53.701Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-new-plugins
+    title: newPlugins
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:52:59.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins-atomically
+    title: plugins.Atomically
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:04.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins-lock-plugin-generations
+    title: plugins.LockPluginGenerations
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:10.343Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins-plugin-generations
+    title: plugins.PluginGenerations
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:15.864Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins-save-plugin-generation
+    title: plugins.SavePluginGeneration
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:21.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-plugins-delete-plugin-generation
+    title: plugins.DeletePluginGeneration
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:26.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-operator-entry
+    title: operatorEntry
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:31.980Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-observed-step
+    title: observedStep
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:36.818Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-test-plugin-observations-enter-what-the-operator-did
+    title: TestPluginObservationsEnterWhatTheOperatorDid
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:42.384Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-ownerchange-test-test-plugin-observations-keep-nothing-when-the-log-is-down
+    title: TestPluginObservationsKeepNothingWhenTheLogIsDown
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:47.759Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-app
+  - id: SYM-s8-internal-identity-app-plugins-plugin-generation-store
+    title: PluginGenerationStore
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:52.627Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-observed-plugin
+    title: ObservedPlugin
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:53:57.515Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations
+    title: PluginObservations
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:02.699Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-new-plugin-observations
+    title: NewPluginObservations
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:08.490Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations-observe
+    title: PluginObservations.Observe
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:14.250Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations-observe-private
+    title: PluginObservations.observe
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:19.954Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations-enter
+    title: PluginObservations.enter
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:25.578Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations-remove
+    title: PluginObservations.remove
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:31.103Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-app-plugins-plugin-observations-record
+    title: PluginObservations.record
+    status: active
+    sourceFile: internal/identity/app/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:36.576Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-app
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-audit-actor-validate-fixed
+    title: Actor.validateFixed
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:42.289Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-entry-content
+  - id: SYM-s8-internal-identity-auditchange-ref-rule
+    title: refRule
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:47.299Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-one
+    title: one
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:53.003Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-maybe
+    title: maybe
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:54:58.716Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-up-to-two
+    title: upToTwo
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:04.437Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-change-rules
+    title: changeRules
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:09.987Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-change-action-kinds
+    title: changeActionKinds
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:15.705Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-is-change-action
+    title: isChangeAction
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:21.388Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-validate-change
+    title: validateChange
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:27.126Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-setting-refs
+    title: settingRefs
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:32.997Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-validate-setting-refs
+    title: validateSettingRefs
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:38.674Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-settings
+    title: Settings
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:44.337Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-ref-validate-change-ref
+    title: Ref.validateChangeRef
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:50.071Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-is-isinshape
+    title: isISINShape
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:55:55.743Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-is-positive-decimal
+    title: isPositiveDecimal
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:01.397Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-parse-ref-kind
+    title: ParseRefKind
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:07.199Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-identity-auditchange-test-test-change-entries-name-what-changed-by-id
+    title: TestChangeEntriesNameWhatChangedByID
+    status: active
+    sourceFile: internal/identity/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:12.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-domain
+  - id: SYM-s8-internal-identity-auditchange-test-test-every-change-action-is-known-and-parses
+    title: TestEveryChangeActionIsKnownAndParses
+    status: active
+    sourceFile: internal/identity/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:18.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-domain
+  - id: SYM-s8-internal-identity-auditchange-test-test-settings-and-reference-kinds-are-closed-sets
+    title: TestSettingsAndReferenceKindsAreClosedSets
+    status: active
+    sourceFile: internal/identity/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:24.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-domain
+  - id: SYM-s8-internal-identity-postgres-auditchange-test-test-audit-log-takes-every-domain-action
+    title: TestAuditLogTakesEveryDomainAction
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:29.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-postgres
+  - id: SYM-s8-internal-identity-postgres-auditchange-test-owner-change-auth
+    title: ownerChangeAuth
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:35.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-postgres
+  - id: SYM-s8-internal-identity-postgres-auditchange-test-test-owner-change-entry-commits-only-with-the-change
+    title: TestOwnerChangeEntryCommitsOnlyWithTheChange
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:41.140Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-postgres
+  - id: SYM-s8-internal-identity-postgres-auditchange-test-test-plugin-generations-are-entered-once-per-generation
+    title: TestPluginGenerationsAreEnteredOncePerGeneration
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:46.764Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-change-postgres
+  - id: SYM-s8-internal-identity-postgres-plugins-store-lock-plugin-generations
+    title: Store.LockPluginGenerations
+    status: active
+    sourceFile: internal/identity/postgres/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:56:52.460Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-postgres
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-postgres-plugins-store-plugin-generations
+    title: Store.PluginGenerations
+    status: active
+    sourceFile: internal/identity/postgres/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:02.647Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-postgres
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-postgres-plugins-pair
+    title: pair
+    status: active
+    sourceFile: internal/identity/postgres/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:08.222Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-postgres
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-postgres-plugins-store-save-plugin-generation
+    title: Store.SavePluginGeneration
+    status: active
+    sourceFile: internal/identity/postgres/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:13.794Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-postgres
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-identity-postgres-plugins-store-delete-plugin-generation
+    title: Store.DeletePluginGeneration
+    status: active
+    sourceFile: internal/identity/postgres/plugins.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:19.372Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-postgres
+      - type: implements
+        target: REQ-identity-audit-plugin-installs
+  - id: SYM-s8-internal-ingest-app-accounts-accounts-apply-change
+    title: Accounts.applyChange
+    status: active
+    sourceFile: internal/ingest/app/accounts.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:25.071Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-change-auditor
+    title: ChangeAuditor
+    status: active
+    sourceFile: internal/ingest/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:29.945Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-audited
+    title: audited
+    status: active
+    sourceFile: internal/ingest/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:35.667Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-account-ref
+    title: accountRef
+    status: active
+    sourceFile: internal/ingest/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:41.263Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-created-refs
+    title: createdRefs
+    status: active
+    sourceFile: internal/ingest/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:46.990Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-instance-ref
+    title: instanceRef
+    status: active
+    sourceFile: internal/ingest/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:52.338Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ingest-app-audit-test-audit-call
+    title: auditCall
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:57:57.183Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-recording-auditor
+    title: recordingAuditor
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:02.163Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-recording-auditor-audited
+    title: recordingAuditor.Audited
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:07.614Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirming-store
+    title: confirmingStore
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:12.415Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirming-store-ticker-accounts
+    title: confirmingStore.TickerAccounts
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:17.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirming-store-confirm-ticker
+    title: confirmingStore.ConfirmTicker
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:23.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirming-store-correct-ticker
+    title: confirmingStore.CorrectTicker
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:28.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-ingest-change
+    title: ingestChange
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:33.531Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirmation
+    title: confirmation
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:39.070Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-confirm-ticker
+    title: confirmTicker
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:44.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-correct-ticker
+    title: correctTicker
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:50.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-retry-sync
+    title: retrySync
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:58:56.014Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-test-ingest-owner-changes-are-audited
+    title: TestIngestOwnerChangesAreAudited
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:01.704Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-ingest-app-audit-test-test-retry-of-an-instance-no-plugin-can-have-enters-nothing
+    title: TestRetryOfAnInstanceNoPluginCanHaveEntersNothing
+    status: active
+    sourceFile: internal/ingest/app/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:07.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-owner-changes-audited
+  - id: SYM-s8-internal-kernel-unavailable-unavailable
+    title: Unavailable
+    status: active
+    sourceFile: internal/kernel/unavailable.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:13.087Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ledger-app-audit-change-auditor
+    title: ChangeAuditor
+    status: active
+    sourceFile: internal/ledger/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:18.116Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ledger-app-audit-audited
+    title: audited
+    status: active
+    sourceFile: internal/ledger/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:23.877Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-ledger-app-audit-account-refs
+    title: accountRefs
+    status: active
+    sourceFile: internal/ledger/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:29.590Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-portfolio-app-audit-change-auditor
+    title: ChangeAuditor
+    status: active
+    sourceFile: internal/portfolio/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:34.600Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-portfolio-app-audit-audited
+    title: audited
+    status: active
+    sourceFile: internal/portfolio/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:40.173Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-portfolio-app-models-models-with-audit
+    title: Models.WithAudit
+    status: active
+    sourceFile: internal/portfolio/app/models.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:45.677Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-portfolio-app-sleeves-sleeves-audited
+    title: Sleeves.audited
+    status: active
+    sourceFile: internal/portfolio/app/sleeves.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:51.160Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-audit-change-auditor
+    title: ChangeAuditor
+    status: active
+    sourceFile: internal/valuation/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T02:59:56.153Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-audit-audited
+    title: audited
+    status: active
+    sourceFile: internal/valuation/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:01.842Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-audit-audited-setting
+    title: auditedSetting
+    status: active
+    sourceFile: internal/valuation/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:07.442Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-audit-isin-of-instrument
+    title: isinOfInstrument
+    status: active
+    sourceFile: internal/valuation/app/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:13.064Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-chartstart-chart-starts-with-audit
+    title: ChartStarts.WithAudit
+    status: active
+    sourceFile: internal/valuation/app/chartstart.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:18.797Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-crosscheck-cross-checks-with-audit
+    title: CrossChecks.WithAudit
+    status: active
+    sourceFile: internal/valuation/app/crosscheck.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:24.479Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-ranking-rankings-with-audit
+    title: Rankings.WithAudit
+    status: active
+    sourceFile: internal/valuation/app/ranking.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:30.109Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-valuation-app-settings-settings-with-audit
+    title: Settings.WithAudit
+    status: active
+    sourceFile: internal/valuation/app/settings.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:35.852Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-changes-audited
+      - type: implements
+        target: REQ-identity-audit-owner-changes
+  - id: SYM-s8-internal-views-ui-audit-change-ref
+    title: changeRef
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:41.529Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit-names-changes
+      - type: implements
+        target: REQ-identity-audit-owner-view
+  - id: SYM-s8-internal-views-ui-audit-test-test-audit-log-names-every-value-of-the-contract
+    title: TestAuditLogNamesEveryValueOfTheContract
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:46.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-names-changes
+  - id: SYM-s8-internal-views-ui-audit-test-test-audit-log-names-every-kind-of-actor
+    title: TestAuditLogNamesEveryKindOfActor
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:52.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-names-changes
+  - id: SYM-s8-internal-views-ui-audit-test-test-audit-log-reads-changes-as-sentences-of-ids
+    title: TestAuditLogReadsChangesAsSentencesOfIDs
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: the S8 brief, from D-211, 2026-11-14
+      recorded_at: 2026-11-14T03:00:57.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit-names-changes

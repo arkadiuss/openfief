@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d4e9b486f11
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-ledger-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:38.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1ea44ec44f2
+  - type: implements
+    from: SYM-s8-internal-ledger-app-audit-change-auditor
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:20.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38d1604f03f4
+  - type: covered_by
+    from: SYM-s8-internal-ledger-app-audit-change-auditor
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:20.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6625df2c1d7

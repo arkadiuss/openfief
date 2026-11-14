@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-238a7625a841
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-setting-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:17.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c57ace7a5e0
+  - type: executable_for
+    from: SYM-s8-internal-identity-auditchange-test-test-every-change-action-is-known-and-parses
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:56:21.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-033eeeb0a95c

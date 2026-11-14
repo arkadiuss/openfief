@@ -1098,3 +1098,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-283e7dcd05ab
+  - type: executable_for
+    from: SYM-s8-internal-views-ui-audit-test-test-audit-log-reads-changes-as-sentences-of-ids
+    to: TEST-ui-audit-names-changes
+    created_at: 2026-11-14T03:01:00.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c5b27cff82

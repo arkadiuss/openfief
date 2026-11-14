@@ -35,7 +35,7 @@ The audit log must record every change of state and every access event.
 
 ## Context
 
-The author decided it with D-211, and chose in the design session that a change and its entry commit in one core-database transaction, so a change whose entry can't be written fails. The identity events are built: sign-ins and sign-outs, passkeys, enrollment links and script tokens. Grants, settings, the owner's entries, attention decisions, plugin installs and model and MCP calls are not, so the requirement stays open. Read API calls are not entries.
+The author decided it with D-211, and chose in the design session that a change and its entry commit in one core-database transaction, so a change whose entry can't be written fails. Built: the identity events (sign-ins and sign-outs, passkeys, enrollment links, script tokens, grants, viewers), model calls and the maintainer's runs and decisions, the settings of the models, and, with S8, the owner's changes in the ledger, ingest, valuation, portfolio and attention contexts and the operator's plugin installs (REQ-identity-audit-owner-changes, REQ-identity-audit-plugin-installs). MCP calls are not built, since D-213 is not, so the requirement stays open. Read API calls are not entries. Connector syncs the core runs on its own are not entered either, which is open for the author.
 
 ## Source
 

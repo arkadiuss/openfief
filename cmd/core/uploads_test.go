@@ -16,6 +16,7 @@ import (
 	"google.golang.org/protobuf/testing/protocmp"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
@@ -203,6 +204,10 @@ func TestStatementService(t *testing.T) {
 	checkUploadRecorded(t, pool, checkUploadTwice(t, api, session, statement)...)
 	checkUploadRefusals(t, api, session, statement)
 	checkUploadScoped(t, srv, session)
+	// The opening upload and the two of the same statement are entries of the owner's (D-211); the refused
+	// uploads, one of them refused by the connector after its entry was written, left none.
+	uploaded := identity.ActionStatementUploaded
+	wantEntriesOf(t, pool, []identity.AuditAction{uploaded}, uploaded, uploaded, uploaded)
 }
 
 // checkUploadTwice uploads statement twice and checks the counts: all new,

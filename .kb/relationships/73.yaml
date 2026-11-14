@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7584a508de49
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-owner-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:12.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75478c2e185d

@@ -29,8 +29,12 @@ func valuationOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // newRankings returns the owner's ranking of market-data sources (D-94)
 // over pool, l and vstore, with the owner's sessions checked by owners;
 // nil owners serves no owner, as the connector commands need none.
-func newRankings(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, owners valuationapp.Owners) *valuationapp.Rankings {
-	return valuationapp.NewRankings(valuationapp.NewPlanner(l, ledgerpg.New(pool)), vstore, owners)
+func newRankings(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, owners *ownerSessions) *valuationapp.Rankings {
+	planner := valuationapp.NewPlanner(l, ledgerpg.New(pool))
+	if owners == nil {
+		return valuationapp.NewRankings(planner, vstore, nil)
+	}
+	return valuationapp.NewRankings(planner, vstore, owners).WithAudit(owners)
 }
 
 // withMarketDataService returns h with the MarketDataService mounted next

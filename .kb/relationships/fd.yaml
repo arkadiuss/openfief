@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1623dd8cd70
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-retry-sync
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:58.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26bbe0e4ae8

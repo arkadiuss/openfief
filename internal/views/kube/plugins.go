@@ -123,6 +123,7 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 	r := views.PluginRecord{
 		Instance:   u.GetName(),
 		Deleting:   u.GetDeletionTimestamp() != nil,
+		Generation: u.GetGeneration(),
 		Image:      nestedString(u, "spec", "image"),
 		Requested:  nestedStrings(u, "spec", "manifest", "capabilities"),
 		Effective:  nestedStrings(u, "status", "effective", "capabilities"),

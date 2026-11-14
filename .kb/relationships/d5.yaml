@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7fdd577c5ec
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-new-plugins
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:01.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-453fc8c9977a

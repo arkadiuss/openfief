@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"maps"
 	"slices"
 	"strings"
 	"time"
@@ -42,10 +43,21 @@ const (
 	// ActorAnonymous is a caller that proved nothing, such as a refused
 	// sign-in; it has no ID.
 	ActorAnonymous ActorKind = "anonymous"
+	// ActorOperator is the operator, the controller that installs, upgrades
+	// and removes plugins from their Plugin resources (D-211): the core
+	// records what it observes the operator did, and the actor's ID is
+	// "operator". A script token and a plugin are no actor kinds: a script
+	// token only reads (D-6), and a plugin changes nothing with its own
+	// identity, since the built-in UI relays the owner's session and the core
+	// is what calls connectors and model providers.
+	ActorOperator ActorKind = "operator"
 )
 
 // SystemActorID is the ID of the system actor.
 const SystemActorID = "core"
+
+// OperatorActorID is the ID of the operator actor.
+const OperatorActorID = "operator"
 
 // Actor is who made the change an audit entry records.
 type Actor struct {
@@ -65,16 +77,20 @@ func (a Actor) Validate() error {
 		if !isHexID(a.ID) {
 			return fmt.Errorf("%w: an enrollment code actor is named by the code's ID", ErrInvalidAuditEntry)
 		}
-	case ActorSystem:
-		if a.ID != SystemActorID {
-			return fmt.Errorf("%w: the system actor's ID is %q", ErrInvalidAuditEntry, SystemActorID)
-		}
-	case ActorAnonymous:
-		if a.ID != "" {
-			return fmt.Errorf("%w: an anonymous actor has no ID", ErrInvalidAuditEntry)
-		}
+	case ActorSystem, ActorOperator, ActorAnonymous:
+		return a.validateFixed()
 	default:
 		return fmt.Errorf("%w: unknown actor kind", ErrInvalidAuditEntry)
+	}
+	return nil
+}
+
+// validateFixed checks the ID of an actor that has only one: the core's, the
+// operator's, and none for a caller that proved nothing.
+func (a Actor) validateFixed() error {
+	want := map[ActorKind]string{ActorSystem: SystemActorID, ActorOperator: OperatorActorID, ActorAnonymous: ""}[a.Kind]
+	if a.ID != want {
+		return fmt.Errorf("%w: the ID of a %s actor is %q", ErrInvalidAuditEntry, a.Kind, want)
 	}
 	return nil
 }
@@ -163,7 +179,7 @@ const (
 // actionKinds maps each action to the kinds of record its entries may name.
 // A function, not a variable: the domain holds no package-level state.
 func actionKinds() map[AuditAction][]RefKind {
-	return map[AuditAction][]RefKind{
+	out := map[AuditAction][]RefKind{
 		ActionSignIn:                  {RefSession, RefPerson},
 		ActionSignOut:                 {RefSession},
 		ActionSignOutEverywhere:       nil,
@@ -187,6 +203,8 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionMaintainerProposalDismissed: {RefMaintainerRun},
 		ActionModelSettingsChanged:        {RefModelSetting},
 	}
+	maps.Copy(out, changeActionKinds())
+	return out
 }
 
 // grantRefKinds are the kinds of record a grant entry names: its holder and
@@ -316,6 +334,8 @@ func (r Ref) Validate() error {
 		if !validModelSetting(r.ID) {
 			return fmt.Errorf("%w: a model setting reference is of the shape of a setting", ErrInvalidAuditEntry)
 		}
+	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+		return r.validateChangeRef()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
 	}
@@ -349,7 +369,8 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -372,7 +393,8 @@ func (r Ref) validateModel() error {
 		ok = isHexID(r.ID)
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting:
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting,
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -586,6 +608,8 @@ func (e *AuditEntry) validateShape() error {
 		return validateModelEntry(e)
 	case e.Action == ActionModelSettingsChanged:
 		return validateSettingsEntry(e)
+	case isChangeAction(e.Action):
+		return validateChange(e)
 	case e.Action == ActionMaintainerRun, e.Action == ActionMaintainerProposalDropped,
 		e.Action == ActionMaintainerProposalApplied, e.Action == ActionMaintainerProposalDismissed:
 		return validateMaintainerEntry(e)
@@ -756,7 +780,7 @@ func (f *AuditFilter) inRange(at time.Time) bool {
 // knownActorKind reports whether k is one of the actor kinds.
 func knownActorKind(k ActorKind) bool {
 	switch k {
-	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorAnonymous:
+	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAnonymous:
 		return true
 	}
 	return false

@@ -627,6 +627,10 @@ The spreadsheet is an Excel 97-2003 workbook (`.xls`), which no maintained pure-
 
 The `Attribution` names `Ministerstwo Finansów`, the dataset, `CC BY 4.0`, the file's address, the day the ministry made the data (the gov.pl file's `Last-Modified` day, or the dane.gov.pl resource's data date, else its creation day), the time it was taken and the `PublishedProcessing` the reader did. The core stores it with the terms ([Valuation](valuation.md#decisions), migration 0013).
 
+### The owner's changes are audited
+
+Each change the owner makes here writes one entry of the audit log through the `ChangeAuditor` port of [audit.go](../../internal/ingest/app/audit.go), kept only if the change then succeeds (D-211, [Identity](identity.md#the-audit-log)): creating, changing, binding and deleting an account (`account_created`, `account_changed`, `account_bound`, `account_deleted`, naming the account and, when there was one, the connector instance), remapping a broker account (`broker_account_remapped`, naming the instance and the account it now maps to, never the broker's account number), uploading a statement (`statement_uploaded`), entering and deleting a bond lot (`bond_lot_added`, `bond_lot_deleted`), confirming and correcting a ticker (`ticker_confirmed`, `ticker_corrected`, naming the instrument by ISIN) and retrying a sync (`sync_retried`, naming the instance, which must be a name a plugin instance can have, else the retry is refused as no instance before any entry). A multi-step change, such as an account's creation, is one entry around all its steps. The connectors' scheduled syncs and `core connector sync` are not the owner's and are not entered.
+
 ## Decisions
 
 - **GR-12**: `app.LogSafe` is `kernel.LogSafe` with ingest's known errors (`loggableErrors`), which the other contexts' sinks now share.

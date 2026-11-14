@@ -55,7 +55,13 @@ func (r *Rankings) SetSeriesSource(ctx context.Context, origin, sessionToken str
 	if err != nil {
 		return fmt.Errorf("setting the source of %s: %w", series, err)
 	}
-	if _, err := r.store.SaveSeriesSource(ctx, &valuation.SeriesSource{Series: series, Source: source, ByOwner: true}, revals); err != nil {
+	err = auditedSetting(ctx, r.audit, origin, sessionToken, settingSeriesSource, func(ctx context.Context) error {
+		if _, saveErr := r.store.SaveSeriesSource(ctx, &valuation.SeriesSource{Series: series, Source: source, ByOwner: true}, revals); saveErr != nil {
+			return fmt.Errorf("saving: %w", saveErr)
+		}
+		return nil
+	})
+	if err != nil {
 		return fmt.Errorf("setting the source of %s: %w", series, err)
 	}
 	return nil
@@ -73,7 +79,10 @@ func (r *Rankings) SetGapThreshold(ctx context.Context, origin, sessionToken str
 	if err := valuation.ValidateGapThreshold(kind, days); err != nil {
 		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	if err := r.store.SaveGapThreshold(ctx, kind, days); err != nil {
+	err := auditedSetting(ctx, r.audit, origin, sessionToken, settingGapPrefix+kind.String(), func(ctx context.Context) error {
+		return r.store.SaveGapThreshold(ctx, kind, days)
+	})
+	if err != nil {
 		return fmt.Errorf("setting the gap threshold of %s: %w", kind, err)
 	}
 	return nil

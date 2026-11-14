@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f5fda6d62a5
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-last-seq
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:07.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9ebbab8f123

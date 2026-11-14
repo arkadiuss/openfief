@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff7131f58468
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-import-flagged-assertion
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:29.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d9aa05e29ba

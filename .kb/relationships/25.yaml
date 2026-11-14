@@ -1042,3 +1042,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9778316b625
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-settings
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:47.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18a878a6504c
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-settings
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:47.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bcea4544b7d
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-correct-ticker
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:52.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b5d425cf203

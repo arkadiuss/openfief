@@ -1315,3 +1315,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89b700cc823f
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-agent-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:49:48.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ef26772afa
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-change-action-kinds
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:18.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c5d6a8f404
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-change-action-kinds
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:18.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0f6d30f6410

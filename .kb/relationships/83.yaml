@@ -972,3 +972,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd6706bc1c0c
+  - type: specified_by
+    from: REQ-identity-audit-owner-changes
+    to: SCEN-identity-audit-owner-changes
+    created_at: 2026-11-14T02:39:48.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f791f7f137d6
+  - type: implements
+    from: SYM-s8-internal-valuation-app-audit-isin-of-instrument
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T03:00:15.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea5586f1b9f1
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-audit-isin-of-instrument
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T03:00:15.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fae6dc16f4f3

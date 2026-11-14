@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5598e66e5d51
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-up-to-two
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:55:07.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57b30670024e
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-up-to-two
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:55:07.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7434ea23873b

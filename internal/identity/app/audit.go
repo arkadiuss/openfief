@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/identity"
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // Auditor keeps the append-only audit log (D-211). *identity/postgres.Store
@@ -120,4 +121,36 @@ func (a *Auth) AuditEntries(ctx context.Context, origin, token string, f *identi
 		}
 	}
 	return page, nil
+}
+
+// RecordOwnerChange has change, a change of state another context makes for
+// the owner of session, kept together with its audit entry (D-211): the entry
+// of action naming refs is appended first, in a transaction, then change runs,
+// and the entry is kept only if change returns nil. So a change the log can't
+// take an entry for is not made, and a change that fails leaves no entry.
+// change runs with the caller's context, on the connections of its own store;
+// the transaction opened here holds the entry alone, so a commit that fails
+// after change succeeded leaves a change with no entry, and returns an error.
+//
+// A failed append is an error wrapping kernel.ErrAuditUnavailable, and an
+// entry the domain refuses (an unknown action, a reference of the wrong shape)
+// one wrapping identity.ErrInvalidAuditEntry, either way with change not
+// called. An error of change is returned as it is, wrapped.
+func (a *Auth) RecordOwnerChange(ctx context.Context, session identity.SessionID, action identity.AuditAction, refs []identity.Ref,
+	change func(context.Context) error,
+) error {
+	e, err := identity.NewAuditEntry(a.now(), identity.Actor{Kind: identity.ActorOwner, ID: string(session)}, action, identity.OutcomeOK, refs...)
+	if err != nil {
+		return fmt.Errorf("building the audit entry of %s: %w", action, err)
+	}
+	err = a.store.Atomically(ctx, func(tx context.Context) error {
+		if appendErr := a.store.AppendAudit(tx, &e); appendErr != nil {
+			return fmt.Errorf("%w: %w", kernel.ErrAuditUnavailable, appendErr)
+		}
+		return change(ctx)
+	})
+	if err != nil {
+		return fmt.Errorf("recording the change %s: %w", action, err)
+	}
+	return nil
 }

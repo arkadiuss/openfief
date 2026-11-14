@@ -1322,3 +1322,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-faf3e457fb34
+  - type: implements
+    from: SYM-s8-internal-identity-app-audit-auth-record-owner-change
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:52:41.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-229394c28447
+  - type: covered_by
+    from: SYM-s8-internal-identity-app-audit-auth-record-owner-change
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:52:41.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da6b8d54f81
+  - type: implements
+    from: SYM-s8-internal-identity-auditchange-ref-rule
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:54:49.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f042bb83c14
+  - type: covered_by
+    from: SYM-s8-internal-identity-auditchange-ref-rule
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:54:49.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051a4216100f

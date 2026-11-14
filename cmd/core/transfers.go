@@ -25,8 +25,8 @@ func ledgerOwners(auth *identityapp.Auth, origins identity.Origins, authz identi
 
 // newTransfers returns the owner's transfer decisions (D-105, D-79) over
 // the ledger, with the owner's sessions checked by owners.
-func newTransfers(l *ledgerapp.Ledger, owners ledgerapp.Owners) *ledgerapp.Transfers {
-	return &ledgerapp.Transfers{Owners: owners, Ledger: l}
+func newTransfers(l *ledgerapp.Ledger, owners *ownerSessions) *ledgerapp.Transfers {
+	return &ledgerapp.Transfers{Owners: owners, Ledger: l, Audit: owners}
 }
 
 // withTransferService returns h with the TransferService mounted next to
@@ -95,7 +95,7 @@ func (s transferSuggestions) SuggestedTransfers(ctx context.Context) ([]ledger.T
 // the AttentionService (D-130), the InstrumentService (D-197) and the
 // CashCheckpointService (D-158), each checking the owner's session with
 // owners where the ledger does.
-func withLedgerEntries(h http.Handler, l *ledgerapp.Ledger, owners ledgerapp.Owners, items *attentionapp.Items,
+func withLedgerEntries(h http.Handler, l *ledgerapp.Ledger, owners *ownerSessions, items *attentionapp.Items,
 	names *ledgerapp.Names, callers identityconnect.Callers, log *slog.Logger,
 ) http.Handler {
 	h = withTransferService(h, newTransfers(l, owners), callers, log)

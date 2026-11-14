@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12478867e105
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-test-observe-plugins-enters-what-the-operator-did
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:52:08.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4f1881b5984
+  - type: executable_for
+    from: SYM-s8-internal-identity-app-ownerchange-test-test-plugin-observations-enter-what-the-operator-did
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:53:44.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35792d0af67d

@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1745f52c4604
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-test-covered-elsewhere-names-tests-that-exist
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:41.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0e83e11ae30

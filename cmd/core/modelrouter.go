@@ -20,6 +20,7 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestkube "github.com/arkadiuss/openfief/internal/ingest/kube"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	modelsdomain "github.com/arkadiuss/openfief/internal/modelrouter"
 	modelsapp "github.com/arkadiuss/openfief/internal/modelrouter/app"
@@ -237,7 +238,7 @@ func (a settingsAudit) RecordChange(ctx context.Context, c *modelsapp.SettingCha
 		return fmt.Errorf("building the audit entry of a settings change: %w", err)
 	}
 	if err := a.log.AppendAudit(ctx, &e); err != nil {
-		return fmt.Errorf("writing the audit entry of a settings change: %w", err)
+		return fmt.Errorf("writing the audit entry of a settings change: %w: %w", kernel.ErrAuditUnavailable, err)
 	}
 	return nil
 }

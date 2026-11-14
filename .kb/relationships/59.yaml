@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c11e722c588a
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-check-refused-without-the-log
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:51:24.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41b74e02678

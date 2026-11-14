@@ -881,3 +881,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19503e78f0a3
+  - type: implements
+    from: SYM-s8-internal-attention-app-audit-change-auditor
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:52:19.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f7480c78b4
+  - type: covered_by
+    from: SYM-s8-internal-attention-app-audit-change-auditor
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:52:19.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9916e37f40f7
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-test-retry-of-an-instance-no-plugin-can-have-enters-nothing
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:59:10.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-146c9a60d0c0

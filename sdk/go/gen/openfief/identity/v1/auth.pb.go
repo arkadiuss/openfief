@@ -292,6 +292,9 @@ const (
 	AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS AuditActorKind = 4
 	// A viewer in a session; the actor's id is the session's id.
 	AuditActorKind_AUDIT_ACTOR_KIND_VIEWER AuditActorKind = 5
+	// The operator, which installs, upgrades and removes plugins: the core
+	// records what it sees the operator did; the id is "operator".
+	AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR AuditActorKind = 6
 )
 
 // Enum value maps for AuditActorKind.
@@ -303,6 +306,7 @@ var (
 		3: "AUDIT_ACTOR_KIND_SYSTEM",
 		4: "AUDIT_ACTOR_KIND_ANONYMOUS",
 		5: "AUDIT_ACTOR_KIND_VIEWER",
+		6: "AUDIT_ACTOR_KIND_OPERATOR",
 	}
 	AuditActorKind_value = map[string]int32{
 		"AUDIT_ACTOR_KIND_UNSPECIFIED":     0,
@@ -311,6 +315,7 @@ var (
 		"AUDIT_ACTOR_KIND_SYSTEM":          3,
 		"AUDIT_ACTOR_KIND_ANONYMOUS":       4,
 		"AUDIT_ACTOR_KIND_VIEWER":          5,
+		"AUDIT_ACTOR_KIND_OPERATOR":        6,
 	}
 )
 
@@ -393,6 +398,78 @@ const (
 	// feature's toggle, a role's route or a data tier's models; names the
 	// setting changed, never the models.
 	AuditAction_AUDIT_ACTION_MODEL_SETTINGS_CHANGED AuditAction = 34
+	// The owner changing a setting other than the agents-and-models ones:
+	// names the setting, and the instrument or account it is of, never the
+	// value.
+	AuditAction_AUDIT_ACTION_SETTINGS_CHANGED AuditAction = 35
+	// The owner creating an account: names the account, and the sleeve it was
+	// put in and the connector instance bound to it, when it was.
+	AuditAction_AUDIT_ACTION_ACCOUNT_CREATED AuditAction = 36
+	// The owner changing an account: names it, and the sleeve when it moved.
+	AuditAction_AUDIT_ACTION_ACCOUNT_CHANGED AuditAction = 37
+	// The owner binding a connector instance to an account: names the account,
+	// then the instance.
+	AuditAction_AUDIT_ACTION_ACCOUNT_BOUND AuditAction = 38
+	// The owner deleting an account: names it.
+	AuditAction_AUDIT_ACTION_ACCOUNT_DELETED AuditAction = 39
+	// The owner mapping a connector's broker account to an account: names that
+	// account, then the instance, never the broker account.
+	AuditAction_AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED AuditAction = 40
+	// A sleeve added: names it, and its kind.
+	AuditAction_AUDIT_ACTION_SLEEVE_ADDED AuditAction = 41
+	// A sleeve renamed, moved to another kind or given another role: names it.
+	AuditAction_AUDIT_ACTION_SLEEVE_CHANGED AuditAction = 42
+	// A sleeve deleted: names it.
+	AuditAction_AUDIT_ACTION_SLEEVE_DELETED AuditAction = 43
+	// A sleeve kind added: names it.
+	AuditAction_AUDIT_ACTION_SLEEVE_KIND_ADDED AuditAction = 44
+	// A sleeve kind renamed: names it.
+	AuditAction_AUDIT_ACTION_SLEEVE_KIND_RENAMED AuditAction = 45
+	// A sleeve kind deleted: names it.
+	AuditAction_AUDIT_ACTION_SLEEVE_KIND_DELETED AuditAction = 46
+	// The owner confirming a suggested transfer: names the accounts of its
+	// legs.
+	AuditAction_AUDIT_ACTION_TRANSFER_CONFIRMED AuditAction = 47
+	// The owner rejecting a suggested transfer: names the accounts of its
+	// legs.
+	AuditAction_AUDIT_ACTION_TRANSFER_REJECTED AuditAction = 48
+	// The owner entering the cash an institution showed for an account: names
+	// the account, never the amount.
+	AuditAction_AUDIT_ACTION_CASH_CHECKPOINT_RECORDED AuditAction = 49
+	// The owner booking a cash checkpoint's difference: names the account.
+	AuditAction_AUDIT_ACTION_CASH_DIFFERENCE_BOOKED AuditAction = 50
+	// The owner giving an instrument a display name: names the instrument,
+	// never the name.
+	AuditAction_AUDIT_ACTION_INSTRUMENT_RENAMED AuditAction = 51
+	// A statement the owner uploaded and the core imported: names the account.
+	AuditAction_AUDIT_ACTION_STATEMENT_UPLOADED AuditAction = 52
+	// The owner confirming an instrument's ticker: names the instrument.
+	AuditAction_AUDIT_ACTION_TICKER_CONFIRMED AuditAction = 53
+	// The owner correcting an instrument's ticker: names the instrument.
+	AuditAction_AUDIT_ACTION_TICKER_CORRECTED AuditAction = 54
+	// The owner entering a bond lot by hand: names the account.
+	AuditAction_AUDIT_ACTION_BOND_LOT_ADDED AuditAction = 55
+	// The owner deleting a hand-entered bond lot: names the account, and the
+	// lot.
+	AuditAction_AUDIT_ACTION_BOND_LOT_DELETED AuditAction = 56
+	// The owner asking a failed sync to run again: names the instance, and the
+	// account.
+	AuditAction_AUDIT_ACTION_SYNC_RETRIED AuditAction = 57
+	// The owner acknowledging an attention item: names it.
+	AuditAction_AUDIT_ACTION_ATTENTION_ACKNOWLEDGED AuditAction = 58
+	// The owner resolving an attention item: names it.
+	AuditAction_AUDIT_ACTION_ATTENTION_RESOLVED AuditAction = 59
+	// The owner acknowledging a price check: names the instrument.
+	AuditAction_AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED AuditAction = 60
+	// A plugin the operator installed, seen by the core: names the instance
+	// and its generation.
+	AuditAction_AUDIT_ACTION_PLUGIN_INSTALLED AuditAction = 61
+	// A plugin whose generation changed, seen by the core: names the instance
+	// and the new generation.
+	AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED AuditAction = 62
+	// A plugin the operator removed, seen by the core: names the instance and
+	// the last generation seen.
+	AuditAction_AUDIT_ACTION_PLUGIN_REMOVED AuditAction = 63
 )
 
 // Enum value maps for AuditAction.
@@ -420,6 +497,35 @@ var (
 		33: "AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED",
 		16: "AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED",
 		34: "AUDIT_ACTION_MODEL_SETTINGS_CHANGED",
+		35: "AUDIT_ACTION_SETTINGS_CHANGED",
+		36: "AUDIT_ACTION_ACCOUNT_CREATED",
+		37: "AUDIT_ACTION_ACCOUNT_CHANGED",
+		38: "AUDIT_ACTION_ACCOUNT_BOUND",
+		39: "AUDIT_ACTION_ACCOUNT_DELETED",
+		40: "AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED",
+		41: "AUDIT_ACTION_SLEEVE_ADDED",
+		42: "AUDIT_ACTION_SLEEVE_CHANGED",
+		43: "AUDIT_ACTION_SLEEVE_DELETED",
+		44: "AUDIT_ACTION_SLEEVE_KIND_ADDED",
+		45: "AUDIT_ACTION_SLEEVE_KIND_RENAMED",
+		46: "AUDIT_ACTION_SLEEVE_KIND_DELETED",
+		47: "AUDIT_ACTION_TRANSFER_CONFIRMED",
+		48: "AUDIT_ACTION_TRANSFER_REJECTED",
+		49: "AUDIT_ACTION_CASH_CHECKPOINT_RECORDED",
+		50: "AUDIT_ACTION_CASH_DIFFERENCE_BOOKED",
+		51: "AUDIT_ACTION_INSTRUMENT_RENAMED",
+		52: "AUDIT_ACTION_STATEMENT_UPLOADED",
+		53: "AUDIT_ACTION_TICKER_CONFIRMED",
+		54: "AUDIT_ACTION_TICKER_CORRECTED",
+		55: "AUDIT_ACTION_BOND_LOT_ADDED",
+		56: "AUDIT_ACTION_BOND_LOT_DELETED",
+		57: "AUDIT_ACTION_SYNC_RETRIED",
+		58: "AUDIT_ACTION_ATTENTION_ACKNOWLEDGED",
+		59: "AUDIT_ACTION_ATTENTION_RESOLVED",
+		60: "AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED",
+		61: "AUDIT_ACTION_PLUGIN_INSTALLED",
+		62: "AUDIT_ACTION_PLUGIN_UPGRADED",
+		63: "AUDIT_ACTION_PLUGIN_REMOVED",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":                   0,
@@ -444,6 +550,35 @@ var (
 		"AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED": 33,
 		"AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED":     16,
 		"AUDIT_ACTION_MODEL_SETTINGS_CHANGED":        34,
+		"AUDIT_ACTION_SETTINGS_CHANGED":              35,
+		"AUDIT_ACTION_ACCOUNT_CREATED":               36,
+		"AUDIT_ACTION_ACCOUNT_CHANGED":               37,
+		"AUDIT_ACTION_ACCOUNT_BOUND":                 38,
+		"AUDIT_ACTION_ACCOUNT_DELETED":               39,
+		"AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED":       40,
+		"AUDIT_ACTION_SLEEVE_ADDED":                  41,
+		"AUDIT_ACTION_SLEEVE_CHANGED":                42,
+		"AUDIT_ACTION_SLEEVE_DELETED":                43,
+		"AUDIT_ACTION_SLEEVE_KIND_ADDED":             44,
+		"AUDIT_ACTION_SLEEVE_KIND_RENAMED":           45,
+		"AUDIT_ACTION_SLEEVE_KIND_DELETED":           46,
+		"AUDIT_ACTION_TRANSFER_CONFIRMED":            47,
+		"AUDIT_ACTION_TRANSFER_REJECTED":             48,
+		"AUDIT_ACTION_CASH_CHECKPOINT_RECORDED":      49,
+		"AUDIT_ACTION_CASH_DIFFERENCE_BOOKED":        50,
+		"AUDIT_ACTION_INSTRUMENT_RENAMED":            51,
+		"AUDIT_ACTION_STATEMENT_UPLOADED":            52,
+		"AUDIT_ACTION_TICKER_CONFIRMED":              53,
+		"AUDIT_ACTION_TICKER_CORRECTED":              54,
+		"AUDIT_ACTION_BOND_LOT_ADDED":                55,
+		"AUDIT_ACTION_BOND_LOT_DELETED":              56,
+		"AUDIT_ACTION_SYNC_RETRIED":                  57,
+		"AUDIT_ACTION_ATTENTION_ACKNOWLEDGED":        58,
+		"AUDIT_ACTION_ATTENTION_RESOLVED":            59,
+		"AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED":      60,
+		"AUDIT_ACTION_PLUGIN_INSTALLED":              61,
+		"AUDIT_ACTION_PLUGIN_UPGRADED":               62,
+		"AUDIT_ACTION_PLUGIN_REMOVED":                63,
 	}
 )
 
@@ -568,6 +703,21 @@ const (
 	// A models setting the owner changed: "switch:on", "feature:ask:off",
 	// "route:ask" or "tier:T0".
 	AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING AuditRefKind = 31
+	// An instrument, by its ISIN.
+	AuditRefKind_AUDIT_REF_KIND_INSTRUMENT AuditRefKind = 32
+	// A sleeve kind, by its key.
+	AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND AuditRefKind = 33
+	// An attention item, by its number.
+	AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM AuditRefKind = 34
+	// A hand-entered bond lot, by its id.
+	AuditRefKind_AUDIT_REF_KIND_BOND_LOT AuditRefKind = 35
+	// A plugin instance of any kind, by its name.
+	AuditRefKind_AUDIT_REF_KIND_PLUGIN AuditRefKind = 36
+	// The generation of a Plugin resource, a decimal number.
+	AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION AuditRefKind = 37
+	// A setting the owner changed, such as "tax:marginal_rate" or
+	// "marketdata:ranking:prices", never its value.
+	AuditRefKind_AUDIT_REF_KIND_SETTING AuditRefKind = 38
 )
 
 // Enum value maps for AuditRefKind.
@@ -589,24 +739,38 @@ var (
 		13: "AUDIT_REF_KIND_MODEL_ERROR",
 		30: "AUDIT_REF_KIND_MAINTAINER_RUN",
 		31: "AUDIT_REF_KIND_MODEL_SETTING",
+		32: "AUDIT_REF_KIND_INSTRUMENT",
+		33: "AUDIT_REF_KIND_SLEEVE_KIND",
+		34: "AUDIT_REF_KIND_ATTENTION_ITEM",
+		35: "AUDIT_REF_KIND_BOND_LOT",
+		36: "AUDIT_REF_KIND_PLUGIN",
+		37: "AUDIT_REF_KIND_PLUGIN_GENERATION",
+		38: "AUDIT_REF_KIND_SETTING",
 	}
 	AuditRefKind_value = map[string]int32{
-		"AUDIT_REF_KIND_UNSPECIFIED":     0,
-		"AUDIT_REF_KIND_SESSION":         1,
-		"AUDIT_REF_KIND_PASSKEY":         2,
-		"AUDIT_REF_KIND_ENROLLMENT_CODE": 3,
-		"AUDIT_REF_KIND_SCRIPT_TOKEN":    4,
-		"AUDIT_REF_KIND_PERSON":          5,
-		"AUDIT_REF_KIND_VIEW_PLUGIN":     6,
-		"AUDIT_REF_KIND_ACCOUNT":         7,
-		"AUDIT_REF_KIND_SLEEVE":          8,
-		"AUDIT_REF_KIND_HOUSEHOLD":       9,
-		"AUDIT_REF_KIND_MODEL_ROLE":      10,
-		"AUDIT_REF_KIND_MODEL":           11,
-		"AUDIT_REF_KIND_MODEL_CALL":      12,
-		"AUDIT_REF_KIND_MODEL_ERROR":     13,
-		"AUDIT_REF_KIND_MAINTAINER_RUN":  30,
-		"AUDIT_REF_KIND_MODEL_SETTING":   31,
+		"AUDIT_REF_KIND_UNSPECIFIED":       0,
+		"AUDIT_REF_KIND_SESSION":           1,
+		"AUDIT_REF_KIND_PASSKEY":           2,
+		"AUDIT_REF_KIND_ENROLLMENT_CODE":   3,
+		"AUDIT_REF_KIND_SCRIPT_TOKEN":      4,
+		"AUDIT_REF_KIND_PERSON":            5,
+		"AUDIT_REF_KIND_VIEW_PLUGIN":       6,
+		"AUDIT_REF_KIND_ACCOUNT":           7,
+		"AUDIT_REF_KIND_SLEEVE":            8,
+		"AUDIT_REF_KIND_HOUSEHOLD":         9,
+		"AUDIT_REF_KIND_MODEL_ROLE":        10,
+		"AUDIT_REF_KIND_MODEL":             11,
+		"AUDIT_REF_KIND_MODEL_CALL":        12,
+		"AUDIT_REF_KIND_MODEL_ERROR":       13,
+		"AUDIT_REF_KIND_MAINTAINER_RUN":    30,
+		"AUDIT_REF_KIND_MODEL_SETTING":     31,
+		"AUDIT_REF_KIND_INSTRUMENT":        32,
+		"AUDIT_REF_KIND_SLEEVE_KIND":       33,
+		"AUDIT_REF_KIND_ATTENTION_ITEM":    34,
+		"AUDIT_REF_KIND_BOND_LOT":          35,
+		"AUDIT_REF_KIND_PLUGIN":            36,
+		"AUDIT_REF_KIND_PLUGIN_GENERATION": 37,
+		"AUDIT_REF_KIND_SETTING":           38,
 	}
 )
 
@@ -5477,14 +5641,15 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1fSCRIPT_TOKEN_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aSCRIPT_TOKEN_STATUS_ACTIVE\x10\x01\x12\x1f\n" +
 	"\x1bSCRIPT_TOKEN_STATUS_EXPIRED\x10\x02\x12\x1f\n" +
-	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\xce\x01\n" +
+	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\xed\x01\n" +
 	"\x0eAuditActorKind\x12 \n" +
 	"\x1cAUDIT_ACTOR_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
 	" AUDIT_ACTOR_KIND_ENROLLMENT_CODE\x10\x02\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
 	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04\x12\x1b\n" +
-	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05*\xab\x06\n" +
+	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05\x12\x1d\n" +
+	"\x19AUDIT_ACTOR_KIND_OPERATOR\x10\x06*\xbe\x0e\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5508,13 +5673,42 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"(AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED\x10 \x12.\n" +
 	"*AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED\x10!\x12*\n" +
 	"&AUDIT_ACTION_ENROLLMENT_LINK_CANCELLED\x10\x10\x12'\n" +
-	"#AUDIT_ACTION_MODEL_SETTINGS_CHANGED\x10\"*\x90\x01\n" +
+	"#AUDIT_ACTION_MODEL_SETTINGS_CHANGED\x10\"\x12!\n" +
+	"\x1dAUDIT_ACTION_SETTINGS_CHANGED\x10#\x12 \n" +
+	"\x1cAUDIT_ACTION_ACCOUNT_CREATED\x10$\x12 \n" +
+	"\x1cAUDIT_ACTION_ACCOUNT_CHANGED\x10%\x12\x1e\n" +
+	"\x1aAUDIT_ACTION_ACCOUNT_BOUND\x10&\x12 \n" +
+	"\x1cAUDIT_ACTION_ACCOUNT_DELETED\x10'\x12(\n" +
+	"$AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED\x10(\x12\x1d\n" +
+	"\x19AUDIT_ACTION_SLEEVE_ADDED\x10)\x12\x1f\n" +
+	"\x1bAUDIT_ACTION_SLEEVE_CHANGED\x10*\x12\x1f\n" +
+	"\x1bAUDIT_ACTION_SLEEVE_DELETED\x10+\x12\"\n" +
+	"\x1eAUDIT_ACTION_SLEEVE_KIND_ADDED\x10,\x12$\n" +
+	" AUDIT_ACTION_SLEEVE_KIND_RENAMED\x10-\x12$\n" +
+	" AUDIT_ACTION_SLEEVE_KIND_DELETED\x10.\x12#\n" +
+	"\x1fAUDIT_ACTION_TRANSFER_CONFIRMED\x10/\x12\"\n" +
+	"\x1eAUDIT_ACTION_TRANSFER_REJECTED\x100\x12)\n" +
+	"%AUDIT_ACTION_CASH_CHECKPOINT_RECORDED\x101\x12'\n" +
+	"#AUDIT_ACTION_CASH_DIFFERENCE_BOOKED\x102\x12#\n" +
+	"\x1fAUDIT_ACTION_INSTRUMENT_RENAMED\x103\x12#\n" +
+	"\x1fAUDIT_ACTION_STATEMENT_UPLOADED\x104\x12!\n" +
+	"\x1dAUDIT_ACTION_TICKER_CONFIRMED\x105\x12!\n" +
+	"\x1dAUDIT_ACTION_TICKER_CORRECTED\x106\x12\x1f\n" +
+	"\x1bAUDIT_ACTION_BOND_LOT_ADDED\x107\x12!\n" +
+	"\x1dAUDIT_ACTION_BOND_LOT_DELETED\x108\x12\x1d\n" +
+	"\x19AUDIT_ACTION_SYNC_RETRIED\x109\x12'\n" +
+	"#AUDIT_ACTION_ATTENTION_ACKNOWLEDGED\x10:\x12#\n" +
+	"\x1fAUDIT_ACTION_ATTENTION_RESOLVED\x10;\x12)\n" +
+	"%AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED\x10<\x12!\n" +
+	"\x1dAUDIT_ACTION_PLUGIN_INSTALLED\x10=\x12 \n" +
+	"\x1cAUDIT_ACTION_PLUGIN_UPGRADED\x10>\x12\x1f\n" +
+	"\x1bAUDIT_ACTION_PLUGIN_REMOVED\x10?*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xf8\x03\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xd4\x05\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5532,7 +5726,14 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x19AUDIT_REF_KIND_MODEL_CALL\x10\f\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_MODEL_ERROR\x10\r\x12!\n" +
 	"\x1dAUDIT_REF_KIND_MAINTAINER_RUN\x10\x1e\x12 \n" +
-	"\x1cAUDIT_REF_KIND_MODEL_SETTING\x10\x1f*\x99\x01\n" +
+	"\x1cAUDIT_REF_KIND_MODEL_SETTING\x10\x1f\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_INSTRUMENT\x10 \x12\x1e\n" +
+	"\x1aAUDIT_REF_KIND_SLEEVE_KIND\x10!\x12!\n" +
+	"\x1dAUDIT_REF_KIND_ATTENTION_ITEM\x10\"\x12\x1b\n" +
+	"\x17AUDIT_REF_KIND_BOND_LOT\x10#\x12\x19\n" +
+	"\x15AUDIT_REF_KIND_PLUGIN\x10$\x12$\n" +
+	" AUDIT_REF_KIND_PLUGIN_GENERATION\x10%\x12\x1a\n" +
+	"\x16AUDIT_REF_KIND_SETTING\x10&*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

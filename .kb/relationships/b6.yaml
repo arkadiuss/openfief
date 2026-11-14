@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-acc608a2ff54
+  - type: implements
+    from: SYM-s8-cmd-core-core-ledger-names
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:48:37.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1740d47ab5a
+  - type: covered_by
+    from: SYM-s8-cmd-core-core-ledger-names
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:48:37.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb79e86ba6b6
+  - type: implements
+    from: SYM-s8-internal-kernel-unavailable-unavailable
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:15.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5075bd138234
+  - type: covered_by
+    from: SYM-s8-internal-kernel-unavailable-unavailable
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:15.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ab4318c1b38

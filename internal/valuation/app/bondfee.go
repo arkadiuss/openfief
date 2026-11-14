@@ -74,7 +74,10 @@ func (s *Settings) SetEarlyRedemptionFee(ctx context.Context, origin, sessionTok
 			return fmt.Errorf("setting the early-redemption fee: %w", err)
 		}
 	}
-	if err := s.fees.SaveBondFee(ctx, parsed, next.EarlyRedemptionFee, next.FeeSource, revals); err != nil {
+	err = auditedSetting(ctx, s.audit, origin, sessionToken, settingEarlyRedemption, func(ctx context.Context) error {
+		return s.fees.SaveBondFee(ctx, parsed, next.EarlyRedemptionFee, next.FeeSource, revals)
+	}, auditInstrumentRef+parsed.String())
+	if err != nil {
 		return fmt.Errorf("setting the early-redemption fee of %s: %w", parsed, err)
 	}
 	return nil

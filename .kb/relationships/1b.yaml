@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c74d1dd2caa
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-recording-auditor
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:04.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca877fc6c78a
+  - type: implements
+    from: SYM-s8-internal-valuation-app-audit-audited-setting
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T03:00:10.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-177c8b62c969
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-audit-audited-setting
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T03:00:10.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee610bac82fa

@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0923b6f0884
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-confirm-ticker
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:47.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c511303d76b

@@ -79,6 +79,35 @@ func actionWords(a identityv1.AuditAction) string {
 		identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_APPLIED:   "Maintainer proposal applied",
 		identityv1.AuditAction_AUDIT_ACTION_MAINTAINER_PROPOSAL_DISMISSED: "Maintainer proposal dismissed",
 		identityv1.AuditAction_AUDIT_ACTION_MODEL_SETTINGS_CHANGED:        "Models settings changed",
+		identityv1.AuditAction_AUDIT_ACTION_SETTINGS_CHANGED:              "Setting changed",
+		identityv1.AuditAction_AUDIT_ACTION_ACCOUNT_CREATED:               "Account created",
+		identityv1.AuditAction_AUDIT_ACTION_ACCOUNT_CHANGED:               "Account changed",
+		identityv1.AuditAction_AUDIT_ACTION_ACCOUNT_BOUND:                 "Account bound to a connector",
+		identityv1.AuditAction_AUDIT_ACTION_ACCOUNT_DELETED:               "Account deleted",
+		identityv1.AuditAction_AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED:       "Broker account remapped",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_ADDED:                  "Sleeve added",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_CHANGED:                "Sleeve changed",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_DELETED:                "Sleeve deleted",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_KIND_ADDED:             "Sleeve kind added",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_KIND_RENAMED:           "Sleeve kind renamed",
+		identityv1.AuditAction_AUDIT_ACTION_SLEEVE_KIND_DELETED:           "Sleeve kind deleted",
+		identityv1.AuditAction_AUDIT_ACTION_TRANSFER_CONFIRMED:            "Transfer confirmed",
+		identityv1.AuditAction_AUDIT_ACTION_TRANSFER_REJECTED:             "Transfer rejected",
+		identityv1.AuditAction_AUDIT_ACTION_CASH_CHECKPOINT_RECORDED:      "Cash checkpoint recorded",
+		identityv1.AuditAction_AUDIT_ACTION_CASH_DIFFERENCE_BOOKED:        "Cash difference booked",
+		identityv1.AuditAction_AUDIT_ACTION_INSTRUMENT_RENAMED:            "Instrument renamed",
+		identityv1.AuditAction_AUDIT_ACTION_STATEMENT_UPLOADED:            "Statement uploaded",
+		identityv1.AuditAction_AUDIT_ACTION_TICKER_CONFIRMED:              "Ticker confirmed",
+		identityv1.AuditAction_AUDIT_ACTION_TICKER_CORRECTED:              "Ticker corrected",
+		identityv1.AuditAction_AUDIT_ACTION_BOND_LOT_ADDED:                "Bond lot added",
+		identityv1.AuditAction_AUDIT_ACTION_BOND_LOT_DELETED:              "Bond lot deleted",
+		identityv1.AuditAction_AUDIT_ACTION_SYNC_RETRIED:                  "Sync retried",
+		identityv1.AuditAction_AUDIT_ACTION_ATTENTION_ACKNOWLEDGED:        "Inbox item acknowledged",
+		identityv1.AuditAction_AUDIT_ACTION_ATTENTION_RESOLVED:            "Inbox item resolved",
+		identityv1.AuditAction_AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED:      "Price check acknowledged",
+		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_INSTALLED:              "Plugin installed",
+		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED:               "Plugin upgraded",
+		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED:                "Plugin removed",
 	}
 	if w, ok := words[a]; ok {
 		return w
@@ -97,6 +126,8 @@ func actorKindWords(k identityv1.AuditActorKind) string {
 		return "An enrollment link"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM:
 		return "The core"
+	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR:
+		return "The operator"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
 		return "Nobody signed in"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED:
@@ -209,9 +240,31 @@ func (n *auditNames) ref(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING:
 		return modelRef(r)
+	case identityv1.AuditRefKind_AUDIT_REF_KIND_INSTRUMENT, identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:
+		return changeRef(r)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_UNSPECIFIED:
 	}
 	return "Record " + short(id)
+}
+
+// changeRef names what an entry of an owner's change or of the operator
+// names: an instrument by its ISIN, a sleeve kind by its key, an item of the
+// Inbox by its number, a bond lot, a plugin instance and its generation, and
+// a setting, by the IDs the entries hold, never a value.
+func changeRef(r *identityv1.AuditRef) string {
+	prefixes := map[identityv1.AuditRefKind]string{
+		identityv1.AuditRefKind_AUDIT_REF_KIND_INSTRUMENT:        "Instrument ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND:       "Sleeve kind ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM:    "Inbox item ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT:          "Bond lot ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN:            "Plugin ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION: "Generation ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:           "Setting ",
+	}
+	return prefixes[r.GetKind()] + r.GetId()
 }
 
 // modelRef names what a model call's entry names: the role, the model, the call
@@ -256,16 +309,27 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PASSKEY, identityv1.AuditRefKind_AUDIT_REF_KIND_ENROLLMENT_CODE,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ROLE, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_CALL, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_ERROR,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN, identityv1.AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_INSTRUMENT, identityv1.AuditRefKind_AUDIT_REF_KIND_SLEEVE_KIND,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:
 	}
 	return "Record " + short(id)
 }
 
 // actor names who made the change.
 func (n *auditNames) actor(a *identityv1.AuditActor) string {
+	fixed := map[identityv1.AuditActorKind]string{
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER:     "Owner",
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM:    "The core (command line)",
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR:  "The operator",
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS: "Nobody signed in",
+	}
+	if who, ok := fixed[a.GetKind()]; ok {
+		return who
+	}
 	switch a.GetKind() {
-	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER:
-		return "Owner"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_VIEWER:
 		if name, ok := n.people[a.GetPersonId()]; ok && a.GetPersonId() != "" {
 			return name
@@ -276,11 +340,9 @@ func (n *auditNames) actor(a *identityv1.AuditActor) string {
 			return "Invitation link for " + name
 		}
 		return "Enrollment link " + short(a.GetId())
-	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM:
-		return "The core (command line)"
-	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
-		return "Nobody signed in"
-	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED:
+	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER,
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR,
+		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
 	}
 	return unknownWord
 }

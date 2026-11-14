@@ -25,8 +25,8 @@ type accountTerms struct {
 // recorder and vstore, with the reporting currency, the Polish pack's
 // defaults, the bonds' early-redemption fees in vstore, which the owner
 // confirms or overrides (D-97), and the owner's sessions checked by owners.
-func newSettings(recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners valuationapp.Owners, cfg *serveConfig) *valuationapp.Settings {
-	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting).WithBondFees(vstore)
+func newSettings(recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners *ownerSessions, cfg *serveConfig) *valuationapp.Settings {
+	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting).WithBondFees(vstore).WithAudit(owners)
 }
 
 // newChartStarts returns the owner's setting of the charts' start (D-167)
@@ -35,7 +35,7 @@ func newSettings(recorder *valuationapp.InputRecorder, vstore *valuationpg.Store
 // (D-163).
 func newChartStarts(auth *identityapp.Auth, origins identity.Origins, authz identityapp.Authorizer, vstore *valuationpg.Store, l *ledgerapp.Ledger) *valuationapp.ChartStarts {
 	owners := &ownerSessions{auth: auth, origins: origins, noSession: valuationapp.ErrNoSession, notOwner: valuationapp.ErrNotOwner, authz: authz}
-	return valuationapp.NewChartStarts(owners, vstore, l)
+	return valuationapp.NewChartStarts(owners, vstore, l).WithAudit(owners)
 }
 
 // withSettingsService returns h with the SettingsService mounted next to

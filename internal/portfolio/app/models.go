@@ -32,6 +32,14 @@ type Models struct {
 	market    MarketData
 	owners    Owners
 	reporting kernel.Currency
+	audit     ChangeAuditor
+}
+
+// WithAudit has every save of the model portfolio entered in the audit log
+// through a (D-211), and returns m.
+func (m *Models) WithAudit(a ChangeAuditor) *Models {
+	m.audit = a
+	return m
 }
 
 // New returns the use cases over the ports, with the backtest in the
@@ -69,7 +77,10 @@ func (m *Models) Save(ctx context.Context, origin, sessionToken string, model po
 	if err := CheckModel(&model); err != nil {
 		return portfolio.Model{}, err
 	}
-	if err := m.store.SaveModel(ctx, model); err != nil {
+	err := audited(ctx, m.audit, origin, sessionToken, auditSettingsChanged, []string{settingModelPortfolio}, func(ctx context.Context) error {
+		return m.store.SaveModel(ctx, model)
+	})
+	if err != nil {
 		return portfolio.Model{}, fmt.Errorf("saving the model portfolio: %w", err)
 	}
 	return model, nil

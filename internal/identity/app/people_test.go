@@ -54,7 +54,9 @@ func (f *grantFixture) trail(skip int) []string {
 			case identity.RefPasskey, identity.RefSession, identity.RefEnrollmentCode:
 				words = append(words, string(ref.Kind))
 			case identity.RefPerson, identity.RefScriptToken, identity.RefViewPlugin, identity.RefAccount, identity.RefSleeve, identity.RefHousehold,
-				identity.RefModelRole, identity.RefModel, identity.RefModelCall, identity.RefModelError, identity.RefMaintainerRun, identity.RefModelSetting:
+				identity.RefModelRole, identity.RefModel, identity.RefModelCall, identity.RefModelError, identity.RefMaintainerRun, identity.RefModelSetting,
+				identity.RefInstrument, identity.RefSleeveKind, identity.RefAttentionItem, identity.RefBondLot, identity.RefPlugin,
+				identity.RefPluginGeneration, identity.RefSetting:
 				words = append(words, string(ref.Kind)+":"+ref.ID)
 			}
 		}

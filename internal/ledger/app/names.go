@@ -37,6 +37,8 @@ type Names struct {
 	Store    InstrumentNameStore
 	Owners   Owners
 	Postings InstrumentPostings
+	// Audit keeps each rename with its audit entry; nil enters none.
+	Audit ChangeAuditor
 }
 
 // Deliver records the names a connector delivered, from source, such as its
@@ -86,10 +88,13 @@ func (n *Names) Rename(ctx context.Context, origin, sessionToken string, isin le
 	if err != nil {
 		return "", fmt.Errorf("renaming %s: %w", isin, err)
 	}
-	if err := mayChange(ctx, n.Owners, origin, sessionToken, accounts); err != nil {
-		return "", fmt.Errorf("renaming %s: %w", isin, err)
+	if authErr := mayChange(ctx, n.Owners, origin, sessionToken, accounts); authErr != nil {
+		return "", fmt.Errorf("renaming %s: %w", isin, authErr)
 	}
-	if err := n.Store.AppendInstrumentNames(ctx, []ledger.InstrumentName{{ISIN: isin, Name: clean, ByOwner: true}}); err != nil {
+	err = audited(ctx, n.Audit, origin, sessionToken, auditInstrumentRenamed, []string{"instrument:" + isin.String()}, func(ctx context.Context) error {
+		return n.Store.AppendInstrumentNames(ctx, []ledger.InstrumentName{{ISIN: isin, Name: clean, ByOwner: true}})
+	})
+	if err != nil {
 		return "", fmt.Errorf("renaming %s: %w", isin, err)
 	}
 	return clean, nil

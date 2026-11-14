@@ -143,6 +143,12 @@ func ingestDeps(pool *pgxpool.Pool, vstore *valuationpg.Store) (*ledgerapp.Ledge
 	return l, valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, jurisdictionPack())
 }
 
+// ledgerNames returns the instruments' display names (D-197) over the ledger l,
+// the owner's renames checked by owners and entered in the audit log.
+func ledgerNames(pool *pgxpool.Pool, l *ledgerapp.Ledger, owners *ownerSessions) *ledgerapp.Names {
+	return &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: owners, Postings: l, Audit: owners}
+}
+
 // jurisdictionPack returns the jurisdiction pack (D-70): the Polish one,
 // the only pack there is.
 func jurisdictionPack() *pl.Pack { return pl.NewPack() }
@@ -151,11 +157,11 @@ func jurisdictionPack() *pl.Pack { return pl.NewPack() }
 // which revalues everything when it changed (D-36), and returns the
 // cross-check use cases (D-22, D-110..D-112), with the owner's sessions
 // checked by owners.
-func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners valuationapp.Owners) (*valuationapp.CrossChecks, error) {
+func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners *ownerSessions) (*valuationapp.CrossChecks, error) {
 	if _, err := recorder.ApplyRules(ctx); err != nil {
 		return nil, fmt.Errorf("rules version: %w", err)
 	}
-	return valuationapp.NewCrossChecks(vstore, owners), nil
+	return valuationapp.NewCrossChecks(vstore, owners).WithAudit(owners), nil
 }
 
 // historyOptions has the views read the connectors' sync history and import
@@ -224,7 +230,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
+	names := ledgerNames(pool, l, ledgerOwners(auth, cfg.Auth.Origins, authz))
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
 		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))

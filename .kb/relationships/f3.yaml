@@ -951,3 +951,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a397614942fb
+  - type: executable_for
+    from: SYM-s8-cmd-core-pluginaudit-test-plugins-step
+    to: TEST-core-plugin-audit
+    created_at: 2026-11-14T02:51:56.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee36cd47b8e9

@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0045876efd9
+  - type: executable_for
+    from: SYM-s8-internal-identity-auditchange-test-test-change-entries-name-what-changed-by-id
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:56:15.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7339ee1f00
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-audit-call
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:57:59.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7748168b24d

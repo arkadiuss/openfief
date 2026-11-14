@@ -1070,3 +1070,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ecbe047cee3
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:39:45.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba3dfc98aa8
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-identity-audit-change-domain
+    created_at: 2026-11-14T02:39:45.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5d879e5af0b
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-identity-audit-change-app
+    created_at: 2026-11-14T02:39:45.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9df89c791098
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-identity-audit-change-postgres
+    created_at: 2026-11-14T02:39:45.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-431f58a7bab6
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:39:45.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1e7a6ab90be
+  - type: verified_by
+    from: SCEN-identity-audit-owner-changes
+    to: TEST-ui-audit-names-changes
+    created_at: 2026-11-14T02:39:45.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-078260e7584b

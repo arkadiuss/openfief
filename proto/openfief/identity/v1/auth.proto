@@ -587,6 +587,9 @@ enum AuditActorKind {
   AUDIT_ACTOR_KIND_ANONYMOUS = 4;
   // A viewer in a session; the actor's id is the session's id.
   AUDIT_ACTOR_KIND_VIEWER = 5;
+  // The operator, which installs, upgrades and removes plugins: the core
+  // records what it sees the operator did; the id is "operator".
+  AUDIT_ACTOR_KIND_OPERATOR = 6;
 }
 
 // AuditAction is what an audit entry records, a closed set: it carries no
@@ -639,6 +642,78 @@ enum AuditAction {
   // feature's toggle, a role's route or a data tier's models; names the
   // setting changed, never the models.
   AUDIT_ACTION_MODEL_SETTINGS_CHANGED = 34;
+  // The owner changing a setting other than the agents-and-models ones:
+  // names the setting, and the instrument or account it is of, never the
+  // value.
+  AUDIT_ACTION_SETTINGS_CHANGED = 35;
+  // The owner creating an account: names the account, and the sleeve it was
+  // put in and the connector instance bound to it, when it was.
+  AUDIT_ACTION_ACCOUNT_CREATED = 36;
+  // The owner changing an account: names it, and the sleeve when it moved.
+  AUDIT_ACTION_ACCOUNT_CHANGED = 37;
+  // The owner binding a connector instance to an account: names the account,
+  // then the instance.
+  AUDIT_ACTION_ACCOUNT_BOUND = 38;
+  // The owner deleting an account: names it.
+  AUDIT_ACTION_ACCOUNT_DELETED = 39;
+  // The owner mapping a connector's broker account to an account: names that
+  // account, then the instance, never the broker account.
+  AUDIT_ACTION_BROKER_ACCOUNT_REMAPPED = 40;
+  // A sleeve added: names it, and its kind.
+  AUDIT_ACTION_SLEEVE_ADDED = 41;
+  // A sleeve renamed, moved to another kind or given another role: names it.
+  AUDIT_ACTION_SLEEVE_CHANGED = 42;
+  // A sleeve deleted: names it.
+  AUDIT_ACTION_SLEEVE_DELETED = 43;
+  // A sleeve kind added: names it.
+  AUDIT_ACTION_SLEEVE_KIND_ADDED = 44;
+  // A sleeve kind renamed: names it.
+  AUDIT_ACTION_SLEEVE_KIND_RENAMED = 45;
+  // A sleeve kind deleted: names it.
+  AUDIT_ACTION_SLEEVE_KIND_DELETED = 46;
+  // The owner confirming a suggested transfer: names the accounts of its
+  // legs.
+  AUDIT_ACTION_TRANSFER_CONFIRMED = 47;
+  // The owner rejecting a suggested transfer: names the accounts of its
+  // legs.
+  AUDIT_ACTION_TRANSFER_REJECTED = 48;
+  // The owner entering the cash an institution showed for an account: names
+  // the account, never the amount.
+  AUDIT_ACTION_CASH_CHECKPOINT_RECORDED = 49;
+  // The owner booking a cash checkpoint's difference: names the account.
+  AUDIT_ACTION_CASH_DIFFERENCE_BOOKED = 50;
+  // The owner giving an instrument a display name: names the instrument,
+  // never the name.
+  AUDIT_ACTION_INSTRUMENT_RENAMED = 51;
+  // A statement the owner uploaded and the core imported: names the account.
+  AUDIT_ACTION_STATEMENT_UPLOADED = 52;
+  // The owner confirming an instrument's ticker: names the instrument.
+  AUDIT_ACTION_TICKER_CONFIRMED = 53;
+  // The owner correcting an instrument's ticker: names the instrument.
+  AUDIT_ACTION_TICKER_CORRECTED = 54;
+  // The owner entering a bond lot by hand: names the account.
+  AUDIT_ACTION_BOND_LOT_ADDED = 55;
+  // The owner deleting a hand-entered bond lot: names the account, and the
+  // lot.
+  AUDIT_ACTION_BOND_LOT_DELETED = 56;
+  // The owner asking a failed sync to run again: names the instance, and the
+  // account.
+  AUDIT_ACTION_SYNC_RETRIED = 57;
+  // The owner acknowledging an attention item: names it.
+  AUDIT_ACTION_ATTENTION_ACKNOWLEDGED = 58;
+  // The owner resolving an attention item: names it.
+  AUDIT_ACTION_ATTENTION_RESOLVED = 59;
+  // The owner acknowledging a price check: names the instrument.
+  AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED = 60;
+  // A plugin the operator installed, seen by the core: names the instance
+  // and its generation.
+  AUDIT_ACTION_PLUGIN_INSTALLED = 61;
+  // A plugin whose generation changed, seen by the core: names the instance
+  // and the new generation.
+  AUDIT_ACTION_PLUGIN_UPGRADED = 62;
+  // A plugin the operator removed, seen by the core: names the instance and
+  // the last generation seen.
+  AUDIT_ACTION_PLUGIN_REMOVED = 63;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -686,6 +761,21 @@ enum AuditRefKind {
   // A models setting the owner changed: "switch:on", "feature:ask:off",
   // "route:ask" or "tier:T0".
   AUDIT_REF_KIND_MODEL_SETTING = 31;
+  // An instrument, by its ISIN.
+  AUDIT_REF_KIND_INSTRUMENT = 32;
+  // A sleeve kind, by its key.
+  AUDIT_REF_KIND_SLEEVE_KIND = 33;
+  // An attention item, by its number.
+  AUDIT_REF_KIND_ATTENTION_ITEM = 34;
+  // A hand-entered bond lot, by its id.
+  AUDIT_REF_KIND_BOND_LOT = 35;
+  // A plugin instance of any kind, by its name.
+  AUDIT_REF_KIND_PLUGIN = 36;
+  // The generation of a Plugin resource, a decimal number.
+  AUDIT_REF_KIND_PLUGIN_GENERATION = 37;
+  // A setting the owner changed, such as "tax:marginal_rate" or
+  // "marketdata:ranking:prices", never its value.
+  AUDIT_REF_KIND_SETTING = 38;
 }
 
 // AuditActor is who made the change.

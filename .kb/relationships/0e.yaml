@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c1cfc895af9
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-confirming-store-correct-ticker
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:31.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4835e97d6a91

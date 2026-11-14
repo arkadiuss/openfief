@@ -144,6 +144,9 @@ func (l *Ledger) notifyCheckpoint(ctx context.Context, c *AssertionCheck) error 
 type CashCheckpoints struct {
 	Owners Owners
 	Ledger CashCheckpointBook
+	// Audit keeps each checkpoint and booking with its audit entry; nil
+	// enters none.
+	Audit ChangeAuditor
 }
 
 // CashCheckpointBook records cash checkpoints and books their
@@ -164,7 +167,15 @@ func (c *CashCheckpoints) Record(ctx context.Context, origin, sessionToken strin
 	if err := mayChange(ctx, c.Owners, origin, sessionToken, []ledger.AccountID{account}); err != nil {
 		return AssertionCheck{}, fmt.Errorf("recording a cash checkpoint: %w", err)
 	}
-	check, err := c.Ledger.RecordCashCheckpoint(ctx, account, on, cash)
+	var check AssertionCheck
+	err := audited(ctx, c.Audit, origin, sessionToken, auditCashCheckpointRecorded, accountRefs(account), func(ctx context.Context) error {
+		var recordErr error
+		check, recordErr = c.Ledger.RecordCashCheckpoint(ctx, account, on, cash)
+		if recordErr != nil {
+			return fmt.Errorf("recording: %w", recordErr)
+		}
+		return nil
+	})
 	if err != nil {
 		return AssertionCheck{}, fmt.Errorf("recording a cash checkpoint: %w", err)
 	}
@@ -183,7 +194,15 @@ func (c *CashCheckpoints) BookDifference(ctx context.Context, origin, sessionTok
 	if err := mayChange(ctx, c.Owners, origin, sessionToken, []ledger.AccountID{account}); err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}
-	t, err := c.Ledger.BookCashDifference(ctx, account, on, cur, as)
+	var t ledger.Transaction
+	err := audited(ctx, c.Audit, origin, sessionToken, auditCashDifferenceBooked, accountRefs(account), func(ctx context.Context) error {
+		var bookErr error
+		t, bookErr = c.Ledger.BookCashDifference(ctx, account, on, cur, as)
+		if bookErr != nil {
+			return fmt.Errorf("booking: %w", bookErr)
+		}
+		return nil
+	})
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}

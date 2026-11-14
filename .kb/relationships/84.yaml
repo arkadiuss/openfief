@@ -1077,3 +1077,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c57f418ec9dc
+  - type: executable_for
+    from: SYM-s8-internal-ingest-app-audit-test-recording-auditor-audited
+    to: TEST-ingest-app-owner-changes-audited
+    created_at: 2026-11-14T02:58:10.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5622546a85ed
+  - type: implements
+    from: SYM-s8-internal-valuation-app-chartstart-chart-starts-with-audit
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T03:00:21.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79d74d1d35c7
+  - type: covered_by
+    from: SYM-s8-internal-valuation-app-chartstart-chart-starts-with-audit
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T03:00:21.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-791deb1e2c94

@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46b5c0394b3f
+  - type: implements
+    from: SYM-s8-internal-ingest-app-audit-instance-ref
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:57:54.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a790350da47
+  - type: covered_by
+    from: SYM-s8-internal-ingest-app-audit-instance-ref
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:57:54.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de7a4fa43bbb

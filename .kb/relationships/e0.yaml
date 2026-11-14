@@ -1231,3 +1231,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58374a467d01
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-read-only-procedures
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:09.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-962dff8b9df3
+  - type: executable_for
+    from: SYM-s8-cmd-core-ownerchanges-test-procedures
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:50:20.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6a6fa1e20b6
+  - type: implements
+    from: SYM-s8-internal-portfolio-app-sleeves-sleeves-audited
+    to: REQ-identity-audit-owner-changes
+    created_at: 2026-11-14T02:59:53.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e42de7b0638
+  - type: covered_by
+    from: SYM-s8-internal-portfolio-app-sleeves-sleeves-audited
+    to: TEST-core-owner-changes-audited
+    created_at: 2026-11-14T02:59:53.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165d70a00dc2

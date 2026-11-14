@@ -50,7 +50,7 @@ func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // routes in use (D-196), and hands the items to l, which raises a mismatched
 // cash checkpoint's at once. Its events go to a log publisher.
 func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, checks *valuationapp.CrossChecks,
-	owners attentionapp.Owners, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
+	owners *ownerSessions, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
 ) *attention {
 	store := attentionpg.New(pool)
 	imports := ingestpg.New(pool)
@@ -71,7 +71,7 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 		// that matters to a wait of a week (D-214).
 		attentionapp.IncompleteBondSeries(l, vstore, valuationpg.TodayIn(time.UTC, now)),
 	}
-	items := attentionapp.New(store, owners, now, slices.Concat(all, extra)...)
+	items := attentionapp.New(store, owners, now, slices.Concat(all, extra)...).WithAudit(owners)
 	l.WithAttention(ledgerAttention{items: items})
 	return &attention{items: items, relay: &attentionapp.Relay{Outbox: store, Publisher: attentionapp.LogPublisher{Log: log}, Now: now}}
 }
