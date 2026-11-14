@@ -65,6 +65,11 @@ type Client struct {
 	BaseURL string
 	// Key returns the API key of a call.
 	Key func() (string, error)
+	// Route, when not empty, pins the hosts OpenRouter may use, in this order
+	// (its provider slugs), with no fallback to others: `provider.order`,
+	// `allow_fallbacks` false and `require_parameters`. Nothing sets it in the
+	// plugin; the Ask box bench does, to compare a model on one host.
+	Route []string
 }
 
 // Message is a message of the conversation.
@@ -222,10 +227,14 @@ const openRouterHost = "openrouter.ai"
 // that silently drops them can answer with no tool call, which the Ask box
 // would read as an answer from data it never read, or with text that is not the
 // structured answer it asked for. Host pinning (`order`, `allow_fallbacks`) is
-// not set here.
+// set only when the client has a Route, which pins the hosts for every request.
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
-	if (len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode) && c.onOpenRouter() {
+	switch {
+	case !c.onOpenRouter():
+	case len(c.Route) > 0:
+		body["provider"] = map[string]any{"order": c.Route, "allow_fallbacks": false, "require_parameters": true}
+	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
 		body["provider"] = map[string]any{"require_parameters": true}
 	}
 	return body

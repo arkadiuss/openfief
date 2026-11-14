@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2bd230006cb
+  - type: implements
+    from: SYM-askbench-runner-task
+    to: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
+    created_at: 2026-11-14T15:42:39.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2355aab8f66
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-main-go-parseroutes
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:46:29.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdac5d5acf8f
+  - type: implements
+    from: SYM-ab3-tools-askbench-main-go-parseroutes
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:46:29.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d68baba496cc

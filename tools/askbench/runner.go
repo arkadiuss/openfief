@@ -177,7 +177,7 @@ func resolveLimits(l ui.AskLimits) ui.AskLimits {
 // ask runs one task: a question in a conversation of its own, graded.
 func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	model := &b.opts.Models[t.model]
-	mr := &modelRun{client: newChatClient(b.opts.HTTP, b.opts.BaseURL, b.opts.APIKey), model: model, meter: b.meter, now: b.opts.Now}
+	mr := &modelRun{client: routedClient(b.opts.HTTP, b.opts.BaseURL, b.opts.APIKey, model.Route), model: model, meter: b.meter, now: b.opts.Now}
 	style := t.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: mr, Today: func() kernel.Date { return b.seed.Today },

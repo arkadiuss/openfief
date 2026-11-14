@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a93ca1b2b005
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-perquestion
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T15:47:09.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe652575a769
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-perquestion
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:47:09.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db43f8bb21d4

@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d72c5911f693
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-main-go-modelflags
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:46:23.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30f869941512
+  - type: implements
+    from: SYM-ab3-tools-askbench-main-go-modelflags
+    to: REQ-askbench-routes-and-ranks-by-cost
+    created_at: 2026-11-14T15:46:23.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6920fa63863b

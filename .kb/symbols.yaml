@@ -218964,6 +218964,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-check-report
     title: CheckReport
     status: active
@@ -218980,6 +218982,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-call-report
     title: CallReport
     status: active
@@ -218996,6 +219000,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-run-report-fill
     title: RunReport.fill
     status: active
@@ -219012,6 +219018,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-case-report
     title: CaseReport
     status: active
@@ -219028,6 +219036,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-count
     title: FailureCount
     status: active
@@ -219044,6 +219054,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-config-report
     title: ConfigReport
     status: active
@@ -219060,6 +219072,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-tool-report
     title: ToolReport
     status: active
@@ -219076,6 +219090,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-limits-report
     title: LimitsReport
     status: active
@@ -219092,6 +219108,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-model-report
     title: ModelReport
     status: active
@@ -219108,6 +219126,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-budget-report
     title: BudgetReport
     status: active
@@ -219124,6 +219144,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-disagreement
     title: Disagreement
     status: active
@@ -219140,6 +219162,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report
     title: Report
     status: active
@@ -219157,6 +219181,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-report
     title: Bench.report
     status: active
@@ -219173,6 +219199,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-disagreements
     title: disagreements
     status: active
@@ -219189,6 +219217,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-phrase-word
     title: phraseWord
     status: active
@@ -219205,6 +219235,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-judge-word
     title: judgeWord
     status: active
@@ -219221,6 +219253,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-model-report
     title: Bench.modelReport
     status: active
@@ -219239,6 +219273,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-decimal-of
     title: decimalOf
     status: active
@@ -219255,6 +219291,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-counts
     title: failureCounts
     status: active
@@ -219271,6 +219309,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-reasons
     title: failureReasons
     status: active
@@ -219287,6 +219327,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-bench-config
     title: Bench.config
     status: active
@@ -219303,6 +219345,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-host-of
     title: hostOf
     status: active
@@ -219319,6 +219363,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-failed
     title: Report.Failed
     status: active
@@ -219337,6 +219383,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-write-to
     title: Report.WriteTo
     status: active
@@ -219353,6 +219401,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-report-summary
     title: Report.Summary
     status: active
@@ -219369,6 +219419,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-write-model
     title: writeModel
     status: active
@@ -219387,6 +219439,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-pass-word
     title: passWord
     status: active
@@ -219403,6 +219457,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-failure-cell
     title: failureCell
     status: active
@@ -219419,6 +219475,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-write-judge
     title: writeJudge
     status: active
@@ -219435,6 +219493,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-report-one-line
     title: oneLine
     status: active
@@ -219451,6 +219511,8 @@ symbols:
         target: REQ-askbench-report
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
+      - type: implements
+        target: REQ-decision-d217-1-model-serves-after-eval-amended
   - id: SYM-askbench-runner-options
     title: Options
     status: active
@@ -219467,6 +219529,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-task
     title: task
     status: active
@@ -219483,6 +219547,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench
     title: Bench
     status: active
@@ -219500,6 +219566,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-new-bench
     title: NewBench
     status: active
@@ -219516,6 +219584,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-run
     title: Bench.Run
     status: active
@@ -219532,6 +219602,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-work
     title: Bench.work
     status: active
@@ -219548,6 +219620,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-ask-unless-stopped
     title: Bench.askUnlessStopped
     status: active
@@ -219564,6 +219638,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-resolve-limits
     title: resolveLimits
     status: active
@@ -219580,6 +219656,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-ask
     title: Bench.ask
     status: active
@@ -219598,6 +219676,8 @@ symbols:
         target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-bench-grade
     title: Bench.grade
     status: active
@@ -219614,6 +219694,8 @@ symbols:
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
+      - type: implements
+        target: REQ-decision-d217-2-eval-graded-by-code-five-runs-amended
   - id: SYM-askbench-runner-test-bench-run
     title: benchRun
     status: active
@@ -222557,20 +222639,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-runner
-  - id: SYM-ab3-tools-askbench-modelclient-go-structured
-    title: structured
-    status: active
-    sourceFile: tools/askbench/modelclient.go
-    origin:
-      kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T15:00:46.711Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-structured
-      - type: implements
-        target: REQ-askbench-grades-by-the-structured-answer
   - id: SYM-ab3-tools-askbench-modelclient-go-structuredmodels
     title: structuredModels
     status: active
@@ -222768,3 +222836,312 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-structured
+  - id: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testaroutehostpinsopenrouterandnothingelse
+    title: TestARouteHostPinsOpenRouterAndNothingElse
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:45:54.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-ab3-tools-askbench-cost-test-go-testcostperquestionisthemeanovereveryquestionasked
+    title: TestCostPerQuestionIsTheMeanOverEveryQuestionAsked
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:45:59.345Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testthereportholdsthecostperquestion
+    title: TestTheReportHoldsTheCostPerQuestion
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:04.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhosesafetypassed
+    title: TestTheRankingIsByCostPerQuestionAmongModelsWhoseSafetyPassed
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:10.192Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-cost-test-go-testnomodelpassingsafetyisnoranking
+    title: TestNoModelPassingSafetyIsNoRanking
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:15.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab3-tools-askbench-main-go-modelflags
+    title: modelFlags
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:20.671Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-parseroutes
+    title: parseRoutes
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:26.551Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-routeset
+    title: routeSet
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:31.707Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-modelclient-go-routedclient
+    title: routedClient
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:43.358Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-rankreport
+    title: RankReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:48.642Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-ranking
+    title: ranking
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:46:54.814Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-ratof
+    title: ratOf
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:00.696Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-perquestion
+    title: perQuestion
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:06.602Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-writeranking
+    title: writeRanking
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:12.509Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-route-test-go-testroutespinamodeltohostsandlabeleachrun
+    title: TestRoutesPinAModelToHostsAndLabelEachRun
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:18.045Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testbadroutesareusageerrors
+    title: TestBadRoutesAreUsageErrors
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:23.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testtheflagsofaroutedmodelarefoundbyidorbylabel
+    title: TestTheFlagsOfARoutedModelAreFoundByIDOrByLabel
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:28.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testarouteisintheroutingandtheconfigurationhash
+    title: TestARouteIsInTheRoutingAndTheConfigurationHash
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:34.409Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-route-test-go-testthereportkeysamodelbyitslabelandholdsitsroute
+    title: TestTheReportKeysAModelByItsLabelAndHoldsItsRoute
+    status: active
+    sourceFile: tools/askbench/route_test.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:47:39.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-route
+  - id: SYM-ab3-tools-askbench-main-go-modelids
+    title: modelIDs
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:43.271Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-knownmodels
+    title: knownModels
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:49.286Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-main-go-routedvariants
+    title: routedVariants
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:52:55.429Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-report-go-questionsasked
+    title: questionsAsked
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T15:53:01.559Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost
+  - id: SYM-ab3-tools-askbench-modelclient-go-modellabel
+    title: modelLabel
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
+      recorded_at: 2026-11-14T16:00:04.337Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-route
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost

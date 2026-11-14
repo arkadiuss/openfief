@@ -202,6 +202,52 @@ func strictFormat() map[string]any {
 	return map[string]any{"type": "json_schema", "json_schema": map[string]any{"name": "response", "strict": true, "schema": map[string]any{"type": "object"}}}
 }
 
+// TestARouteHostPinsOpenRouterAndNothingElse checks the pinning the Ask box bench
+// asks for: a client with a Route sends, on OpenRouter, the hosts in order with
+// no fallback and require_parameters, whatever the request holds; at any other
+// host, and with no Route, the request is what it was.
+func TestARouteHostPinsOpenRouterAndNothingElse(t *testing.T) {
+	t.Parallel()
+	plain := &Request{Model: "m", Messages: []Message{{Role: "user", Content: "hi"}}}
+	pinned := map[string]any{"order": []any{"primeintellect", "novita"}, "allow_fallbacks": false, "require_parameters": true}
+	tests := []struct {
+		name    string
+		baseURL string
+		route   []string
+		req     *Request
+		want    map[string]any
+	}{
+		{name: "OpenRouter, a request with nothing special", baseURL: "https://openrouter.ai/api/v1", route: []string{"primeintellect", "novita"}, req: plain, want: pinned},
+		{
+			name: "OpenRouter, a request with tools", baseURL: "https://openrouter.ai/api/v1", route: []string{"primeintellect", "novita"},
+			req: &Request{Model: "m", Tools: []Tool{{Name: "t"}}}, want: pinned,
+		},
+		{
+			name: "one host", baseURL: "https://openrouter.ai/api/v1", route: []string{"primeintellect"}, req: plain,
+			want: map[string]any{"order": []any{"primeintellect"}, "allow_fallbacks": false, "require_parameters": true},
+		},
+		{name: "another server is told nothing", baseURL: "https://api.openai.com/v1", route: []string{"primeintellect"}, req: plain},
+		{name: "no route, no tools: nothing, as before", baseURL: "https://openrouter.ai/api/v1", req: plain},
+		{
+			name: "no route, tools: require_parameters only, as before", baseURL: "https://openrouter.ai/api/v1", req: &Request{Model: "m", Tools: []Tool{{Name: "t"}}},
+			want: map[string]any{"require_parameters": true},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			body := onTheWire(t, (&Client{BaseURL: tt.baseURL, Route: tt.route}).RequestBody(tt.req))
+			var want any
+			if tt.want != nil {
+				want = tt.want
+			}
+			if diff := cmp.Diff(want, body["provider"]); diff != "" {
+				t.Errorf("provider (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
 func TestASchemaWinsOverJSONMode(t *testing.T) {
 	t.Parallel()
 	body := onTheWire(t, (&Client{BaseURL: "https://api.openai.com/v1"}).RequestBody(&Request{Model: "m", ResponseSchema: json.RawMessage(`{"type":"object"}`), JSONMode: true}))

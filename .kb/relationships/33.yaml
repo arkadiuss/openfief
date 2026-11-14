@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07308d94d1b1
+  - type: executable_for
+    from: SYM-ab3-plugins-model-openai-openaichat-chat-test-go-testaroutehostpinsopenrouterandnothingelse
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-14T15:45:56.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db14c5dcfd39

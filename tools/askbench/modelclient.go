@@ -32,10 +32,23 @@ type Model struct {
 	ID          string
 	InputPrice  kernel.Decimal
 	OutputPrice kernel.Decimal
+	// Route, when not empty, pins the OpenRouter hosts the model is asked on, by
+	// their provider slugs, in this order and with no fallback to others.
+	Route []string
 	// Structured is whether the model's entry has the structured-output flag
 	// (D-205): the structured answer is then asked of it strictly (json_schema),
 	// else as a JSON object (JSON mode) that the loop checks and retries once.
 	Structured bool
+}
+
+// modelLabel names a run of the model: its id, and, when it is pinned to hosts, the
+// id with them (google/gemma-4-26b-a4b-it@primeintellect), so one model on two
+// hosts is two entries of the report.
+func modelLabel(m *Model) string {
+	if len(m.Route) == 0 {
+		return m.ID
+	}
+	return m.ID + "@" + strings.Join(m.Route, "|")
 }
 
 // candidateModels are D-207's two candidates for the demo's model, with the
@@ -45,14 +58,8 @@ type Model struct {
 func candidateModels() []Model {
 	return []Model{
 		priced("qwen/qwen3.7-flash", "0.03", "0.13"),
-		structured(priced("openai/gpt-oss-120b", "0.15", "0.60")),
+		{ID: "openai/gpt-oss-120b", InputPrice: priced("", "0.15", "0").InputPrice, OutputPrice: priced("", "0", "0.60").OutputPrice, Structured: true},
 	}
-}
-
-// structured returns m with the structured-output flag.
-func structured(m Model) Model {
-	m.Structured = true
-	return m
 }
 
 // structuredModels are the models whose entries have the structured-output flag
@@ -295,11 +302,19 @@ func newChatClient(hc *http.Client, baseURL, key string) *openaichat.Client {
 	return &openaichat.Client{HTTP: hc, BaseURL: strings.TrimRight(baseURL, "/"), Key: func() (string, error) { return key, nil }}
 }
 
+// routedClient is newChatClient pinned to the hosts of route.
+func routedClient(hc *http.Client, baseURL, key string, route []string) *openaichat.Client {
+	c := newChatClient(hc, baseURL, key)
+	c.Route = route
+	return c
+}
+
 // routingProbe returns the request body a request with one tool gets at
-// baseURL: it holds the provider routing member (OpenRouter's
-// require_parameters) the plugin adds for the host, which the config hash covers.
-func routingProbe(baseURL string) map[string]any {
-	c := newChatClient(nil, baseURL, "")
+// baseURL, pinned to route: it holds the provider routing member (OpenRouter's
+// require_parameters, and the order and no fallback of a route) the plugin's
+// client adds for the host, which the config hash covers.
+func routingProbe(baseURL string, route []string) map[string]any {
+	c := routedClient(nil, baseURL, "", route)
 	body := c.RequestBody(&openaichat.Request{Model: "m", Tools: []openaichat.Tool{{Name: "t"}}})
 	if provider, ok := body["provider"]; ok {
 		return map[string]any{"provider": provider}

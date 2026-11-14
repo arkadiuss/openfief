@@ -1231,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07cc18c19f0e
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-route-test-go-testbadroutesareusageerrors
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:47:26.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e89e0cc6b30b

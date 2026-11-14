@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-545269f11328
+  - type: implements
+    from: SYM-askbench-report-report-failed
+    to: REQ-decision-d217-1-model-serves-after-eval-amended
+    created_at: 2026-11-14T15:40:48.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f974aa18d92

@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3d33d9fa559
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-cost-test-go-testnomodelpassingsafetyisnoranking
+    to: TEST-askbench-cost
+    created_at: 2026-11-14T15:46:18.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a074c66c1dbb

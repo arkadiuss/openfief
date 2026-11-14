@@ -366,10 +366,10 @@ func TestTheConfigurationHashFollowsWhatTheResultsDependOn(t *testing.T) {
 
 func TestTheRoutingMemberFollowsTheHost(t *testing.T) {
 	t.Parallel()
-	if got := routingProbe(defaultBaseURL); got["provider"] == nil {
+	if got := routingProbe(defaultBaseURL, nil); got["provider"] == nil {
 		t.Errorf("OpenRouter's routing = %v, want provider.require_parameters", got)
 	}
-	if got := routingProbe("https://api.openai.com/v1"); len(got) != 0 {
+	if got := routingProbe("https://api.openai.com/v1", nil); len(got) != 0 {
 		t.Errorf("OpenAI's routing = %v, want none", got)
 	}
 }

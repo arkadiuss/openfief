@@ -1,6 +1,6 @@
 ---
 title: A model serves a role only after it passes that role's eval, and the eval runs again whenever the role's model, provider host, prompt or tools change, and weekly on main, each run within a fixed budget.
-status: open
+status: closed
 origin:
   kind: import
   ref: design-decisions:D-217#1

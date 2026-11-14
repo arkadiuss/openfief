@@ -1245,17 +1245,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-937067777fd3
-  - type: covered_by
-    from: SYM-ab3-tools-askbench-modelclient-go-structured
-    to: TEST-askbench-structured
-    created_at: 2026-11-14T15:00:49.414Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d3ee10c37e38
-  - type: implements
-    from: SYM-ab3-tools-askbench-modelclient-go-structured
-    to: REQ-askbench-grades-by-the-structured-answer
-    created_at: 2026-11-14T15:00:49.458Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-25f55a834b4a

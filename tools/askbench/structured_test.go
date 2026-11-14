@@ -113,7 +113,7 @@ func TestTheStructuredFlagIsInTheConfigurationHash(t *testing.T) {
 
 func TestTheDefaultModelsKeepTheirFlags(t *testing.T) {
 	t.Parallel()
-	models, err := modelsFrom("", "", nil, nil)
+	models, err := modelsFrom(&modelFlags{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,11 +124,11 @@ func TestTheDefaultModelsKeepTheirFlags(t *testing.T) {
 	if !got["openai/gpt-oss-120b"] || got["qwen/qwen3.7-flash"] {
 		t.Errorf("structured by default = %v, want gpt-oss with the flag and qwen without it (JSON mode)", got)
 	}
-	gemma, err := modelsFrom("google/gemma-4-26b-a4b-it", "google/gemma-4-26b-a4b-it=0.05:0.3", nil, nil)
+	gemma, err := modelsFrom(&modelFlags{names: "google/gemma-4-26b-a4b-it", prices: "google/gemma-4-26b-a4b-it=0.05:0.3"})
 	if err != nil || !gemma[0].Structured {
 		t.Errorf("gemma = %+v, %v; want the flag by default", gemma, err)
 	}
-	other, err := modelsFrom("x/y", "x/y=1:2", []string{"x/y"}, nil)
+	other, err := modelsFrom(&modelFlags{names: "x/y", prices: "x/y=1:2", structured: []string{"x/y"}})
 	if err != nil || !other[0].Structured {
 		t.Errorf("-structured: %+v, %v", other, err)
 	}

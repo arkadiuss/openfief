@@ -148,6 +148,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	fs.SetOutput(stderr)
 	models := fs.String("model", "", "comma-separated OpenRouter model ids; default D-207's two candidates, qwen/qwen3.7-flash and openai/gpt-oss-120b")
 	prices := fs.String("price", "", "comma-separated id=input:output prices in USD per million tokens, for a model not among the candidates")
+	routes := fs.String("route", "", "comma-separated model=provider1|provider2 entries: pin the model to those OpenRouter hosts (their provider slugs), in that order, with no fallback; one model may have several entries, each a run of its own labelled model@provider1|provider2")
 	structured := fs.String("structured", "", "comma-separated model ids whose entry has the structured-output flag, asked for the answer strictly (gpt-oss and gemma-4 are by default)")
 	jsonMode := fs.String("json-mode", "", "comma-separated model ids whose entry has no structured-output flag, asked for the answer as a JSON object, whatever the default")
 	baseURL := fs.String("base-url", defaultBaseURL, "the OpenAI-compatible API root")
@@ -165,7 +166,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	if key == "" {
 		return nil, fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
 	}
-	list, err := modelsFrom(*models, *prices, splitList(*structured), splitList(*jsonMode))
+	list, err := modelsFrom(&modelFlags{names: *models, prices: *prices, routes: *routes, structured: splitList(*structured), jsonMode: splitList(*jsonMode)})
 	if err != nil {
 		return nil, err
 	}
@@ -196,10 +197,61 @@ func splitList(s string) []string {
 	return out
 }
 
+// modelFlags are the flags that choose the models of a run.
+type modelFlags struct {
+	names, prices, routes string
+	structured, jsonMode  []string
+}
+
 // modelsFrom returns the models to ask: those named, or the candidates, each
-// with the price the -price flag gives or the candidates' table, and the
-// structured-output flag by default or as asked (structured and jsonMode).
-func modelsFrom(names, prices string, structuredIDs, jsonModeIDs []string) ([]Model, error) {
+// with the price the -price flag gives or the candidates' table, the
+// structured-output flag by default or as asked, and, for a model with -route
+// entries, one run of it for each, pinned to its hosts. A model that only a route
+// names is asked too.
+func modelsFrom(f *modelFlags) ([]Model, error) {
+	known, err := knownModels(f.prices)
+	if err != nil {
+		return nil, err
+	}
+	rs, err := parseRoutes(f.routes)
+	if err != nil {
+		return nil, err
+	}
+	var out []Model
+	for _, id := range modelIDs(f.names, &rs) {
+		m, ok := known[id]
+		if !ok {
+			return nil, fmt.Errorf("%w: no price for %s: give one with -price %s=input:output", ErrModels, id, id)
+		}
+		for _, v := range routedVariants(&m, rs.byModel[id]) {
+			byFlag := func(list []string) bool { return slices.Contains(list, id) || slices.Contains(list, modelLabel(&v)) }
+			v.Structured = (slices.Contains(structuredModels(), id) || byFlag(f.structured)) && !byFlag(f.jsonMode)
+			out = append(out, v)
+		}
+	}
+	return out, nil
+}
+
+// modelIDs returns the ids to ask: those named, or the candidates when neither a
+// name nor a route gives one, and then the models only a route names.
+func modelIDs(names string, rs *routeSet) []string {
+	ids := splitList(names)
+	if len(ids) == 0 && len(rs.models) == 0 {
+		for _, m := range candidateModels() {
+			ids = append(ids, m.ID)
+		}
+	}
+	for _, id := range rs.models {
+		if !slices.Contains(ids, id) {
+			ids = append(ids, id)
+		}
+	}
+	return ids
+}
+
+// knownModels returns the models with a price by id: the candidates and those the
+// -price flag gives.
+func knownModels(prices string) (map[string]Model, error) {
 	known := map[string]Model{}
 	for _, m := range candidateModels() {
 		known[m.ID] = m
@@ -211,22 +263,58 @@ func modelsFrom(names, prices string, structuredIDs, jsonModeIDs []string) ([]Mo
 		}
 		known[m.ID] = m
 	}
-	ids := splitList(names)
-	if len(ids) == 0 {
-		for _, m := range candidateModels() {
-			ids = append(ids, m.ID)
-		}
+	return known, nil
+}
+
+// routedVariants returns the runs of m: one for each of its routes, or m itself
+// when it has none.
+func routedVariants(m *Model, routes [][]string) []Model {
+	if len(routes) == 0 {
+		return []Model{*m}
 	}
-	out := make([]Model, 0, len(ids))
-	for _, id := range ids {
-		m, ok := known[id]
-		if !ok {
-			return nil, fmt.Errorf("%w: no price for %s: give one with -price %s=input:output", ErrModels, id, id)
-		}
-		m.Structured = (slices.Contains(structuredModels(), id) || slices.Contains(structuredIDs, id)) && !slices.Contains(jsonModeIDs, id)
-		out = append(out, m)
+	out := make([]Model, 0, len(routes))
+	for _, route := range routes {
+		v := *m
+		v.Route = route
+		out = append(out, v)
 	}
-	return out, nil
+	return out
+}
+
+// parseRoutes reads the -route entries, model=provider1|provider2: the routes of
+// each model in the order given, and the models that have one, in that order. A
+// model may have several; a route that names no provider, or names one twice, or
+// the same route twice for a model, is a usage error.
+func parseRoutes(s string) (routeSet, error) {
+	set := routeSet{byModel: map[string][][]string{}}
+	for _, entry := range splitList(s) {
+		i := strings.LastIndex(entry, "=")
+		if i <= 0 {
+			return routeSet{}, fmt.Errorf("%w: -route wants model=provider1|provider2, got %q", ErrUsage, entry)
+		}
+		var route []string
+		for p := range strings.SplitSeq(entry[i+1:], "|") {
+			if p = strings.TrimSpace(p); p != "" && !slices.Contains(route, p) {
+				route = append(route, p)
+			}
+		}
+		id := entry[:i]
+		if len(route) == 0 || slices.ContainsFunc(set.byModel[id], func(r []string) bool { return slices.Equal(r, route) }) {
+			return routeSet{}, fmt.Errorf("%w: -route %q names no provider, or repeats a route of the model", ErrUsage, entry)
+		}
+		if _, seen := set.byModel[id]; !seen {
+			set.models = append(set.models, id)
+		}
+		set.byModel[id] = append(set.byModel[id], route)
+	}
+	return set, nil
+}
+
+// routeSet is the -route entries: the routes of each model in the order given,
+// and the models that have one, in that order.
+type routeSet struct {
+	byModel map[string][][]string
+	models  []string
 }
 
 // parsePrice reads id=input:output, the prices in USD per million tokens.

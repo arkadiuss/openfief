@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math/big"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -163,11 +164,13 @@ type ConfigReport struct {
 	Routing map[string]any `json:"routing"`
 	// StructuredOutput is the model entry's structured-output flag: whether the
 	// answer is asked strictly or as a JSON object; AnswerSchema is its schema.
-	StructuredOutput bool         `json:"structuredOutput"`
-	AnswerSchema     string       `json:"answerSchema"`
-	SystemPrompt     string       `json:"systemPrompt"`
-	Tools            []ToolReport `json:"tools"`
-	Limits           LimitsReport `json:"limits"`
+	StructuredOutput bool `json:"structuredOutput"`
+	// Route is the hosts the model was pinned to, in order.
+	Route        []string     `json:"route,omitempty"`
+	AnswerSchema string       `json:"answerSchema"`
+	SystemPrompt string       `json:"systemPrompt"`
+	Tools        []ToolReport `json:"tools"`
+	Limits       LimitsReport `json:"limits"`
 }
 
 // ToolReport is a tool as the model is told it.
@@ -185,9 +188,14 @@ type LimitsReport struct {
 	Deadline     string `json:"deadline"`
 }
 
-// ModelReport is one model's results.
+// ModelReport is one model's results, keyed by its label: its id, with the hosts
+// it was pinned to when it was (google/gemma-4-26b-a4b-it@primeintellect).
 type ModelReport struct {
 	Model string `json:"model"`
+	// ModelID is the id the provider knows it by, and Route the hosts it was
+	// pinned to, in order.
+	ModelID string   `json:"modelId"`
+	Route   []string `json:"route,omitempty"`
 	// ConfigHash is the SHA-256 of Config, so a change of any of its parts is
 	// one comparison.
 	ConfigHash   string       `json:"configHash"`
@@ -198,6 +206,11 @@ type ModelReport struct {
 	InputTokens  int64        `json:"inputTokens"`
 	OutputTokens int64        `json:"outputTokens"`
 	Cost         string       `json:"cost"`
+	// Questions is how many questions were asked of the model, one that hit a
+	// call error included, and CostPerQuestion the mean USD a question cost
+	// across all the cases, D-207's measure of the cheapest model that passes.
+	Questions       int    `json:"questions"`
+	CostPerQuestion string `json:"costPerQuestion"`
 	// SafetyPassed is true when no safety case failed on a run the model
 	// answered; a run that hit a call error is not a failure (see ErroredRuns).
 	SafetyPassed bool `json:"safetyPassed"`
@@ -224,6 +237,13 @@ type BudgetReport struct {
 	Aborted bool `json:"aborted"`
 }
 
+// RankReport is a model of the ranking by cost per question.
+type RankReport struct {
+	Model           string `json:"model"`
+	CostPerQuestion string `json:"costPerQuestion"`
+	ConfigHash      string `json:"configHash"`
+}
+
 // Disagreement is an answer the phrase list and the judge grade differently.
 type Disagreement struct {
 	Model  string `json:"model"`
@@ -240,11 +260,15 @@ type Report struct {
 	Seed   uint64 `json:"seed"`
 	// Subset is true when only some cases ran, so the safety cases may not
 	// have been asked at all.
-	Subset        bool           `json:"subset"`
-	RunsPerCase   int            `json:"runsPerCase"`
-	Budget        BudgetReport   `json:"budget"`
-	Judged        bool           `json:"judged"`
-	Models        []ModelReport  `json:"models"`
+	Subset      bool          `json:"subset"`
+	RunsPerCase int           `json:"runsPerCase"`
+	Budget      BudgetReport  `json:"budget"`
+	Judged      bool          `json:"judged"`
+	Models      []ModelReport `json:"models"`
+	// Ranking lists the models whose safety cases passed, the cheapest
+	// question first: D-207's cheapest model that passes, by what a question
+	// costs and not by the list price.
+	Ranking       []RankReport   `json:"ranking"`
 	Disagreements []Disagreement `json:"disagreements,omitempty"`
 }
 
@@ -266,7 +290,56 @@ func (b *Bench) report(tasks []task, results []RunReport, aborted bool) (*Report
 		r.Models = append(r.Models, mr)
 		r.Disagreements = append(r.Disagreements, disagreements(&mr)...)
 	}
+	r.Ranking = ranking(r.Models)
 	return r, nil
+}
+
+// questionsAsked counts the questions put to model mi: all but those never
+// asked, for the budget was spent.
+func questionsAsked(mi int, tasks []task, results []RunReport) int {
+	n := 0
+	for i := range tasks {
+		if tasks[i].model == mi && !results[i].NotRun && !results[i].BudgetSpent {
+			n++
+		}
+	}
+	return n
+}
+
+// ranking lists the models whose safety cases passed by what a question cost,
+// the cheapest first, a tie in the order the models were asked.
+func ranking(models []ModelReport) []RankReport {
+	var out []RankReport
+	for i := range models {
+		if m := &models[i]; m.SafetyPassed && !m.CouldNotRun {
+			out = append(out, RankReport{Model: m.Model, CostPerQuestion: m.CostPerQuestion, ConfigHash: m.ConfigHash})
+		}
+	}
+	sort.SliceStable(out, func(i, j int) bool { return ratOf(out[i].CostPerQuestion).Cmp(ratOf(out[j].CostPerQuestion)) < 0 })
+	return out
+}
+
+// ratOf reads a decimal text exactly; one that does not read is zero.
+func ratOf(text string) *big.Rat {
+	r, ok := new(big.Rat).SetString(text)
+	if !ok {
+		return new(big.Rat)
+	}
+	return r
+}
+
+// costPerQuestionPlaces is how many decimal places a cost per question is
+// written with: a question costs a fraction of a cent.
+const costPerQuestionPlaces = 8
+
+// perQuestion is cost divided by questions, in USD to costPerQuestionPlaces
+// places; zero for no question.
+func perQuestion(cost kernel.Decimal, questions int) string {
+	if questions == 0 {
+		return "0"
+	}
+	mean := new(big.Rat).Quo(ratOf(cost.String()), big.NewRat(int64(questions), 1))
+	return mean.FloatString(costPerQuestionPlaces)
 }
 
 // disagreements lists the runs of a model's cases that the phrase list and the
@@ -310,7 +383,7 @@ func (b *Bench) modelReport(mi int, tasks []task, results []RunReport) (ModelRep
 		return ModelReport{}, err
 	}
 	mr := ModelReport{
-		Model: m.ID, ConfigHash: hash, Config: cfg, InputPrice: m.InputPrice.String(), OutputPrice: m.OutputPrice.String(), SafetyPassed: true,
+		Model: modelLabel(m), ModelID: m.ID, Route: m.Route, ConfigHash: hash, Config: cfg, InputPrice: m.InputPrice.String(), OutputPrice: m.OutputPrice.String(), SafetyPassed: true,
 	}
 	var total kernel.Decimal
 	counts := map[CallErrorReport]int{}
@@ -332,6 +405,8 @@ func (b *Bench) modelReport(mi int, tasks []task, results []RunReport) (ModelRep
 			mr.SafetyPassed = false
 		}
 	}
+	mr.Questions = questionsAsked(mi, tasks, results)
+	mr.CostPerQuestion = perQuestion(total, mr.Questions)
 	mr.Errors = errorCounts(counts)
 	mr.CouldNotRun = mr.Completions == 0 && len(mr.Errors) > 0
 	mr.Cost = total.String()
@@ -459,8 +534,8 @@ func failureReasons(r *RunReport) []string {
 // config returns what the model's results depend on and its hash.
 func (b *Bench) config(m *Model) (ConfigReport, string, error) {
 	cfg := ConfigReport{
-		Model: m.ID, BaseURL: hostOf(b.opts.BaseURL), Routing: routingProbe(b.opts.BaseURL), SystemPrompt: ui.AskSystemPrompt(b.seed.Today),
-		StructuredOutput: m.Structured, AnswerSchema: ui.AskAnswerSchema(),
+		Model: m.ID, BaseURL: hostOf(b.opts.BaseURL), Routing: routingProbe(b.opts.BaseURL, m.Route), SystemPrompt: ui.AskSystemPrompt(b.seed.Today),
+		StructuredOutput: m.Structured, Route: m.Route, AnswerSchema: ui.AskAnswerSchema(),
 		Limits: LimitsReport{
 			ToolRounds: b.opts.Limits.ToolRounds, ToolCalls: b.opts.Limits.ToolCalls, OutputTokens: b.opts.Limits.OutputTokens,
 			Deadline: b.opts.Limits.Deadline.String(),
@@ -529,6 +604,7 @@ func (r *Report) Summary() string {
 	if r.Subset {
 		b.WriteString("Only some cases ran, so the safety cases may not all have been asked.\n\n")
 	}
+	writeRanking(&b, r)
 	for i := range r.Models {
 		writeModel(&b, &r.Models[i])
 	}
@@ -536,6 +612,33 @@ func (r *Report) Summary() string {
 		writeJudge(&b, r)
 	}
 	return b.String()
+}
+
+// writeRanking writes the models whose safety cases passed by what a question
+// cost, D-207's cheapest model that passes, and says which are not ranked.
+func writeRanking(b *strings.Builder, r *Report) {
+	b.WriteString("## Cost per question\n\n")
+	if len(r.Ranking) == 0 {
+		b.WriteString("No model passed its safety cases, so none is ranked.\n\n")
+	} else {
+		b.WriteString("The models whose safety cases passed, the cheapest question first (D-207: the cheapest that passes, by cost per question and not by list price).\n\n| Rank | Model | USD per question | Configuration |\n|---|---|---|---|\n")
+		for i, m := range r.Ranking {
+			fmt.Fprintf(b, "| %d | %s | %s | `%s` |\n", i+1, m.Model, m.CostPerQuestion, m.ConfigHash)
+		}
+		b.WriteString("\n")
+	}
+	var unranked []string
+	for i := range r.Models {
+		if m := &r.Models[i]; !m.SafetyPassed || m.CouldNotRun {
+			unranked = append(unranked, m.Model)
+		}
+	}
+	if len(unranked) > 0 {
+		fmt.Fprintf(b, "Not ranked, a safety case did not pass or the model could not run: %s.\n\n", strings.Join(unranked, ", "))
+	}
+	if r.Subset {
+		b.WriteString("Only some cases ran, so a model's safety is not proven and the ranking is not D-207's.\n\n")
+	}
 }
 
 // writeModel writes one model's section of the summary.
@@ -549,7 +652,7 @@ func writeModel(b *strings.Builder, m *ModelReport) {
 	case m.ErroredRuns > 0:
 		verdict = "no safety case failed, but it is not proven: some questions hit call errors and were not scored"
 	}
-	fmt.Fprintf(b, "## %s\n\nConfiguration `%s`. %d input and %d output tokens, %s USD. Safety: %s.\n\n", m.Model, m.ConfigHash, m.InputTokens, m.OutputTokens, m.Cost, verdict)
+	fmt.Fprintf(b, "## %s\n\nConfiguration `%s`. %d input and %d output tokens, %s USD, %s USD a question over %d. Safety: %s.\n\n", m.Model, m.ConfigHash, m.InputTokens, m.OutputTokens, m.Cost, m.CostPerQuestion, m.Questions, verdict)
 	if len(m.Errors) > 0 {
 		fmt.Fprintf(b, "Failed calls to the model (errors, not model failures): %s. %d questions hit one and are not scored.\n\n", errorsText(m.Errors), m.ErroredRuns)
 	}

@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b31ef346f088
+  - type: executable_for
+    from: SYM-ab3-tools-askbench-route-test-go-testtheflagsofaroutedmodelarefoundbyidorbylabel
+    to: TEST-askbench-route
+    created_at: 2026-11-14T15:47:31.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdf4737fcbd
