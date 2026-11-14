@@ -18,6 +18,7 @@ import (
 
 	attentionapp "github.com/arkadiuss/openfief/internal/attention/app"
 	attentionpg "github.com/arkadiuss/openfief/internal/attention/postgres"
+	"github.com/arkadiuss/openfief/internal/identity"
 	identitykube "github.com/arkadiuss/openfief/internal/identity/kube"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
@@ -94,7 +95,10 @@ func clusterOrNil(log *slog.Logger) *cluster {
 
 // connectorDeps are what the connector scheduler is built from.
 type connectorDeps struct {
-	pool   *pgxpool.Pool
+	pool *pgxpool.Pool
+	// outbox keeps what a sync writes, and the administrator's changes at the
+	// command line, together with their audit entries (D-211).
+	outbox *outbox
 	ledger *ledgerapp.Ledger
 	// sleeves keeps the sleeves and which account is in which, in the
 	// portfolio context.
@@ -142,16 +146,20 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		if err := migrate(ctx, p.pool); err != nil {
 			return err
 		}
-		vstore, err := valuationpg.NewStore(p.pool, jobTracing()...)
+		vstore, err := joinedStore(p.pool)
 		if err != nil {
-			return fmt.Errorf("valuation store: %w", err)
+			return err
+		}
+		ob, err := newOutbox(p.pool, time.Now)
+		if err != nil {
+			return err
 		}
 		l, recorder := ingestDeps(p.pool, vstore)
 		// The connector commands record cross-check prices for no owner.
 		checks := valuationapp.NewCrossChecks(vstore, nil)
 		// The model's targets need no owner: no session is checked.
 		pack := jurisdictionPack().ReportingCurrency()
-		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, pack, pack)
+		models, err := portfolioapp.New(portfoliopg.New(joined(p.pool)), vstore, nil, pack, pack)
 		if err != nil {
 			return fmt.Errorf("model portfolio: %w", err)
 		}
@@ -159,14 +167,14 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		// core's checks run in the core.
 		// The connector commands rename no instrument for the owner: they
 		// only carry names over when they re-key (D-214).
-		names := &ledgerapp.Names{Store: ledgerpg.New(p.pool), Postings: l}
+		names := &ledgerapp.Names{Store: ledgerpg.New(joined(p.pool)), Postings: l}
 		return fn(&connectorDeps{
-			pool: p.pool, ledger: l, sleeves: portfolioapp.NewRegistry(portfoliopg.New(p.pool), l),
+			pool: p.pool, outbox: ob, ledger: l, sleeves: portfolioapp.NewRegistry(portfoliopg.New(joined(p.pool)), l),
 			recorder: recorder, crossChecks: checks, now: time.Now, log: log,
 			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models, wrappers: vstore,
 			rankings:  newRankings(p.pool, l, vstore, nil),
-			attention: attentionapp.New(attentionpg.New(p.pool), nil, time.Now),
-			names:     names, rekeyers: rekeyers(vstore, portfoliopg.New(p.pool), names, l),
+			attention: attentionapp.New(attentionpg.New(joined(p.pool)), nil, time.Now),
+			names:     names, rekeyers: rekeyers(vstore, portfoliopg.New(joined(p.pool)), names, l),
 		})
 	})
 }
@@ -199,15 +207,20 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 		Ledger: d.ledger, Seeding: d.ledger, Bonds: d.bonds, Wrappers: d.wrappers, Payouts: store, Postings: d.ledger,
 		Default: jurisdiction.DefaultWrapper(jurisdictionPack()), Today: d.today,
 	}
+	conns := &ingestapp.Connectors{
+		Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
+		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
+		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
+		Seeding: d.ledger, Starts: store, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
+		Tickers: store, Lookup: caller, Instances: discovery, Attention: valuationAttention{items: d.attention},
+		Names: d.names, Rekeyers: d.rekeyers,
+	}
+	if d.outbox != nil {
+		// A sync's writes and its audit entry are one transaction (D-211).
+		conns.Audit = d.outbox
+	}
 	return &ingestapp.Scheduler{
-		Connectors: &ingestapp.Connectors{
-			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
-			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
-			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
-			Seeding: d.ledger, Starts: store, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
-			Tickers: store, Lookup: caller, Instances: discovery, Attention: valuationAttention{items: d.attention},
-			Names: d.names, Rekeyers: d.rekeyers,
-		},
+		Connectors:  conns,
 		Instances:   discovery,
 		Store:       store,
 		Scope:       &ingestapp.PricingScope{Holdings: d.ledger, Bonds: d.bonds, Model: d.model, Today: d.today},
@@ -259,8 +272,7 @@ func connectorCommand(ctx context.Context, cmd *command, d *connectorDeps, c *cl
 	args := &cmd.Connector
 	switch cmd.Name {
 	case cmdBind:
-		at := d.now()
-		if err := ingestapp.Bind(ctx, d.ledger, ingestpg.New(d.pool), args.Instance, args.Account, at); err != nil {
+		if err := bindAsAdmin(ctx, d, args); err != nil {
 			return fmt.Errorf("connector bind: %w", err)
 		}
 		_, err := fmt.Fprintf(out, "bound connector instance %s to account %s\n", args.Instance, args.Account)
@@ -279,6 +291,27 @@ func connectorCommand(ctx context.Context, cmd *command, d *connectorDeps, c *cl
 		return writeErr(err)
 	}
 	return fmt.Errorf("%w: %q", errUsage, cmd.Name)
+}
+
+// adminActor is the administrator at the core's command line, as the audit
+// log names them (D-67, D-211).
+func adminActor() identity.Actor {
+	return identity.Actor{Kind: identity.ActorAdmin, ID: identity.AdminActorID}
+}
+
+// bindAsAdmin binds the connector instance to the account for the administrator
+// at the command line: the binding and its audit entry, account_bound by the
+// admin actor, are one transaction (D-211).
+func bindAsAdmin(ctx context.Context, d *connectorDeps, args *connectorArgs) error {
+	at := d.now()
+	entry, err := identity.NewAuditEntry(at, adminActor(), identity.ActionAccountBound, identity.OutcomeOK,
+		identity.Ref{Kind: identity.RefAccount, ID: string(args.Account)}, identity.Ref{Kind: identity.RefPlugin, ID: args.Instance})
+	if err != nil {
+		return fmt.Errorf("the audit entry of the binding: %w", err)
+	}
+	return d.outbox.Within(ctx, &entry, func(ctx context.Context) error {
+		return ingestapp.Bind(ctx, d.ledger, ingestpg.New(joined(d.pool)), args.Instance, args.Account, at)
+	})
 }
 
 // syncNow syncs one instance at once, with the default sync settings.
@@ -397,11 +430,12 @@ type valuationInputs struct {
 }
 
 // StorePrices records prices.
-func (v valuationInputs) StorePrices(ctx context.Context, _ ingest.BatchID, prices []valuation.Price) error {
-	if err := v.recorder.RecordPrices(ctx, prices); err != nil {
-		return fmt.Errorf("valuation: %w", err)
+func (v valuationInputs) StorePrices(ctx context.Context, _ ingest.BatchID, prices []valuation.Price) (int, error) {
+	changed, err := v.recorder.RecordPricesChanged(ctx, prices)
+	if err != nil {
+		return 0, fmt.Errorf("valuation: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // StoreFXRates records FX rates.
@@ -454,13 +488,18 @@ func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID,
 // StoreBondTerms records treasury bond series terms (D-9), each for its
 // instrument's ISIN with the instance that delivered them (D-179);
 // holdings of it are then valued as bonds.
-func (v valuationInputs) StoreBondTerms(ctx context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
+func (v valuationInputs) StoreBondTerms(ctx context.Context, _ ingest.BatchID, terms []ingest.BondTerms) (int, error) {
+	changed := 0
 	for i := range terms {
-		if err := v.recorder.RecordBondTerms(ctx, terms[i].Instrument.ISIN, &terms[i].Terms, terms[i].Source); err != nil {
-			return fmt.Errorf("valuation: %w", err)
+		c, err := v.recorder.RecordBondTermsChanged(ctx, terms[i].Instrument.ISIN, &terms[i].Terms, terms[i].Source)
+		if err != nil {
+			return 0, fmt.Errorf("valuation: %w", err)
+		}
+		if c {
+			changed++
 		}
 	}
-	return nil
+	return changed, nil
 }
 
 // errUnknownIndex reports an index reading of an index valuation doesn't

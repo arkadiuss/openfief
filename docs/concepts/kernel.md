@@ -133,7 +133,7 @@ flowchart TD
 
 ### Unavailable, not refused
 
-`ErrAuthzUnavailable` and `ErrAuditUnavailable` ([unavailable.go](../../internal/kernel/unavailable.go)) say that the authorization model or the audit log could not answer now, so a change was refused for want of an answer and not on its merits (D-164, D-211). A Connect adapter answers either as "unavailable, try again", and `kernel.Unavailable` returns the one an error wraps, so the adapters share one rule.
+`ErrAuthzUnavailable` and `ErrAuditUnavailable` ([unavailable.go](../../internal/kernel/unavailable.go)) say that the authorization model or the audit log could not answer now, so a change was refused for want of an answer and not on its merits (D-164, D-211). A Connect adapter answers either as "unavailable, try again", and `kernel.Unavailable` returns the one an error wraps, so the adapters share one rule. An audit log is unavailable when its entry can't be enqueued in the outbox, in the transaction of the change ([Identity](identity.md#the-outbox)): the change is not made. Because the change's stores share that one transaction and connection, a statement of any of them that fails and is not handled inside a savepoint rolls the whole change back.
 
 ## Decisions
 

@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ec7e4af3ce
+  - type: executable_for
+    from: SYM-s9-internal-identity-app-ownerchange-test-fakeoutbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:34.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bb45e77e23e
+  - type: executable_for
+    from: SYM-s9-cmd-core-modelrouter-test-testmodelauditentersaviewersquestionastheviewers
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:20.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df59d63f6bba

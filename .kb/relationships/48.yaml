@@ -1217,3 +1217,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8feb1682bebd
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-changetx
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:49:01.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3eaef04bb5c
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-changetx
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:01.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48af98facf5f

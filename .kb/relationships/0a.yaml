@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45e9bc545c10
+  - type: executable_for
+    from: SYM-s9-internal-identity-app-ownerchange-test-fakeoutbox-within
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:39.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-028036c7226e

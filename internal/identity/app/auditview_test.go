@@ -50,6 +50,41 @@ func TestAuditEntriesFilterByOutcomeAndActions(t *testing.T) {
 	}
 }
 
+// TestAuditEntriesKeepNamingAViewerWhoseSessionEnded checks that an entry a
+// viewer made in a session still names the person after the session ended and
+// after the owner revoked the person: sessions and people are never deleted
+// (migration 0002), so the log can name them for ever, by an ID that the people
+// list, revoked ones included, resolves to the name (D-211).
+func TestAuditEntriesKeepNamingAViewerWhoseSessionEnded(t *testing.T) {
+	t.Parallel()
+	f := newGrantFixture(t, demoConfig{})
+	_, owner := f.enroll(t)
+	_, r := f.enrollViewer(t, &owner, sleeve(sleeveCore))
+	person, session := r.Session.Session.Person(), r.Session.Session.ID
+	if _, err := f.auth.RevokePerson(t.Context(), local, owner.Token, person); err != nil {
+		t.Fatalf("RevokePerson: %v", err)
+	}
+	if _, err := f.auth.Session(t.Context(), origin(t, local), r.Session.Token, identity.SessionScopeRead); err == nil {
+		t.Fatal("the revoked viewer's session still works")
+	}
+	page, err := f.auth.AuditEntries(t.Context(), local, owner.Token, &identity.AuditFilter{ActorKind: identity.ActorViewer, ActorID: string(session)})
+	must(t, "AuditEntries", err)
+	if len(page.Entries) == 0 || page.Persons[session] != person {
+		t.Fatalf("entries of the ended session = %d, persons %v; want its entries and %s as the person", len(page.Entries), page.Persons, person)
+	}
+	people, err := f.auth.People(t.Context(), local, owner.Token)
+	must(t, "People", err)
+	name := ""
+	for i := range people {
+		if people[i].Person.ID == person {
+			name = people[i].Person.Name
+		}
+	}
+	if name != "Alice" {
+		t.Errorf("the revoked person's name = %q, want Alice: the log must still name them", name)
+	}
+}
+
 // TestAuditEntriesNameViewerSessions checks that a viewer's session, which is
 // the actor of their entries, comes with the ID of the person it is of, so the
 // log can name them; an owner's or a link's actor has none.

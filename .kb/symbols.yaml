@@ -10946,19 +10946,6 @@ symbols:
         target: TEST-ledger-pg-store
       - type: implements
         target: REQ-ledger-pg-store-accounts
-  - id: SYM-ledger-pg-db
-    title: db
-    sourceFile: internal/ledger/postgres/store.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:34:42.568Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-new
     title: New
     sourceFile: internal/ledger/postgres/store.go
@@ -14555,30 +14542,6 @@ symbols:
         target: TEST-valuation-app-plan
       - type: executable_for
         target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-prices
-    title: fakeRecorder.SavePrices
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:22.232Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
-    title: fakeRecorder.SaveFXRates
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:28.137Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
   - id: SYM-valuation-app-test-helper-fake-recorder-save-index-readings
     title: fakeRecorder.SaveIndexReadings
     sourceFile: internal/valuation/app/fakes_test.go
@@ -14586,18 +14549,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T07:38:33.494Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-plan
-      - type: executable_for
-        target: TEST-valuation-app-revalue
-  - id: SYM-valuation-app-test-helper-fake-recorder-save-bond-terms
-    title: fakeRecorder.SaveBondTerms
-    sourceFile: internal/valuation/app/fakes_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T07:38:38.477Z
     relationships:
       - type: executable_for
         target: TEST-valuation-app-plan
@@ -116274,19 +116225,6 @@ symbols:
         target: TEST-attention-pg-store
       - type: implements
         target: REQ-attention-outbox-same-transaction
-  - id: SYM-attention-pg-db
-    title: db
-    sourceFile: internal/attention/postgres/store.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:45:01.575Z
-    relationships:
-      - type: covered_by
-        target: TEST-attention-pg-store
-      - type: implements
-        target: REQ-attention-outbox-same-transaction
   - id: SYM-attention-pg-new
     title: New
     sourceFile: internal/attention/postgres/store.go
@@ -133253,19 +133191,6 @@ symbols:
         target: TEST-portfolio-pg-sleeves
       - type: implements
         target: REQ-portfolio-account-in-one-sleeve
-      - type: implements
-        target: REQ-portfolio-pg-sleeves
-  - id: SYM-portfolio-pg-db
-    title: db
-    sourceFile: internal/portfolio/postgres/store.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T12:31:32.164Z
-    relationships:
-      - type: covered_by
-        target: TEST-portfolio-pg-sleeves
       - type: implements
         target: REQ-portfolio-pg-sleeves
   - id: SYM-portfolio-pg-store-in-tx
@@ -211786,17 +211711,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-owner-changes-audited
-  - id: SYM-s8-cmd-core-ownerchanges-test-check-refused-without-the-log
-    title: checkRefusedWithoutTheLog
-    status: active
-    sourceFile: cmd/core/ownerchanges_test.go
-    origin:
-      kind: agent
-      ref: the S8 brief, from D-211, 2026-11-14
-      recorded_at: 2026-11-14T02:51:21.659Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-owner-changes-audited
   - id: SYM-s8-cmd-core-ownerchanges-test-import-flagged-assertion
     title: importFlaggedAssertion
     status: active
@@ -211978,17 +211892,6 @@ symbols:
         target: TEST-identity-audit-change-app
       - type: implements
         target: REQ-identity-audit-owner-changes
-  - id: SYM-s8-internal-identity-app-ownerchange-test-test-record-owner-change-keeps-the-entry-with-the-change
-    title: TestRecordOwnerChangeKeepsTheEntryWithTheChange
-    status: active
-    sourceFile: internal/identity/app/ownerchange_test.go
-    origin:
-      kind: agent
-      ref: the S8 brief, from D-211, 2026-11-14
-      recorded_at: 2026-11-14T02:52:48.836Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-audit-change-app
   - id: SYM-s8-internal-identity-app-ownerchange-test-plugins
     title: plugins
     status: active
@@ -212507,28 +212410,6 @@ symbols:
       kind: agent
       ref: the S8 brief, from D-211, 2026-11-14
       recorded_at: 2026-11-14T02:56:29.797Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-audit-change-postgres
-  - id: SYM-s8-internal-identity-postgres-auditchange-test-owner-change-auth
-    title: ownerChangeAuth
-    status: active
-    sourceFile: internal/identity/postgres/auditchange_test.go
-    origin:
-      kind: agent
-      ref: the S8 brief, from D-211, 2026-11-14
-      recorded_at: 2026-11-14T02:56:35.470Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-audit-change-postgres
-  - id: SYM-s8-internal-identity-postgres-auditchange-test-test-owner-change-entry-commits-only-with-the-change
-    title: TestOwnerChangeEntryCommitsOnlyWithTheChange
-    status: active
-    sourceFile: internal/identity/postgres/auditchange_test.go
-    origin:
-      kind: agent
-      ref: the S8 brief, from D-211, 2026-11-14
-      recorded_at: 2026-11-14T02:56:41.140Z
     relationships:
       - type: executable_for
         target: TEST-identity-audit-change-postgres
@@ -213130,3 +213011,1500 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-audit-names-changes
+  - id: SYM-s9-cmd-core-auditdrain-test-drainaudit
+    title: drainAudit
+    status: active
+    sourceFile: cmd/core/auditdrain_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:18.886Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s9-cmd-core-auditdrain-test-job
+    title: job
+    status: active
+    sourceFile: cmd/core/auditdrain_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:23.570Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s9-cmd-core-auditoutbox-txkey
+    title: txKey
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:28.855Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool
+    title: joinedPool
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:34.226Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joined
+    title: joined
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:39.638Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-txof
+    title: txOf
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:45.050Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool-join
+    title: joinedPool.Join
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:50.490Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool-exec
+    title: joinedPool.Exec
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:23:55.805Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool-query
+    title: joinedPool.Query
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:01.178Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool-queryrow
+    title: joinedPool.QueryRow
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:06.460Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedpool-begin
+    title: joinedPool.Begin
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:11.762Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-joinedstore
+    title: joinedStore
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:16.952Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditref
+    title: auditRef
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:22.240Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditentryargs
+    title: auditEntryArgs
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:27.582Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditentryargs-kind
+    title: auditEntryArgs.Kind
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:32.923Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditentryargs-insertopts
+    title: auditEntryArgs.InsertOpts
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:37.968Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditargsof
+    title: auditArgsOf
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:43.841Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditlog
+    title: auditLog
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:54.391Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditworker
+    title: auditWorker
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:24:59.697Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditworker-work
+    title: auditWorker.Work
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:05.111Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditworker-write
+    title: auditWorker.write
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:10.423Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-auditjob
+    title: auditJob
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:15.682Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-outbox
+    title: outbox
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:20.957Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-newoutbox
+    title: newOutbox
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:26.220Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-outbox-within
+    title: outbox.Within
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:31.288Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-outbox-run
+    title: outbox.run
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:36.595Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-outbox-enqueue
+    title: outbox.enqueue
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:10.409Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-outbox-auditedsync
+    title: outbox.AuditedSync
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:25:52.511Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-cmd-core-auditoutbox-outbox-enqueue-exported
+    title: outbox.Enqueue
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:22.395Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-syncentry
+    title: syncEntry
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:30.715Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-cmd-core-connectors-adminactor
+    title: adminActor
+    status: active
+    sourceFile: cmd/core/connectors.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:41.258Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-admin-audit
+      - type: implements
+        target: REQ-identity-audit-admin-actor
+  - id: SYM-s9-cmd-core-connectors-bindasadmin
+    title: bindAsAdmin
+    status: active
+    sourceFile: cmd/core/connectors.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:46.553Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-admin-audit
+      - type: implements
+        target: REQ-identity-audit-admin-actor
+  - id: SYM-s9-cmd-core-connectors-test-checkbindandsynctrail
+    title: checkBindAndSyncTrail
+    status: active
+    sourceFile: cmd/core/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:51.097Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-sync-audit
+  - id: SYM-s9-cmd-core-modelrouter-entryenqueuer
+    title: entryEnqueuer
+    status: active
+    sourceFile: cmd/core/modelrouter.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:26:56.385Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-modelrouter-test-recordinglog-enqueue
+    title: recordingLog.Enqueue
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:01.115Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-outboxfixture
+    title: outboxFixture
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:05.764Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-newoutboxfixture
+    title: newOutboxFixture
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:10.332Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-outboxfixture-jobs
+    title: outboxFixture.jobs
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:15.024Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-outboxfixture-accounts
+    title: outboxFixture.accounts
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:19.836Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-outboxfixture-entry
+    title: outboxFixture.entry
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:24.491Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-insertaccount
+    title: insertAccount
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:29.381Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxenqueueneedsthetransactionofachange
+    title: TestOutboxEnqueueNeedsTheTransactionOfAChange
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:38.609Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testsyncentryonlywhenthesyncchangedstate
+    title: TestSyncEntryOnlyWhenTheSyncChangedState
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:43.414Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-sync-audit
+  - id: SYM-s9-cmd-core-outbox-test-testsyncentryisavalidentry
+    title: TestSyncEntryIsAValidEntry
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:48.106Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-sync-audit
+  - id: SYM-s9-cmd-core-outbox-test-trailof
+    title: trailOf
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:52.778Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-sync-audit
+  - id: SYM-s9-cmd-core-ownerchanges-test-testownerchangeswaitforthelogintheoutbox
+    title: TestOwnerChangesWaitForTheLogInTheOutbox
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:27:57.416Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s9-cmd-core-ownerchanges-test-checkrefusedwithouttheoutbox
+    title: checkRefusedWithoutTheOutbox
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:02.107Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s9-internal-attention-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/attention/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:07.416Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-identity-app-audit-changeoutbox
+    title: ChangeOutbox
+    status: active
+    sourceFile: internal/identity/app/audit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:12.656Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-outbox-app
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-identity-app-audit-ownerof
+    title: ownerOf
+    status: active
+    sourceFile: internal/identity/app/audit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:17.840Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-outbox-app
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-identity-app-auditview-test-testauditentrieskeepnamingaviewerwhosesessionended
+    title: TestAuditEntriesKeepNamingAViewerWhoseSessionEnded
+    status: active
+    sourceFile: internal/identity/app/auditview_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:22.408Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-viewer-person
+  - id: SYM-s9-internal-identity-app-auth-withchangeoutbox
+    title: WithChangeOutbox
+    status: active
+    sourceFile: internal/identity/app/auth.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:27.707Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-outbox-app
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-identity-app-ownerchange-test-fakeoutbox
+    title: fakeOutbox
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:32.394Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-outbox-app
+  - id: SYM-s9-internal-identity-app-ownerchange-test-fakeoutbox-within
+    title: fakeOutbox.Within
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:37.024Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-outbox-app
+  - id: SYM-s9-internal-identity-app-ownerchange-test-testrecordownerchangeenterstheentryintheoutbox
+    title: TestRecordOwnerChangeEntersTheEntryInTheOutbox
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:41.650Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-outbox-app
+  - id: SYM-s9-internal-identity-auditchange-synccountkinds
+    title: SyncCountKinds
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:47.003Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-identity-postgres-audit-store-appendauditonce
+    title: Store.AppendAuditOnce
+    status: active
+    sourceFile: internal/identity/postgres/audit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:52.060Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-once-postgres
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-identity-postgres-auditchange-test-testappendauditoncewritesanentryonceperkey
+    title: TestAppendAuditOnceWritesAnEntryOncePerKey
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:28:56.527Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-once-postgres
+  - id: SYM-s9-internal-ingest-app-connectors-markettally
+    title: marketTally
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:01.762Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-connectors-test-fakestores-changed
+    title: fakeStores.changed
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:06.643Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-ingest-app-connectors-test-fakesyncaudit
+    title: fakeSyncAudit
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:11.575Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-ingest-app-connectors-test-fakesyncaudit-auditedsync
+    title: fakeSyncAudit.AuditedSync
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:16.389Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-ingest-app-connectors-test-testconnectorssyncreportsonlywhatchangedstate
+    title: TestConnectorsSyncReportsOnlyWhatChangedState
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:21.247Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-ingest-app-syncaudit-syncchange
+    title: SyncChange
+    status: active
+    sourceFile: internal/ingest/app/syncaudit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:26.561Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-syncaudit-syncchange-empty
+    title: SyncChange.Empty
+    status: active
+    sourceFile: internal/ingest/app/syncaudit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:31.734Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-syncaudit-syncauditor
+    title: SyncAuditor
+    status: active
+    sourceFile: internal/ingest/app/syncaudit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:37.010Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-syncaudit-changeof
+    title: changeOf
+    status: active
+    sourceFile: internal/ingest/app/syncaudit.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:42.371Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/ingest/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:47.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-ledger-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/ledger/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:53.064Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-modelrouter-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/modelrouter/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:29:58.268Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-modelrouter-postgres-store-joiner
+    title: Joiner
+    status: active
+    sourceFile: internal/modelrouter/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:03.596Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-portfolio-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/portfolio/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:09.038Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-valuation-app-fakes-test-fakerecorder-savepriceschanged
+    title: fakeRecorder.SavePricesChanged
+    status: active
+    sourceFile: internal/valuation/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:13.630Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed
+  - id: SYM-s9-internal-valuation-app-fakes-test-fakerecorder-savefxrateschanged
+    title: fakeRecorder.SaveFXRatesChanged
+    status: active
+    sourceFile: internal/valuation/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:18.470Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed
+  - id: SYM-s9-internal-valuation-app-fakes-test-fakerecorder-savebondtermschanged
+    title: fakeRecorder.SaveBondTermsChanged
+    status: active
+    sourceFile: internal/valuation/app/fakes_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:23.205Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed
+  - id: SYM-s9-internal-valuation-app-record-inputrecorder-recordpriceschanged
+    title: InputRecorder.RecordPricesChanged
+    status: active
+    sourceFile: internal/valuation/app/record.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:28.527Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-app-record-inputrecorder-recordfxrateschanged
+    title: InputRecorder.RecordFXRatesChanged
+    status: active
+    sourceFile: internal/valuation/app/record.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:34.070Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-app-record-inputrecorder-recordbondtermschanged
+    title: InputRecorder.RecordBondTermsChanged
+    status: active
+    sourceFile: internal/valuation/app/record.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:39.353Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-postgres-queue-execbatch
+    title: execBatch
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:49.111Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-postgres-queue-store-savepriceschanged
+    title: Store.SavePricesChanged
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:54.215Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-postgres-queue-store-savefxrateschanged
+    title: Store.SaveFXRatesChanged
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:30:59.415Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-postgres-queue-store-savebondtermschanged
+    title: Store.SaveBondTermsChanged
+    status: active
+    sourceFile: internal/valuation/postgres/queue.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:31:04.487Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-changed
+      - type: implements
+        target: REQ-valuation-inputs-report-changes
+  - id: SYM-s9-internal-valuation-postgres-store-db
+    title: DB
+    status: active
+    sourceFile: internal/valuation/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:31:09.721Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-internal-valuation-postgres-store-store-on
+    title: Store.On
+    status: active
+    sourceFile: internal/valuation/postgres/store.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:31:14.922Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-changetx
+    title: changeTx
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:48:59.118Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auditoutbox-entryof
+    title: entryOf
+    status: active
+    sourceFile: cmd/core/auditoutbox.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:04.120Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-auth-newauthwithoutbox
+    title: newAuthWithOutbox
+    status: active
+    sourceFile: cmd/core/auth.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:09.101Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-audit-outbox
+      - type: implements
+        target: REQ-identity-audit-outbox
+  - id: SYM-s9-cmd-core-core-newviews
+    title: newViews
+    status: active
+    sourceFile: cmd/core/core.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:13.999Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-s9-cmd-core-modelrouter-test-testmodelauditentersaviewersquestionastheviewers
+    title: TestModelAuditEntersAViewersQuestionAsTheViewers
+    status: active
+    sourceFile: cmd/core/modelrouter_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:18.289Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-outboxfixture-refuseauditjobs
+    title: outboxFixture.refuseAuditJobs
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:22.710Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxchangethatismadeleavesitswritesandonejob
+    title: TestOutboxChangeThatIsMadeLeavesItsWritesAndOneJob
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:27.182Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxchangethatfailsleavesnothing
+    title: TestOutboxChangeThatFailsLeavesNothing
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:31.720Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxstepofonestorethatfailsrollsthewholechangeback
+    title: TestOutboxStepOfOneStoreThatFailsRollsTheWholeChangeBack
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:36.276Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxstepthatfailsandishandledcostsnothingelse
+    title: TestOutboxStepThatFailsAndIsHandledCostsNothingElse
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:40.857Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-testoutboxenqueuethatisrefusedfailsthechange
+    title: TestOutboxEnqueueThatIsRefusedFailsTheChange
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:45.357Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-synccase
+    title: syncCase
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:49.758Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-synccases
+    title: syncCases
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:54.131Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-checksyncjobs
+    title: checkSyncJobs
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:49:58.445Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-checksyncjob
+    title: checkSyncJob
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:03.079Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-outbox-test-reftexts
+    title: refTexts
+    status: active
+    sourceFile: cmd/core/outbox_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:07.770Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-outbox
+  - id: SYM-s9-cmd-core-ownerchanges-test-waitingsettingsentry
+    title: waitingSettingsEntry
+    status: active
+    sourceFile: cmd/core/ownerchanges_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:12.662Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-changes-audited
+  - id: SYM-s9-internal-identity-app-ownerchange-test-testrecordownerchangefailsclosed
+    title: TestRecordOwnerChangeFailsClosed
+    status: active
+    sourceFile: internal/identity/app/ownerchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:17.402Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-outbox-app
+  - id: SYM-s9-internal-identity-auditchange-isplainrecordid
+    title: isPlainRecordID
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:22.743Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-identity-auditchange-issynccount
+    title: isSyncCount
+    status: active
+    sourceFile: internal/identity/auditchange.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:27.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-change-domain
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-identity-postgres-auditchange-test-testappendauditoncerefuseswhatthedomainrefusesandthetablekeepsthekeyunique
+    title: TestAppendAuditOnceRefusesWhatTheDomainRefusesAndTheTableKeepsTheKeyUnique
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:32.457Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-once-postgres
+  - id: SYM-s9-internal-identity-postgres-auditchange-test-deletedaccountentry
+    title: deletedAccountEntry
+    status: active
+    sourceFile: internal/identity/postgres/auditchange_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:37.099Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-once-postgres
+  - id: SYM-s9-internal-ingest-app-connectors-deliverywrites
+    title: deliveryWrites
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:42.332Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-connectors-connectors-write
+    title: Connectors.write
+    status: active
+    sourceFile: internal/ingest/app/connectors.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:47.409Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-audit
+      - type: implements
+        target: REQ-identity-audit-sync-entries
+  - id: SYM-s9-internal-ingest-app-connectors-test-syncchangeof
+    title: syncChangeOf
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:52.027Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-ingest-app-connectors-test-testconnectorsuploadisnotauditedasasync
+    title: TestConnectorsUploadIsNotAuditedAsASync
+    status: active
+    sourceFile: internal/ingest/app/connectors_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:50:56.656Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-audit
+  - id: SYM-s9-internal-valuation-postgres-changed-test-testsavepricesreportsonlywhatwasnewordifferent
+    title: TestSavePricesReportsOnlyWhatWasNewOrDifferent
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:51:01.234Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed
+  - id: SYM-s9-internal-valuation-postgres-changed-test-testsavefxratesreportsonlywhatwasnewordifferent
+    title: TestSaveFXRatesReportsOnlyWhatWasNewOrDifferent
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:51:05.805Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed
+  - id: SYM-s9-internal-valuation-postgres-changed-test-testsavebondtermsreportsonlywhatwasnewordifferent
+    title: TestSaveBondTermsReportsOnlyWhatWasNewOrDifferent
+    status: active
+    sourceFile: internal/valuation/postgres/changed_test.go
+    origin:
+      kind: agent
+      ref: the S9 brief, from D-211, D-198 and D-67, 2026-11-14
+      recorded_at: 2026-11-14T04:51:10.303Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-changed

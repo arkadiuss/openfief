@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ad7234a557b
+  - type: specified_by
+    from: REQ-identity-audit-outbox
+    to: SCEN-identity-audit-outbox
+    created_at: 2026-11-14T04:22:50.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fb9f80192ba

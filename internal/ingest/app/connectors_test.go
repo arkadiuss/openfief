@@ -68,15 +68,18 @@ func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id inges
 
 // fakeStores records what each valuation input store was given.
 type fakeStores struct {
-	err      error
-	calls    int
-	prices   []valuation.Price
-	rates    []valuation.FXRate
-	readings []ingest.IndexReading
-	levels   []valuation.IndexLevel
-	terms    []ingest.BondTerms
-	checks   []valuation.CrossCheckPrice
-	sources  []valuation.Source
+	err   error
+	calls int
+	// unchanged makes the price and bond terms stores answer that nothing
+	// they were given differed from what they held.
+	unchanged bool
+	prices    []valuation.Price
+	rates     []valuation.FXRate
+	readings  []ingest.IndexReading
+	levels    []valuation.IndexLevel
+	terms     []ingest.BondTerms
+	checks    []valuation.CrossCheckPrice
+	sources   []valuation.Source
 }
 
 // StoreSources records the sources without counting a call, so the other
@@ -92,16 +95,16 @@ func (f *fakeStores) StoreCrossCheckPrices(_ context.Context, _ ingest.BatchID, 
 	return f.err
 }
 
-func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
+func (f *fakeStores) StoreBondTerms(_ context.Context, _ ingest.BatchID, terms []ingest.BondTerms) (int, error) {
 	f.calls++
 	f.terms = terms
-	return f.err
+	return f.changed(len(terms)), f.err
 }
 
-func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) error {
+func (f *fakeStores) StorePrices(_ context.Context, _ ingest.BatchID, prices []valuation.Price) (int, error) {
 	f.calls++
 	f.prices = prices
-	return f.err
+	return f.changed(len(prices)), f.err
 }
 
 func (f *fakeStores) StoreFXRates(_ context.Context, _ ingest.BatchID, rates []valuation.FXRate) error {
@@ -120,6 +123,15 @@ func (f *fakeStores) StoreIndexLevels(_ context.Context, _ ingest.BatchID, level
 	f.calls++
 	f.levels = levels
 	return f.err
+}
+
+// changed is how many of n stored values the fake counts as new or changed:
+// all of them, unless unchanged says they were stored before.
+func (f *fakeStores) changed(n int) int {
+	if f.unchanged {
+		return 0
+	}
+	return n
 }
 
 // delivery returns a synthetic delivery from xtb: mapping(t) plus one price,
@@ -209,6 +221,96 @@ func TestConnectorsSync(t *testing.T) {
 	}
 	if diff := cmp.Diff(wantSources, stores.sources); diff != "" {
 		t.Errorf("recorded sources (-want +got):\n%s", diff)
+	}
+}
+
+// fakeSyncAudit runs a sync's writes as the real auditor does, in order, and
+// keeps what it reports.
+type fakeSyncAudit struct {
+	calls   int
+	changes []app.SyncChange
+}
+
+func (f *fakeSyncAudit) AuditedSync(ctx context.Context, _ string, write func(context.Context) (app.SyncChange, error)) error {
+	f.calls++
+	c, err := write(ctx)
+	f.changes = append(f.changes, c)
+	return err
+}
+
+// TestConnectorsSyncReportsOnlyWhatChangedState checks what a sync hands the
+// auditor (D-198, D-211): the transaction versions the ledger stored, and the
+// prices and bond terms that were new or different, with the accounts they
+// were stored in; a sync that re-sends what is stored reports an empty change,
+// so the auditor writes no entry, and only a sync, not an upload, is audited.
+func TestConnectorsSyncReportsOnlyWhatChangedState(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name      string
+		summary   ingest.ImportSummary
+		unchanged bool
+		want      app.SyncChange
+	}{
+		{
+			name:    "everything is new",
+			summary: ingest.ImportSummary{New: 2, NewVersions: 1, Accounts: []ingest.AccountCounts{{Account: "acc-1", New: 2, NewVersions: 1}, {Account: "acc-2", Unchanged: 4}}},
+			want:    app.SyncChange{Instance: "xtb-main", Batch: "b-1", Transactions: 3, Prices: 1, BondTerms: 1, Accounts: []ledger.AccountID{"acc-1"}},
+		},
+		{
+			name: "the same again", summary: ingest.ImportSummary{Unchanged: 5, Accounts: []ingest.AccountCounts{{Account: "acc-1", Unchanged: 5}}},
+			unchanged: true, want: app.SyncChange{Instance: "xtb-main", Batch: "b-1"},
+		},
+		{
+			name: "only the transactions are new", summary: ingest.ImportSummary{New: 1, Accounts: []ingest.AccountCounts{{Account: "acc-1", New: 1}}},
+			unchanged: true, want: app.SyncChange{Instance: "xtb-main", Batch: "b-1", Transactions: 1, Accounts: []ledger.AccountID{"acc-1"}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := syncChangeOf(t, &tt.summary, tt.unchanged)
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("the change (-want +got):\n%s", diff)
+			}
+			if wantEmpty := tt.want.Transactions+tt.want.Prices+tt.want.BondTerms == 0; got.Empty() != wantEmpty {
+				t.Errorf("Empty = %v, want %v", got.Empty(), wantEmpty)
+			}
+		})
+	}
+}
+
+// syncChangeOf runs a sync of a delivery with a price and bond terms, whose
+// import was summary and whose stores say unchanged, and returns the one
+// change the auditor was handed.
+func syncChangeOf(t *testing.T, summary *ingest.ImportSummary, unchanged bool) app.SyncChange {
+	t.Helper()
+	d := delivery(t)
+	d.BondTerms = []ingest.BondTerms{{}}
+	audit := &fakeSyncAudit{}
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{summary: *summary}, &fakeStores{unchanged: unchanged})
+	c.Audit = audit
+	if _, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions, Watermark: "w-1"}); err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	if audit.calls != 1 || len(audit.changes) != 1 {
+		t.Fatalf("the auditor was asked %d times, want once", audit.calls)
+	}
+	return audit.changes[0]
+}
+
+// TestConnectorsUploadIsNotAuditedAsASync checks that only a sync is handed to
+// the auditor: the owner's upload has its own entry.
+func TestConnectorsUploadIsNotAuditedAsASync(t *testing.T) {
+	t.Parallel()
+	audit := &fakeSyncAudit{}
+	c := connectors(t, &fakeCaller{delivery: delivery(t)}, &fakeLedger{summary: ingest.ImportSummary{New: 1}}, &fakeStores{})
+	c.Audit = audit
+	file := app.NamedFile{Name: "s.csv", Contents: strings.NewReader("x")}
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, file, nil); err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	if audit.calls != 0 {
+		t.Errorf("the auditor was asked %d times for an upload, want none", audit.calls)
 	}
 }
 

@@ -1,17 +1,16 @@
 package postgres_test
 
 import (
-	"context"
 	"errors"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/identity/postgres"
-	"github.com/arkadiuss/openfief/internal/identity/webauthn"
 )
 
 // TestAuditLogTakesEveryDomainAction checks that the database's closed set of
@@ -36,6 +35,9 @@ func TestAuditLogTakesEveryDomainAction(t *testing.T) {
 		{name: "the operator with no ID", kind: "operator", id: "", wantErr: true},
 		{name: "the core as the operator", kind: "system", id: "operator", wantErr: true},
 		{name: "an owner called the operator", kind: "owner", id: "operator", wantErr: true},
+		{name: "the administrator", kind: "admin", id: "admin"},
+		{name: "the administrator as the core", kind: "admin", id: "core", wantErr: true},
+		{name: "the core as the administrator", kind: "system", id: "admin", wantErr: true},
 	} {
 		_, err := pool.Exec(t.Context(), insert, tc.kind, tc.id, "plugin_installed", "ok")
 		if gotErr := err != nil; gotErr != tc.wantErr {
@@ -44,62 +46,71 @@ func TestAuditLogTakesEveryDomainAction(t *testing.T) {
 	}
 }
 
-var errChangeBroke = errors.New("the change broke")
-
-// ownerChangeAuth returns the auth use cases over the real store of pool.
-func ownerChangeAuth(t *testing.T, store *postgres.Store) *app.Auth {
-	t.Helper()
-	origins, err := identity.NewOrigins([]string{localUI})
-	if err != nil {
-		t.Fatalf("NewOrigins: %v", err)
+// TestAppendAuditOnceWritesAnEntryOncePerKey checks, over the real store, the
+// outbox's write (D-211): an entry keyed by its job's ID is written once
+// however often the worker runs, with the time of the change and not of the
+// write; a second job's entry is written; and an entry the domain refuses is
+// not.
+func TestAppendAuditOnceWritesAnEntryOncePerKey(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	at := time.Date(2026, time.March, 2, 10, 0, 0, 0, time.UTC)
+	first := deletedAccountEntry(t, at, "xtb-main")
+	for i, want := range []bool{true, false, false} {
+		again := first
+		wrote, err := store.AppendAuditOnce(t.Context(), 41, &again)
+		if err != nil || wrote != want {
+			t.Fatalf("run %d of job 41: AppendAuditOnce = %v, %v; want %v", i+1, wrote, err, want)
+		}
 	}
-	cfg := app.AuthConfig{Origins: origins, Sessions: identity.DefaultSessionPolicy()}
-	auth, err := app.NewAuth(store, webauthn.New("OpenFief"), app.NewTokens(store, issuedAt, nil), nil, cfg, issuedAt, nil)
-	if err != nil {
-		t.Fatalf("NewAuth: %v", err)
+	other := deletedAccountEntry(t, at, "ibkr-main")
+	if wrote, err := store.AppendAuditOnce(t.Context(), 42, &other); err != nil || !wrote {
+		t.Fatalf("job 42: AppendAuditOnce = %v, %v; want it written", wrote, err)
 	}
-	return auth
+	page, err := store.AuditEntries(t.Context(), &identity.AuditFilter{Action: identity.ActionAccountDeleted})
+	if err != nil || len(page.Entries) != 2 {
+		t.Fatalf("entries = %d, %v; want one per job", len(page.Entries), err)
+	}
+	for _, e := range page.Entries {
+		if !e.At.Equal(at) {
+			t.Errorf("an entry's time = %s, want the change's, %s", e.At, at)
+		}
+	}
 }
 
-// TestOwnerChangeEntryCommitsOnlyWithTheChange checks, over the real store,
-// RecordOwnerChange (D-211): the entry of a change that was made is in the
-// log, the entry of one that failed is not, and neither is a change made when
-// the log can't take its entry.
-func TestOwnerChangeEntryCommitsOnlyWithTheChange(t *testing.T) {
+// TestAppendAuditOnceRefusesWhatTheDomainRefusesAndTheTableKeepsTheKeyUnique
+// checks that an entry the domain refuses is not written, and that the key is
+// unique in the table itself, not only in the statement.
+func TestAppendAuditOnceRefusesWhatTheDomainRefusesAndTheTableKeepsTheKeyUnique(t *testing.T) {
 	t.Parallel()
 	pool := newPool(t)
 	store := postgres.New(pool)
-	auth := ownerChangeAuth(t, store)
-	ctx := t.Context()
-	refs := []identity.Ref{{Kind: identity.RefAccount, ID: "xtb-main"}}
-	count := func() int {
-		t.Helper()
-		page, err := store.AuditEntries(ctx, &identity.AuditFilter{Action: identity.ActionAccountDeleted})
-		if err != nil {
-			t.Fatalf("AuditEntries: %v", err)
-		}
-		return len(page.Entries)
+	at := time.Date(2026, time.March, 2, 10, 0, 0, 0, time.UTC)
+	bad := deletedAccountEntry(t, at, "xtb-main")
+	bad.Refs = []identity.Ref{{Kind: identity.RefAccount, ID: "an account number: 12 3456"}}
+	if _, err := store.AppendAuditOnce(t.Context(), 43, &bad); !errors.Is(err, identity.ErrInvalidAuditEntry) {
+		t.Errorf("an entry the domain refuses: %v, want ErrInvalidAuditEntry", err)
 	}
+	good := deletedAccountEntry(t, at, "xtb-main")
+	if _, err := store.AppendAuditOnce(t.Context(), 41, &good); err != nil {
+		t.Fatalf("AppendAuditOnce: %v", err)
+	}
+	if _, err := pool.Exec(t.Context(), `
+		INSERT INTO identity.audit_log (at, actor_kind, actor_id, action, outcome, refs, outbox_job_id)
+		VALUES (now(), 'system', 'core', 'sign_out_everywhere', 'ok', '[]', 41)`); err == nil {
+		t.Error("a second row under the key of job 41: no error, want the unique constraint to refuse it")
+	}
+}
 
-	made := 0
-	if err := auth.RecordOwnerChange(ctx, auditSession, identity.ActionAccountDeleted, refs, func(context.Context) error { made++; return nil }); err != nil {
-		t.Fatalf("RecordOwnerChange: %v", err)
+// deletedAccountEntry returns the entry of the owner deleting account at at.
+func deletedAccountEntry(t *testing.T, at time.Time, account string) identity.AuditEntry {
+	t.Helper()
+	e, err := identity.NewAuditEntry(at, identity.Actor{Kind: identity.ActorOwner, ID: auditSession}, identity.ActionAccountDeleted,
+		identity.OutcomeOK, identity.Ref{Kind: identity.RefAccount, ID: account})
+	if err != nil {
+		t.Fatalf("NewAuditEntry: %v", err)
 	}
-	if made != 1 || count() != 1 {
-		t.Errorf("after a change: made %d times, %d entries; want 1 and 1", made, count())
-	}
-	err := auth.RecordOwnerChange(ctx, auditSession, identity.ActionAccountDeleted, refs, func(context.Context) error { return errChangeBroke })
-	if !errors.Is(err, errChangeBroke) || count() != 1 {
-		t.Errorf("a failing change = %v with %d entries, want its error and the one entry", err, count())
-	}
-	if _, execErr := pool.Exec(ctx, "ALTER TABLE identity.audit_log RENAME TO audit_log_away"); execErr != nil {
-		t.Fatalf("taking the log away: %v", execErr)
-	}
-	made = 0
-	err = auth.RecordOwnerChange(ctx, auditSession, identity.ActionAccountDeleted, refs, func(context.Context) error { made++; return nil })
-	if err == nil || made != 0 {
-		t.Errorf("a change with the log gone = %v, made %d times; want an error and no change", err, made)
-	}
+	return e
 }
 
 // TestPluginGenerationsAreEnteredOncePerGeneration checks the observation of

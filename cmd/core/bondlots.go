@@ -139,7 +139,7 @@ func (e *entryCaller) get() (*connectrpc.Client, error) {
 // connector learns what it booked in the account from the ledger, while the
 // deletion holds the instance's sync claim in the ingest schema (D-154).
 func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots {
-	store := ingestpg.New(d.pool)
+	store := ingestpg.New(joined(d.pool))
 	connectors := entryConnectors(d, store)
 	connectors.Seeding, connectors.Starts = d.ledger, store
 	lots := &ingestapp.BondLots{

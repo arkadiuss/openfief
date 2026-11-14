@@ -34,7 +34,7 @@ func newSleeves(r *portfolioapp.Registry, auth *identityapp.Auth, origins identi
 // D-78) in the Polish pack, which it also forgets with a deleted account
 // (D-120).
 func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms accountTerms) *ingestapp.Accounts {
-	store := ingestpg.New(d.pool)
+	store := ingestpg.New(joined(d.pool))
 	accounts := &ingestapp.Accounts{
 		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
 		Deletions: d.ledger, Connections: store, Forget: terms, Payouts: ledgerImporter{ledger: d.ledger},

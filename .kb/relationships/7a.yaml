@@ -63,20 +63,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-83d68c206bf1
   - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-28T07:38:29.221Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-072cbf1ea447
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-fxrates
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:38:29.234Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6d4135d517b1
-  - type: executable_for
     from: SYM-valuation-postgres-test-helper-save-inputs
     to: TEST-valuation-postgres-store
     created_at: 2026-10-28T08:10:25.849Z
@@ -944,3 +930,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8eafca14a82
+  - type: specified_by
+    from: REQ-identity-audit-admin-actor
+    to: SCEN-identity-audit-admin-actor
+    created_at: 2026-11-14T04:22:55.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f60f107b5fa
+  - type: executable_for
+    from: SYM-s9-internal-identity-app-auditview-test-testauditentrieskeepnamingaviewerwhosesessionended
+    to: TEST-identity-audit-viewer-person
+    created_at: 2026-11-14T04:28:24.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65f8d572c364
+  - type: implements
+    from: SYM-s9-internal-ledger-postgres-store-db
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:29:55.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f7eb56755c2
+  - type: covered_by
+    from: SYM-s9-internal-ledger-postgres-store-db
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:29:55.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239d2023ead4

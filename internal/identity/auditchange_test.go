@@ -76,6 +76,44 @@ func TestChangeEntriesNameWhatChangedByID(t *testing.T) {
 			refs: []identity.Ref{ref(identity.RefAccount, changeAccount)}, wantErr: true,
 		},
 		{
+			name: "an account bound at the command line by the administrator", actor: identity.Actor{Kind: identity.ActorAdmin, ID: identity.AdminActorID},
+			action: identity.ActionAccountBound, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{ref(identity.RefAccount, changeAccount), ref(identity.RefPlugin, changeInstance)},
+		},
+		{
+			name: "the administrator under another ID", actor: identity.Actor{Kind: identity.ActorAdmin, ID: identity.SystemActorID},
+			action: identity.ActionAccountBound, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{ref(identity.RefAccount, changeAccount), ref(identity.RefPlugin, changeInstance)}, wantErr: true,
+		},
+		{
+			name: "a sync that wrote transactions and prices", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{
+				ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-0123456789abcdef"), ref(identity.RefAccount, changeAccount),
+				ref(identity.RefSyncCount, "transactions:12"), ref(identity.RefSyncCount, "prices:340"),
+			},
+		},
+		{
+			name: "a sync that names no count", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1")}, wantErr: true,
+		},
+		{
+			name: "a sync count that is an amount", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1"), ref(identity.RefSyncCount, "prices:101.37")}, wantErr: true,
+		},
+		{
+			name: "a sync count of a kind nobody knows", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeOK,
+			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1"), ref(identity.RefSyncCount, "euros:3")}, wantErr: true,
+		},
+		{
+			name: "a failed sync is no entry", actor: identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID},
+			action: identity.ActionConnectorSynced, outcome: identity.OutcomeFailed,
+			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance), ref(identity.RefImportBatch, "b-1"), ref(identity.RefSyncCount, "prices:3")}, wantErr: true,
+		},
+		{
 			name: "a broker account left unmapped", actor: owner, action: identity.ActionBrokerAccountRemapped, outcome: identity.OutcomeOK,
 			refs: []identity.Ref{ref(identity.RefPlugin, changeInstance)},
 		},
@@ -200,7 +238,7 @@ func TestSettingsAndReferenceKindsAreClosedSets(t *testing.T) {
 	if _, err := identity.ParseRefKind("amount"); !errors.Is(err, identity.ErrInvalidAuditEntry) {
 		t.Errorf("ParseRefKind(amount) = %v, want ErrInvalidAuditEntry", err)
 	}
-	for _, k := range []identity.RefKind{identity.RefInstrument, identity.RefSleeveKind, identity.RefAttentionItem, identity.RefBondLot, identity.RefPlugin, identity.RefPluginGeneration, identity.RefSetting} {
+	for _, k := range []identity.RefKind{identity.RefInstrument, identity.RefSleeveKind, identity.RefAttentionItem, identity.RefBondLot, identity.RefPlugin, identity.RefPluginGeneration, identity.RefSetting, identity.RefImportBatch, identity.RefSyncCount} {
 		if got, err := identity.ParseRefKind(string(k)); err != nil || got != k {
 			t.Errorf("ParseRefKind(%q) = %q, %v", k, got, err)
 		}

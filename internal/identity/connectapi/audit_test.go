@@ -88,7 +88,7 @@ func TestListAuditEntriesOwnerOnly(t *testing.T) {
 func TestListAuditEntriesNewestFirst(t *testing.T) {
 	t.Parallel()
 	a := newAuditFixture(t)
-	all := a.list(t, &identityv1.ListAuditEntriesRequest{})
+	all := a.list(t, &identityv1.ListAuditEntriesRequest{PageSize: identity.MaxAuditPage})
 	if len(all.GetEntries()) != a.entries || all.GetNextPageToken() != "" {
 		t.Fatalf("got %d entries and token %q, want %d and none", len(all.GetEntries()), all.GetNextPageToken(), a.entries)
 	}

@@ -20,7 +20,6 @@ import (
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	ingestkube "github.com/arkadiuss/openfief/internal/ingest/kube"
-	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	modelsdomain "github.com/arkadiuss/openfief/internal/modelrouter"
 	modelsapp "github.com/arkadiuss/openfief/internal/modelrouter/app"
@@ -207,8 +206,12 @@ func (a modelAudit) append(ctx context.Context, at time.Time, actor modelsapp.Ac
 	outcome identity.AuditOutcome, refs []identity.Ref,
 ) error {
 	who := identity.Actor{Kind: identity.ActorSystem, ID: identity.SystemActorID}
-	if actor.Kind == modelsapp.ActorOwner {
+	switch actor.Kind {
+	case modelsapp.ActorOwner:
 		who = identity.Actor{Kind: identity.ActorOwner, ID: actor.ID}
+	case modelsapp.ActorViewer:
+		who = identity.Actor{Kind: identity.ActorViewer, ID: actor.ID}
+	case modelsapp.ActorSystem:
 	}
 	e, err := identity.NewAuditEntry(at, who, action, outcome, refs...)
 	if err != nil {
@@ -223,22 +226,30 @@ func (a modelAudit) append(ctx context.Context, at time.Time, actor modelsapp.Ac
 // settingsAudit is the settings' SettingsAuditor over the identity context's
 // audit log (D-211): each change of the agents-and-models settings is an
 // entry of the action model_settings_changed, naming the owner's session and
-// the setting, and written inside the transaction that stores the change.
+// the setting, enqueued in the outbox inside the transaction that stores the
+// change, with the change's time (the store hands the hook the context of that
+// transaction).
 type settingsAudit struct {
-	log auditAppender
+	out entryEnqueuer
+}
+
+// entryEnqueuer enqueues an audit entry in the transaction its context
+// carries; *outbox implements it.
+type entryEnqueuer interface {
+	Enqueue(ctx context.Context, e *identity.AuditEntry) error
 }
 
 var _ modelsapp.SettingsAuditor = settingsAudit{}
 
-// RecordChange appends the entry of a change of the settings.
+// RecordChange enqueues the entry of a change of the settings.
 func (a settingsAudit) RecordChange(ctx context.Context, c *modelsapp.SettingChange) error {
 	e, err := identity.NewAuditEntry(c.At, identity.Actor{Kind: identity.ActorOwner, ID: c.Session},
 		identity.ActionModelSettingsChanged, identity.OutcomeOK, identity.Ref{Kind: identity.RefModelSetting, ID: c.Setting})
 	if err != nil {
 		return fmt.Errorf("building the audit entry of a settings change: %w", err)
 	}
-	if err := a.log.AppendAudit(ctx, &e); err != nil {
-		return fmt.Errorf("writing the audit entry of a settings change: %w: %w", kernel.ErrAuditUnavailable, err)
+	if err := a.out.Enqueue(ctx, &e); err != nil {
+		return fmt.Errorf("enqueueing the audit entry of a settings change: %w", err)
 	}
 	return nil
 }
@@ -264,19 +275,23 @@ var _ modelsapp.Askers = askSessions{}
 // Asker returns the ID of the session of sessionToken on origin, or an error
 // wrapping modelsapp.ErrNoSession for an origin off the allow-list and for a
 // session that is missing, unknown, expired or revoked.
-func (a askSessions) Asker(ctx context.Context, origin, sessionToken string) (string, error) {
+func (a askSessions) Asker(ctx context.Context, origin, sessionToken string) (modelsapp.Actor, error) {
 	allowed, err := a.origins.Allowed(origin)
 	if err != nil {
-		return "", fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
+		return modelsapp.Actor{}, fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
 	}
 	s, err := a.auth.Session(ctx, allowed, sessionToken, identity.SessionScopeRead)
 	switch {
 	case err == nil:
-		return string(s.ID), nil
+		// A viewer's question is the viewer's, never the owner's (D-211).
+		if s.OfViewer() {
+			return modelsapp.Actor{Kind: modelsapp.ActorViewer, ID: string(s.ID)}, nil
+		}
+		return modelsapp.Actor{Kind: modelsapp.ActorOwner, ID: string(s.ID)}, nil
 	case errors.Is(err, identityapp.ErrInvalidSession):
-		return "", fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
+		return modelsapp.Actor{}, fmt.Errorf("%w: %w", modelsapp.ErrNoSession, err)
 	}
-	return "", fmt.Errorf("checking a session: %w", err)
+	return modelsapp.Actor{}, fmt.Errorf("checking a session: %w", err)
 }
 
 // agentModels is the wired models context: the owner's settings (D-212), the
@@ -298,12 +313,12 @@ type agentModels struct {
 // models schema, owner-only (D-212), and the plugins through providers. The
 // router needs the attention items, which need the route check this returns,
 // so attend builds it.
-func newAgentModels(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity.Origins, now func() time.Time) *agentModels {
-	store := modelspg.New(pool)
+func newAgentModels(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, origins identity.Origins, now func() time.Time) *agentModels {
+	store := modelspg.New(joined(pool))
 	owners := &ownerSessions{auth: auth, origins: origins, noSession: modelsapp.ErrNoSession, notOwner: modelsapp.ErrNotOwner}
 	providers := &modelProviderInstances{}
 	settings := modelsapp.NewSettings(store, owners).WithProviders(providers, providers).
-		WithAudit(settingsAudit{log: identitypg.New(pool)}, now)
+		WithAudit(settingsAudit{out: out}, now)
 	return &agentModels{
 		settings: settings, askers: askSessions{auth: auth, origins: origins},
 		providers: providers, store: store, pool: pool, now: now,
@@ -314,10 +329,10 @@ func newAgentModels(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity
 // need each other: the items run the models' route check (D-196), and the
 // router raises its items on them. extra are the other checks that need the
 // owner, such as the view plugins without a grant (D-196, D-209).
-func newAgentsAndAttention(pool *pgxpool.Pool, auth *identityapp.Auth, origins identity.Origins, l *ledgerapp.Ledger,
+func newAgentsAndAttention(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, origins identity.Origins, l *ledgerapp.Ledger,
 	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
 ) (*agentModels, *attention) {
-	agents := newAgentModels(pool, auth, origins, now)
+	agents := newAgentModels(pool, out, auth, origins, now)
 	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, origins), now, log, append([]attentionapp.Check{agents.routeCheck()}, extra...)...)
 	agents.attend(attn.items)
 	return agents, attn

@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2de88d6f5e1f
+  - type: implements
+    from: SYM-s9-internal-identity-app-auth-withchangeoutbox
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:28:30.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a16cc423ea
+  - type: covered_by
+    from: SYM-s9-internal-identity-app-auth-withchangeoutbox
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:30.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c85dcefe190a

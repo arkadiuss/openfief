@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cda1ceaa80d6
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-synccase
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:52.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d772c0ef58f3

@@ -394,7 +394,7 @@ func checkTokenAudit(t *testing.T, pool *pgxpool.Pool, secret string) {
 	if err != nil {
 		t.Fatalf("reading the audit log: %v", err)
 	}
-	if want := []string{"system script_token_created ok", "system script_token_revoked ok"}; !slices.Equal(got, want) {
+	if want := []string{"admin script_token_created ok", "admin script_token_revoked ok"}; !slices.Equal(got, want) {
 		t.Errorf("audit log = %v, want %v", got, want)
 	}
 	var dump string

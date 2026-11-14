@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81bacda4b0e3
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:23:36.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b3568a0cf9c
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-joinedpool
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:23:36.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99710383b463

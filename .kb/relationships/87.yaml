@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7886f674fdf6
+  - type: executable_for
+    from: SYM-s9-internal-identity-postgres-auditchange-test-testappendauditoncewritesanentryonceperkey
+    to: TEST-identity-audit-once-postgres
+    created_at: 2026-11-14T04:28:58.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c4eb846209c

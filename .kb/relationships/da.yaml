@@ -1091,3 +1091,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f42dbd11c9d8
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-auditentryargs
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:24:30.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3e1c624360
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-auditentryargs
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:24:30.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b79da213e8
+  - type: implements
+    from: SYM-s9-internal-identity-app-audit-ownerof
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:28:20.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc444dd53f0
+  - type: covered_by
+    from: SYM-s9-internal-identity-app-audit-ownerof
+    to: TEST-identity-audit-outbox-app
+    created_at: 2026-11-14T04:28:20.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-420db8268e58

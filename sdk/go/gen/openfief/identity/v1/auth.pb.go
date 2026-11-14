@@ -295,6 +295,9 @@ const (
 	// The operator, which installs, upgrades and removes plugins: the core
 	// records what it sees the operator did; the id is "operator".
 	AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR AuditActorKind = 6
+	// The administrator at the core's command line, such as `core token issue`
+	// and `core connector bind`; the id is "admin".
+	AuditActorKind_AUDIT_ACTOR_KIND_ADMIN AuditActorKind = 7
 )
 
 // Enum value maps for AuditActorKind.
@@ -307,6 +310,7 @@ var (
 		4: "AUDIT_ACTOR_KIND_ANONYMOUS",
 		5: "AUDIT_ACTOR_KIND_VIEWER",
 		6: "AUDIT_ACTOR_KIND_OPERATOR",
+		7: "AUDIT_ACTOR_KIND_ADMIN",
 	}
 	AuditActorKind_value = map[string]int32{
 		"AUDIT_ACTOR_KIND_UNSPECIFIED":     0,
@@ -316,6 +320,7 @@ var (
 		"AUDIT_ACTOR_KIND_ANONYMOUS":       4,
 		"AUDIT_ACTOR_KIND_VIEWER":          5,
 		"AUDIT_ACTOR_KIND_OPERATOR":        6,
+		"AUDIT_ACTOR_KIND_ADMIN":           7,
 	}
 )
 
@@ -470,6 +475,11 @@ const (
 	// A plugin the operator removed, seen by the core: names the instance and
 	// the last generation seen.
 	AuditAction_AUDIT_ACTION_PLUGIN_REMOVED AuditAction = 63
+	// A sync the core started that changed state, by the system actor: names
+	// the connector instance, the import batch, the accounts it wrote
+	// transactions in and how many of each kind of record it wrote, never an
+	// amount.
+	AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED AuditAction = 64
 )
 
 // Enum value maps for AuditAction.
@@ -526,6 +536,7 @@ var (
 		61: "AUDIT_ACTION_PLUGIN_INSTALLED",
 		62: "AUDIT_ACTION_PLUGIN_UPGRADED",
 		63: "AUDIT_ACTION_PLUGIN_REMOVED",
+		64: "AUDIT_ACTION_CONNECTOR_SYNCED",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":                   0,
@@ -579,6 +590,7 @@ var (
 		"AUDIT_ACTION_PLUGIN_INSTALLED":              61,
 		"AUDIT_ACTION_PLUGIN_UPGRADED":               62,
 		"AUDIT_ACTION_PLUGIN_REMOVED":                63,
+		"AUDIT_ACTION_CONNECTOR_SYNCED":              64,
 	}
 )
 
@@ -718,6 +730,11 @@ const (
 	// A setting the owner changed, such as "tax:marginal_rate" or
 	// "marketdata:ranking:prices", never its value.
 	AuditRefKind_AUDIT_REF_KIND_SETTING AuditRefKind = 38
+	// An import batch, by its id.
+	AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH AuditRefKind = 39
+	// How many records of one kind a sync wrote, as "<kind>:<count>" with the
+	// kind "transactions", "prices" or "bond_terms".
+	AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT AuditRefKind = 40
 )
 
 // Enum value maps for AuditRefKind.
@@ -746,6 +763,8 @@ var (
 		36: "AUDIT_REF_KIND_PLUGIN",
 		37: "AUDIT_REF_KIND_PLUGIN_GENERATION",
 		38: "AUDIT_REF_KIND_SETTING",
+		39: "AUDIT_REF_KIND_IMPORT_BATCH",
+		40: "AUDIT_REF_KIND_SYNC_COUNT",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":       0,
@@ -771,6 +790,8 @@ var (
 		"AUDIT_REF_KIND_PLUGIN":            36,
 		"AUDIT_REF_KIND_PLUGIN_GENERATION": 37,
 		"AUDIT_REF_KIND_SETTING":           38,
+		"AUDIT_REF_KIND_IMPORT_BATCH":      39,
+		"AUDIT_REF_KIND_SYNC_COUNT":        40,
 	}
 )
 
@@ -5641,7 +5662,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1fSCRIPT_TOKEN_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aSCRIPT_TOKEN_STATUS_ACTIVE\x10\x01\x12\x1f\n" +
 	"\x1bSCRIPT_TOKEN_STATUS_EXPIRED\x10\x02\x12\x1f\n" +
-	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\xed\x01\n" +
+	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\x89\x02\n" +
 	"\x0eAuditActorKind\x12 \n" +
 	"\x1cAUDIT_ACTOR_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
@@ -5649,7 +5670,8 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x17AUDIT_ACTOR_KIND_SYSTEM\x10\x03\x12\x1e\n" +
 	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05\x12\x1d\n" +
-	"\x19AUDIT_ACTOR_KIND_OPERATOR\x10\x06*\xbe\x0e\n" +
+	"\x19AUDIT_ACTOR_KIND_OPERATOR\x10\x06\x12\x1a\n" +
+	"\x16AUDIT_ACTOR_KIND_ADMIN\x10\a*\xe1\x0e\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5702,13 +5724,14 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"%AUDIT_ACTION_PRICE_CHECK_ACKNOWLEDGED\x10<\x12!\n" +
 	"\x1dAUDIT_ACTION_PLUGIN_INSTALLED\x10=\x12 \n" +
 	"\x1cAUDIT_ACTION_PLUGIN_UPGRADED\x10>\x12\x1f\n" +
-	"\x1bAUDIT_ACTION_PLUGIN_REMOVED\x10?*\x90\x01\n" +
+	"\x1bAUDIT_ACTION_PLUGIN_REMOVED\x10?\x12!\n" +
+	"\x1dAUDIT_ACTION_CONNECTOR_SYNCED\x10@*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xd4\x05\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\x94\x06\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5733,7 +5756,9 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x17AUDIT_REF_KIND_BOND_LOT\x10#\x12\x19\n" +
 	"\x15AUDIT_REF_KIND_PLUGIN\x10$\x12$\n" +
 	" AUDIT_REF_KIND_PLUGIN_GENERATION\x10%\x12\x1a\n" +
-	"\x16AUDIT_REF_KIND_SETTING\x10&*\x99\x01\n" +
+	"\x16AUDIT_REF_KIND_SETTING\x10&\x12\x1f\n" +
+	"\x1bAUDIT_REF_KIND_IMPORT_BATCH\x10'\x12\x1d\n" +
+	"\x19AUDIT_REF_KIND_SYNC_COUNT\x10(*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

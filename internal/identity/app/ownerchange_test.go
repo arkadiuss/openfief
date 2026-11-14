@@ -20,72 +20,100 @@ var (
 	errLogDown     = errors.New("the log is down")
 )
 
-// TestRecordOwnerChangeKeepsTheEntryWithTheChange checks the seam the other
-// contexts' owner changes go through (D-211): the entry is written before the
-// change and kept only when the change succeeds, a failure of the change
-// leaves no entry, and a log that can't take the entry means the change is not
-// called at all.
-func TestRecordOwnerChangeKeepsTheEntryWithTheChange(t *testing.T) {
+// fakeOutbox is a ChangeOutbox over a list of pending entries: it runs the
+// change, and keeps the entry only when the change succeeds, as the real one
+// does in the one transaction; with enqueueFails set it cannot enqueue, so the
+// change is not made.
+type fakeOutbox struct {
+	pending      []identity.AuditEntry
+	enqueueFails error
+}
+
+func (o *fakeOutbox) Within(ctx context.Context, e *identity.AuditEntry, change func(context.Context) error) error {
+	if o.enqueueFails != nil {
+		return fmt.Errorf("%w: %w", kernel.ErrAuditUnavailable, o.enqueueFails)
+	}
+	if err := change(ctx); err != nil {
+		return err
+	}
+	o.pending = append(o.pending, *e)
+	return nil
+}
+
+// TestRecordOwnerChangeEntersTheEntryInTheOutbox checks the seam the other
+// contexts' owner changes go through (D-211): the entry, with the time of the
+// change and the owner's session, goes to the outbox together with the change,
+// a failure of the change leaves no entry, and an outbox that can't take the
+// entry means the change is not made.
+func TestRecordOwnerChangeEntersTheEntryInTheOutbox(t *testing.T) {
 	t.Parallel()
 	const session = identity.SessionID("0123456789abcdef")
 	refs := []identity.Ref{{Kind: identity.RefAccount, ID: "xtb-main"}}
+	out := &fakeOutbox{}
+	f := newAuthFixture(t, demoConfig{}, app.WithChangeOutbox(out))
+	called := false
+	err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, refs, func(context.Context) error {
+		called = true
+		return nil
+	})
+	if err != nil || !called {
+		t.Fatalf("RecordOwnerChange = %v, change called %v", err, called)
+	}
+	want := []identity.AuditEntry{{
+		At: f.clock.now(), Actor: identity.Actor{Kind: identity.ActorOwner, ID: string(session)},
+		Action: identity.ActionAccountDeleted, Outcome: identity.OutcomeOK, Refs: refs,
+	}}
+	if diff := cmp.Diff(want, out.pending); diff != "" {
+		t.Errorf("pending entries (-want +got):\n%s", diff)
+	}
+	if len(f.store.audit) != 0 {
+		t.Errorf("the log holds %d entries before the worker ran, want none: the outbox holds them", len(f.store.audit))
+	}
+}
 
-	t.Run("the change is made and its entry kept", func(t *testing.T) {
-		t.Parallel()
-		f := newAuthFixture(t, demoConfig{})
-		var order []string
-		err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, refs, func(context.Context) error {
-			order = append(order, fmt.Sprintf("change after %d", len(f.store.audit)))
-			return nil
+// TestRecordOwnerChangeFailsClosed checks the cases in which no entry is
+// enqueued: a change that fails leaves none and its error comes through, and
+// an outbox that can't take the entry, none at all, or an entry the domain
+// refuses, means the change is not made.
+func TestRecordOwnerChangeFailsClosed(t *testing.T) {
+	t.Parallel()
+	const session = identity.SessionID("0123456789abcdef")
+	good := []identity.Ref{{Kind: identity.RefAccount, ID: "xtb-main"}}
+	bad := []identity.Ref{{Kind: identity.RefAccount, ID: "an account number: 12 3456"}}
+	tests := []struct {
+		name       string
+		out        *fakeOutbox // nil: no outbox
+		refs       []identity.Ref
+		changeErr  error
+		wantErr    error
+		wantCalled bool
+	}{
+		{name: "a change that fails", out: &fakeOutbox{}, refs: good, changeErr: errChangeBroke, wantErr: errChangeBroke, wantCalled: true},
+		{name: "an enqueue that fails", out: &fakeOutbox{enqueueFails: errLogDown}, refs: good, wantErr: kernel.ErrAuditUnavailable},
+		{name: "no outbox", refs: good, wantErr: kernel.ErrAuditUnavailable},
+		{name: "an entry the domain refuses", out: &fakeOutbox{}, refs: bad, wantErr: identity.ErrInvalidAuditEntry},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var opts []app.AuthOption
+			if tt.out != nil {
+				opts = append(opts, app.WithChangeOutbox(tt.out))
+			}
+			f := newAuthFixture(t, demoConfig{}, opts...)
+			called := false
+			err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, tt.refs, func(context.Context) error {
+				called = true
+				return tt.changeErr
+			})
+			if !errors.Is(err, tt.wantErr) || called != tt.wantCalled {
+				t.Errorf("RecordOwnerChange = %v, change called %v; want %v and called %v", err, called, tt.wantErr, tt.wantCalled)
+			}
+			if tt.out != nil && len(tt.out.pending) != 0 {
+				t.Errorf("%d entries enqueued, want none", len(tt.out.pending))
+			}
 		})
-		if err != nil {
-			t.Fatalf("RecordOwnerChange: %v", err)
-		}
-		want := []identity.AuditEntry{{
-			Seq: 1, At: f.clock.now(), Actor: identity.Actor{Kind: identity.ActorOwner, ID: string(session)},
-			Action: identity.ActionAccountDeleted, Outcome: identity.OutcomeOK, Refs: refs,
-		}}
-		if diff := cmp.Diff(want, f.store.audit); diff != "" {
-			t.Errorf("entries (-want +got):\n%s", diff)
-		}
-		if diff := cmp.Diff([]string{"change after 1"}, order); diff != "" {
-			t.Errorf("the change ran (-want +got):\n%s", diff)
-		}
-	})
-	t.Run("a change that fails leaves no entry and its error comes through", func(t *testing.T) {
-		t.Parallel()
-		f := newAuthFixture(t, demoConfig{})
-		err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, refs, func(context.Context) error { return errChangeBroke })
-		if !errors.Is(err, errChangeBroke) || len(f.store.audit) != 0 {
-			t.Errorf("RecordOwnerChange = %v with %d entries, want the change's error and none", err, len(f.store.audit))
-		}
-	})
-	t.Run("a log that is down means no change", func(t *testing.T) {
-		t.Parallel()
-		f := newAuthFixture(t, demoConfig{})
-		f.store.auditFail = errLogDown
-		called := false
-		err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, refs, func(context.Context) error {
-			called = true
-			return nil
-		})
-		if !errors.Is(err, kernel.ErrAuditUnavailable) || called {
-			t.Errorf("RecordOwnerChange = %v, change called %v; want ErrAuditUnavailable and no change", err, called)
-		}
-	})
-	t.Run("an entry the domain refuses means no change", func(t *testing.T) {
-		t.Parallel()
-		f := newAuthFixture(t, demoConfig{})
-		called := false
-		bad := []identity.Ref{{Kind: identity.RefAccount, ID: "an account number: 12 3456"}}
-		err := f.auth.RecordOwnerChange(t.Context(), session, identity.ActionAccountDeleted, bad, func(context.Context) error {
-			called = true
-			return nil
-		})
-		if !errors.Is(err, identity.ErrInvalidAuditEntry) || called {
-			t.Errorf("RecordOwnerChange = %v, change called %v; want ErrInvalidAuditEntry and no change", err, called)
-		}
-	})
+	}
 }
 
 // plugins is a PluginGenerationStore over the in-memory auth store, with the

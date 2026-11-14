@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb8921d9d1cb
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-outbox-enqueue
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:25:44.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-690c9a27b0be
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-outbox-enqueue
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:25:44.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-517798e578b1

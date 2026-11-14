@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/pgconn"
 
 	"github.com/arkadiuss/openfief/internal/modelrouter"
 	"github.com/arkadiuss/openfief/internal/modelrouter/app"
@@ -20,11 +20,29 @@ var _ app.SettingsStore = (*Store)(nil)
 // Store keeps the owner's agents-and-models settings in the modelrouter schema.
 // It implements app.SettingsStore.
 type Store struct {
-	pool *pgxpool.Pool
+	pool DB
+}
+
+// DB is what Store runs its statements on: a *pgxpool.Pool, or anything that
+// answers as one, such as the core's pool that joins the transaction a context
+// carries.
+type DB interface {
+	Begin(ctx context.Context) (pgx.Tx, error)
+	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
+}
+
+// Joiner is a DB that can carry a transaction in a context, so that what runs
+// with that context joins it: the store hands the context of a change's
+// transaction to the hook that runs before its commit, which enqueues the
+// change's audit entry in it (D-211).
+type Joiner interface {
+	Join(ctx context.Context, tx pgx.Tx) context.Context
 }
 
 // New returns the store over pool. Run Migrate first.
-func New(pool *pgxpool.Pool) *Store { return &Store{pool: pool} }
+func New(pool DB) *Store { return &Store{pool: pool} }
 
 // Settings returns the stored settings: the switch and its toggles, every
 // route and every tier's allowed models. With nothing ever saved it returns
@@ -133,7 +151,9 @@ func (s *Store) SaveDataTierModels(ctx context.Context, tier modelrouter.DataTie
 }
 
 // inTx runs write in a transaction, then within when it is not nil, and
-// commits; a failure of either stores nothing.
+// commits; a failure of either stores nothing. within gets a context that
+// carries the transaction when the store's DB is a Joiner, so what it writes
+// or enqueues commits with the change.
 func (s *Store) inTx(ctx context.Context, within func(context.Context) error, write func(tx pgx.Tx) error) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if err := write(tx); err != nil {
@@ -141,6 +161,9 @@ func (s *Store) inTx(ctx context.Context, within func(context.Context) error, wr
 		}
 		if within == nil {
 			return nil
+		}
+		if j, ok := s.pool.(Joiner); ok {
+			return within(j.Join(ctx, tx))
 		}
 		return within(ctx)
 	})

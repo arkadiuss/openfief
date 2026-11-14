@@ -22,7 +22,7 @@ import (
 // statement files, through d.entries once discovery runs. A file may be up
 // to ingestapp.DefaultMaxUploadBytes.
 func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
-	store := ingestpg.New(d.pool)
+	store := ingestpg.New(joined(d.pool))
 	connectors := entryConnectors(d, store)
 	connectors.Seeding, connectors.Starts = d.ledger, store
 	uploads := &ingestapp.Uploads{
@@ -42,7 +42,7 @@ func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 // into the ledger.
 func newTickers(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Tickers {
 	l := ledgerImporter{ledger: d.ledger}
-	tickers := &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: l, Assertions: l, Names: d.names}
+	tickers := &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(joined(d.pool)), Ledger: l, Assertions: l, Names: d.names}
 	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
 		tickers.Audit = a
 	}

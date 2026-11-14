@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/pgconn"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
@@ -25,7 +25,17 @@ var ErrUnknownMode = errors.New("unknown ingest mode")
 // app.BatchRecorder and app.BrokerAccountStore in PostgreSQL, in the ingest schema that Migrate
 // creates.
 type Store struct {
-	pool *pgxpool.Pool
+	pool DB
+}
+
+// DB is what Store runs its statements on: a *pgxpool.Pool, or anything that
+// answers as one, such as the core's pool that joins the transaction a context
+// carries.
+type DB interface {
+	Begin(ctx context.Context) (pgx.Tx, error)
+	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
 }
 
 var (
@@ -36,7 +46,7 @@ var (
 )
 
 // New returns the store over pool. Run Migrate first.
-func New(pool *pgxpool.Pool) *Store {
+func New(pool DB) *Store {
 	return &Store{pool: pool}
 }
 

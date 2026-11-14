@@ -211,7 +211,7 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 
 ### The owner's entries are audited
 
-Each sleeve and sleeve kind the owner adds, changes, renames or deletes (`sleeve_added`, `sleeve_changed`, `sleeve_deleted`, `sleeve_kind_added`, `sleeve_kind_renamed`, `sleeve_kind_deleted`, naming the sleeve or the kind by its key) and each save of the model portfolio (`settings_changed`, naming `model_portfolio` and none of its targets or weights) writes one entry of the audit log through the `ChangeAuditor` port of [audit.go](../../internal/portfolio/app/audit.go), kept only if the store then succeeds, so a change the log can't record is not made (D-211, [Identity](identity.md#the-audit-log)). The maintainer's own entries are the maintainer's, as above.
+The portfolio store runs its statements on a `DB` (`postgres.DB`), which the core makes join the transaction of an audited change, so its writes and the change's audit entry commit together ([Identity](identity.md#the-outbox)). Each sleeve and sleeve kind the owner adds, changes, renames or deletes (`sleeve_added`, `sleeve_changed`, `sleeve_deleted`, `sleeve_kind_added`, `sleeve_kind_renamed`, `sleeve_kind_deleted`, naming the sleeve or the kind by its key) and each save of the model portfolio (`settings_changed`, naming `model_portfolio` and none of its targets or weights) writes one entry of the audit log through the `ChangeAuditor` port of [audit.go](../../internal/portfolio/app/audit.go), kept only if the store then succeeds, so a change the log can't record is not made (D-211, [Identity](identity.md#the-audit-log)). The maintainer's own entries are the maintainer's, as above.
 
 ## Decisions
 

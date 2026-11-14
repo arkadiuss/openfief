@@ -1168,3 +1168,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a329f74f7eb7
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-outboxfixture-refuseauditjobs
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:25.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd778d5e8337

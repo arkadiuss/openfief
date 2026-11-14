@@ -895,3 +895,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ab4318c1b38
+  - type: implements
+    from: SYM-s9-internal-identity-postgres-audit-store-appendauditonce
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:28:54.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-327ed8657eeb
+  - type: covered_by
+    from: SYM-s9-internal-identity-postgres-audit-store-appendauditonce
+    to: TEST-identity-audit-once-postgres
+    created_at: 2026-11-14T04:28:54.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ec17d96b1c7
+  - type: implements
+    from: SYM-s9-internal-valuation-postgres-store-store-on
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:31:17.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdbf5cd1443b
+  - type: covered_by
+    from: SYM-s9-internal-valuation-postgres-store-store-on
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:31:17.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eacac54f1ff

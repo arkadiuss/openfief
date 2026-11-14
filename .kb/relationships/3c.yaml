@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a9581b1b371
+  - type: executable_for
+    from: SYM-s9-cmd-core-connectors-test-checkbindandsynctrail
+    to: TEST-core-sync-audit
+    created_at: 2026-11-14T04:26:53.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbf887855d1
+  - type: executable_for
+    from: SYM-s9-cmd-core-modelrouter-test-recordinglog-enqueue
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:27:03.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e658f395a0e2

@@ -1077,3 +1077,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-006679b2056a
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-checksyncjob
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:50:05.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280db6d36a3e

@@ -110,7 +110,7 @@ type AttentionItems interface {
 
 ### The owner's decisions are audited
 
-The owner's acknowledging or resolving an item writes one entry of the audit log, `attention_acknowledged` or `attention_resolved`, naming the item by its number ([audit.go](../../internal/attention/app/audit.go), D-211, [Identity](identity.md#the-audit-log)). `Items.WithAudit` takes the `ChangeAuditor`; the entry is written before the change to the item and its outbox event, and kept only if that transaction succeeds, so an item whose decision can't be recorded is left as it was. Raising and clearing items are the checks' own and are not entries.
+The owner's acknowledging or resolving an item writes one entry of the audit log, `attention_acknowledged` or `attention_resolved`, naming the item by its number ([audit.go](../../internal/attention/app/audit.go), D-211, [Identity](identity.md#the-audit-log)). `Items.WithAudit` takes the `ChangeAuditor`; the entry is enqueued in the audit outbox, in the same transaction as the change to the item and its own outbox event ([Identity](identity.md#the-outbox)), so an item whose decision can't be recorded is left as it was. Raising and clearing items are the checks' own and are not entries.
 
 ## Decisions
 

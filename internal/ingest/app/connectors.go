@@ -138,7 +138,9 @@ type CoreTokens interface {
 // the same instrument, date and source replaces it, so a retried batch has
 // no further effect.
 type PriceStore interface {
-	StorePrices(ctx context.Context, batch ingest.BatchID, prices []valuation.Price) error
+	// StorePrices records prices and returns how many were new or differed
+	// from the stored one: prices sent again unchanged are none.
+	StorePrices(ctx context.Context, batch ingest.BatchID, prices []valuation.Price) (int, error)
 }
 
 // FXRateStore records FX rates (D-20), idempotently like PriceStore, keyed
@@ -177,7 +179,9 @@ type CrossCheckPriceStore interface {
 // core value holdings of their instruments as bonds. Recording a series'
 // terms again replaces them, so a retried batch has no further effect.
 type BondTermsStore interface {
-	StoreBondTerms(ctx context.Context, batch ingest.BatchID, terms []ingest.BondTerms) error
+	// StoreBondTerms records terms and returns how many were new or differed
+	// from those stored: terms sent again unchanged are none.
+	StoreBondTerms(ctx context.Context, batch ingest.BatchID, terms []ingest.BondTerms) (int, error)
 }
 
 // AccountSeeding tells whether an account is seeded, and its go-live date
@@ -299,6 +303,9 @@ type Connectors struct {
 	// Names records the display names deliveries give instruments
 	// (D-197); nil records none.
 	Names InstrumentNamer
+	// Audit keeps each sync's writes with its audit entry, the system's,
+	// when the sync changed state (D-211); nil enters none.
+	Audit SyncAuditor
 	// Rekeyers re-key, in order, what each context stores under a
 	// provisional instrument once a delivery brings its registry ISIN
 	// (D-214); the ledger's must come last (rekey). A delivery with
@@ -488,22 +495,61 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
-	imported, err := importMapping(ctx, c.Ledger, mode, source, &m)
+	w := &deliveryWrites{
+		instance: instance, id: id, source: source, mode: mode, m: &m, d: d, readings: readings,
+		seeding: r.Seeding, starts: starts,
+	}
+	// A sync the core starts keeps its writes and its audit entry in one
+	// transaction, when something audits it (D-211).
+	if c.Audit != nil && source == SourceSync {
+		err = c.Audit.AuditedSync(ctx, instance, func(ctx context.Context) (SyncChange, error) { return c.write(ctx, w) })
+	} else {
+		_, err = c.write(ctx, w)
+	}
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	if err := c.storeMarketData(ctx, instance, id, d, readings); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if err := c.markSeeded(ctx, instance, r.Seeding); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if err := c.recordStarts(ctx, source, mode, starts); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	batch.Complete(&m, &imported)
+	batch.Complete(&m, &w.imported)
 	batch.Unmapped = r.Unmapped
 	return batch, nil
+}
+
+// deliveryWrites is what deliver writes once it has admitted a delivery: the
+// mapping to the ledger, the market data, the seeded marks and the go-live
+// dates, and, after it wrote them, what the ledger imported.
+type deliveryWrites struct {
+	instance string
+	id       ingest.BatchID
+	source   string
+	mode     ingest.Mode
+	m        *ingest.Mapping
+	d        *Delivery
+	readings []ingest.IndexReading
+	seeding  []ingest.BrokerAccountID
+	starts   *ingest.Mapping
+
+	imported ingest.ImportSummary
+}
+
+// write makes the writes of w, in this order: the ledger import, the market
+// data, which counts what was new or different, the seeded marks and the
+// go-live dates. It returns what they changed, for the audit entry of a sync.
+func (c *Connectors) write(ctx context.Context, w *deliveryWrites) (SyncChange, error) {
+	var err error
+	if w.imported, err = importMapping(ctx, c.Ledger, w.mode, w.source, w.m); err != nil {
+		return SyncChange{}, err
+	}
+	tally, err := c.storeMarketData(ctx, w.instance, w.id, w.d, w.readings)
+	if err != nil {
+		return SyncChange{}, err
+	}
+	if markErr := c.markSeeded(ctx, w.instance, w.seeding); markErr != nil {
+		return SyncChange{}, markErr
+	}
+	if startErr := c.recordStarts(ctx, w.source, w.mode, w.starts); startErr != nil {
+		return SyncChange{}, startErr
+	}
+	return changeOf(w.instance, w.id, &w.imported, tally), nil
 }
 
 // storeNames records the display names instance delivered (D-197),
@@ -709,36 +755,47 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 // readings are d's index readings with their source; none is stored when
 // d no longer carries any, as when they were dropped as undeclared
 // (D-186).
-func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
+func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) (marketTally, error) {
+	var tally marketTally
 	if len(d.IndexReadings) == 0 {
 		readings = nil
 	}
 	if err := c.storeSources(ctx, instance, id, d); err != nil {
-		return err
+		return tally, err
 	}
-	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
-		return err
+	var err error
+	if tally.prices, err = c.storeInputs(ctx, instance, id, d, readings); err != nil {
+		return tally, err
 	}
-	if err := c.storeTerms(ctx, instance, id, d.BondTerms); err != nil {
-		return err
+	if tally.terms, err = c.storeTerms(ctx, instance, id, d.BondTerms); err != nil {
+		return tally, err
 	}
 	if err := c.storeNames(ctx, instance, d.InstrumentNames); err != nil {
-		return err
+		return tally, err
 	}
-	return c.rekey(ctx, d.RegistryISINs)
+	return tally, c.rekey(ctx, d.RegistryISINs)
+}
+
+// marketTally counts what a delivery's market data wrote: the prices and the
+// bond terms that were new or differed from those stored.
+type marketTally struct {
+	prices, terms int
 }
 
 // storeInputs stores a delivery's prices, FX rates and the validated index
 // readings, each with the instance as its source; an empty kind is skipped.
-func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
+// It returns how many prices were new or differed from the stored ones.
+func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) (int, error) {
+	changed := 0
 	if len(d.Prices) > 0 {
 		prices := make([]valuation.Price, len(d.Prices))
 		for i, p := range d.Prices {
 			p.Source = instance
 			prices[i] = p
 		}
-		if err := c.Prices.StorePrices(ctx, id, prices); err != nil {
-			return fmt.Errorf("store prices: %w", err)
+		var err error
+		if changed, err = c.Prices.StorePrices(ctx, id, prices); err != nil {
+			return 0, fmt.Errorf("store prices: %w", err)
 		}
 	}
 	if len(d.FXRates) > 0 {
@@ -748,18 +805,18 @@ func (c *Connectors) storeInputs(ctx context.Context, instance string, id ingest
 			rates[i] = r
 		}
 		if err := c.FXRates.StoreFXRates(ctx, id, rates); err != nil {
-			return fmt.Errorf("store FX rates: %w", err)
+			return 0, fmt.Errorf("store FX rates: %w", err)
 		}
 	}
 	if len(readings) > 0 {
 		if err := c.Indices.StoreIndexReadings(ctx, id, readings); err != nil {
-			return fmt.Errorf("store index readings: %w", err)
+			return 0, fmt.Errorf("store index readings: %w", err)
 		}
 	}
 	if err := c.storeCrossChecks(ctx, instance, id, d.CrossCheckPrices); err != nil {
-		return err
+		return 0, err
 	}
-	return c.storeLevels(ctx, instance, id, d.IndexLevels)
+	return changed, c.storeLevels(ctx, instance, id, d.IndexLevels)
 }
 
 // storeSources records instance, with the delivery's institution, as a
@@ -813,18 +870,19 @@ func (c *Connectors) storeCrossChecks(ctx context.Context, instance string, id i
 
 // storeTerms stores a delivery's treasury bond series terms with the
 // instance as their source (D-179); none is skipped.
-func (c *Connectors) storeTerms(ctx context.Context, instance string, id ingest.BatchID, terms []ingest.BondTerms) error {
+func (c *Connectors) storeTerms(ctx context.Context, instance string, id ingest.BatchID, terms []ingest.BondTerms) (int, error) {
 	if len(terms) == 0 {
-		return nil
+		return 0, nil
 	}
 	out := slices.Clone(terms)
 	for i := range out {
 		out[i].Source = instance
 	}
-	if err := c.Terms.StoreBondTerms(ctx, id, out); err != nil {
-		return fmt.Errorf("store bond terms: %w", err)
+	changed, err := c.Terms.StoreBondTerms(ctx, id, out)
+	if err != nil {
+		return 0, fmt.Errorf("store bond terms: %w", err)
 	}
-	return nil
+	return changed, nil
 }
 
 // storeLevels stores a delivery's market index levels with the instance as

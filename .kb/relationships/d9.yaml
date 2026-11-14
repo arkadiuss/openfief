@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c816df63fe59
+  - type: executable_for
+    from: SYM-s9-internal-ingest-app-connectors-test-fakesyncaudit
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:29:14.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0c8a91dae90
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-checksyncjobs
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:50:00.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4b27661db1f

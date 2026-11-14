@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9c5bbf6aa6f
+  - type: specified_by
+    from: REQ-identity-audit-viewer-actor
+    to: SCEN-identity-audit-viewer-actor
+    created_at: 2026-11-14T04:22:57.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2aa2a61942f4
+  - type: implements
+    from: SYM-s9-internal-ingest-app-syncaudit-syncchange
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:29:29.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3115e11fe062
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-syncaudit-syncchange
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:29:29.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb587ea4428a

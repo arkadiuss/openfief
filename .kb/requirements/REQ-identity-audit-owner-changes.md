@@ -28,7 +28,7 @@ Every change of state the owner makes through an owner service in the ledger, in
 
 ## Context
 
-D-211 lists the owner's entries and corrections, settings and decisions on attention items. Each change is entered through the identity context's RecordOwnerChange: the entry is written first in a transaction of its own and kept only when the change succeeds, so a change the log can't take an entry for is not made, and a change that fails leaves no entry. The entry is not in the change's own transaction, because the stores are other contexts' (a commit that fails after the change leaves it unentered, and the owner sees an error).
+D-211 lists the owner's entries and corrections, settings and decisions on attention items. Each change is entered through the identity context's RecordOwnerChange, which since S9 enqueues the entry in the outbox (REQ-identity-audit-outbox): the change runs in one transaction with its stores joined and the entry is a job inserted in it, so a change whose entry can't be enqueued is not made, and a change that fails leaves no entry. A worker writes the entry to the log afterwards, once, with the change's time; a log that is down delays it and loses none.
 
 ## Source
 

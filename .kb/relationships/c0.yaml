@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7ad63bfeca7
+  - type: executable_for
+    from: SYM-s9-internal-valuation-postgres-changed-test-testsavepricesreportsonlywhatwasnewordifferent
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:51:03.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7b21890c49

@@ -93,18 +93,22 @@ type Store interface {
 // in the same database transaction (D-36): both commit, or neither does.
 // Upserting replaces a stored row with the same key.
 type Recorder interface {
-	// SavePrices upserts prices, keyed by instrument and date.
-	SavePrices(ctx context.Context, prices []valuation.Price, revals []valuation.Revaluation) error
-	// SaveFXRates upserts rates, keyed by currency, base, date and source.
-	SaveFXRates(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) error
+	// SavePricesChanged upserts prices, keyed by instrument, date and source,
+	// and returns how many were new or differed from the stored one: prices
+	// sent again unchanged are none.
+	SavePricesChanged(ctx context.Context, prices []valuation.Price, revals []valuation.Revaluation) (int, error)
+	// SaveFXRatesChanged upserts rates, keyed by currency, base, date and
+	// source, and returns how many were new or differed from the stored one.
+	SaveFXRatesChanged(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) (int, error)
 	// SaveIndexReadings upserts readings, keyed by kind, year and month.
 	SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error
 	// SaveIndexLevels upserts market index levels, keyed by index and date.
 	// No holding is valued from them, so they cause no revaluation.
 	SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error
-	// SaveBondTerms upserts the series terms of the bond with isin, with
-	// the connector instance that delivered them (D-179).
-	SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error
+	// SaveBondTermsChanged upserts the series terms of the bond with isin,
+	// with the connector instance that delivered them (D-179), and reports
+	// whether they were new or differed from those stored.
+	SaveBondTermsChanged(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) (bool, error)
 	// Enqueue enqueues revals.
 	Enqueue(ctx context.Context, revals []valuation.Revaluation) error
 	TermsRecorder

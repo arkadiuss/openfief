@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-572555af77ce
+  - type: executable_for
+    from: SYM-s9-internal-ingest-app-connectors-test-testconnectorssyncreportsonlywhatchangedstate
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:29:23.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09b0e7e31d4b

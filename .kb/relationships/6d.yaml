@@ -1336,3 +1336,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68476a8fa074
+  - type: implements
+    from: SYM-s9-internal-ingest-app-syncaudit-changeof
+    to: REQ-identity-audit-sync-entries
+    created_at: 2026-11-14T04:29:44.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60b7041c10bc
+  - type: covered_by
+    from: SYM-s9-internal-ingest-app-syncaudit-changeof
+    to: TEST-ingest-app-sync-audit
+    created_at: 2026-11-14T04:29:44.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c406fa0e9ec4

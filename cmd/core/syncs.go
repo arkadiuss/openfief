@@ -38,7 +38,7 @@ func (t *syncTrigger) set(s *ingestapp.Scheduler) { t.scheduler.Store(s) }
 // runs, each instance at most once a minute.
 func newRetries(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Retries {
 	retries := &ingestapp.Retries{
-		Owners: owners, Bindings: ingestpg.New(d.pool), Trigger: d.syncs, Every: ingestapp.DefaultRetryEvery, Now: d.now,
+		Owners: owners, Bindings: ingestpg.New(joined(d.pool)), Trigger: d.syncs, Every: ingestapp.DefaultRetryEvery, Now: d.now,
 	}
 	if a, ok := owners.(ingestapp.ChangeAuditor); ok {
 		retries.Audit = a

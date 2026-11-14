@@ -196,12 +196,12 @@ type fakeRecorder struct {
 	err     error
 }
 
-func (f *fakeRecorder) SavePrices(_ context.Context, _ []valuation.Price, revals []valuation.Revaluation) error {
-	return f.record("prices", revals)
+func (f *fakeRecorder) SavePricesChanged(_ context.Context, prices []valuation.Price, revals []valuation.Revaluation) (int, error) {
+	return len(prices), f.record("prices", revals)
 }
 
-func (f *fakeRecorder) SaveFXRates(_ context.Context, _ []valuation.FXRate, revals []valuation.Revaluation) error {
-	return f.record("fx", revals)
+func (f *fakeRecorder) SaveFXRatesChanged(_ context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) (int, error) {
+	return len(rates), f.record("fx", revals)
 }
 
 func (f *fakeRecorder) SaveIndexReadings(_ context.Context, _ []valuation.IndexReading, revals []valuation.Revaluation) error {
@@ -212,8 +212,8 @@ func (f *fakeRecorder) SaveIndexLevels(context.Context, []valuation.IndexLevel) 
 	return f.record("levels", nil)
 }
 
-func (f *fakeRecorder) SaveBondTerms(_ context.Context, _ ledger.ISIN, _ *pl.Terms, _ string, revals []valuation.Revaluation) error {
-	return f.record("terms", revals)
+func (f *fakeRecorder) SaveBondTermsChanged(_ context.Context, _ ledger.ISIN, _ *pl.Terms, _ string, revals []valuation.Revaluation) (bool, error) {
+	return true, f.record("terms", revals)
 }
 
 func (f *fakeRecorder) Enqueue(_ context.Context, revals []valuation.Revaluation) error {

@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75478c2e185d
+  - type: implements
+    from: SYM-s9-internal-valuation-postgres-queue-store-savepriceschanged
+    to: REQ-valuation-inputs-report-changes
+    created_at: 2026-11-14T04:30:56.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac6af0735aa
+  - type: covered_by
+    from: SYM-s9-internal-valuation-postgres-queue-store-savepriceschanged
+    to: TEST-valuation-postgres-changed
+    created_at: 2026-11-14T04:30:56.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26c6857f9c7e

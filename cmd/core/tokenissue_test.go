@@ -145,7 +145,7 @@ func TestTokenIssueRevokesWhenItsGrantCantReachSpiceDB(t *testing.T) {
 	if !strings.Contains(err.Error(), string(toks[0].ID)) {
 		t.Errorf("the error %q does not name the token %s", err, toks[0].ID)
 	}
-	f.requireNoGrantAndTrail(t, []string{"system script_token_created ok", "system grant_created ok", "system script_token_revoked ok", "system grant_revoked ok"})
+	f.requireNoGrantAndTrail(t, []string{"admin script_token_created ok", "admin grant_created ok", "admin script_token_revoked ok", "admin grant_revoked ok"})
 }
 
 // requireNoGrantAndTrail fails t unless no grant is in force and the audit log
@@ -180,7 +180,7 @@ func TestTokenIssueWithSpiceDBUp(t *testing.T) {
 	if want := []string{"OPERATION_TOUCH household:home#reader@script_token:" + string(toks[0].ID)}; !slices.Equal(perms.writes, want) {
 		t.Errorf("written to SpiceDB = %v, want %v", perms.writes, want)
 	}
-	want := []string{"system script_token_created ok", "system grant_created ok"}
+	want := []string{"admin script_token_created ok", "admin grant_created ok"}
 	if diff := cmp.Diff(want, f.trail(t)); diff != "" {
 		t.Errorf("audit log (-want +got):\n%s", diff)
 	}

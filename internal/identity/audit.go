@@ -51,6 +51,13 @@ const (
 	// identity, since the built-in UI relays the owner's session and the core
 	// is what calls connectors and model providers.
 	ActorOperator ActorKind = "operator"
+	// ActorAdmin is the administrator at the core's command line, such as
+	// `core token issue`, the break-glass way to a script token (D-67), and
+	// `core connector bind` (D-211): a change made through the core CLI, by
+	// someone who can run commands in the core's pod. The actor's ID is
+	// "admin". The core's own work, such as a scheduled sync, stays the
+	// system actor.
+	ActorAdmin ActorKind = "admin"
 )
 
 // SystemActorID is the ID of the system actor.
@@ -58,6 +65,9 @@ const SystemActorID = "core"
 
 // OperatorActorID is the ID of the operator actor.
 const OperatorActorID = "operator"
+
+// AdminActorID is the ID of the admin actor.
+const AdminActorID = "admin"
 
 // Actor is who made the change an audit entry records.
 type Actor struct {
@@ -77,7 +87,7 @@ func (a Actor) Validate() error {
 		if !isHexID(a.ID) {
 			return fmt.Errorf("%w: an enrollment code actor is named by the code's ID", ErrInvalidAuditEntry)
 		}
-	case ActorSystem, ActorOperator, ActorAnonymous:
+	case ActorSystem, ActorOperator, ActorAdmin, ActorAnonymous:
 		return a.validateFixed()
 	default:
 		return fmt.Errorf("%w: unknown actor kind", ErrInvalidAuditEntry)
@@ -86,9 +96,9 @@ func (a Actor) Validate() error {
 }
 
 // validateFixed checks the ID of an actor that has only one: the core's, the
-// operator's, and none for a caller that proved nothing.
+// operator's, the administrator's, and none for a caller that proved nothing.
 func (a Actor) validateFixed() error {
-	want := map[ActorKind]string{ActorSystem: SystemActorID, ActorOperator: OperatorActorID, ActorAnonymous: ""}[a.Kind]
+	want := map[ActorKind]string{ActorSystem: SystemActorID, ActorOperator: OperatorActorID, ActorAdmin: AdminActorID, ActorAnonymous: ""}[a.Kind]
 	if a.ID != want {
 		return fmt.Errorf("%w: the ID of a %s actor is %q", ErrInvalidAuditEntry, a.Kind, want)
 	}
@@ -334,7 +344,7 @@ func (r Ref) Validate() error {
 		if !validModelSetting(r.ID) {
 			return fmt.Errorf("%w: a model setting reference is of the shape of a setting", ErrInvalidAuditEntry)
 		}
-	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 		return r.validateChangeRef()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
@@ -370,7 +380,7 @@ func (r Ref) validateGrantRef() error {
 	case RefHousehold:
 		ok = r.ID == HouseholdID
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -394,7 +404,7 @@ func (r Ref) validateModel() error {
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -542,8 +552,9 @@ func looksLikeSecret(s string) bool {
 	return strings.HasPrefix(s, SecretPrefix) || strings.HasPrefix(s, SessionPrefix) || strings.HasPrefix(s, EnrollmentPrefix)
 }
 
-// maxRefs is the most records one entry names.
-const maxRefs = 8
+// maxRefs is the most records one entry names: a sync's, with its counts and the
+// accounts it wrote, is the most (maxSyncAccounts).
+const maxRefs = 32
 
 // grantRefs is how many records a grant entry names: its holder and its
 // target.
@@ -780,7 +791,7 @@ func (f *AuditFilter) inRange(at time.Time) bool {
 // knownActorKind reports whether k is one of the actor kinds.
 func knownActorKind(k ActorKind) bool {
 	switch k {
-	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAnonymous:
+	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAdmin, ActorAnonymous:
 		return true
 	}
 	return false

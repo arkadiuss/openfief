@@ -52,8 +52,8 @@ func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, checks *valuationapp.CrossChecks,
 	owners *ownerSessions, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
 ) *attention {
-	store := attentionpg.New(pool)
-	imports := ingestpg.New(pool)
+	store := attentionpg.New(joined(pool))
+	imports := ingestpg.New(joined(pool))
 	all := []attentionapp.Check{
 		attentionapp.FlaggedAssertions(l),
 		attentionapp.FlaggedPriceChecks(checks),

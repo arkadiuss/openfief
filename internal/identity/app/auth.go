@@ -68,10 +68,18 @@ type Auth struct {
 	now        func() time.Time
 	random     io.Reader
 	grants     *Grants
+	outbox     ChangeOutbox
 }
 
 // AuthOption configures the auth use cases.
 type AuthOption func(*Auth)
+
+// WithChangeOutbox gives the auth use cases the outbox that keeps the owner's
+// changes in the other contexts together with their audit entries
+// (RecordOwnerChange). Without it such a change is refused as unavailable.
+func WithChangeOutbox(o ChangeOutbox) AuthOption {
+	return func(a *Auth) { a.outbox = o }
+}
 
 // WithGrants gives the auth use cases the owner's grants (D-209): the
 // owner's session can then create, revoke and list them, and revoking a

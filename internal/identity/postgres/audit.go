@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -46,6 +47,38 @@ func (s *Store) AppendAudit(ctx context.Context, e *identity.AuditEntry) error {
 		return fmt.Errorf("appending an audit entry (%s): %w", e.Action, err)
 	}
 	return nil
+}
+
+// AppendAuditOnce adds e to the audit log under key, the ID of the River job
+// that carries it, and reports whether it did: an entry already written under
+// key is left as it is, so a worker that runs twice, or whose commit was not
+// acknowledged, writes the entry once (D-211). e keeps the time of the change
+// it records. It validates e first and fails without writing when it is no
+// record the domain accepts; e.Seq is set when the entry was written.
+func (s *Store) AppendAuditOnce(ctx context.Context, key int64, e *identity.AuditEntry) (bool, error) {
+	if err := e.Validate(); err != nil {
+		return false, fmt.Errorf("appending an audit entry: %w", err)
+	}
+	refs := make([]refJSON, 0, len(e.Refs))
+	for _, r := range e.Refs {
+		refs = append(refs, refJSON{Kind: string(r.Kind), ID: r.ID})
+	}
+	blob, err := json.Marshal(refs)
+	if err != nil {
+		return false, fmt.Errorf("appending an audit entry: %w", err)
+	}
+	err = s.db(ctx).QueryRow(ctx, `
+		INSERT INTO identity.audit_log (at, actor_kind, actor_id, action, outcome, refs, outbox_job_id)
+		VALUES ($1, $2, $3, $4, $5, $6, $7)
+		ON CONFLICT (outbox_job_id) DO NOTHING RETURNING id`,
+		e.At, string(e.Actor.Kind), e.Actor.ID, string(e.Action), string(e.Outcome), blob, key).Scan(&e.Seq)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return false, nil
+	}
+	if err != nil {
+		return false, fmt.Errorf("appending an audit entry (%s): %w", e.Action, err)
+	}
+	return true, nil
 }
 
 // AuditEntries returns the page of entries f selects, newest first, and the

@@ -1147,3 +1147,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8eadb54e472d
+  - type: implements
+    from: SYM-s9-internal-modelrouter-postgres-store-joiner
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:30:06.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b87288849177
+  - type: covered_by
+    from: SYM-s9-internal-modelrouter-postgres-store-joiner
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:30:06.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-466c4299f79c

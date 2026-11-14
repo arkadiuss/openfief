@@ -7,7 +7,6 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/portfolio"
@@ -23,13 +22,14 @@ var ErrCorrupt = errors.New("corrupt portfolio row")
 // one over a pool, where each call commits on its own; InTx passes one
 // whose calls all run in one transaction.
 type Store struct {
-	db db
+	db DB
 	tx pgx.Tx // nil outside InTx
 }
 
-// db is what Store runs its statements on: a *pgxpool.Pool or a pgx.Tx.
-// Begin on a pgx.Tx starts a savepoint.
-type db interface {
+// DB is what Store runs its statements on: a *pgxpool.Pool, a pgx.Tx, or
+// anything that answers as one, such as the core's pool that joins the
+// transaction a context carries. Begin on a pgx.Tx starts a savepoint.
+type DB interface {
 	Begin(ctx context.Context) (pgx.Tx, error)
 	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
 	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
@@ -37,7 +37,7 @@ type db interface {
 }
 
 // New returns the store over pool. Run Migrate first.
-func New(pool *pgxpool.Pool) *Store { return &Store{db: pool} }
+func New(pool DB) *Store { return &Store{db: pool} }
 
 // InTx runs fn with a Store whose calls all run in one database
 // transaction, committed when fn returns nil and rolled back otherwise.

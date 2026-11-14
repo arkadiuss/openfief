@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9da0b5e316c9
+  - type: implements
+    from: SYM-s9-cmd-core-connectors-adminactor
+    to: REQ-identity-audit-admin-actor
+    created_at: 2026-11-14T04:26:43.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13b7e72fb343
+  - type: covered_by
+    from: SYM-s9-cmd-core-connectors-adminactor
+    to: TEST-core-admin-audit
+    created_at: 2026-11-14T04:26:43.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cca487a57670

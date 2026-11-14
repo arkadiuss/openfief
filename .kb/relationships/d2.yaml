@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e24d51e1ad05
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-auditworker-write
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:25:12.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c94f3a7ce2
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-auditworker-write
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:25:12.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-000ba748b5a0
+  - type: executable_for
+    from: SYM-s9-cmd-core-outbox-test-synccases
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:49:56.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9074b01deeb6

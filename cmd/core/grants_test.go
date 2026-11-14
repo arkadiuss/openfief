@@ -191,7 +191,7 @@ func TestGrantsStartupCutsOverOnce(t *testing.T) {
 	log := quiet()
 
 	grantsStartup(ctx, f.grants, false, nil, log)
-	issued := []string{"system script_token_created ok"}
+	issued := []string{"admin script_token_created ok"}
 	if got := f.trail(t); !slices.Equal(got, issued) {
 		t.Fatalf("a start under the policy left %v, want only the token's creation", got)
 	}
@@ -348,7 +348,7 @@ func TestTokenIssueGrantsTheHousehold(t *testing.T) {
 	if err != nil || len(inForce) != 1 || inForce[0].Target != identity.Household() || inForce[0].Holder.ID != string(tok.ID) {
 		t.Errorf("grants in force = %v, %v, want the token's household grant", inForce, err)
 	}
-	want := []string{"system script_token_created ok", "system grant_created ok"}
+	want := []string{"admin script_token_created ok", "admin grant_created ok"}
 	if diff := cmp.Diff(want, f.trail(t)); diff != "" {
 		t.Errorf("audit log (-want +got):\n%s", diff)
 	}
@@ -370,7 +370,7 @@ func TestTokenRevokeEndsItsGrants(t *testing.T) {
 	if left, listErr := f.grants.InForce(ctx); listErr != nil || len(left) != 0 {
 		t.Errorf("grants in force after the revocation = %v, %v, want none", left, listErr)
 	}
-	want := []string{"system script_token_created ok", "system grant_created ok", "system script_token_revoked ok", "system grant_revoked ok"}
+	want := []string{"admin script_token_created ok", "admin grant_created ok", "admin script_token_revoked ok", "admin grant_revoked ok"}
 	if diff := cmp.Diff(want, f.trail(t)); diff != "" {
 		t.Errorf("audit log (-want +got):\n%s", diff)
 	}

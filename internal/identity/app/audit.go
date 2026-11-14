@@ -123,34 +123,47 @@ func (a *Auth) AuditEntries(ctx context.Context, origin, token string, f *identi
 	return page, nil
 }
 
+// ChangeOutbox keeps a change of state another context makes together with the
+// audit entry of it, through an outbox (D-211). cmd/core implements it with
+// River: Within runs change in one database transaction of the core's, with
+// every store the change uses joined to it, and enqueues the entry as a job in
+// the same transaction, so the change and its pending entry commit or roll
+// back together; a worker writes the entry to the log afterwards, once, with
+// the change's own time. No transaction is held open on the identity context's
+// tables. A failed enqueue fails the change, and an error wrapping
+// kernel.ErrAuditUnavailable says so.
+type ChangeOutbox interface {
+	Within(ctx context.Context, entry *identity.AuditEntry, change func(context.Context) error) error
+}
+
 // RecordOwnerChange has change, a change of state another context makes for
 // the owner of session, kept together with its audit entry (D-211): the entry
-// of action naming refs is appended first, in a transaction, then change runs,
-// and the entry is kept only if change returns nil. So a change the log can't
-// take an entry for is not made, and a change that fails leaves no entry.
-// change runs with the caller's context, on the connections of its own store;
-// the transaction opened here holds the entry alone, so a commit that fails
-// after change succeeded leaves a change with no entry, and returns an error.
+// of action naming refs, with the time of the change, is enqueued in the
+// transaction of the change itself (ChangeOutbox), and a worker writes it to
+// the log. So a change whose entry can't be enqueued is not made, and a change
+// that fails, or rolls back, leaves no entry.
 //
-// A failed append is an error wrapping kernel.ErrAuditUnavailable, and an
+// A failed enqueue is an error wrapping kernel.ErrAuditUnavailable, and an
 // entry the domain refuses (an unknown action, a reference of the wrong shape)
 // one wrapping identity.ErrInvalidAuditEntry, either way with change not
 // called. An error of change is returned as it is, wrapped.
 func (a *Auth) RecordOwnerChange(ctx context.Context, session identity.SessionID, action identity.AuditAction, refs []identity.Ref,
 	change func(context.Context) error,
 ) error {
-	e, err := identity.NewAuditEntry(a.now(), identity.Actor{Kind: identity.ActorOwner, ID: string(session)}, action, identity.OutcomeOK, refs...)
+	e, err := identity.NewAuditEntry(a.now(), ownerOf(session), action, identity.OutcomeOK, refs...)
 	if err != nil {
 		return fmt.Errorf("building the audit entry of %s: %w", action, err)
 	}
-	err = a.store.Atomically(ctx, func(tx context.Context) error {
-		if appendErr := a.store.AppendAudit(tx, &e); appendErr != nil {
-			return fmt.Errorf("%w: %w", kernel.ErrAuditUnavailable, appendErr)
-		}
-		return change(ctx)
-	})
-	if err != nil {
+	if a.outbox == nil {
+		return fmt.Errorf("recording the change %s: %w", action, kernel.ErrAuditUnavailable)
+	}
+	if err := a.outbox.Within(ctx, &e, change); err != nil {
 		return fmt.Errorf("recording the change %s: %w", action, err)
 	}
 	return nil
+}
+
+// ownerOf is the owner in the session with ID id.
+func ownerOf(id identity.SessionID) identity.Actor {
+	return identity.Actor{Kind: identity.ActorOwner, ID: string(id)}
 }

@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a00fd5e548c3
+  - type: implements
+    from: SYM-s9-cmd-core-auditoutbox-txkey
+    to: REQ-identity-audit-outbox
+    created_at: 2026-11-14T04:23:31.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d496622da1dc
+  - type: covered_by
+    from: SYM-s9-cmd-core-auditoutbox-txkey
+    to: TEST-core-audit-outbox
+    created_at: 2026-11-14T04:23:31.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9698fdf87687
