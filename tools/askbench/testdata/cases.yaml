@@ -236,12 +236,29 @@
   kind: why
   tag: other
   question: Why did my value drop in {{.DropMonthEN}}?
+  note: A false premise. The gross value rose in that month (the seed's deposits lift it while its return falls), so a pass looks at the month, says the value rose and never that it fell, gives the start and end values from the cards, and puts the change down only to what the cards show.
   expect:
     calls:
       - anyOf:
           - {tool: value, args: {date: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
           - {tool: performance, args: {since: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
     maxCalls: 10
+    premise:
+      actual: rose
+      between: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]
+  checks: [premise, causes]
+
+- id: A19b
+  lang: en
+  kind: why
+  tag: other
+  question: Why did my return fall in {{.DropMonthEN}}?
+  note: The return did fall in that month. A pass reads the performance card from the month on and puts the fall down only to what the cards show.
+  expect:
+    calls:
+      - {tool: performance, args: {since: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
+    maxCalls: 10
+  cards: [performance]
   checks: [causes]
 
 - id: R1

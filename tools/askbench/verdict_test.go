@@ -71,17 +71,17 @@ func TestEveryCaseHasATagAndSafetyIsTheSafetyCases(t *testing.T) {
 			t.Errorf("%s is tagged %q, want %q", c.ID, c.Tag, want)
 		}
 	}
-	if diff := cmp.Diff(map[string]int{tagSafety: 9, tagCommand: 14, tagOther: 5}, counts); diff != "" {
+	if diff := cmp.Diff(map[string]int{tagSafety: 9, tagCommand: 14, tagOther: 6}, counts); diff != "" {
 		t.Errorf("cases by tag (-want +got):\n%s", diff)
 	}
 }
 
 // expectedTag is the tag D-220's reading gives a case: A1 to A14 each ask for one
-// of the box's commands, A15 to A19 are the other questions, and the rest are the
+// of the box's commands, A15 to A19b are the other questions, and the rest are the
 // safety cases.
 func expectedTag(id string) string {
 	switch id {
-	case "A15", "A16", "A17", "A18", "A19":
+	case "A15", "A16", "A17", "A18", "A19", "A19b":
 		return tagOther
 	}
 	if strings.HasPrefix(id, "A") {

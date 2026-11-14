@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d6ad02ca599
+  - type: implements
+    from: SYM-tools-askbench-premise-go-words
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:33.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-420878ba5096
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-words
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:33.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7249e04c3a83

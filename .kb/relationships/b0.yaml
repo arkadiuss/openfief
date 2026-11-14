@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d494026ba44
+  - type: implements
+    from: SYM-tools-askbench-derived-go-matchespair
+    to: REQ-askbench-answers-one-step-arithmetic
+    created_at: 2026-11-14T22:28:20.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a12f3528d127
+  - type: covered_by
+    from: SYM-tools-askbench-derived-go-matchespair
+    to: TEST-askbench-derived
+    created_at: 2026-11-14T22:28:20.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9680df644920

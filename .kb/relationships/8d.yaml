@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c58d9e2e27bb
+  - type: implements
+    from: SYM-tools-askbench-derived-go-distinctrats
+    to: REQ-askbench-answers-one-step-arithmetic
+    created_at: 2026-11-14T22:28:44.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ea148f6b0d
+  - type: covered_by
+    from: SYM-tools-askbench-derived-go-distinctrats
+    to: TEST-askbench-derived
+    created_at: 2026-11-14T22:28:45.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3bf931bbfbf

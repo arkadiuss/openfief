@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b3d27a6d6b0
+  - type: implements
+    from: SYM-tools-askbench-premise-go-firstnumber
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:37:40.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5276c91fd10
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-firstnumber
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:37:40.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f6ffa8c166

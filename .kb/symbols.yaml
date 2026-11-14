@@ -226184,3 +226184,380 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-derived-go-derivedfrom
+    title: derivedFrom
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:10.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-matchespair
+    title: matchesPair
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:17.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-onestep
+    title: oneStep
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:23.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-roundhalfup
+    title: roundHalfUp
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:29.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-rationalof
+    title: rationalOf
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:35.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-distinctrats
+    title: distinctRats
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:41.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-premise-go-premise
+    title: Premise
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:48.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-premisecorrected
+    title: premiseCorrected
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:54.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-risewords
+    title: riseWords
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:00.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-risestems
+    title: riseStems
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:06.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-fallwords
+    title: fallWords
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:12.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-fallstems
+    title: fallStems
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:18.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-negators
+    title: negators
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:24.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-words
+    title: words
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:30.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-isnegator
+    title: isNegator
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:36.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-assertsfall
+    title: assertsFall
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:42.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-saysrise
+    title: saysRise
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:48.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-hasanyprefix
+    title: hasAnyPrefix
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:54.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-monthfigures
+    title: monthFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:06.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-derived-test-go-testanswernumbersareonestepoftwocardnumbers
+    title: TestAnswerNumbersAreOneStepOfTwoCardNumbers
+    status: active
+    sourceFile: tools/askbench/derived_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:12.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-derived
+  - id: SYM-tools-askbench-premise-test-go-a19run
+    title: a19Run
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:18.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-test-go-testa19isafalsepremisethatpassesonlybysayingthevaluerosewiththemonthsfigures
+    title: TestA19IsAFalsePremiseThatPassesOnlyBySayingTheValueRoseWithTheMonthsFigures
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:23.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-test-go-testa19baskswhythereturnfellandwantsthereturncard
+    title: TestA19bAsksWhyTheReturnFellAndWantsTheReturnCard
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:29.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-go-cardmonthfigures
+    title: cardMonthFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:31.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-firstnumber
+    title: firstNumber
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:37.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-test-go-testa19namesthemonththevaluerosein
+    title: TestA19NamesTheMonthTheValueRoseIn
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:42.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-go-figureswritten
+    title: figuresWritten
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:41:18.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-performancefigures
+    title: performanceFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:41:24.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case

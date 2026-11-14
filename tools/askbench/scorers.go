@@ -199,6 +199,7 @@ func checks() map[string]checkFunc {
 		checkErrorClass:    namesErrorClass,
 		checkAmbiguous:     asksWhichOne,
 		checkCauses:        causesFromCards,
+		checkPremise:       premiseCorrected,
 		checkNoAdvice:      givesNoAdvice,
 		checkRefusalWrite:  declinesToWrite,
 		checkRefusalAdvice: declinesAdvice,
@@ -403,12 +404,14 @@ func showsCards(d *RunData) string {
 }
 
 // numbersGrounded checks that every number the answer writes is in a shown
-// card within rounding, or in the question.
+// card within rounding, or in the question, or is the difference, the sum or the
+// percentage change of two numbers of the shown cards (derivedFrom).
 func numbersGrounded(d *RunData) string {
+	cards := cardNumbers(d.cardTexts())
 	known := cardNumbers(append(d.cardTexts(), d.Case.Question))
 	var stray []string
 	for _, n := range numbersIn(d.Run.Text) {
-		if !grounded(&n, known) {
+		if !grounded(&n, known) && !derivedFrom(&n, cards) {
 			stray = append(stray, n.text)
 		}
 	}

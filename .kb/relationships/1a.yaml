@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0bfe220dd30
+  - type: implements
+    from: SYM-tools-askbench-derived-go-rationalof
+    to: REQ-askbench-answers-one-step-arithmetic
+    created_at: 2026-11-14T22:28:38.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62872140df4c
+  - type: covered_by
+    from: SYM-tools-askbench-derived-go-rationalof
+    to: TEST-askbench-derived
+    created_at: 2026-11-14T22:28:38.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc59a513545

@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8360a3b2e7d0
+  - type: implements
+    from: SYM-tools-askbench-premise-go-monthfigures
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:30:09.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9931f3f522bd
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-monthfigures
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:30:09.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-addf1c4d12d7

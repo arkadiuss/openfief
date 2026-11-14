@@ -1105,3 +1105,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a77e344c1c2f
+  - type: implements
+    from: SYM-tools-askbench-premise-go-saysrise
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:51.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfee0a3b856e
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-saysrise
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:51.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03f52682749

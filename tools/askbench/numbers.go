@@ -17,12 +17,18 @@ type reading struct {
 	// tol is the width of one unit of the last digit written, times the scale
 	// ("k", "mln") it was written with: a rounded or cut number is within it.
 	tol kernel.Decimal
+	// places is how many decimal places the number was written with, and scaled
+	// is true when a scale word ("k", "mln") stands after it.
+	places int
+	scaled bool
 }
 
 // foundNumber is a number of a text and its readings.
 type foundNumber struct {
 	text     string
 	readings []reading
+	// percent is true when a percent sign follows the number.
+	percent bool
 }
 
 // numberPattern finds a number: digits grouped by spaces (a space, a no-break
@@ -88,7 +94,7 @@ func numbersIn(text string) []foundNumber {
 		if plain && exemptWhole(raw) {
 			continue
 		}
-		out = append(out, foundNumber{text: raw, readings: readingsOf(raw, scale)})
+		out = append(out, foundNumber{text: raw, readings: readingsOf(raw, scale), percent: percentAfter(text[end:])})
 	}
 	return out
 }
@@ -144,13 +150,15 @@ func readingsOf(raw string, scale int32) []reading {
 			continue
 		}
 		unit := kernel.NewDecimal(1, 0)
+		places := 0
 		if _, frac, ok := strings.Cut(norm, "."); ok && frac != "" {
+			places = len(frac)
 			// One unit of the last digit written: 0.01 for two places.
 			if u, uerr := kernel.ParseDecimal("0." + strings.Repeat("0", len(frac)-1) + "1"); uerr == nil {
 				unit = u
 			}
 		}
-		out = append(out, reading{value: d.Mul(factor), tol: unit.Mul(factor)})
+		out = append(out, reading{value: d.Mul(factor), tol: unit.Mul(factor), places: places, scaled: scale != 0})
 	}
 	return out
 }

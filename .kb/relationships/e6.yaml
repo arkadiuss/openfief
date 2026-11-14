@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c648eb9bd49
+  - type: implements
+    from: SYM-tools-askbench-premise-go-risestems
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:09.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30684dbe03f0
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-risestems
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:09.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcb5edcbea50

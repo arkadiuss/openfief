@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a3d2655a718
+  - type: implements
+    from: SYM-tools-askbench-premise-go-risewords
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:03.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec5bfa0f01c
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-risewords
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:03.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eb7285f081c

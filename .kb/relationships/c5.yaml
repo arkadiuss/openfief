@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-132fc318609a
+  - type: implements
+    from: SYM-tools-askbench-premise-go-hasanyprefix
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:57.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89b6e209831
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-hasanyprefix
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:57.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e933ba8949c

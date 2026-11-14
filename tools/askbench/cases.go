@@ -73,6 +73,9 @@ type Expect struct {
 	// it, each the calls to make and the cards to show; a run passes by the
 	// one it went for. A case has Calls or Alternatives, not both.
 	Alternatives []Alternative `yaml:"alternatives"`
+	// Premise, for a question that assumes something the cards show to be
+	// false, is what the answer must set right (checkPremise).
+	Premise *Premise `yaml:"premise"`
 }
 
 // Alternative is one way to answer a case: the calls the model must make and

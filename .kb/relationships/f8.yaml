@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2da35dfd39b
+  - type: implements
+    from: SYM-tools-askbench-premise-go-performancefigures
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:41:27.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b50ab683d081
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-performancefigures
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:41:27.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa9663a05f8c
