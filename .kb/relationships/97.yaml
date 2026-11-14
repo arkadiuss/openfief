@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b348262e7272
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-auditfakes_test-auditpage
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:40.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da0e4ef49b8f

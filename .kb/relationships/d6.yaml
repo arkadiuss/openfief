@@ -1427,3 +1427,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c93850150e8d
+  - type: implements
+    from: SYM-audit-internal-identity-audit-auditfilter-matcheswhat
+    to: REQ-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:31:40.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b807c22204c4
+  - type: covered_by
+    from: SYM-audit-internal-identity-audit-auditfilter-matcheswhat
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:31:40.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a34eb2f0229c

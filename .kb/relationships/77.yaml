@@ -958,3 +958,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1fdaed87526
+  - type: verified_by
+    from: SCEN-identity-audit-filter-outcome-actions
+    to: TEST-identity-audit-filters-app
+    created_at: 2026-11-14T00:15:50.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d82216351198
+  - type: verified_by
+    from: SCEN-identity-audit-filter-outcome-actions
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-14T00:15:50.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e2887544a35
+  - type: verified_by
+    from: SCEN-identity-audit-filter-outcome-actions
+    to: TEST-identity-audit-postgres
+    created_at: 2026-11-14T00:15:50.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d12286fde84e
+  - type: verified_by
+    from: SCEN-identity-audit-filter-outcome-actions
+    to: TEST-identity-audit-domain
+    created_at: 2026-11-14T00:15:50.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68fc108a857a

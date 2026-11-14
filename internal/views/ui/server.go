@@ -230,6 +230,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
 	s.accessRoutes(mux)
+	s.auditRoutes(mux)
 	s.onboardingRoutes(mux)
 	s.statementRoutes(mux)
 	return mux

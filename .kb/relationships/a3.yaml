@@ -1350,3 +1350,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a017a23a6f6
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-auditfilterform
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:40.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b2b4f5ab9e1
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-auditfilterform
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:40.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e913a8204b

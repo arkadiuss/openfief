@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b7f2c5801fc
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-auditfakes_test-fakeauditlog
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:19:22.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e71f3b997c14
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-parseauditdays
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:32:27.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ed8d22f0a86
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-parseauditdays
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:27.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bb647a8fd6f

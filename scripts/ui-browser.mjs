@@ -60,7 +60,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', access: '/access', setup: '/setup', model: '/model',
+  settings: '/settings', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -365,6 +365,11 @@ async function people(browser) {
   const section = await page.textContent('#people-title ~ .table');
   check(section.includes('Alice') && section.includes('no access yet') && section.includes('revoked'), 'people: the section lacks Alice, Bob\'s "no access yet" or Carol\'s revoked mark');
   check(await sideways(page) <= 0, 'people: the Access page scrolls sideways at 360 px');
+  const pending = await page.textContent('#pending-invites-title ~ .table');
+  check(pending.includes('Dana') && pending.includes('Cancel invitation') && !pending.includes('#code='), 'people: the pending invitation lacks Dana or its cancel button, or shows a link');
+  const history = await page.textContent('#history-title ~ .table');
+  check(history.includes('Access granted') && history.includes('Alice') && history.includes('Invitation cancelled'), 'history: the section lacks the grants, Alice or the cancelled invitation');
+  check(await page.locator('#history-title ~ p a[href="/settings/audit"]').count() === 1, 'history: no link to the whole audit log');
   await page.fill('#viewer-name', 'Dana');
   await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/access/people"] button[type="submit"]')]);
   let body = await page.textContent('body');
@@ -379,6 +384,26 @@ async function people(browser) {
   await ctx.close();
 }
 
+// auditLog checks Settings' Audit log (D-211) at phone and desktop width: the filter applies from its form, a viewer's
+// row is named, and the table does not scroll the page sideways.
+async function auditLog(browser) {
+  for (const [label, options] of [['phone', { viewport: { width: 360, height: 780 }, isMobile: true, hasTouch: true }], ['desktop', { viewport: { width: 1280, height: 800 } }]]) {
+    const ctx = await context(browser, options, true);
+    const page = await ctx.newPage();
+    await page.goto(base + '/settings/audit', { waitUntil: 'networkidle' });
+    const all = await page.locator('tbody tr').count();
+    check(all === 12, `audit ${label}: ${all} rows, want the fake log's 12`);
+    check((await page.textContent('tbody')).includes('Alice'), `audit ${label}: the viewer's sign-in is not named`);
+    await page.selectOption('#audit-outcome', 'refused');
+    await Promise.all([page.waitForLoadState('networkidle'), page.click('form[aria-label="Filter the audit log"] button[type="submit"]')]);
+    const refused = await page.locator('tbody tr').count();
+    check(refused === 2, `audit ${label}: ${refused} refused rows, want 2`);
+    check(await sideways(page) <= 0, `audit ${label}: scrolls sideways`);
+    await page.screenshot({ path: path.join(out, `${label}-audit-filtered-by-form.png`), fullPage: true });
+    await ctx.close();
+  }
+}
+
 // viewerEmpty checks a viewer the owner granted nothing yet (D-210): every page they have says plainly that nothing has
 // been shared with them, with no chart and no error, at phone and desktop width.
 async function viewerEmpty(browser) {
@@ -386,7 +411,7 @@ async function viewerEmpty(browser) {
     const ctx = await browser.newContext(options);
     const page = await ctx.newPage();
     await page.goto(base + '/test/sign-in-viewer');
-    for (const target of ['/', '/accounts', '/sleeves']) {
+    for (const target of ['/', '/accounts', '/sleeves', '/inbox']) {
       const response = await page.goto(base + target, { waitUntil: 'networkidle' });
       check(response && response.status() === 200, `viewer ${label} ${target}: status ${response && response.status()}`);
       check((await page.textContent('body')).includes('Nothing has been shared with you yet'), `viewer ${label} ${target}: no empty state`);
@@ -568,6 +593,7 @@ try {
   await recordPages(browser);
   await passkeyCheck(browser);
   await people(browser);
+  await auditLog(browser);
   await viewerEmpty(browser);
   await app();
   await keptOverview();

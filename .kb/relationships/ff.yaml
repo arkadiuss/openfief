@@ -1154,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3141e2791b5f
+  - type: executable_for
+    from: SYM-audit-internal-identity-app-auditview_test-testauditentriesnameviewersessions
+    to: TEST-identity-audit-filters-app
+    created_at: 2026-11-14T00:16:22.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90aa360fbc40

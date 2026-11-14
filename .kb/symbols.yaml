@@ -208335,3 +208335,760 @@ symbols:
         target: TEST-ui-viewer-nothing-shared
       - type: implements
         target: REQ-ui-inbox-viewer-nothing-shared
+  - id: SYM-audit-internal-identity-app-auditview_test-testauditentriesfilterbyoutcomeandactions
+    title: TestAuditEntriesFilterByOutcomeAndActions
+    status: active
+    sourceFile: internal/identity/app/auditview_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-filters-app
+  - id: SYM-audit-internal-identity-app-auditview_test-testauditentriesnameviewersessions
+    title: TestAuditEntriesNameViewerSessions
+    status: active
+    sourceFile: internal/identity/app/auditview_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-filters-app
+  - id: SYM-audit-internal-identity-connectapi-service-auditoutcomeandactions
+    title: auditOutcomeAndActions
+    status: active
+    sourceFile: internal/identity/connectapi/service.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-connectapi
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-views-ui-audit-historyactions
+    title: historyActions
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-access-history
+  - id: SYM-audit-internal-views-ui-audit-actionwords
+    title: actionWords
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-actorkindwords
+    title: actorKindWords
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-enumkey
+    title: enumKey
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditnames
+    title: auditNames
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-newauditnames
+    title: newAuditNames
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-short
+    title: short
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-named
+    title: named
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditnames-ref
+    title: auditNames.ref
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditnames-actor
+    title: auditNames.actor
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditrow
+    title: auditRow
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditnames-row
+    title: auditNames.row
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditoption
+    title: auditOption
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditfilterform
+    title: auditFilterForm
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditview
+    title: auditView
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-historyview
+    title: historyView
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-access-history
+  - id: SYM-audit-internal-views-ui-audit-server-auditroutes
+    title: server.auditRoutes
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-parsedaudit
+    title: parsedAudit
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-parseauditquery
+    title: parseAuditQuery
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-actorkindof
+    title: actorKindOf
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-actionof
+    title: actionOf
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-outcomeof
+    title: outcomeOf
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-filterchoices
+    title: filterChoices
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-sortedkeys
+    title: sortedKeys
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-server-auditpage
+    title: server.auditPage
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-server-loadhistory
+    title: server.loadHistory
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-access-history
+  - id: SYM-audit-internal-views-ui-audit_test-auditrows
+    title: auditRows
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testaccesshistory
+    title: TestAccessHistory
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testaccesshistorypages
+    title: TestAccessHistoryPages
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testauditlogpage
+    title: TestAuditLogPage
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testauditlogfilters
+    title: TestAuditLogFilters
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testauditlogpages
+    title: TestAuditLogPages
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testauditlogunavailable
+    title: TestAuditLogUnavailable
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-audit_test-testauditandhistoryaretheowners
+    title: TestAuditAndHistoryAreTheOwners
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-auditfakes_test-fakeauditlog
+    title: fakeAuditLog
+    status: active
+    sourceFile: internal/views/ui/auditfakes_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-auditfakes_test-auditmatches
+    title: auditMatches
+    status: active
+    sourceFile: internal/views/ui/auditfakes_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-auditfakes_test-fakeauth-listauditentries
+    title: fakeAuth.ListAuditEntries
+    status: active
+    sourceFile: internal/views/ui/auditfakes_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-auditactor-getpersonid
+    title: AuditActor.GetPersonId
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-connectapi
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getoutcome
+    title: ListAuditEntriesRequest.GetOutcome
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-connectapi
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getactions
+    title: ListAuditEntriesRequest.GetActions
+    status: active
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-connectapi
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-identity-audit-auditfilter-matchesactor
+    title: AuditFilter.matchesActor
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-identity-audit-auditfilter-matcheswhat
+    title: AuditFilter.matchesWhat
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-identity-audit-auditfilter-validateselection
+    title: AuditFilter.validateSelection
+    status: active
+    sourceFile: internal/identity/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-domain
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-identity-connectapi-service-auditcursor
+    title: auditCursor
+    status: active
+    sourceFile: internal/identity/connectapi/service.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-connectapi
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-identity-postgres-audit-addwhat
+    title: addWhat
+    status: active
+    sourceFile: internal/identity/postgres/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-postgres
+      - type: implements
+        target: REQ-identity-audit-filter-outcome-actions
+  - id: SYM-audit-internal-views-ui-audit-outcomeword
+    title: outcomeWord
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-outcometone
+    title: outcomeTone
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-modelref
+    title: modelRef
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-auditnames-holderortarget
+    title: auditNames.holderOrTarget
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-parseauditwhat
+    title: parseAuditWhat
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit-parseauditdays
+    title: parseAuditDays
+    status: active
+    sourceFile: internal/views/ui/audit.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-audit
+      - type: implements
+        target: REQ-ui-audit-log-page
+  - id: SYM-audit-internal-views-ui-audit_test-testauditlogmalformedfilters
+    title: TestAuditLogMalformedFilters
+    status: active
+    sourceFile: internal/views/ui/audit_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-auditfakes_test-auditinrange
+    title: auditInRange
+    status: active
+    sourceFile: internal/views/ui/auditfakes_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit
+  - id: SYM-audit-internal-views-ui-auditfakes_test-auditpage
+    title: auditPage
+    status: active
+    sourceFile: internal/views/ui/auditfakes_test.go
+    origin:
+      kind: agent
+      ref: 'S7 task brief: the Access page''s history and Settings'' audit log view (D-210, D-211), 2026-11-13'
+      recorded_at: 2026-11-13T23:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-audit

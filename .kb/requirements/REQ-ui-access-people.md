@@ -35,4 +35,4 @@ D-210 (the author's, 2026-11-12). The owner-only People section of the Access pa
 
 > Settings has an Access page: the people (the owner, and each viewer with their grants and sessions, invited by a one-time link to enroll their own passkey and revoked from there), the script tokens (each with its grants, its expiry and whether it may use MCP), the view plugins with their grants, and the history of every grant and revocation.
 
-OpenFief author decisions (docs/DESIGN.md), design-decisions:D-210#1
+OpenFief author decisions (docs/DESIGN.md), design-decisions:D-210#2

@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff9e0b310fa9
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-auditoption
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:35.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76f50168c52b
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-auditoption
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:35.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a473b560db5

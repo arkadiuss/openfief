@@ -74,7 +74,7 @@ func TestInviteViewer(t *testing.T) {
 		t.Errorf("InviteViewer request (-want +got):\n%s", diff)
 	}
 	rec = h.serve(t, withSession(request(http.MethodGet, "/access", ""), ownerSession))
-	wantNoBody(t, rec, "synthetic-invite-code", "Invitation for Dana")
+	wantNoBody(t, rec, "synthetic-invite-code", "Invitation for Dana created")
 
 	// A viewer who starts with no grant is allowed, with the default lifetime.
 	rec = h.serve(t, withSession(form("/access/people", "name=Erin"), ownerSession))
@@ -124,7 +124,7 @@ func TestInviteViewerRefusals(t *testing.T) {
 	wantBody(t, rec, "Confirm with your passkey", "Inviting a viewer", `data-webauthn="check"`, `data-retry="passkey-check-retry"`,
 		`action="/access/people"`, `name="name" value="Dana"`, `name="minutes" value="60"`,
 		`name="grant" value="sleeve:core"`, `name="grant" value="household:home"`)
-	wantNoBody(t, rec, "synthetic-invite-code", "Invitation for Dana")
+	wantNoBody(t, rec, "synthetic-invite-code", "Invitation for Dana created")
 	h.auth.locked(func() {
 		if h.auth.inviteReq != nil {
 			t.Error("an invitation reached the core's model without a passkey check")

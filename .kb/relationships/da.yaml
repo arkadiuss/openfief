@@ -1070,3 +1070,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-067acd80b754
+  - type: specified_by
+    from: REQ-ui-audit-log-page
+    to: SCEN-ui-audit-log-page
+    created_at: 2026-11-14T00:15:54.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb6d80e54632
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-actionwords
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:16:38.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ac11d84ab3c
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-actionwords
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:16:38.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42dbd11c9d8

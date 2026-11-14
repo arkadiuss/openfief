@@ -846,3 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e52ec55ff995
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-auditnames-ref
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:17:17.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0398348fdde
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-auditnames-ref
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:17:17.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1510b48fcecc
+  - type: implements
+    from: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getactions
+    to: REQ-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:19:48.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a82644883ba
+  - type: covered_by
+    from: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getactions
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-14T00:19:48.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca198b4f8ff0

@@ -1,0 +1,42 @@
+{{define "content"}}
+{{template "settings-nav" .}}
+{{with .Data}}
+<section class="card" aria-labelledby="audit-title">
+  <h2 id="audit-title">Audit log</h2>
+  <p class="muted">Every change of state and every access event, newest first: who did it, what, which records and the outcome. It never holds an amount, a secret or the text of a question. It can't be changed or deleted.</p>
+  <form method="get" action="/settings/audit" aria-label="Filter the audit log">
+    <div class="fields">
+      <div class="field">
+        <label for="audit-actor">Who</label>
+        <select id="audit-actor" name="actor"><option value="">Anyone</option>{{range .Filter.Actors}}<option value="{{.Value}}"{{if .Selected}} selected{{end}}>{{.Label}}</option>{{end}}</select>
+      </div>
+      <div class="field">
+        <label for="audit-action">What</label>
+        <select id="audit-action" name="action"><option value="">Anything</option>{{range .Filter.Actions}}<option value="{{.Value}}"{{if .Selected}} selected{{end}}>{{.Label}}</option>{{end}}</select>
+      </div>
+      <div class="field">
+        <label for="audit-outcome">Outcome</label>
+        <select id="audit-outcome" name="outcome"><option value="">Any</option>{{range .Filter.Outcomes}}<option value="{{.Value}}"{{if .Selected}} selected{{end}}>{{.Label}}</option>{{end}}</select>
+      </div>
+      <div class="field">
+        <label for="audit-from">From (UTC day)</label>
+        <input id="audit-from" name="from" type="date" value="{{.Filter.From}}">
+      </div>
+      <div class="field">
+        <label for="audit-to">To (UTC day, included)</label>
+        <input id="audit-to" name="to" type="date" value="{{.Filter.To}}">
+      </div>
+    </div>
+    <div class="actions"><button type="submit" class="primary">Filter</button>{{if .Filter.Active}} <a href="/settings/audit">Clear the filter</a>{{end}}</div>
+  </form>
+  {{if .Unavailable}}
+  <p class="alert alert-warn" role="status">The audit log can't be read now. Try again in a moment.</p>
+  {{else if .Rows}}
+  {{template "audit-table" .Rows}}
+  {{if .Older}}<p><a href="{{.Older}}" rel="next">Older entries</a></p>{{end}}
+  {{else}}
+  <p class="muted">{{if .Filter.Active}}No entries match this filter.{{else}}Nothing has been recorded yet.{{end}}</p>
+  {{end}}
+</section>
+{{end}}
+{{end}}

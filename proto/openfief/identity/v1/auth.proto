@@ -687,6 +687,9 @@ message AuditActor {
   // The session's, enrollment code's or "core" ID; empty for an anonymous
   // caller.
   string id = 2;
+  // For a viewer's session: the ID of the person it is of, when the session
+  // is still known; empty otherwise. An ID, never a name.
+  string person_id = 3;
 }
 
 // AuditRef names one record by kind and ID, never by name, amount or secret.
@@ -725,6 +728,12 @@ message ListAuditEntriesRequest {
   // The next_page_token of the previous page, with the same filter; empty
   // starts from the newest.
   string page_token = 9;
+  // Only entries that ended so; unspecified selects every outcome.
+  AuditOutcome outcome = 10;
+  // Only entries of any one of these actions, as the Access page's history
+  // asks for the grants and the links; empty selects every action. With
+  // action set as well, an entry must match both.
+  repeated AuditAction actions = 11;
 }
 
 message ListAuditEntriesResponse {

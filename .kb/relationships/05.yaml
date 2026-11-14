@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8df33c3f2ad0
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-enumkey
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:16:53.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-155eeb7bb90d
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-enumkey
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:16:53.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b1800cf2db

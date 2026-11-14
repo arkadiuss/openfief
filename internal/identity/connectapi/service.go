@@ -235,7 +235,7 @@ func (s *authService) ListAuditEntries(ctx context.Context, req *connect.Request
 	}
 	out := &identityv1.ListAuditEntriesResponse{Entries: make([]*identityv1.AuditEntry, 0, len(page.Entries))}
 	for i := range page.Entries {
-		out.Entries = append(out.Entries, pbAuditEntry(&page.Entries[i]))
+		out.Entries = append(out.Entries, pbAuditEntry(&page.Entries[i], page.Persons))
 	}
 	if page.Next != 0 {
 		out.NextPageToken = strconv.FormatInt(page.Next, 10)
@@ -258,20 +258,53 @@ func auditFilter(m *identityv1.ListAuditEntriesRequest) (identity.AuditFilter, e
 			return identity.AuditFilter{}, fmt.Errorf("%w: unknown action", app.ErrInvalidRequest)
 		}
 	}
+	if err := auditOutcomeAndActions(m, &f); err != nil {
+		return identity.AuditFilter{}, err
+	}
 	if m.GetFrom() != nil {
 		f.From = m.GetFrom().AsTime()
 	}
 	if m.GetTo() != nil {
 		f.To = m.GetTo().AsTime()
 	}
-	if tok := m.GetPageToken(); tok != "" {
-		before, err := strconv.ParseInt(tok, 10, 64)
-		if err != nil || before <= 0 {
-			return identity.AuditFilter{}, fmt.Errorf("%w: bad page token", app.ErrInvalidRequest)
-		}
-		f.Before = before
+	var err error
+	if f.Before, err = auditCursor(m.GetPageToken()); err != nil {
+		return identity.AuditFilter{}, err
 	}
 	return f, nil
+}
+
+// auditCursor reads the cursor a page token carries: zero for none, otherwise
+// a positive number; anything else wraps app.ErrInvalidRequest.
+func auditCursor(tok string) (int64, error) {
+	if tok == "" {
+		return 0, nil
+	}
+	before, err := strconv.ParseInt(tok, 10, 64)
+	if err != nil || before <= 0 {
+		return 0, fmt.Errorf("%w: bad page token", app.ErrInvalidRequest)
+	}
+	return before, nil
+}
+
+// auditOutcomeAndActions sets f's outcome and its set of actions from m; an
+// unknown or unspecified member of the set wraps app.ErrInvalidRequest.
+func auditOutcomeAndActions(m *identityv1.ListAuditEntriesRequest, f *identity.AuditFilter) error {
+	if m.GetOutcome() != identityv1.AuditOutcome_AUDIT_OUTCOME_UNSPECIFIED {
+		outcome, ok := invert(pbOutcomes())[m.GetOutcome()]
+		if !ok {
+			return fmt.Errorf("%w: unknown outcome", app.ErrInvalidRequest)
+		}
+		f.Outcome = outcome
+	}
+	for _, a := range m.GetActions() {
+		action, ok := domainActions()[a]
+		if !ok {
+			return fmt.Errorf("%w: unknown action", app.ErrInvalidRequest)
+		}
+		f.Actions = append(f.Actions, action)
+	}
+	return nil
 }
 
 // The audit enums, from the domain to the contract, as functions: the package
@@ -365,9 +398,13 @@ func invert[K, V comparable](m map[K]V) map[V]K {
 
 // pbAuditEntry converts an entry. Every field is a closed value, a time or
 // an ID.
-func pbAuditEntry(e *identity.AuditEntry) *identityv1.AuditEntry {
+func pbAuditEntry(e *identity.AuditEntry, persons map[identity.SessionID]string) *identityv1.AuditEntry {
+	actor := &identityv1.AuditActor{Kind: pbActorKinds()[e.Actor.Kind], Id: e.Actor.ID}
+	if e.Actor.Kind == identity.ActorViewer {
+		actor.PersonId = persons[identity.SessionID(e.Actor.ID)]
+	}
 	out := &identityv1.AuditEntry{
-		Seq: e.Seq, At: timestamppb.New(e.At), Actor: &identityv1.AuditActor{Kind: pbActorKinds()[e.Actor.Kind], Id: e.Actor.ID},
+		Seq: e.Seq, At: timestamppb.New(e.At), Actor: actor,
 		Action: pbActions()[e.Action], Outcome: pbOutcomes()[e.Outcome], Refs: make([]*identityv1.AuditRef, 0, len(e.Refs)),
 	}
 	for _, r := range e.Refs {

@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0d85dd6df5b
+  - type: verified_by
+    from: SCEN-ui-audit-log-page
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:15:53.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9770c4ab95ba

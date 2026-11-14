@@ -33,6 +33,10 @@ type AuditPage struct {
 	// Next is the cursor for the page after this one (AuditFilter.Before);
 	// zero when this is the last.
 	Next int64
+	// Persons maps the ID of a viewer's session that is an actor on this
+	// page to the person it is of, so the log can name them; a session that
+	// is no longer known is left out. Only an ID, never a name.
+	Persons map[identity.SessionID]string
 }
 
 // record appends the entry for action by actor with outcome, naming refs, as
@@ -98,6 +102,22 @@ func (a *Auth) AuditEntries(ctx context.Context, origin, token string, f *identi
 	page, err := a.store.AuditEntries(ctx, f)
 	if err != nil {
 		return AuditPage{}, fmt.Errorf("listing audit entries: %w", err)
+	}
+	page.Persons = map[identity.SessionID]string{}
+	for i := range page.Entries {
+		actor := page.Entries[i].Actor
+		id := identity.SessionID(actor.ID)
+		if _, known := page.Persons[id]; actor.Kind != identity.ActorViewer || known {
+			continue
+		}
+		s, _, sessionErr := a.store.Session(ctx, id)
+		switch {
+		case errors.Is(sessionErr, ErrUnknownSession):
+		case sessionErr != nil:
+			return AuditPage{}, fmt.Errorf("naming the viewer of a session: %w", sessionErr)
+		default:
+			page.Persons[id] = s.Person()
+		}
 	}
 	return page, nil
 }

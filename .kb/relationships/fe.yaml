@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-039df9c6421d
+  - type: implements
+    from: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getoutcome
+    to: REQ-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:19:42.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-485140ce7dcd
+  - type: covered_by
+    from: SYM-audit-sdk-go-gen-openfief-identity-v1-auth-pb-listauditentriesrequest-getoutcome
+    to: TEST-identity-audit-connectapi
+    created_at: 2026-11-14T00:19:42.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec3f25d856b9

@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ba2cd363337
+  - type: verified_by
+    from: SCEN-ui-access-history
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:15:55.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fdaa313a517

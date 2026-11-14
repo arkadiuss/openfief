@@ -117,6 +117,13 @@ type fakeAuth struct {
 	// cancelInviteErr makes it fail as the core does.
 	cancelledInvites []string
 	cancelInviteErr  error
+	// auditReqs are the ListAuditEntries requests, and auditErr makes it fail as
+	// the core does.
+	auditReqs []*identityv1.ListAuditEntriesRequest
+	auditErr  error
+	// auditCap, when set, is the most entries a page of ListAuditEntries holds,
+	// as a smaller page than the page size asks for.
+	auditCap int
 	// codeRefused makes BeginRegistration refuse an enrollment code, as the
 	// core does one that expired, was cancelled or was used; its message here
 	// is one the page must never show.

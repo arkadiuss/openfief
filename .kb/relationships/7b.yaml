@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-71136723deae
+  - type: executable_for
+    from: SYM-audit-internal-views-ui-auditfakes_test-auditinrange
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:36.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7fd81d63783

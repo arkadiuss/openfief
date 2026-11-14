@@ -214,5 +214,18 @@
   </div></div>
   {{end}}
 </section>
+
+<section class="card" aria-labelledby="history-title">
+  <h2 id="history-title">History</h2>
+  <p class="muted">Every grant and revocation, of viewers, script tokens and view plugins, and every invitation link issued, used, cancelled or refused, newest first. It never shows an amount or a secret. <a href="{{.History.SeeAll}}">See the whole audit log</a>.</p>
+  {{if .History.Unavailable}}
+  <p class="alert alert-warn" role="status">The history can't be read now. Try again in a moment.</p>
+  {{else if .History.Rows}}
+  {{template "audit-table" .History.Rows}}
+  {{if .History.Older}}<p><a href="{{.History.Older}}" rel="next">Older entries</a></p>{{end}}
+  {{else}}
+  <p class="muted">Nothing has been granted or revoked yet.</p>
+  {{end}}
+</section>
 {{end}}
 {{end}}

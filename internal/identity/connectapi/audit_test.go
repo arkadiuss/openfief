@@ -144,6 +144,25 @@ func TestListAuditEntriesFilters(t *testing.T) {
 	if len(none.GetEntries()) != 0 {
 		t.Errorf("filter by actor kind = %v; want none", none)
 	}
+	set := a.list(t, &identityv1.ListAuditEntriesRequest{Actions: []identityv1.AuditAction{
+		identityv1.AuditAction_AUDIT_ACTION_SIGN_OUT, identityv1.AuditAction_AUDIT_ACTION_SIGN_IN, identityv1.AuditAction_AUDIT_ACTION_PASSKEY_ADDED,
+	}})
+	if len(set.GetEntries()) != 3 {
+		t.Errorf("filter by a set of actions = %v; want 3 entries", set)
+	}
+	both := a.list(t, &identityv1.ListAuditEntriesRequest{
+		Action: identityv1.AuditAction_AUDIT_ACTION_SIGN_IN, Actions: []identityv1.AuditAction{identityv1.AuditAction_AUDIT_ACTION_SIGN_OUT},
+	})
+	if len(both.GetEntries()) != 0 {
+		t.Errorf("filter by an action outside the set = %v; want none", both)
+	}
+	refused := a.list(t, &identityv1.ListAuditEntriesRequest{Outcome: identityv1.AuditOutcome_AUDIT_OUTCOME_REFUSED, PageSize: identityMaxPage})
+	if len(refused.GetEntries()) != a.entries {
+		t.Errorf("filter by outcome refused = %d entries; want all %d", len(refused.GetEntries()), a.entries)
+	}
+	if ok := a.list(t, &identityv1.ListAuditEntriesRequest{Outcome: identityv1.AuditOutcome_AUDIT_OUTCOME_OK}); len(ok.GetEntries()) != 0 {
+		t.Errorf("filter by outcome ok = %v; want none", ok)
+	}
 }
 
 func TestListAuditEntriesBadRequests(t *testing.T) {
@@ -160,6 +179,9 @@ func TestListAuditEntriesBadRequests(t *testing.T) {
 		{name: "actor id without a kind", req: &identityv1.ListAuditEntriesRequest{ActorId: "0123456789abcdef"}},
 		{name: "actor id that is no id", req: &identityv1.ListAuditEntriesRequest{ActorKind: identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER, ActorId: "Jan"}},
 		{name: "unknown action", req: &identityv1.ListAuditEntriesRequest{Action: 99}},
+		{name: "unknown outcome", req: &identityv1.ListAuditEntriesRequest{Outcome: 99}},
+		{name: "unknown action in the set", req: &identityv1.ListAuditEntriesRequest{Actions: []identityv1.AuditAction{identityv1.AuditAction_AUDIT_ACTION_SIGN_IN, 99}}},
+		{name: "unspecified action in the set", req: &identityv1.ListAuditEntriesRequest{Actions: []identityv1.AuditAction{identityv1.AuditAction_AUDIT_ACTION_UNSPECIFIED}}},
 		{name: "unknown actor kind", req: &identityv1.ListAuditEntriesRequest{ActorKind: 99}},
 		{name: "empty range", req: &identityv1.ListAuditEntriesRequest{From: timestamppb.New(time.Unix(2000, 0)), To: timestamppb.New(time.Unix(1000, 0))}},
 	}

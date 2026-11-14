@@ -84,6 +84,8 @@ type accessData struct {
 	// Pending are the invitations not used, cancelled or expired yet.
 	Pending []inviteRow
 	Invite  inviteForm
+	// History is the grants, revocations and links, newest first (D-210).
+	History historyView
 	// Confirm is the viewer the owner asked to revoke, shown with what
 	// revoking does until the owner confirms.
 	Confirm *personRow
@@ -156,6 +158,7 @@ func (s *server) renderAccess(w http.ResponseWriter, r *http.Request, sess sessi
 	}
 	data.People = peopleRows(in.People.GetPeople(), in.Sleeves, in.Accounts)
 	data.Pending = inviteRows(in.Invites.GetInvites(), in.Sleeves, in.Accounts)
+	data.History = s.loadHistory(r, sess, in)
 	data.Invite.Choices = newChoices("new-viewer", in.Sleeves, in.Accounts, data.Invite.Grants)
 	data.Invite.Lifetimes = selectLifetime(inviteLifetimes(), data.Invite.Minutes)
 	s.show(w, r, status, "access", page{Title: "Access", Session: &sess, Data: data})

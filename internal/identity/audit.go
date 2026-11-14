@@ -624,6 +624,12 @@ type AuditFilter struct {
 	ActorID   string
 	// Action selects one action; empty selects every action.
 	Action AuditAction
+	// Actions selects entries of any one of them, as the Access page's
+	// history does for the grants and the links; empty selects every action.
+	// With Action set, an entry must match both.
+	Actions []AuditAction
+	// Outcome selects entries that ended so; empty selects every outcome.
+	Outcome AuditOutcome
 	// From and To select entries at or after From and before To; a zero
 	// bound is open.
 	From, To time.Time
@@ -641,10 +647,8 @@ func (f *AuditFilter) Validate() error {
 	if err := f.validateActor(); err != nil {
 		return err
 	}
-	if f.Action != "" {
-		if _, ok := actionKinds()[f.Action]; !ok {
-			return fmt.Errorf("%w: unknown action", ErrInvalidAuditFilter)
-		}
+	if err := f.validateSelection(); err != nil {
+		return err
 	}
 	if !f.From.IsZero() && !f.To.IsZero() && !f.From.Before(f.To) {
 		return fmt.Errorf("%w: the range is empty", ErrInvalidAuditFilter)
@@ -669,19 +673,39 @@ func (f *AuditFilter) PageSize() int {
 // Matches reports whether e is selected by f's actor, action and time
 // range, and its cursor.
 func (f *AuditFilter) Matches(e *AuditEntry) bool {
-	if f.ActorKind != "" && e.Actor.Kind != f.ActorKind {
-		return false
-	}
-	if f.ActorID != "" && e.Actor.ID != f.ActorID {
-		return false
-	}
-	if f.Action != "" && e.Action != f.Action {
-		return false
-	}
 	if f.Before != 0 && e.Seq >= f.Before {
 		return false
 	}
-	return f.inRange(e.At)
+	return f.matchesActor(&e.Actor) && f.matchesWhat(e) && f.inRange(e.At)
+}
+
+// matchesActor reports whether a is the kind and the actor f selects.
+func (f *AuditFilter) matchesActor(a *Actor) bool {
+	return (f.ActorKind == "" || a.Kind == f.ActorKind) && (f.ActorID == "" || a.ID == f.ActorID)
+}
+
+// matchesWhat reports whether e is of the action, one of the actions and the
+// outcome f selects.
+func (f *AuditFilter) matchesWhat(e *AuditEntry) bool {
+	return (f.Action == "" || e.Action == f.Action) &&
+		(len(f.Actions) == 0 || slices.Contains(f.Actions, e.Action)) &&
+		(f.Outcome == "" || e.Outcome == f.Outcome)
+}
+
+// validateSelection checks the action, the set of actions and the outcome f
+// selects.
+func (f *AuditFilter) validateSelection() error {
+	for _, a := range append([]AuditAction{f.Action}, f.Actions...) {
+		if _, ok := actionKinds()[a]; a != "" && !ok {
+			return fmt.Errorf("%w: unknown action", ErrInvalidAuditFilter)
+		}
+	}
+	if f.Outcome != "" {
+		if _, err := ParseAuditOutcome(string(f.Outcome)); err != nil {
+			return fmt.Errorf("%w: unknown outcome", ErrInvalidAuditFilter)
+		}
+	}
+	return nil
 }
 
 // validateActor checks the actor kind and ID f selects.

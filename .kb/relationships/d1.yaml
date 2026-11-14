@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77c2bebce649
+  - type: implements
+    from: SYM-audit-internal-views-ui-audit-outcometone
+    to: REQ-ui-audit-log-page
+    created_at: 2026-11-14T00:32:07.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7494c0708828
+  - type: covered_by
+    from: SYM-audit-internal-views-ui-audit-outcometone
+    to: TEST-ui-audit
+    created_at: 2026-11-14T00:32:07.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-384990cc4e33

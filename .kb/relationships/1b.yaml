@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bacf0aa98fba
+  - type: specified_by
+    from: REQ-identity-audit-filter-outcome-actions
+    to: SCEN-identity-audit-filter-outcome-actions
+    created_at: 2026-11-14T00:15:52.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c74d1dd2caa
