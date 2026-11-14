@@ -1154,3 +1154,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dfa42c0b9a5
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: REQ-ui-ask-final-round-whole-conversation
+    created_at: 2026-11-14T21:35:20.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c06a35e20f
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: TEST-ui-ask-final-round
+    created_at: 2026-11-14T21:35:20.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb477b7b4011
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: TEST-askbench-final-round
+    created_at: 2026-11-14T21:35:20.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4d035538d1

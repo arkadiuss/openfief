@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66d683adb842
+  - type: executable_for
+    from: SYM-internal-views-ui-askfinal-test-go-testaplainfirstreplyisfollowedbythewholeconversationandtheinstruction
+    to: TEST-ui-ask-final-round
+    created_at: 2026-11-14T21:51:58.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5356dde78ce6

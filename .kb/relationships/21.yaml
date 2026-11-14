@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16f59d5b494f
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-checksecondcall
+    to: TEST-askbench-final-round
+    created_at: 2026-11-14T21:52:47.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0971de4ef0

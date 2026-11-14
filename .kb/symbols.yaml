@@ -222171,12 +222171,18 @@ symbols:
     sourceFile: internal/views/ui/askmodel.go
     origin:
       kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T14:55:39.320Z
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:35:12.053Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-final-round
+      - type: covered_by
+        target: TEST-ui-ask-final-round
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
@@ -222185,12 +222191,18 @@ symbols:
     sourceFile: internal/views/ui/askmodel.go
     origin:
       kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T14:55:45.019Z
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:35:17.408Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-final-round
+      - type: covered_by
+        target: TEST-ui-ask-final-round
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-answered
@@ -226106,3 +226118,69 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-retry
+  - id: SYM-internal-views-ui-askfinal-test-go-testaplainfirstreplyisfollowedbythewholeconversationandtheinstruction
+    title: TestAPlainFirstReplyIsFollowedByTheWholeConversationAndTheInstruction
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:51:55.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-internal-views-ui-askfinal-test-go-testthefinalroundkeepseverytoolcallandresultandthemodelsplainreply
+    title: TestTheFinalRoundKeepsEveryToolCallAndResultAndTheModelsPlainReply
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:00.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-internal-views-ui-askfinal-test-go-testtheretryafteraninvalidreplykeepsthewholeconversation
+    title: TestTheRetryAfterAnInvalidReplyKeepsTheWholeConversation
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:06.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-tools-askbench-finalround-test-go-testaplainfirstreplythentheanswergradesasthemodelsrefusalnotagreeting
+    title: TestAPlainFirstReplyThenTheAnswerGradesAsTheModelsRefusalNotAGreeting
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:38.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-finalround-test-go-checksecondcall
+    title: checkSecondCall
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:44.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-finalround-test-go-plainfirstmodel
+    title: plainFirstModel
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T22:08:23.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
