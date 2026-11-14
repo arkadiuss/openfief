@@ -30,6 +30,10 @@ The Ask box bench can ask a model on chosen OpenRouter hosts only, in order and 
 
 The first runs showed one model behaving differently on different hosts, so a run must be able to pin the host. D-207 picks the demo's model as the cheapest one that passes the Ask box's eval on the hosts that passed it; D-220 now says what passing is, so the bench ranks the models whose verdict is pass and no longer those whose safety passed alone, which a model that refuses everything also does.
 
+## Why this changed
+
+D-220 now says what passing the Ask box's eval means, and the bench gives each model@host a verdict. The ranking is therefore of the models whose verdict is pass, no longer of those whose safety alone passed, which a model that refuses everything also does.
+
 ## Source
 
 > The AB5 brief and the orchestrator's addition: the verdict per model@host (D-220) goes next to the measured USD per 1,000 questions, and D-207's ranking is the cheapest model@host whose verdict is pass.
