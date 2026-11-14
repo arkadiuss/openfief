@@ -84,8 +84,6 @@ func (j joinedPool) Exec(ctx context.Context, sql string, args ...any) (pgconn.C
 
 // Query runs sql in the transaction ctx carries, or on the pool. The returned
 // rows are pgx's interface, as the stores' database port says.
-//
-//nolint:ireturn // the signature is pgx's: the stores' DB ports return pgx.Rows
 func (j joinedPool) Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error) {
 	var (
 		rows pgx.Rows
@@ -103,8 +101,6 @@ func (j joinedPool) Query(ctx context.Context, sql string, args ...any) (pgx.Row
 }
 
 // QueryRow runs sql in the transaction ctx carries, or on the pool.
-//
-//nolint:ireturn // the signature is pgx's: the stores' DB ports return pgx.Row
 func (j joinedPool) QueryRow(ctx context.Context, sql string, args ...any) pgx.Row {
 	if tx, ok := txOf(ctx); ok {
 		return tx.QueryRow(ctx, sql, args...)
@@ -114,8 +110,6 @@ func (j joinedPool) QueryRow(ctx context.Context, sql string, args ...any) pgx.R
 
 // Begin opens a savepoint in the transaction ctx carries, or a transaction on
 // the pool.
-//
-//nolint:ireturn // the signature is pgx's: the stores' DB ports return pgx.Tx
 func (j joinedPool) Begin(ctx context.Context) (pgx.Tx, error) {
 	var (
 		tx  pgx.Tx
