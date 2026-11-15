@@ -1224,3 +1224,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c22c08a4b848
+  - type: implements
+    from: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-checked
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:49:06.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-841105e9ac13
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-checked
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:06.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68099115a46a

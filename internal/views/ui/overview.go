@@ -265,6 +265,9 @@ func (s *server) home(r *http.Request, sess session, date kernel.Date, accounts 
 	}
 	data.Status = statusLine{ValuedThrough: latestValued(statuses), Open: data.Open, Failing: data.Failing}
 	data.Ask.Model = s.askHasModel(r, sess)
+	if data.Ask.Model && s.turnstile != nil {
+		data.Ask.TurnstileSiteKey = s.turnstile.cfg.SiteKey
+	}
 	if q := r.URL.Query().Get(askParam); q != "" {
 		card, askErr := s.ask.answer(r, sess, q)
 		if askErr != nil {

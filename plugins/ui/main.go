@@ -8,10 +8,14 @@
 // pages, handlers and static files are internal/views/ui; this binary only
 // wires them to the plugin's environment.
 //
-// The manifest asks for the view capability and no egress hosts. Its config
+// The manifest asks for the view capability and no fixed egress host. Its config
 // is optional: the limits of one question the Ask box sends a model
 // (askToolRounds, askToolCalls, askOutputTokens and askDeadline, D-208's
-// defaults when unset). There is no way to run it without a projected token: local
+// defaults when unset), and Cloudflare Turnstile in front of it
+// (turnstileSiteKey and turnstileVerifyUrl, whose host is the one egress host
+// the manifest asks for, from config, and the instance's Secret
+// ui--turnstile-secret). With neither set it asks for nothing: no egress host,
+// no Secret. There is no way to run it without a projected token: local
 // development runs it in a local cluster such as kind or k3d (D-84).
 package main
 
@@ -117,8 +121,13 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 	if err != nil {
 		return nil, fmt.Errorf("config: %w", err)
 	}
+	turnstile, err := raw.turnstile()
+	if err != nil {
+		return nil, fmt.Errorf("config: %w", err)
+	}
 	h, err := ui.New(&ui.Config{
 		AskLimits:       askLimits,
+		Turnstile:       turnstile,
 		Auth:            identityv1connect.NewAuthServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Model:           portfoliov1connect.NewModelPortfolioServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		BondLots:        ingestv1connect.NewBondLotServiceClient(authClient(openfief.TokenFile{}), coreURL),

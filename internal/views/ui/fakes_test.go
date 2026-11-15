@@ -965,6 +965,13 @@ func newHarness(t *testing.T) *harness {
 // discards.
 func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	t.Helper()
+	return newHarnessWith(t, log, nil)
+}
+
+// newHarnessWith is newHarnessLogging with the UI's config changed by mod before
+// the UI is made; nil changes nothing.
+func newHarnessWith(t *testing.T, log *slog.Logger, mod func(*Config)) *harness {
+	t.Helper()
 	h := &harness{
 		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
 		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(), checks: &fakePriceChecks{},
@@ -1005,7 +1012,7 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	t.Cleanup(core.Close)
 	h.tokenFile = filepath.Join(t.TempDir(), "token")
 	h.writeToken(t, pluginToken)
-	handler, err := New(&Config{
+	cfg := &Config{
 		Auth:            identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Model:           portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		BondLots:        ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
@@ -1027,7 +1034,11 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		Instruments:     ledgerv1connect.NewInstrumentServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		CashCheckpoints: ledgerv1connect.NewCashCheckpointServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Log:             log,
-	})
+	}
+	if mod != nil {
+		mod(cfg)
+	}
+	handler, err := New(cfg)
 	if err != nil {
 		t.Fatalf("New: %v", err)
 	}

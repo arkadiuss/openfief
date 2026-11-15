@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c8cc7be2da8
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileverifyofausedtokenisrefused
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:51:30.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc86d9b9e3a0

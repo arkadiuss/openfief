@@ -23,6 +23,10 @@ const (
 	browserSignInViewer = "/test/sign-in-viewer"
 	// browserEndedSession is where they get a session the core rejects.
 	browserEndedSession = "/test/ended-session"
+	// browserTurnstile is the environment variable that puts Turnstile on the Ask
+	// box in the served UI (D-208).
+	browserTurnstile = "OPENFIEF_UI_TURNSTILE"
+
 	// browserAskModel is where they set up the Ask box's model (D-203): the
 	// tiers query parameter lists the data tiers the model may receive, and
 	// "off" takes the model away again.
@@ -87,7 +91,14 @@ func TestServeForBrowser(t *testing.T) {
 	if addr == "" {
 		t.Skip("set OPENFIEF_UI_SERVE to serve the UI over the fakes for a browser")
 	}
-	h := newHarness(t)
+	// With OPENFIEF_UI_TURNSTILE the Ask box has Turnstile in front of its model (D-208),
+	// checked by a fake Cloudflare that takes the tokens a fake widget makes ("ok-...").
+	var withTurnstile func(*Config)
+	if os.Getenv(browserTurnstile) != "" {
+		cloudflare := newFakeSiteverify(t)
+		withTurnstile = func(c *Config) { c.Turnstile = cloudflare.config() }
+	}
+	h := newHarnessWith(t, nil, withTurnstile)
 	h.read.locked(func() { h.read.modelOn = true })
 	// The actions D-183 protects ask for a passkey check first, which the
 	// browser checks run with a virtual authenticator.

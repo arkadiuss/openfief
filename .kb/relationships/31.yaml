@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28e88680ceef
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-decodesiteverify
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T23:59:19.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24f6b16e70ec
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-decodesiteverify
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T23:59:19.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d18178e3649

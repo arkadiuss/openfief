@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-157119d09d5c
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testnewrefusesturnstilewithoutamodeltoguard
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:53:06.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bcc53a515a8

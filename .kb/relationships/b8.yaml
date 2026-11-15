@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a26c8290d268
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-calls
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:50:58.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608a82b2fead

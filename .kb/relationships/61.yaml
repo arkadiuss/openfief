@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0b77a86b091
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxcommandsneednotokenandnevercallcloudflare
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:52:48.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3b1b8a95dde

@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7357f92177e
+  - type: executable_for
+    from: SYM-m5-plugins-ui-turnstile-test-go-testturnstilefromconfig
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:53:31.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6617204b44d5

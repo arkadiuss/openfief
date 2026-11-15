@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d801927d8166
+  - type: executable_for
+    from: SYM-m5-plugins-ui-turnstile-test-go-testsecretfromfilereadsitoneverycallandnamesneitherpathnorvalueinitserrors
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:53:42.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15bd0778f6a1

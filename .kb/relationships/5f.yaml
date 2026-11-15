@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d0cadd15790
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-siteverifyreply
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:49:49.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e6f8946b40d
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-siteverifyreply
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:49.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8102789059c4

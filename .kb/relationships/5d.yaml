@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d3432bc4fc9
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxshowsthewidgetonlywhereturnstileisonandamodelanswers
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:52:10.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a15fe9dc8705

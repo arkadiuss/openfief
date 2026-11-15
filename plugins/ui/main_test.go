@@ -16,8 +16,10 @@ import (
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), asks for exactly what the UI needs: the view
-// capability, the browser path "/" the core proxies to it (D-81), no egress
-// host, no Secret, and a schema that takes no config.
+// capability, the browser path "/" the core proxies to it (D-81), no fixed
+// egress host (the one it may ask for is the host of its optional
+// turnstileVerifyUrl config field, D-75, D-208), the one optional Secret of the
+// Turnstile check, and a schema of optional config.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -28,12 +30,22 @@ func TestManifest(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParseManifestLabel: %v", err)
 	}
-	want := plugins.Manifest{Capabilities: []plugins.Capability{plugins.CapabilityView}, BrowserPath: "/"}
+	want := plugins.Manifest{
+		Capabilities: []plugins.Capability{plugins.CapabilityView}, BrowserPath: "/",
+		EgressFromConfig: []string{"turnstileVerifyUrl"},
+		Secrets:          []plugins.SecretMount{{Role: "turnstile-secret", MountPath: "/etc/openfief/turnstile", Optional: true}},
+	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)
 	}
 	if len(got.ConfigSchema) == 0 {
 		t.Error("the manifest has no config schema")
+	}
+	if len(got.Egress) != 0 {
+		t.Errorf("the manifest names fixed egress hosts %v, want none: with no Turnstile config the UI reaches no host", got.Egress)
+	}
+	if turnstileMountDir != "/etc/openfief/turnstile" {
+		t.Errorf("the Secret is read from %q, not where the manifest mounts it", turnstileMountDir)
 	}
 }
 

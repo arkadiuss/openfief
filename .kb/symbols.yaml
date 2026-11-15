@@ -229331,3 +229331,565 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-browserproxy-clientip
+  - id: SYM-m5-internal-views-ui-askmodel-go-routedanswerer-checked
+    title: routedAnswerer.checked
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:03.774Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-fakes-test-go-newharnesswith
+    title: newHarnessWith
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:09.809Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-server-go-server-withturnstile
+    title: server.withTurnstile
+    status: active
+    sourceFile: internal/views/ui/server.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:15.743Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-ask-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig
+    title: TurnstileConfig
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:21.917Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig-validate
+    title: TurnstileConfig.validate
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:27.917Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict
+    title: turnstileVerdict
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:34.080Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck
+    title: turnstileCheck
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:40.667Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-siteverifyreply
+    title: siteverifyReply
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:46.746Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-verify
+    title: turnstileCheck.verify
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:52.729Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-judge
+    title: turnstileCheck.judge
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:49:59.011Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-hostonly
+    title: hostOnly
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:05.104Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-checkneededanswer
+    title: checkNeededAnswer
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:11.256Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-checkunavailableanswer
+    title: checkUnavailableAnswer
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:17.632Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileanswer
+    title: turnstileAnswer
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:23.968Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify
+    title: fakeSiteverify
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:30.112Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-newfakesiteverify
+    title: newFakeSiteverify
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:36.592Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-serve
+    title: fakeSiteverify.serve
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:43.301Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-writestring
+    title: writeString
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:49.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-calls
+    title: fakeSiteverify.calls
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:50:55.446Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-config
+    title: fakeSiteverify.config
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:02.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-check
+    title: fakeSiteverify.check
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:09.081Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileverifybyverdict
+    title: TestTurnstileVerifyByVerdict
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:15.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileverifysendsthesecretthetokenandtheaddressonly
+    title: TestTurnstileVerifySendsTheSecretTheTokenAndTheAddressOnly
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:21.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileverifyofausedtokenisrefused
+    title: TestTurnstileVerifyOfAUsedTokenIsRefused
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:27.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileverifywithcloudflareunreachablefailsclosed
+    title: TestTurnstileVerifyWithCloudflareUnreachableFailsClosed
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:34.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileneverlogsthetokenthesecretorthequestion
+    title: TestTurnstileNeverLogsTheTokenTheSecretOrTheQuestion
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:41.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileconfigvalidate
+    title: TestTurnstileConfigValidate
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:48.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-turnstileharness
+    title: turnstileHarness
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:51:55.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-harness-askswithtoken
+    title: harness.asksWithToken
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:01.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxshowsthewidgetonlywhereturnstileisonandamodelanswers
+    title: TestAskBoxShowsTheWidgetOnlyWhereTurnstileIsOnAndAModelAnswers
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:07.685Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxshowsnowidgetwhennomodelanswers
+    title: TestAskBoxShowsNoWidgetWhenNoModelAnswers
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:13.863Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testuipolicyallowsturnstileonlywhereitison
+    title: TestUIPolicyAllowsTurnstileOnlyWhereItIsOn
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:19.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxpassesaquestionwithagoodtoken
+    title: TestAskBoxPassesAQuestionWithAGoodToken
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:26.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxstopsaquestionthecheckrefusesbeforeanythingissentorcounted
+    title: TestAskBoxStopsAQuestionTheCheckRefusesBeforeAnythingIsSentOrCounted
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:32.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxasingleusetokencannotasktwice
+    title: TestAskBoxASingleUseTokenCannotAskTwice
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:39.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxcommandsneednotokenandnevercallcloudflare
+    title: TestAskBoxCommandsNeedNoTokenAndNeverCallCloudflare
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:45.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxchecksbeforethecorecountsandthecorestillrefuses
+    title: TestAskBoxChecksBeforeTheCoreCountsAndTheCoreStillRefuses
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:51.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxturnstilewithacorethatfailsstillkeepsthecheckfirst
+    title: TestAskBoxTurnstileWithACoreThatFailsStillKeepsTheCheckFirst
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:52:57.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-testnewrefusesturnstilewithoutamodeltoguard
+    title: TestNewRefusesTurnstileWithoutAModelToGuard
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:04.130Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-plugins-ui-config-go-rawconfig-turnstileon
+    title: rawConfig.turnstileOn
+    status: active
+    sourceFile: plugins/ui/config.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:10.176Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-plugins-ui-turnstile-go-secretfromfile
+    title: keyFromMount
+    status: active
+    sourceFile: plugins/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:16.585Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-plugins-ui-turnstile-go-rawconfig-turnstile
+    title: rawConfig.turnstile
+    status: active
+    sourceFile: plugins/ui/turnstile.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:22.628Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-plugins-ui-turnstile-test-go-testturnstilefromconfig
+    title: TestTurnstileFromConfig
+    status: active
+    sourceFile: plugins/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:28.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-turnstile
+  - id: SYM-m5-plugins-ui-turnstile-test-go-testturnstileoffbuildsnothing
+    title: TestTurnstileOffBuildsNothing
+    status: active
+    sourceFile: plugins/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:33.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-turnstile
+  - id: SYM-m5-plugins-ui-turnstile-test-go-testsecretfromfilereadsitoneverycallandnamesneitherpathnorvalueinitserrors
+    title: TestKeyFromMountReadsItOnEveryCallTrimmed
+    status: active
+    sourceFile: plugins/ui/turnstile_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-14T22:53:39.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-go-decodesiteverify
+    title: decodeSiteverify
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-14T23:59:16.533Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-ask
+    title: turnstileCheck.ask
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-14T23:59:21.923Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-verification
+  - id: SYM-m5-internal-views-ui-turnstile-test-go-wantnothingsentorcounted
+    title: wantNothingSentOrCounted
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-14T23:59:27.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-plugins-ui-turnstile-test-go-writekey
+    title: writeKey
+    status: active
+    sourceFile: plugins/ui/turnstile_test.go
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-14T23:59:32.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-turnstile
+  - id: SYM-m5-plugins-ui-turnstile-test-go-testkeyfrommounterrorsnamethedirectoryandneverthekey
+    title: TestKeyFromMountErrorsNameTheDirectoryAndNeverTheKey
+    status: active
+    sourceFile: plugins/ui/turnstile_test.go
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-14T23:59:37.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ui-turnstile

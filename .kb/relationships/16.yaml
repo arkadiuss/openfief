@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e0565dd036a
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-writestring
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:50:52.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-422cf7666a14

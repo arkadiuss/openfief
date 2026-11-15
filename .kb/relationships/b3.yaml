@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4d8308a518d
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-fakes-test-go-newharnesswith
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:12.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79ee1d14660

@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa9663a05f8c
+  - type: verified_by
+    from: SCEN-ui-turnstile-verification
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:47:06.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333b6359b8b3
+  - type: verified_by
+    from: SCEN-ui-turnstile-verification
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:47:06.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-902acf0b0d4f

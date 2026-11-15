@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25f098cd887f
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkneededanswer
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:50:14.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a1be75b0767
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-checkneededanswer
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:50:14.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-165739ea78a9

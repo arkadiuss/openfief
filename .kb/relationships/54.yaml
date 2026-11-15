@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f93fd60190c5
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-judge
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:50:02.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c07b7d91325c
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-judge
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:50:02.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9f10834036e

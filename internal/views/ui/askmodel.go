@@ -526,6 +526,9 @@ type routedAnswerer struct {
 	model    *modelAnswerer
 	today    func() kernel.Date
 	log      *slog.Logger
+	// turnstile is the check a question to the model passes first (D-208); nil
+	// is none.
+	turnstile *turnstileCheck
 }
 
 // boxAnswersItself reports whether the box answers question on today without its
@@ -565,12 +568,27 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	return a.model.ask(r, sess, question)
 }
 
+// checked runs the Turnstile check, when the installation has one, on the token
+// the widget put in the question's request: the card that says why the question
+// stops, and true, or false for one that goes on. It comes before the core
+// counts the question, so a bot that passes no check spends no one's allowance.
+func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, bool) {
+	if a.turnstile == nil {
+		return answerCard{}, false
+	}
+	verdict := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	return turnstileAnswer(question, verdict)
+}
+
 // guard runs what stands before a question that goes to the model (D-208): the
-// core counts it, once, before the first call of its loop, against its budget
+// check that a person is asking, then the core counts it, once, before the first call of its loop, against its budget
 // for the day and its limits per session and per address. It returns the card
 // that says why the question stops, and true, or false for one that goes on;
 // an error ends the request, as a session that is no longer valid does.
 func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, error) {
+	if card, stopped := a.checked(r, question); stopped {
+		return card, true, nil
+	}
 	adm, err := a.model.model.admit(r.Context(), sess, clientAddress(r))
 	if err != nil {
 		if connect.CodeOf(err) == connect.CodeUnauthenticated {

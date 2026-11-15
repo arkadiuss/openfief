@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb2ca5541523
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig-validate
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:49:30.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58ef52067de4
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig-validate
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:30.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c15689e478e
