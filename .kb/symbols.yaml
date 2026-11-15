@@ -195776,6 +195776,8 @@ symbols:
         target: REQ-askbench-scorers-exact
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
+      - type: implements
+        target: REQ-ui-ask-performance-tool-names-both-languages
   - id: SYM-ask-model-asktools-go-value-tool
     title: valueTool
     status: active
@@ -217274,6 +217276,8 @@ symbols:
       - type: implements
         target: REQ-askbench-keeps-verdict-history
       - type: implements
+        target: REQ-askbench-parallel-matches-the-box-cap
+      - type: implements
         target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-split-list
     title: splitList
@@ -230770,3 +230774,25 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-ask3-test-testthebenchasksasmanyquestionsatonceastheboxallowscallsbydefault
+    title: TestTheBenchAsksAsManyQuestionsAtOnceAsTheBoxAllowsCallsByDefault
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: bench parallel 3 (D-208) and the performance tool''s description (D-203), 2026-11-15'
+      recorded_at: 2026-11-15T10:08:42.034Z
+    sourceFile: tools/askbench/runner_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-runner
+  - id: SYM-ask3-test-testtheperformancetoolisfoundbyreturnandperformanceineitherlanguage
+    title: TestThePerformanceToolIsFoundByReturnAndPerformanceInEitherLanguage
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: bench parallel 3 (D-208) and the performance tool''s description (D-203), 2026-11-15'
+      recorded_at: 2026-11-15T10:08:50.178Z
+    sourceFile: internal/views/ui/asktools_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools

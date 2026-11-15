@@ -302,3 +302,17 @@ func TestTheBoxAnswersItselfWhatItsRoutedAnswererDoes(t *testing.T) {
 		}
 	}
 }
+
+// TestThePerformanceToolIsFoundByReturnAndPerformanceInEitherLanguage pins that
+// the description says the tool answers questions about return and performance
+// over a period and names the Polish terms, so that a model reaches for it when
+// asked for "stopa zwrotu" or "wynik" (D-203).
+func TestThePerformanceToolIsFoundByReturnAndPerformanceInEitherLanguage(t *testing.T) {
+	t.Parallel()
+	tool := performanceTool()
+	for _, want := range []string{"return and performance over a period", `"stopa zwrotu"`, `"wynik"`} {
+		if !strings.Contains(tool.Description, want) {
+			t.Errorf("the description %q lacks %q", tool.Description, want)
+		}
+	}
+}

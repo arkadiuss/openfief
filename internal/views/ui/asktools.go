@@ -152,8 +152,8 @@ func allocationTool() askTool {
 func performanceTool() askTool {
 	return askTool{
 		Name: "performance",
-		Description: "The time-weighted return over a period, with the portfolio's value at its start and end. Deposits, withdrawals and " +
-			"confirmed transfers don't count as return.",
+		Description: "Answers questions about return and performance over a period (in Polish, \"stopa zwrotu\" and \"wynik\"): the time-weighted " +
+			"return, with the portfolio's value at its start and end. Deposits, withdrawals and confirmed transfers don't count as return.",
 		Schema: `{"type":"object","properties":{"period":{"type":"string","enum":["this_year","this_month","last_12_months","last_year","all"],` +
 			`"description":"A period; this_year when omitted. Ignored when year or since is given."},` +
 			`"year":{"type":"integer","description":"A calendar year, such as 2025."},` +

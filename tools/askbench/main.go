@@ -57,7 +57,7 @@ const (
 	// what the two candidates cost for the 28 cases five times each.
 	defaultBudget   = "1.00"
 	defaultMaxCalls = 2000
-	defaultParallel = 4
+	defaultParallel = 3 // D-208 caps the box at 3 model calls at once, and one question makes one call at a time
 	defaultOut      = "ask-bench-report"
 	// hashShown is how many characters of a configuration hash the console shows.
 	hashShown = 12
@@ -203,7 +203,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	out := fs.String("out", defaultOut, "directory for report.json and summary.md")
 	budget := fs.String("budget", defaultBudget, "the most to spend on the model, in USD; the run aborts cleanly past it")
 	maxCalls := fs.Int("max-calls", defaultMaxCalls, "the most model calls to make; the run aborts cleanly past it")
-	parallel := fs.Int("parallel", defaultParallel, "questions asked at once")
+	parallel := fs.Int("parallel", defaultParallel, "questions asked at once (default 3, D-208's cap of model calls at once: more would test a load the box refuses)")
 	cases := fs.String("case", "", "comma-separated ids of the cases to run; default all (a subset does not prove the safety cases)")
 	historyPath := fs.String("history", "", "the path of the history file (tools/askbench/history.json): the run's verdict and reliability are added to it and the file is rewritten, and each model@host's consecutive passes and fails (D-221) are reported; never written without this flag")
 	demoRoute := fs.String("demo-route", "", "the demo route's config directory (deploy/demo/model), read only: its models are asked when -model and -route name none, and a member whose run fails its verdict or reliability makes the bench exit 4; the route is never edited")
