@@ -224,6 +224,12 @@ func resultText(r *Report, dir string) string {
 		fmt.Fprintf(&b, "%s: %s; %s USD; configuration %s; scorer version %d\n", m.Model, verdict, m.Cost, m.ConfigHash[:hashShown], r.ScorerVersion)
 		if len(m.Errors) > 0 {
 			fmt.Fprintf(&b, "%s: failed calls (errors, not model failures): %s\n", m.Model, errorsText(m.Errors))
+			if n := badReplies(m.Errors); n > 0 {
+				fmt.Fprintf(&b, "%s: bad replies (a 2xx answer that is no chat completion; the host's fault, in the reliability): %d\n", m.Model, n)
+			}
+			if m.VoidRuns > 0 {
+				fmt.Fprintf(&b, "%s: void (bench fault): %d runs, to be run again after the fix\n", m.Model, m.VoidRuns)
+			}
 		}
 	}
 	if r.Budget.Aborted {

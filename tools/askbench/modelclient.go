@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/big"
 	"net/http"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -105,11 +106,17 @@ type ModelCall struct {
 	Measured bool
 	// Provider is the host that served the call, "" when the reply named none.
 	Provider string
-	// Transport is true when the call failed at the transport level: no HTTP
-	// answer, a timeout, a 5xx or a 429 that its retry did not mend, the
-	// provider's fault and not the request's (D-207). Such a call is retried
-	// once, a 429 by the chat client before it gets here.
+	// Transport is true when the call failed through the host's fault (D-207):
+	// no HTTP answer, a timeout, a 5xx, a 429 that its retry did not mend, a
+	// reply that is no chat completion to a request the bench checked, or a
+	// degenerate generation. Such a call is retried once, a 429 by the chat
+	// client before it gets here.
 	Transport bool
+	// Fault is whose fault a failed call is: faultHost (it counts in the
+	// reliability), faultBench (the bench sent a request that is ill-formed, or
+	// failed locally: the run is void), or "" (a refused key, no credits or
+	// another 4xx, listed as an error).
+	Fault string
 	// Retry is true for the second attempt of a call that failed at the
 	// transport level; Retried is true for the failed first attempt, and
 	// Recovered for the one whose retry answered.
@@ -254,16 +261,26 @@ func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOf
 		r.budgetHit = true
 		return ui.AskReply{}, err
 	}
+	if err := validateRequest(req); err != nil {
+		// Nothing is sent: a request that is ill-formed says nothing of the host.
+		return ui.AskReply{}, r.fail(&call, fmt.Errorf("%w: %w", errInvalidRequest, err))
+	}
 	started := r.now()
 	reply, err := r.client.Complete(ctx, req)
 	call.Latency = r.now().Sub(started)
 	if err != nil {
-		call.Error = errorClass(err)
-		failure := callFailure(err)
-		call.Status, call.Label = failure.Status, failure.Label
-		call.Transport = isTransportFailure(err)
-		r.calls = append(r.calls, call)
-		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
+		return ui.AskReply{}, r.fail(&call, err)
+	}
+	if degenerate(reply) {
+		call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
+		call.Round.fillReply(reply)
+		call.Cost, call.Measured = measuredCost(reply.Cost)
+		if !call.Measured {
+			call.Cost = costOf(r.model, reply.InputTokens, reply.OutputTokens)
+		}
+		r.meter.charge(reply.InputTokens, reply.OutputTokens, call.Cost)
+		r.cost = r.cost.Add(call.Cost)
+		return ui.AskReply{}, r.fail(&call, errDegenerate)
 	}
 	call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
 	call.Round.fillReply(reply)
@@ -279,6 +296,52 @@ func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOf
 		out.Calls = append(out.Calls, ui.AskCall{ID: tc.ID, Name: tc.Name, Args: tc.Arguments})
 	}
 	return out, nil
+}
+
+// fail records a failed call, with its class, label, status and whose fault it
+// is, and returns the error the loop sees.
+func (r *modelRun) fail(call *ModelCall, err error) error {
+	call.Error = errorClass(err)
+	failure := callFailure(err)
+	call.Status, call.Label = failure.Status, failure.Label
+	call.Fault = faultOf(err)
+	call.Transport = call.Fault == faultHost
+	r.calls = append(r.calls, *call)
+	return fmt.Errorf("the model: %s: %w", call.Error, err)
+}
+
+// faultOf says whose fault a failed call is. The host's: no answer, a timeout,
+// a 5xx, a 429, a reply that is no chat completion (the request was checked
+// before it was sent) and a degenerate generation. The bench's: a request that
+// breaks the chat API's rules and an error of its own side of the call. Neither
+// for a refused key, no credits and another 4xx.
+func faultOf(err error) string {
+	switch errorClass(err) {
+	case classLocal, classInvalid:
+		return faultBench
+	case classBadReply, classDegenerate, classTimeout:
+		return faultHost
+	}
+	if isTransportFailure(err) {
+		return faultHost
+	}
+	return ""
+}
+
+// harmonyTokens are the control tokens of the harmony format that a host must
+// strip: in a reply's content they show a generation that lost its way.
+func harmonyTokens() []string {
+	return []string{"<|channel|>", "<|message|>", "<|start|>", "<|end|>", "<|return|>", "<|call|>", "<|constrain|>"}
+}
+
+// degenerate reports whether a reply is a generation gone wrong and no answer:
+// it stopped at the length limit with no text and no tool call, or its content
+// holds harmony control tokens.
+func degenerate(reply *openaichat.Reply) bool {
+	if reply.FinishReason == "length" && strings.TrimSpace(reply.Content) == "" && len(reply.ToolCalls) == 0 {
+		return true
+	}
+	return slices.ContainsFunc(harmonyTokens(), func(tok string) bool { return strings.Contains(reply.Content, tok) })
 }
 
 // isTransportFailure reports whether a call failed at the transport level: the
@@ -305,8 +368,40 @@ const (
 	labelProviderError = "provider error"
 	labelRejected      = "request rejected"
 	labelNoAnswer      = "no answer"
+	labelBadReply      = "bad reply"
+	labelDegenerate    = "degenerate reply"
+	labelInvalid       = "invalid request"
+	labelLocal         = "local error"
 	labelFailed        = "failed"
 )
+
+// The error classes of a failed call, a fixed set: why it failed, whatever the
+// label and the status say. Every failed call has one; none is provider text.
+const (
+	classRejected    = "rejected"
+	classUnavailable = "unavailable"
+	classBadReply    = "bad reply"
+	classTimeout     = "timeout"
+	classLocal       = "local error"
+	// classDegenerate is a reply that is a generation gone wrong: it stopped at
+	// the length limit with no text, or holds the host's own control tokens.
+	classDegenerate = "degenerate reply"
+	// classInvalid is a request the bench's own check refused to send.
+	classInvalid = "invalid request"
+)
+
+// Whose fault a failed call is, a fixed set.
+const (
+	faultHost  = "host"
+	faultBench = "bench"
+)
+
+// errInvalidRequest is a request that breaks the chat API's rules; the bench
+// never sends one, and the run it belongs to is void.
+var errInvalidRequest = errors.New("the request breaks the chat API's rules")
+
+// errDegenerate is a reply that is a generation gone wrong, not an answer.
+var errDegenerate = errors.New("the reply is a degenerate generation")
 
 // statusLabel returns the fixed label of an HTTP status, "" when it has none.
 func statusLabel(status int) string {
@@ -343,23 +438,42 @@ func callFailure(err error) CallErrorReport {
 		return CallErrorReport{Label: labelTimeout}
 	case found:
 		return CallErrorReport{Label: labelNoAnswer}
+	case errors.Is(err, errInvalidRequest):
+		return CallErrorReport{Label: labelInvalid}
+	case errors.Is(err, errDegenerate):
+		return CallErrorReport{Label: labelDegenerate}
+	case errors.Is(err, openaichat.ErrBadReply):
+		// A 2xx answer that is no chat completion: not a transport failure.
+		return CallErrorReport{Label: labelBadReply}
 	}
-	return CallErrorReport{Label: labelFailed}
+	// An error of the bench's own side of the call: building the request or
+	// reading the reply.
+	return CallErrorReport{Label: labelLocal}
 }
 
-// errorClass names why a call failed, never quoting the provider or the key.
+// errorClass names why a call failed, from the fixed set of classes, never
+// quoting the provider or the key. Every error has one: an error that is none
+// of the chat client's is a local error.
 func errorClass(err error) string {
+	var ce *openaichat.CallError
+	found := errors.As(err, &ce)
 	switch {
-	case errors.Is(err, openaichat.ErrRejected):
-		return "rejected"
+	case errors.Is(err, errInvalidRequest):
+		return classInvalid
+	case errors.Is(err, errDegenerate):
+		return classDegenerate
+	case found && ce.Timeout, errors.Is(err, context.DeadlineExceeded):
+		return classTimeout
 	case errors.Is(err, openaichat.ErrBadReply):
-		return "bad reply"
-	case errors.Is(err, openaichat.ErrUnavailable):
-		return "unavailable"
-	case errors.Is(err, context.DeadlineExceeded):
-		return labelTimeout
+		return classBadReply
+	case found && errors.Is(err, openaichat.ErrRejected):
+		return classRejected
+	case found && errors.Is(err, openaichat.ErrUnavailable):
+		return classUnavailable
 	}
-	return "failed"
+	// Neither an answer of the provider nor its absence: the request could not
+	// be built or the reply could not be read.
+	return classLocal
 }
 
 // requestOf translates the loop's conversation into the chat client's request,

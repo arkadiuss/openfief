@@ -32,7 +32,7 @@ func askEvalPage(results []evalResult) string {
 	seen := map[string]bool{}
 	for i := range results {
 		r := &results[i]
-		if !r.full() || !r.Answered || r.Verdict == verdictNone || seen[r.label()+"|"+r.Reasoning] {
+		if !r.full() || !r.Answered || r.Verdict == verdictNone || r.Void > 0 || seen[r.label()+"|"+r.Reasoning] {
 			continue
 		}
 		seen[r.label()+"|"+r.Reasoning] = true
@@ -61,12 +61,14 @@ func resultCells(r *evalResult) []string {
 	}
 	verdict := r.Verdict
 	switch {
+	case r.Void > 0:
+		verdict = "void (bench fault)"
 	case !r.Answered:
 		verdict = "no answer: every call failed (rate limited)"
 	case r.Verdict == verdictNone:
 		verdict = "none (before D-220)"
 	}
-	if r.Answered && r.Verdict != verdictNone {
+	if r.Answered && r.Verdict != verdictNone && r.Void == 0 {
 		verdict += " (" + r.scorerText() + ")"
 	}
 	if !r.full() {

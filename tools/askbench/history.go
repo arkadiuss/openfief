@@ -146,7 +146,7 @@ func (h *History) StreakOf(label string) Streak {
 // run that could not run proves nothing of the model, and a run of some cases,
 // or one the budget cut short, is not D-221's run.
 func entryOf(m *ModelReport, date string) (HistoryEntry, bool) {
-	if m.CouldNotRun {
+	if m.CouldNotRun || m.VoidRuns > 0 {
 		return HistoryEntry{}, false
 	}
 	e := HistoryEntry{Date: date, Verdict: verdictFail, Reliability: verdictFail, TransportFailureRate: m.Reliability.Rate, ConfigHash: m.ConfigHash}

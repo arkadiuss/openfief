@@ -150,3 +150,17 @@ func TestCommittedResultsLoadNewestFirst(t *testing.T) {
 		}
 	}
 }
+
+func TestAVoidRunShowsAsVoidAndIsNotAStandingVerdict(t *testing.T) {
+	t.Parallel()
+	report := `{"schema":2,"subset":false,"models":[{"model":"m/a@h/x","modelId":"m/a","route":["h/x"],"configHash":"0123456789abcdef","cost":"0.01","inputTokens":9,
+  "cases":[{"id":"A3","passAll":false}],"verdict":{"pass":false},"completions":4,"erroredRuns":2,"voidRuns":2}]}`
+	r := trimmed(t, report)[0]
+	if r.Void != 2 || r.Unscored != 2 {
+		t.Fatalf("result = %+v, want two void runs", r)
+	}
+	standing, every, _ := strings.Cut(askEvalPage([]evalResult{{Run: "16", Date: "2026-11-15", Model: "m/a", Host: "h/x", Verdict: verdictFail, Answered: true, Cases: 29, Void: 2, ConfigHash: "0123456789abcdef"}}), "## Every run")
+	if !strings.Contains(every, "void (bench fault)") || strings.Contains(standing, "m/a") {
+		t.Errorf("a void run must show as void and stay out of the standing table:\n%s\n%s", standing, every)
+	}
+}

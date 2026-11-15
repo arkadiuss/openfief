@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52da0fdb4449
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-fault-host-for
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:09:08.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34197674ef22

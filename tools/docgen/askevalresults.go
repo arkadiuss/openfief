@@ -60,6 +60,9 @@ type evalResult struct {
 	UnderBar int `json:"underBar,omitempty"`
 	// Unscored is the runs a failed call ended.
 	Unscored int `json:"unscored,omitempty"`
+	// Void is how many of those runs the bench's own fault ended: the result
+	// is void, and the model is run again after the fix.
+	Void int `json:"void,omitempty"`
 	// Answered is false when no call of the model got an answer.
 	Answered    bool             `json:"answered"`
 	Reliability *evalReliability `json:"reliability,omitempty"`

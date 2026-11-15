@@ -129,6 +129,7 @@ type benchModel struct {
 	Reliability *evalReliability `json:"reliability"`
 	Completions *int             `json:"completions"`
 	Errored     int              `json:"erroredRuns"`
+	VoidRuns    int              `json:"voidRuns"`
 	CouldNot    bool             `json:"couldNotRun"`
 	Questions   int              `json:"questions"`
 }
@@ -152,7 +153,7 @@ func trimReport(data []byte, run, date string) ([]evalResult, error) {
 func trimModel(m *benchModel, subset bool) evalResult {
 	r := evalResult{
 		Model: m.ModelID, Host: strings.Join(m.Route, ","), Reasoning: m.Reasoning, Verdict: verdictNone,
-		Cases: len(m.Cases), Unscored: m.Errored, ConfigHash: m.ConfigHash, Reliability: m.Reliability,
+		Cases: len(m.Cases), Unscored: m.Errored, Void: m.VoidRuns, ConfigHash: m.ConfigHash, Reliability: m.Reliability,
 		CostPer1k: m.CostPer1k, CostSource: m.CostSource, Answered: m.answered(),
 	}
 	if r.Model == "" {

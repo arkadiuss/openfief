@@ -1133,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-547a36cb0e2c
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-check-bad-reply-outputs
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:08:45.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd514a59428f

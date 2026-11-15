@@ -1364,3 +1364,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fcbdc941f48
+  - type: implements
+    from: SYM-askbench-modelclient-degenerate
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:07:05.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ff8eac02f1
+  - type: covered_by
+    from: SYM-askbench-modelclient-degenerate
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:07:05.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99b345ef9ae6

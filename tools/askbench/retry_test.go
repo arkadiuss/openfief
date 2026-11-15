@@ -258,7 +258,7 @@ func TestAModelRunRetriesATransportErrorAndRecordsBoth(t *testing.T) {
 	t.Parallel()
 	url, _ := dropFirst(t, newFakeModel(t), 1)
 	mr := &modelRun{client: newChatClient(http.DefaultClient, url, testKey), model: &Model{ID: "m"}, meter: newMeter(decimalOf("1"), 10), now: time.Now}
-	if _, err := mr.Generate(t.Context(), nil, nil, 10, ""); err != nil {
+	if _, err := mr.Generate(t.Context(), askedOnce(), nil, 10, ""); err != nil {
 		t.Fatalf("Generate: %v", err)
 	}
 	if len(mr.calls) != 2 {

@@ -1469,3 +1469,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc5d649804a3
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-bad-final-reply-model
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:08:29.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5948b1213a1f

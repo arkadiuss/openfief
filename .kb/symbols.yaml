@@ -217555,6 +217555,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+      - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-request-of
     title: requestOf
@@ -221282,6 +221284,8 @@ symbols:
         target: TEST-askbench-errors
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
   - id: SYM-askbench-report-call-error-report
     title: CallErrorReport
     status: active
@@ -221434,7 +221438,7 @@ symbols:
       - type: executable_for
         target: TEST-askbench-errors
   - id: SYM-askbench-errors-test-unknown-error-is-failed
-    title: TestCallFailureOfAnUnknownErrorIsFailed
+    title: TestCallFailureOfAnUnknownErrorIsALocalError
     status: active
     sourceFile: tools/askbench/errors_test.go
     origin:
@@ -233495,3 +233499,347 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-period-opening
+  - id: SYM-askbench-modelclient-model-run-fail
+    title: modelRun.fail
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:35.805Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-fault-of
+    title: faultOf
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:44.721Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-harmony-tokens
+    title: harmonyTokens
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:52.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-degenerate
+    title: degenerate
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:01.222Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-bad-replies
+    title: badReplies
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:10.644Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-safety-text
+    title: safetyText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:19.123Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-write-failed-calls
+    title: writeFailedCalls
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:27.600Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-breaks
+    title: breaks
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:35.875Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-validate-request
+    title: validateRequest
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:44.178Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-check-message
+    title: checkMessage
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:52.475Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-check-assistant
+    title: checkAssistant
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:00.653Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-runner-run-report-add-outcomes
+    title: RunReport.addOutcomes
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:08.807Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-errors-test-go-test-every-failure-has-a-class-of-the-fixed-set
+    title: TestEveryFailureHasAClassOfTheFixedSet
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:17.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-bad-final-reply-model
+    title: badFinalReplyModel
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:25.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-check-bad-reply-run
+    title: checkBadReplyRun
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:33.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-check-bad-reply-outputs
+    title: checkBadReplyOutputs
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:41.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-bad-reply-in-the-final-round-is-reported-with-its-class-and-counted-apart
+    title: TestABadReplyInTheFinalRoundIsReportedWithItsClassAndCountedApart
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:49.150Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-asked-once
+    title: askedOnce
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:57.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-fault-host-for
+    title: faultHostFor
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:05.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-validate-request-accepts-the-loops-conversations
+    title: TestValidateRequestAcceptsTheLoopsConversations
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:12.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-validate-request-refuses-what-the-chat-a-p-i-refuses
+    title: TestValidateRequestRefusesWhatTheChatAPIRefuses
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:21.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-an-invalid-request-is-never-sent-and-is-the-benchs-fault
+    title: TestAnInvalidRequestIsNeverSentAndIsTheBenchsFault
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:29.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-every-failed-call-is-in-one-bucket
+    title: TestEveryFailedCallIsInOneBucket
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:37.239Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-degenerate-generation-is-the-hosts-fault-and-retried-once
+    title: TestADegenerateGenerationIsTheHostsFaultAndRetriedOnce
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:45.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-completion-of
+    title: completionOf
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:53.184Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-length-stop-with-a-tool-call-is-not-degenerate
+    title: TestALengthStopWithAToolCallIsNotDegenerate
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:01.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-void-run-has-no-verdict-in-the-history-and-says-so
+    title: TestAVoidRunHasNoVerdictInTheHistoryAndSaysSo
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:09.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-docgen-askeval-test-go-a-void-run-shows-as-void
+    title: TestAVoidRunShowsAsVoidAndIsNotAStandingVerdict
+    status: active
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:17.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval

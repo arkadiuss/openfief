@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-610def6c5044
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-a-degenerate-generation-is-the-hosts-fault-and-retried-once
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:09:49.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1124ae626cd

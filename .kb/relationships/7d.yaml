@@ -1336,3 +1336,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f46534f9d4cb
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-a-length-stop-with-a-tool-call-is-not-degenerate
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:10:05.079Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef9b25e4275

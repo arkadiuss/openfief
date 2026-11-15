@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db6163564679
+  - type: implements
+    from: SYM-askbench-modelclient-model-run-fail
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:06:40.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2862bbfeb3f8
+  - type: covered_by
+    from: SYM-askbench-modelclient-model-run-fail
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:06:40.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a52031d7dcea

@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7aab2d841140
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-a-void-run-has-no-verdict-in-the-history-and-says-so
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:10:13.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43b94dfc7fe4
