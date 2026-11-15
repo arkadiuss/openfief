@@ -45,6 +45,20 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "1336aed93200401b8bb1dac96cc8a8f007942c23bec077809827ae4bea57abf4"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "1336aed93200401b8bb1dac96cc8a8f007942c23bec077809827ae4bea57abf4"
       }
     ],
     "openai/gpt-oss-120b@deepinfra/bf16": [
@@ -75,6 +89,20 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "ba3a065ce116abd31d00050321ae388464353a8555fac21ffababcb65302f365"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "ba3a065ce116abd31d00050321ae388464353a8555fac21ffababcb65302f365"
       }
     ],
     "openai/gpt-oss-120b@near-ai/fp4": [
@@ -105,6 +133,20 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "e87cb2b356e41db23b64251ceb9eb41f6b7b75a5b95c855dc8f04601fa0a0bfa"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "69ff19681f5b5bde8c2b351ca54de2df1f348af8d608d8c26ddb61adef858483"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0.0036363636363636364,
+        "configHash": "69ff19681f5b5bde8c2b351ca54de2df1f348af8d608d8c26ddb61adef858483"
       }
     ]
   }
