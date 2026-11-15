@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67f888c73080
+  - type: executable_for
+    from: SYM-ab9-internal-views-ui-askevalnote-test-go-testmodelanswersshowwhoansweredwithadisclaimerandtheevallink
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:52:38.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d43cc79de13

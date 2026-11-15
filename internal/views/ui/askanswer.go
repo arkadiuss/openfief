@@ -43,6 +43,10 @@ type answerCard struct {
 	// Model is the model that wrote Text, as "provider/model", when a model
 	// answered (D-203); empty for the commands' own answers.
 	Model string
+	// Note is what a model's answer says under it: its name, that it can be
+	// wrong and the link to the eval (D-222); nil for the commands' own
+	// answers and for a card about a model that did not answer.
+	Note *modelNote
 	// Source, when set, is what the card's header says in place of "Answered
 	// from your data": a card about a model that did not answer.
 	Source string

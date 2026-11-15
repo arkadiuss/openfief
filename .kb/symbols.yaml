@@ -230343,3 +230343,208 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-docgen-askeval
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-evalresultfiles
+    title: evalResultFiles
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:51:23.135Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-modelnote
+    title: modelNote
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:51:31.403Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-evalresultrow
+    title: evalResultRow
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:51:39.645Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-evaluatedmodels
+    title: evaluatedModels
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:51:47.899Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-decision-d222-2-model-not-evaluated-is-named
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer
+    title: noteAnswerer
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:51:56.146Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-decision-d222-3-commands-show-no-model-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    title: noteAnswerer.answer
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:52:05.296Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-decision-d222-1-model-answer-shows-name-line-and-link
+      - type: implements
+        target: REQ-decision-d222-3-commands-show-no-model-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-go-modelname
+    title: modelName
+    sourceFile: internal/views/ui/askevalnote.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:52:14.738Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-server-go-server-notemodelanswers
+    title: server.noteModelAnswers
+    sourceFile: internal/views/ui/server.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:52:24.705Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-eval-note
+      - type: implements
+        target: REQ-ui-ask-shows-model-and-disclaimer
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-testmodelanswersshowwhoansweredwithadisclaimerandtheevallink
+    title: TestModelAnswersShowWhoAnsweredWithADisclaimerAndTheEvalLink
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:52:33.568Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-testcommandanswersshownomodelnote
+    title: TestCommandAnswersShowNoModelNote
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:52:42.661Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-stubanswerer
+    title: stubAnswerer
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T10:04:41.659Z
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-stubanswerer-answer
+    title: stubAnswerer.answer
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:53:01.300Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-testnoteanswerernotesonlyanswersamodelwrote
+    title: TestNoteAnswererNotesOnlyAnswersAModelWrote
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:53:12.127Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ab9-internal-views-ui-askevalnote-test-go-testevaluatedmodelscountsonlyfullrunswithaverdict
+    title: TestEvaluatedModelsCountsOnlyFullRunsWithAVerdict
+    sourceFile: internal/views/ui/askevalnote_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:53:22.341Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-eval-note
+  - id: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model-model-ref
+    title: fakeAskModel.modelRef
+    sourceFile: internal/views/ui/askmodel_fakes_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:56:53.308Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-page

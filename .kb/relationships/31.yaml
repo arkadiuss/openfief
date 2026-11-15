@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d18178e3649
+  - type: executable_for
+    from: SYM-ab9-internal-views-ui-askevalnote-test-go-testnoteanswerernotesonlyanswersamodelwrote
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:53:16.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa22bd742fee

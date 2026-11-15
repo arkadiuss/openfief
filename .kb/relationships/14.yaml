@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2e128cc3404
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evaluatedmodels
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:52.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcfae6aea5f2
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evaluatedmodels
+    to: REQ-decision-d222-2-model-not-evaluated-is-named
+    created_at: 2026-11-15T09:51:52.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d23eb4e6ad6
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evaluatedmodels
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:51:52.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-210ad1c2b758

@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e06aef9b9a51
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evalresultfiles
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:27.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3545d36cf3ac
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evalresultfiles
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:51:27.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c061b5af3390
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evalresultfiles
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:51:27.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e76fbe1b85e

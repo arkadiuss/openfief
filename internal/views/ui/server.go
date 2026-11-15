@@ -109,6 +109,9 @@ type Config struct {
 	// security policy admits Turnstile's script and frame and nothing else from
 	// outside. It needs AskModel. Nil is how every installation but the demo runs.
 	Turnstile *TurnstileConfig
+	// AskEvalURL is the page a model's answer links to, which reports how
+	// models did in the Ask box's eval (D-222); empty takes the docs site's.
+	AskEvalURL string
 	// Maintainer calls the core's MaintainerService (D-204) like Auth: with
 	// the plugin's own token, the person's session in each request. It is
 	// optional: without it the model portfolio's page shows no note and the
@@ -226,6 +229,9 @@ func New(cfg *Config) (http.Handler, error) {
 			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
 		}
 	}
+	if err := s.noteModelAnswers(cfg.AskEvalURL); err != nil {
+		return nil, err
+	}
 	return securityHeaders(csp, sameOrigin(s.routes(static))), nil
 }
 
@@ -245,6 +251,19 @@ func (s *server) withTurnstile(cfg *Config) (string, error) {
 	}
 	s.turnstile = &turnstileCheck{cfg: *cfg.Turnstile, log: s.log}
 	return contentSecurityPolicyWithTurnstile, nil
+}
+
+// noteModelAnswers has every answer a model wrote carry its note (D-222).
+func (s *server) noteModelAnswers(evalURL string) error {
+	evaluated, err := evaluatedModels(evalResultFiles)
+	if err != nil {
+		return err
+	}
+	if evalURL == "" {
+		evalURL = defaultAskEvalURL
+	}
+	s.ask = noteAnswerer{next: s.ask, evaluated: evaluated, evalURL: evalURL}
+	return nil
 }
 
 // routes maps every path to its handler.

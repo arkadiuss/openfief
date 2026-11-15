@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75fbced47d2c
+  - type: executable_for
+    from: SYM-ask-model-askmodel-fakes-test-go-fake-ask-model-model-ref
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-15T09:56:58.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdd6c19b277f

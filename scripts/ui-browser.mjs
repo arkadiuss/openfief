@@ -256,8 +256,15 @@ async function askModelBox(browser) {
     const text = await page.textContent('#answer .model-text');
     check(text.includes('Most of it is listed.') && text.includes('The rest is cash.'), `phone ${scheme}: the model's text is not shown`);
     check((await page.textContent('#answer .used-card')).includes('By asset class'), `phone ${scheme}: the card the model read is not shown`);
+    // D-222: a model's answer says who answered, that it can be wrong, and links to the eval's results.
+    const note = await page.textContent('#answer .ask-note');
+    check(note.includes('Answered by') && note.includes('AI can be wrong; check the cards. Not investment advice.') && note.includes('How models did in our evaluation'),
+      `phone ${scheme}: a model's answer does not show its name, the disclaimer and the link to the evaluation`);
+    const evalHref = await page.getAttribute('#answer .ask-note a.ask-eval-link', 'href');
+    check(evalHref === 'https://openfief.dev/docs/reference/ask-eval/', `phone ${scheme}: the evaluation link is ${evalHref}`);
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model.png`), fullPage: true });
     await ask('allocation by currency', '#answer:has-text("By currency")');
+    check((await page.locator('#answer .ask-note').count()) === 0, `phone ${scheme}: a command's answer shows the model note`);
     check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a command is not answered by the box itself`);
     // A refusal: the model's words, and the box's commands it offers as chips.

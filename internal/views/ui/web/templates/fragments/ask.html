@@ -32,6 +32,7 @@
     {{with .Used}}<div class="used-cards" role="group" aria-label="Cards the model read">{{range .}}
       <section class="used-card"><p class="answer-title">{{.Title}}</p>{{with .Text}}<p>{{.}}</p>{{end}}{{template "ask-card-body" .}}</section>{{end}}
     </div>{{end}}
+    {{with .Note}}<p class="muted ask-note" role="note">{{if eq $.Kind "answer"}}Answered by{{else}}From{{end}} {{.Name}}{{if not .Evaluated}} (not evaluated by OpenFief){{end}}. AI can be wrong; check the cards. Not investment advice. <a class="ask-eval-link" href="{{.EvalURL}}" rel="noopener noreferrer">How models did in our evaluation &rarr;</a></p>{{end}}
     {{range .Withheld}}<p class="withheld" role="note">Withheld from the model: the {{.Label}} card. It holds {{.Data}} ({{.Tier}}), which no model on the route is allowed to receive.</p>{{end}}
   </div>
 </div>

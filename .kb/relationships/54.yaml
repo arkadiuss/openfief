@@ -1294,3 +1294,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b141f6d0ab6f
+  - type: executable_for
+    from: SYM-ab9-internal-views-ui-askevalnote-test-go-stubanswerer-answer
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:53:06.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28870df064a8

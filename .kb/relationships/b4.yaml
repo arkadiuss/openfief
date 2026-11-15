@@ -1203,3 +1203,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a54e1e3ae5fa
+  - type: specified_by
+    from: REQ-decision-d222-3-commands-show-no-model-note
+    to: SCEN-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:21.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdb95b6eb0ba

@@ -40,6 +40,9 @@ type fakeAskModel struct {
 	// reply, when set, answers every GenerateAsk instead of the script, from
 	// the conversation so far.
 	reply func(msgs []*modelsv1.AskMessage) scriptedReply
+	// model, when set, is the "provider/model" reference that answers; "p/m"
+	// otherwise.
+	model string
 	// failWith, when set, is the error GenerateAsk returns.
 	failWith error
 	// availableErr, when set, is the error GetAskModel returns.
@@ -148,11 +151,19 @@ func (f *fakeAskModel) GenerateAsk(_ context.Context, r *connect.Request[modelsv
 	case len(f.script) > 0:
 		next, f.script = f.script[0], f.script[1:]
 	}
-	resp := &modelsv1.GenerateAskResponse{Content: next.text, ToolCalls: next.calls, Model: "p/m", FinishReason: modelsv1.FinishReason_FINISH_REASON_STOP}
+	resp := &modelsv1.GenerateAskResponse{Content: next.text, ToolCalls: next.calls, Model: f.modelRef(), FinishReason: modelsv1.FinishReason_FINISH_REASON_STOP}
 	if len(next.calls) > 0 {
 		resp.FinishReason = modelsv1.FinishReason_FINISH_REASON_TOOL_CALLS
 	}
 	return connect.NewResponse(resp), nil
+}
+
+// modelRef is the reference of the model that answers.
+func (f *fakeAskModel) modelRef() string {
+	if f.model != "" {
+		return f.model
+	}
+	return "p/m"
 }
 
 func (f *fakeAskModel) turnOn(tiers ...string) {
