@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adecfbb68ecd
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-checkemptyreplyrun
+    to: TEST-askbench-final-round-empty-reply
+    created_at: 2026-11-15T13:14:09.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccde58f627fe
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-checkemptyreplyrun
+    to: TEST-askbench-reasoning-length-trace
+    created_at: 2026-11-15T13:14:09.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd57b3bc209

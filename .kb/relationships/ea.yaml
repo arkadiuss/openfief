@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dd7df9fc366
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-checknoreasoningtextinreport
+    to: TEST-askbench-reasoning-length-trace
+    created_at: 2026-11-15T13:14:17.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-230ba5330951

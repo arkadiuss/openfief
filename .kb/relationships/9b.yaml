@@ -1210,3 +1210,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e0bc84617ca
+  - type: implements
+    from: SYM-fr2-plugins-model-openai-openaichat-chat-go-object-reasoningchars
+    to: REQ-askbench-traces-reasoning-length
+    created_at: 2026-11-15T12:22:12.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5299694abe89
+  - type: covered_by
+    from: SYM-fr2-plugins-model-openai-openaichat-chat-go-object-reasoningchars
+    to: TEST-plugins-model-openai-reasoning-length
+    created_at: 2026-11-15T12:22:12.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28b064c7960b

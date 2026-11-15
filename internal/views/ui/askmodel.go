@@ -380,9 +380,7 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 		c.retry(reply.Content, err)
 		attempts = 1
 	} else {
-		c.msgs = append(c.msgs,
-			askMessage{Role: roleAssistant, Content: reply.Content, Tier: mostSensitive(c.tiers)},
-			askMessage{Role: roleUser, Content: finalText, Tier: tierT2})
+		c.msgs = append(c.msgs, finalInstruction(reply.Content, mostSensitive(c.tiers))...)
 	}
 	for attempt := range attempts {
 		if c.tokens >= c.a.limits.OutputTokens {
@@ -408,9 +406,26 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 // retry adds the model's reply that was not an answer and the reason, so its
 // next reply can mend it. The reason is fixed words and never the reply.
 func (c *askConversation) retry(content string, why error) {
-	c.msgs = append(c.msgs,
-		askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)},
-		askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+	if strings.TrimSpace(content) != "" {
+		c.msgs = append(c.msgs, askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)})
+	}
+	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+}
+
+// finalInstruction is what the final round adds to the conversation after the
+// model's reply that was not an answer. A reply with text is kept as an
+// assistant message and asked to be put into the schema as it is (finalText). A
+// blank reply, as when the model stopped after a tool's result with nothing to
+// say, has nothing to restate: no empty assistant message is sent, and the
+// instruction asks for the answer from the cards (finalAnswerText).
+func finalInstruction(content, tier string) []askMessage {
+	if strings.TrimSpace(content) == "" {
+		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierT2}}
+	}
+	return []askMessage{
+		{Role: roleAssistant, Content: content, Tier: tier},
+		{Role: roleUser, Content: finalText, Tier: tierT2},
+	}
 }
 
 // answered is the answer card of a valid structured answer: its text, the kind,

@@ -194,6 +194,12 @@ func retryText(err error) string {
 // model told to "reply now" had turned a correct refusal into a greeting.
 const finalText = "Put your previous reply into this schema without changing its meaning or adding anything."
 
+// finalAnswerText is what the model is told when its last reply was empty (it
+// only called tools, or stopped after a tool's result without a word): there is
+// no reply to restate, and asking for one made models refuse. It asks for the
+// answer itself, in the schema, from the cards read.
+const finalAnswerText = "Answer the user's question in this schema, using only the cards above."
+
 // refusalSuggestions are the commands the box offers with a refusal (D-194):
 // the examples of its own commands that need no name from the person's record,
 // each one it understands, in the order of knownCommands. They are the box's, not

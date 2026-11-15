@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-615fada5a149
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-testanemptyreplyafteratoolisfollowedbytheanswerinstructionandgradesasapass
+    to: TEST-askbench-final-round-empty-reply
+    created_at: 2026-11-15T12:22:43.717Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cfebee76e16
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-testanemptyreplyafteratoolisfollowedbytheanswerinstructionandgradesasapass
+    to: TEST-askbench-reasoning-length-trace
+    created_at: 2026-11-15T12:22:43.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c82424f964f5

@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0196b088686f
+  - type: implements
+    from: SYM-fr2-internal-views-ui-askmodel-go-finalinstruction
+    to: REQ-ui-ask-final-round-empty-reply-asks-answer
+    created_at: 2026-11-15T12:22:05.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e36e9342f85c
+  - type: covered_by
+    from: SYM-fr2-internal-views-ui-askmodel-go-finalinstruction
+    to: TEST-ui-ask-final-round-empty-reply
+    created_at: 2026-11-15T12:22:05.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-393e0911e12b

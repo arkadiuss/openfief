@@ -18,6 +18,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // maxReplyBytes caps what is read of the provider's reply.
@@ -187,6 +188,11 @@ type Reply struct {
 	// prompt cache, as usage.prompt_tokens_details.cached_tokens (or the
 	// usage's own cached_tokens) reports them; 0 when the reply has none.
 	CachedTokens int64
+	// ReasoningChars is the length in characters of the reasoning the host
+	// returned with the reply (message.reasoning, else message.reasoning_content);
+	// 0 when it returned none. Only the length is kept: reasoning is never an
+	// answer and never shown, so its text is dropped here.
+	ReasoningChars int
 	// Cost is the call's cost in USD as the provider reported it (OpenRouter's
 	// usage.cost), as the number's own text; empty when the reply has none.
 	Cost string
@@ -476,6 +482,7 @@ func parseReply(raw []byte) (*Reply, error) {
 	if message.get("content", &content) && content != nil {
 		out.Content = *content
 	}
+	out.ReasoningChars = message.reasoningChars()
 	var calls []object
 	message.get("tool_calls", &calls)
 	for _, c := range calls {
@@ -498,6 +505,19 @@ func parseReply(raw []byte) (*Reply, error) {
 	}
 	top.get("provider", &out.Provider)
 	return &out, nil
+}
+
+// reasoningChars returns the length in characters of the message's reasoning,
+// where hosts put it: "reasoning", else "reasoning_content". It never returns
+// the text.
+func (o object) reasoningChars() int {
+	for _, name := range []string{"reasoning", "reasoning_content"} {
+		var text *string
+		if o.get(name, &text) && text != nil && *text != "" {
+			return utf8.RuneCountInString(*text)
+		}
+	}
+	return 0
 }
 
 // cachedTokens returns how many input tokens the host served from its cache:

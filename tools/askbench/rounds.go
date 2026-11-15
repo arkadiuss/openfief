@@ -40,6 +40,10 @@ type RoundReport struct {
 	// FinishReason is the reply's; ToolCalls the names of the tools it asked for.
 	FinishReason string   `json:"finishReason,omitempty"`
 	ToolCalls    []string `json:"toolCalls,omitempty"`
+	// ReasoningChars is the length in characters of the reasoning the host
+	// returned with the reply, 0 when none. Only the length is traced, never the
+	// reasoning's text.
+	ReasoningChars int `json:"reasoningChars,omitempty"`
 	// Text is the reply's plain text, cut to 500 characters.
 	Text string `json:"text,omitempty"`
 	// Answered is false for a call that failed, whose reply fields are empty.
@@ -80,6 +84,7 @@ func (r *RoundReport) fillReply(reply *openaichat.Reply) {
 	for _, tc := range reply.ToolCalls {
 		r.ToolCalls = append(r.ToolCalls, tc.Name)
 	}
+	r.ReasoningChars = reply.ReasoningChars
 	r.Text = truncateChars(reply.Content, replyTextLimit)
 }
 

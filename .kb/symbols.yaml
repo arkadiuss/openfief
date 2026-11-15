@@ -222188,7 +222188,11 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-final-round
       - type: covered_by
+        target: TEST-ui-ask-final-round-empty-reply
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-empty-reply-asks-answer
       - type: implements
         target: REQ-ui-ask-final-round-keeps-reply-meaning
       - type: implements
@@ -222210,7 +222214,11 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-final-round
       - type: covered_by
+        target: TEST-ui-ask-final-round-empty-reply
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-empty-reply-asks-answer
       - type: implements
         target: REQ-ui-ask-final-round-keeps-reply-meaning
       - type: implements
@@ -226636,9 +226644,13 @@ symbols:
       recorded_at: 2026-11-14T23:20:32.656Z
     relationships:
       - type: covered_by
+        target: TEST-askbench-reasoning-length-trace
+      - type: covered_by
         target: TEST-askbench-rounds
       - type: implements
         target: REQ-askbench-traces-each-model-round
+      - type: implements
+        target: REQ-askbench-traces-reasoning-length
   - id: SYM-askbench-rounds-truncate-chars
     title: truncateChars
     status: active
@@ -230899,3 +230911,109 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-model-page
+  - id: SYM-fr2-internal-views-ui-askmodel-go-finalinstruction
+    title: finalInstruction
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T12:22:01.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-final-round-empty-reply
+      - type: implements
+        target: REQ-ui-ask-final-round-empty-reply-asks-answer
+  - id: SYM-fr2-plugins-model-openai-openaichat-chat-go-object-reasoningchars
+    title: object.reasoningChars
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T12:22:08.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-reasoning-length
+      - type: implements
+        target: REQ-askbench-traces-reasoning-length
+  - id: SYM-internal-views-ui-askfinal-test-go-testthefinalroundafteranemptyreplyasksfortheanswerfromthecards
+    title: TestTheFinalRoundAfterAnEmptyReplyAsksForTheAnswerFromTheCards
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T12:22:33.054Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round-empty-reply
+  - id: SYM-askbench-finalround-test-go-testanemptyreplyafteratoolisfollowedbytheanswerinstructionandgradesasapass
+    title: TestAnEmptyReplyAfterAToolIsFollowedByTheAnswerInstructionAndGradesAsAPass
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T12:22:39.771Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round-empty-reply
+      - type: executable_for
+        target: TEST-askbench-reasoning-length-trace
+  - id: SYM-plugins-model-openai-openaichat-cached-test-go-testcompletereadsthelengthofthereasoningandneveritstext
+    title: TestCompleteReadsTheLengthOfTheReasoningAndNeverItsText
+    status: active
+    sourceFile: plugins/model-openai/openaichat/cached_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T12:22:45.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-reasoning-length
+  - id: SYM-internal-views-ui-askfinal-test-go-checkemptyreplyinstruction
+    title: checkEmptyReplyInstruction
+    status: active
+    origin:
+      kind: agent
+      ref: Design session approval of the empty-reply fix after bench traces (D-205, D-217), 2026-11-15
+      recorded_at: 2026-11-15T13:13:48.239Z
+    sourceFile: internal/views/ui/askfinal_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round-empty-reply
+  - id: SYM-askbench-finalround-test-go-emptyaftertoolmodel
+    title: emptyAfterToolModel
+    status: active
+    origin:
+      kind: agent
+      ref: Design session approval of the empty-reply fix after bench traces (D-205, D-217), 2026-11-15
+      recorded_at: 2026-11-15T13:13:56.259Z
+    sourceFile: tools/askbench/finalround_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round-empty-reply
+      - type: executable_for
+        target: TEST-askbench-reasoning-length-trace
+  - id: SYM-askbench-finalround-test-go-checkemptyreplyrun
+    title: checkEmptyReplyRun
+    status: active
+    origin:
+      kind: agent
+      ref: Design session approval of the empty-reply fix after bench traces (D-205, D-217), 2026-11-15
+      recorded_at: 2026-11-15T13:14:04.032Z
+    sourceFile: tools/askbench/finalround_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round-empty-reply
+      - type: executable_for
+        target: TEST-askbench-reasoning-length-trace
+  - id: SYM-askbench-finalround-test-go-checknoreasoningtextinreport
+    title: checkNoReasoningTextInReport
+    status: active
+    origin:
+      kind: agent
+      ref: Design session approval of the empty-reply fix after bench traces (D-205, D-217), 2026-11-15
+      recorded_at: 2026-11-15T13:14:12.201Z
+    sourceFile: tools/askbench/finalround_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-reasoning-length-trace

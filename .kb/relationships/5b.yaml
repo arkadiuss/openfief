@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc86d9b9e3a0
+  - type: executable_for
+    from: SYM-internal-views-ui-askfinal-test-go-testthefinalroundafteranemptyreplyasksfortheanswerfromthecards
+    to: TEST-ui-ask-final-round-empty-reply
+    created_at: 2026-11-15T12:22:37.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aae845b94ba

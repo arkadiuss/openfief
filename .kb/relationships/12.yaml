@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44da903bc338
+  - type: verified_by
+    from: SCEN-askbench-traces-reasoning-length
+    to: TEST-askbench-reasoning-length-trace
+    created_at: 2026-11-15T12:21:59.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df19b2c8b11f
+  - type: verified_by
+    from: SCEN-askbench-traces-reasoning-length
+    to: TEST-plugins-model-openai-reasoning-length
+    created_at: 2026-11-15T12:21:59.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2d195aea01
