@@ -33,8 +33,9 @@ type heroView struct {
 	MonthPercent string
 	// YearReturn is the time-weighted return since the last day of last
 	// year, or the first valued day after it, in percent; empty without
-	// valued days.
-	YearReturn string
+	// valued days. YearOpening is that day, the charts' start its link
+	// sets (D-223).
+	YearReturn, YearOpening string
 }
 
 // sleeveGroup is one sleeve's accounts on the overview (D-193): its name,
@@ -163,21 +164,54 @@ func monthChange(totals []*viewsv1.DateTotal, date kernel.Date, f numberFormat) 
 	return diffMoney(base.GetValueReporting(), last.GetValueReporting(), f)
 }
 
-// yearReturn returns the time-weighted return of days, a performance
-// series, since the last of them dated before date's year, or its first
-// day, to its last, in percent; empty without days.
-func yearReturn(days []*viewsv1.PerformanceDay, date kernel.Date, f numberFormat) string {
-	if len(days) == 0 {
-		return ""
+// periodOpening returns the day a period's return opens on, the close of
+// the day before its first day (D-223), so the first day counts in full: the
+// date the charts' start is set to wherever the period opens on the
+// performance chart, from the overview's link or an Ask box card. It is the
+// zero date for a period with no first day (everything: the charts' default
+// start). It resolves p through periodRange, the one place a period's days
+// are decided.
+func periodOpening(p askPeriod, to kernel.Date) kernel.Date {
+	from := periodRange(p, to).From
+	if from.IsZero() {
+		return from
 	}
-	start := yearStart(date.Year()).String()
+	return from.AddDays(-1)
+}
+
+// yearOpeningDay returns the day of days, a performance series, this
+// year's return opens on: the last of them dated on or before the year's
+// opening close (periodOpening), or its first day when none is. It is nil
+// without days.
+func yearOpeningDay(days []*viewsv1.PerformanceDay, date kernel.Date) *viewsv1.PerformanceDay {
+	if len(days) == 0 {
+		return nil
+	}
+	opening := periodOpening(askPeriod{Kind: periodYear}, date).String()
 	base := days[0]
 	for _, d := range days {
-		if d.GetDate() < start {
+		if d.GetDate() <= opening {
 			base = d
 		}
 	}
-	return returnPercent(base.GetIndex(), days[len(days)-1].GetIndex(), f)
+	return base
+}
+
+// yearReturn returns the time-weighted return of days, a performance
+// series, from this year's opening day (yearOpeningDay) to its last, in
+// percent, with the opening day's date, which the chart's link sets as the
+// charts' start (D-223); both are empty without days.
+func yearReturn(days []*viewsv1.PerformanceDay, date kernel.Date, f numberFormat) yearFigure {
+	base := yearOpeningDay(days, date)
+	if base == nil {
+		return yearFigure{}
+	}
+	return yearFigure{Percent: returnPercent(base.GetIndex(), days[len(days)-1].GetIndex(), f), Opening: base.GetDate()}
+}
+
+// yearFigure is this year's time-weighted return and the day it opens on.
+type yearFigure struct {
+	Percent, Opening string
 }
 
 // groupBySleeve returns rows grouped by their sleeve, in the order of

@@ -951,3 +951,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dca7b82939e4
+  - type: verified_by
+    from: SCEN-ui-period-opens-chart-on-opening-close
+    to: TEST-ui-period-chart-link
+    created_at: 2026-11-15T18:12:34.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40f07a2195d
+  - type: verified_by
+    from: SCEN-ui-period-opens-chart-on-opening-close
+    to: TEST-ui-period-opening
+    created_at: 2026-11-15T18:12:34.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4745a8a9bb
+  - type: verified_by
+    from: SCEN-ui-period-opens-chart-on-opening-close
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T18:12:34.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f62043e707c6
+  - type: verified_by
+    from: SCEN-ui-period-opens-chart-on-opening-close
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:12:34.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c32d824eef

@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98a67ec13978
+  - type: executable_for
+    from: SYM-views-app-period-chart-two-places
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:49:23.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c417fdd3678

@@ -411,3 +411,100 @@ func TestTheModelsPeriodCallsAskWhatTheTypedCommandsAsk(t *testing.T) {
 		t.Errorf("queries run by the tools against the typed commands' (-typed +tools):\n%s", diff)
 	}
 }
+
+// TestEveryPerformancePeriodIsOnePeriodCard checks that each way of naming a
+// performance period, in a typed command and as the model's tool arguments,
+// asks the read API's GetPeriodChange for the days the period resolves to and
+// answers with the same card, which opens the period at the end of the day
+// before its first (D-61, D-194, D-203). The latest valued day is 2026-03-31 and
+// the tracking began on 2026-03-30 (the fake core's default start).
+func TestEveryPerformancePeriodIsOnePeriodCard(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		q, args  string
+		from, to string
+		title    string
+		// same is false for a command whose tool arguments name the period by
+		// default, which the typed command words differently.
+		same bool
+	}{
+		{"performance", `{}`, "2026-01-01", "2026-03-31", "Time-weighted return this year: -1,20%", false},
+		{"performance this year", `{"period":"this_year"}`, "2026-01-01", "2026-03-31", "Time-weighted return this year: -1,20%", true},
+		{"performance this month", `{"period":"this_month"}`, "2026-03-01", "2026-03-31", "Time-weighted return this month: -1,20%", true},
+		{"performance last 12 months", `{"period":"last_12_months"}`, "2025-04-01", "2026-03-31", "Time-weighted return over the last 12 months: -1,20%", true},
+		{"performance last year", `{"period":"last_year"}`, "2025-01-01", "2025-12-31", "Time-weighted return last year: -1,20%", true},
+		{"performance in 2025", `{"year":2025}`, "2025-01-01", "2025-12-31", "Time-weighted return in 2025: -1,20%", true},
+		{"performance in 2026", `{"year":2026}`, "2026-01-01", "2026-03-31", "Time-weighted return in 2026: -1,20%", true},
+		{"performance since 2026-01-15", `{"since":"2026-01-15"}`, "2026-01-15", "2026-03-31", "Time-weighted return since 2026-01-15: -1,20%", true},
+		{"performance all", `{"period":"all"}`, "2026-03-30", "2026-03-31", "Time-weighted return since tracking began: -1,20%", true},
+		{"performance in November 2025", `{"month":"2025-11"}`, "2025-11-01", "2025-11-30", "Time-weighted return in November 2025: -1,20%", true},
+		{
+			"performance from 2025-11-01 to 2025-11-30", `{"from":"2025-11-01","to":"2025-11-30"}`,
+			"2025-11-01", "2025-11-30", "Time-weighted return from 2025-11-01 to 2025-11-30: -1,20%", true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.q, func(t *testing.T) {
+			t.Parallel()
+			if tt.same {
+				wantToolAsksWhatTheCommandAsks(t, tt.q, tt.args)
+			}
+			h := newHarness(t)
+			rec := h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {tt.q}}.Encode(), ""), readSession)))
+			wantStatus(t, rec, http.StatusOK)
+			wantBody(t, rec, tt.title, "From the end of ", "Start", "56\u202f719,52 PLN", "End", "58\u202f686,37 PLN", "Deposits", "Withdrawals", "Show the performance chart")
+			// The card's link opens the chart on the period's opening close, the
+			// day before its first day, so both show the same return (D-223).
+			opening := mustDate(t, tt.from).AddDays(-1).String()
+			wantBody(t, rec, `href="/?over=performance&amp;start=`+opening+`#over-time">Show the performance chart`)
+			if diff := cmp.Diff([]string{tt.from + " " + tt.to}, periodsAsked(h)); diff != "" {
+				t.Errorf("GetPeriodChange asked (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// wantToolAsksWhatTheCommandAsks fails unless the performance tool, given args,
+// runs the query the typed command q makes.
+func wantToolAsksWhatTheCommandAsks(t *testing.T, q, args string) {
+	t.Helper()
+	today := mustDate(t, askToday)
+	typed, ok := parseAsk(q, today)
+	if !ok {
+		t.Fatalf("parseAsk(%q) is no command", q)
+	}
+	called, err := performanceTool().query(args, today)
+	if err != nil {
+		t.Fatalf("the performance tool refused %s: %v", args, err)
+	}
+	if diff := cmp.Diff(typed, called); diff != "" {
+		t.Errorf("tool against typed command (-typed +tool):\n%s", diff)
+	}
+}
+
+// periodsAsked returns the periods the fake core was asked for, as "from to".
+func periodsAsked(h *harness) []string {
+	var asked []string
+	h.read.locked(func() {
+		for _, r := range h.read.periods {
+			asked = append(asked, r.GetFrom()+" "+r.GetTo())
+		}
+	})
+	return asked
+}
+
+// TestAPerformanceWithNothingRecordedHasNoStart checks that the period of
+// everything, with nothing recorded, says so and asks for no period.
+func TestAPerformanceWithNothingRecordedHasNoStart(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	h.read.locked(func() { h.read.noPerformanceStart = true })
+	rec := h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"performance since tracking began"}}.Encode(), ""), readSession)))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, "No valued days since tracking began")
+	var asked int
+	h.read.locked(func() { asked = len(h.read.periods) })
+	if asked != 0 {
+		t.Errorf("the core was asked %d periods, want none", asked)
+	}
+}

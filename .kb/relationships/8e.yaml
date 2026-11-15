@@ -1336,3 +1336,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b367638fe4ca
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-want-tool-asks-what-the-command-asks
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:33:35.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eecb3b43d4a8
+  - type: implements
+    from: SYM-docgen-askevaltable-runaskevaltable
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:33:58.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69b330316f66
+  - type: covered_by
+    from: SYM-docgen-askevaltable-runaskevaltable
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:33:59.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3735f4e358c9

@@ -203,18 +203,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		rep.addCall(&mr.calls[i])
 		rep.Rounds = append(rep.Rounds, mr.calls[i].Round)
 	}
-	for i := range mr.calls {
-		c := &mr.calls[i]
-		switch {
-		case c.Error == "":
-			rep.Completions++
-		case !c.Retried:
-			// A failed call that was retried is told by its retry's outcome, and in
-			// the reliability counts: only the call that ended the attempt is an error.
-			rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
-		}
-	}
-	rep.Errored = len(rep.CallErrors) > 0
+	rep.addOutcomes(mr.calls)
 	if err != nil {
 		rep.Error = errorText(err)
 		return rep
@@ -230,6 +219,24 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		rep.Error = errorText(gradeErr)
 	}
 	return rep
+}
+
+// addOutcomes counts the answered calls of the run and lists the calls that
+// ended it in failure, and marks the run void when the bench's fault is one.
+func (r *RunReport) addOutcomes(calls []ModelCall) {
+	for i := range calls {
+		c := &calls[i]
+		switch {
+		case c.Error == "":
+			r.Completions++
+		case !c.Retried:
+			// A failed call that was retried is told by its retry's outcome, and in
+			// the reliability counts: only the call that ended the attempt is an error.
+			r.CallErrors = append(r.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label, Class: c.Error, Fault: c.Fault})
+			r.Void = r.Void || c.Fault == faultBench
+		}
+	}
+	r.Errored = len(r.CallErrors) > 0
 }
 
 // addCall adds a call of the run to its tokens, its estimated-cost count and the

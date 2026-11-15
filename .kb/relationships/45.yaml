@@ -1245,3 +1245,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91aeb62de3f3
+  - type: implements
+    from: SYM-views-app-period-views-period-change
+    to: REQ-views-period-return-from-opening-close
+    created_at: 2026-11-15T18:13:52.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58ce1efe9a48
+  - type: covered_by
+    from: SYM-views-app-period-views-period-change
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:13:52.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62745e363294

@@ -1301,3 +1301,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e6b629a50b9
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-teststandingrunssortpassesfirstthencasespassedthencost
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:14.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b57336bd02bf

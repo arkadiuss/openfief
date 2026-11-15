@@ -256,7 +256,7 @@ var _ ui.AskModel = replayModel{}
 
 // Generate asks for the stored calls, then answers.
 func (m replayModel) Generate(_ context.Context, msgs []ui.AskMessage, _ []ui.AskTool, _ int64, _ string) (ui.AskReply, error) {
-	if len(m.calls) == 0 || msgs[len(msgs)-1].Role == "tool" {
+	if len(m.calls) == 0 || msgs[len(msgs)-1].Role == chatTool {
 		var ids []string
 		for i, c := range m.calls {
 			if c.Outcome == "ran" {

@@ -937,3 +937,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b82ef66285bc
+  - type: implements
+    from: SYM-askbench-modelclient-fault-of
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:06:48.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ad37390ad3
+  - type: covered_by
+    from: SYM-askbench-modelclient-fault-of
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:06:48.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcebc08ea765

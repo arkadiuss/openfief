@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7355ff6371a
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-every-performance-period-is-one-period-card
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:33:27.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8b4168e2f3c

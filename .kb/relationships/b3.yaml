@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c79ee1d14660
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-every-failure-has-a-class-of-the-fixed-set
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:08:21.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16731752b192

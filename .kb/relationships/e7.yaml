@@ -1413,3 +1413,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90127ceaa905
+  - type: implements
+    from: SYM-docgen-askevalpage-verdicttext
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:34:07.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41f6361c163f
+  - type: covered_by
+    from: SYM-docgen-askevalpage-verdicttext
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:07.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08f024acbb53
+  - type: implements
+    from: SYM-docgen-askevalpage-verdicttext
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T19:34:07.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0497671babca

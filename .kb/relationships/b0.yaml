@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8ba10f332ec
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-teststaleguidetablefailsthecheck
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:35:18.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5538a71beaea

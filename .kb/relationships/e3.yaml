@@ -1105,3 +1105,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f11956a937fd
+  - type: implements
+    from: SYM-askbench-runner-run-report-add-outcomes
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:08:12.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edbd4b541c99
+  - type: covered_by
+    from: SYM-askbench-runner-run-report-add-outcomes
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:08:12.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0305871b47a

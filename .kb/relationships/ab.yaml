@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-559d8f95cd0e
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-every-failed-call-is-in-one-bucket
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:09:41.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a22c5c956a39

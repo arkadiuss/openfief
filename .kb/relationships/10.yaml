@@ -1196,3 +1196,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b031de14fdb
+  - type: implements
+    from: SYM-ui-period-range
+    to: REQ-ui-ask-every-period-one-card
+    created_at: 2026-11-15T17:09:04.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15838d7f1200
+  - type: covered_by
+    from: SYM-ui-period-range
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:09:04.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f6ea36e9ddc
+  - type: implements
+    from: SYM-ui-period-range
+    to: REQ-ui-period-opens-chart-on-opening-close
+    created_at: 2026-11-15T18:13:30.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c3f73c58ee5
+  - type: implements
+    from: SYM-ui-period-range
+    to: REQ-views-period-return-from-opening-close
+    created_at: 2026-11-15T18:13:30.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e1a0dc216d
+  - type: covered_by
+    from: SYM-ui-period-range
+    to: TEST-ui-period-opening
+    created_at: 2026-11-15T18:13:30.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-613e77005aa1

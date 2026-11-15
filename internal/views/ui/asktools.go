@@ -164,9 +164,9 @@ func performanceTool() askTool {
 	return askTool{
 		Name: "performance",
 		Description: "Answers questions about return and performance over a period (in Polish, \"stopa zwrotu\" and \"wynik\"): the time-weighted " +
-			"return, with the portfolio's value at its start and end and, for a month or two days, the deposits and withdrawals in it. " +
-			"Deposits, withdrawals and confirmed transfers don't count as return. A period is a calendar month, a calendar year, a first " +
-			"and a last day, a first day onward or a named period.",
+			"return, with the portfolio's value at its start and end and the deposits and withdrawals in it. A period counts its first day " +
+			"in full: it runs from the end of the day before it to the end of its last day. Deposits, withdrawals and confirmed transfers " +
+			"don't count as return. A period is a calendar month, a calendar year, a first and a last day, a first day onward or a named period.",
 		Schema: `{"type":"object","properties":{"period":{"type":"string","enum":["this_year","this_month","last_12_months","last_year","all"],` +
 			`"description":"A named period; this_year when omitted. Ignored when from and to, month, year or since is given."},` +
 			`"from":{"type":"string","description":"The first day of a period, as YYYY-MM-DD; given with to."},` +

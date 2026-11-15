@@ -145262,10 +145262,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-home
+      - type: covered_by
+        target: TEST-ui-period-chart-link
       - type: implements
         target: REQ-decision-d193-1-overview
       - type: implements
         target: REQ-ui-overview-places
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
   - id: SYM-ui-server-home
     title: server.home
     sourceFile: internal/views/ui/overview.go
@@ -145482,10 +145486,20 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: covered_by
+        target: TEST-ui-period-opening
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
+      - type: implements
+        target: REQ-views-period-return-from-opening-close
   - id: SYM-ui-show-kind
     title: showKind
     sourceFile: internal/views/ui/ask.go
@@ -145762,11 +145776,15 @@ symbols:
       recorded_at: 2026-11-06T08:21:17.934Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask-period
+      - type: covered_by
         target: TEST-ui-home
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
   - id: SYM-ui-command-answerer-show
     title: commandAnswerer.show
     sourceFile: internal/views/ui/askanswer.go
@@ -146514,10 +146532,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-home-unit
+      - type: covered_by
+        target: TEST-ui-period-opening
       - type: implements
         target: REQ-decision-d193-1-overview
       - type: implements
         target: REQ-ui-overview-places
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
   - id: SYM-ui-test-ask-box
     title: TestAskBox
     sourceFile: internal/views/ui/home_test.go
@@ -195771,11 +195793,15 @@ symbols:
       recorded_at: 2026-11-13T18:59:43.254Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask-period
+      - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
         target: REQ-askbench-scorers-exact
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
       - type: implements
         target: REQ-ui-ask-performance-tool-names-both-languages
   - id: SYM-ask-model-asktools-go-value-tool
@@ -217529,6 +217555,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+      - type: implements
         target: REQ-askbench-requests-like-the-plugin
   - id: SYM-askbench-modelclient-request-of
     title: requestOf
@@ -221256,6 +221284,8 @@ symbols:
         target: TEST-askbench-errors
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
   - id: SYM-askbench-report-call-error-report
     title: CallErrorReport
     status: active
@@ -221408,7 +221438,7 @@ symbols:
       - type: executable_for
         target: TEST-askbench-errors
   - id: SYM-askbench-errors-test-unknown-error-is-failed
-    title: TestCallFailureOfAnUnknownErrorIsFailed
+    title: TestCallFailureOfAnUnknownErrorIsALocalError
     status: active
     sourceFile: tools/askbench/errors_test.go
     origin:
@@ -231118,8 +231148,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-period
+      - type: covered_by
+        target: TEST-views-app-period-chart-return
       - type: implements
         target: REQ-views-period-change
+      - type: implements
+        target: REQ-views-period-return-from-opening-close
   - id: SYM-views-app-period-views-total-on
     title: Views.totalOn
     status: active
@@ -231313,8 +231347,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-period
+      - type: covered_by
+        target: TEST-views-app-period-chart-return
       - type: implements
         target: REQ-views-period-change
+      - type: implements
+        target: REQ-views-period-return-from-opening-close
   - id: SYM-views-app-period-test-test-period-change-refusals
     title: TestPeriodChangeRefusals
     status: active
@@ -232065,20 +232103,6 @@ symbols:
         target: TEST-ui-ask-period
       - type: implements
         target: REQ-ui-ask-period-commands
-  - id: SYM-views-ui-askperiod-ask-period-bounded
-    title: askPeriod.bounded
-    status: active
-    sourceFile: internal/views/ui/askperiod.go
-    origin:
-      kind: agent
-      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
-      recorded_at: 2026-11-15T13:37:41.861Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-ui-ask-period
-      - type: implements
-        target: REQ-ui-ask-period-commands
   - id: SYM-views-ui-askperiod-bounded-span
     title: boundedSpan
     status: active
@@ -232177,6 +232201,8 @@ symbols:
         target: TEST-ui-ask-period
       - type: implements
         target: REQ-ui-ask-period-cards-from-core
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
   - id: SYM-views-ui-askperiod-command-answerer-period-value
     title: commandAnswerer.periodValue
     status: active
@@ -233294,3 +233320,997 @@ symbols:
         target: TEST-askbench-rescore
       - type: implements
         target: REQ-askbench-rescores-offline
+  - id: SYM-views-ui-askanswer-command-answerer-tracking-start
+    title: commandAnswerer.trackingStart
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
+  - id: SYM-views-ui-askperiod-test-test-every-performance-period-is-one-period-card
+    title: TestEveryPerformancePeriodIsOnePeriodCard
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-want-tool-asks-what-the-command-asks
+    title: wantToolAsksWhatTheCommandAsks
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-periods-asked
+    title: periodsAsked
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-a-performance-with-nothing-recorded-has-no-start
+    title: TestAPerformanceWithNothingRecordedHasNoStart
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-ui-period-opening
+    title: periodOpening
+    status: active
+    sourceFile: internal/views/ui/home.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, wherever a period opens on the performance chart the charts'' start is its opening close, 2026-11-15'
+      recorded_at: 2026-11-15T18:13:02.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-period-opening
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
+      - type: implements
+        target: REQ-views-period-return-from-opening-close
+  - id: SYM-ui-year-opening-day
+    title: yearOpeningDay
+    status: active
+    sourceFile: internal/views/ui/home.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, wherever a period opens on the performance chart the charts'' start is its opening close, 2026-11-15'
+      recorded_at: 2026-11-15T18:13:10.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-period-opening
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
+  - id: SYM-views-app-period-chart-test-new-year-fixture
+    title: newYearFixture
+    status: active
+    sourceFile: internal/views/app/periodchart_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:48:42.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period-chart-return
+  - id: SYM-views-app-period-chart-test-same-return
+    title: TestAPeriodsCardAndChartShowTheSameReturn
+    status: active
+    sourceFile: internal/views/app/periodchart_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:48:51.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period-chart-return
+  - id: SYM-views-app-period-chart-want-same-return
+    title: wantSameReturn
+    status: active
+    sourceFile: internal/views/app/periodchart_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:00.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period-chart-return
+  - id: SYM-views-app-period-chart-chart-return
+    title: chartReturn
+    status: active
+    sourceFile: internal/views/app/periodchart_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:09.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period-chart-return
+  - id: SYM-views-app-period-chart-two-places
+    title: twoPlaces
+    status: active
+    sourceFile: internal/views/app/periodchart_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:19.040Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period-chart-return
+  - id: SYM-ui-year-figure
+    title: yearFigure
+    status: active
+    sourceFile: internal/views/ui/home.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:27.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-period-opening
+      - type: implements
+        target: REQ-ui-period-opens-chart-on-opening-close
+  - id: SYM-ui-test-hero-year-link
+    title: TestHeroYearLinkOpensOnTheYearsOpeningClose
+    status: active
+    sourceFile: internal/views/ui/home_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:35.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-period-chart-link
+  - id: SYM-ui-test-period-opening
+    title: TestPeriodOpening
+    status: active
+    sourceFile: internal/views/ui/home_unit_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
+      recorded_at: 2026-11-15T18:49:44.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-period-opening
+  - id: SYM-askbench-modelclient-model-run-fail
+    title: modelRun.fail
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:35.805Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-fault-of
+    title: faultOf
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:44.721Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-harmony-tokens
+    title: harmonyTokens
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:06:52.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-modelclient-degenerate
+    title: degenerate
+    status: active
+    sourceFile: tools/askbench/modelclient.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:01.222Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-bad-replies
+    title: badReplies
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:10.644Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-safety-text
+    title: safetyText
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:19.123Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-write-failed-calls
+    title: writeFailedCalls
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:27.600Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-breaks
+    title: breaks
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:35.875Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-validate-request
+    title: validateRequest
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:44.178Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-check-message
+    title: checkMessage
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:07:52.475Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-check-assistant
+    title: checkAssistant
+    status: active
+    sourceFile: tools/askbench/requestcheck.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:00.653Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-runner-run-report-add-outcomes
+    title: RunReport.addOutcomes
+    status: active
+    sourceFile: tools/askbench/runner.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:08.807Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-errors
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-errors-test-go-test-every-failure-has-a-class-of-the-fixed-set
+    title: TestEveryFailureHasAClassOfTheFixedSet
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:17.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-bad-final-reply-model
+    title: badFinalReplyModel
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:25.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-check-bad-reply-run
+    title: checkBadReplyRun
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:33.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-check-bad-reply-outputs
+    title: checkBadReplyOutputs
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:41.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-bad-reply-in-the-final-round-is-reported-with-its-class-and-counted-apart
+    title: TestABadReplyInTheFinalRoundIsReportedWithItsClassAndCountedApart
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:49.150Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-asked-once
+    title: askedOnce
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:08:57.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-fault-host-for
+    title: faultHostFor
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:05.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-validate-request-accepts-the-loops-conversations
+    title: TestValidateRequestAcceptsTheLoopsConversations
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:12.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-validate-request-refuses-what-the-chat-a-p-i-refuses
+    title: TestValidateRequestRefusesWhatTheChatAPIRefuses
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:21.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-an-invalid-request-is-never-sent-and-is-the-benchs-fault
+    title: TestAnInvalidRequestIsNeverSentAndIsTheBenchsFault
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:29.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-every-failed-call-is-in-one-bucket
+    title: TestEveryFailedCallIsInOneBucket
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:37.239Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-degenerate-generation-is-the-hosts-fault-and-retried-once
+    title: TestADegenerateGenerationIsTheHostsFaultAndRetriedOnce
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:45.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-completion-of
+    title: completionOf
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:09:53.184Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-length-stop-with-a-tool-call-is-not-degenerate
+    title: TestALengthStopWithAToolCallIsNotDegenerate
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:01.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-errors-test-go-test-a-void-run-has-no-verdict-in-the-history-and-says-so
+    title: TestAVoidRunHasNoVerdictInTheHistoryAndSaysSo
+    status: active
+    sourceFile: tools/askbench/errors_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:09.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-docgen-askeval-test-go-a-void-run-shows-as-void
+    title: TestAVoidRunShowsAsVoidAndIsNotAStandingVerdict
+    status: active
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: Brief on run 16-1 and the design session's approval (D-207, D-217, D-221), 2026-11-15
+      recorded_at: 2026-11-15T19:10:17.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-docgen-askevaltable-void
+    title: void
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:31:54.418Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-stands
+    title: stands
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:02.724Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-casespassed
+    title: casesPassed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:11.062Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-safetypassed
+    title: safetyPassed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:18.762Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-historylabel
+    title: historyLabel
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:26.431Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-passed
+    title: passed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:34.337Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-loadhistory
+    title: loadHistory
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:42.315Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-consecutivepasses
+    title: consecutivePasses
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:50.451Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-loadcomments
+    title: loadComments
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:58.548Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-of
+    title: of
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:06.197Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-standingruns
+    title: standingRuns
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:14.310Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-comparecost
+    title: compareCost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:22.424Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-resultstable
+    title: resultsTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:30.359Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-reliabilitypercent
+    title: reliabilityPercent
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:38.286Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-withtable
+    title: withTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:46.643Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-runaskevaltable
+    title: runAskEvalTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:54.748Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevalpage-verdicttext
+    title: verdictText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:03.270Z
+    sourceFile: tools/docgen/askevalpage.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-docgen-askevaltable-test-teststandingrunssortpassesfirstthencasespassedthencost
+    title: TestStandingRunsSortPassesFirstThenCasesPassedThenCost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:10.731Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-teststandingrunskeeponlythelatestfullrunwithaverdictofeachmodelandhost
+    title: TestStandingRunsKeepOnlyTheLatestFullRunWithAVerdictOfEachModelAndHost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:17.690Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testresultstableshowseverycolumnandacomment
+    title: TestResultsTableShowsEveryColumnAndAComment
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:24.544Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testcommentlookupprefersthemostspecifickeyandamissingoneisempty
+    title: TestCommentLookupPrefersTheMostSpecificKeyAndAMissingOneIsEmpty
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:31.691Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testconsecutivepassesstopatafailureoranotherconfiguration
+    title: TestConsecutivePassesStopAtAFailureOrAnotherConfiguration
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:38.990Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testwithtablereplacesonlythefencedtext
+    title: TestWithTableReplacesOnlyTheFencedText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:45.908Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testvoidrunsreadthesameonbothpages
+    title: TestVoidRunsReadTheSameOnBothPages
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:52.866Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testsafetycasesmatchthebenchscases
+    title: TestSafetyCasesMatchTheBenchsCases
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:59.659Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testcommittedguidetableiscurrentandcommentsareoneline
+    title: TestCommittedGuideTableIsCurrentAndCommentsAreOneLine
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:35:07.048Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-teststaleguidetablefailsthecheck
+    title: TestStaleGuideTableFailsTheCheck
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:35:14.105Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-guidewithtable
+    title: guideWithTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:41:10.938Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askeval-stampparallel
+    title: stampParallel
+    status: active
+    origin:
+      kind: agent
+      ref: 'The design session''s addition to the results table: runs at a parallelism other than 3 are marked (2026-11-15)'
+      recorded_at: 2026-11-15T20:01:28.165Z
+    sourceFile: tools/docgen/askeval.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-historyentry
+    title: historyEntry
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:16:58.883Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-evalhistory
+    title: evalHistory
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:06.361Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-evalcomments
+    title: evalComments
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:13.440Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-guidetext
+    title: guideText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:20.585Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-test-standing
+    title: standing
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:28.203Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-labels
+    title: labels
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:35.190Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testarunatanotherparallelismismarkedonbothpagesandimportrecordsit
+    title: TestARunAtAnotherParallelismIsMarkedOnBothPagesAndImportRecordsIt
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:42.092Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table

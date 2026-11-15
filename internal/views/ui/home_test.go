@@ -121,6 +121,18 @@ func TestOverTimeTabs(t *testing.T) {
 	wantStatus(t, plain, http.StatusSeeOther)
 }
 
+// TestHeroYearLinkOpensOnTheYearsOpeningClose checks that the overview's
+// "TWR this year" link opens the performance chart on the year's opening
+// close, the first valued day the year's return runs from (D-223), so the
+// chart and the figure beside it show the same return.
+func TestHeroYearLinkOpensOnTheYearsOpeningClose(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), readSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, `href="/?over=performance&amp;start=2026-03-30#over-time">TWR `)
+}
+
 // TestAskBox checks the Ask box (D-194): a few commands answered as cards
 // with one Open link, a question it doesn't understand answered with the
 // commands it does, the answer on the overview without htmx, and the
@@ -137,7 +149,7 @@ func TestAskBox(t *testing.T) {
 			"transactions sync failed, error class", "2026-03-03T07:00:00Z", "Open the failing sync in the Inbox",
 		}},
 		{"allocation by currency", []string{"By currency, gross, on 2026-03-31", "66.7%", "Open the allocation"}},
-		{"Performance this year", []string{"Time-weighted return this year: &#43;1,5%", "Show the performance chart"}},
+		{"Performance this year", []string{"Time-weighted return this year: -1,20%", "From the end of 2025-12-31 to the end of 2026-03-31", "Deposits", "Show the performance chart"}},
 		{"value on 2026-03-31", []string{"Value on 2026-03-31: 1 500,00 PLN gross", "Liquidation", "Open the overview on 2026-03-31"}},
 		{"show synthetic brokerage", []string{"Synthetic brokerage: 1 000,00 PLN gross", "Open Synthetic brokerage", `href="/accounts/acc-synthetic-1"`}},
 		{"show sleeve core", []string{"Core: 1 account", "Open Core on the overview"}},

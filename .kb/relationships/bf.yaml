@@ -1406,3 +1406,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04983830d1d3
+  - type: implements
+    from: SYM-views-ui-askanswer-command-answerer-tracking-start
+    to: REQ-ui-ask-every-period-one-card
+    created_at: 2026-11-15T17:08:48.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7056f8d40cc
+  - type: covered_by
+    from: SYM-views-ui-askanswer-command-answerer-tracking-start
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:08:48.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d729e336b785

@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c05bb9cc657e
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-labels
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T20:17:38.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1525b069099f

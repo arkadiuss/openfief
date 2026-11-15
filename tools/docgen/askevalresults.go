@@ -60,6 +60,9 @@ type evalResult struct {
 	UnderBar int `json:"underBar,omitempty"`
 	// Unscored is the runs a failed call ended.
 	Unscored int `json:"unscored,omitempty"`
+	// Void is how many of those runs the bench's own fault ended: the result
+	// is void, and the model is run again after the fix.
+	Void int `json:"void,omitempty"`
 	// Answered is false when no call of the model got an answer.
 	Answered    bool             `json:"answered"`
 	Reliability *evalReliability `json:"reliability,omitempty"`
@@ -73,6 +76,10 @@ type evalResult struct {
 	// ScorerVersion is the version of the scoring rules that graded the run;
 	// a file without one is from before versioning and reads as 1.
 	ScorerVersion int `json:"scorerVersion,omitempty"`
+	// Parallel is how many questions the run asked at once when that was not
+	// D-208's 3; the bench's report does not carry it, so `askeval import
+	// -parallel` records it. A file without it was made at 3.
+	Parallel int `json:"parallel,omitempty"`
 }
 
 // unversionedScorer is the scorer version a result file without one reads as.

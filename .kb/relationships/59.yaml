@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8532c19ca421
+  - type: executable_for
+    from: SYM-askbench-errors-test-go-test-validate-request-accepts-the-loops-conversations
+    to: TEST-askbench-errors
+    created_at: 2026-11-15T19:09:16.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dce00cd44bb

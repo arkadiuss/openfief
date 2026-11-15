@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbddf26a0651
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-testconsecutivepassesstopatafailureoranotherconfiguration
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:42.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96864e3786cd

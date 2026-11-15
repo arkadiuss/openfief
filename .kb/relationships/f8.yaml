@@ -1105,3 +1105,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92bb30a412d7
+  - type: verified_by
+    from: SCEN-ui-ask-every-period-one-card
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:11:08.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c08ccaabc376

@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e3c113f717f
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-testwithtablereplacesonlythefencedtext
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:49.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b36aa85b380

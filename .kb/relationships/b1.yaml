@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1074ffb6b495
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-testvoidrunsreadthesameonbothpages
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:56.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218b1d1bce2d

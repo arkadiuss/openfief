@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-530c1568d4cb
+  - type: implements
+    from: SYM-docgen-askevaltable-of
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:33:10.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-910a932a7db3
+  - type: covered_by
+    from: SYM-docgen-askevaltable-of
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:33:10.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17c654264c64

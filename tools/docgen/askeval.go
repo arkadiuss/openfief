@@ -13,14 +13,18 @@ import (
 	"strings"
 )
 
-var errAskEvalUsage = errors.New("usage: docgen askeval import -report FILE -run NAME -date YYYY-MM-DD [-out DIR]")
+var errAskEvalUsage = errors.New("usage: docgen askeval import -report FILE -run NAME -date YYYY-MM-DD [-out DIR] [-parallel N] | askeval table [-check]")
 
 const (
 	// runsPerCase is how many times the bench asks each case; a report that
 	// lacks the number of questions is priced over cases times this.
 	runsPerCase = 5
 	perThousand = 1000
-	costPlaces  = 5
+	// defaultParallel is how many questions the bench asks at once, D-208's cap
+	// of model calls at once, and what a result file without a parallelism was
+	// made at.
+	defaultParallel = 3
+	costPlaces      = 5
 )
 
 var (
@@ -29,7 +33,10 @@ var (
 )
 
 // importArgs are the flags of `docgen askeval import`.
-type importArgs struct{ report, run, date, out string }
+type importArgs struct {
+	report, run, date, out string
+	parallel               int
+}
 
 func parseImportArgs(args []string) (importArgs, error) {
 	var a importArgs
@@ -37,11 +44,12 @@ func parseImportArgs(args []string) (importArgs, error) {
 	flags.StringVar(&a.report, "report", "", "the bench's report.json")
 	flags.StringVar(&a.run, "run", "", "the run's name, a number and an optional label, such as 9-1 or 12-trace")
 	flags.StringVar(&a.date, "date", "", "the run's UTC day, YYYY-MM-DD")
+	flags.IntVar(&a.parallel, "parallel", defaultParallel, "questions the bench asked at once (its -parallel; the report does not carry it)")
 	flags.StringVar(&a.out, "out", resultsDir, "folder of result files")
 	if err := flags.Parse(args); err != nil {
 		return a, fmt.Errorf("askeval import: %w", err)
 	}
-	if a.report == "" || !runNameRE.MatchString(a.run) || !dateRE.MatchString(a.date) {
+	if a.parallel < 1 || a.report == "" || !runNameRE.MatchString(a.run) || !dateRE.MatchString(a.date) {
 		return a, errAskEvalUsage
 	}
 	return a, nil
@@ -65,6 +73,7 @@ func runAskEval(args []string, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
+	stampParallel(results, a.parallel)
 	body, err := json.MarshalIndent(results, "", "  ")
 	if err != nil {
 		return fmt.Errorf("encode results: %w", err)
@@ -77,6 +86,17 @@ func runAskEval(args []string, stdout io.Writer) error {
 		return fmt.Errorf("write summary: %w", err)
 	}
 	return nil
+}
+
+// stampParallel records how many questions the run asked at once, unless it
+// is D-208's 3, which a result file leaves out.
+func stampParallel(results []evalResult, parallel int) {
+	if parallel == defaultParallel {
+		return
+	}
+	for i := range results {
+		results[i].Parallel = parallel
+	}
 }
 
 // padRun zero-pads the run's number so that file names sort in run order.
@@ -129,6 +149,7 @@ type benchModel struct {
 	Reliability *evalReliability `json:"reliability"`
 	Completions *int             `json:"completions"`
 	Errored     int              `json:"erroredRuns"`
+	VoidRuns    int              `json:"voidRuns"`
 	CouldNot    bool             `json:"couldNotRun"`
 	Questions   int              `json:"questions"`
 }
@@ -152,7 +173,7 @@ func trimReport(data []byte, run, date string) ([]evalResult, error) {
 func trimModel(m *benchModel, subset bool) evalResult {
 	r := evalResult{
 		Model: m.ModelID, Host: strings.Join(m.Route, ","), Reasoning: m.Reasoning, Verdict: verdictNone,
-		Cases: len(m.Cases), Unscored: m.Errored, ConfigHash: m.ConfigHash, Reliability: m.Reliability,
+		Cases: len(m.Cases), Unscored: m.Errored, Void: m.VoidRuns, ConfigHash: m.ConfigHash, Reliability: m.Reliability,
 		CostPer1k: m.CostPer1k, CostSource: m.CostSource, Answered: m.answered(),
 	}
 	if r.Model == "" {

@@ -95,7 +95,7 @@ func TestAskEvalPage(t *testing.T) {
 		{Run: "3", Date: "2026-11-14", Model: "m/c", Verdict: verdictNone, Diagnostic: []string{"R1"}, ConfigHash: "abcd", BenchSchema: 1},
 	}
 	page := askEvalPage(results)
-	for _, want := range []string{"title: How models did in the Ask box evaluation", "synthetic", "m/a@h/bf16", "`01234567`", "4 of 28 cases under pass^5", "diagnostic: R1 only", "no answer"} {
+	for _, want := range []string{"title: How models did in the Ask box evaluation", "synthetic", "m/a@h/bf16", "`01234567`", "4 of 28 cases under pass^5", "diagnostic: R1 only", "void (no answer"} {
 		if !strings.Contains(page, want) {
 			t.Errorf("page lacks %q", want)
 		}
@@ -126,7 +126,7 @@ func TestTheResultsPageShowsTheScorerVersionBesideEveryVerdict(t *testing.T) {
 	if !strings.Contains(standing, "pass (scorer 2)") {
 		t.Errorf("the standing table lacks the scorer version:\n%s", standing)
 	}
-	if strings.Contains(every, "none (before D-220) (scorer") {
+	if strings.Contains(every, "void (no verdict: before D-220) (scorer") {
 		t.Errorf("a run with no verdict shows a scorer version:\n%s", every)
 	}
 }
@@ -148,5 +148,19 @@ func TestCommittedResultsLoadNewestFirst(t *testing.T) {
 		if i > 0 && results[i-1].Date < r.Date {
 			t.Errorf("results are not newest first at %d", i)
 		}
+	}
+}
+
+func TestAVoidRunShowsAsVoidAndIsNotAStandingVerdict(t *testing.T) {
+	t.Parallel()
+	report := `{"schema":2,"subset":false,"models":[{"model":"m/a@h/x","modelId":"m/a","route":["h/x"],"configHash":"0123456789abcdef","cost":"0.01","inputTokens":9,
+  "cases":[{"id":"A3","passAll":false}],"verdict":{"pass":false},"completions":4,"erroredRuns":2,"voidRuns":2}]}`
+	r := trimmed(t, report)[0]
+	if r.Void != 2 || r.Unscored != 2 {
+		t.Fatalf("result = %+v, want two void runs", r)
+	}
+	standing, every, _ := strings.Cut(askEvalPage([]evalResult{{Run: "16", Date: "2026-11-15", Model: "m/a", Host: "h/x", Verdict: verdictFail, Answered: true, Cases: 29, Void: 2, ConfigHash: "0123456789abcdef"}}), "## Every run")
+	if !strings.Contains(every, "void (bench fault)") || strings.Contains(standing, "m/a") {
+		t.Errorf("a void run must show as void and stay out of the standing table:\n%s\n%s", standing, every)
 	}
 }
