@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b578a2aa9bd
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-split-test-go-checkunranked
+    to: TEST-askbench-split
+    created_at: 2026-11-14T18:43:34.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5a51c81936b

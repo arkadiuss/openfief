@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3baed0ab4367
+  - type: implements
+    from: SYM-ab6-tools-askbench-route-go-readproviders
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:09:33.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0809ddbc8168
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-readproviders
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:09:33.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79140126a716

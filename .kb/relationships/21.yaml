@@ -1077,3 +1077,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d68ce62b863
+  - type: specified_by
+    from: REQ-decision-d220-1-ask-eval-verdict
+    to: SCEN-askbench-verdict
+    created_at: 2026-11-14T18:40:42.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16f59d5b494f
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-checksecondcall
+    to: TEST-askbench-final-round
+    created_at: 2026-11-14T21:52:47.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0971de4ef0
+  - type: verified_by
+    from: SCEN-askbench-ask-cases
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:23:48.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e2d3375523
+  - type: executable_for
+    from: SYM-tools-askbench-premise-test-go-testa19namesthemonththevaluerosein
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:37:45.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59e2afee9aba

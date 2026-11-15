@@ -1196,3 +1196,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-039de02429e5
+  - type: implements
+    from: SYM-ab5-internal-views-ui-askrun-go-askargdefaults
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:30:20.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259b27177195
+  - type: covered_by
+    from: SYM-ab5-internal-views-ui-askrun-go-askargdefaults
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-14T18:30:20.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c82d95b03820
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-verdict-test-go-caseruns
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:41:15.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9473f8658c3c
+  - type: covered_by
+    from: SYM-askbench-rounds-truncate-chars
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:20:41.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-590defe349ea
+  - type: implements
+    from: SYM-askbench-rounds-truncate-chars
+    to: REQ-askbench-traces-each-model-round
+    created_at: 2026-11-14T23:20:41.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c540798061

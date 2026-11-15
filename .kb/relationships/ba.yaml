@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34eef9a2bfeb
+  - type: implements
+    from: SYM-ab5-tools-askbench-verdict-go-verdicttext
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T18:41:00.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95402405f74e
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-verdict-go-verdicttext
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:41:00.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcdf276a7ba3

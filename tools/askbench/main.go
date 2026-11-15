@@ -12,8 +12,9 @@
 // safety property (the refusals, and the injection cases' safety: no payload
 // followed, no extra call, no echo) passed on all five runs for every model, 1
 // when one did not, 2 when it could not run (a bad argument or key, or
-// a model that no call reached: bad key, no credits, no network) and 3 when its
-// budget ran out before every question was asked. A call that fails while
+// a model that no call reached: bad key, no credits, no network), 3 when its
+// budget ran out before every question was asked and 4 when a member of the
+// demo route (-demo-route, D-221) failed its verdict or reliability. A call that fails while
 // others answer is an error listed in the report, not a model failure. Answer cases are reported, not gated.
 package main
 
@@ -44,10 +45,13 @@ const keyEnv = "OPENROUTER_API_KEY"
 
 // The exit codes.
 const (
-	exitOK      = 0
-	exitUnsafe  = 1
-	exitError   = 2
-	exitBudget  = 3
+	exitOK     = 0
+	exitUnsafe = 1
+	exitError  = 2
+	exitBudget = 3
+	// exitRoute is the exit code of a member of the demo route whose run failed
+	// its verdict or its reliability, when no safety case failed (D-221).
+	exitRoute   = 4
 	httpTimeout = time.Minute
 	// defaultBudget is the most the run may spend, in US dollars: far above
 	// what the two candidates cost for the 28 cases five times each.
@@ -74,6 +78,10 @@ type config struct {
 	opts       Options
 	out        string
 	judgeModel string
+	// history is the path of the history file the run reads and rewrites, "" for
+	// none; members are the labels of the demo route's models, nil for none.
+	history string
+	members []string
 }
 
 // run runs the bench and returns its exit code.
@@ -93,12 +101,23 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 	if err != nil {
 		return failed(stderr, err)
 	}
+	if err := recordRun(report, cfg, cfg.opts.Now()); err != nil {
+		return failed(stderr, err)
+	}
 	if err := report.WriteTo(cfg.out); err != nil {
 		return failed(stderr, err)
 	}
 	if _, err := io.WriteString(stdout, resultText(report, cfg.out)); err != nil {
 		return exitError
 	}
+	return exitCode(report)
+}
+
+// exitCode is the bench's exit code for a finished report: a model no call
+// reached or a budget that ran out first, then a safety property that failed,
+// then a member of the demo route that failed its verdict or reliability (D-221,
+// which fails the weekly workflow so the author sees it).
+func exitCode(report *Report) int {
 	switch {
 	case report.CouldNotRun():
 		return exitError
@@ -106,8 +125,31 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 		return exitBudget
 	case report.Failed():
 		return exitUnsafe
+	case report.Route != nil && len(report.Route.Failing) > 0:
+		return exitRoute
 	}
 	return exitOK
+}
+
+// recordRun applies the demo route and the history to the report: it reads the
+// history when -history names one, adds the run to it, rewrites the file, and
+// fills the report's route section. A run given neither has none.
+func recordRun(r *Report, cfg *config, now time.Time) error {
+	if cfg.history == "" && len(cfg.members) == 0 {
+		return nil
+	}
+	var h *History
+	if cfg.history != "" {
+		var err error
+		if h, err = LoadHistory(cfg.history); err != nil {
+			return err
+		}
+	}
+	r.applyHistory(h, cfg.members, now.UTC().Format(time.DateOnly))
+	if h != nil {
+		return h.Save(cfg.history)
+	}
+	return nil
 }
 
 // failed says why the bench could not run, on stderr, and returns its exit code.
@@ -140,6 +182,9 @@ func resultText(r *Report, dir string) string {
 	if r.Budget.Aborted {
 		fmt.Fprintf(&b, "the budget ran out (%s of %s USD, %d of %d calls): the run was aborted\n", r.Budget.Cost, r.Budget.MaxCost, r.Budget.Calls, r.Budget.MaxCalls)
 	}
+	if r.Route != nil {
+		b.WriteString(routeText(r.Route))
+	}
 	fmt.Fprintf(&b, "report: %s/report.json, %s/summary.md\n", dir, dir)
 	return b.String()
 }
@@ -160,6 +205,8 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	maxCalls := fs.Int("max-calls", defaultMaxCalls, "the most model calls to make; the run aborts cleanly past it")
 	parallel := fs.Int("parallel", defaultParallel, "questions asked at once")
 	cases := fs.String("case", "", "comma-separated ids of the cases to run; default all (a subset does not prove the safety cases)")
+	historyPath := fs.String("history", "", "the path of the history file (tools/askbench/history.json): the run's verdict and reliability are added to it and the file is rewritten, and each model@host's consecutive passes and fails (D-221) are reported; never written without this flag")
+	demoRoute := fs.String("demo-route", "", "the demo route's config directory (deploy/demo/model), read only: its models are asked when -model and -route name none, and a member whose run fails its verdict or reliability makes the bench exit 4; the route is never edited")
 	judge := fs.Bool("judge", false, "also grade the advice cases with a judge model, reported only; costs calls beyond the Ask calls")
 	judgeModel := fs.String("judge-model", "openai/gpt-oss-120b", "the judge's model id")
 	if err := fs.Parse(args); err != nil {
@@ -169,7 +216,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	if key == "" {
 		return nil, fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
 	}
-	list, err := modelsFrom(&modelFlags{names: *models, prices: *prices, routes: *routes, reasoning: *reasoning, structured: splitList(*structured), jsonMode: splitList(*jsonMode)})
+	chosen, err := chooseModels(&modelFlags{names: *models, prices: *prices, routes: *routes, reasoning: *reasoning, structured: splitList(*structured), jsonMode: splitList(*jsonMode)}, *demoRoute)
 	if err != nil {
 		return nil, err
 	}
@@ -181,8 +228,8 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 		return nil, fmt.Errorf("%w: -budget is a positive amount of USD", ErrUsage)
 	}
 	hc := &http.Client{Timeout: httpTimeout}
-	cfg := &config{out: *out, judgeModel: *judgeModel, opts: Options{
-		Models: list, BaseURL: *baseURL, APIKey: key, Parallel: *parallel, MaxCost: limit, MaxCalls: *maxCalls,
+	cfg := &config{out: *out, judgeModel: *judgeModel, history: *historyPath, members: memberLabels(chosen.members), opts: Options{
+		Models: chosen.list, BaseURL: *baseURL, APIKey: key, Parallel: *parallel, MaxCost: limit, MaxCalls: *maxCalls,
 		Limits: ui.AskLimits{}, Cases: splitList(*cases), HTTP: hc, Now: time.Now,
 	}}
 	if *judge {
@@ -190,6 +237,35 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 			gevalopenai.WithBaseURL(*baseURL), gevalopenai.WithAPIKey(key), gevalopenai.WithHTTPClient(hc))}
 	}
 	return cfg, nil
+}
+
+// modelChoice is the models of a run and the members of the demo route.
+type modelChoice struct {
+	list    []Model
+	members []Model
+}
+
+// chooseModels returns the models to ask and the demo route's members: the models
+// the flags name, or, when they name none and a demo route is given, the route's
+// members, which are asked as the route's entries have them.
+func chooseModels(f *modelFlags, demoRoute string) (modelChoice, error) {
+	var c modelChoice
+	if demoRoute != "" {
+		members, err := LoadDemoRoute(demoRoute)
+		if err != nil {
+			return c, err
+		}
+		c.members = members
+	}
+	list, err := modelsFrom(f)
+	if err != nil {
+		return c, err
+	}
+	c.list = list
+	if len(c.members) > 0 && f.names == "" && f.routes == "" {
+		c.list = c.members
+	}
+	return c, nil
 }
 
 // splitList splits a comma-separated list, dropping blanks.

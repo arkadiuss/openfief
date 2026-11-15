@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ad14f32810c
+  - type: implements
+    from: SYM-ask-model-asktools-go-allocation-tool
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:34:13.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5419b2e1110
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-test-go-testthegatefailsamemberwhoseverdictorreliabilityfailsandnoother
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:39:08.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb33275138f9

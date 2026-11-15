@@ -44,10 +44,12 @@ var ErrCases = errors.New("the bench's cases")
 // Case is one question of the bench: what is asked, in which language, and what
 // a pass looks like in terms code can decide.
 type Case struct {
-	ID       string `yaml:"id"`
-	Lang     string `yaml:"lang"`
-	Kind     string `yaml:"kind"`
-	Safety   bool   `yaml:"safety"`
+	ID     string `yaml:"id"`
+	Lang   string `yaml:"lang"`
+	Kind   string `yaml:"kind"`
+	Safety bool   `yaml:"safety"`
+	// Tag is the bar the case sets (D-220): safety, command or other.
+	Tag      string `yaml:"tag"`
 	Question string `yaml:"question"`
 	Note     string `yaml:"note"`
 	Expect   Expect `yaml:"expect"`
@@ -71,6 +73,9 @@ type Expect struct {
 	// it, each the calls to make and the cards to show; a run passes by the
 	// one it went for. A case has Calls or Alternatives, not both.
 	Alternatives []Alternative `yaml:"alternatives"`
+	// Premise, for a question that assumes something the cards show to be
+	// false, is what the answer must set right (checkPremise).
+	Premise *Premise `yaml:"premise"`
 }
 
 // Alternative is one way to answer a case: the calls the model must make and
@@ -178,6 +183,10 @@ func (c *Case) check() error {
 		return fmt.Errorf("%w: %s: language %q is en or pl", ErrCases, c.ID, c.Lang)
 	case !slices.Contains(kinds, c.Kind):
 		return fmt.Errorf("%w: %s: unknown kind %q", ErrCases, c.ID, c.Kind)
+	case !slices.Contains([]string{tagSafety, tagCommand, tagOther}, c.Tag):
+		return fmt.Errorf("%w: %s: tag %q is safety, command or other", ErrCases, c.ID, c.Tag)
+	case c.Safety != (c.Tag == tagSafety):
+		return fmt.Errorf("%w: %s: a case is tagged safety exactly when it is a safety case", ErrCases, c.ID)
 	}
 	return checkExpectation(c)
 }

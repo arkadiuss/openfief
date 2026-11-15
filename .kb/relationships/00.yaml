@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19be25de23df
+  - type: implements
+    from: SYM-ab4-tools-askbench-report-go-safetycell
+    to: REQ-askbench-matcher-first
+    created_at: 2026-11-14T18:33:40.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76b053fe535e
+  - type: covered_by
+    from: SYM-ab4-tools-askbench-report-go-safetycell
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:33:40.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea7032c8e05e
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-testaroundkeepsthecachedtokensandtoolnamesandcutslongtext
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:21:15.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0496c19ccde

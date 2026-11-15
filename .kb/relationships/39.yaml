@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-140ca2e21619
+  - type: specified_by
+    from: REQ-askbench-answers-one-step-arithmetic
+    to: SCEN-askbench-one-step-arithmetic
+    created_at: 2026-11-14T22:23:43.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7121324921c0
+  - type: implements
+    from: SYM-tools-askbench-premise-go-assertsfall
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:45.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81021c75a7a0
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-assertsfall
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:45.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae41ec36fc82

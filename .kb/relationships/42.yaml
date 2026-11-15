@@ -1112,3 +1112,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4366aaf5f3b9
+  - type: verified_by
+    from: SCEN-askbench-answers-grounded-in-cards
+    to: TEST-askbench-derived
+    created_at: 2026-11-14T22:23:47.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d51d8e632534
+  - type: implements
+    from: SYM-tools-askbench-premise-go-premisecorrected
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:28:57.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eec42239f1e5
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-premisecorrected
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:28:57.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8502d7db4223
+  - type: implements
+    from: SYM-tools-askbench-premise-go-cardmonthfigures
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:37:34.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fc7cf236e14
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-cardmonthfigures
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:37:34.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c311bc499e

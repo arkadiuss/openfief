@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80e1bf8688ad
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testnoreliablemodelpassingisnoranking
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:56.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15dc4e2a2425

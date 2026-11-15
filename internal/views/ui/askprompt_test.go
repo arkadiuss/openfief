@@ -100,3 +100,42 @@ func TestPromptSaysWhatToAnswerAndHowToDecline(t *testing.T) {
 		}
 	}
 }
+
+func TestPromptNamesValueAllocationAndPerformanceAsInScopeBeforeTheDeclineRule(t *testing.T) {
+	t.Parallel()
+	parts := askPromptParts(kernel.Date{})
+	scope, rule := -1, -1
+	for i, p := range parts {
+		switch {
+		case p.Text == askInScopeRule():
+			scope = i
+		case p.Text == askDeclineRule():
+			rule = i
+		}
+	}
+	if scope < 0 || rule < 0 || scope > rule {
+		t.Fatalf("in-scope sentence at %d, decline rule at %d, want the first ahead of the second", scope, rule)
+	}
+	checkInScopeSentence(t, &parts[scope])
+}
+
+// checkInScopeSentence checks that the sentence names value, allocation and
+// performance twice each (the subject and its tool), says never to refuse them,
+// is not public and names none of the declined classes.
+func checkInScopeSentence(t *testing.T, sentence *askPromptPart) {
+	t.Helper()
+	for _, word := range []string{"value", "allocation", "performance"} {
+		if strings.Count(sentence.Text, word) != 2 { // once as the subject, once as the tool
+			t.Errorf("the in-scope sentence names %q %d times, want the subject and its tool", word, strings.Count(sentence.Text, word))
+		}
+	}
+	if !strings.Contains(sentence.Text, "never refuse") {
+		t.Errorf("the in-scope sentence does not say these are never refused: %q", sentence.Text)
+	}
+	if sentence.Public {
+		t.Error("the in-scope sentence is public: the box may only say the one self-description of itself")
+	}
+	if len(sentencesNamingADeclinedClass(askDeclineRule())) > 0 {
+		t.Error("the in-scope sentence names a declined class")
+	}
+}

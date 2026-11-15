@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dd022816e8f
+  - type: implements
+    from: SYM-ab5-tools-askbench-verdict-go-failuretext
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T19:11:31.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9585e862df27
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-verdict-go-failuretext
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T19:11:31.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb8720782c51
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-routereport
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:37:24.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb01a114d3ee
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-routereport
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:37:24.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5acbb1589dec
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testtheretryisacallofthebudget
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:32.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a90e7bbaa461

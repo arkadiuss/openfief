@@ -1245,3 +1245,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e10ebc27967
+  - type: implements
+    from: SYM-askbench-report-run-report
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:02:25.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a750158dee85
+  - type: covered_by
+    from: SYM-askbench-report-run-report
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:02:25.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b839600f57
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-run-test-go-testawholerunisaddedtothehistoryandagivenroutememberisgated
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T20:37:48.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e0b54753042

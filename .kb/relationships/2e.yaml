@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80c7b5a49f77
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testamodelrunretriesatransporterrorandrecordsboth
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:41:01.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61cb27482fba

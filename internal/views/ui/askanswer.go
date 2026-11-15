@@ -460,17 +460,22 @@ func (a commandAnswerer) sync(r *http.Request, sess session, term string) (answe
 	if err != nil && connect.CodeOf(err) != connect.CodeNotFound {
 		return answerCard{}, fmt.Errorf("ListSyncAttempts: %w", err)
 	}
-	return syncAnswer(inst, resp.Msg), nil
+	return syncAnswer(inst, resp.Msg, a.s.today()), nil
 }
 
-// syncAnswer turns an instance's status and latest attempts into its
-// answer.
-func syncAnswer(inst string, resp *viewsv1.ListSyncAttemptsResponse) answerCard {
+// syncAnswer turns an instance's status and latest attempts into its answer,
+// today being today: when it started failing and for how long, how many attempts
+// in a row failed and with which error class, the last good sync and the next
+// try, then each of the latest attempts with its time and its error class.
+func syncAnswer(inst string, resp *viewsv1.ListSyncAttemptsResponse, today kernel.Date) answerCard {
 	st := resp.GetStatus()
 	card := answerCard{
 		Title: "The " + inst + " sync is working",
 		Text:  "Last good sync: " + orNone(st.GetLastSuccessAt()) + ". Next try: " + orNone(st.GetNextSyncAt()) + ". Every attempt keeps its error class, never its text.",
 		Link:  &answerLink{Href: pluginsPath, Text: openPlugins},
+	}
+	if st.GetFailures() > 0 {
+		card.Text = failureSummary(st, today) + " " + card.Text
 	}
 	switch {
 	case st.GetKeepsFailing():
@@ -480,13 +485,50 @@ func syncAnswer(inst string, resp *viewsv1.ListSyncAttemptsResponse) answerCard 
 		card.Title = "The " + inst + " sync failed " + plural(int(st.GetFailures()), "time", "times") + " in a row"
 	}
 	for _, at := range resp.GetAttempts() {
-		outcome := "went through"
+		detail, outcome := at.GetMode()+" sync", "went through"
 		if at.GetFailed() {
-			outcome = enumLabel(at.GetErrorClass().String(), "SYNC_ERROR_CLASS_")
+			detail, outcome = at.GetMode()+" sync failed, error class", errorClassLabel(at.GetErrorClass())
 		}
-		card.Rows = append(card.Rows, answerRow{Label: at.GetStartedAt(), Detail: at.GetMode() + " sync", Figure: outcome})
+		card.Rows = append(card.Rows, answerRow{Label: at.GetStartedAt(), Detail: detail, Figure: outcome})
 	}
 	return card
+}
+
+// errorClassLabel names a sync's error class in words: "timeout", "unavailable".
+func errorClassLabel(c viewsv1.SyncErrorClass) string {
+	return enumLabel(c.String(), "SYNC_ERROR_CLASS_")
+}
+
+// failureSummary says how long a sync that failed has been failing, how many
+// attempts in a row failed and with which error class, today being today. It
+// reads like "Failing for 3 days, since 2026-10-25: 4 failed attempts in a row,
+// the latest with the error class unavailable".
+func failureSummary(st *viewsv1.SyncStatus, today kernel.Date) string {
+	out := "Failing"
+	if since := st.GetFailingSince(); since != "" {
+		day := since[:min(len(since), len(isoDay))]
+		if d, err := kernel.ParseDate(day); err == nil && !d.After(today) {
+			out += " for " + days(d.DaysUntil(today)) + ", since " + day
+		} else {
+			out += " since " + since
+		}
+	}
+	out += ": " + plural(int(st.GetFailures()), "failed attempt", "failed attempts") + " in a row"
+	if c := st.GetLastErrorClass(); c != viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_UNSPECIFIED {
+		out += ", the latest with the error class " + errorClassLabel(c)
+	}
+	return out + "."
+}
+
+// isoDay is a day written as 2026-10-28: the first characters of a time stamp.
+const isoDay = "2006-01-02"
+
+// days writes a number of days: "less than a day", "1 day", "3 days".
+func days(n int) string {
+	if n < 1 {
+		return "less than a day"
+	}
+	return plural(n, "day", "days")
 }
 
 // syncStatusRow is one instance's status as a row.

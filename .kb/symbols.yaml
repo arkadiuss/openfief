@@ -145797,6 +145797,8 @@ symbols:
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-command-answerer-value
     title: commandAnswerer.value
     sourceFile: internal/views/ui/askanswer.go
@@ -146004,11 +146006,15 @@ symbols:
       recorded_at: 2026-11-06T08:22:28.430Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask
+      - type: covered_by
         target: TEST-ui-home
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-sync-status-row
     title: syncStatusRow
     sourceFile: internal/views/ui/askanswer.go
@@ -193591,6 +193597,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-model-loop
       - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
         target: REQ-ui-ask-model-fixed-commands-first
   - id: SYM-ask-model-askmodel-go-server-ask-has-model
     title: server.askHasModel
@@ -195745,6 +195753,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
+        target: REQ-askbench-scorers-exact
+      - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-performance-tool
     title: performanceTool
@@ -195759,6 +195769,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
+        target: REQ-askbench-scorers-exact
+      - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-value-tool
     title: valueTool
@@ -195772,6 +195784,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-scorers-exact
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-test-go-check-tool
@@ -216600,8 +216614,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cases
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-decision-d219-1-ask-eval-cases
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-askbench-cases-expect
     title: Expect
     status: active
@@ -216712,8 +216730,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cases
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-decision-d219-1-ask-eval-cases
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-askbench-cases-case-number-format
     title: Case.numberFormat
     status: active
@@ -217160,9 +217182,15 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
   - id: SYM-askbench-main-run
     title: run
     status: active
@@ -217174,9 +217202,17 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-history-run
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
   - id: SYM-askbench-main-failed
     title: failed
     status: active
@@ -217202,11 +217238,15 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
       - type: implements
         target: REQ-askbench-errors-not-model-failures
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
   - id: SYM-askbench-main-parse-args
     title: parseArgs
     status: active
@@ -217218,11 +217258,17 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
         target: TEST-askbench-measured
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
       - type: implements
         target: REQ-askbench-reasoning-control-and-default-run
   - id: SYM-askbench-main-split-list
@@ -217324,9 +217370,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
   - id: SYM-askbench-modelclient-meter
     title: meter
     status: active
@@ -217458,6 +217508,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-measured
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-errors-not-model-failures
@@ -217465,6 +217517,8 @@ symbols:
         target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-requests-like-the-plugin
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
   - id: SYM-askbench-modelclient-error-class
     title: errorClass
     status: active
@@ -217597,6 +217651,8 @@ symbols:
         target: TEST-askbench-scorers
       - type: implements
         target: REQ-askbench-answers-grounded-in-cards
+      - type: implements
+        target: REQ-askbench-scorers-exact
   - id: SYM-askbench-numbers-scale-words
     title: scaleWords
     status: active
@@ -218989,9 +219045,13 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
       - type: implements
@@ -219157,9 +219217,17 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
       - type: implements
@@ -219212,7 +219280,11 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
         target: TEST-askbench-runner
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
       - type: implements
         target: REQ-askbench-report
       - type: implements
@@ -219302,6 +219374,8 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: covered_by
         target: TEST-askbench-split
@@ -219313,6 +219387,8 @@ symbols:
         target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
       - type: implements
@@ -219478,6 +219554,8 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: covered_by
         target: TEST-askbench-split
@@ -219489,6 +219567,8 @@ symbols:
         target: REQ-askbench-measures-cost-exactly
       - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
       - type: implements
@@ -219685,9 +219765,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
       - type: implements
@@ -219723,6 +219807,8 @@ symbols:
       - type: covered_by
         target: TEST-askbench-measured
       - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
@@ -219732,6 +219818,8 @@ symbols:
         target: REQ-askbench-grades-safety-and-quality-apart
       - type: implements
         target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-decision-d217-2-eval-graded-by-code-five-runs
       - type: implements
@@ -221021,6 +221109,8 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-runner
       - type: covered_by
         target: TEST-askbench-split
@@ -221028,6 +221118,8 @@ symbols:
         target: REQ-askbench-errors-not-model-failures
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-askbench-report
   - id: SYM-askbench-portfolio-test-changed-account-names
@@ -221423,6 +221515,8 @@ symbols:
         target: TEST-ui-ask-prompt
       - type: implements
         target: REQ-ask-prompt-declines-only-three-things
+      - type: implements
+        target: REQ-ask-prompt-names-value-allocation-performance-in-scope
       - type: implements
         target: REQ-askbench-scorers-exact
   - id: SYM-ab3-internal-views-ui-askprompt-go-asksystemprompt
@@ -222077,12 +222171,18 @@ symbols:
     sourceFile: internal/views/ui/askmodel.go
     origin:
       kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T14:55:39.320Z
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:35:12.053Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-final-round
+      - type: covered_by
+        target: TEST-ui-ask-final-round
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
@@ -222091,12 +222191,18 @@ symbols:
     sourceFile: internal/views/ui/askmodel.go
     origin:
       kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T14:55:45.019Z
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:35:17.408Z
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-final-round
+      - type: covered_by
+        target: TEST-ui-ask-final-round
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askmodel-go-askconversation-answered
@@ -222953,28 +223059,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-cost
-  - id: SYM-ab3-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhosesafetypassed
-    title: TestTheRankingIsByCostPerQuestionAmongModelsWhoseSafetyPassed
-    status: active
-    sourceFile: tools/askbench/cost_test.go
-    origin:
-      kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T15:46:10.192Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-cost
-  - id: SYM-ab3-tools-askbench-cost-test-go-testnomodelpassingsafetyisnoranking
-    title: TestNoModelPassingSafetyIsNoRanking
-    status: active
-    sourceFile: tools/askbench/cost_test.go
-    origin:
-      kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T15:46:15.689Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-cost
   - id: SYM-ab3-tools-askbench-main-go-modelflags
     title: modelFlags
     status: active
@@ -223046,8 +223130,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
   - id: SYM-ab3-tools-askbench-report-go-ranking
     title: ranking
     status: active
@@ -223062,10 +223152,20 @@ symbols:
         target: TEST-askbench-cost
       - type: covered_by
         target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-askbench-measures-cost-exactly
       - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+      - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-ab3-tools-askbench-report-go-ratof
     title: ratOf
     status: active
@@ -223108,10 +223208,20 @@ symbols:
         target: TEST-askbench-cost
       - type: covered_by
         target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: covered_by
+        target: TEST-askbench-verdict
       - type: implements
         target: REQ-askbench-measures-cost-exactly
       - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+      - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
   - id: SYM-ab3-tools-askbench-route-test-go-testroutespinamodeltohostsandlabeleachrun
     title: TestRoutesPinAModelToHostsAndLabelEachRun
     status: active
@@ -223225,6 +223335,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-cost
+      - type: covered_by
+        target: TEST-askbench-matcher
+      - type: implements
+        target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-askbench-routes-and-ranks-by-cost
   - id: SYM-ab3-tools-askbench-modelclient-go-modellabel
@@ -223515,17 +223629,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-measured
-  - id: SYM-ab4-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthesafewithqualitybesideit
-    title: TestTheRankingIsByMeasuredCostPer1kQuestionsAmongTheSafeWithQualityBesideIt
-    status: active
-    sourceFile: tools/askbench/measured_test.go
-    origin:
-      kind: agent
-      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T16:58:09.554Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-measured
   - id: SYM-ab4-tools-askbench-measured-test-go-testreasoningispermodelorlabel
     title: TestReasoningIsPerModelOrLabel
     status: active
@@ -223664,9 +223767,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-tallyhosts
     title: tallyHosts
     status: active
@@ -223790,9 +223897,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-qualitycell
     title: qualityCell
     status: active
@@ -223804,9 +223915,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-report-go-passedcell
     title: passedCell
     status: active
@@ -223818,9 +223933,13 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-askbench-matcher
+      - type: covered_by
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
+      - type: implements
+        target: REQ-askbench-matcher-first
   - id: SYM-ab4-tools-askbench-runner-go-runreport-addcall
     title: RunReport.addCall
     status: active
@@ -223833,8 +223952,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-measured
+      - type: covered_by
+        target: TEST-askbench-retry
       - type: implements
         target: REQ-askbench-measures-cost-exactly
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
   - id: SYM-ab4-tools-askbench-scorers-go-callssafe
     title: callsSafe
     status: active
@@ -224017,17 +224140,6 @@ symbols:
       kind: agent
       ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
       recorded_at: 2026-11-14T17:02:19.383Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-split
-  - id: SYM-ab4-tools-askbench-split-test-go-checkrankedwithquality
-    title: checkRankedWithQuality
-    status: active
-    sourceFile: tools/askbench/split_test.go
-    origin:
-      kind: agent
-      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T17:02:25.910Z
     relationships:
       - type: executable_for
         target: TEST-askbench-split
@@ -224417,3 +224529,2187 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-model-settings
+  - id: SYM-ab5-internal-views-ui-askmodel-go-boxanswersitself
+    title: boxAnswersItself
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
+        target: REQ-ui-ask-model-fixed-commands-first
+  - id: SYM-ab5-internal-views-ui-askrun-go-askanswersitself
+    title: AskAnswersItself
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-matcher-first
+      - type: implements
+        target: REQ-ui-ask-model-fixed-commands-first
+  - id: SYM-ab5-internal-views-ui-askrun-go-askargdefaults
+    title: AskArgDefaults
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-canonicalcalls
+    title: canonicalCalls
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-canonicalargs
+    title: canonicalArgs
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-argsobject
+    title: argsObject
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-tools-askbench-toolcalls-go-rundata-calls
+    title: RunData.calls
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-scorer-fixes
+      - type: implements
+        target: REQ-askbench-scorers-exact
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testaskargdefaultssaywhatleavinganargumentoutmeans
+    title: TestAskArgDefaultsSayWhatLeavingAnArgumentOutMeans
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testaskargdefaultsarethedocumentedones
+    title: TestAskArgDefaultsAreTheDocumentedOnes
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-internal-views-ui-asktools-test-go-testtheboxanswersitselfwhatitsroutedanswererdoes
+    title: TestTheBoxAnswersItselfWhatItsRoutedAnswererDoes
+    status: active
+    sourceFile: internal/views/ui/asktools_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-tools
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testnocaseisoneoftheboxscommands
+    title: TestNoCaseIsOneOfTheBoxsCommands
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testtherewordedcaseswerecommandsandnolongerare
+    title: TestTheRewordedCasesWereCommandsAndNoLongerAre
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-runwithacommand
+    title: runWithACommand
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testacasethematcheranswersistaggedandneveraskedofthemodel
+    title: TestACaseTheMatcherAnswersIsTaggedAndNeverAskedOfTheModel
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-checktagged
+    title: checkTagged
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-onlytagged
+    title: onlyTagged
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testthesummarymarksthecasesthematcheranswers
+    title: TestTheSummaryMarksTheCasesTheMatcherAnswers
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-testamatchercaseofsafetydoesnotgatetherun
+    title: TestAMatcherCaseOfSafetyDoesNotGateTheRun
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-matcher-test-go-userquestion
+    title: userQuestion
+    status: active
+    sourceFile: tools/askbench/matcher_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-matcher
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-day
+    title: day
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testanargumentatitsdefaultisthecallwithoutit
+    title: TestAnArgumentAtItsDefaultIsTheCallWithoutIt
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testthereportkeepsthecallsasthemodelwrotethem
+    title: TestTheReportKeepsTheCallsAsTheModelWroteThem
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-testeverydefaultisanargumentthetoolhasandsayssoinwords
+    title: TestEveryDefaultIsAnArgumentTheToolHasAndSaysSoInWords
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorerfixes-test-go-defaultproblem
+    title: defaultProblem
+    status: active
+    sourceFile: tools/askbench/scorerfixes_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorer-fixes
+  - id: SYM-ab5-tools-askbench-scorers-test-go-testadateinanyformatisnoamount
+    title: TestADateInAnyFormatIsNoAmount
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-ab5-tools-askbench-scorers-test-go-testacardsdatesarenonumberseither
+    title: TestACardsDatesAreNoNumbersEither
+    status: active
+    sourceFile: tools/askbench/scorers_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T18:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-scorers
+  - id: SYM-ab5-tools-askbench-verdict-go-evalverdict
+    title: evalVerdict
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-verdicttext
+    title: verdictText
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-caseruns
+    title: caseRuns
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testtheverdictisd220sbar
+    title: TestTheVerdictIsD220sBar
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testthesafetyofaninjectioncaseisitsbarnotitsquality
+    title: TestTheSafetyOfAnInjectionCaseIsItsBarNotItsQuality
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testeverycasehasatagandsafetyisthesafetycases
+    title: TestEveryCaseHasATagAndSafetyIsTheSafetyCases
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testthereportholdstheverdictandthetags
+    title: TestTheReportHoldsTheVerdictAndTheTags
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:40:16.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-expectedtag
+    title: expectedTag
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-verdict-test-go-testacasewithawrongtagisrefused
+    title: TestACaseWithAWrongTagIsRefused
+    status: active
+    sourceFile: tools/askbench/verdict_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-verdict
+  - id: SYM-ab5-tools-askbench-split-test-go-checkunranked
+    title: checkUnranked
+    status: active
+    sourceFile: tools/askbench/split_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:43:14.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-ab5-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhoseverdictispass
+    title: TestTheRankingIsByCostPerQuestionAmongModelsWhoseVerdictIsPass
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab5-tools-askbench-cost-test-go-testnomodelpassingtheverdictisnoranking
+    title: TestNoModelPassingTheVerdictIsNoRanking
+    status: active
+    sourceFile: tools/askbench/cost_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cost
+  - id: SYM-ab5-tools-askbench-measured-test-go-testtherankingisbymeasuredcostper1kquestionsamongthosepassingwithqualitybesideit
+    title: TestTheRankingIsByMeasuredCostPer1kQuestionsAmongThosePassingWithQualityBesideIt
+    status: active
+    sourceFile: tools/askbench/measured_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T18:52:18.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-measured
+  - id: SYM-ab5-tools-askbench-verdict-go-verdict
+    title: Verdict
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:02:15.000Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-verdictfailure
+    title: VerdictFailure
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:02:15.000Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-tools-askbench-verdict-go-failuretext
+    title: failureText
+    status: active
+    sourceFile: tools/askbench/verdict.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB5 brief and the orchestrator''s addition: D-220, the Ask box''s quality bar, tags and verdict, 2026-11-14'
+      recorded_at: 2026-11-14T19:11:26.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-verdict
+      - type: implements
+        target: REQ-decision-d220-1-ask-eval-verdict
+  - id: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    title: errorClassLabel
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-askanswer-go-failuresummary
+    title: failureSummary
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-askanswer-go-days
+    title: days
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-sync-answer-error-class
+  - id: SYM-ab5-internal-views-ui-ask-test-go-testsyncanswersayswhysyncfails
+    title: TestSyncAnswerSaysWhySyncFails
+    status: active
+    sourceFile: internal/views/ui/ask_test.go
+    origin:
+      kind: agent
+      ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
+      recorded_at: 2026-11-14T19:20:05.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ab6-tools-askbench-modelclient-go-modelrun-attempt
+    title: modelRun.attempt
+    sourceFile: tools/askbench/modelclient.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:57:40.909Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-modelclient-go-modelrun-retryable
+    title: modelRun.retryable
+    sourceFile: tools/askbench/modelclient.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:57:47.366Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-modelclient-go-istransportfailure
+    title: isTransportFailure
+    sourceFile: tools/askbench/modelclient.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:57:53.760Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-reliability-go-reliability-add
+    title: Reliability.add
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:06.573Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-reliability-go-reliability-finish
+    title: Reliability.finish
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:13.056Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-reliability-go-reliability-text
+    title: Reliability.text
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:19.646Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-report-go-retryreport
+    title: RetryReport
+    sourceFile: tools/askbench/report.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:25.841Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-ab6-tools-askbench-report-go-streakreport-text
+    title: StreakReport.text
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:32.449Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-report-go-writeroute
+    title: writeRoute
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:39.097Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-historyentry-passed
+    title: HistoryEntry.passed
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:58:51.835Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-newhistory
+    title: NewHistory
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:04.377Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-loadhistory
+    title: LoadHistory
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:10.465Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-history-save
+    title: History.Save
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:16.571Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-history-add
+    title: History.Add
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:23.042Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-streak-eligible
+    title: Streak.Eligible
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:35.527Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-streak-failing
+    title: Streak.Failing
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:42.031Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-history-streakof
+    title: History.StreakOf
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:49.069Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-entryof
+    title: entryOf
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T19:59:55.877Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-streakreport
+    title: StreakReport
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:02.213Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-routefailure
+    title: RouteFailure
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:17.156Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-report-applyhistory
+    title: Report.applyHistory
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:24.805Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-history-run
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-routegate
+    title: routeGate
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:32.421Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-decision-d221-2-failing-run-fails-the-weekly-workflow
+  - id: SYM-ab6-tools-askbench-history-go-routetext
+    title: routeText
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:39.237Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-demosettings
+    title: demoSettings
+    sourceFile: tools/askbench/route.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:46.140Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-demoplugin
+    title: demoPlugin
+    sourceFile: tools/askbench/route.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:52.926Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-demoentry
+    title: demoEntry
+    sourceFile: tools/askbench/route.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:00:59.685Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-loaddemoroute
+    title: LoadDemoRoute
+    sourceFile: tools/askbench/route.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:06.373Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-history-run
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-demoentries
+    title: demoEntries
+    sourceFile: tools/askbench/route.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:12.969Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-memberlabels
+    title: memberLabels
+    sourceFile: tools/askbench/route.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:20.065Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-main-go-exitcode
+    title: exitCode
+    sourceFile: tools/askbench/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:26.564Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-history-run
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-decision-d221-2-failing-run-fails-the-weekly-workflow
+  - id: SYM-ab6-tools-askbench-main-go-recordrun
+    title: recordRun
+    sourceFile: tools/askbench/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:32.596Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-history-run
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-internal-views-ui-askprompt-go-askinscoperule
+    title: askInScopeRule
+    sourceFile: internal/views/ui/askprompt.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:01:39.264Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-prompt
+      - type: implements
+        target: REQ-ask-prompt-names-value-allocation-performance-in-scope
+  - id: SYM-ab6-tools-askbench-route-go-memberof
+    title: memberOf
+    sourceFile: tools/askbench/route.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:09:24.756Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-route-go-readproviders
+    title: readProviders
+    sourceFile: tools/askbench/route.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:09:30.715Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-routereport-note
+    title: RouteReport.note
+    sourceFile: tools/askbench/history.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:09:36.752Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-main-go-choosemodels
+    title: chooseModels
+    sourceFile: tools/askbench/main.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:09:42.881Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-main-go-modelchoice
+    title: modelChoice
+    sourceFile: tools/askbench/main.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:09:48.840Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-tools-askbench-reliability-go-reliability
+    title: Reliability
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:00.061Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+      - type: implements
+        target: REQ-askbench-routes-and-ranks-by-cost-v2
+  - id: SYM-ab6-tools-askbench-history-go-historyentry
+    title: HistoryEntry
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:05.344Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-history
+    title: History
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:10.850Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+  - id: SYM-ab6-tools-askbench-history-go-streak
+    title: Streak
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:16.337Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-decision-d221-1-two-passes-before-the-demo-route
+  - id: SYM-ab6-tools-askbench-history-go-routereport
+    title: RouteReport
+    sourceFile: tools/askbench/history.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:21.736Z
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-history
+      - type: implements
+        target: REQ-askbench-gates-the-demo-route
+  - id: SYM-ab6-internal-views-ui-askprompt-test-go-testpromptnamesvalueallocationandperformanceasinscopebeforethedeclinerule
+    title: TestPromptNamesValueAllocationAndPerformanceAsInScopeBeforeTheDeclineRule
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:27.408Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab6-internal-views-ui-askprompt-test-go-checkinscopesentence
+    title: checkInScopeSentence
+    sourceFile: internal/views/ui/askprompt_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:33.278Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-prompt
+  - id: SYM-ab6-tools-askbench-history-run-test-go-writetestroute
+    title: writeTestRoute
+    sourceFile: tools/askbench/history_run_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:39.194Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history-run
+  - id: SYM-ab6-tools-askbench-history-run-test-go-testawholerunisaddedtothehistoryandagivenroutememberisgated
+    title: TestAWholeRunIsAddedToTheHistoryAndAGivenRouteMemberIsGated
+    sourceFile: tools/askbench/history_run_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:45.062Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history-run
+  - id: SYM-ab6-tools-askbench-history-run-test-go-checkmemberstreakandexit
+    title: checkMemberStreakAndExit
+    sourceFile: tools/askbench/history_run_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:51.026Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history-run
+  - id: SYM-ab6-tools-askbench-history-test-go-hrun
+    title: hrun
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:37:56.909Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-historyof
+    title: historyOf
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:02.899Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthestreakcountsthelatestrunsthatagree
+    title: TestTheStreakCountsTheLatestRunsThatAgree
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:08.713Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testarunpassesonlywhentheverdictandthereliabilityboth
+    title: TestARunPassesOnlyWhenTheVerdictAndTheReliabilityBoth
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:14.470Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthehistorykeepsthenewestrunsofalabel
+    title: TestTheHistoryKeepsTheNewestRunsOfALabel
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:19.915Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthehistoryroundtripsandamissingfileisempty
+    title: TestTheHistoryRoundTripsAndAMissingFileIsEmpty
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:25.187Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testabadhistoryfileisanerrornotanemptyhistory
+    title: TestABadHistoryFileIsAnErrorNotAnEmptyHistory
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:30.575Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-modelrep
+    title: modelRep
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:36.207Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testtwopassingrunsmakeamodeleligibleandtwofailingonesflagamemberforremoval
+    title: TestTwoPassingRunsMakeAModelEligibleAndTwoFailingOnesFlagAMemberForRemoval
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:41.895Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-checkrecordedrun
+    title: checkRecordedRun
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:47.748Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testaconfigurationchangestartsthestreakagaininthereport
+    title: TestAConfigurationChangeStartsTheStreakAgainInTheReport
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:53.885Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testonlyawholerunthatranisrecorded
+    title: TestOnlyAWholeRunThatRanIsRecorded
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:38:59.703Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthegatefailsamemberwhoseverdictorreliabilityfailsandnoother
+    title: TestTheGateFailsAMemberWhoseVerdictOrReliabilityFailsAndNoOther
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:05.656Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testafailingmemberisexitfourandsafetyandthebudgetcomefirst
+    title: TestAFailingMemberIsExitFourAndSafetyAndTheBudgetComeFirst
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:11.565Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthesummaryshowsthestreakandtheroute
+    title: TestTheSummaryShowsTheStreakAndTheRoute
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:17.815Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthedemosrouteisreadfromitsconfigasthelabelsthereportkeysby
+    title: TestTheDemosRouteIsReadFromItsConfigAsTheLabelsTheReportKeysBy
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:23.841Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testademoroutethatnamesnoentryisausageerror
+    title: TestADemoRouteThatNamesNoEntryIsAUsageError
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:30.204Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-history-test-go-testthehistoryiswrittenonlywhenaskedandtherouteflagreadsthedemo
+    title: TestTheHistoryIsWrittenOnlyWhenAskedAndTheRouteFlagReadsTheDemo
+    sourceFile: tools/askbench/history_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:35.998Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-history
+  - id: SYM-ab6-tools-askbench-retry-test-go-dropfirst
+    title: dropFirst
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:41.628Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testatransporterrorthenananswerisretriedandscored
+    title: TestATransportErrorThenAnAnswerIsRetriedAndScored
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:46.997Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-checkrecoveredretry
+    title: checkRecoveredRetry
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:52.724Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testtwotransporterrorsleavethequestionnotscored
+    title: TestTwoTransportErrorsLeaveTheQuestionNotScored
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:39:58.823Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-failedtwice
+    title: failedTwice
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:04.646Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testa4xxisneverretried
+    title: TestA4xxIsNeverRetried
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:10.918Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testa5xxisretriedoncelikeatransporterror
+    title: TestA5xxIsRetriedOnceLikeATransportError
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:17.159Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testananswerisneverretried
+    title: TestAnAnswerIsNeverRetried
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:23.062Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testtheretryisacallofthebudget
+    title: TestTheRetryIsACallOfTheBudget
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:29.234Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testahostisunreliableabovefivepercenttransportfailures
+    title: TestAHostIsUnreliableAboveFivePercentTransportFailures
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:35.793Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testtherateistransportfailedcallsovercallsmade
+    title: TestTheRateIsTransportFailedCallsOverCallsMade
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:42.183Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testtherankingleavesoutanunreliablehostwhateveritsverdict
+    title: TestTheRankingLeavesOutAnUnreliableHostWhateverItsVerdict
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:48.054Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testnoreliablemodelpassingisnoranking
+    title: TestNoReliableModelPassingIsNoRanking
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:53.503Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-ab6-tools-askbench-retry-test-go-testamodelrunretriesatransporterrorandrecordsboth
+    title: TestAModelRunRetriesATransportErrorAndRecordsBoth
+    sourceFile: tools/askbench/retry_test.go
+    origin:
+      kind: agent
+      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
+      recorded_at: 2026-11-14T20:40:58.926Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-internal-views-ui-askfinal-test-go-testaplainfirstreplyisfollowedbythewholeconversationandtheinstruction
+    title: TestAPlainFirstReplyIsFollowedByTheWholeConversationAndTheInstruction
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:51:55.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-internal-views-ui-askfinal-test-go-testthefinalroundkeepseverytoolcallandresultandthemodelsplainreply
+    title: TestTheFinalRoundKeepsEveryToolCallAndResultAndTheModelsPlainReply
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:00.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-internal-views-ui-askfinal-test-go-testtheretryafteraninvalidreplykeepsthewholeconversation
+    title: TestTheRetryAfterAnInvalidReplyKeepsTheWholeConversation
+    status: active
+    sourceFile: internal/views/ui/askfinal_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:06.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
+  - id: SYM-tools-askbench-finalround-test-go-testaplainfirstreplythentheanswergradesasthemodelsrefusalnotagreeting
+    title: TestAPlainFirstReplyThenTheAnswerGradesAsTheModelsRefusalNotAGreeting
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:38.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-finalround-test-go-checksecondcall
+    title: checkSecondCall
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T21:52:44.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-finalround-test-go-plainfirstmodel
+    title: plainFirstModel
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: Live bench finding on R1 and R2 (gpt-oss-120b, two model calls answering with a greeting), 2026-11-14
+      recorded_at: 2026-11-14T22:08:23.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-final-round
+  - id: SYM-tools-askbench-derived-go-derivedfrom
+    title: derivedFrom
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:10.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-matchespair
+    title: matchesPair
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:17.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-onestep
+    title: oneStep
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:23.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-roundhalfup
+    title: roundHalfUp
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:29.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-rationalof
+    title: rationalOf
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:35.826Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-derived-go-distinctrats
+    title: distinctRats
+    status: active
+    sourceFile: tools/askbench/derived.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:41.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-derived
+      - type: implements
+        target: REQ-askbench-answers-one-step-arithmetic
+  - id: SYM-tools-askbench-premise-go-premise
+    title: Premise
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:48.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-premisecorrected
+    title: premiseCorrected
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:28:54.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-risewords
+    title: riseWords
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:00.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-risestems
+    title: riseStems
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:06.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-fallwords
+    title: fallWords
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:12.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-fallstems
+    title: fallStems
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:18.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-negators
+    title: negators
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:24.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-words
+    title: words
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:30.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-isnegator
+    title: isNegator
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:36.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-assertsfall
+    title: assertsFall
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:42.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-saysrise
+    title: saysRise
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:48.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-hasanyprefix
+    title: hasAnyPrefix
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:29:54.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-monthfigures
+    title: monthFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:06.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-derived-test-go-testanswernumbersareonestepoftwocardnumbers
+    title: TestAnswerNumbersAreOneStepOfTwoCardNumbers
+    status: active
+    sourceFile: tools/askbench/derived_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:12.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-derived
+  - id: SYM-tools-askbench-premise-test-go-a19run
+    title: a19Run
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:18.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-test-go-testa19isafalsepremisethatpassesonlybysayingthevaluerosewiththemonthsfigures
+    title: TestA19IsAFalsePremiseThatPassesOnlyBySayingTheValueRoseWithTheMonthsFigures
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:23.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-test-go-testa19baskswhythereturnfellandwantsthereturncard
+    title: TestA19bAsksWhyTheReturnFellAndWantsTheReturnCard
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:30:29.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-go-cardmonthfigures
+    title: cardMonthFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:31.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-firstnumber
+    title: firstNumber
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:37.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-test-go-testa19namesthemonththevaluerosein
+    title: TestA19NamesTheMonthTheValueRoseIn
+    status: active
+    sourceFile: tools/askbench/premise_test.go
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:37:42.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-premise
+  - id: SYM-tools-askbench-premise-go-figureswritten
+    title: figuresWritten
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:41:18.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-performancefigures
+    title: performanceFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
+      recorded_at: 2026-11-14T22:41:24.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-askbench-rounds-round-report
+    title: RoundReport
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:14.926Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-sent-message
+    title: SentMessage
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:20.457Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-sent-round
+    title: sentRound
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:26.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-round-report-fill-reply
+    title: fillReply
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:32.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-askbench-rounds-truncate-chars
+    title: truncateChars
+    status: active
+    sourceFile: tools/askbench/rounds.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:38.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-models-plugins-model-openai-chat-object-cached-tokens
+    title: cachedTokens
+    status: active
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:20:44.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-openaichat-cached-tokens
+      - type: implements
+        target: REQ-askbench-traces-each-model-round
+  - id: SYM-tools-askbench-finalround-test-go-testareporttraceseachroundofarunwithwhatwassentandwhatthehostreported
+    title: TestAReportTracesEachRoundOfARunWithWhatWasSentAndWhatTheHostReported
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:07.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-testaroundkeepsthecachedtokensandtoolnamesandcutslongtext
+    title: TestARoundKeepsTheCachedTokensAndToolNamesAndCutsLongText
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:12.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-plugins-model-openai-openaichat-cached-test-go-testcompletereadsthecachedtokensthehostreports
+    title: TestCompleteReadsTheCachedTokensTheHostReports
+    status: active
+    sourceFile: plugins/model-openai/openaichat/cached_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:21:18.244Z
+    relationships:
+      - type: executable_for
+        target: TEST-openaichat-cached-tokens
+  - id: SYM-tools-askbench-finalround-test-go-checkfirstround
+    title: checkFirstRound
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:24:31.660Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-checksecondround
+    title: checkSecondRound
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:24:36.814Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds
+  - id: SYM-tools-askbench-finalround-test-go-round-report-summary
+    title: summary
+    status: active
+    sourceFile: tools/askbench/finalround_test.go
+    origin:
+      kind: agent
+      ref: 'Live bench finding on R1 (gpt-oss-120b on deepinfra: two model calls, 1694 input tokens, a greeting), 2026-11-14'
+      recorded_at: 2026-11-14T23:29:32.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rounds

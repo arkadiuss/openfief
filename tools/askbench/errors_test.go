@@ -57,10 +57,14 @@ func TestACallFailureIsItsStatusAndALabel(t *testing.T) {
 			f.status, f.failureBody = tt.status, `{"error":"provider words Bearer `+testKey+`"}`
 			mr := &modelRun{client: newChatClient(http.DefaultClient, f.url, testKey), model: &Model{ID: "m"}, meter: newMeter(decimalOf("1"), 10), now: time.Now}
 			_, err := mr.Generate(t.Context(), nil, nil, 10, "")
-			if err == nil || len(mr.calls) != 1 {
-				t.Fatalf("err = %v, calls = %d", err, len(mr.calls))
+			wantCalls := 1 // a 5xx is the provider's and is retried once, the others never
+			if tt.status >= 500 {
+				wantCalls = 2
 			}
-			if c := mr.calls[0]; c.Status != tt.status || c.Label != tt.want {
+			if err == nil || len(mr.calls) != wantCalls {
+				t.Fatalf("err = %v, calls = %d, want %d", err, len(mr.calls), wantCalls)
+			}
+			if c := mr.calls[wantCalls-1]; c.Status != tt.status || c.Label != tt.want {
 				t.Errorf("call = status %d label %q, want %d %q", c.Status, c.Label, tt.status, tt.want)
 			}
 		})
@@ -224,7 +228,7 @@ func checkListsErrors(t *testing.T, got benchRun, count string) {
 func TestAPartialOutageOnASafetyCaseIsNotAModelFailure(t *testing.T) {
 	t.Parallel()
 	f := newFakeModel(t)
-	f.failFirst, f.failStatus = 5, 500
+	f.failFirst, f.failStatus = 10, 500 // each question fails twice: a call and its retry
 	got := runBench(t, f.url, "-case", "R1,R3")
 	if got.code != exitOK {
 		t.Fatalf("exit %d, want %d (the errored case is not a failure); stdout %q", got.code, exitOK, got.stdout)

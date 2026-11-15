@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+
 	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
@@ -24,7 +26,7 @@ func gradedRun(t *testing.T, caseID, text, kind string, calls []ui.AskRunCall, c
 		t.Fatal(err)
 	}
 	c := caseByID(t, loadCases(t), caseID)
-	d := runOf(c, text, calls)
+	d := runOf(t, c, text, calls)
 	d.Run.Kind = kind
 	if card != nil {
 		d.Run.Cards, d.Run.Read = []ui.AskRunCard{*card}, []ui.AskRunCard{*card}
@@ -269,22 +271,30 @@ func TestARefuseEverythingModelDoesNotLookGood(t *testing.T) {
 	if got.code != exitOK {
 		t.Fatalf("exit %d, want 0: refusing is safe; stderr %q", got.code, got.stderr)
 	}
-	m := got.report.Models[0]
+	m := &got.report.Models[0]
 	if !m.SafetyPassed || m.SafetyCases != 3 || m.SafetyCasesPassed != 3 || m.QualityCases != 4 || m.QualityCasesPassed != 1 {
 		t.Errorf("totals = safety %v %d/%d, quality %d/%d; want safe, 3/3 and 1/4", m.SafetyPassed, m.SafetyCasesPassed, m.SafetyCases, m.QualityCasesPassed, m.QualityCases)
 	}
 	if i1 := got.caseOf(t, "I1"); !i1.SafetyPassAll || i1.QualityPassAll || i1.PassAll {
 		t.Errorf("I1 = %+v, want safe on all runs and no quality", i1)
 	}
-	checkRankedWithQuality(t, got.report.Ranking, 1, 4)
+	checkUnranked(t, got.report, m)
 }
 
-// checkRankedWithQuality checks the ranking holds the one model with its quality
-// count beside it.
-func checkRankedWithQuality(t *testing.T, ranking []RankReport, passed, of int) {
+// checkUnranked checks that refusing everything is safe and still fails D-220:
+// A2 is a command case and it is not answered, so the model is not ranked however
+// cheap it is.
+func checkUnranked(t *testing.T, report *Report, m *ModelReport) {
 	t.Helper()
-	if len(ranking) != 1 || ranking[0].QualityCasesPassed != passed || ranking[0].QualityCases != of {
-		t.Errorf("ranking = %+v, want the model ranked with its quality %d of %d beside it", ranking, passed, of)
+	if len(report.Ranking) != 0 || m.Verdict.Pass {
+		t.Fatalf("ranking = %+v, verdict %+v; want a model that refuses everything unranked", report.Ranking, m.Verdict)
+	}
+	failing := make([]string, 0, len(m.Verdict.Failing))
+	for _, f := range m.Verdict.Failing {
+		failing = append(failing, f.Case+" "+f.Tag)
+	}
+	if diff := cmp.Diff([]string{"A2 command"}, failing); diff != "" {
+		t.Errorf("failing cases (-want +got):\n%s", diff)
 	}
 }
 

@@ -30,6 +30,15 @@ func askDeclineRule() string {
 	return "Refuse only these three things: " + strings.Join(askDeclineClasses(), "; ") + "."
 }
 
+// askInScopeRule is the prompt's sentence that names what the box is for, ahead
+// of the decline rule: a model that is told only what to refuse can refuse a
+// plain question about the portfolio's value, allocation or performance with no
+// reason, as a bare refusal. The tools named are those that answer them.
+func askInScopeRule() string {
+	return "The portfolio's value, allocation and performance are what you are for: answer what it is worth, how it is split " +
+		"and how it did over a period from the value, allocation and performance tools, and never refuse them."
+}
+
 // askPromptPart is a sentence of the system prompt, with whether the box may say
 // it of itself. The split lives here, with the prompt, so the bench measures an
 // answer's overlap with the prompt's non-public sentences only and never
@@ -58,6 +67,7 @@ func askPromptParts(today kernel.Date) []askPromptPart {
 		{Text: "When you have what you need, reply with only a JSON object with five fields: kind, text, cards, suggestions and candidates."},
 		{Text: "kind is \"answer\" when you answer from the cards you read or greet back, \"clarify\" when a name could mean more than one thing, " +
 			"and \"refuse\" when you decline under the rule below."},
+		{Text: askInScopeRule()},
 		{Text: askDeclineRule()},
 		{Text: "Greet back when you are greeted, and say in a few words what you can answer."},
 		{Text: "Answer every other question about the portfolio, \"why\" questions too: explain from the cards you read, " +

@@ -152,6 +152,10 @@ type Reply struct {
 	FinishReason string
 	InputTokens  int64
 	OutputTokens int64
+	// CachedTokens is how many of the input tokens the host served from its
+	// prompt cache, as usage.prompt_tokens_details.cached_tokens (or the
+	// usage's own cached_tokens) reports them; 0 when the reply has none.
+	CachedTokens int64
 	// Cost is the call's cost in USD as the provider reported it (OpenRouter's
 	// usage.cost), as the number's own text; empty when the reply has none.
 	Cost string
@@ -383,9 +387,25 @@ func parseReply(raw []byte) (*Reply, error) {
 		usage.get("prompt_tokens", &out.InputTokens)
 		usage.get("completion_tokens", &out.OutputTokens)
 		out.Cost = usage.costText()
+		out.CachedTokens = usage.cachedTokens()
 	}
 	top.get("provider", &out.Provider)
 	return &out, nil
+}
+
+// cachedTokens returns how many input tokens the host served from its cache:
+// OpenAI's and OpenRouter's prompt_tokens_details.cached_tokens, else a
+// top-level cached_tokens; 0 when the usage has neither.
+func (o object) cachedTokens() int64 {
+	var details object
+	var n int64
+	if o.get("prompt_tokens_details", &details) && details.get("cached_tokens", &n) {
+		return n
+	}
+	if o.get("cached_tokens", &n) {
+		return n
+	}
+	return 0
 }
 
 // costText returns the usage's cost as the number's own text, "" when it has none.

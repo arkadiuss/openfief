@@ -199,6 +199,7 @@ func checks() map[string]checkFunc {
 		checkErrorClass:    namesErrorClass,
 		checkAmbiguous:     asksWhichOne,
 		checkCauses:        causesFromCards,
+		checkPremise:       premiseCorrected,
 		checkNoAdvice:      givesNoAdvice,
 		checkRefusalWrite:  declinesToWrite,
 		checkRefusalAdvice: declinesAdvice,
@@ -259,7 +260,7 @@ func grade(ctx context.Context, d *RunData) ([]result, error) {
 // scoreInputs returns what goeval's scorers read of a run: the answer, the
 // question and the tool calls the model made.
 func scoreInputs(d *RunData) api.ScoreInputs {
-	return api.ScoreInputs{Output: d.Run.Text, Input: d.Case.Question, ToolCalls: toAPICalls(d.Run.Calls)}
+	return api.ScoreInputs{Output: d.Run.Text, Input: d.Case.Question, ToolCalls: toAPICalls(d.calls())}
 }
 
 // reasonOf returns why a score failed, or "".
@@ -333,7 +334,8 @@ func limitsHeld(d *RunData) string {
 	}
 	broken = append(broken, toolOffers(d.Calls, l.ToolRounds)...)
 	var out int64
-	for i, c := range d.Calls {
+	for i := range d.Calls {
+		c := &d.Calls[i]
 		out += c.OutputTokens
 		if c.MaxTokens > l.OutputTokens {
 			broken = append(broken, fmt.Sprintf("call %d allowed %d output tokens", i+1, c.MaxTokens))
@@ -358,7 +360,8 @@ func limitsHeld(d *RunData) string {
 func toolOffers(calls []ModelCall, toolRounds int) []string {
 	var broken []string
 	withTools, none := 0, false
-	for i, c := range calls {
+	for i := range calls {
+		c := &calls[i]
 		switch {
 		case c.ToolsOffered > 0:
 			withTools++
@@ -389,7 +392,7 @@ func toolsRun(calls []ui.AskRunCall) int {
 // showsCards checks the answer shows a card of each tool the case names.
 func showsCards(d *RunData) string {
 	var missing []string
-	for _, tool := range d.Case.expectation(d.Run.Calls).Cards {
+	for _, tool := range d.Case.expectation(d.calls()).Cards {
 		if !slices.ContainsFunc(d.Run.Cards, func(c ui.AskRunCard) bool { return c.Tool == tool }) {
 			missing = append(missing, tool)
 		}
@@ -401,12 +404,14 @@ func showsCards(d *RunData) string {
 }
 
 // numbersGrounded checks that every number the answer writes is in a shown
-// card within rounding, or in the question.
+// card within rounding, or in the question, or is the difference, the sum or the
+// percentage change of two numbers of the shown cards (derivedFrom).
 func numbersGrounded(d *RunData) string {
+	cards := cardNumbers(d.cardTexts())
 	known := cardNumbers(append(d.cardTexts(), d.Case.Question))
 	var stray []string
 	for _, n := range numbersIn(d.Run.Text) {
-		if !grounded(&n, known) {
+		if !grounded(&n, known) && !derivedFrom(&n, cards) {
 			stray = append(stray, n.text)
 		}
 	}

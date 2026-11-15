@@ -1252,3 +1252,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b27fbefecf2d
+  - type: implements
+    from: SYM-ab5-tools-askbench-toolcalls-go-argsobject
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:30:40.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c63edbf92aa
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-toolcalls-go-argsobject
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:30:40.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd31062dcb79
+  - type: implements
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-add
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T19:58:09.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34034a172fd5
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-add
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:58:09.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe948015843

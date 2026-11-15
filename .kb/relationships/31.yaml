@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88dda2420ecd
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-matcher-test-go-testnocaseisoneoftheboxscommands
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:31:14.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e714ea17019a
+  - type: implements
+    from: SYM-tools-askbench-premise-go-fallstems
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:21.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2f672c4bd09
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-fallstems
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:21.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b84734d2f5

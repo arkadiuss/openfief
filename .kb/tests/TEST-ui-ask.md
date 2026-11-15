@@ -9,4 +9,4 @@ origin:
 id: TEST-ui-ask
 type: test
 ---
-Table tests of parseAsk over every command's phrasings and refusals, periodRange, matchTarget (exact, prefix, substring, kind), matchInstance, askSuggestions (each one understood), the known commands' examples, and returnPercent.
+Table tests of parseAsk over every command's phrasings and refusals, periodRange, matchTarget (exact, prefix, substring, kind), matchInstance, askSuggestions (each one understood), the known commands' examples, and returnPercent. Also the sync answer's card for a sync that keeps failing, one that failed once, one with no class or start and one that works: the days it has failed, the attempts in a row, the latest error class, and each attempt's time and class.

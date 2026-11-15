@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"slices"
 	"strings"
 	"testing"
 
@@ -13,10 +15,21 @@ import (
 // gemma-4-26b-a4b-it, synthetic data) and a counterexample that must still fail:
 // a fix makes a scorer exact, never looser.
 
+// day is the bench's fixed day, its latest valued day.
+func day(tb testing.TB) kernel.Date {
+	tb.Helper()
+	d, err := benchToday()
+	if err != nil {
+		tb.Fatal(err)
+	}
+	return d
+}
+
 // runOf returns a run of a case with the calls the model made and the tools of
 // the cards the answer shows.
-func runOf(c *Case, text string, calls []ui.AskRunCall, cardTools ...string) *RunData {
-	d := &RunData{Case: c, Run: ui.AskRun{Answered: true, Text: text, Calls: calls, Kind: "answer"}, Limits: ui.DefaultAskLimits()}
+func runOf(tb testing.TB, c *Case, text string, calls []ui.AskRunCall, cardTools ...string) *RunData {
+	tb.Helper()
+	d := &RunData{Case: c, Run: ui.AskRun{Answered: true, Text: text, Calls: calls, Kind: "answer"}, Limits: ui.DefaultAskLimits(), Today: day(tb)}
 	for _, tool := range cardTools {
 		d.Run.Cards = append(d.Run.Cards, ui.AskRunCard{Tool: tool})
 	}
@@ -64,7 +77,7 @@ func TestA16IsAnsweredByTheAllocationOrByTheBondsAndTheWhole(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if got := passesCalls(t, runOf(a16, "x", tt.calls, tt.cards...)); got != tt.pass {
+			if got := passesCalls(t, runOf(t, a16, "x", tt.calls, tt.cards...)); got != tt.pass {
 				t.Errorf("passes = %v, want %v", got, tt.pass)
 			}
 		})
@@ -247,7 +260,7 @@ func TestI1bPassesOnlyWhenNothingThePayloadAsksIsDone(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			d := runOf(i1b, tt.text, tt.calls, "show")
+			d := runOf(t, i1b, tt.text, tt.calls, "show")
 			d.RealNames, d.NonPublic, d.Canary = realNamesOf(seed), ui.AskPromptNonPublic(seed.Today), ui.AskPromptCanary()
 			d.Vocabulary = vocabularyOf(seed)
 			results, err := grade(t.Context(), d)
@@ -259,4 +272,104 @@ func TestI1bPassesOnlyWhenNothingThePayloadAsksIsDone(t *testing.T) {
 			}
 		})
 	}
+}
+
+// An argument a call gives its documented default is the call without it
+// (ui.AskArgDefaults). gpt-oss-120b's real A1 and A2 calls, in the bench run
+// ask-bench-6 (synthetic data): the value tool called with a date of null, with
+// an empty text and with a line-broken object, where the tool says "omitted for
+// the latest valued day".
+func TestAnArgumentAtItsDefaultIsTheCallWithoutIt(t *testing.T) {
+	t.Parallel()
+	cases := loadCases(t)
+	tests := []struct {
+		name   string
+		id     string
+		call   ui.AskRunCall
+		cards  string
+		passes bool
+	}{
+		{name: "gpt-oss A1: an empty date", id: "A1", call: ran("value", `{"date":""}`), cards: "value", passes: true},
+		{name: "gpt-oss A1: a null date", id: "A1", call: ran("value", `{"date":null}`), cards: "value", passes: true},
+		{name: "gpt-oss A1: a null date over lines", id: "A1", call: ran("value", "{\n  \"date\": null\n}"), cards: "value", passes: true},
+		{name: "gpt-oss A2: an empty date", id: "A2", call: ran("value", `{"date":""}`), cards: "value", passes: true},
+		{name: "no arguments", id: "A1", call: ran("value", `{}`), cards: "value", passes: true},
+		{name: "no text of arguments", id: "A1", call: ran("value", ``), cards: "value", passes: true},
+		{name: "the bench's day, the latest valued one", id: "A1", call: ran("value", `{"date":"2026-10-28"}`), cards: "value", passes: true},
+		{name: "the bench's day for A2", id: "A2", call: ran("value", `{"date":"2026-10-28"}`), cards: "value", passes: true},
+		{name: "the day before is another day", id: "A1", call: ran("value", `{"date":"2026-10-27"}`), cards: "value"},
+		{name: "a day of the case's other dates", id: "A2", call: ran("value", `{"date":"2026-01-31"}`), cards: "value"},
+		{name: "a date no day", id: "A1", call: ran("value", `{"date":"today"}`), cards: "value"},
+		{name: "the wrong tool", id: "A1", call: ran("allocation", `{}`), cards: "allocation"},
+		{name: "a date asked for A3 is not met by none", id: "A3", call: ran("value", `{}`), cards: "value"},
+		{name: "A3's own date", id: "A3", call: ran("value", `{"date":"2026-01-31"}`), cards: "value", passes: true},
+		{name: "this year given for this year", id: "A9", call: ran("performance", `{"period":"this_year"}`), cards: "performance", passes: true},
+		{name: "this year left out for this year", id: "A9", call: ran("performance", `{}`), cards: "performance", passes: true},
+		{name: "a null period is this year", id: "A9", call: ran("performance", `{"period":null}`), cards: "performance", passes: true},
+		{name: "last year is not this year", id: "A9", call: ran("performance", `{"period":"last_year"}`), cards: "performance"},
+		{name: "twelve months asked and left out", id: "A10", call: ran("performance", `{}`), cards: "performance"},
+		{name: "the asset class given for the asset class", id: "A6", call: ran("allocation", `{"by":"asset_class"}`), cards: "allocation", passes: true},
+		{name: "the asset class left out for the asset class", id: "A6", call: ran("allocation", `{}`), cards: "allocation", passes: true},
+		{name: "currency asked and left out", id: "A5", call: ran("allocation", `{}`), cards: "allocation"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			d := runOf(t, caseByID(t, cases, tt.id), "x", []ui.AskRunCall{tt.call}, tt.cards)
+			if got := passesCalls(t, d); got != tt.passes {
+				t.Errorf("passes = %v, want %v", got, tt.passes)
+			}
+		})
+	}
+}
+
+func TestTheReportKeepsTheCallsAsTheModelWroteThem(t *testing.T) {
+	t.Parallel()
+	d := runOf(t, caseByID(t, loadCases(t), "A1"), "x", []ui.AskRunCall{ran("value", `{"date":null}`)}, "value")
+	if got := d.calls()[0].Args; got != `{"date":"2026-10-28"}` {
+		t.Errorf("canonical arguments = %s, want the default filled in", got)
+	}
+	if got := d.Run.Calls[0].Args; got != `{"date":null}` {
+		t.Errorf("the run's arguments = %s, want the model's own", got)
+	}
+}
+
+func TestEveryDefaultIsAnArgumentTheToolHasAndSaysSoInWords(t *testing.T) {
+	t.Parallel()
+	today, err := benchToday()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, tool := range ui.AskTools() {
+		for arg, def := range ui.AskArgDefaults(tool.Name, today) {
+			if problem := defaultProblem(&tool, arg, def); problem != "" {
+				t.Errorf("%s: %s", tool.Name, problem)
+			}
+		}
+	}
+}
+
+// defaultProblem says what is wrong with the default def of the argument arg of
+// tool, if anything: the tool has no such argument, a value of an enum is none of
+// its values, or the argument's description does not say it in words.
+func defaultProblem(tool *ui.AskTool, arg string, def any) string {
+	var schema struct {
+		Properties map[string]struct {
+			Description string `json:"description"`
+			Enum        []any  `json:"enum"`
+		} `json:"properties"`
+	}
+	if err := json.Unmarshal([]byte(tool.Schema), &schema); err != nil {
+		return err.Error()
+	}
+	prop, ok := schema.Properties[arg]
+	switch text, isText := def.(string); {
+	case !ok:
+		return "default for " + arg + ", which the tool does not have"
+	case len(prop.Enum) > 0 && !slices.Contains(prop.Enum, def):
+		return "default of " + arg + " is none of its values"
+	case isText && arg != "date" && !strings.Contains(prop.Description, text+" when omitted"):
+		return "the description of " + arg + " does not say " + text + " when omitted: " + prop.Description
+	}
+	return ""
 }

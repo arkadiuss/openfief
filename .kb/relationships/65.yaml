@@ -1112,13 +1112,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0440c8429d4a
-  - type: executable_for
-    from: SYM-ab3-tools-askbench-cost-test-go-testtherankingisbycostperquestionamongmodelswhosesafetypassed
-    to: TEST-askbench-cost
-    created_at: 2026-11-14T15:46:13.123Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0c92d5ca21ad
   - type: implements
     from: SYM-askbench-report-write-model
     to: REQ-askbench-grades-safety-and-quality-apart
@@ -1140,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada8ad06f7d7
+  - type: implements
+    from: SYM-askbench-report-write-model
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:03:10.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bd3d13d66ef
+  - type: covered_by
+    from: SYM-askbench-report-write-model
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:03:10.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8624119616ea

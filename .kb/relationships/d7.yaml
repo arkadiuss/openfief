@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dbaa97ce0a4
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-questionsasked
+    to: REQ-askbench-matcher-first
+    created_at: 2026-11-14T18:33:26.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a7e2dd2f845
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-questionsasked
+    to: TEST-askbench-matcher
+    created_at: 2026-11-14T18:33:26.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b49ee86992

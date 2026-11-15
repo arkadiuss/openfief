@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9c7002e280c
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testtwotransporterrorsleavethequestionnotscored
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:01.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a41bc79494b

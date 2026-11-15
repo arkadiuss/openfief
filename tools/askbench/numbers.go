@@ -17,12 +17,18 @@ type reading struct {
 	// tol is the width of one unit of the last digit written, times the scale
 	// ("k", "mln") it was written with: a rounded or cut number is within it.
 	tol kernel.Decimal
+	// places is how many decimal places the number was written with, and scaled
+	// is true when a scale word ("k", "mln") stands after it.
+	places int
+	scaled bool
 }
 
 // foundNumber is a number of a text and its readings.
 type foundNumber struct {
 	text     string
 	readings []reading
+	// percent is true when a percent sign follows the number.
+	percent bool
 }
 
 // numberPattern finds a number: digits grouped by spaces (a space, a no-break
@@ -35,10 +41,18 @@ func numberPattern() *regexp.Regexp {
 // isoDatePattern matches a whole ISO date.
 func isoDatePattern() *regexp.Regexp { return regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`) }
 
-// dateTexts are the dates a text can hold, which are not amounts: 2026-10-28
-// and 28.10.2026.
+// dateTexts are the dates a text can hold, which are not amounts. The cards print
+// ISO dates (2026-10-28, also as the day of a time stamp), and a model writes them
+// back in the owner's way: 2026-10-28, with a hyphen of any kind, 28.10.2026,
+// 28/10/2026, and "28 10 2026" with spaces of any kind, a no-break one and a narrow
+// no-break one among them, since the owner's number format groups with one. A date
+// is a year of 19xx or 20xx, a month and a day of one or two digits, in either
+// order of year first or last, and neither end of it touches another digit, so the
+// tail of a longer number is not read as a date.
 func dateTexts() *regexp.Regexp {
-	return regexp.MustCompile(`\d{4}-\d{2}-\d{2}|\d{1,2}[./]\d{1,2}[./]\d{4}`)
+	const sep = `[-\x{2010}-\x{2013}./ \x{00a0}\x{202f}]`
+	const year = `(?:19|20)\d{2}`
+	return regexp.MustCompile(`\b` + year + sep + `\d{1,2}` + sep + `\d{1,2}\b|\b\d{1,2}` + sep + `\d{1,2}` + sep + year + `\b`)
 }
 
 // The powers of ten a scale word gives.
@@ -80,7 +94,7 @@ func numbersIn(text string) []foundNumber {
 		if plain && exemptWhole(raw) {
 			continue
 		}
-		out = append(out, foundNumber{text: raw, readings: readingsOf(raw, scale)})
+		out = append(out, foundNumber{text: raw, readings: readingsOf(raw, scale), percent: percentAfter(text[end:])})
 	}
 	return out
 }
@@ -136,13 +150,15 @@ func readingsOf(raw string, scale int32) []reading {
 			continue
 		}
 		unit := kernel.NewDecimal(1, 0)
+		places := 0
 		if _, frac, ok := strings.Cut(norm, "."); ok && frac != "" {
+			places = len(frac)
 			// One unit of the last digit written: 0.01 for two places.
 			if u, uerr := kernel.ParseDecimal("0." + strings.Repeat("0", len(frac)-1) + "1"); uerr == nil {
 				unit = u
 			}
 		}
-		out = append(out, reading{value: d.Mul(factor), tol: unit.Mul(factor)})
+		out = append(out, reading{value: d.Mul(factor), tol: unit.Mul(factor), places: places, scaled: scale != 0})
 	}
 	return out
 }

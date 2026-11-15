@@ -143,8 +143,14 @@ func (b *Bench) work(ctx context.Context, tasks []task) ([]RunReport, bool) {
 }
 
 // askUnlessStopped asks t, or reports it not run once the budget has stopped
-// the run; a question that finds the budget spent stops it.
+// the run; a question that finds the budget spent stops it. A question the box
+// answers itself with one of its commands is not asked at all: in production
+// the matcher answers it before the model (D-203), so the run is tagged as the
+// matcher's, whatever the budget.
 func (b *Bench) askUnlessStopped(ctx context.Context, t *task, stopped *atomic.Bool) RunReport {
+	if ui.AskAnswersItself(t.c.Question, b.seed.Today) {
+		return RunReport{Run: t.run, Matcher: true}
+	}
 	if stopped.Load() {
 		return RunReport{Run: t.run, NotRun: true}
 	}
@@ -195,13 +201,18 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
 	for i := range mr.calls {
 		rep.addCall(&mr.calls[i])
+		rep.Rounds = append(rep.Rounds, mr.calls[i].Round)
 	}
-	for _, c := range mr.calls {
-		if c.Error == "" {
+	for i := range mr.calls {
+		c := &mr.calls[i]
+		switch {
+		case c.Error == "":
 			rep.Completions++
-			continue
+		case !c.Retried:
+			// A failed call that was retried is told by its retry's outcome, and in
+			// the reliability counts: only the call that ended the attempt is an error.
+			rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
 		}
-		rep.CallErrors = append(rep.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label})
 	}
 	rep.Errored = len(rep.CallErrors) > 0
 	if err != nil {
@@ -226,6 +237,13 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 func (r *RunReport) addCall(c *ModelCall) {
 	r.InputTokens += c.InputTokens
 	r.OutputTokens += c.OutputTokens
+	r.Attempts++
+	if c.Transport {
+		r.TransportFailures++
+	}
+	if c.Retried {
+		r.Retries = append(r.Retries, RetryReport{Status: c.Status, Label: c.Label, Recovered: c.Recovered})
+	}
 	if c.Error != "" {
 		return
 	}

@@ -1217,3 +1217,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51435951e32e
+  - type: implements
+    from: SYM-askbench-report-report
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:02:38.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e1fb3828d6
+  - type: covered_by
+    from: SYM-askbench-report-report
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:02:38.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c648eb9bd49
+  - type: implements
+    from: SYM-tools-askbench-premise-go-risestems
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:09.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30684dbe03f0
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-risestems
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:09.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcb5edcbea50

@@ -6,6 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
 // askToday is the synthetic day the Ask tests ask on.
@@ -217,5 +218,92 @@ func TestReturnPercent(t *testing.T) {
 		if got := returnPercent(tt.first, tt.last, f); got != tt.want {
 			t.Errorf("returnPercent(%s, %s) = %q, want %q", tt.first, tt.last, got, tt.want)
 		}
+	}
+}
+
+// TestSyncAnswerSaysWhySyncFails checks the card of "why is … failing" (D-194,
+// D-198): the latest attempts each with its time and its error class, never its
+// text, and, for a sync that failed, how long it has been failing, how many
+// attempts in a row failed and the latest error class, in words that name it as
+// the error class so that nothing reads it as missing data.
+func TestSyncAnswerSaysWhySyncFails(t *testing.T) {
+	t.Parallel()
+	today := mustDate(t, askToday)
+	failed := func(at string, class viewsv1.SyncErrorClass) *viewsv1.SyncAttempt {
+		return &viewsv1.SyncAttempt{StartedAt: at, Mode: "scheduled", Failed: true, ErrorClass: class}
+	}
+	ok := &viewsv1.SyncAttempt{StartedAt: "2026-03-27T06:00:00Z", Mode: "scheduled"}
+	timeout, unavailable := viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_TIMEOUT, viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_UNAVAILABLE
+	tests := []struct {
+		name     string
+		status   *viewsv1.SyncStatus
+		attempts []*viewsv1.SyncAttempt
+		title    string
+		text     string
+		rows     []answerRow
+	}{
+		{
+			name: "keeps failing for days",
+			status: &viewsv1.SyncStatus{
+				Failures: 4, FailingSince: "2026-03-28T06:00:00Z", KeepsFailing: true, LastErrorClass: unavailable,
+				LastSuccessAt: "2026-03-27T06:00:00Z", NextSyncAt: "2026-04-01T06:00:00Z",
+			},
+			attempts: []*viewsv1.SyncAttempt{failed("2026-03-31T06:00:00Z", unavailable), failed("2026-03-30T06:00:00Z", unavailable), ok},
+			title:    "The x sync keeps failing since 2026-03-28T06:00:00Z",
+			text: "Failing for 3 days, since 2026-03-28: 4 failed attempts in a row, the latest with the error class unavailable. " +
+				"Last good sync: 2026-03-27T06:00:00Z. Next try: 2026-04-01T06:00:00Z. Every attempt keeps its error class, never its text.",
+			rows: []answerRow{
+				{Label: "2026-03-31T06:00:00Z", Detail: "scheduled sync failed, error class", Figure: "unavailable"},
+				{Label: "2026-03-30T06:00:00Z", Detail: "scheduled sync failed, error class", Figure: "unavailable"},
+				{Label: "2026-03-27T06:00:00Z", Detail: "scheduled sync", Figure: "went through"},
+			},
+		},
+		{
+			name:     "failing since today",
+			status:   &viewsv1.SyncStatus{Failures: 3, FailingSince: "2026-03-31T01:00:00Z", KeepsFailing: true, LastErrorClass: timeout},
+			attempts: []*viewsv1.SyncAttempt{failed("2026-03-31T07:00:00Z", timeout)},
+			title:    "The x sync keeps failing since 2026-03-31T01:00:00Z",
+			text: "Failing for less than a day, since 2026-03-31: 3 failed attempts in a row, the latest with the error class timeout. " +
+				"Last good sync: none yet. Next try: none yet. Every attempt keeps its error class, never its text.",
+			rows: []answerRow{{Label: "2026-03-31T07:00:00Z", Detail: "scheduled sync failed, error class", Figure: "timeout"}},
+		},
+		{
+			name:     "one day, one failure, not yet keeping failing",
+			status:   &viewsv1.SyncStatus{Failures: 1, FailingSince: "2026-03-30", LastErrorClass: timeout},
+			attempts: []*viewsv1.SyncAttempt{failed("2026-03-30T06:00:00Z", timeout)},
+			title:    "The x sync failed 1 time in a row",
+			text: "Failing for 1 day, since 2026-03-30: 1 failed attempt in a row, the latest with the error class timeout. " +
+				"Last good sync: none yet. Next try: none yet. Every attempt keeps its error class, never its text.",
+			rows: []answerRow{{Label: "2026-03-30T06:00:00Z", Detail: "scheduled sync failed, error class", Figure: "timeout"}},
+		},
+		{
+			name:     "no class and no start",
+			status:   &viewsv1.SyncStatus{Failures: 2},
+			attempts: []*viewsv1.SyncAttempt{failed("2026-03-30T06:00:00Z", viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_UNSPECIFIED)},
+			title:    "The x sync failed 2 times in a row",
+			text: "Failing: 2 failed attempts in a row. Last good sync: none yet. Next try: none yet. " +
+				"Every attempt keeps its error class, never its text.",
+			rows: []answerRow{{Label: "2026-03-30T06:00:00Z", Detail: "scheduled sync failed, error class", Figure: "unspecified"}},
+		},
+		{
+			name:     "a sync that works says nothing of failing",
+			status:   &viewsv1.SyncStatus{LastSuccessAt: "2026-03-31T06:00:00Z", NextSyncAt: "2026-04-01T06:00:00Z"},
+			attempts: []*viewsv1.SyncAttempt{{StartedAt: "2026-03-31T06:00:00Z", Mode: "scheduled"}},
+			title:    "The x sync is working",
+			text:     "Last good sync: 2026-03-31T06:00:00Z. Next try: 2026-04-01T06:00:00Z. Every attempt keeps its error class, never its text.",
+			rows:     []answerRow{{Label: "2026-03-31T06:00:00Z", Detail: "scheduled sync", Figure: "went through"}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			card := syncAnswer("x", &viewsv1.ListSyncAttemptsResponse{Status: tt.status, Attempts: tt.attempts}, today)
+			if card.Title != tt.title || card.Text != tt.text {
+				t.Errorf("card = %q / %q, want %q / %q", card.Title, card.Text, tt.title, tt.text)
+			}
+			if diff := cmp.Diff(tt.rows, card.Rows); diff != "" {
+				t.Errorf("rows (-want +got):\n%s", diff)
+			}
+		})
 	}
 }

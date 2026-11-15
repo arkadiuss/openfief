@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-208ff2094c9e
+  - type: implements
+    from: SYM-ab6-tools-askbench-route-go-memberlabels
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:01:23.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23bf8254cb26
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-route-go-memberlabels
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:01:23.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e26d29c09f5f

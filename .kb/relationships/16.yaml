@@ -1049,3 +1049,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf4b0e7de55a
+  - type: executable_for
+    from: SYM-ab5-internal-views-ui-asktools-test-go-testaskargdefaultsarethedocumentedones
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-14T18:31:01.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8382f17d06
+  - type: executable_for
+    from: SYM-ab5-internal-views-ui-asktools-test-go-testtheboxanswersitselfwhatitsroutedanswererdoes
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-14T18:31:07.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ea426b334d
+  - type: verified_by
+    from: SCEN-askbench-gates-the-demo-route
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:56:44.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf855475120f
+  - type: verified_by
+    from: SCEN-askbench-gates-the-demo-route
+    to: TEST-askbench-history-run
+    created_at: 2026-11-14T19:56:44.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b94e565d257
+  - type: implements
+    from: SYM-askbench-main-result-text
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:03:35.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a55a3c06c47
+  - type: covered_by
+    from: SYM-askbench-main-result-text
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:03:35.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-498b9f093124

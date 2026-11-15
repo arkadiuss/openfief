@@ -8,4 +8,4 @@ origin:
 id: SCEN-askbench-answers-grounded-in-cards
 type: scenario
 ---
-Given answers with numbers in Polish and English format, rounded or cut, dates, years and small counts, and names of accounts and instruments, when they are graded against the cards shown, then a number within its rounding or a name in a card passes and one that no card holds fails, a date, a year and a small count are not amounts, and a cause of a fall that no card holds fails.
+Given answers with numbers in Polish and English format, rounded or cut, dates, years and small counts, and names of accounts and instruments, when they are graded against the cards shown, then a number within its rounding or a name in a card passes and one that no card holds fails, a number that is one step (a difference, a sum or a percentage change) of two shown numbers, rounded half-up to the places it is written, passes too, a date, a year and a small count are not amounts, and a cause of a fall that no card holds fails.

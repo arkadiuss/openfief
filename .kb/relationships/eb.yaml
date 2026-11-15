@@ -1126,3 +1126,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84efedb5d002
+  - type: executable_for
+    from: SYM-ab5-tools-askbench-scorerfixes-test-go-day
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:32:16.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d979e20c6173
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-history-add
+    to: REQ-askbench-keeps-verdict-history
+    created_at: 2026-11-14T19:59:26.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98815cee1e2e
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-history-add
+    to: TEST-askbench-history
+    created_at: 2026-11-14T19:59:26.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe7b66896dc
+  - type: implements
+    from: SYM-tools-askbench-premise-go-negators
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-14T22:29:27.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bb125905439
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-negators
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:29:27.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c1ef0f5d49d
+  - type: executable_for
+    from: SYM-tools-askbench-premise-test-go-a19run
+    to: TEST-askbench-premise
+    created_at: 2026-11-14T22:30:21.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311fd8bf5262

@@ -1035,3 +1035,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a8519aeafd1
+  - type: implements
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-finish
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T19:58:16.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-160dfc757a8b
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-reliability-go-reliability-finish
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T19:58:16.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8fa21be831
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-history-test-go-testademoroutethatnamesnoentryisausageerror
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:39:33.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d6c0b0b87d8

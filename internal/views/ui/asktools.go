@@ -66,6 +66,13 @@ type askTool struct {
 	Label string
 	// Tier is the data tier of what the tool's card carries (D-206).
 	Tier string
+	// Defaults returns what leaving an argument out means, the value it has
+	// when the model does not give it, for each argument that has one, latest
+	// being the latest valued day. A call that gives an argument its default
+	// says what the call without it says: the one source for a harness that
+	// compares calls (AskArgDefaults), and the descriptions below say the same
+	// in words. Nil when no argument has a default.
+	Defaults func(latest kernel.Date) map[string]any
 	// query turns the model's arguments, a JSON object text, into the
 	// command the answerer runs, today being today.
 	query func(args string, today kernel.Date) (askQuery, error)
@@ -137,7 +144,8 @@ func allocationTool() askTool {
 		Schema: `{"type":"object","properties":{"by":{"type":"string","enum":["asset_class","currency","institution","sleeve"],` +
 			`"description":"The grouping; asset_class when omitted."}},"additionalProperties":false}`,
 		Label: "Allocation", Tier: tierT0,
-		query: allocationQuery,
+		Defaults: func(kernel.Date) map[string]any { return map[string]any{"by": "asset_class"} },
+		query:    allocationQuery,
 	}
 }
 
@@ -151,7 +159,8 @@ func performanceTool() askTool {
 			`"year":{"type":"integer","description":"A calendar year, such as 2025."},` +
 			`"since":{"type":"string","description":"A first day, as YYYY-MM-DD."}},"additionalProperties":false}`,
 		Label: "Performance", Tier: tierT0,
-		query: performanceQuery,
+		Defaults: func(kernel.Date) map[string]any { return map[string]any{"period": "this_year"} },
+		query:    performanceQuery,
 	}
 }
 
@@ -163,6 +172,12 @@ func valueTool() askTool {
 		Schema: `{"type":"object","properties":{"date":{"type":"string","description":"The day, as YYYY-MM-DD; omitted for the latest valued day."}},` +
 			`"additionalProperties":false}`,
 		Label: "Value", Tier: tierT0,
+		Defaults: func(latest kernel.Date) map[string]any {
+			if latest.IsZero() {
+				return nil
+			}
+			return map[string]any{"date": latest.String()}
+		},
 		query: valueQuery,
 	}
 }

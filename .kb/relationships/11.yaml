@@ -1133,3 +1133,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac9d33a7bd19
+  - type: implements
+    from: SYM-ask-model-asktools-go-performance-tool
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:34:21.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8728214d82bd
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-round-report-summary
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:29:34.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6063c8644e1

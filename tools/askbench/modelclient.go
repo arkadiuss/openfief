@@ -105,6 +105,16 @@ type ModelCall struct {
 	Measured bool
 	// Provider is the host that served the call, "" when the reply named none.
 	Provider string
+	// Transport is true when the call failed at the transport level: no HTTP
+	// answer, a timeout or a 5xx, the provider's fault and not the request's
+	// (D-207). Such a call is retried once.
+	Transport bool
+	// Retry is true for the second attempt of a call that failed at the
+	// transport level; Retried is true for the failed first attempt, and
+	// Recovered for the one whose retry answered.
+	Retry, Retried, Recovered bool
+	// Round is what the call sent and got back, for the report's trace.
+	Round RoundReport
 }
 
 // meter counts what a run spends, across the runs that share it, and says when
@@ -202,26 +212,53 @@ var _ ui.AskModel = (*modelRun)(nil)
 // call with a schema asks for the structured answer, as the plugin does: strictly
 // when the model's entry has the flag, else as a JSON object.
 func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []ui.AskTool, maxTokens int64, schema string) (ui.AskReply, error) {
-	call := ModelCall{ToolsOffered: len(tools), MaxTokens: maxTokens}
+	req := requestOf(r.model.ID, msgs, tools, maxTokens)
+	if schema != "" {
+		req.SetAnswerFormat(json.RawMessage(schema), r.model.Structured)
+	}
+	out, err := r.attempt(ctx, req, len(tools), false)
+	if err == nil || !r.retryable(ctx) {
+		return out, err
+	}
+	// A transport failure is retried once, and the retry is a call of its own:
+	// it spends the budget and its cost. An answer of any kind, and a 4xx, never
+	// are retried.
+	first := len(r.calls) - 1
+	retried, retryErr := r.attempt(ctx, req, len(tools), true)
+	if errors.Is(retryErr, ErrBudget) {
+		return out, err
+	}
+	r.calls[first].Retried, r.calls[first].Recovered = true, retryErr == nil
+	return retried, retryErr
+}
+
+// retryable reports whether the call that just failed is worth one more: it
+// failed at the transport level, and the question still has time.
+func (r *modelRun) retryable(ctx context.Context) bool {
+	return len(r.calls) > 0 && r.calls[len(r.calls)-1].Transport && ctx.Err() == nil
+}
+
+// attempt makes one call to the model and records it. It fails with ErrBudget,
+// recording nothing, when the budget is spent.
+func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOffered int, retry bool) (ui.AskReply, error) {
+	call := ModelCall{ToolsOffered: toolsOffered, MaxTokens: req.MaxTokens, Retry: retry, Round: sentRound(req, len(r.calls)+1, retry)}
 	if err := r.meter.allow(); err != nil {
 		r.budgetHit = true
 		return ui.AskReply{}, err
 	}
 	started := r.now()
-	req := requestOf(r.model.ID, msgs, tools, maxTokens)
-	if schema != "" {
-		req.SetAnswerFormat(json.RawMessage(schema), r.model.Structured)
-	}
 	reply, err := r.client.Complete(ctx, req)
 	call.Latency = r.now().Sub(started)
 	if err != nil {
 		call.Error = errorClass(err)
 		failure := callFailure(err)
 		call.Status, call.Label = failure.Status, failure.Label
+		call.Transport = isTransportFailure(err)
 		r.calls = append(r.calls, call)
 		return ui.AskReply{}, fmt.Errorf("the model: %s: %w", call.Error, err)
 	}
 	call.InputTokens, call.OutputTokens, call.Provider = reply.InputTokens, reply.OutputTokens, reply.Provider
+	call.Round.fillReply(reply)
 	call.Cost, call.Measured = measuredCost(reply.Cost)
 	if !call.Measured {
 		call.Cost = costOf(r.model, reply.InputTokens, reply.OutputTokens)
@@ -234,6 +271,18 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 		out.Calls = append(out.Calls, ui.AskCall{ID: tc.ID, Name: tc.Name, Args: tc.Arguments})
 	}
 	return out, nil
+}
+
+// isTransportFailure reports whether a call failed at the transport level: the
+// chat client got no HTTP answer (nothing came, or it timed out) or the
+// provider answered 5xx. A 4xx, a refused key, a rate limit and a bad reply are
+// the request's or the model's, not the host's, and are not.
+func isTransportFailure(err error) bool {
+	var ce *openaichat.CallError
+	if !errors.As(err, &ce) {
+		return false
+	}
+	return ce.Status == 0 || (ce.Status >= http.StatusInternalServerError && ce.Status < statusCeiling)
 }
 
 // The labels of a failed call, a fixed set: a status and one of these say what

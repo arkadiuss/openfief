@@ -972,3 +972,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-430648b98499
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-ranking
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T18:42:07.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d71b5d14f0b7
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-ranking
+    to: REQ-askbench-routes-and-ranks-by-cost-v2
+    created_at: 2026-11-14T18:42:07.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3972f88d1cb9
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-ranking
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:42:07.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f32627aa511e
+  - type: implements
+    from: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    to: REQ-ui-ask-sync-answer-error-class
+    created_at: 2026-11-14T19:20:09.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b3bd0f59288
+  - type: covered_by
+    from: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
+    to: TEST-ui-ask
+    created_at: 2026-11-14T19:20:09.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cec6a0415eb6
+  - type: specified_by
+    from: REQ-decision-d221-2-failing-run-fails-the-weekly-workflow
+    to: SCEN-askbench-gates-the-demo-route
+    created_at: 2026-11-14T19:56:55.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6730624baa99
+  - type: implements
+    from: SYM-ab3-tools-askbench-report-go-ranking
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-14T20:02:51.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84f951eb01a4
+  - type: covered_by
+    from: SYM-ab3-tools-askbench-report-go-ranking
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:02:51.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ef665e966bf

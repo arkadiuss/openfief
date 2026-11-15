@@ -132,7 +132,10 @@ func TestAskBox(t *testing.T) {
 		want []string
 	}{
 		{"What needs me?", []string{"2 things need you", "Open the Inbox (2)", "Map a broker account flex-main reported", "Data coming in"}},
-		{"Why is xtb failing?", []string{"The xtb-main sync keeps failing since 2026-03-03T06:00:00Z", "timeout", "Open the failing sync in the Inbox"}},
+		{"Why is xtb failing?", []string{
+			"The xtb-main sync keeps failing since 2026-03-03T06:00:00Z", "Failing for 29 days, since 2026-03-03: 3 failed attempts in a row, the latest with the error class timeout.",
+			"transactions sync failed, error class", "2026-03-03T07:00:00Z", "Open the failing sync in the Inbox",
+		}},
 		{"allocation by currency", []string{"By currency, gross, on 2026-03-31", "66.7%", "Open the allocation"}},
 		{"Performance this year", []string{"Time-weighted return this year: &#43;1,5%", "Show the performance chart"}},
 		{"value on 2026-03-31", []string{"Value on 2026-03-31: 1 500,00 PLN gross", "Liquidation", "Open the overview on 2026-03-31"}},

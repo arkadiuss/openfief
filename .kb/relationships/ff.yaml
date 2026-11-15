@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da80805ed462
+  - type: executable_for
+    from: SYM-tools-askbench-finalround-test-go-checkfirstround
+    to: TEST-askbench-rounds
+    created_at: 2026-11-14T23:24:34.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4858404cfcf

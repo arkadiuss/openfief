@@ -1126,3 +1126,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4fbb700b01b
+  - type: implements
+    from: SYM-askbench-cases-case
+    to: REQ-decision-d220-1-ask-eval-verdict
+    created_at: 2026-11-14T18:42:00.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7699049a80fd
+  - type: covered_by
+    from: SYM-askbench-cases-case
+    to: TEST-askbench-verdict
+    created_at: 2026-11-14T18:42:00.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87881e50cd23
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testa4xxisneverretried
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:14.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ac7d9ddf24a
+  - type: executable_for
+    from: SYM-ab6-tools-askbench-retry-test-go-testa5xxisretriedoncelikeatransporterror
+    to: TEST-askbench-retry
+    created_at: 2026-11-14T20:40:20.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7839e343162c
+  - type: executable_for
+    from: SYM-internal-views-ui-askfinal-test-go-testthefinalroundkeepseverytoolcallandresultandthemodelsplainreply
+    to: TEST-ui-ask-final-round
+    created_at: 2026-11-14T21:52:03.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05d43d3b9bb

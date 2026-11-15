@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdacc38ce691
+  - type: implements
+    from: SYM-ab5-tools-askbench-toolcalls-go-rundata-calls
+    to: REQ-askbench-scorers-exact
+    created_at: 2026-11-14T18:30:48.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5795c6cf7279
+  - type: covered_by
+    from: SYM-ab5-tools-askbench-toolcalls-go-rundata-calls
+    to: TEST-askbench-scorer-fixes
+    created_at: 2026-11-14T18:30:48.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20a2e33d49e4

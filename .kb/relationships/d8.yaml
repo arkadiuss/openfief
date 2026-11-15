@@ -979,3 +979,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89d30db538dc
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-routetext
+    to: REQ-askbench-gates-the-demo-route
+    created_at: 2026-11-14T20:00:42.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56f3edd407dc
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-routetext
+    to: TEST-askbench-history
+    created_at: 2026-11-14T20:00:42.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70d793369ee7
