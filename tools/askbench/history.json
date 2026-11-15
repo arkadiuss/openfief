@@ -59,6 +59,20 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "1336aed93200401b8bb1dac96cc8a8f007942c23bec077809827ae4bea57abf4"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "pass",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9"
       }
     ],
     "openai/gpt-oss-120b@deepinfra/bf16": [
@@ -103,6 +117,20 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "ba3a065ce116abd31d00050321ae388464353a8555fac21ffababcb65302f365"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8"
       }
     ],
     "openai/gpt-oss-120b@near-ai/fp4": [
@@ -147,6 +175,20 @@
         "reliability": "pass",
         "transportFailureRate": 0.0036363636363636364,
         "configHash": "69ff19681f5b5bde8c2b351ca54de2df1f348af8d608d8c26ddb61adef858483"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab"
       }
     ]
   }
