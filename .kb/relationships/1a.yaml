@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b92dffd55e7
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-padrun
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:05.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9238612ab2a2
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-padrun
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:05.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86061d9cfbdb

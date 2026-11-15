@@ -229907,3 +229907,439 @@ symbols:
         target: TEST-tooling-demo-validate
       - type: implements
         target: REQ-demo-model-guards-prepared
+  - id: SYM-ab9-tools-docgen-askeval-go-runaskeval
+    title: runAskEval
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:00:49.634Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-padrun
+    title: padRun
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:00.407Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchreport
+    title: benchReport
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:09.374Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchmodel
+    title: benchModel
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:17.680Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-trimreport
+    title: trimReport
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:28.223Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-askevalpage
+    title: askEvalPage
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:37.042Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-resultcells
+    title: resultCells
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:47.071Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-failingtext
+    title: failingText
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:01:57.719Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-reliabilitytext
+    title: reliabilityText
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:02:06.859Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-costtext
+    title: costText
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:02:16.666Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalpage-go-short
+    title: short
+    sourceFile: tools/docgen/askevalpage.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:02:25.753Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testrunaskevalimportwritesasortablefile
+    title: TestRunAskEvalImportWritesASortableFile
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:03:05.202Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testaskevalpage
+    title: TestAskEvalPage
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:03:15.724Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-go-importargs
+    title: importArgs
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:06:59.707Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-parseimportargs
+    title: parseImportArgs
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:07:10.450Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchcase
+    title: benchCase
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:07:19.479Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchverdict
+    title: benchVerdict
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:07:29.145Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-trimmodel
+    title: trimModel
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:07:39.721Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchmodel-answered
+    title: benchModel.answered
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:07:50.259Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-go-benchmodel-estimatedcost
+    title: benchModel.estimatedCost
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:08:00.694Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-test-go-trimmed
+    title: trimmed
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:08:11.037Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testtrimreportkeepshostfailingcasesandreliability
+    title: TestTrimReportKeepsHostFailingCasesAndReliability
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:08:21.882Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testtrimreportofamodelnocallansweredhasnoverdict
+    title: TestTrimReportOfAModelNoCallAnsweredHasNoVerdict
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:08:34.051Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testtrimreportofanoldsubsetreportisdiagnosticwithnoverdict
+    title: TestTrimReportOfAnOldSubsetReportIsDiagnosticWithNoVerdict
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:08:46.369Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-ab9-tools-docgen-askeval-go-costestimate
+    title: costEstimate
+    sourceFile: tools/docgen/askeval.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:10:35.376Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-evalfailing
+    title: evalFailing
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:15:06.483Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-evalreliability
+    title: evalReliability
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:15:18.387Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-evalresult
+    title: evalResult
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:15:29.718Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-evalresult-label
+    title: evalResult.label
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:15:41.861Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-evalresult-full
+    title: evalResult.full
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:15:53.399Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askevalresults-go-loadresults
+    title: loadResults
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:16:04.707Z
+    symbol_role: behavioral
+    status: active
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-ab9-tools-docgen-askeval-test-go-testcommittedresultsloadnewestfirst
+    title: TestCommittedResultsLoadNewestFirst
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'AB9 brief: the Ask box evaluation article and the Ask box showing who answered, with the author''s D-222 (2026-11-15)'
+      recorded_at: 2026-11-15T09:16:16.719Z
+    status: active
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval

@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b80e4b19674
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalpage-go-short
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:02:30.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4e2aa4a8760
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalpage-go-short
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:02:30.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd417f855a8b

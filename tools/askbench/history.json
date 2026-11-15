@@ -1,4 +1,111 @@
 {
   "schema": 1,
-  "runs": {}
+  "runs": {
+    "google/gemma-4-26b-a4b-it@nextbit/bf16": [
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "5a6887ed31be0ad7362f6b1dfa05561cfddf52873ae728ab1d4c710e7a295f72"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "5a6887ed31be0ad7362f6b1dfa05561cfddf52873ae728ab1d4c710e7a295f72"
+      }
+    ],
+    "openai/gpt-oss-120b@crusoe/bf16": [
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b"
+      }
+    ],
+    "openai/gpt-oss-120b@deepinfra/bf16": [
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9"
+      }
+    ],
+    "openai/gpt-oss-120b@near-ai/fp4": [
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "e87cb2b356e41db23b64251ceb9eb41f6b7b75a5b95c855dc8f04601fa0a0bfa"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "e87cb2b356e41db23b64251ceb9eb41f6b7b75a5b95c855dc8f04601fa0a0bfa"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "e87cb2b356e41db23b64251ceb9eb41f6b7b75a5b95c855dc8f04601fa0a0bfa"
+      },
+      {
+        "date": "2026-11-14",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "e87cb2b356e41db23b64251ceb9eb41f6b7b75a5b95c855dc8f04601fa0a0bfa"
+      }
+    ]
+  }
 }

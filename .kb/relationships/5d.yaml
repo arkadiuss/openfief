@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a15fe9dc8705
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalpage-go-costtext
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:02:21.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df6372abcea6
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalpage-go-costtext
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:02:21.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-539f89263d5e

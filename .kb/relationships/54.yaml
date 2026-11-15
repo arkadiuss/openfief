@@ -1280,3 +1280,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9f10834036e
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-runaskeval
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:00:54.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-098df5e6bf12
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-runaskeval
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:00:54.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b141f6d0ab6f

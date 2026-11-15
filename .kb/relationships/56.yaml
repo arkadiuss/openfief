@@ -1049,3 +1049,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-165739ea78a9
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalpage-go-reliabilitytext
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:02:12.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5a73d6c6053
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalpage-go-reliabilitytext
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:02:12.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b3f35d0a8f6

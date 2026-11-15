@@ -1217,3 +1217,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bb396ae2262
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-trimreport
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:33.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-946e0fddebeb
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-trimreport
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:33.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5379c3def1

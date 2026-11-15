@@ -5,6 +5,7 @@
 //	docgen reference -packages FILE -tasks FILE -coverage FILE -out DIR
 //	docgen fresh [-message FILE] < changes
 //	docgen refs -tasks FILE
+//	docgen askeval import -report FILE -run NAME -date YYYY-MM-DD
 //
 // It never runs git itself: the Taskfile pipes git's output in.
 package main
@@ -16,7 +17,7 @@ import (
 	"os"
 )
 
-var errUsage = errors.New("usage: docgen reference|fresh|refs [flags]")
+var errUsage = errors.New("usage: docgen reference|fresh|refs|askeval [flags]")
 
 func main() {
 	if err := run(os.Args[1:], os.Stdin, os.Stdout); err != nil {
@@ -36,6 +37,8 @@ func run(args []string, stdin io.Reader, stdout io.Writer) error {
 		return runReference(repo, args[1:])
 	case "fresh":
 		return runFresh(repo, args[1:], stdin, stdout)
+	case "askeval":
+		return runAskEval(args[1:], stdout)
 	case "refs":
 		return runRefs(repo, args[1:], stdout)
 	default:

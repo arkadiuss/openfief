@@ -1098,3 +1098,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e70e34a08fcc
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalpage-go-resultcells
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:52.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-714c60dcac5b
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalpage-go-resultcells
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:53.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8375967c13e4
+  - type: executable_for
+    from: SYM-ab9-tools-docgen-askeval-test-go-testcommittedresultsloadnewestfirst
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:16:22.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f4679b17110

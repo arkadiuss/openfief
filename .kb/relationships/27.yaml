@@ -909,3 +909,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-672539e6aa56
+  - type: verified_by
+    from: SCEN-askeval-results-page
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T08:59:03.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b8c42c65541
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalpage-go-failingtext
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:02:02.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-189855f93b81
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalpage-go-failingtext
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:02:02.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-addc8f3a293c

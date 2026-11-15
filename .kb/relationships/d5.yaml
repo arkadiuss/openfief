@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77b4270c1e04
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalresult
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:15:34.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae058615d5af
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalresult
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:15:34.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48705d384b77

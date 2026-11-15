@@ -1,0 +1,50 @@
+[
+  {
+    "run": "2",
+    "date": "2026-11-14",
+    "model": "qwen/qwen3.7-flash",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 9,
+    "answered": true,
+    "costPer1k": "0.10713",
+    "costSource": "estimated",
+    "configHash": "f432a3ad9c87028ebb4271ee3ae43757ff97ceb11058b18c3c78738f90a85aa0",
+    "benchSchema": 1
+  },
+  {
+    "run": "2",
+    "date": "2026-11-14",
+    "model": "openai/gpt-oss-120b",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 11,
+    "answered": true,
+    "costPer1k": "0.36387",
+    "costSource": "estimated",
+    "configHash": "17722b087a373ca3e8eecec001434fde406bef4d61c5fa6a94df6c1ae9025c17",
+    "benchSchema": 1
+  },
+  {
+    "run": "2",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it:free",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 28,
+    "answered": false,
+    "configHash": "163038798cd01ef1976e34d8f9b9b5c9548dccca005a0727b829607f0e58f169",
+    "benchSchema": 1
+  },
+  {
+    "run": "2",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-31b-it:free",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 28,
+    "answered": false,
+    "configHash": "74f40bc5fd7d80e56b4890c5c9917957346c410f778188b2f1214cd2cc86722b",
+    "benchSchema": 1
+  }
+]

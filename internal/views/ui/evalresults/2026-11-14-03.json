@@ -1,0 +1,40 @@
+[
+  {
+    "run": "3",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-31b-it:free",
+    "verdict": "none",
+    "diagnostic": [
+      "A1",
+      "A5",
+      "A11",
+      "R1",
+      "R3",
+      "I2"
+    ],
+    "cases": 6,
+    "underBar": 6,
+    "answered": false,
+    "configHash": "74f40bc5fd7d80e56b4890c5c9917957346c410f778188b2f1214cd2cc86722b",
+    "benchSchema": 1
+  },
+  {
+    "run": "3",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it:free",
+    "verdict": "none",
+    "diagnostic": [
+      "A1",
+      "A5",
+      "A11",
+      "R1",
+      "R3",
+      "I2"
+    ],
+    "cases": 6,
+    "underBar": 6,
+    "answered": false,
+    "configHash": "163038798cd01ef1976e34d8f9b9b5c9548dccca005a0727b829607f0e58f169",
+    "benchSchema": 1
+  }
+]

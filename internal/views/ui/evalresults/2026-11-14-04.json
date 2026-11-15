@@ -1,0 +1,28 @@
+[
+  {
+    "run": "4",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 6,
+    "answered": true,
+    "costPer1k": "0.11676",
+    "costSource": "estimated",
+    "configHash": "7f018f2217379d8705e86b6850493deaceee796daf98c8652ffe503200796216",
+    "benchSchema": 1
+  },
+  {
+    "run": "4",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-31b-it",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 6,
+    "answered": true,
+    "costPer1k": "0.33197",
+    "costSource": "estimated",
+    "configHash": "7282c6e5f09d2dced136100a4ff894251e68312d4e0de4d8482621e8a968ecb6",
+    "benchSchema": 1
+  }
+]

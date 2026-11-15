@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0546127f2097
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:22.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66dcc0f21d5c
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:22.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b82ab05a51c

@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3fbd8865cc94
+  - type: executable_for
+    from: SYM-ab9-tools-docgen-askeval-test-go-testtrimreportofamodelnocallansweredhasnoverdict
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:08:40.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b82ef66285bc
