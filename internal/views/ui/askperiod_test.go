@@ -453,6 +453,10 @@ func TestEveryPerformancePeriodIsOnePeriodCard(t *testing.T) {
 			rec := h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {tt.q}}.Encode(), ""), readSession)))
 			wantStatus(t, rec, http.StatusOK)
 			wantBody(t, rec, tt.title, "From the end of ", "Start", "56\u202f719,52 PLN", "End", "58\u202f686,37 PLN", "Deposits", "Withdrawals", "Show the performance chart")
+			// The card's link opens the chart on the period's opening close, the
+			// day before its first day, so both show the same return (D-223).
+			opening := mustDate(t, tt.from).AddDays(-1).String()
+			wantBody(t, rec, `href="/?over=performance&amp;start=`+opening+`#over-time">Show the performance chart`)
 			if diff := cmp.Diff([]string{tt.from + " " + tt.to}, periodsAsked(h)); diff != "" {
 				t.Errorf("GetPeriodChange asked (-want +got):\n%s", diff)
 			}

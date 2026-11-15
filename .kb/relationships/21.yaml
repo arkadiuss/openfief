@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f02240cc4f29
+  - type: executable_for
+    from: SYM-views-app-period-chart-test-new-year-fixture
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:48:47.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42d3de903f6a

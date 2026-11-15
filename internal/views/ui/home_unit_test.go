@@ -2,6 +2,7 @@ package ui
 
 import (
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/protobuf/testing/protocmp"
@@ -71,14 +72,54 @@ func TestYearReturn(t *testing.T) {
 	t.Parallel()
 	f := numberFormat{Group: narrowSpace, Decimal: ","}
 	days := []*viewsv1.PerformanceDay{{Date: "2025-12-30", Index: "100"}, {Date: "2025-12-31", Index: "110"}, {Date: "2026-03-31", Index: "121"}}
-	if got := yearReturn(days, mustDate(t, "2026-03-31"), f); got != "+10,0%" {
-		t.Errorf("yearReturn = %q, want +10,0%%", got)
+	tests := []struct {
+		name        string
+		days        []*viewsv1.PerformanceDay
+		pct, opened string
+	}{
+		{"opens on the close of 31 December, so 1 January counts in full", days, "+10,0%", "2025-12-31"},
+		{"one day, which is its own opening", days[2:], "+0,0%", "2026-03-31"},
+		{"tracking began after the year's opening: its first day", days[1:2], "+0,0%", "2025-12-31"},
+		{"no days", nil, "", ""},
 	}
-	if got := yearReturn(days[2:], mustDate(t, "2026-03-31"), f); got != "+0,0%" {
-		t.Errorf("yearReturn of one day = %q", got)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got := yearReturn(tt.days, mustDate(t, "2026-03-31"), f)
+			if got.Percent != tt.pct || got.Opening != tt.opened {
+				t.Errorf("yearReturn = %q from %q, want %q from %q", got.Percent, got.Opening, tt.pct, tt.opened)
+			}
+		})
 	}
-	if got := yearReturn(nil, mustDate(t, "2026-03-31"), f); got != "" {
-		t.Errorf("yearReturn without days = %q", got)
+}
+
+// TestPeriodOpening checks the day a period opens on the charts (D-223): the
+// close of the day before its first day, so the first day counts in full,
+// and none for the period with no first day.
+func TestPeriodOpening(t *testing.T) {
+	t.Parallel()
+	to := mustDate(t, "2026-03-31")
+	tests := []struct {
+		name string
+		p    askPeriod
+		want string
+	}{
+		{"this year opens on 31 December", askPeriod{Kind: periodYear}, "2025-12-31"},
+		{"this month opens on the last day of February", askPeriod{Kind: periodMonth}, "2026-02-28"},
+		{"the last 12 months open 365 days before", askPeriod{Kind: periodTwelveMonths}, "2025-03-31"},
+		{"last year opens on 31 December 2024", askPeriod{Kind: periodLastYear}, "2024-12-31"},
+		{"2025 opens on 31 December 2024", askPeriod{Kind: periodCalendarYear, Year: 2025}, "2024-12-31"},
+		{"November 2025 opens on 31 October", askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}, "2025-10-31"},
+		{"since a day opens on the day before", askPeriod{Kind: periodSince, Since: mustDate(t, "2026-01-15")}, "2026-01-14"},
+		{"everything has no opening: the charts' default start", askPeriod{Kind: periodAll}, ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := optionalString(periodOpening(tt.p, to)); got != tt.want {
+				t.Errorf("periodOpening = %q, want %q", got, tt.want)
+			}
+		})
 	}
 }
 

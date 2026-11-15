@@ -121,6 +121,18 @@ func TestOverTimeTabs(t *testing.T) {
 	wantStatus(t, plain, http.StatusSeeOther)
 }
 
+// TestHeroYearLinkOpensOnTheYearsOpeningClose checks that the overview's
+// "TWR this year" link opens the performance chart on the year's opening
+// close, the first valued day the year's return runs from (D-223), so the
+// chart and the figure beside it show the same return.
+func TestHeroYearLinkOpensOnTheYearsOpeningClose(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), readSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, `href="/?over=performance&amp;start=2026-03-30#over-time">TWR `)
+}
+
 // TestAskBox checks the Ask box (D-194): a few commands answered as cards
 // with one Open link, a question it doesn't understand answered with the
 // commands it does, the answer on the overview without htmx, and the

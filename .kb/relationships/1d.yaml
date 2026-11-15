@@ -1441,3 +1441,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8c99be833a3
+  - type: verified_by
+    from: SCEN-views-period-return-from-opening-close
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:12:31.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df3d1e6f859d
+  - type: verified_by
+    from: SCEN-views-period-return-from-opening-close
+    to: TEST-views-app-period
+    created_at: 2026-11-15T18:12:31.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5697b6d20ee

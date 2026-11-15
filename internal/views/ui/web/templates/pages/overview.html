@@ -19,7 +19,7 @@
   <h2 id="hero-title" class="eyebrow">Total on {{.Date}} · gross</h2>
   {{with .Hero}}
   {{with .Gross}}<a class="figure" href="#accounts" aria-describedby="hero-title">{{money .}}</a>{{else}}<p class="figure">not valued</p>{{end}}
-  <p class="hero-change" title="Both from the last valued day before the period: the month's change from the last valued day of last month, the year's return from the last valued day of last year.">{{with .MonthChange}}<span class="mono">{{signed .}}</span> ({{$.Data.Hero.MonthPercent}}) this month{{else}}No change this month yet{{end}}{{with .YearReturn}} · <a href="/?over=performance#over-time">TWR {{.}} this year</a>{{end}}</p>
+  <p class="hero-change" title="Both from the last valued day before the period: the month's change from the last valued day of last month, the year's return from the last valued day of last year.">{{with .MonthChange}}<span class="mono">{{signed .}}</span> ({{$.Data.Hero.MonthPercent}}) this month{{else}}No change this month yet{{end}}{{with .YearReturn}} · <a href="/?over=performance{{with $.Data.Hero.YearOpening}}&amp;start={{.}}{{end}}#over-time">TWR {{.}} this year</a>{{end}}</p>
   <dl class="values">
     <div><dt>Net</dt><dd>{{with .Net}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
     <div><dt>Liquidation</dt><dd>{{with .Liquidation}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>

@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed20a60710b0
+  - type: executable_for
+    from: SYM-views-app-period-chart-test-same-return
+    to: TEST-views-app-period-chart-return
+    created_at: 2026-11-15T18:48:56.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-610def6c5044

@@ -350,7 +350,8 @@ func (s *server) hero(r *http.Request, sess session, date kernel.Date, over *ove
 	if err != nil {
 		return heroView{}, fmt.Errorf("GetPerformance: %w", err)
 	}
-	h.YearReturn = yearReturn(perf.Msg.GetDays(), date, f)
+	year := yearReturn(perf.Msg.GetDays(), date, f)
+	h.YearReturn, h.YearOpening = year.Percent, year.Opening
 	return h, nil
 }
 

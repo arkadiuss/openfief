@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13f2b062081c
+  - type: implements
+    from: SYM-views-ui-askperiod-command-answerer-period-performance
+    to: REQ-ui-period-opens-chart-on-opening-close
+    created_at: 2026-11-15T18:13:45.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd7542f3e17d
