@@ -111,11 +111,12 @@ sed -i 's/askOutputTokens: 800/askOutputTokens: 1600/' "$work/repo/deploy/demo/m
 expect "limits of one question that are not D-208's" fail "the UI's limits of one question are not D-208's"
 
 fresh
+sed -i 's/turnstileSiteKey: .*/turnstileSiteKey: REPLACE-WITH-THE-TURNSTILE-SITE-KEY/' "$work/repo/deploy/demo/model/kustomization.yaml"
 printf '\ncomponents:\n  - ../model\n' >>"$work/repo/deploy/demo/openfief/kustomization.yaml"
 expect "the placeholder site key in a live demo" fail "has the placeholder Turnstile site key"
 
 fresh
-sed -i 's/REPLACE-WITH-THE-TURNSTILE-SITE-KEY/0x4AAAAAAAxxxxxxxxxxxxxx/' "$work/repo/deploy/demo/model/kustomization.yaml"
+sed -i 's/turnstileSiteKey: .*/turnstileSiteKey: 0x4AAAAAAAxxxxxxxxxxxxxx/' "$work/repo/deploy/demo/model/kustomization.yaml"
 expect "a model layer with a site key" pass "every image is pinned by digest"
 
 if [ "$failures" -ne 0 ]; then

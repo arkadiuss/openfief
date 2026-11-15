@@ -94,10 +94,10 @@ patches:
   # The limits of one question are D-208's, written out so the demo's values are on the page: five rounds that may call tools,
   # ten tool calls, 800 output tokens and two minutes.
   #
-  # turnstileSiteKey is a PLACEHOLDER until the author creates the widget in Cloudflare (docs/dev/demo.md#turning-the-model-on)
-  # and puts its public site key here, in a reviewed change. It fails the manifest's schema (a site key is a digit, "x" and
-  # letters, digits, "_" and "-"), so the operator refuses this Plugin until then, and scripts/demo/validate.sh fails a live
-  # demo that includes this layer with it still in.
+  # turnstileSiteKey is the public site key of the Turnstile widget the author made in Cloudflare for demo.openfief.dev
+  # (docs/dev/demo.md#turning-the-model-on). It is public by design (the page embeds it); the widget's secret key is never
+  # here: it is the Secret ui--turnstile-secret, created over SSH (task demo:turnstile-secret). scripts/demo/validate.sh still
+  # fails a live demo that includes this layer with the placeholder REPLACE-WITH-THE-TURNSTILE-SITE-KEY.
   - target:
       kind: Plugin
       name: ui
@@ -109,7 +109,7 @@ patches:
           askToolCalls: 10
           askOutputTokens: 800
           askDeadline: 2m
-          turnstileSiteKey: REPLACE-WITH-THE-TURNSTILE-SITE-KEY
+          turnstileSiteKey: 0x4AAAAAAGCWIt1_-YD2kYJ0
           turnstileVerifyUrl: https://challenges.cloudflare.com/turnstile/v0/siteverify
   - target:
       kind: PluginGrant
