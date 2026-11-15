@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7121f11dea74
+  - type: executable_for
+    from: SYM-tools-docgen-askeval-test-go-testtheresultspageshowsthescorerversionbesideeveryverdict
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T15:46:19.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dbc69b5c7e2

@@ -96,9 +96,12 @@ func padRun(run string) string {
 // benchReport is the part of the bench's report.json the trim reads. Older
 // reports lack the verdict, reliability and cost fields, which then stay empty.
 type benchReport struct {
-	Schema int          `json:"schema"`
-	Subset bool         `json:"subset"`
-	Models []benchModel `json:"models"`
+	Schema int `json:"schema"`
+	// ScorerVersion is the version of the scoring rules that graded the report,
+	// 0 for a report that predates versioning.
+	ScorerVersion int          `json:"scorerVersion"`
+	Subset        bool         `json:"subset"`
+	Models        []benchModel `json:"models"`
 }
 
 type benchCase struct {
@@ -139,7 +142,7 @@ func trimReport(data []byte, run, date string) ([]evalResult, error) {
 	out := make([]evalResult, 0, len(rep.Models))
 	for i := range rep.Models {
 		r := trimModel(&rep.Models[i], rep.Subset)
-		r.Run, r.Date, r.BenchSchema = run, date, rep.Schema
+		r.Run, r.Date, r.BenchSchema, r.ScorerVersion = run, date, rep.Schema, rep.ScorerVersion
 		out = append(out, r)
 	}
 	return out, nil

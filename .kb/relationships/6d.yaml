@@ -1427,3 +1427,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bf5ed5a127e
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-carrychecks
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:27.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf354dda46a6
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-carrychecks
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:27.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9908067dc79c

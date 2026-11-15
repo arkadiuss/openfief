@@ -1322,3 +1322,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b8558c13e0a
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-replaymodel
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:34.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009235457ee3
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-replaymodel
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:34.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b367638fe4ca

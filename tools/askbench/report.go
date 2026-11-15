@@ -17,8 +17,10 @@ import (
 	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
-// reportSchema is the version of report.json's shape.
-const reportSchema = 1
+// reportSchema is the version of report.json's shape. 2 added what re-grading
+// needs and schema 1 lacks: each run's cards with their text, the box's title
+// when it gave up, and the output limit each call carried (rescore.go).
+const reportSchema = 2
 
 // The modes of the report's directory and files: the owner's alone to write.
 const (
@@ -55,17 +57,24 @@ type RunReport struct {
 	// Kind, Candidates and Suggestions are the structured answer's other fields;
 	// SchemaError says why the model's reply was not one after its retry, and
 	// Invalid counts the replies that were not one, a retried one included.
-	Kind         string        `json:"kind,omitempty"`
-	Candidates   []string      `json:"candidates,omitempty"`
-	Suggestions  []string      `json:"suggestions,omitempty"`
-	SchemaError  string        `json:"schemaError,omitempty"`
-	Invalid      int           `json:"invalidReplies,omitempty"`
-	Checks       []CheckReport `json:"checks,omitempty"`
-	Calls        []CallReport  `json:"calls,omitempty"`
-	Cards        []string      `json:"cards,omitempty"`
-	ModelCalls   int           `json:"modelCalls"`
-	InputTokens  int64         `json:"inputTokens"`
-	OutputTokens int64         `json:"outputTokens"`
+	Kind        string        `json:"kind,omitempty"`
+	Candidates  []string      `json:"candidates,omitempty"`
+	Suggestions []string      `json:"suggestions,omitempty"`
+	SchemaError string        `json:"schemaError,omitempty"`
+	Invalid     int           `json:"invalidReplies,omitempty"`
+	Checks      []CheckReport `json:"checks,omitempty"`
+	Calls       []CallReport  `json:"calls,omitempty"`
+	Cards       []string      `json:"cards,omitempty"`
+	// Title is what the box says of itself when it gave up, which Answer then
+	// follows with the text. CardData are the cards the answer shows and ReadData
+	// all the cards the model's calls produced, with their text as the model read
+	// it: what a re-grading needs, since Cards names only the tools (schema 2).
+	Title        string       `json:"title,omitempty"`
+	CardData     []CardReport `json:"cardData,omitempty"`
+	ReadData     []CardReport `json:"readData,omitempty"`
+	ModelCalls   int          `json:"modelCalls"`
+	InputTokens  int64        `json:"inputTokens"`
+	OutputTokens int64        `json:"outputTokens"`
 	// Cost is in US dollars: each call's cost as the provider reported it
 	// (OpenRouter's usage.cost), and for a call whose reply had none the tokens
 	// times the model entry's prices, which EstimatedCalls counts.
@@ -101,6 +110,49 @@ type RunReport struct {
 	// Rounds traces the run's calls to the model, a retry included: what was
 	// sent and what the host reported.
 	Rounds []RoundReport `json:"rounds,omitempty"`
+}
+
+// CardReport is a card as the model read it, in the report.
+type CardReport struct {
+	Tool  string      `json:"tool"`
+	Title string      `json:"title"`
+	Text  string      `json:"text,omitempty"`
+	Rows  []RowReport `json:"rows,omitempty"`
+}
+
+// RowReport is a row of a card.
+type RowReport struct {
+	Label  string `json:"label"`
+	Detail string `json:"detail,omitempty"`
+	Figure string `json:"figure,omitempty"`
+}
+
+// cardReports writes cards as the report keeps them.
+func cardReports(cards []ui.AskRunCard) []CardReport {
+	out := make([]CardReport, 0, len(cards))
+	for i := range cards {
+		c := &cards[i]
+		cr := CardReport{Tool: c.Tool, Title: c.Title, Text: c.Text}
+		for _, r := range c.Rows {
+			cr.Rows = append(cr.Rows, RowReport{Label: r.Label, Detail: r.Detail, Figure: r.Figure})
+		}
+		out = append(out, cr)
+	}
+	return out
+}
+
+// askRunCards reads cards back from the report.
+func askRunCards(cards []CardReport) []ui.AskRunCard {
+	out := make([]ui.AskRunCard, 0, len(cards))
+	for i := range cards {
+		c := &cards[i]
+		rc := ui.AskRunCard{Tool: c.Tool, Title: c.Title, Text: c.Text}
+		for _, r := range c.Rows {
+			rc.Rows = append(rc.Rows, ui.AskRunRow{Label: r.Label, Detail: r.Detail, Figure: r.Figure})
+		}
+		out = append(out, rc)
+	}
+	return out
 }
 
 // CallErrorReport is a failed call to the model: the HTTP status (0 when none
@@ -156,6 +208,7 @@ func (r *RunReport) fill(d *RunData, results []result) {
 	r.Kind, r.Candidates, r.Suggestions, r.SchemaError, r.Invalid = d.Run.Kind, d.Run.Candidates, d.Run.Suggestions, d.Run.SchemaError, d.Run.Invalid
 	if !d.Run.Answered {
 		r.Answer = d.Run.Title + ": " + d.Run.Text
+		r.Title = d.Run.Title
 	}
 	safe, good := true, true
 	for _, res := range results {
@@ -174,6 +227,7 @@ func (r *RunReport) fill(d *RunData, results []result) {
 	for i := range d.Run.Cards {
 		r.Cards = append(r.Cards, d.Run.Cards[i].Tool)
 	}
+	r.CardData, r.ReadData = cardReports(d.Run.Cards), cardReports(d.Run.Read)
 }
 
 // setProperties records the run's two properties from its checks: safe is every
@@ -410,13 +464,19 @@ type Report struct {
 	// given the route or a history. The bench only reads the route.
 	Route         *RouteReport   `json:"route,omitempty"`
 	Disagreements []Disagreement `json:"disagreements,omitempty"`
+	// ScorerVersion is the version of the scoring rules that graded the run
+	// (ScorerVersion in scorerversion.go); a report that predates versioning has
+	// none, which reads as 1. Rescore, when set, says the report is a
+	// re-grading of an older one, with no model called.
+	ScorerVersion int            `json:"scorerVersion"`
+	Rescore       *RescoreReport `json:"rescore,omitempty"`
 }
 
 // report assembles the report of a finished run.
 func (b *Bench) report(tasks []task, results []RunReport, aborted bool) (*Report, error) {
 	used := b.meter.snapshot()
 	r := &Report{
-		Schema: reportSchema, Day: b.seed.Today.String(), Seed: benchSeed, Subset: len(b.cases) != b.total, RunsPerCase: b.opts.Runs, Judged: b.opts.Judge != nil,
+		Schema: reportSchema, ScorerVersion: ScorerVersion, Day: b.seed.Today.String(), Seed: benchSeed, Subset: len(b.cases) != b.total, RunsPerCase: b.opts.Runs, Judged: b.opts.Judge != nil,
 		Budget: BudgetReport{
 			MaxCost: b.opts.MaxCost.String(), MaxCalls: b.opts.MaxCalls, Calls: used.calls, InputTokens: used.in, OutputTokens: used.out,
 			Cost: used.amount.String(), Aborted: aborted,
@@ -848,7 +908,10 @@ func (r *Report) WriteTo(dir string) error {
 // table of its cases.
 func (r *Report) Summary() string {
 	var b strings.Builder
-	fmt.Fprintf(&b, "# Ask box bench\n\nDay %s, seed %d, %d runs a case.\n\n", r.Day, r.Seed, r.RunsPerCase)
+	fmt.Fprintf(&b, "# Ask box bench\n\nDay %s, seed %d, %d runs a case. Scorer version %d: verdicts graded by different versions are not comparable.\n\n", r.Day, r.Seed, r.RunsPerCase, scorerOf(r))
+	if r.Rescore != nil {
+		writeRescore(&b, r.Rescore)
+	}
 	fmt.Fprintf(&b, "Budget: spent %s of %s USD and %d of %d model calls", r.Budget.Cost, r.Budget.MaxCost, r.Budget.Calls, r.Budget.MaxCalls)
 	if r.Budget.Aborted {
 		b.WriteString(". **The budget ran out: the run was aborted and questions were not asked.**")
@@ -865,6 +928,17 @@ func (r *Report) Summary() string {
 		writeJudge(&b, r)
 	}
 	return b.String()
+}
+
+// writeRescore says that the report is a re-grading and how it was done.
+func writeRescore(b *strings.Builder, s *RescoreReport) {
+	fmt.Fprintf(b, "**Re-scored.** The stored answers, calls and cards of a report of scorer version %d (schema %d) were graded again by version %d, and no model was called: %d runs were graded, %d of them passing or failing differently. ",
+		s.From, s.SourceSchema, ScorerVersion, s.Runs, s.Changed)
+	if s.RebuiltCards > 0 || s.CarriedChecks > 0 || s.Kept > 0 {
+		fmt.Fprintf(b, "That report did not hold the cards' text or each call's output limit, so the cards of %d runs were rebuilt by replaying their calls over the bench's seed, %d checks (Limits) were carried over as graded, and %d runs were kept as graded. ",
+			s.RebuiltCards, s.CarriedChecks, s.Kept)
+	}
+	b.WriteString("The streaks and the demo route are not part of a re-grading.\n\n")
 }
 
 // writeRanking writes the models whose safety cases passed by what a question

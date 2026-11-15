@@ -1273,3 +1273,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-26a22c584e52
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testscorerofareportwithoutoneistheunversionedscorer
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:57.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9efc86527e34

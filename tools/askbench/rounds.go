@@ -29,8 +29,10 @@ type RoundReport struct {
 	Messages int      `json:"messages"`
 	// Sent describes each message sent, in the order of Roles.
 	Sent []SentMessage `json:"sent"`
-	// ToolsOffered is how many tools the request offered.
-	ToolsOffered int `json:"toolsOffered"`
+	// ToolsOffered is how many tools the request offered, and MaxTokens the
+	// output limit it carried (absent from a report of schema 1).
+	ToolsOffered int   `json:"toolsOffered"`
+	MaxTokens    int64 `json:"maxTokens,omitempty"`
 	// PromptTokens and CompletionTokens are what the host reported, and
 	// CachedTokens how many of the prompt tokens it said it served from its
 	// cache (0 when it said nothing).
@@ -62,7 +64,7 @@ type SentMessage struct {
 
 // sentRound returns the sent half of a round for req.
 func sentRound(req *openaichat.Request, round int, retry bool) RoundReport {
-	r := RoundReport{Round: round, Retry: retry, Messages: len(req.Messages), ToolsOffered: len(req.Tools)}
+	r := RoundReport{Round: round, Retry: retry, Messages: len(req.Messages), ToolsOffered: len(req.Tools), MaxTokens: req.MaxTokens}
 	for i := range req.Messages {
 		m := &req.Messages[i]
 		sum := sha256.Sum256([]byte(m.Content))

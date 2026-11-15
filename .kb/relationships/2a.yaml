@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4875c6813c00
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testregradingareportofschemaonerebuildsthecardsfromthecallsandgradesasbefore
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:05.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d0012b10b24

@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e478bbb2546
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testnamedcardsareonlychosenwhentheanswerleavesnochoice
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:42.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780bc0ee63fc

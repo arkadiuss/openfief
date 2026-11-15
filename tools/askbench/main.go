@@ -5,6 +5,10 @@
 // part of the product; `task ask:bench` runs it:
 //
 //	askbench [-model ids] [-out dir] [-budget usd] [-max-calls n] [-judge] ...
+//	askbench -rescore report.json -out dir
+//
+// The second form grades the stored answers of a report again by the scoring
+// rules of this build (ScorerVersion), calls no model and needs no key.
 //
 // The model is reached the way the core's model-openai plugin reaches it, with
 // the key in the environment variable OPENROUTER_API_KEY; the key goes only to
@@ -27,6 +31,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"slices"
 	"strings"
 	"syscall"
@@ -82,6 +87,8 @@ type config struct {
 	// none; members are the labels of the demo route's models, nil for none.
 	history string
 	members []string
+	// rescore is the report.json to grade again, "" for a run of the bench.
+	rescore string
 }
 
 // run runs the bench and returns its exit code.
@@ -92,6 +99,9 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 	}
 	if err != nil {
 		return failed(stderr, err)
+	}
+	if cfg.rescore != "" {
+		return runRescore(ctx, cfg, stdout, stderr)
 	}
 	b, err := NewBench(&cfg.opts)
 	if err != nil {
@@ -111,6 +121,43 @@ func run(ctx context.Context, args []string, getenv func(string) string, stdout,
 		return exitError
 	}
 	return exitCode(report)
+}
+
+// runRescore grades the report again with this build's scoring rules, makes no
+// model call, writes the new report.json and summary.md into the output
+// directory and says what changed. Its exit code follows the report like a run's.
+func runRescore(ctx context.Context, cfg *config, stdout, stderr io.Writer) int {
+	report, err := LoadReport(cfg.rescore)
+	if err != nil {
+		return failed(stderr, err)
+	}
+	if err := Rescore(ctx, report); err != nil {
+		return failed(stderr, err)
+	}
+	if err := report.WriteTo(cfg.out); err != nil {
+		return failed(stderr, err)
+	}
+	if _, err := io.WriteString(stdout, rescoreText(report, cfg.out)); err != nil {
+		return exitError
+	}
+	return exitCode(report)
+}
+
+// rescoreText says in a few lines what the re-grading did and where its report is.
+func rescoreText(r *Report, dir string) string {
+	var b strings.Builder
+	info := r.Rescore
+	fmt.Fprintf(&b, "re-scored %d runs from scorer version %d to %d: %d passed or failed differently; %d had their cards rebuilt from their calls, %d checks were carried over, %d runs were kept as graded\n",
+		info.Runs, info.From, r.ScorerVersion, info.Changed, info.RebuiltCards, info.CarriedChecks, info.Kept)
+	for _, note := range info.Notes {
+		fmt.Fprintf(&b, "kept: %s\n", note)
+	}
+	for i := range r.Models {
+		m := &r.Models[i]
+		fmt.Fprintf(&b, "%s: %s\n", m.Model, verdictText(&m.Verdict))
+	}
+	fmt.Fprintf(&b, "report: %s/report.json, %s/summary.md\n", dir, dir)
+	return b.String()
 }
 
 // exitCode is the bench's exit code for a finished report: a model no call
@@ -174,7 +221,7 @@ func resultText(r *Report, dir string) string {
 		case m.ErroredRuns > 0:
 			verdict = "no safety case failed, but it is not proven: some calls failed"
 		}
-		fmt.Fprintf(&b, "%s: %s; %s USD; configuration %s\n", m.Model, verdict, m.Cost, m.ConfigHash[:hashShown])
+		fmt.Fprintf(&b, "%s: %s; %s USD; configuration %s; scorer version %d\n", m.Model, verdict, m.Cost, m.ConfigHash[:hashShown], r.ScorerVersion)
 		if len(m.Errors) > 0 {
 			fmt.Fprintf(&b, "%s: failed calls (errors, not model failures): %s\n", m.Model, errorsText(m.Errors))
 		}
@@ -209,8 +256,12 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	demoRoute := fs.String("demo-route", "", "the demo route's config directory (deploy/demo/model), read only: its models are asked when -model and -route name none, and a member whose run fails its verdict or reliability makes the bench exit 4; the route is never edited")
 	judge := fs.Bool("judge", false, "also grade the advice cases with a judge model, reported only; costs calls beyond the Ask calls")
 	judgeModel := fs.String("judge-model", "openai/gpt-oss-120b", "the judge's model id")
+	rescore := fs.String("rescore", "", "a report.json to grade again with the current scoring rules (ScorerVersion), making no model call and needing no key; the new report.json and summary.md go into -out, which is required and must not hold the report")
 	if err := fs.Parse(args); err != nil {
 		return nil, fmt.Errorf("%w: %w", ErrUsage, err)
+	}
+	if *rescore != "" {
+		return rescoreArgs(fs, *rescore, *out)
 	}
 	key := getenv(keyEnv)
 	if key == "" {
@@ -237,6 +288,26 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 			gevalopenai.WithBaseURL(*baseURL), gevalopenai.WithAPIKey(key), gevalopenai.WithHTTPClient(hc))}
 	}
 	return cfg, nil
+}
+
+// rescoreArgs reads the arguments of a re-grading: the report and an explicit
+// output directory other than the report's own, and no flag that only a run of
+// the bench uses.
+func rescoreArgs(fs *flag.FlagSet, report, out string) (*config, error) {
+	given := map[string]bool{}
+	fs.Visit(func(f *flag.Flag) { given[f.Name] = true })
+	for _, name := range []string{"model", "route", "reasoning", "structured", "json-mode", "price", "history", "demo-route", "judge", "budget", "max-calls", "case", "base-url"} {
+		if given[name] {
+			return nil, fmt.Errorf("%w: -%s is a flag of a run, and -rescore makes none", ErrUsage, name)
+		}
+	}
+	if !given["out"] {
+		return nil, fmt.Errorf("%w: -rescore needs -out, the directory for the new report", ErrUsage)
+	}
+	if filepath.Clean(filepath.Dir(report)) == filepath.Clean(out) {
+		return nil, fmt.Errorf("%w: -out is the directory of the report to re-score; it would overwrite it", ErrUsage)
+	}
+	return &config{rescore: report, out: out}, nil
 }
 
 // modelChoice is the models of a run and the members of the demo route.

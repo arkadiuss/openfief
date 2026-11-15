@@ -65,14 +65,16 @@
         "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9"
+        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
+        "scorerVersion": 2
       },
       {
         "date": "2026-11-15",
         "verdict": "pass",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9"
+        "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@deepinfra/bf16": [
@@ -123,14 +125,16 @@
         "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8"
+        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8",
+        "scorerVersion": 2
       },
       {
         "date": "2026-11-15",
         "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8"
+        "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@near-ai/fp4": [
@@ -181,14 +185,16 @@
         "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab"
+        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab",
+        "scorerVersion": 2
       },
       {
         "date": "2026-11-15",
         "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
-        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab"
+        "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab",
+        "scorerVersion": 2
       }
     ]
   }

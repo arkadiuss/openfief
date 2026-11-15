@@ -1147,3 +1147,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04659b896f75
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-firstrunof
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:50:53.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c536a73384

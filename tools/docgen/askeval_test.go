@@ -56,6 +56,17 @@ func TestTrimReportOfAnOldSubsetReportIsDiagnosticWithNoVerdict(t *testing.T) {
 	}
 }
 
+func TestTrimReportKeepsTheScorerVersionAndAReportWithoutOneHasNone(t *testing.T) {
+	t.Parallel()
+	versioned := `{"schema":2,"scorerVersion":2,"subset":false,"models":[{"model":"m/a","modelId":"m/a","configHash":"0123456789abcdef","cost":"0.02","inputTokens":9,"cases":[{"id":"A1","passAll":true}],"verdict":{"pass":true},"completions":10}]}`
+	if r := trimmed(t, versioned)[0]; r.ScorerVersion != 2 || r.BenchSchema != 2 {
+		t.Errorf("result = %+v, want scorer version 2 and bench schema 2", r)
+	}
+	if r := trimmed(t, verdictReport)[0]; r.ScorerVersion != 0 {
+		t.Errorf("a report without a scorer version gave %d, want none", r.ScorerVersion)
+	}
+}
+
 func TestRunAskEvalImportWritesASortableFile(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
@@ -92,6 +103,31 @@ func TestAskEvalPage(t *testing.T) {
 	standing, _, _ := strings.Cut(page, "## Every run")
 	if strings.Contains(standing, "m/b") || strings.Contains(standing, "m/c") {
 		t.Errorf("the standing table lists a run with no verdict: %s", standing)
+	}
+}
+
+func TestTheResultsPageShowsTheScorerVersionBesideEveryVerdict(t *testing.T) {
+	t.Parallel()
+	results := []evalResult{
+		{Run: "15", Date: "2026-11-16", Model: "m/a", Verdict: verdictPass, Answered: true, Cases: 29, ConfigHash: "0123456789abcdef", BenchSchema: 2, ScorerVersion: 2},
+		{Run: "14", Date: "2026-11-15", Model: "m/a", Verdict: verdictFail, Answered: true, Cases: 29, ConfigHash: "0123456789abcdef", BenchSchema: 1},
+		{Run: "6", Date: "2026-11-14", Model: "m/b", Verdict: verdictNone, Answered: true, Cases: 28, ConfigHash: "ffff0000ffff0000", BenchSchema: 1},
+	}
+	page := askEvalPage(results)
+	standing, every, _ := strings.Cut(page, "## Every run")
+	for name, want := range map[string]string{
+		"a versioned verdict":    "| pass (scorer 2) |",
+		"an unversioned verdict": "| fail (scorer 1, before versioning) |",
+	} {
+		if !strings.Contains(every, want) {
+			t.Errorf("the run table lacks %s as %q:\n%s", name, want, every)
+		}
+	}
+	if !strings.Contains(standing, "pass (scorer 2)") {
+		t.Errorf("the standing table lacks the scorer version:\n%s", standing)
+	}
+	if strings.Contains(every, "none (before D-220) (scorer") {
+		t.Errorf("a run with no verdict shows a scorer version:\n%s", every)
 	}
 }
 

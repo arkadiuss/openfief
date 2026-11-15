@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c55020f5d247
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-bench-rescorerun
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:11.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606eb8d38624
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-bench-rescorerun
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:11.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adf5c92c0bf9

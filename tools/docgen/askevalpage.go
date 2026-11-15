@@ -40,7 +40,7 @@ func askEvalPage(results []evalResult) string {
 	}
 
 	b.WriteString("\n## Every run\n\n")
-	b.WriteString("Newest first. *Failing cases* give runs passed over runs needed (D-220); *unscored* runs are ones whose call failed. A run marked *diagnostic* asked only some cases, which cannot prove safety, so it carries no verdict. Runs before the verdict existed (D-220) show how many cases were below pass^5. Cost is measured, or marked estimated or mixed where tokens were priced from the listing. The bench's report schema and the configuration hash (model, host, reasoning, structured-output flag, prompt, tool schemas and limits) are in the last columns: the same hash is the same configuration.\n\n")
+	b.WriteString("Newest first. *Failing cases* give runs passed over runs needed (D-220); *unscored* runs are ones whose call failed. A run marked *diagnostic* asked only some cases, which cannot prove safety, so it carries no verdict. Runs before the verdict existed (D-220) show how many cases were below pass^5. Cost is measured, or marked estimated or mixed where tokens were priced from the listing. The scorer version beside each verdict says which scoring rules graded it (the bench's `ScorerVersion`, bumped whenever a scoring rule changes), so verdicts of different versions are not comparable; a run graded before versioning shows scorer 1, and a run graded again with the stored answers and no model call shows the version that re-graded it. The bench's report schema and the configuration hash (model, host, reasoning, structured-output flag, prompt, tool schemas and limits) are in the last columns: the same hash is the same configuration.\n\n")
 	b.WriteString("| Run | Date | Model@host | Reasoning | Verdict | Failing cases | Reliability | USD per 1k questions | Bench schema | Config |\n|---|---|---|---|---|---|---|---|---|---|\n")
 	for i := range results {
 		r := &results[i]
@@ -65,6 +65,9 @@ func resultCells(r *evalResult) []string {
 		verdict = "no answer: every call failed (rate limited)"
 	case r.Verdict == verdictNone:
 		verdict = "none (before D-220)"
+	}
+	if r.Answered && r.Verdict != verdictNone {
+		verdict += " (" + r.scorerText() + ")"
 	}
 	if !r.full() {
 		verdict += " (diagnostic: " + strings.Join(r.Diagnostic, ", ") + " only)"

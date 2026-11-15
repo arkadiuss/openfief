@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4af8418052d
+  - type: implements
+    from: SYM-tools-askbench-main-go-runrescore
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:43:06.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6de1215ef36
+  - type: covered_by
+    from: SYM-tools-askbench-main-go-runrescore
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:43:06.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6fe9de169b9

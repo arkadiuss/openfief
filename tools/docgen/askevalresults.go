@@ -70,6 +70,22 @@ type evalResult struct {
 	ConfigHash string `json:"configHash"`
 	// BenchSchema is the report.json schema of the bench that wrote the run.
 	BenchSchema int `json:"benchSchema"`
+	// ScorerVersion is the version of the scoring rules that graded the run;
+	// a file without one is from before versioning and reads as 1.
+	ScorerVersion int `json:"scorerVersion,omitempty"`
+}
+
+// unversionedScorer is the scorer version a result file without one reads as.
+const unversionedScorer = 1
+
+// scorerText is the scorer version that graded the run, as the page shows it
+// beside the verdict: "scorer 2", and for a file from before versioning "scorer
+// 1, before versioning".
+func (r *evalResult) scorerText() string {
+	if r.ScorerVersion <= 0 {
+		return fmt.Sprintf("scorer %d, before versioning", unversionedScorer)
+	}
+	return fmt.Sprintf("scorer %d", r.ScorerVersion)
 }
 
 // label is "model@host", or the model alone for default routing.

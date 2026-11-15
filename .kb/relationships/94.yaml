@@ -1147,3 +1147,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7d12f416ba5
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-bench-rundataof
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:19.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a90f7baf4ec
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-bench-rundataof
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:19.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88a3534bad72
+  - type: implements
+    from: SYM-tools-askbench-main-go-rescoreargs
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:43:23.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ab46a67c46b
+  - type: covered_by
+    from: SYM-tools-askbench-main-go-rescoreargs
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:43:23.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ec597ca2958

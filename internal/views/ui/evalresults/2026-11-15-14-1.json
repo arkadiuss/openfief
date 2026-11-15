@@ -25,7 +25,8 @@
     "costPer1k": "0.14540",
     "costSource": "measured",
     "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
-    "benchSchema": 1
+    "benchSchema": 2,
+    "scorerVersion": 2
   },
   {
     "run": "14-1",
@@ -53,7 +54,8 @@
     "costPer1k": "0.11705",
     "costSource": "measured",
     "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8",
-    "benchSchema": 1
+    "benchSchema": 2,
+    "scorerVersion": 2
   },
   {
     "run": "14-1",
@@ -87,6 +89,7 @@
     "costPer1k": "0.05883",
     "costSource": "measured",
     "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab",
-    "benchSchema": 1
+    "benchSchema": 2,
+    "scorerVersion": 2
   }
 ]

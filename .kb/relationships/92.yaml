@@ -1168,3 +1168,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e2fd0ac2593
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-wasgraded
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:52:49.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54226c3d4deb
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-wasgraded
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:52:49.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6d6ec7acff

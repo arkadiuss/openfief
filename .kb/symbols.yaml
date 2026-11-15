@@ -219042,11 +219042,15 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-askbench-rescore
+      - type: covered_by
         target: TEST-askbench-retry
       - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-rescores-offline
       - type: implements
         target: REQ-askbench-retries-transport-and-reports-reliability
       - type: implements
@@ -219279,11 +219283,15 @@ symbols:
       - type: covered_by
         target: TEST-askbench-history
       - type: covered_by
+        target: TEST-askbench-rescore
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-gates-the-demo-route
       - type: implements
         target: REQ-askbench-report
+      - type: implements
+        target: REQ-askbench-scorer-version
       - type: implements
         target: REQ-decision-d217-1-model-serves-after-eval
       - type: implements
@@ -225679,8 +225687,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-history
+      - type: covered_by
+        target: TEST-askbench-rescore
       - type: implements
         target: REQ-askbench-keeps-verdict-history
+      - type: implements
+        target: REQ-askbench-scorer-version
   - id: SYM-ab6-tools-askbench-history-go-history
     title: History
     sourceFile: tools/askbench/history.go
@@ -226590,7 +226602,11 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-askbench-rescore
+      - type: covered_by
         target: TEST-askbench-rounds
+      - type: implements
+        target: REQ-askbench-rescores-offline
       - type: implements
         target: REQ-askbench-traces-each-model-round
   - id: SYM-askbench-rounds-sent-message
@@ -232660,3 +232676,621 @@ symbols:
         target: TEST-askbench-premise
       - type: implements
         target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-rescore-go-rescorereport
+    title: RescoreReport
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:18.288Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-loadreport
+    title: LoadReport
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:26.444Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-rescore
+    title: Rescore
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:34.782Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-bench-rescoremodel
+    title: Bench.rescoreModel
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:42.809Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-runkey
+    title: runKey
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:50.135Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-limitsof
+    title: limitsOf
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:41:58.703Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-bench-rescorerun
+    title: Bench.rescoreRun
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:07.150Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-bench-rundataof
+    title: Bench.runDataOf
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:15.160Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-carrychecks
+    title: carryChecks
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:23.348Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-replaymodel
+    title: replayModel
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:30.555Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-replaymodel-generate
+    title: replayModel.Generate
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:38.786Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-bench-replaycards
+    title: Bench.replayCards
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:46.844Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-namedcards
+    title: namedCards
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:42:54.852Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-main-go-runrescore
+    title: runRescore
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:02.848Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-main-go-rescoretext
+    title: rescoreText
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:10.769Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-main-go-rescoreargs
+    title: rescoreArgs
+    status: active
+    sourceFile: tools/askbench/main.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:18.969Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-report-go-cardreport
+    title: CardReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:26.280Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-report-go-rowreport
+    title: RowReport
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:33.468Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-report-go-cardreports
+    title: cardReports
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:41.479Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-report-go-askruncards
+    title: askRunCards
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:49.178Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-report-go-writerescore
+    title: writeRescore
+    status: active
+    sourceFile: tools/askbench/report.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:43:57.162Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-scorerversion-go-scorerof
+    title: scorerOf
+    status: active
+    sourceFile: tools/askbench/scorerversion.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:04.760Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-scorer-version
+  - id: SYM-tools-docgen-askevalresults-go-evalresult-scorertext
+    title: evalResult.scorerText
+    status: active
+    sourceFile: tools/docgen/askevalresults.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:12.378Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askbench-scorer-version
+  - id: SYM-tools-askbench-rescore-test-go-graded
+    title: graded
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:19.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-striptoschemaone
+    title: stripToSchemaOne
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:26.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-reportof
+    title: reportOf
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:33.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-checksbyrun
+    title: checksByRun
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:40.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testarunofthebenchstoreswhatregradingneeds
+    title: TestARunOfTheBenchStoresWhatReGradingNeeds
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:47.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testregradingareportofthebenchchangesnothingandcallsnomodel
+    title: TestReGradingAReportOfTheBenchChangesNothingAndCallsNoModel
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:44:54.812Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testregradingareportofschemaonerebuildsthecardsfromthecallsandgradesasbefore
+    title: TestReGradingAReportOfSchemaOneRebuildsTheCardsFromTheCallsAndGradesAsBefore
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:02.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-a19report
+    title: a19Report
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:09.377Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testregradingacceptsthecardschangeina19andstillfailsthecounterexamples
+    title: TestReGradingAcceptsTheCardsChangeInA19AndStillFailsTheCounterexamples
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:16.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testarunwhosecardscannotberebuiltiskeptasgraded
+    title: TestARunWhoseCardsCannotBeRebuiltIsKeptAsGraded
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:23.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testacheckthatneedswhatthereportlacksandwasnotstoredfailstherescore
+    title: TestACheckThatNeedsWhatTheReportLacksAndWasNotStoredFailsTheRescore
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:30.983Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testnamedcardsareonlychosenwhentheanswerleavesnochoice
+    title: TestNamedCardsAreOnlyChosenWhenTheAnswerLeavesNoChoice
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:38.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testthescorerversionisnotpartoftheconfiguration
+    title: TestTheScorerVersionIsNotPartOfTheConfiguration
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:45.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testscorerofareportwithoutoneistheunversionedscorer
+    title: TestScorerOfAReportWithoutOneIsTheUnversionedScorer
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:45:53.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-docgen-askeval-test-go-testtrimreportkeepsthescorerversionandareportwithoutonehasnone
+    title: TestTrimReportKeepsTheScorerVersionAndAReportWithoutOneHasNone
+    status: active
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:46:07.951Z
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-tools-docgen-askeval-test-go-testtheresultspageshowsthescorerversionbesideeveryverdict
+    title: TestTheResultsPageShowsTheScorerVersionBesideEveryVerdict
+    status: active
+    sourceFile: tools/docgen/askeval_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:46:15.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-tools-askbench-rescore-go-rescorereport-keep
+    title: RescoreReport.keep
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:50:28.307Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-bench-cardsof
+    title: Bench.cardsOf
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:50:35.927Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-replayed
+    title: replayed
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:50:42.829Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-test-go-firstrunof
+    title: firstRunOf
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:50:50.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testregradinga19movesthecaseandtheverdictandwritesthenewscorerversion
+    title: TestReGradingA19MovesTheCaseAndTheVerdictAndWritesTheNewScorerVersion
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:50:57.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testtherescoreflagregradesofflineandwritesthenewreport
+    title: TestTheRescoreFlagReGradesOfflineAndWritesTheNewReport
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:51:03.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-test-go-testtherescoreflagguardsitsoutput
+    title: TestTheRescoreFlagGuardsItsOutput
+    status: active
+    sourceFile: tools/askbench/rescore_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:51:11.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore
+  - id: SYM-tools-askbench-rescore-go-wasgraded
+    title: wasGraded
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:52:46.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-tools-askbench-rescore-go-regrade
+    title: regrade
+    status: active
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session decisions (author''s delegate): a scorer version and offline re-scoring of the Ask box bench, with D-217, D-219, D-220 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T15:52:53.499Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore
+      - type: implements
+        target: REQ-askbench-rescores-offline

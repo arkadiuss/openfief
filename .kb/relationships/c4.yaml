@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad0fc86181d5
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-historyentry
+    to: REQ-askbench-scorer-version
+    created_at: 2026-11-15T15:46:47.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc8b86df824
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-historyentry
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:46:47.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee9490a75c5

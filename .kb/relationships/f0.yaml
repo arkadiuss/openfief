@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a322801a7444
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-regrade
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:52:57.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9cad945dadd
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-regrade
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:52:57.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9dfda85dce
