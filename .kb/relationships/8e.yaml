@@ -1336,3 +1336,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b367638fe4ca
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-want-tool-asks-what-the-command-asks
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T17:33:35.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eecb3b43d4a8

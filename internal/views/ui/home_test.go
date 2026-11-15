@@ -137,7 +137,7 @@ func TestAskBox(t *testing.T) {
 			"transactions sync failed, error class", "2026-03-03T07:00:00Z", "Open the failing sync in the Inbox",
 		}},
 		{"allocation by currency", []string{"By currency, gross, on 2026-03-31", "66.7%", "Open the allocation"}},
-		{"Performance this year", []string{"Time-weighted return this year: &#43;1,5%", "Show the performance chart"}},
+		{"Performance this year", []string{"Time-weighted return this year: -1,20%", "From the end of 2025-12-31 to the end of 2026-03-31", "Deposits", "Show the performance chart"}},
 		{"value on 2026-03-31", []string{"Value on 2026-03-31: 1 500,00 PLN gross", "Liquidation", "Open the overview on 2026-03-31"}},
 		{"show synthetic brokerage", []string{"Synthetic brokerage: 1 000,00 PLN gross", "Open Synthetic brokerage", `href="/accounts/acc-synthetic-1"`}},
 		{"show sleeve core", []string{"Core: 1 account", "Open Core on the overview"}},

@@ -1014,17 +1014,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e02d7eb5b0e
-  - type: covered_by
-    from: SYM-views-ui-askperiod-ask-period-bounded
-    to: TEST-ui-ask-period
-    created_at: 2026-11-15T13:37:45.779Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a680c87b1d5e
-  - type: implements
-    from: SYM-views-ui-askperiod-ask-period-bounded
-    to: REQ-ui-ask-period-commands
-    created_at: 2026-11-15T13:37:45.828Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ff663179bb20

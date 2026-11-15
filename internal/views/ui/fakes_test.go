@@ -623,6 +623,9 @@ type fakeRead struct {
 	periods       []*viewsv1.GetPeriodChangeRequest
 	periodErr     error
 	periodMissing bool
+	// noPerformanceStart leaves the charts' default start out of
+	// GetPerformance's answer, as for a portfolio with nothing recorded.
+	noPerformanceStart bool
 	// chartStarts are the charts' starts the owner saved through the fake
 	// SettingsService (D-167), by account, the portfolio's under "".
 	chartStarts map[string]string

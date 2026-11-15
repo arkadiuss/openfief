@@ -310,10 +310,17 @@ type span struct {
 	Label    string
 }
 
-// periodRange returns the days of p, to being the latest valued day: this
-// year from 1 January, this month from its first day, twelve months back,
-// last calendar year, everything (the charts' default start), since a day,
-// or a calendar year.
+// periodRange resolves p to the days it covers, both inclusive, to being the
+// latest valued day, the one convention of every performance period (D-61,
+// D-194): the period's return runs from the end of the day before From to the
+// end of To, so From counts in full. This year runs from 1 January and this
+// month from its first day, last calendar year is the year before to's, since
+// a day runs from that day, a calendar year is clipped at to, and a month or
+// two days are as asked. The last 12 months start 364 days before to, so the
+// window opens at the end of the day 365 days before it, the same date a year
+// back in a common year, as the card used to start its index. Everything has no
+// first day here, the zero date: it starts where tracking began, which the
+// read API names, so the caller fills it in. It is pure: no I/O, no clock.
 func periodRange(p askPeriod, to kernel.Date) span {
 	switch p.Kind {
 	case periodYear:
@@ -321,7 +328,7 @@ func periodRange(p askPeriod, to kernel.Date) span {
 	case periodMonth:
 		return span{monthStart(to), to, labelThisMonth}
 	case periodTwelveMonths:
-		return span{to.AddDays(-daysInYear), to, "over the last 12 months"}
+		return span{to.AddDays(1 - daysInYear), to, "over the last 12 months"}
 	case periodLastYear:
 		return span{yearStart(to.Year() - 1), yearStart(to.Year()).AddDays(-1), labelLastYear}
 	case periodAll:
@@ -340,5 +347,6 @@ func periodRange(p askPeriod, to kernel.Date) span {
 	return span{yearStart(to.Year()), to, labelThisYear}
 }
 
-// daysInYear is how many days back "the last 12 months" starts.
+// daysInYear is how many days the last 12 months' opening day lies before its
+// last day.
 const daysInYear = 365

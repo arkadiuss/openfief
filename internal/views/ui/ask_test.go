@@ -133,7 +133,7 @@ func TestPeriodRange(t *testing.T) {
 	}{
 		{askPeriod{Kind: periodYear}, "2026-01-01", askToday, "this year"},
 		{askPeriod{Kind: periodMonth}, "2026-03-01", askToday, "this month"},
-		{askPeriod{Kind: periodTwelveMonths}, "2025-03-31", askToday, "over the last 12 months"},
+		{askPeriod{Kind: periodTwelveMonths}, "2025-04-01", askToday, "over the last 12 months"},
 		{askPeriod{Kind: periodLastYear}, "2025-01-01", "2025-12-31", "last year"},
 		{askPeriod{Kind: periodAll}, "0001-01-01", askToday, "since tracking began"},
 		{askPeriod{Kind: periodSince, Since: since}, "2026-01-15", askToday, "since 2026-01-15"},

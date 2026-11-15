@@ -577,32 +577,41 @@ func (a commandAnswerer) allocation(r *http.Request, sess session, d dimension, 
 	return card, nil
 }
 
-// performance answers the time-weighted return over p, up to date.
+// performance answers the time-weighted return over p, up to date, the
+// latest valued day: every period, named or bounded, resolves to its days
+// (periodRange) and is answered by the read API's GetPeriodChange, so one
+// convention gives one card (D-61, D-194).
 func (a commandAnswerer) performance(r *http.Request, sess session, p askPeriod, date kernel.Date) (answerCard, error) {
-	if p.bounded() {
-		return a.periodPerformance(r, sess, boundedSpan(p), date)
+	s := periodRange(p, date)
+	if s.From.IsZero() && p.Kind == periodAll {
+		from, err := a.trackingStart(r, sess, date)
+		if err != nil {
+			return answerCard{}, err
+		}
+		if from.IsZero() {
+			return answerCard{Title: "No valued days " + s.Label, Text: "The time-weighted return needs valued days."}, nil
+		}
+		s.From = from
 	}
-	days := periodRange(p, date)
-	label := days.Label
-	resp, err := a.s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{From: optionalString(days.From), To: days.To.String()}, sess))
+	return a.periodPerformance(r, sess, s, date)
+}
+
+// trackingStart returns the day the portfolio's tracking began, the charts'
+// default start (D-138), as the read API names it; zero when nothing is
+// recorded. It asks for one day of the series, only for that start.
+func (a commandAnswerer) trackingStart(r *http.Request, sess session, date kernel.Date) (kernel.Date, error) {
+	resp, err := a.s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{From: optionalString(date), To: date.String()}, sess))
 	if err != nil {
-		return answerCard{}, fmt.Errorf("GetPerformance: %w", err)
+		return kernel.Date{}, fmt.Errorf("GetPerformance: %w", err)
 	}
-	series := resp.Msg.GetDays()
-	if len(series) == 0 {
-		return answerCard{Title: "No valued days " + label, Text: "The time-weighted return needs valued days."}, nil
+	if resp.Msg.GetDefaultFrom() == "" {
+		return kernel.Date{}, nil
 	}
-	first, last := series[0], series[len(series)-1]
-	f := requestFormat(r)
-	return answerCard{
-		Title: "Time-weighted return " + label + ": " + returnPercent(first.GetIndex(), last.GetIndex(), f),
-		Text:  "From " + first.GetDate() + " to " + last.GetDate() + ". Deposits, withdrawals and the transfers you confirmed don't count as return.",
-		Rows: []answerRow{
-			{Label: "Start", Detail: first.GetDate(), Figure: f.money(first.GetValueReporting())},
-			{Label: "End", Detail: last.GetDate(), Figure: f.money(last.GetValueReporting())},
-		},
-		Link: &answerLink{Href: "/?" + url.Values{overParam: {overPerformance}, startParam: {first.GetDate()}}.Encode() + "#over-time", Text: "Show the performance chart"},
-	}, nil
+	from, err := kernel.ParseDate(resp.Msg.GetDefaultFrom())
+	if err != nil {
+		return kernel.Date{}, fmt.Errorf("GetPerformance default start: %w", err)
+	}
+	return from, nil
 }
 
 // returnPercent is the return from index first to index last in percent,

@@ -99,7 +99,10 @@ func (f *fakeRead) GetPerformance(_ context.Context, r *connect.Request[viewsv1.
 		return nil, err
 	}
 	var chosen string
-	f.locked(func() { f.performance, chosen = append(f.performance, r.Msg), f.chartStarts[r.Msg.GetAccountId()] })
+	var noStart bool
+	f.locked(func() {
+		f.performance, chosen, noStart = append(f.performance, r.Msg), f.chartStarts[r.Msg.GetAccountId()], f.noPerformanceStart
+	})
 	// The default start is 2026-03-30 (D-138); a chosen one of 03-31,
 	// asked for or saved (D-167), rebases the index there.
 	resp := &viewsv1.GetPerformanceResponse{
@@ -109,6 +112,9 @@ func (f *fakeRead) GetPerformance(_ context.Context, r *connect.Request[viewsv1.
 			{Date: "2026-03-30", Index: "100", ValueReporting: pln("1490.00")},
 			{Date: "2026-03-31", Index: "101.5", ValueReporting: pln("1512.34")},
 		},
+	}
+	if noStart {
+		resp.DefaultFrom = ""
 	}
 	from := r.Msg.GetFrom()
 	if from == "" {

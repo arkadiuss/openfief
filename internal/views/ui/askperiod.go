@@ -97,11 +97,6 @@ func parseChange(words string, today kernel.Date) (askPeriod, bool) {
 	return askPeriod{}, false
 }
 
-// bounded reports whether p is a period of the read API's GetPeriodChange, a
-// month or two days, which the performance command answers with it; the other
-// periods keep their own answer.
-func (p askPeriod) bounded() bool { return p.Kind == periodMonthOf || p.Kind == periodBetween }
-
 // boundedSpan returns the days of a bounded period or a calendar year, none of
 // them cut at the latest valued day: a period that reaches past it is refused,
 // never shortened.

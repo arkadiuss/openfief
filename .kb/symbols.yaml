@@ -145482,10 +145482,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask
+      - type: covered_by
+        target: TEST-ui-ask-period
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
   - id: SYM-ui-show-kind
     title: showKind
     sourceFile: internal/views/ui/ask.go
@@ -145762,11 +145766,15 @@ symbols:
       recorded_at: 2026-11-06T08:21:17.934Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask-period
+      - type: covered_by
         target: TEST-ui-home
       - type: implements
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
   - id: SYM-ui-command-answerer-show
     title: commandAnswerer.show
     sourceFile: internal/views/ui/askanswer.go
@@ -195771,11 +195779,15 @@ symbols:
       recorded_at: 2026-11-13T18:59:43.254Z
     relationships:
       - type: covered_by
+        target: TEST-ui-ask-period
+      - type: covered_by
         target: TEST-ui-ask-tools
       - type: implements
         target: REQ-askbench-scorers-exact
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
       - type: implements
         target: REQ-ui-ask-performance-tool-names-both-languages
   - id: SYM-ask-model-asktools-go-value-tool
@@ -232065,20 +232077,6 @@ symbols:
         target: TEST-ui-ask-period
       - type: implements
         target: REQ-ui-ask-period-commands
-  - id: SYM-views-ui-askperiod-ask-period-bounded
-    title: askPeriod.bounded
-    status: active
-    sourceFile: internal/views/ui/askperiod.go
-    origin:
-      kind: agent
-      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
-      recorded_at: 2026-11-15T13:37:41.861Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-ui-ask-period
-      - type: implements
-        target: REQ-ui-ask-period-commands
   - id: SYM-views-ui-askperiod-bounded-span
     title: boundedSpan
     status: active
@@ -233294,3 +233292,61 @@ symbols:
         target: TEST-askbench-rescore
       - type: implements
         target: REQ-askbench-rescores-offline
+  - id: SYM-views-ui-askanswer-command-answerer-tracking-start
+    title: commandAnswerer.trackingStart
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-every-period-one-card
+  - id: SYM-views-ui-askperiod-test-test-every-performance-period-is-one-period-card
+    title: TestEveryPerformancePeriodIsOnePeriodCard
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-want-tool-asks-what-the-command-asks
+    title: wantToolAsksWhatTheCommandAsks
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-periods-asked
+    title: periodsAsked
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-a-performance-with-nothing-recorded-has-no-start
+    title: TestAPerformanceWithNothingRecordedHasNoStart
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: every performance period answers with the period card and one convention, a gap against D-61, D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
