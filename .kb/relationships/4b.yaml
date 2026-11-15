@@ -1154,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1e928aacd6b
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-standing
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T20:17:31.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb5b26b329c6

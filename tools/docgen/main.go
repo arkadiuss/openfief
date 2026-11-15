@@ -38,6 +38,9 @@ func run(args []string, stdin io.Reader, stdout io.Writer) error {
 	case "fresh":
 		return runFresh(repo, args[1:], stdin, stdout)
 	case "askeval":
+		if len(args) > 1 && args[1] == "table" {
+			return runAskEvalTable(repo, args[2:], stdout)
+		}
 		return runAskEval(args[1:], stdout)
 	case "refs":
 		return runRefs(repo, args[1:], stdout)

@@ -95,7 +95,7 @@ func TestAskEvalPage(t *testing.T) {
 		{Run: "3", Date: "2026-11-14", Model: "m/c", Verdict: verdictNone, Diagnostic: []string{"R1"}, ConfigHash: "abcd", BenchSchema: 1},
 	}
 	page := askEvalPage(results)
-	for _, want := range []string{"title: How models did in the Ask box evaluation", "synthetic", "m/a@h/bf16", "`01234567`", "4 of 28 cases under pass^5", "diagnostic: R1 only", "no answer"} {
+	for _, want := range []string{"title: How models did in the Ask box evaluation", "synthetic", "m/a@h/bf16", "`01234567`", "4 of 28 cases under pass^5", "diagnostic: R1 only", "void (no answer"} {
 		if !strings.Contains(page, want) {
 			t.Errorf("page lacks %q", want)
 		}
@@ -126,7 +126,7 @@ func TestTheResultsPageShowsTheScorerVersionBesideEveryVerdict(t *testing.T) {
 	if !strings.Contains(standing, "pass (scorer 2)") {
 		t.Errorf("the standing table lacks the scorer version:\n%s", standing)
 	}
-	if strings.Contains(every, "none (before D-220) (scorer") {
+	if strings.Contains(every, "void (no verdict: before D-220) (scorer") {
 		t.Errorf("a run with no verdict shows a scorer version:\n%s", every)
 	}
 }

@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d7e095238b3
+  - type: implements
+    from: SYM-docgen-askevaltable-historylabel
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:32:30.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9ca2210b35e
+  - type: covered_by
+    from: SYM-docgen-askevaltable-historylabel
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:32:30.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46af84f19f95

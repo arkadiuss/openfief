@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84690964759f
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-testcommentlookupprefersthemostspecifickeyandamissingoneisempty
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:34:35.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a82d0170548
+  - type: implements
+    from: SYM-docgen-askevaltable-historyentry
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T20:17:02.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f1edbb3f2be
+  - type: covered_by
+    from: SYM-docgen-askevaltable-historyentry
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T20:17:03.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59b73e51f895

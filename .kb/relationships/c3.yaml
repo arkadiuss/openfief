@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-919cf44e058c
+  - type: executable_for
+    from: SYM-docgen-askevaltable-test-testcommittedguidetableiscurrentandcommentsareoneline
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:35:10.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41924406e27e

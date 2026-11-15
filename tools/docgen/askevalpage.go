@@ -22,7 +22,7 @@ func askEvalPage(results []evalResult) string {
 	b.WriteString("---\ntitle: How models did in the Ask box evaluation\n" +
 		"description: Each model and host the Ask box's eval has covered, with its verdict, failing cases, reliability, cost and run dates, regenerated from the bench's committed results.\nweight: 40\n---\n\n")
 	b.WriteString("Generated on every build from the bench's results, committed under [internal/views/ui/evalresults](../../../../internal/views/ui/evalresults/). " +
-		"The method, what each tag asks and what we learned are in [How models did on the Ask box evaluation](../../../../docs/guides/ask-box-evaluation.md): " +
+		"The guide leads with a table of one row per model and host, with comments, and has the method, what each tag asks and what we learned: [How models did on the Ask box evaluation](../../../../docs/guides/ask-box-evaluation.md). " +
 		"the bar is D-220, the reliability rule D-207 and the demo route D-221, and the cases and grading are D-217 and D-219. " +
 		"All of the data is synthetic: the bench asks over the demo's seeded record, never a real account. A model the eval has not covered is named as not evaluated in the Ask box.\n")
 
@@ -32,7 +32,7 @@ func askEvalPage(results []evalResult) string {
 	seen := map[string]bool{}
 	for i := range results {
 		r := &results[i]
-		if !r.full() || !r.Answered || r.Verdict == verdictNone || r.Void > 0 || seen[r.label()+"|"+r.Reasoning] {
+		if !r.stands() || seen[r.label()+"|"+r.Reasoning] {
 			continue
 		}
 		seen[r.label()+"|"+r.Reasoning] = true
@@ -40,7 +40,7 @@ func askEvalPage(results []evalResult) string {
 	}
 
 	b.WriteString("\n## Every run\n\n")
-	b.WriteString("Newest first. *Failing cases* give runs passed over runs needed (D-220); *unscored* runs are ones whose call failed. A run marked *diagnostic* asked only some cases, which cannot prove safety, so it carries no verdict. Runs before the verdict existed (D-220) show how many cases were below pass^5. Cost is measured, or marked estimated or mixed where tokens were priced from the listing. The scorer version beside each verdict says which scoring rules graded it (the bench's `ScorerVersion`, bumped whenever a scoring rule changes), so verdicts of different versions are not comparable; a run graded before versioning shows scorer 1, and a run graded again with the stored answers and no model call shows the version that re-graded it. The bench's report schema and the configuration hash (model, host, reasoning, structured-output flag, prompt, tool schemas and limits) are in the last columns: the same hash is the same configuration.\n\n")
+	b.WriteString("Newest first. *Failing cases* give runs passed over runs needed (D-220); *unscored* runs are ones whose call failed. A run marked *void* says nothing of its model: no call of it got an answer, or it ran before the verdict existed. A run marked *diagnostic* asked only some cases, which cannot prove safety, so it carries no verdict. Void and diagnostic runs are left out of the table above and of the guide's. Runs before the verdict existed (D-220) show how many cases were below pass^5. Cost is measured, or marked estimated or mixed where tokens were priced from the listing. The scorer version beside each verdict says which scoring rules graded it (the bench's `ScorerVersion`, bumped whenever a scoring rule changes), so verdicts of different versions are not comparable; a run graded before versioning shows scorer 1, and a run graded again with the stored answers and no model call shows the version that re-graded it. The bench's report schema and the configuration hash (model, host, reasoning, structured-output flag, prompt, tool schemas and limits) are in the last columns: the same hash is the same configuration.\n\n")
 	b.WriteString("| Run | Date | Model@host | Reasoning | Verdict | Failing cases | Reliability | USD per 1k questions | Bench schema | Config |\n|---|---|---|---|---|---|---|---|---|---|\n")
 	for i := range results {
 		r := &results[i]
@@ -59,22 +59,30 @@ func resultCells(r *evalResult) []string {
 	if r.Host == "" {
 		host += " (default routing)"
 	}
-	verdict := r.Verdict
-	switch {
-	case r.Void > 0:
-		verdict = "void (bench fault)"
-	case !r.Answered:
-		verdict = "no answer: every call failed (rate limited)"
-	case r.Verdict == verdictNone:
-		verdict = "none (before D-220)"
-	}
-	if r.Answered && r.Verdict != verdictNone && r.Void == 0 {
-		verdict += " (" + r.scorerText() + ")"
-	}
+	verdict := verdictText(r)
 	if !r.full() {
 		verdict += " (diagnostic: " + strings.Join(r.Diagnostic, ", ") + " only)"
 	}
 	return []string{tableCell(host), reasoning, verdict, failingText(r), reliabilityText(r), costText(r)}
+}
+
+// verdictText is a run's verdict as both pages show it: "pass (scorer 2)", "fail
+// (scorer 1, before versioning)", or for a void run what made it void, with no
+// scorer version, since nothing was graded.
+func verdictText(r *evalResult) string {
+	switch {
+	case r.Void > 0:
+		return "void (bench fault)"
+	case !r.Answered:
+		return "void (no answer: every call failed, rate limited)"
+	case r.Verdict == verdictNone:
+		return "void (no verdict: before D-220)"
+	}
+	text := r.Verdict + " (" + r.scorerText()
+	if r.Parallel > 0 && r.Parallel != defaultParallel {
+		text += fmt.Sprintf(", parallel %d", r.Parallel)
+	}
+	return text + ")"
 }
 
 func failingText(r *evalResult) string {
@@ -114,11 +122,11 @@ func reliabilityText(r *evalResult) string {
 
 func costText(r *evalResult) string {
 	if r.CostPer1k == "" {
-		return "n/a"
+		return notAvailable
 	}
 	f, err := strconv.ParseFloat(r.CostPer1k, 64)
 	if err != nil {
-		return "n/a"
+		return notAvailable
 	}
 	text := strconv.FormatFloat(f, 'f', 3, 64)
 	if r.CostSource != "measured" && r.CostSource != "" {

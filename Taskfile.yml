@@ -992,6 +992,7 @@ tasks:
       # kibi's 120 s query limit); outside CI it is reused while the .kb files, kibi and its patches are unchanged.
       - bash scripts/kibi-coverage.sh '{{.KIBI}}' site/.gen/coverage.json
       - go run ./tools/docgen reference -packages site/.gen/packages.json -tasks site/.gen/tasks.json -coverage site/.gen/coverage.json -out site/.gen/content
+      - go run ./tools/docgen askeval table -check
       - '{{.KIBI}} report --output site/.gen/static/requirements >/dev/null'
 
   docs:refs:
@@ -1040,6 +1041,11 @@ tasks:
       OUT: '{{.OUT | default "ask-bench-report"}}'
     cmds:
       - go run ./tools/askbench -out '{{.OUT}}' {{if .MODEL}}-model '{{.MODEL}}'{{end}} {{if .BUDGET}}-budget '{{.BUDGET}}'{{end}} {{.CLI_ARGS}}
+
+  ask:table:
+    desc: Rewrite the results table of the Ask box evaluation guide from the committed results, tools/askbench/history.json and tools/askbench/comments.yaml (the docs build fails while it is stale)
+    cmds:
+      - go run ./tools/docgen askeval table
 
   docs:fresh:
     desc: 'Staleness gate over a pushed range: covered code changed only with its docs pages or a Docs-Unchanged trailer, e.g. task docs:fresh BASE=origin/main'

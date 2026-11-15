@@ -233843,3 +233843,474 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-docgen-askeval
+  - id: SYM-docgen-askevaltable-void
+    title: void
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:31:54.418Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-stands
+    title: stands
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:02.724Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-casespassed
+    title: casesPassed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:11.062Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-safetypassed
+    title: safetyPassed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:18.762Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-historylabel
+    title: historyLabel
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:26.431Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-passed
+    title: passed
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:34.337Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-loadhistory
+    title: loadHistory
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:42.315Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-consecutivepasses
+    title: consecutivePasses
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:50.451Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-loadcomments
+    title: loadComments
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:32:58.548Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-of
+    title: of
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:06.197Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-standingruns
+    title: standingRuns
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:14.310Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-comparecost
+    title: compareCost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:22.424Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-resultstable
+    title: resultsTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:30.359Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-reliabilitypercent
+    title: reliabilityPercent
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:38.286Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-withtable
+    title: withTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:46.643Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-runaskevaltable
+    title: runAskEvalTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:33:54.748Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevalpage-verdicttext
+    title: verdictText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:03.270Z
+    sourceFile: tools/docgen/askevalpage.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-docgen-askevaltable-test-teststandingrunssortpassesfirstthencasespassedthencost
+    title: TestStandingRunsSortPassesFirstThenCasesPassedThenCost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:10.731Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-teststandingrunskeeponlythelatestfullrunwithaverdictofeachmodelandhost
+    title: TestStandingRunsKeepOnlyTheLatestFullRunWithAVerdictOfEachModelAndHost
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:17.690Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testresultstableshowseverycolumnandacomment
+    title: TestResultsTableShowsEveryColumnAndAComment
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:24.544Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testcommentlookupprefersthemostspecifickeyandamissingoneisempty
+    title: TestCommentLookupPrefersTheMostSpecificKeyAndAMissingOneIsEmpty
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:31.691Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testconsecutivepassesstopatafailureoranotherconfiguration
+    title: TestConsecutivePassesStopAtAFailureOrAnotherConfiguration
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:38.990Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testwithtablereplacesonlythefencedtext
+    title: TestWithTableReplacesOnlyTheFencedText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:45.908Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testvoidrunsreadthesameonbothpages
+    title: TestVoidRunsReadTheSameOnBothPages
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:52.866Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testsafetycasesmatchthebenchscases
+    title: TestSafetyCasesMatchTheBenchsCases
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:34:59.659Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testcommittedguidetableiscurrentandcommentsareoneline
+    title: TestCommittedGuideTableIsCurrentAndCommentsAreOneLine
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:35:07.048Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-teststaleguidetablefailsthecheck
+    title: TestStaleGuideTableFailsTheCheck
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:35:14.105Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-guidewithtable
+    title: guideWithTable
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T19:41:10.938Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askeval-stampparallel
+    title: stampParallel
+    status: active
+    origin:
+      kind: agent
+      ref: 'The design session''s addition to the results table: runs at a parallelism other than 3 are marked (2026-11-15)'
+      recorded_at: 2026-11-15T20:01:28.165Z
+    sourceFile: tools/docgen/askeval.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-historyentry
+    title: historyEntry
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:16:58.883Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-evalhistory
+    title: evalHistory
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:06.361Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-evalcomments
+    title: evalComments
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:13.440Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-guidetext
+    title: guideText
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:20.585Z
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table
+  - id: SYM-docgen-askevaltable-test-standing
+    title: standing
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:28.203Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-labels
+    title: labels
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:35.190Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-docgen-askevaltable-test-testarunatanotherparallelismismarkedonbothpagesandimportrecordsit
+    title: TestARunAtAnotherParallelismIsMarkedOnBothPagesAndImportRecordsIt
+    status: active
+    origin:
+      kind: agent
+      ref: 'The author''s request on the models docs: a table with results, not prose only, eventually comments (2026-11-15)'
+      recorded_at: 2026-11-15T20:17:42.092Z
+    sourceFile: tools/docgen/askevaltable_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table

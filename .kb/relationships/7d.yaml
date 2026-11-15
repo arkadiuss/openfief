@@ -1343,3 +1343,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ef9b25e4275
+  - type: implements
+    from: SYM-docgen-askevaltable-reliabilitypercent
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:33:42.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b5bb32a76b
+  - type: covered_by
+    from: SYM-docgen-askevaltable-reliabilitypercent
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:33:42.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd607b10d910

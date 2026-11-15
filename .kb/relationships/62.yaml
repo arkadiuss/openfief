@@ -1476,3 +1476,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5948b1213a1f
+  - type: implements
+    from: SYM-docgen-askevaltable-loadcomments
+    to: REQ-askeval-guide-leads-with-generated-table
+    created_at: 2026-11-15T19:33:02.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fb00e3daf1c
+  - type: covered_by
+    from: SYM-docgen-askevaltable-loadcomments
+    to: TEST-docgen-askeval-table
+    created_at: 2026-11-15T19:33:02.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfac8603148c
