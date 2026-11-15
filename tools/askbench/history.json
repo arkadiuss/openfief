@@ -81,6 +81,22 @@
         "transportFailureRate": 0,
         "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
         "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
+        "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@deepinfra/bf16": [
@@ -139,6 +155,22 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
+        "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "pass",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@near-ai/fp4": [
@@ -197,6 +229,22 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab"
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
+        "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
+        "scorerVersion": 2
       }
     ]
   }

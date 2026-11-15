@@ -1,0 +1,104 @@
+[
+  {
+    "run": "16-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A4",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 261,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.14831",
+    "costSource": "measured",
+    "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  },
+  {
+    "run": "16-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "deepinfra/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A3",
+        "tag": "command",
+        "passed": 3,
+        "need": 5,
+        "unscored": 2
+      },
+      {
+        "case": "A4",
+        "tag": "command",
+        "passed": 4,
+        "need": 5,
+        "unscored": 1
+      }
+    ],
+    "cases": 29,
+    "unscored": 3,
+    "answered": true,
+    "reliability": {
+      "calls": 292,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.11503",
+    "costSource": "measured",
+    "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  },
+  {
+    "run": "16-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "near-ai/fp4",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A6",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A13",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 279,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.06086",
+    "costSource": "measured",
+    "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  }
+]
