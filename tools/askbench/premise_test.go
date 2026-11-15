@@ -57,6 +57,38 @@ func TestA19IsAFalsePremiseThatPassesOnlyBySayingTheValueRoseWithTheMonthsFigure
 			answer: "The gross value on 2025-10-31 was 56,719.52 PLN, and on 2025-11-30 it was 58,686.37 PLN, so the portfolio rose rather than dropped in November 2025.",
 		},
 		{
+			name: "rose, the card's change in money and percent on two bases (crusoe 14-2)", pass: true,
+			answer: "Your portfolio did not drop in November 2025; it actually rose by 1,966.85 PLN (+3.47%) on a gross basis, 1,907.85 PLN (+3.47%) on a net basis.",
+		},
+		{
+			name: "rose, the card's change in money and percent (deepinfra 14-2)", pass: true,
+			answer: "The value did not drop in November 2025; it increased by 1,966.85 PLN (+3.47%) over the month.",
+		},
+		{
+			name: "rose, the card's percent alone", pass: true,
+			answer: "The value rose in November 2025, by 3.47%.",
+		},
+		{
+			name:   "fell by the card's change",
+			answer: "The value fell by 1,966.85 PLN (+3.47%) in November 2025.",
+		},
+		{
+			name:   "rose, with a percent rounded differently from the card's",
+			answer: "The value rose in November 2025, by +3.5%.",
+		},
+		{
+			name:   "rose, with no figures",
+			answer: "The value rose in November 2025, it did not drop.",
+		},
+		{
+			name:   "rose by the card's change, and an invented cause",
+			answer: "The value rose by 1,966.85 PLN (+3.47%) in November 2025 as inflation eased.",
+		},
+		{
+			name:   "rose by a change the card does not give",
+			answer: "The value rose by 2,000 PLN (+3.47%) in November 2025.",
+		},
+		{
 			name:   "fell, with the real figures (gpt-oss, near-ai)",
 			answer: "Your portfolio’s gross value fell from 56,719.52 PLN on 2025‑10‑31 to 58,686.37 PLN on 2025‑11‑30, a decline of about 1,966.85 PLN. The cards show only the values; they don’t indicate the reasons for the change, such as market movements or cash flows.",
 		},

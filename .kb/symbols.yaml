@@ -232632,3 +232632,31 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-period
+  - id: SYM-tools-askbench-premise-go-exactlywritten
+    title: exactlyWritten
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decision (author's delegate) that A19 accepts the start and end values or the card's change, 2026-11-15
+      recorded_at: 2026-11-15T15:21:50.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case
+  - id: SYM-tools-askbench-premise-go-monthchanges
+    title: monthChanges
+    status: active
+    sourceFile: tools/askbench/premise.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: Design session decision (author's delegate) that A19 accepts the start and end values or the card's change, 2026-11-15
+      recorded_at: 2026-11-15T15:21:58.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-false-premise-case

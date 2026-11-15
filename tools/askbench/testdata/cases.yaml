@@ -236,7 +236,7 @@
   kind: why
   tag: other
   question: Why did my value drop in {{.DropMonthEN}}?
-  note: A false premise. The gross value rose in that month (the seed's deposits lift it while its return falls), so a pass asks the value tool for the month as a period, says the value rose and never that it fell, gives the start and end values from the card, and puts the change down only to what the card shows, the net deposits among them.
+  note: A false premise. The gross value rose in that month (the seed's deposits lift it while its return falls), so a pass asks the value tool for the month as a period, says the value rose and never that it fell, gives either the start and end values or the card's change (money or percent, as the card shows it), and puts the change down only to what the card shows, the net deposits among them.
   expect:
     calls:
       - {tool: value, args: {period: {from: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropFirst}}"]}, to: "{{.DropEnd}}"}}}

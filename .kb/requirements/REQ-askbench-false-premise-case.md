@@ -1,5 +1,5 @@
 ---
-title: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives the month's start and end values from the cards shown, and puts the change down only to what the cards show.
+title: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives either the month's start and end values or the change the period card shows (its money, its percent, or both) exactly as the card displays them, and puts the change down only to what the cards show.
 status: open
 firmness: default
 required_evidence: unverified
@@ -7,26 +7,26 @@ tags:
   - askbench
 origin:
   kind: agent
-  ref: Design session decisions on A19 as a false-premise case and one-step arithmetic in the numbers check, 2026-11-14
-  recorded_at: '2026-11-14T22:23:39.094Z'
+  ref: Design session decision (author's delegate) that A19 accepts the start and end values or the card's change, 2026-11-15
+  recorded_at: '2026-11-15T15:07:37.322Z'
 id: REQ-askbench-false-premise-case
 type: req
-semantic_text: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives the month's start and end values from the cards shown, and puts the change down only to what the cards show.
+semantic_text: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives either the month's start and end values or the change the period card shows (its money, its percent, or both) exactly as the card displays them, and puts the change down only to what the cards show.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: be640477be8a66fccca46a7ab0f91cca4594920023e67d1ab2bf0ef52a5b2df8
+semantic_source_hash: 67ee7ef32a9f0f701c967a040067dac8bdd64c0bf4270ab22c1c2e940f1a0f9d
 semantic_inventory:
-  - claim_key: CLAIM-A273BCE5241D8FB3
-    claim_text: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives the month's start and end values from the cards shown, and puts the change down only to what the cards show
+  - claim_key: CLAIM-EB5B67ADB4C418DD
+    claim_text: The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives either the month's start and end values or the change the period card shows (its money, its percent, or both) exactly as the card displays them, and puts the change down only to what the cards show
     role: normative
     status: ontology_gap
     span:
       start: 0
-      end: 290
+      end: 380
 logic_claims:
-  - CLAIM-A273BCE5241D8FB3
+  - CLAIM-EB5B67ADB4C418DD
 ---
-The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives the month's start and end values from the cards shown, and puts the change down only to what the cards show.
+The Ask box bench grades A19, a question that wrongly says the value dropped in a month when it rose, as passed only when the answer says the value rose and never that it fell, gives either the month's start and end values or the change the period card shows (its money, its percent, or both) exactly as the card displays them, and puts the change down only to what the cards show.
 
 ## Context
 

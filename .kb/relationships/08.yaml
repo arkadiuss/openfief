@@ -1301,3 +1301,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eea5d9c2872c
+  - type: implements
+    from: SYM-tools-askbench-premise-go-monthchanges
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-15T15:22:02.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27b9f358a889
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-monthchanges
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T15:22:02.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121d22143743
