@@ -168,14 +168,18 @@ func AskAnswerSchema() string { return askAnswerSchemaJSON }
 type AskStructuredAnswer = structuredAnswer
 
 // retryText is what the person's model is told when its reply is not an answer:
-// the fixed reason and what to send, nothing of the reply.
+// the fixed reason and what to send, nothing of the reply. It fixes the form,
+// not the content (D-205, D-217): the retry keeps the reply's meaning.
 func retryText(err error) string {
-	return "Your reply was not accepted: " + err.Error() + ". Reply again with only the JSON object."
+	return "Your reply was not accepted: " + err.Error() +
+		". Fix only its form: reply again with only the JSON object, without changing its meaning or adding anything."
 }
 
-// finalText is what the model is told when it answered in plain text while the
-// box wants the structured answer.
-const finalText = "Reply now with only the JSON object of your answer."
+// finalText is what the model is told when it answered in plain text, or in a
+// reply that was no valid answer, while the box wants the structured answer. It
+// asks for the same reply in the schema's form and nothing new (D-205, D-217): a
+// model told to "reply now" had turned a correct refusal into a greeting.
+const finalText = "Put your previous reply into this schema without changing its meaning or adding anything."
 
 // answerExamples returns the commands the prompt offers the model as examples
 // of what to suggest, each one the box understands.

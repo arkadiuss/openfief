@@ -1154,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f853ebe4403
+  - type: verified_by
+    from: SCEN-ui-ask-final-round-keeps-reply-meaning
+    to: TEST-ui-ask-final-round
+    created_at: 2026-11-15T00:03:50.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31349b1be3d5

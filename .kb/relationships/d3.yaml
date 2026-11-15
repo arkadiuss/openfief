@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be50a9e0cc4a
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-retrytext
+    to: REQ-ui-ask-final-round-keeps-reply-meaning
+    created_at: 2026-11-15T00:04:11.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd0d225c67f0
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askstructured-go-retrytext
+    to: TEST-ui-ask-final-round
+    created_at: 2026-11-15T00:04:11.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e91d75fb2aa3

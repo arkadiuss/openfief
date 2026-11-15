@@ -222182,6 +222182,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-structured
       - type: implements
+        target: REQ-ui-ask-final-round-keeps-reply-meaning
+      - type: implements
         target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
         target: REQ-ui-ask-model-structured-answer
@@ -222201,6 +222203,8 @@ symbols:
         target: TEST-ui-ask-final-round
       - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-keeps-reply-meaning
       - type: implements
         target: REQ-ui-ask-final-round-whole-conversation
       - type: implements
@@ -222440,7 +222444,11 @@ symbols:
     symbol_role: behavioral
     relationships:
       - type: covered_by
+        target: TEST-ui-ask-final-round
+      - type: covered_by
         target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-final-round-keeps-reply-meaning
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
@@ -230548,3 +230556,14 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-model-page
+  - id: SYM-internal-views-ui-askfinal-test-go-testthefinalroundasksforthepreviousreplyintheschemawithoutchangingit
+    title: TestTheFinalRoundAsksForThePreviousReplyInTheSchemaWithoutChangingIt
+    status: active
+    origin:
+      kind: agent
+      ref: Design session decision on the traced R1 run (D-205, D-217), 2026-11-15
+      recorded_at: 2026-11-15T00:03:50.897Z
+    sourceFile: internal/views/ui/askfinal_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-final-round
