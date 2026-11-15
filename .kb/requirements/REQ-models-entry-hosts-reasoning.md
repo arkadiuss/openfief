@@ -35,7 +35,7 @@ An entry of a model-openai instance at OpenRouter may pin its model to hosts, in
 
 ## Context
 
-The demo's model is pinned to one host and its fallback to another, because the Ask box's eval passed on those hosts only (D-207, D-217). The chat client already had optional Route and Reasoning fields that only the bench set; the plugin now sets them from the entry. A pin has no fallback to other hosts, so a pinned host that is down fails the call and the router goes to the route's next model. Hosts and reasoning are OpenRouter's request members and OpenAI's own API refuses unknown ones, so another base URL is refused at start instead of silently ignored.
+The demo's model is pinned to one host, deepinfra/bf16, with reasoning low, because the Ask box's eval passed on that host only (D-207, D-217, D-221; bench runs 16-2 and 17, scorer version 3; its terms are R-33). The route has no fallback model until a second host is a D-221 member. The chat client already had optional Route and Reasoning fields that only the bench set; the plugin now sets them from the entry. A pin has no fallback to other hosts, so a pinned host that is down fails the call and, with no further model on the route, the Ask box says the model is unavailable while still answering its fixed commands (D-203). Hosts and reasoning are OpenRouter's request members and OpenAI's own API refuses unknown ones, so another base URL is refused at start instead of silently ignored.
 
 ## Source
 

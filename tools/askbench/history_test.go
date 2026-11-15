@@ -292,11 +292,14 @@ func TestTheDemosRouteIsReadFromItsConfigAsTheLabelsTheReportKeysBy(t *testing.T
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(models) == 0 {
-		t.Fatal("no route members")
+	if len(models) != 1 {
+		t.Fatalf("route members = %d, want deepinfra@bf16 alone (D-221)", len(models))
 	}
 	m := models[0]
-	if got := modelLabel(&m); got != "google/gemma-4-26b-a4b-it@nextbit/bf16" || !m.Structured || m.InputPrice.Sign() == 0 || m.OutputPrice.Sign() == 0 {
+	if m.Reasoning != "low" {
+		t.Errorf("reasoning = %q, want low", m.Reasoning)
+	}
+	if got := modelLabel(&m); got != "openai/gpt-oss-120b@deepinfra/bf16" || !m.Structured || m.InputPrice.Sign() == 0 || m.OutputPrice.Sign() == 0 {
 		t.Errorf("first member = %q structured %v prices %v/%v", got, m.Structured, m.InputPrice, m.OutputPrice)
 	}
 }

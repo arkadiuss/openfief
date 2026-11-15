@@ -1,21 +1,21 @@
 {
   "routes": {
     "ask": [
-      "openrouter/google/gemma-4-26b-a4b-it"
+      "openrouter/openai/gpt-oss-120b"
     ]
   },
   "tiers": {
     "T0": [
-      "openrouter/google/gemma-4-26b-a4b-it"
+      "openrouter/openai/gpt-oss-120b"
     ],
     "TF": [
-      "openrouter/google/gemma-4-26b-a4b-it"
+      "openrouter/openai/gpt-oss-120b"
     ],
     "T1": [
-      "openrouter/google/gemma-4-26b-a4b-it"
+      "openrouter/openai/gpt-oss-120b"
     ],
     "T2": [
-      "openrouter/google/gemma-4-26b-a4b-it"
+      "openrouter/openai/gpt-oss-120b"
     ]
   }
 }

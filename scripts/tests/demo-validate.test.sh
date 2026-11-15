@@ -54,11 +54,11 @@ expect "a variable the demo settings don't define" fail "uses variables the demo
 
 # The model layer (deploy/demo/model) is ready and off: a Component the live demo does not list.
 fresh
-sed -i 's#"openrouter/google/gemma-4-26b-a4b-it"#"openrouter/openai/gpt-oss-120b"#' "$work/repo/deploy/demo/model/settings.json"
-expect "a route to a model the provider instance does not list" fail "name openrouter/openai/gpt-oss-120b, which the instance openrouter does not list"
+sed -i 's#"openrouter/openai/gpt-oss-120b"#"openrouter/google/gemma-4-26b-a4b-it"#' "$work/repo/deploy/demo/model/settings.json"
+expect "a route to a model the provider instance does not list" fail "name openrouter/google/gemma-4-26b-a4b-it, which the instance openrouter does not list"
 
 fresh
-sed -i 's#"routes": {#"routes": {\n    "maintainer": ["openrouter/google/gemma-4-26b-a4b-it"],#' "$work/repo/deploy/demo/model/settings.json"
+sed -i 's#"routes": {#"routes": {\n    "maintainer": ["openrouter/openai/gpt-oss-120b"],#' "$work/repo/deploy/demo/model/settings.json"
 expect "a route for the maintainer" fail "route something other than the Ask box"
 
 fresh

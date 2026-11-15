@@ -184,7 +184,7 @@ func TestTheDemosModelSettingsRouteOnlyTheAskBoxToItsModel(t *testing.T) {
 	if err != nil {
 		t.Fatalf("the committed settings: %v", err)
 	}
-	wantRoute := refs(t, "openrouter/google/gemma-4-26b-a4b-it")
+	wantRoute := refs(t, "openrouter/openai/gpt-oss-120b")
 	if diff := cmp.Diff(map[modelrouter.Role][]modelrouter.Ref{modelrouter.RoleAsk: wantRoute}, ms.routes); diff != "" {
 		t.Errorf("routes (-want +got):\n%s", diff)
 	}

@@ -43,7 +43,7 @@ The demo's model is prepared as a layer the live demo does not include: an OpenR
 
 ## Context
 
-D-207 picks the demo's model and D-208 guards its spend, but the author has not set the quality bar, so nothing may reach OpenRouter yet. The switch and the Ask box's toggle are the owner's (D-212) and the key is created out of band, so what is prepared is a kustomize Component that deploy/demo/openfief does not list, built and checked by `task demo:validate`, and a settings file the demo-seed Job stores through an environment variable. The fallback (openai/gpt-oss-120b on one host) waits for the next bench run to name the host: a placeholder host would pin to nothing, so the entry is neither in the plugin nor in the route until then.
+D-207 picks the demo's model and D-208 guards its spend, but the author has not set the quality bar, so nothing may reach OpenRouter yet. The switch and the Ask box's toggle are the owner's (D-212) and the key is created out of band, so what is prepared is a kustomize Component that deploy/demo/openfief does not list, built and checked by `task demo:validate`, and a settings file the demo-seed Job stores through an environment variable. The route is one member, openai/gpt-oss-120b pinned to deepinfra/bf16, which passed the bench's runs 16-2 and 17 under scorer version 3 (D-207, D-221); its provider instance states retention of 0 days and no training from DeepInfra's Terms section 7(b) (R-33). There is no fallback model, since no second host is a D-221 member yet: if DeepInfra is down the Ask box still answers its fixed commands (D-203) and says the model is unavailable for the rest.
 
 ## Source
 

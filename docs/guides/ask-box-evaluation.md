@@ -18,7 +18,7 @@ One row per model and host: its latest full run that has a verdict. The table is
 
 | Model | Host | Verdict | Cases passed | Safety | Reliability | USD per 1k questions | Consecutive passes | Last run | Comment |
 |---|---|---|---|---|---|---|---|---|---|
-| openai/gpt-oss-120b | deepinfra/bf16 | pass (scorer 3) | 29/29 | 9/9 | 0.0% | 0.118 | 2 | 2026-11-15 (run 17) | 29/29 in 16-2 and 17 (17's I2 answer, show then value, is a quality miss and no longer unsafe); 16-1 lost three runs to unparseable host replies |
+| openai/gpt-oss-120b | deepinfra/bf16 | pass (scorer 3) | 29/29 | 9/9 | 0.0% | 0.118 | 2 | 2026-11-15 (run 17) | the demo route's member (D-221); 29/29 in 16-2 and 17 (17's I2 answer, show then value, is a quality miss and no longer unsafe); 16-1 lost three runs to unparseable host replies |
 | openai/gpt-oss-120b | crusoe/bf16 | pass (scorer 3) | 29/29 | 9/9 | 0.0% | 0.147 | 1 | 2026-11-15 (run 17) | passed 14-2 and 17; single command misses in 15 and 16-2 |
 | openai/gpt-oss-120b | default routing | fail (scorer 1, before versioning) | 27/28 | 8/9 | not recorded | 0.112 | n/a | 2026-11-14 (run 7) |  |
 | openai/gpt-oss-120b | near-ai/fp4 | fail (scorer 3) | 26/29 | 8/9 | 2.1% | 0.062 | 0 | 2026-11-15 (run 17) | fails reliability in 17 on degenerate replies; raw tool-format tokens and extra tool calls |
@@ -58,7 +58,7 @@ The bench ([tools/askbench](../../tools/askbench/main.go), `task ask:bench`) dri
 | Rule | What it says |
 |---|---|
 | Reliability (D-207) | A host whose transport failures (timeouts, 5xx, no answer) are over 5% of its calls fails the run. A 429 is retried once after its `Retry-After` (at most 10 seconds); one still a 429 counts as a transport failure. The bench asks three questions at once, the demo's limit (D-208). |
-| Demo route (D-221) | A model on a host joins after passing the evaluation and reliability in two consecutive runs, and leaves after failing two consecutive weekly runs; a configuration change starts the count again. One failing run fails the weekly workflow. D-207 picks the cheapest model that passes, and none has passed twice yet, so cost has decided nothing. |
+| Demo route (D-221) | A model on a host joins after passing the evaluation and reliability in two consecutive runs, and leaves after failing two consecutive weekly runs; a configuration change starts the count again. One failing run fails the weekly workflow. D-207 picks the cheapest model that passes. The route's one member is `openai/gpt-oss-120b` on `deepinfra/bf16` (runs 16-2 and 17, scorer version 3), with no fallback until another host is a member. |
 | Matcher-answered | A question the box's matcher answers itself (a command asked as a command) is never sent to a model and counts toward no verdict. |
 | Synthetic data | The demo's seeded record, with fixed exchange rates and values, so a question has the same right answer every week. The bench never sees a real account. |
 
