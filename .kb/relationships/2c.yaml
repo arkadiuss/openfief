@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17c654264c64
+  - type: implements
+    from: SYM-askbench-rejections-accepted-elsewhere
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:54:20.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e6fe6e2b440
+  - type: covered_by
+    from: SYM-askbench-rejections-accepted-elsewhere
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:54:20.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c70a79b78acb

@@ -1133,3 +1133,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16731752b192
+  - type: implements
+    from: SYM-askbench-requestcheck-check-tools
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:55:41.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eefa1ffef5fc
+  - type: implements
+    from: SYM-askbench-requestcheck-check-tools
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:55:41.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd5c6160380
+  - type: covered_by
+    from: SYM-askbench-requestcheck-check-tools
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:55:41.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27d0d98072b

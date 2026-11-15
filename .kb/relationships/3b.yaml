@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0264bae54ec5
+  - type: executable_for
+    from: SYM-askbench-rescorefaults-test-go-check-all
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T20:20:40.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a795460a6639

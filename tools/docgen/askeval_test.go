@@ -164,3 +164,32 @@ func TestAVoidRunShowsAsVoidAndIsNotAStandingVerdict(t *testing.T) {
 		t.Errorf("a void run must show as void and stay out of the standing table:\n%s\n%s", standing, every)
 	}
 }
+
+func TestReliabilityIsShownPerQuestionWhenTheResultHasIt(t *testing.T) {
+	t.Parallel()
+	report := `{"schema":3,"subset":false,"scorerVersion":3,"models":[{"model":"m/a@h/x","modelId":"m/a","route":["h/x"],"configHash":"0123456789abcdef","cost":"0.01","inputTokens":9,
+  "cases":[{"id":"A3","passAll":true}],"verdict":{"pass":true},
+  "reliability":{"questions":145,"failedQuestions":2,"calls":300,"transportFailures":3,"rate":0.0138,"failed":false},"completions":4}]}`
+	r := trimmed(t, report)[0]
+	if got, want := reliabilityText(&r), "1.4% of questions failed (2 of 145; 3 failed calls)"; got != want {
+		t.Errorf("reliabilityText = %q, want %q", got, want)
+	}
+	old := trimmed(t, verdictReport)[0]
+	if got, want := reliabilityText(&old), "0.0% transport failures (0 of 10 calls)"; got != want {
+		t.Errorf("reliabilityText of a result before the rule = %q, want %q", got, want)
+	}
+}
+
+func TestARunVoidForItsCredentialsShowsAsSuch(t *testing.T) {
+	t.Parallel()
+	report := `{"schema":3,"subset":false,"models":[{"model":"m/a@h/x","modelId":"m/a","route":["h/x"],"configHash":"0123456789abcdef","cost":"0.01","inputTokens":9,
+  "cases":[{"id":"A3","passAll":false}],"verdict":{"pass":false},"completions":4,"erroredRuns":2,"voidRuns":2,"voidCredentials":2}]}`
+	r := trimmed(t, report)[0]
+	if r.Void != 2 || r.VoidCredentials != 2 {
+		t.Fatalf("result = %+v, want two runs void for the credentials", r)
+	}
+	_, every, _ := strings.Cut(askEvalPage([]evalResult{{Run: "16", Date: "2026-11-15", Model: "m/a", Host: "h/x", Verdict: verdictFail, Answered: true, Cases: 29, Void: 2, VoidCredentials: 2, ConfigHash: "0123456789abcdef"}}), "## Every run")
+	if !strings.Contains(every, "void (credentials/credit)") || strings.Contains(every, "void (bench fault)") {
+		t.Errorf("the run must show as void for its credentials:\n%s", every)
+	}
+}

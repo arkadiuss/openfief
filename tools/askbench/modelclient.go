@@ -106,17 +106,26 @@ type ModelCall struct {
 	Measured bool
 	// Provider is the host that served the call, "" when the reply named none.
 	Provider string
-	// Transport is true when the call failed through the host's fault (D-207):
+	// Transport is true when the call failed in a way worth one more try (D-207):
 	// no HTTP answer, a timeout, a 5xx, a 429 that its retry did not mend, a
 	// reply that is no chat completion to a request the bench checked, or a
 	// degenerate generation. Such a call is retried once, a 429 by the chat
 	// client before it gets here.
 	Transport bool
-	// Fault is whose fault a failed call is: faultHost (it counts in the
-	// reliability), faultBench (the bench sent a request that is ill-formed, or
-	// failed locally: the run is void), or "" (a refused key, no credits or
-	// another 4xx, listed as an error).
+	// Fault is whose fault a failed call is, always one of the fixed set:
+	// faultHost (it counts in the reliability), faultBench (the bench sent a
+	// request that is ill-formed, or failed locally: the run is void),
+	// faultCredentials (a refused key or no credits: the run is void and no
+	// host's or model's) or faultUndecided (a 4xx that the rest of the run
+	// decides, see rejections.go: never in a finished report).
 	Fault string
+	// Rule is what decided Fault for a 4xx: one of the rule words, "" for a
+	// call that failed otherwise.
+	Rule string
+	// RequestHash is a hash of the request as the model sees it, without its
+	// provider routing (requestHash): equal for equivalent requests sent to
+	// different hosts and models.
+	RequestHash string
 	// Retry is true for the second attempt of a call that failed at the
 	// transport level; Retried is true for the failed first attempt, and
 	// Recovered for the one whose retry answered.
@@ -265,6 +274,7 @@ func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOf
 		// Nothing is sent: a request that is ill-formed says nothing of the host.
 		return ui.AskReply{}, r.fail(&call, fmt.Errorf("%w: %w", errInvalidRequest, err))
 	}
+	call.RequestHash = requestHash(r.client, req)
 	started := r.now()
 	reply, err := r.client.Complete(ctx, req)
 	call.Latency = r.now().Sub(started)
@@ -304,28 +314,71 @@ func (r *modelRun) fail(call *ModelCall, err error) error {
 	call.Error = errorClass(err)
 	failure := callFailure(err)
 	call.Status, call.Label = failure.Status, failure.Label
-	call.Fault = faultOf(err)
-	call.Transport = call.Fault == faultHost
+	call.Fault, call.Rule = faultOf(err), ruleOf(err)
+	call.Transport = transient(err)
 	r.calls = append(r.calls, *call)
 	return fmt.Errorf("the model: %s: %w", call.Error, err)
 }
 
-// faultOf says whose fault a failed call is. The host's: no answer, a timeout,
-// a 5xx, a 429, a reply that is no chat completion (the request was checked
+// faultOf says whose fault a failed call is, from the fixed set; no call is
+// nobody's. The host's: no answer, a timeout, a 5xx, a 429, a 404 (the route's
+// pin may be stale), a reply that is no chat completion (the request was checked
 // before it was sent) and a degenerate generation. The bench's: a request that
-// breaks the chat API's rules and an error of its own side of the call. Neither
-// for a refused key, no credits and another 4xx.
+// breaks the chat API's rules, an error of its own side of the call, and any
+// answer that is no HTTP status of a request. A refused key (401) and no credits
+// (402) are no model's or host's: faultCredentials. Another 4xx is decided by
+// the evidence of the whole run once it is over (faultUndecided, rejections.go):
+// the host's when an identical request was accepted elsewhere, else the bench's.
 func faultOf(err error) string {
 	switch errorClass(err) {
 	case classLocal, classInvalid:
 		return faultBench
-	case classBadReply, classDegenerate, classTimeout:
+	}
+	if transient(err) {
 		return faultHost
 	}
-	if isTransportFailure(err) {
+	var ce *openaichat.CallError
+	if !errors.As(err, &ce) {
+		return faultBench
+	}
+	switch {
+	case ce.Status == http.StatusUnauthorized || ce.Status == http.StatusPaymentRequired:
+		return faultCredentials
+	case ce.Status == http.StatusNotFound || ce.Status == http.StatusRequestTimeout:
 		return faultHost
+	case ce.Status >= http.StatusBadRequest && ce.Status < http.StatusInternalServerError:
+		return faultUndecided
+	}
+	return faultBench
+}
+
+// ruleOf says which rule decided the fault of a failed call, for the calls a
+// rule decides at once; the rest of the 4xx get theirs when the run is over.
+func ruleOf(err error) string {
+	var ce *openaichat.CallError
+	if !errors.As(err, &ce) {
+		return ""
+	}
+	switch ce.Status {
+	case http.StatusUnauthorized, http.StatusPaymentRequired:
+		return ruleCredentials
+	case http.StatusNotFound:
+		return ruleNotFound
 	}
 	return ""
+}
+
+// transient reports whether a call failed in a way that is worth one more try:
+// the host gave no answer, ran out of time, answered 5xx or 429, sent a reply
+// that is no chat completion or a degenerate generation.
+func transient(err error) bool {
+	switch errorClass(err) {
+	case classLocal, classInvalid:
+		return false
+	case classBadReply, classDegenerate, classTimeout:
+		return true
+	}
+	return isTransportFailure(err)
 }
 
 // harmonyTokens are the control tokens of the harmony format that a host must
@@ -348,8 +401,7 @@ func degenerate(reply *openaichat.Reply) bool {
 // chat client got no HTTP answer (nothing came, or it timed out), the provider
 // answered 5xx, or it answered 429 twice (the client retries a 429 once, after
 // Retry-After): a host that rate-limits its callers is not reliable (D-207). Any
-// other 4xx, a refused key and a bad reply are the request's or the model's, not
-// the host's, and are not.
+// other 4xx is decided by faultOf and the run's evidence, and is not retried.
 func isTransportFailure(err error) bool {
 	var ce *openaichat.CallError
 	if !errors.As(err, &ce) {
@@ -359,6 +411,9 @@ func isTransportFailure(err error) bool {
 		(ce.Status >= http.StatusInternalServerError && ce.Status < statusCeiling)
 }
 
+// memberReasoning is the request body member that carries the reasoning control.
+const memberReasoning = "reasoning"
+
 // The labels of a failed call, a fixed set: a status and one of these say what
 // went wrong, and nothing the provider wrote.
 const (
@@ -367,6 +422,7 @@ const (
 	labelRateLimited   = "rate limited"
 	labelProviderError = "provider error"
 	labelRejected      = "request rejected"
+	labelNotFound      = "not found"
 	labelNoAnswer      = "no answer"
 	labelBadReply      = "bad reply"
 	labelDegenerate    = "degenerate reply"
@@ -394,6 +450,27 @@ const (
 const (
 	faultHost  = "host"
 	faultBench = "bench"
+	// faultCredentials is a refused key or no credits: the run is void, counts
+	// against no host and no model, and the bench exits with exitCredentials.
+	faultCredentials = "credentials"
+	// faultUndecided is a 4xx that waits for the evidence of the whole run
+	// (rejections.go). It is in no finished report.
+	faultUndecided = "undecided"
+)
+
+// The rules that decide the fault of a 4xx, a fixed set of words in report.json.
+const (
+	// ruleAcceptedElsewhere: an identical request was accepted by another
+	// model@host entry of the run, so this host cannot serve it (the host's).
+	ruleAcceptedElsewhere = "accepted elsewhere"
+	// ruleAcceptedNowhere: no entry accepted it, so the request is wrong (the
+	// bench's), and the request check should have caught it.
+	ruleAcceptedNowhere = "accepted nowhere"
+	// ruleNotFound: a 404 is the route's or the pin's fault, counted against the
+	// host and flagged, for the pin may be stale.
+	ruleNotFound = "not found"
+	// ruleCredentials: a 401 or a 402 voids the run.
+	ruleCredentials = "credentials/credit"
 )
 
 // errInvalidRequest is a request that breaks the chat API's rules; the bench
@@ -410,6 +487,8 @@ func statusLabel(status int) string {
 		return labelNoCredits
 	case status == http.StatusUnauthorized:
 		return labelKeyRefused
+	case status == http.StatusNotFound:
+		return labelNotFound
 	case status == http.StatusTooManyRequests:
 		return labelRateLimited
 	case status >= http.StatusInternalServerError && status < statusCeiling:
@@ -528,7 +607,7 @@ func routingProbe(baseURL string, m *Model) map[string]any {
 	c := benchClient(nil, baseURL, "", m)
 	body := c.RequestBody(&openaichat.Request{Model: "m", Tools: []openaichat.Tool{{Name: "t"}}})
 	out := map[string]any{}
-	for _, key := range []string{"provider", "reasoning", "usage"} {
+	for _, key := range []string{"provider", memberReasoning, "usage"} {
 		if v, ok := body[key]; ok {
 			out[key] = v
 		}

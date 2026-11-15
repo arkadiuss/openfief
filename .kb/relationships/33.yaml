@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dce1909436dd
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-check-refusing-host
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:20:15.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2abf10d5d44e

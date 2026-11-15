@@ -874,20 +874,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-302a276558d4
-  - type: implements
-    from: SYM-ab4-tools-askbench-scorers-go-callcap
-    to: REQ-askbench-grades-safety-and-quality-apart
-    created_at: 2026-11-14T17:00:52.954Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cdcbbaf350b1
-  - type: covered_by
-    from: SYM-ab4-tools-askbench-scorers-go-callcap
-    to: TEST-askbench-split
-    created_at: 2026-11-14T17:00:52.992Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-270ca06c5809
   - type: executable_for
     from: SYM-ab4-tools-askbench-split-test-go-scored
     to: TEST-askbench-split
@@ -951,3 +937,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e842ed9354b2
+  - type: implements
+    from: SYM-askbench-rejections-routing-members
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:53:54.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc407a2fa3b5
+  - type: covered_by
+    from: SYM-askbench-rejections-routing-members
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:53:54.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cde51e6bbc1c
+  - type: implements
+    from: SYM-askbench-rejections-is-evidence-rejection
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:54:02.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1546056e2c92
+  - type: covered_by
+    from: SYM-askbench-rejections-is-evidence-rejection
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:54:02.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31a08f0a0f79

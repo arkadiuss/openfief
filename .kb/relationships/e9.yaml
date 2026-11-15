@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5ebb75df407
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-request-hashes-of
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:57:44.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4db85b1d3234
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-call-want
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:40:21.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dd641d541bd

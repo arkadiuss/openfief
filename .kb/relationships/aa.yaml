@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6590a3e249b5
+  - type: executable_for
+    from: SYM-askbench-rescorefaults-test-go-legacy-reliability-report
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T19:59:11.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3af30d9fbd

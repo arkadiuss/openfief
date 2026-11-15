@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-869c322e0acf
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-a-deterministic-bad-reply-is-one-failed-question-not-two
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:58:37.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6284fa44d58

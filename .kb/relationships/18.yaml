@@ -1252,3 +1252,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50a50fcefb1b
+  - type: implements
+    from: SYM-askbench-requestcheck-valid-tool-name
+    to: REQ-askbench-failed-call-has-a-class
+    created_at: 2026-11-15T19:55:24.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-904be44fad69
+  - type: implements
+    from: SYM-askbench-requestcheck-valid-tool-name
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:55:24.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0ffc401890
+  - type: covered_by
+    from: SYM-askbench-requestcheck-valid-tool-name
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:55:24.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd0f8095989
+  - type: executable_for
+    from: SYM-askbench-rescorefaults-test-go-test-re-grading-counts-reliability-per-question-from-the-stored-call-failures
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T19:59:20.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b305d98cce7a

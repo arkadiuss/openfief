@@ -123,9 +123,9 @@ func modelRep(label, hash string, pass, reliable bool) ModelReport {
 	if !pass {
 		m.Verdict.Failing = []VerdictFailure{{Case: "A1", Tag: tagCommand, Passed: 3, Need: 5, Runs: 5}}
 	}
-	m.Reliability = Reliability{Calls: 100, TransportFailures: 1, Rate: 0.01}
+	m.Reliability = Reliability{Questions: 100, FailedQuestions: 1, Calls: 100, TransportFailures: 1, Rate: 0.01}
 	if !reliable {
-		m.Reliability = Reliability{Calls: 100, TransportFailures: 9, Rate: 0.09, Failed: true}
+		m.Reliability = Reliability{Questions: 100, FailedQuestions: 9, Calls: 100, TransportFailures: 9, Rate: 0.09, Failed: true}
 	}
 	return m
 }
@@ -224,7 +224,7 @@ func TestTheGateFailsAMemberWhoseVerdictOrReliabilityFailsAndNoOther(t *testing.
 	}
 	for model, wants := range map[string][2]string{
 		"weak":  {"verdict fail: A1 (command) 3/5", "reliability"},
-		"flaky": {"reliability fail (9.0%, 9/100)", "verdict"},
+		"flaky": {"reliability fail (9.0% of questions, 9 of 100; 9 failed calls)", "verdict"},
 	} {
 		if !strings.Contains(reasons[model], wants[0]) || strings.Contains(reasons[model], wants[1]) {
 			t.Errorf("%s: %q, want %q and not %q", model, reasons[model], wants[0], wants[1])

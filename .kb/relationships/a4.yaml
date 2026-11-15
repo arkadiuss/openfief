@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4440b26d51a6
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-the-request-check-refuses-what-every-host-refuses
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:58:54.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-981daff13d6c

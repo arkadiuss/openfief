@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"path/filepath"
 	"slices"
@@ -57,6 +58,14 @@ type RescoreReport struct {
 	CarriedChecks int      `json:"carriedChecks"`
 	Kept          int      `json:"kept"`
 	Notes         []string `json:"notes,omitempty"`
+	// DerivedFaults is how many failed calls of the report had no fault stored
+	// (a report before scorer version 3) and had it derived from their status and
+	// label; Undecided how many of those are a 4xx that only the request's hash,
+	// which that report did not store, could decide: they count in no host's
+	// reliability and void nothing. The reliability of every model is counted
+	// again per question from the stored call failures.
+	DerivedFaults int `json:"derivedFaults,omitempty"`
+	Undecided     int `json:"undecided,omitempty"`
 }
 
 // LoadReport reads a bench's report.json.
@@ -109,6 +118,7 @@ func (b *Bench) rescoreModel(ctx context.Context, rep *Report, m *ModelReport, i
 			return fmt.Errorf("%w: %s: the report has case %s, which the bench no longer has", ErrRun, m.Model, cr.ID)
 		}
 		for ri := range cr.Detail {
+			cr.Detail[ri].deriveFaults(info)
 			if err := b.rescoreRun(ctx, &runKey{c: &b.cases[i], limits: limits, schema: rep.Schema}, &cr.Detail[ri], info); err != nil {
 				return fmt.Errorf("%w: %s %s run %d: %w", ErrRun, m.Model, cr.ID, cr.Detail[ri].Run, err)
 			}
@@ -118,7 +128,71 @@ func (b *Bench) rescoreModel(ctx context.Context, rep *Report, m *ModelReport, i
 		m.addTotals(&fresh)
 	}
 	m.Verdict = evalVerdict(m.Cases, rep.RunsPerCase, m.CouldNotRun)
+	m.recountReliability()
 	return nil
+}
+
+// recountReliability counts the model's void runs and its reliability again from
+// its runs' stored call failures: per question (D-207), whatever the report
+// counted before.
+func (m *ModelReport) recountReliability() {
+	m.VoidRuns, m.VoidCredentials, m.Reliability = 0, 0, Reliability{}
+	for ci := range m.Cases {
+		m.VoidRuns += m.Cases[ci].Void
+		m.VoidCredentials += m.Cases[ci].VoidCredentials
+		m.Reliability.add(m.Cases[ci].Detail)
+	}
+	m.Reliability.finish()
+}
+
+// deriveFaults gives the failed calls of a stored run the fault a report before
+// scorer version 3 did not store, from what it did store: a refused key and no
+// credits void the run, a 404 is the host's, no answer, a timeout, a 5xx, a 429
+// and a bad or degenerate reply are the host's as they were counted, an invalid
+// request and a local error are the bench's. Another 4xx cannot be decided, for
+// that needs the hash of the request, and is counted and left out. Then it
+// settles the run again.
+func (run *RunReport) deriveFaults(info *RescoreReport) {
+	for i := range run.CallErrors {
+		ce := &run.CallErrors[i]
+		if ce.Fault != "" {
+			continue
+		}
+		derived := legacyFault(ce)
+		if derived.fault == "" {
+			info.Undecided++
+			continue
+		}
+		ce.Fault, ce.Rule = derived.fault, derived.rule
+		info.DerivedFaults++
+		if derived.fault == faultHost && (ce.Status == http.StatusNotFound || ce.Label == labelBadReply || ce.Label == labelDegenerate || ce.Label == labelFailed) {
+			run.TransportFailures++ // a 404 and a bad, degenerate or bare failed reply were no failure of the host before
+		}
+	}
+	run.settle()
+}
+
+// derivedFault is the fault and the rule given to a failed call that had none.
+type derivedFault struct{ fault, rule string }
+
+// legacyFault is the fault and the rule of a failed call that has none stored,
+// empty for a call that cannot be decided from its status, label and class.
+func legacyFault(ce *CallErrorReport) derivedFault {
+	switch {
+	case ce.Status == http.StatusUnauthorized || ce.Status == http.StatusPaymentRequired:
+		return derivedFault{faultCredentials, ruleCredentials}
+	case ce.Status == http.StatusNotFound:
+		return derivedFault{faultHost, ruleNotFound}
+	case ce.Status == http.StatusTooManyRequests || ce.Status >= http.StatusInternalServerError:
+		return derivedFault{faultHost, ""}
+	case ce.Status != 0:
+		return derivedFault{}
+	}
+	switch ce.Label {
+	case labelInvalid, labelLocal:
+		return derivedFault{faultBench, ""}
+	}
+	return derivedFault{faultHost, ""}
 }
 
 // runKey is what a run's re-grading needs besides the run: its case, its
@@ -178,7 +252,7 @@ func (b *Bench) rescoreRun(ctx context.Context, k *runKey, run *RunReport, info 
 // as it was graded.
 func regrade(ctx context.Context, k *runKey, run *RunReport, d *RunData, info *RescoreReport) ([]result, error) {
 	results, err := grade(ctx, d)
-	if err != nil || k.schema >= reportSchema {
+	if err != nil || k.schema >= storedCardsSchema {
 		return results, err
 	}
 	return carryChecks(results, run.Checks, []string{"Limits"}, info)
@@ -195,7 +269,7 @@ func (info *RescoreReport) keep(id string, run int, why string) {
 // cardsOf returns the run's cards: those the report holds (schema 2), or, for a
 // report of schema 1, the ones its calls rebuild.
 func (b *Bench) cardsOf(ctx context.Context, k *runKey, run *RunReport) replayed {
-	if k.schema >= reportSchema {
+	if k.schema >= storedCardsSchema {
 		return replayed{cards: askRunCards(run.CardData), read: askRunCards(run.ReadData)}
 	}
 	got := b.replayCards(ctx, k, run)

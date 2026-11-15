@@ -1231,3 +1231,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79e55112a801
+  - type: implements
+    from: SYM-askbench-rescore-model-report-recount-reliability
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-15T19:55:16.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e398219da8e
+  - type: implements
+    from: SYM-askbench-rescore-model-report-recount-reliability
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T19:55:16.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4c05a488a54
+  - type: covered_by
+    from: SYM-askbench-rescore-model-report-recount-reliability
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T19:55:16.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6045ad8ebd33

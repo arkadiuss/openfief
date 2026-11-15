@@ -16,10 +16,12 @@
 // safety property (the refusals, and the injection cases' safety: no payload
 // followed, no extra call, no echo) passed on all five runs for every model, 1
 // when one did not, 2 when it could not run (a bad argument or key, or
-// a model that no call reached: bad key, no credits, no network), 3 when its
-// budget ran out before every question was asked and 4 when a member of the
-// demo route (-demo-route, D-221) failed its verdict or reliability. A call that fails while
-// others answer is an error listed in the report, not a model failure. Answer cases are reported, not gated.
+// a model that no call reached: no network), 3 when its budget ran out before
+// every question was asked, 4 when a member of the demo route (-demo-route,
+// D-221) failed its verdict or reliability and 5 when a refused key (401) or no
+// credits (402) voided a run, which says nothing of any model and comes before
+// the other codes. A call that fails while others answer is an error listed in
+// the report, not a model failure. Answer cases are reported, not gated.
 package main
 
 import (
@@ -56,8 +58,13 @@ const (
 	exitBudget = 3
 	// exitRoute is the exit code of a member of the demo route whose run failed
 	// its verdict or its reliability, when no safety case failed (D-221).
-	exitRoute   = 4
-	httpTimeout = time.Minute
+	exitRoute = 4
+	// exitCredentials is the exit code of a run that a refused key (401) or no
+	// credits (402) voided: it says nothing of any model or host, so the weekly
+	// workflow fails and the author sees it (D-221). It comes before every other
+	// code, since the results it would read are not the run's.
+	exitCredentials = 5
+	httpTimeout     = time.Minute
 	// defaultBudget is the most the run may spend, in US dollars: far above
 	// what the two candidates cost for the 28 cases five times each.
 	defaultBudget   = "1.00"
@@ -152,20 +159,26 @@ func rescoreText(r *Report, dir string) string {
 	for _, note := range info.Notes {
 		fmt.Fprintf(&b, "kept: %s\n", note)
 	}
+	if info.DerivedFaults > 0 || info.Undecided > 0 {
+		fmt.Fprintf(&b, "faults: %d failed calls had none stored and got theirs from their status and label; %d 4xx could not be decided without the request's hash and count in no reliability\n", info.DerivedFaults, info.Undecided)
+	}
 	for i := range r.Models {
 		m := &r.Models[i]
-		fmt.Fprintf(&b, "%s: %s\n", m.Model, verdictText(&m.Verdict))
+		fmt.Fprintf(&b, "%s: %s; reliability %s\n", m.Model, verdictText(&m.Verdict), m.Reliability.text())
+		b.WriteString(faultLines(m))
 	}
 	fmt.Fprintf(&b, "report: %s/report.json, %s/summary.md\n", dir, dir)
 	return b.String()
 }
 
-// exitCode is the bench's exit code for a finished report: a model no call
-// reached or a budget that ran out first, then a safety property that failed,
+// exitCode is the bench's exit code for a finished report: a run voided by its
+// key or credits first, then a model no call reached or a budget that ran out, then a safety property that failed,
 // then a member of the demo route that failed its verdict or reliability (D-221,
 // which fails the weekly workflow so the author sees it).
 func exitCode(report *Report) int {
 	switch {
+	case report.CredentialsVoid():
+		return exitCredentials
 	case report.CouldNotRun():
 		return exitError
 	case report.Budget.Aborted:
@@ -227,9 +240,7 @@ func resultText(r *Report, dir string) string {
 			if n := badReplies(m.Errors); n > 0 {
 				fmt.Fprintf(&b, "%s: bad replies (a 2xx answer that is no chat completion; the host's fault, in the reliability): %d\n", m.Model, n)
 			}
-			if m.VoidRuns > 0 {
-				fmt.Fprintf(&b, "%s: void (bench fault): %d runs, to be run again after the fix\n", m.Model, m.VoidRuns)
-			}
+			b.WriteString(faultLines(m))
 		}
 	}
 	if r.Budget.Aborted {
@@ -239,6 +250,28 @@ func resultText(r *Report, dir string) string {
 		b.WriteString(routeText(r.Route))
 	}
 	fmt.Fprintf(&b, "report: %s/report.json, %s/summary.md\n", dir, dir)
+	return b.String()
+}
+
+// faultLines says on stdout what a model's failed calls mean beyond their
+// counts: a 404 loudly, the 4xx the evidence decided, and the void runs.
+func faultLines(m *ModelReport) string {
+	var b strings.Builder
+	if n := notFoundCalls(m.Errors); n > 0 {
+		fmt.Fprintf(&b, "%s: 404: the pin may be stale (%d calls found no route; the host's fault, in the reliability)\n", m.Model, n)
+	}
+	if n := callsByRule(m.Errors, ruleAcceptedElsewhere); n > 0 {
+		fmt.Fprintf(&b, "%s: %d rejected calls were accepted elsewhere: the host's fault, in the reliability\n", m.Model, n)
+	}
+	if n := callsByRule(m.Errors, ruleAcceptedNowhere); n > 0 {
+		fmt.Fprintf(&b, "%s: %d rejected calls were accepted nowhere: the bench's fault, the request check should catch them (requestcheck.go)\n", m.Model, n)
+	}
+	if m.VoidCredentials > 0 {
+		fmt.Fprintf(&b, "%s: void (credentials/credit): %d runs, the key was refused or the credits are gone; exit %d\n", m.Model, m.VoidCredentials, exitCredentials)
+	}
+	if bench := m.VoidRuns - m.VoidCredentials; bench > 0 {
+		fmt.Fprintf(&b, "%s: void (bench fault): %d runs, to be run again after the fix\n", m.Model, bench)
+	}
 	return b.String()
 }
 

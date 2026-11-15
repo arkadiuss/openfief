@@ -1259,3 +1259,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d18337836c9
+  - type: executable_for
+    from: SYM-docgen-askeval-test-go-test-reliability-is-shown-per-question-when-the-result-has-it
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T20:40:38.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a25810b87f79

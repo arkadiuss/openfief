@@ -1154,3 +1154,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34197674ef22
+  - type: executable_for
+    from: SYM-askbench-retry-test-go-test-the-rate-is-failed-questions-over-questions-and-calls-are-counted-beside
+    to: TEST-askbench-retry
+    created_at: 2026-11-15T19:59:46.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fc2ac88300e

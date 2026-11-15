@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/arkadiuss/openfief/plugins/model-openai/openaichat"
@@ -35,11 +37,19 @@ func breaks(i int, why string) error {
 //   - a tool message answers a tool call of the assistant message before it
 //     that was not answered yet, and carries that call's id;
 //   - every tool call of an assistant message is answered by a tool message
-//     before the next message that is not a tool's.
+//     before the next message that is not a tool's;
+//   - every tool has a name of 1 to 64 letters, digits, underscores or dashes,
+//     used once, and parameters that are a JSON object; a response schema is a
+//     JSON object. These are what hosts refuse most often with a 400 that no
+//     other host would answer differently: a 4xx that no entry of a run accepted
+//     is the bench's fault (rejections.go) and means this check misses something.
 //
 // A request that fails is never sent: the run it belongs to is void, the bench's
 // own fault and no host's.
 func validateRequest(req *openaichat.Request) error {
+	if err := checkTools(req); err != nil {
+		return err
+	}
 	if len(req.Messages) == 0 {
 		return fmt.Errorf("%w: no messages", errBadConversation)
 	}
@@ -58,6 +68,41 @@ func validateRequest(req *openaichat.Request) error {
 	}
 	if last := req.Messages[len(req.Messages)-1].Role; last != chatUser && last != chatTool {
 		return fmt.Errorf("%w: the conversation ends with a %s message", errBadConversation, last)
+	}
+	return nil
+}
+
+// maxToolName is the longest name a chat API takes for a tool.
+const maxToolName = 64
+
+// toolNamePattern is a tool name a chat API takes: 1 to maxToolName letters,
+// digits, underscores or dashes.
+var toolNamePattern = regexp.MustCompile(`^[a-zA-Z0-9_-]{1,64}$`)
+
+// validToolName reports whether name is one a chat API takes.
+func validToolName(name string) bool { return toolNamePattern.MatchString(name) }
+
+// isJSONObject reports whether raw is a JSON object.
+func isJSONObject(raw json.RawMessage) bool {
+	var v map[string]json.RawMessage
+	return json.Unmarshal(raw, &v) == nil && v != nil
+}
+
+// checkTools checks the tools and the response schema of the request.
+func checkTools(req *openaichat.Request) error {
+	seen := map[string]bool{}
+	for i := range req.Tools {
+		t := &req.Tools[i]
+		if !validToolName(t.Name) || seen[t.Name] {
+			return fmt.Errorf("%w: tool %d: a name that is not 1 to %d letters, digits, underscores or dashes, or is used twice", errBadConversation, i, maxToolName)
+		}
+		seen[t.Name] = true
+		if len(t.Parameters) > 0 && !isJSONObject(t.Parameters) {
+			return fmt.Errorf("%w: tool %d: parameters that are not a JSON object", errBadConversation, i)
+		}
+	}
+	if len(req.ResponseSchema) > 0 && !isJSONObject(req.ResponseSchema) {
+		return fmt.Errorf("%w: a response schema that is not a JSON object", errBadConversation)
 	}
 	return nil
 }

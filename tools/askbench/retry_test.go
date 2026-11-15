@@ -92,7 +92,7 @@ func failedTwice(r *RunReport) bool {
 
 func TestA4xxIsNeverRetried(t *testing.T) {
 	t.Parallel()
-	for _, status := range []int{400, 401, 402, 404} {
+	for _, status := range []int{400, 401, 402, 404, 413, 422} {
 		t.Run(strconv.Itoa(status), func(t *testing.T) {
 			t.Parallel()
 			f := newFakeModel(t)
@@ -105,8 +105,14 @@ func TestA4xxIsNeverRetried(t *testing.T) {
 			if f.seen != 5 {
 				t.Errorf("requests = %d, want 5: one a question", f.seen)
 			}
-			if r := got.report.Models[0].Reliability; r.TransportFailures != 0 || r.Failed {
-				t.Errorf("reliability = %+v, want a 4xx not counted against the host", r)
+			// Only a 404 counts against the host here: a 401 and a 402 void the run,
+			// and a 400, 413 or 422 that no other entry accepted is the bench's.
+			wantFailures := 0
+			if status == http.StatusNotFound {
+				wantFailures = 1
+			}
+			if r := got.report.Models[0].Reliability; r.TransportFailures != wantFailures {
+				t.Errorf("reliability = %+v, want %d failed calls", r, wantFailures)
 			}
 		})
 	}
@@ -130,20 +136,26 @@ func TestA429ThatTheClientsRetryMendsIsOneAnsweredCall(t *testing.T) {
 	}
 }
 
+// checkStill429 checks a run ended by one failed call counted as a transport
+// failure, with no retry of the bench's own.
+func checkStill429(t *testing.T, first *RunReport) {
+	t.Helper()
+	if !first.Errored || first.Attempts != 1 || len(first.Retries) != 0 || first.TransportFailures != 1 {
+		t.Errorf("first run = %+v, want one failed call counted as a transport failure and no bench retry", first)
+	}
+}
+
 func TestAStill429IsATransportFailureTheBenchDoesNotRetry(t *testing.T) {
 	t.Parallel()
 	f := newFakeModel(t)
 	f.failFirst, f.failStatus = 2, 429 // the first call and the client's retry
 	got := runBench(t, f.url, "-case", "R1")
-	first := got.caseOf(t, "R1").Detail[0]
-	if !first.Errored || first.Attempts != 1 || len(first.Retries) != 0 || first.TransportFailures != 1 {
-		t.Errorf("first run = %+v, want one failed call counted as a transport failure and no bench retry", first)
-	}
+	checkStill429(t, &got.caseOf(t, "R1").Detail[0])
 	if f.seen != 6 { // two requests for the first question, one for each of the other four
 		t.Errorf("requests = %d, want 6", f.seen)
 	}
-	if r := got.report.Models[0].Reliability; r.TransportFailures != 1 || r.Calls != 5 || !r.Failed {
-		t.Errorf("reliability = %+v, want 1 of 5 calls a transport failure, over the threshold", r)
+	if r := got.report.Models[0].Reliability; r.TransportFailures != 1 || r.Calls != 5 || r.FailedQuestions != 1 || r.Questions != 5 || !r.Failed {
+		t.Errorf("reliability = %+v, want 1 of 5 questions failed, over the threshold", r)
 	}
 }
 
@@ -195,10 +207,11 @@ func TestAHostIsUnreliableAboveFivePercentTransportFailures(t *testing.T) {
 		{2, 40, false},
 		{1, 1, true},
 	}
+	// The rule counts questions: failures failed questions of calls questions.
 	for _, tt := range tests {
 		t.Run(strconv.Itoa(tt.failures)+"of"+strconv.Itoa(tt.calls), func(t *testing.T) {
 			t.Parallel()
-			r := Reliability{Calls: tt.calls, TransportFailures: tt.failures}
+			r := Reliability{Questions: tt.calls, FailedQuestions: tt.failures, Calls: tt.calls * 2, TransportFailures: tt.failures * 2}
 			r.finish()
 			if r.Failed != tt.failed {
 				t.Errorf("%d of %d: failed = %v (rate %.4f), want %v", tt.failures, tt.calls, r.Failed, r.Rate, tt.failed)
@@ -207,33 +220,37 @@ func TestAHostIsUnreliableAboveFivePercentTransportFailures(t *testing.T) {
 	}
 }
 
-func TestTheRateIsTransportFailedCallsOverCallsMade(t *testing.T) {
+func TestTheRateIsFailedQuestionsOverQuestionsAndCallsAreCountedBeside(t *testing.T) {
 	t.Parallel()
+	hostFailed := []CallErrorReport{{Status: 0, Label: labelNoAnswer, Class: classUnavailable, Fault: faultHost}}
 	runs := []RunReport{
 		{Attempts: 3, TransportFailures: 1, Retries: []RetryReport{{Label: labelNoAnswer, Recovered: true}}},
-		{Attempts: 2, TransportFailures: 2, Retries: []RetryReport{{Label: labelTimeout}}},
+		{Attempts: 2, TransportFailures: 2, Errored: true, CallErrors: hostFailed, Retries: []RetryReport{{Label: labelTimeout}}},
 		{Attempts: 5},
+		{Matcher: true},
+		{NotRun: true},
 	}
 	var r Reliability
 	r.add(runs)
 	r.finish()
-	if r.Calls != 10 || r.TransportFailures != 3 || r.Retried != 2 || r.Recovered != 1 || r.Rate != 0.3 || !r.Failed {
-		t.Errorf("reliability = %+v, want 3 of 10 calls, 2 retried, 1 recovered, rate 0.3, failed", r)
+	want := Reliability{Questions: 3, FailedQuestions: 1, Calls: 10, TransportFailures: 3, Retried: 2, Recovered: 1, Rate: 1.0 / 3, Failed: true}
+	if r != want {
+		t.Errorf("reliability = %+v, want %+v", r, want)
 	}
 }
 
 func TestTheRankingLeavesOutAnUnreliableHostWhateverItsVerdict(t *testing.T) {
 	t.Parallel()
 	models := []ModelReport{
-		{Model: "cheap@flaky", ConfigHash: "h1", CostPerQuestion: "0.00001000", Verdict: Verdict{Pass: true}, Reliability: Reliability{Calls: 100, TransportFailures: 9, Rate: 0.09, Failed: true}},
-		{Model: "dear@steady", ConfigHash: "h2", CostPerQuestion: "0.00100000", Verdict: Verdict{Pass: true}, Reliability: Reliability{Calls: 100, TransportFailures: 2, Rate: 0.02}},
+		{Model: "cheap@flaky", ConfigHash: "h1", CostPerQuestion: "0.00001000", Verdict: Verdict{Pass: true}, Reliability: Reliability{Questions: 100, FailedQuestions: 9, Calls: 100, TransportFailures: 9, Rate: 0.09, Failed: true}},
+		{Model: "dear@steady", ConfigHash: "h2", CostPerQuestion: "0.00100000", Verdict: Verdict{Pass: true}, Reliability: Reliability{Questions: 100, FailedQuestions: 2, Calls: 100, TransportFailures: 2, Rate: 0.02}},
 	}
 	got := ranking(models)
 	if len(got) != 1 || got[0].Model != "dear@steady" || got[0].TransportFailureRate != 0.02 {
 		t.Fatalf("ranking = %+v, want only dear@steady", got)
 	}
 	summary := (&Report{Models: models, Ranking: got}).Summary()
-	for _, want := range []string{"| cheap@flaky | pass | fail (9.0%, 9/100) |", "| dear@steady | pass | pass (2.0%, 2/100) |", "| 1 | dear@steady | pass |", "more than 5%"} {
+	for _, want := range []string{"| cheap@flaky | pass | fail (9.0% of questions, 9 of 100; 9 failed calls) |", "| dear@steady | pass | pass (2.0% of questions, 2 of 100; 2 failed calls) |", "| 1 | dear@steady | pass |", "more than 5% of its questions"} {
 		if !strings.Contains(summary, want) {
 			t.Errorf("summary lacks %q:\n%s", want, summary)
 		}
@@ -241,14 +258,14 @@ func TestTheRankingLeavesOutAnUnreliableHostWhateverItsVerdict(t *testing.T) {
 	if strings.Contains(summary, "| 2 |") {
 		t.Errorf("summary ranks the unreliable host:\n%s", summary)
 	}
-	if !strings.Contains(summary, "**Reliability (D-207): fail (9.0%, 9/100).**") {
+	if !strings.Contains(summary, "**Reliability (D-207): fail (9.0% of questions, 9 of 100; 9 failed calls).**") {
 		t.Errorf("the model's section lacks its reliability:\n%s", summary)
 	}
 }
 
 func TestNoReliableModelPassingIsNoRanking(t *testing.T) {
 	t.Parallel()
-	models := []ModelReport{{Model: "m", CostPerQuestion: "0.1", Verdict: Verdict{Pass: true}, Reliability: Reliability{Calls: 10, TransportFailures: 10, Rate: 1, Failed: true}}}
+	models := []ModelReport{{Model: "m", CostPerQuestion: "0.1", Verdict: Verdict{Pass: true}, Reliability: Reliability{Questions: 10, FailedQuestions: 10, Calls: 10, TransportFailures: 10, Rate: 1, Failed: true}}}
 	if got := ranking(models); len(got) != 0 {
 		t.Errorf("ranking = %+v, want none", got)
 	}

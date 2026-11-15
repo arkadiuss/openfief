@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41924406e27e
+  - type: implements
+    from: SYM-askbench-modelclient-transient
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-15T19:53:37.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c5bf7e1bc32
+  - type: covered_by
+    from: SYM-askbench-modelclient-transient
+    to: TEST-askbench-retry
+    created_at: 2026-11-15T19:53:37.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242679e33837

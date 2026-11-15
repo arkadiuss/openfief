@@ -30,7 +30,8 @@ func TestStatusLabels(t *testing.T) {
 		{502, "provider error"},
 		{503, "provider error"},
 		{400, "request rejected"},
-		{404, "request rejected"},
+		{404, "not found"},
+		{403, "request rejected"},
 		{0, ""},
 		{302, ""},
 	}
@@ -135,17 +136,18 @@ func TestEveryFailureHasAClassOfTheFixedSet(t *testing.T) {
 	}
 }
 
-func TestNothingReachingAModelCouldNotRunAndExitsTwo(t *testing.T) {
+func TestNothingReachingAModelCouldNotRunAndExitsTwoOrFiveForCredentials(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		status int
 		count  string
 		label  string
+		exit   int
 	}{
-		{402, "402 no credits (unavailable) ×10", "no credits"},
-		{401, "401 key refused (unavailable) ×10", "key refused"},
-		{429, "429 rate limited (unavailable) ×10", "rate limited"},
-		{500, "500 provider error (unavailable) ×10", "provider error"},
+		{402, "402 no credits (unavailable) ×10", "no credits", exitCredentials},
+		{401, "401 key refused (unavailable) ×10", "key refused", exitCredentials},
+		{429, "429 rate limited (unavailable) ×10", "rate limited", exitError},
+		{500, "500 provider error (unavailable) ×10", "provider error", exitError},
 	}
 	for _, tt := range tests {
 		t.Run(strconv.Itoa(tt.status), func(t *testing.T) {
@@ -153,8 +155,8 @@ func TestNothingReachingAModelCouldNotRunAndExitsTwo(t *testing.T) {
 			f := newFakeModel(t)
 			f.status, f.failureBody = tt.status, `{"error":"the provider's own words, key `+testKey+`"}`
 			got := runBench(t, f.url, "-case", "R1,I2")
-			if got.code != exitError {
-				t.Fatalf("exit %d, want %d; stdout %q", got.code, exitError, got.stdout)
+			if got.code != tt.exit {
+				t.Fatalf("exit %d, want %d; stdout %q", got.code, tt.exit, got.stdout)
 			}
 			checkCouldNotRunReport(t, got.report, tt.status, tt.label, tt.count)
 			checkSaysCouldNotRun(t, got, tt.count)
@@ -175,19 +177,23 @@ func checkCouldNotRunReport(t *testing.T, r *Report, status int, label, count st
 		t.Error("the report calls it a model failure")
 	}
 	for i := range m.Cases {
-		checkAllErrored(t, &m.Cases[i], CallErrorReport{Status: status, Label: label, Class: classUnavailable, Fault: faultHostFor(status)})
+		want := CallErrorReport{Status: status, Label: label, Class: classUnavailable, Fault: faultHostFor(status)}
+		if want.Fault == faultCredentials {
+			want.Rule = ruleCredentials
+		}
+		checkAllErrored(t, &m.Cases[i], &want)
 	}
 }
 
 // checkAllErrored checks that a case's five runs all hit one failed call, so
 // none passed, none was scored and no failure reason is listed.
-func checkAllErrored(t *testing.T, c *CaseReport, want CallErrorReport) {
+func checkAllErrored(t *testing.T, c *CaseReport, want *CallErrorReport) {
 	t.Helper()
 	if c.Passed != 0 || c.Runs != 0 || c.Errored != 5 || len(c.Failures) != 0 {
 		t.Errorf("case %s = %+v, want five errored runs and no failures", c.ID, c)
 	}
 	run := &c.Detail[0]
-	if !run.Errored || len(run.CallErrors) != 1 || run.CallErrors[0] != want {
+	if !run.Errored || len(run.CallErrors) != 1 || run.CallErrors[0] != *want {
 		t.Errorf("case %s run = %+v, want one call error %+v", c.ID, run, want)
 	}
 }
@@ -238,7 +244,7 @@ func TestAPartialOutageIsScoredAndItsErrorsAreListedNotCountedAsFailures(t *test
 		t.Fatalf("model = couldNotRun %v completions %d errored %d", m.CouldNotRun, m.Completions, m.ErroredRuns)
 	}
 	a1, r1 := got.caseOf(t, "A1"), got.caseOf(t, "R1")
-	checkAllErrored(t, &a1, CallErrorReport{Status: 429, Label: "rate limited", Class: classUnavailable, Fault: faultHost})
+	checkAllErrored(t, &a1, &CallErrorReport{Status: 429, Label: "rate limited", Class: classUnavailable, Fault: faultHost})
 	if a1.PassAll || !r1.PassAll || r1.Errored != 0 {
 		t.Errorf("A1 pass^5 %v and R1 = %+v, want A1 not passed and R1 scored and passed", a1.PassAll, r1)
 	}
@@ -357,12 +363,12 @@ func askedOnce() []ui.AskMessage {
 }
 
 // faultHostFor is whose fault a failed call of status is: the host's for a 429
-// and a 5xx, nobody's for the other refusals (a key, credits).
+// and a 5xx, the credentials' for a refused key or no credits.
 func faultHostFor(status int) string {
 	if status == http.StatusTooManyRequests || status >= http.StatusInternalServerError {
 		return faultHost
 	}
-	return ""
+	return faultCredentials
 }
 
 func TestValidateRequestAcceptsTheLoopsConversations(t *testing.T) {

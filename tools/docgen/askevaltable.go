@@ -250,8 +250,9 @@ func resultsTable(results []evalResult, history evalHistory, comments evalCommen
 	return b.String()
 }
 
-// reliabilityPercent is the share of the run's calls that failed in transport
-// (D-207), marked when it fails the run.
+// reliabilityPercent is the share of the run's questions the host failed
+// (D-207; of its calls in a result before scorer version 3), marked when it
+// fails the run.
 func reliabilityPercent(r *evalResult) string {
 	rel := r.Reliability
 	if rel == nil {

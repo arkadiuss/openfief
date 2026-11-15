@@ -1,5 +1,5 @@
 ---
-title: The Ask box bench retries a call that failed with no answer, a timeout or a 5xx once, retries a 429 once after its Retry-After inside the chat client, and never retries any other 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts a 429 that stays a 429 as a transport failure, reports each model@host's transport-failure rate and fails a host whose rate is over five percent for the run whatever its verdict.
+title: The Ask box bench retries a call that failed with no answer, a timeout, a 5xx or a bad reply once, retries a 429 once after its Retry-After inside the chat client, and never retries a 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts reliability per question and not per call (a question is failed only when, after its retry, it still has no usable answer because of a host fault, however many calls it took), reports each model@host's failed-question rate beside its failed-call counts and fails a host whose rate is over five percent of its questions for the run whatever its verdict.
 status: open
 tags:
   - askbench
@@ -7,34 +7,33 @@ firmness: default
 required_evidence: unverified
 origin:
   kind: agent
-  ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
-  recorded_at: '2026-11-14T19:56:46.891Z'
-semantic_text: The Ask box bench retries a call that failed with no answer, a timeout or a 5xx once, retries a 429 once after its Retry-After inside the chat client, and never retries any other 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts a 429 that stays a 429 as a transport failure, reports each model@host's transport-failure rate and fails a host whose rate is over five percent for the run whatever its verdict.
+  ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+  recorded_at: '2026-11-15T20:00:00.000Z'
+semantic_text: The Ask box bench retries a call that failed with no answer, a timeout, a 5xx or a bad reply once, retries a 429 once after its Retry-After inside the chat client, and never retries a 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts reliability per question and not per call (a question is failed only when, after its retry, it still has no usable answer because of a host fault, however many calls it took), reports each model@host's failed-question rate beside its failed-call counts and fails a host whose rate is over five percent of its questions for the run whatever its verdict.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 99f7f219301d278c7d53eb0eee2aed284e5915d78b2c5b2cd133e77ddd67f81d
+semantic_source_hash: 4a56db447219b1f3c66d0b97faecd0a980e5a11c8a4c5d2866c3691a98046706
 semantic_inventory:
-  - claim_key: CLAIM-A73EF4164D32FE47
-    claim_text: The Ask box bench retries a call that failed with no answer, a timeout or a 5xx once, retries a 429 once after its Retry-After inside the chat client, and never retries any other 4xx or an answer
+  - claim_key: CLAIM-AD30E88E91F6E424
+    claim_text: The Ask box bench retries a call that failed with no answer, a timeout, a 5xx or a bad reply once, retries a 429 once after its Retry-After inside the chat client, and never retries a 4xx or an answer
     role: normative
     status: ontology_gap
     span:
       start: 0
-      end: 195
-  - claim_key: CLAIM-483A68C39331334E
-    claim_text: it counts the retry as a call and marks it in the run detail, counts a 429 that stays a 429 as a transport failure, reports each model@host's transport-failure rate and fails a host whose rate is over five percent for the run whatever its verdict
-    role: descriptive
-    status: ontology_gap
+      end: 200
+  - claim_key: CLAIM-E611530DDF87C828
+    claim_text: it counts the retry as a call and marks it in the run detail, counts reliability per question and not per call (a question is failed only when, after its retry, it still has no usable answer because of a host fault, however many calls it took), reports each model@host's failed-question rate beside its failed-call counts and fails a host whose rate is over five percent of its questions for the run whatever its verdict
+    role: rationale
+    status: nonlogical
     span:
-      start: 197
-      end: 443
+      start: 202
+      end: 622
 logic_claims:
-  - CLAIM-A73EF4164D32FE47
-  - CLAIM-483A68C39331334E
+  - CLAIM-AD30E88E91F6E424
 id: REQ-askbench-retries-transport-and-reports-reliability
 type: req
 ---
-The Ask box bench retries a call that failed with no answer, a timeout or a 5xx once, retries a 429 once after its Retry-After inside the chat client, and never retries any other 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts a 429 that stays a 429 as a transport failure, reports each model@host's transport-failure rate and fails a host whose rate is over five percent for the run whatever its verdict.
+The Ask box bench retries a call that failed with no answer, a timeout, a 5xx or a bad reply once, retries a 429 once after its Retry-After inside the chat client, and never retries a 4xx or an answer; it counts the retry as a call and marks it in the run detail, counts reliability per question and not per call (a question is failed only when, after its retry, it still has no usable answer because of a host fault, however many calls it took), reports each model@host's failed-question rate beside its failed-call counts and fails a host whose rate is over five percent of its questions for the run whatever its verdict.
 
 ## Context
 

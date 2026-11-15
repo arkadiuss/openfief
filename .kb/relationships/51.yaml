@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd13cc3111f9
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-entry-of-report
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:57:20.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2921693a0646

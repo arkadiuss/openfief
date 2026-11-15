@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a22c5c956a39
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-a-rejection-of-the-only-entry-is-accepted-nowhere
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:57:53.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a717da90fe2d

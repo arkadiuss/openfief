@@ -217261,9 +217261,13 @@ symbols:
       - type: covered_by
         target: TEST-askbench-history
       - type: covered_by
+        target: TEST-askbench-rejections
+      - type: covered_by
         target: TEST-askbench-runner
       - type: implements
         target: REQ-askbench-budget-and-exit-codes
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
       - type: implements
         target: REQ-askbench-errors-not-model-failures
       - type: implements
@@ -221448,17 +221452,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-errors
-  - id: SYM-askbench-errors-test-nothing-reaching-a-model
-    title: TestNothingReachingAModelCouldNotRunAndExitsTwo
-    status: active
-    sourceFile: tools/askbench/errors_test.go
-    origin:
-      kind: agent
-      ref: Brief to the Ask bench status session (a run no model answered must not look like a model result), 2026-11-14
-      recorded_at: 2026-11-14T13:28:26.903Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-errors
   - id: SYM-askbench-errors-test-check-could-not-run-report
     title: checkCouldNotRunReport
     status: active
@@ -224015,20 +224008,6 @@ symbols:
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
-  - id: SYM-ab4-tools-askbench-scorers-go-callcap
-    title: callCap
-    status: active
-    sourceFile: tools/askbench/scorers.go
-    origin:
-      kind: agent
-      ref: 'AB4 brief from the design session: softer decline wording, injection cases split into safety and answer, reasoning control and exact cost in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T17:00:49.956Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-askbench-split
-      - type: implements
-        target: REQ-askbench-grades-safety-and-quality-apart
   - id: SYM-ab4-tools-askbench-scorers-go-callssafescorer
     title: callsSafeScorer
     status: active
@@ -226129,17 +226108,6 @@ symbols:
       kind: agent
       ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
       recorded_at: 2026-11-14T20:40:35.793Z
-    status: active
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-retry
-  - id: SYM-ab6-tools-askbench-retry-test-go-testtherateistransportfailedcallsovercallsmade
-    title: TestTheRateIsTransportFailedCallsOverCallsMade
-    sourceFile: tools/askbench/retry_test.go
-    origin:
-      kind: agent
-      ref: 'AB6 brief from the design session: retry and reliability in the bench, one prompt tweak (D-205, D-207, D-217, D-220), and the coordinator''s D-221 addition (history, weekly gate), 2026-11-14'
-      recorded_at: 2026-11-14T20:40:42.183Z
     status: active
     relationships:
       - type: executable_for
@@ -233525,6 +233493,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-errors
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
       - type: implements
         target: REQ-askbench-failed-call-has-a-class
   - id: SYM-askbench-modelclient-harmony-tokens
@@ -233595,6 +233567,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-askbench-errors
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
       - type: implements
         target: REQ-askbench-failed-call-has-a-class
   - id: SYM-askbench-requestcheck-breaks
@@ -234314,3 +234290,773 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-docgen-askeval-table
+  - id: SYM-askbench-modelclient-rule-of
+    title: ruleOf
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/modelclient.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-modelclient-transient
+    title: transient
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/modelclient.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-retry
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-rejections-request-hash
+    title: requestHash
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-rejections-routing-members
+    title: routingMembers
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-rejections-is-evidence-rejection
+    title: isEvidenceRejection
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-rejections-resolve-rejections
+    title: resolveRejections
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-rejections-accepted-elsewhere
+    title: acceptedElsewhere
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-runner-run-report-settle
+    title: RunReport.settle
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/runner.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-reliability-run-report-counts-for-reliability
+    title: RunReport.countsForReliability
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-reliability-run-report-failed-by-host
+    title: RunReport.failedByHost
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/reliability.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-rescore-run-report-derive-faults
+    title: RunReport.deriveFaults
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore-faults
+      - type: implements
+        target: REQ-askbench-rescores-offline
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-rescore-legacy-fault
+    title: legacyFault
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore-faults
+      - type: implements
+        target: REQ-askbench-rescores-offline
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-rescore-model-report-recount-reliability
+    title: ModelReport.recountReliability
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore-faults
+      - type: implements
+        target: REQ-askbench-rescores-offline
+      - type: implements
+        target: REQ-askbench-retries-transport-and-reports-reliability
+  - id: SYM-askbench-requestcheck-valid-tool-name
+    title: validToolName
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/requestcheck.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-is-json-object
+    title: isJSONObject
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/requestcheck.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-requestcheck-check-tools
+    title: checkTools
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/requestcheck.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+      - type: implements
+        target: REQ-askbench-failed-call-has-a-class
+  - id: SYM-askbench-report-not-found-calls
+    title: notFoundCalls
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-report-calls-by-rule
+    title: callsByRule
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-report-report-credentials-void
+    title: Report.CredentialsVoid
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-main-fault-lines
+    title: faultLines
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/main.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-main-exit-code
+    title: exitCode
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-15T19:56:44.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-rejections-test-go-rejecting-models
+    title: rejectingModels
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-two-entries
+    title: twoEntries
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-entry-of-report
+    title: entryOfReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-rejection-another-entry-accepted-is-the-hosts-fault
+    title: TestARejectionAnotherEntryAcceptedIsTheHostsFault
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-rejection-no-entry-accepted-is-the-benchs-fault-and-voids-the-run
+    title: TestARejectionNoEntryAcceptedIsTheBenchsFaultAndVoidsTheRun
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-request-hashes-of
+    title: requestHashesOf
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-rejection-of-the-only-entry-is-accepted-nowhere
+    title: TestARejectionOfTheOnlyEntryIsAcceptedNowhere
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-rejection-is-decided-by-the-request-not-the-models-name
+    title: TestARejectionIsDecidedByTheRequestNotTheModelsName
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a404-counts-against-the-host-and-says-the-pin-may-be-stale
+    title: TestA404CountsAgainstTheHostAndSaysThePinMayBeStale
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-refused-key-or-no-credits-voids-the-run-and-exits-with-its-own-code
+    title: TestARefusedKeyOrNoCreditsVoidsTheRunAndExitsWithItsOwnCode
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-the-credentials-exit-code-is-distinct-and-comes-first
+    title: TestTheCredentialsExitCodeIsDistinctAndComesFirst
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-deterministic-bad-reply-is-one-failed-question-not-two
+    title: TestADeterministicBadReplyIsOneFailedQuestionNotTwo
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-a-question-the-retry-mended-is-not-failed-and-one-that-beats-the-host-is-failed-once
+    title: TestAQuestionTheRetryMendedIsNotFailedAndOneThatBeatsTheHostIsFailedOnce
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-the-request-check-refuses-what-every-host-refuses
+    title: TestTheRequestCheckRefusesWhatEveryHostRefuses
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-test-every-tool-the-bench-offers-passes-the-request-check
+    title: TestEveryToolTheBenchOffersPassesTheRequestCheck
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rescorefaults-test-go-legacy-reliability-report
+    title: legacyReliabilityReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescorefaults_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore-faults
+  - id: SYM-askbench-rescorefaults-test-go-test-re-grading-counts-reliability-per-question-from-the-stored-call-failures
+    title: TestReGradingCountsReliabilityPerQuestionFromTheStoredCallFailures
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescorefaults_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore-faults
+  - id: SYM-askbench-rescorefaults-test-go-test-re-grading-a-report-of-the-bench-keeps-its-reliability
+    title: TestReGradingAReportOfTheBenchKeepsItsReliability
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescorefaults_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore-faults
+  - id: SYM-askbench-errors-test-go-test-nothing-reaching-a-model-could-not-run-and-exits-two-or-five-for-credentials
+    title: TestNothingReachingAModelCouldNotRunAndExitsTwoOrFiveForCredentials
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/errors_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-errors
+  - id: SYM-askbench-retry-test-go-test-the-rate-is-failed-questions-over-questions-and-calls-are-counted-beside
+    title: TestTheRateIsFailedQuestionsOverQuestionsAndCallsAreCountedBeside
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/retry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-askbench-scorers-must-tools
+    title: mutatingTools
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/scorers.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-askbench-scorers-count-calls
+    title: countCalls
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/scorers.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-askbench-cases-payload-call
+    title: PayloadCall
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/cases.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-askbench-split-test-go-test-the-injection-cases-encode-their-payloads-as-data
+    title: TestTheInjectionCasesEncodeTheirPayloadsAsData
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/split_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-split
+  - id: SYM-askbench-rejections-run-report-decide
+    title: RunReport.decide
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-report-case-report-count-errored
+    title: CaseReport.countErrored
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/report.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-askbench-cases-check-payload-calls
+    title: checkPayloadCalls
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/cases.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-split
+      - type: implements
+        target: REQ-askbench-grades-safety-and-quality-apart
+  - id: SYM-docgen-askevalpage-verdict-word
+    title: verdictWord
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/docgen/askevalpage.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval
+      - type: implements
+        target: REQ-askeval-results-page-from-committed-results
+  - id: SYM-askbench-rescore-derived-fault
+    title: derivedFault
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescore.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rescore-faults
+      - type: implements
+        target: REQ-askbench-rescores-offline
+  - id: SYM-askbench-rejections-test-go-check-each-call
+    title: checkEachCall
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-check-texts
+    title: checkTexts
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-check-refusing-host
+    title: checkRefusingHost
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rejections-test-go-check-credentials-void
+    title: checkCredentialsVoid
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-rescorefaults-test-go-check-derived-faults
+    title: checkDerivedFaults
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescorefaults_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore-faults
+  - id: SYM-askbench-rescorefaults-test-go-check-all
+    title: checkAll
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rescorefaults_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rescore-faults
+  - id: SYM-askbench-retry-test-go-check-still429
+    title: checkStill429
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/retry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-askbench-rejections-test-go-call-want
+    title: callWant
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/rejections_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-rejections
+  - id: SYM-askbench-report-error-key
+    title: errorKey
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/askbench/report.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-rejections
+      - type: implements
+        target: REQ-askbench-decides-4xx-by-evidence
+  - id: SYM-docgen-askeval-test-go-test-reliability-is-shown-per-question-when-the-result-has-it
+    title: TestReliabilityIsShownPerQuestionWhenTheResultHasIt
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/docgen/askeval_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
+  - id: SYM-docgen-askeval-test-go-test-arun-void-for-its-credentials-shows-as-such
+    title: TestARunVoidForItsCredentialsShowsAsSuch
+    status: active
+    origin:
+      kind: agent
+      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
+      recorded_at: 2026-11-15T20:00:00.000Z
+    sourceFile: tools/docgen/askeval_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval
