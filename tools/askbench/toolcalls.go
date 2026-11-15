@@ -31,7 +31,9 @@ func canonicalCalls(calls []ui.AskRunCall, today kernel.Date) []ui.AskRunCall {
 }
 
 // canonicalArgs returns raw, a tool's arguments, with each argument the tool
-// has a default for set to it where it is missing, null or empty text.
+// has a default for set to it where it is missing, null or empty text, unless
+// the call gives an argument that replaces it (ui.AskArgReplacedBy): a value
+// asked over a period has no date.
 func canonicalArgs(tool, raw string, today kernel.Date) string {
 	defaults := ui.AskArgDefaults(tool, today)
 	if len(defaults) == 0 {
@@ -41,16 +43,25 @@ func canonicalArgs(tool, raw string, today kernel.Date) string {
 	if !ok {
 		return raw
 	}
+	replaced := ui.AskArgReplacedBy(tool)
 	for key, def := range defaults {
-		if got, has := args[key]; !has || got == nil || got == "" {
-			args[key] = def
+		if given(args, key) || slices.ContainsFunc(replaced[key], func(other string) bool { return given(args, other) }) {
+			continue
 		}
+		args[key] = def
 	}
 	out, err := json.Marshal(args)
 	if err != nil {
 		return raw
 	}
 	return string(out)
+}
+
+// given reports whether args gives the argument a value: it is there and neither
+// null nor empty text.
+func given(args map[string]any, key string) bool {
+	got, has := args[key]
+	return has && got != nil && got != ""
 }
 
 // argsObject reads raw as a JSON object of arguments; no text and null are the
@@ -217,11 +228,16 @@ func matchArgs(expected, actual map[string]any) bool {
 }
 
 // matchKey says whether one argument, given or not, satisfies what is expected
-// of it: a value, or an operator object.
+// of it: a value, an operator object, or an object whose keys each satisfy theirs
+// (a period's from and to).
 func matchKey(spec, got any, has bool) bool {
 	ops, isOp := spec.(map[string]any)
-	if !isOp || !hasOperator(ops) {
+	if !isOp {
 		return has && reflect.DeepEqual(spec, got)
+	}
+	if !hasOperator(ops) {
+		nested, isObject := got.(map[string]any)
+		return has && isObject && matchArgs(ops, nested)
 	}
 	if !has {
 		optional, ok := ops["$optional"].(bool)

@@ -102,6 +102,10 @@ type templateVars struct {
 	DropMonthPL  string
 	DropPrevEnd  string
 	DropEnd      string
+	// DropFirst is the month's first valued day and DropMonth its key, as
+	// "YYYY-MM".
+	DropFirst string
+	DropMonth string
 }
 
 // polishMonths are the months in the locative, as "w listopadzie 2025" wants.
@@ -131,6 +135,7 @@ func varsFor(pf *Portfolio) (templateVars, error) {
 	}
 	year := strconv.Itoa(first.Year())
 	v.DropPrevEnd, v.DropEnd = first.AddDays(-1).String(), last.String()
+	v.DropFirst, v.DropMonth = first.String(), month
 	v.DropMonthEN = first.Month().String() + " " + year
 	v.DropMonthPL = polishMonths()[int(first.Month())-1] + " " + year
 	return v, nil

@@ -98,23 +98,80 @@ func TestA19AsksAboutTheMonthTheSeedDrops(t *testing.T) {
 	if !strings.HasPrefix(vars.DropEnd, month) || strings.HasPrefix(vars.DropPrevEnd, month) {
 		t.Errorf("the month's dates run from %s to %s, want the end of the month before to the end of %s", vars.DropPrevEnd, vars.DropEnd, month)
 	}
-	checkA19Alternatives(t, a19, &vars)
+	checkA19Period(t, a19, &vars)
 }
 
-// checkA19Alternatives checks A19 accepts a value or a performance call in the
-// month, with the month's dates.
-func checkA19Alternatives(t *testing.T, a19 *Case, vars *templateVars) {
+// checkA19Period checks A19 expects one call of the value tool for the month as
+// a period, from the end of the month before or its first day to its last day,
+// and the value card.
+func checkA19Period(t *testing.T, a19 *Case, vars *templateVars) {
 	t.Helper()
-	alt := a19.Expect.Calls[0].AnyOf
-	if len(alt) != 2 || alt[0].Tool != "value" || alt[1].Tool != "performance" {
-		t.Fatalf("A19 accepts %+v, want a value or a performance call", alt)
+	calls := a19.Expect.Calls
+	if len(calls) != 1 || calls[0].Tool != "value" || !slices.Equal(a19.Cards, []string{"value"}) {
+		t.Fatalf("A19 expects %+v and the cards %v, want one value call and the value card", calls, a19.Cards)
 	}
-	spec, ok := alt[0].Args["date"].(map[string]any)
+	period, ok := calls[0].Args["period"].(map[string]any)
 	if !ok {
-		t.Fatalf("A19's date is %v, want an operator", alt[0].Args["date"])
+		t.Fatalf("A19's period is %v, want an object of from and to", calls[0].Args["period"])
 	}
-	if diff := cmp.Diff([]any{vars.DropPrevEnd, vars.DropEnd}, spec["$dateBetween"]); diff != "" {
-		t.Errorf("A19's dates (-want +got):\n%s", diff)
+	from, ok := period["from"].(map[string]any)
+	if !ok {
+		t.Fatalf("A19's from is %v, want an operator", period["from"])
+	}
+	if diff := cmp.Diff([]any{vars.DropPrevEnd, vars.DropFirst}, from["$dateBetween"]); diff != "" {
+		t.Errorf("A19's first day (-want +got):\n%s", diff)
+	}
+	if period["to"] != vars.DropEnd {
+		t.Errorf("A19's last day = %v, want %s", period["to"], vars.DropEnd)
+	}
+}
+
+// TestA19AndA19bAcceptTheMonthsPeriodAndNothingElse checks, against the calls a
+// model makes, which ones meet the cases' expectations: the tool called for the
+// whole month, as its period or its calendar month, and no other month or day.
+func TestA19AndA19bAcceptTheMonthsPeriodAndNothingElse(t *testing.T) {
+	t.Parallel()
+	pf := buildPortfolio(t)
+	vars, err := varsFor(pf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases, err := LoadCases(pf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	a19, a19b := caseByID(t, cases, "A19"), caseByID(t, cases, "A19b")
+	tests := []struct {
+		name string
+		c    *Case
+		tool string
+		args string
+		want bool
+	}{
+		{"A19 by the month's days", a19, "value", `{"period":{"from":"` + vars.DropFirst + `","to":"` + vars.DropEnd + `"}}`, true},
+		{"A19 from the end of the month before", a19, "value", `{"period":{"from":"` + vars.DropPrevEnd + `","to":"` + vars.DropEnd + `"}}`, true},
+		{"A19 by a date, as before", a19, "value", `{"date":"` + vars.DropEnd + `"}`, false},
+		{"A19 ending a day early", a19, "value", `{"period":{"from":"` + vars.DropFirst + `","to":"` + vars.DropPrevEnd + `"}}`, false},
+		{"A19 with the performance tool", a19, "performance", `{"since":"` + vars.DropFirst + `"}`, false},
+		{"A19b by the calendar month", a19b, "performance", `{"month":"` + vars.DropMonth + `"}`, true},
+		{"A19b by the month's days", a19b, "performance", `{"from":"` + vars.DropFirst + `","to":"` + vars.DropEnd + `"}`, true},
+		{"A19b from a day, as before", a19b, "performance", `{"since":"` + vars.DropFirst + `"}`, false},
+		{"A19b by another month", a19b, "performance", `{"month":"2025-01"}`, false},
+		{"A19b by the year", a19b, "performance", `{"year":2025}`, false},
+	}
+	for _, tt := range tests {
+		got := false
+		for i := range tt.c.Expect.Calls {
+			e := &tt.c.Expect.Calls[i]
+			for _, alt := range append([]ExpectedCall{*e}, e.AnyOf...) {
+				if alt.Tool == tt.tool && alt.Args != nil && argsMatchRaw(&alt, tt.args) {
+					got = true
+				}
+			}
+		}
+		if got != tt.want {
+			t.Errorf("%s: the call %s %s meets the expectation = %v, want %v", tt.name, tt.tool, tt.args, got, tt.want)
+		}
 	}
 }
 

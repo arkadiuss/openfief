@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-764f4daac9e7
+  - type: covered_by
+    from: SYM-askbench-premise-value-figures
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T14:04:19.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aca407b6ff2
+  - type: implements
+    from: SYM-askbench-premise-value-figures
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:04:19.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5d49f6ef04a

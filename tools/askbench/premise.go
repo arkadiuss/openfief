@@ -125,6 +125,13 @@ func hasAnyPrefix(w string, stems []string) bool {
 // valueOnDate finds the day a value card is of, in its title.
 var valueOnDate = regexp.MustCompile(`Value on (\d{4}-\d{2}-\d{2})`)
 
+// valueOverDaysGroups is the match of valueOverDays and its two days.
+const valueOverDaysGroups = 3
+
+// valueOverDays finds the two days a value card of a period is of, in its text:
+// the end of the day before the period and the end of its last day.
+var valueOverDays = regexp.MustCompile(`at the end of (\d{4}-\d{2}-\d{2}) and at the end of (\d{4}-\d{2}-\d{2})`)
+
 // figuresWritten returns how many of the figures the answer writes.
 func figuresWritten(d *RunData, figures []kernel.Decimal) int {
 	nums := numbersIn(d.Run.Text)
@@ -138,7 +145,8 @@ func figuresWritten(d *RunData, figures []kernel.Decimal) int {
 }
 
 // monthFigures returns the distinct figures the cards give for days from first
-// to last, as exact numbers: the gross of a value card of such a day, the Start
+// to last, as exact numbers: the gross of a value card of such a day, the gross
+// at the start and at the end of a value card of a period within them, the Start
 // and the End of a performance card when their day is one.
 func monthFigures(cards []ui.AskRunCard, first, last string) []kernel.Decimal {
 	var out []kernel.Decimal
@@ -158,17 +166,37 @@ func cardMonthFigures(c *ui.AskRunCard, first, last string) []string {
 	var out []string
 	switch c.Tool {
 	case "value":
-		m := valueOnDate.FindStringSubmatch(c.Title)
-		if len(m) < 2 || m[1] < first || m[1] > last {
-			return nil
-		}
-		for _, r := range c.Rows {
-			if r.Label == "Gross" {
-				out = append(out, r.Figure)
-			}
-		}
+		out = valueFigures(c, first, last)
 	case "performance":
 		out = performanceFigures(c, first, last)
+	}
+	return out
+}
+
+// valueFigures returns the gross figures of a value card whose day, or whose
+// first and last day, are from first to last: a day's gross, or a period's gross
+// at its start and at its end.
+func valueFigures(c *ui.AskRunCard, first, last string) []string {
+	if m := valueOnDate.FindStringSubmatch(c.Title); m != nil {
+		if m[1] < first || m[1] > last {
+			return nil
+		}
+		return grossRows(c, func(r *ui.AskRunRow) []string { return []string{r.Figure} })
+	}
+	m := valueOverDays.FindStringSubmatch(c.Text)
+	if len(m) != valueOverDaysGroups || m[1] < first || m[2] > last {
+		return nil
+	}
+	return grossRows(c, func(r *ui.AskRunRow) []string { return strings.Split(r.Detail, " to ") })
+}
+
+// grossRows returns what figures reads of each Gross row of c.
+func grossRows(c *ui.AskRunCard, figures func(r *ui.AskRunRow) []string) []string {
+	var out []string
+	for i := range c.Rows {
+		if c.Rows[i].Label == "Gross" {
+			out = append(out, figures(&c.Rows[i])...)
+		}
 	}
 	return out
 }

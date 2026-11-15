@@ -1238,3 +1238,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99b9daca9ac4
+  - type: verified_by
+    from: SCEN-askbench-month-cases-ask-the-period
+    to: TEST-askbench-period
+    created_at: 2026-11-15T14:03:08.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-119bfcf22584
+  - type: verified_by
+    from: SCEN-askbench-month-cases-ask-the-period
+    to: TEST-askbench-cases
+    created_at: 2026-11-15T14:03:08.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8476f5821924
+  - type: verified_by
+    from: SCEN-askbench-month-cases-ask-the-period
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T14:03:08.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29b49d17ed1f
+  - type: verified_by
+    from: SCEN-askbench-month-cases-ask-the-period
+    to: TEST-askbench-read-service
+    created_at: 2026-11-15T14:03:08.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6712068558cd

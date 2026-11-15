@@ -236,16 +236,15 @@
   kind: why
   tag: other
   question: Why did my value drop in {{.DropMonthEN}}?
-  note: A false premise. The gross value rose in that month (the seed's deposits lift it while its return falls), so a pass looks at the month, says the value rose and never that it fell, gives the start and end values from the cards, and puts the change down only to what the cards show.
+  note: A false premise. The gross value rose in that month (the seed's deposits lift it while its return falls), so a pass asks the value tool for the month as a period, says the value rose and never that it fell, gives the start and end values from the card, and puts the change down only to what the card shows, the net deposits among them.
   expect:
     calls:
-      - anyOf:
-          - {tool: value, args: {date: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
-          - {tool: performance, args: {since: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
+      - {tool: value, args: {period: {from: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropFirst}}"]}, to: "{{.DropEnd}}"}}}
     maxCalls: 10
     premise:
       actual: rose
       between: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]
+  cards: [value]
   checks: [premise, causes]
 
 - id: A19b
@@ -253,10 +252,12 @@
   kind: why
   tag: other
   question: Why did my return fall in {{.DropMonthEN}}?
-  note: The return did fall in that month. A pass reads the performance card from the month on and puts the fall down only to what the cards show.
+  note: The return did fall in that month. A pass asks the performance tool for the month, as a calendar month or as its first and last day, reads the month's performance card and puts the fall down only to what the cards show.
   expect:
     calls:
-      - {tool: performance, args: {since: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropEnd}}"]}}}
+      - anyOf:
+          - {tool: performance, args: {month: "{{.DropMonth}}"}}
+          - {tool: performance, args: {from: {$dateBetween: ["{{.DropPrevEnd}}", "{{.DropFirst}}"]}, to: "{{.DropEnd}}"}}
     maxCalls: 10
   cards: [performance]
   checks: [causes]

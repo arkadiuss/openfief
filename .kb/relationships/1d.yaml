@@ -1434,3 +1434,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4be723f50fc0
+  - type: executable_for
+    from: SYM-askbench-period-test-test-adefault-another-argument-replaces-is-left-out
+    to: TEST-askbench-period
+    created_at: 2026-11-15T14:05:07.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8c99be833a3

@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bcc53a515a8
+  - type: covered_by
+    from: SYM-askbench-premise-gross-rows
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T14:04:27.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-330fcd4f849b
+  - type: implements
+    from: SYM-askbench-premise-gross-rows
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:04:27.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb055b6e6fd9

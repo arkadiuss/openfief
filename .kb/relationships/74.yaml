@@ -1427,3 +1427,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46250d3f55c0
+  - type: covered_by
+    from: SYM-askbench-readservice-period-input-of
+    to: TEST-askbench-read-service
+    created_at: 2026-11-15T14:03:47.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-479c24eacd93
+  - type: implements
+    from: SYM-askbench-readservice-period-input-of
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:03:47.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-378df055389d

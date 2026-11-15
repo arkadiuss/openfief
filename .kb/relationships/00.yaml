@@ -1000,3 +1000,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb4b8f7f7a93
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-a19-and-a19b-accept-the-months-period-and-nothing-else
+    to: TEST-askbench-cases
+    created_at: 2026-11-15T14:04:51.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90da6d13800b

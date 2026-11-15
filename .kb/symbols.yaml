@@ -216867,17 +216867,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-cases
-  - id: SYM-askbench-cases-test-check-a19-alternatives
-    title: checkA19Alternatives
-    status: active
-    sourceFile: tools/askbench/cases_test.go
-    origin:
-      kind: agent
-      ref: 'AB1 brief from the author: the Ask box bench (D-217, D-218, D-219), 2026-11-14'
-      recorded_at: 2026-11-14T08:33:15.785Z
-    relationships:
-      - type: executable_for
-        target: TEST-askbench-cases
   - id: SYM-askbench-cases-test-test-every-check-anamed-case-lists-exists
     title: TestEveryCheckANamedCaseListsExists
     status: active
@@ -232487,3 +232476,159 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-period
+  - id: SYM-askbench-readservice-read-service-get-period-change
+    title: readService.GetPeriodChange
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:03:35.795Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-readservice-period-input-of
+    title: periodInputOf
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:03:43.823Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-readservice-date-total
+    title: dateTotal
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:03:51.819Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-readservice-period-response
+    title: periodResponse
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:03:59.737Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-readservice-value-change
+    title: valueChange
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:07.877Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-read-service
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-premise-value-figures
+    title: valueFigures
+    status: active
+    sourceFile: tools/askbench/premise.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:15.980Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-premise-gross-rows
+    title: grossRows
+    status: active
+    sourceFile: tools/askbench/premise.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:23.638Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-premise
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-toolcalls-given
+    title: given
+    status: active
+    sourceFile: tools/askbench/toolcalls.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:31.619Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-period
+      - type: implements
+        target: REQ-askbench-month-cases-ask-the-period
+  - id: SYM-askbench-cases-test-check-a19-period
+    title: checkA19Period
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:39.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-cases-test-test-a19-and-a19b-accept-the-months-period-and-nothing-else
+    title: TestA19AndA19bAcceptTheMonthsPeriodAndNothingElse
+    status: active
+    sourceFile: tools/askbench/cases_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:47.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-cases
+  - id: SYM-askbench-period-test-test-an-object-argument-matches-key-by-key
+    title: TestAnObjectArgumentMatchesKeyByKey
+    status: active
+    sourceFile: tools/askbench/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:04:55.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-period
+  - id: SYM-askbench-period-test-test-adefault-another-argument-replaces-is-left-out
+    title: TestADefaultAnotherArgumentReplacesIsLeftOut
+    status: active
+    sourceFile: tools/askbench/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T14:05:02.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-period
