@@ -1,6 +1,46 @@
 {
   "schema": 1,
   "runs": {
+    "anthropic/claude-haiku-5.5": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0.0299625468164794,
+        "configHash": "fc1de370d4cf8075458367f4761c88c021a9e1e59c916738accc6da257de84ac",
+        "scorerVersion": 2
+      }
+    ],
+    "anthropic/claude-sonnet-5.5": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "fail",
+        "transportFailureRate": 0.7311827956989247,
+        "configHash": "107249aca207ae883e2014794bc61e9a83b7f087c064a020f7d04a615217c2a4",
+        "scorerVersion": 2
+      }
+    ],
+    "deepseek/deepseek-v4.1-flash": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "pass",
+        "transportFailureRate": 0.0037313432835820895,
+        "configHash": "af40bc20425d951761b6e335bfe2451608c7d25ca3e51982d088b1068c7b5832",
+        "scorerVersion": 2
+      }
+    ],
+    "google/gemini-3.8-flash": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "fail",
+        "transportFailureRate": 0.8304093567251462,
+        "configHash": "dac5d75d15ff94bc4524b3434f62c5d9ee8356fae845fc26268d9d7b9cf9ce5c",
+        "scorerVersion": 2
+      }
+    ],
     "google/gemma-4-26b-a4b-it@nextbit/bf16": [
       {
         "date": "2026-11-14",
@@ -15,6 +55,16 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "5a6887ed31be0ad7362f6b1dfa05561cfddf52873ae728ab1d4c710e7a295f72"
+      }
+    ],
+    "openai/gpt-5.6-luna": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "fail",
+        "transportFailureRate": 0.7950310559006211,
+        "configHash": "166db5a07f220a8eda525d3cb90b66e2b6fadec95e70b0665ee96e523160d844",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@crusoe/bf16": [
@@ -97,6 +147,14 @@
         "transportFailureRate": 0,
         "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
         "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "pass",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
+        "scorerVersion": 2
       }
     ],
     "openai/gpt-oss-120b@deepinfra/bf16": [
@@ -167,6 +225,14 @@
       {
         "date": "2026-11-15",
         "verdict": "pass",
+        "reliability": "pass",
+        "transportFailureRate": 0,
+        "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
+        "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
@@ -244,6 +310,24 @@
         "reliability": "pass",
         "transportFailureRate": 0,
         "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
+        "scorerVersion": 2
+      },
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "fail",
+        "transportFailureRate": 0.05536332179930796,
+        "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
+        "scorerVersion": 2
+      }
+    ],
+    "qwen/qwen3.8-flash": [
+      {
+        "date": "2026-11-15",
+        "verdict": "fail",
+        "reliability": "fail",
+        "transportFailureRate": 0.13636363636363635,
+        "configHash": "60429257b725dbb31ccf87b6654f9994eded0870da2355076acbe24a82804b29",
         "scorerVersion": 2
       }
     ]
