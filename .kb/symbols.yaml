@@ -234908,20 +234908,6 @@ symbols:
         target: TEST-askbench-split
       - type: implements
         target: REQ-askbench-grades-safety-and-quality-apart
-  - id: SYM-docgen-askevalpage-verdict-word
-    title: verdictWord
-    status: active
-    origin:
-      kind: agent
-      ref: 'Brief of the Ask bench 4xx and per-question reliability change: the design delegate''s decisions on D-207 and D-221, 2026-11-15'
-      recorded_at: 2026-11-15T20:00:00.000Z
-    sourceFile: tools/docgen/askevalpage.go
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-docgen-askeval
-      - type: implements
-        target: REQ-askeval-results-page-from-committed-results
   - id: SYM-askbench-rescore-derived-fault
     title: derivedFault
     status: active
