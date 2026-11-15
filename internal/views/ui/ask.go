@@ -60,6 +60,9 @@ type askQuery struct {
 	Period askPeriod
 	// Date is a value command's date; zero for the latest valued day.
 	Date kernel.Date
+	// Change is the period a value command asks the change over, instead of
+	// the value on a day; nil for the value on Date.
+	Change *askPeriod
 }
 
 // periodKind is the kind of span a performance command asks about.
@@ -74,16 +77,25 @@ const (
 	periodAll
 	periodSince
 	periodCalendarYear
+	// periodMonthOf is a calendar month, such as November 2025.
+	periodMonthOf
+	// periodBetween is two days, both inclusive.
+	periodBetween
 )
 
 // askPeriod is a performance command's period: a kind, and the date or
 // year it names, if any.
 type askPeriod struct {
 	Kind periodKind
-	// Since is a periodSince's first day.
+	// Since is a periodSince's first day, and a periodBetween's.
 	Since kernel.Date
-	// Year is a periodCalendarYear's year.
+	// Year is a periodCalendarYear's or a periodMonthOf's year.
 	Year int
+	// Month is a periodMonthOf's month.
+	Month time.Month
+	// To is a periodBetween's last day. Its days are as asked: they may be
+	// out of order or not valued, which the answer says.
+	To kernel.Date
 }
 
 // The questions' patterns, matched against the normalized question
@@ -93,7 +105,8 @@ var (
 	syncPattern  = regexp.MustCompile(`^why (is|does|do|did|are) (the )?(?P<x>.+?)( syncs?)? (fail|failing|keep failing|keeps failing|not syncing|broken)$|^why (?P<y>.+?) (fails|failed|failing)$|^(sync|syncs|sync status) (of |for )?(?P<z>.+)$`)
 	allocPattern = regexp.MustCompile(`^(allocation|split|breakdown|exposure)( (by|per|across) (?P<d>.+))?$|^by (?P<e>.+)$`)
 	perfPattern  = regexp.MustCompile(`^(performance|return|returns|twr|time-weighted return)( (?P<p>.+))?$`)
-	valuePattern = regexp.MustCompile(`^(value|worth|total|net worth)( (on|at|as of|for) (?P<d>.+)| (?P<e>today|yesterday|end of last month|end of last year))?$`)
+	valuePattern = regexp.MustCompile(`^(?P<c>value change|change in value|value changed|net worth change|change in net worth)( (?P<r>.+))?$|` +
+		`^(value|worth|total|net worth)( (?P<w>on|at|as of|for|in|during|over|from|between) (?P<d>.+)| (?P<e>today|yesterday|end of last month|end of last year))?$`)
 	showPattern  = regexp.MustCompile(`^(show|open|find|go to)( me)?( the| my)? ((?P<k>account|sleeve|instrument) )?(?P<x>.+)$|^(?P<l>account|sleeve|instrument) (?P<y>.+)$`)
 	isoDate      = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 	dottedDate   = regexp.MustCompile(`^(\d{1,2})\.(\d{1,2})\.(\d{4})$`)
@@ -126,13 +139,41 @@ func parseAsk(question string, today kernel.Date) (askQuery, bool) {
 		p, ok := parsePeriod(firstGroup(perfPattern, q, "p"), today)
 		return askQuery{Command: askPerformance, Period: p}, ok
 	case valuePattern.MatchString(q):
-		d, ok := parseAskDate(firstGroup(valuePattern, q, "d", "e"), today)
-		return askQuery{Command: askValue, Date: d}, ok
+		return parseValue(q, today)
 	case showPattern.MatchString(q):
 		kind := showKindOf(firstGroup(showPattern, q, "k", "l"))
 		return askQuery{Command: askShow, Term: firstGroup(showPattern, q, "x", "y"), Show: kind}, true
 	}
 	return askQuery{}, false
+}
+
+// parseValue returns the value command q is: the value on a day, or its change
+// over a month, a year or two days, as "value change in November 2025", "value
+// from 2025-11-01 to 2025-11-30" or "value in 2025"; ok is false for a day or a
+// period that is none, and for a change without a period.
+func parseValue(q string, today kernel.Date) (askQuery, bool) {
+	if firstGroup(valuePattern, q, "c") != "" {
+		p, ok := parseChange(firstGroup(valuePattern, q, "r"), today)
+		return askQuery{Command: askValue, Change: &p}, ok
+	}
+	w, words := firstGroup(valuePattern, q, "w"), firstGroup(valuePattern, q, "d", "e")
+	switch w {
+	case "", "on", "at", "as of":
+		d, ok := parseAskDate(words, today)
+		return askQuery{Command: askValue, Date: d}, ok
+	case "for":
+		if d, ok := parseAskDate(words, today); ok {
+			return askQuery{Command: askValue, Date: d}, true
+		}
+	}
+	if w == "from" || w == "between" {
+		words = w + " " + words
+	}
+	p, ok := parseChange(words, today)
+	if !ok {
+		return askQuery{Command: askValue}, false
+	}
+	return askQuery{Command: askValue, Change: &p}, true
 }
 
 // firstGroup returns the first of the named groups of p that matched in s,
@@ -189,6 +230,9 @@ func parsePeriod(words string, today kernel.Date) (askPeriod, bool) {
 	}
 	if k, ok := fixed[words]; ok {
 		return askPeriod{Kind: k}, true
+	}
+	if p, ok := parseBounded(words, today); ok {
+		return p, true
 	}
 	if y := firstGroup(yearPattern, words, "y"); y != "" {
 		d, err := kernel.ParseDate(y + "-01-01")
@@ -290,6 +334,8 @@ func periodRange(p askPeriod, to kernel.Date) span {
 			end = to
 		}
 		return span{yearStart(p.Year), end, "in " + yearStart(p.Year).String()[:4]}
+	case periodMonthOf, periodBetween:
+		return boundedSpan(p)
 	}
 	return span{yearStart(to.Year()), to, labelThisYear}
 }

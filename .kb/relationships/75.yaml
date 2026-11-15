@@ -1049,3 +1049,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a74b0671317
+  - type: executable_for
+    from: SYM-m5-plugins-model-openai-datacollection-test-go-testparseconfigdatacollectionofanentryonopenrouter
+    to: TEST-plugins-model-openai-data-collection
+    created_at: 2026-11-14T19:53:08.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b75e58cdd991
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-testproxywithturnstileallowscloudflaresscriptandframeandnothingelse
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:48.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-584bab34b27b
+  - type: implements
+    from: SYM-m5-internal-views-ui-askrun-go-askmodelfunc-admit
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:58:55.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7643d0b63b3c
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askrun-go-askmodelfunc-admit
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:58:55.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5afbf50ecb03
+  - type: implements
+    from: SYM-models-plugins-model-openai-chat-chat-client-post
+    to: REQ-models-chat-client-retries-429-once
+    created_at: 2026-11-15T09:14:55.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b892563a09a
+  - type: covered_by
+    from: SYM-models-plugins-model-openai-chat-chat-client-post
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:14:55.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1add913789a0
+  - type: covered_by
+    from: SYM-views-pb-value-change-get-end-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:13:08.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c5761e92618
+  - type: implements
+    from: SYM-views-pb-value-change-get-end-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:13:08.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6a31358c694
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:14:23.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a44a511cfcb0
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:14:23.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e478bbb2546
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testnamedcardsareonlychosenwhentheanswerleavesnochoice
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:42.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780bc0ee63fc

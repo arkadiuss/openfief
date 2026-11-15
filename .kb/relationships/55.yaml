@@ -979,3 +979,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-714d8087c152
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testbudgetdayendsatlocalmidnight
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:53.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67f888c73080
+  - type: executable_for
+    from: SYM-ab9-internal-views-ui-askevalnote-test-go-testmodelanswersshowwhoansweredwithadisclaimerandtheevallink
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:52:38.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d43cc79de13
+  - type: covered_by
+    from: SYM-views-period-paid-flows
+    to: TEST-views-period
+    created_at: 2026-11-15T12:42:30.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750e1c1525c7
+  - type: implements
+    from: SYM-views-period-paid-flows
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:45:11.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c6f4de52343
+  - type: specified_by
+    from: REQ-ui-ask-period-commands
+    to: SCEN-ui-ask-period-commands
+    created_at: 2026-11-15T13:36:14.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef5a2a4ee80b

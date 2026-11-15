@@ -937,3 +937,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02a509d8b6d1
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel-estimatedcost
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:08:05.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-886fb30f1b16
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel-estimatedcost
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:08:05.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffd3bf3337df
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:15:06.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-049ddbf3bb4b
+  - type: implements
+    from: SYM-views-pb-get-period-change-response
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:15:06.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4af8418052d
+  - type: implements
+    from: SYM-tools-askbench-main-go-runrescore
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:43:06.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6de1215ef36
+  - type: covered_by
+    from: SYM-tools-askbench-main-go-runrescore
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:43:06.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6fe9de169b9

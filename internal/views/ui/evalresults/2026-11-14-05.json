@@ -1,0 +1,72 @@
+[
+  {
+    "run": "5",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it",
+    "host": "primeintellect/bf16",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 13,
+    "unscored": 20,
+    "answered": true,
+    "costPer1k": "0.15954",
+    "costSource": "estimated",
+    "configHash": "3b3fcc7fedeaca5d681b233aaa469ec17f026c66be7f2051aea81854c9bdeede",
+    "benchSchema": 1
+  },
+  {
+    "run": "5",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it",
+    "host": "nextbit/bf16",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 6,
+    "answered": true,
+    "costPer1k": "0.16277",
+    "costSource": "estimated",
+    "configHash": "0432d3c500d6cc4a64bac58ae8572dedb7a7ae1a63943bfc5f78633ed2419812",
+    "benchSchema": 1
+  },
+  {
+    "run": "5",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-31b-it",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 5,
+    "answered": true,
+    "costPer1k": "0.50175",
+    "costSource": "estimated",
+    "configHash": "5caa1b2fc4e6bfb5033d118277435d892239a1801b5d973d0a769a14e4d65efe",
+    "benchSchema": 1
+  },
+  {
+    "run": "5",
+    "date": "2026-11-14",
+    "model": "openai/gpt-oss-120b",
+    "host": "primeintellect/fp4",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 20,
+    "unscored": 51,
+    "answered": true,
+    "costPer1k": "0.21801",
+    "costSource": "estimated",
+    "configHash": "cc2a7589f232b9165acfcf61d661c68ba8e0b800609fdfbad43b66cb5b5390f9",
+    "benchSchema": 1
+  },
+  {
+    "run": "5",
+    "date": "2026-11-14",
+    "model": "qwen/qwen3.7-flash",
+    "verdict": "none",
+    "cases": 28,
+    "underBar": 28,
+    "answered": true,
+    "costPer1k": "0.17719",
+    "costSource": "estimated",
+    "configHash": "51d894ff6f1cb3c4b5b831c4717d5777c31833e88bbee00f0b76a76d13e9f850",
+    "benchSchema": 1
+  }
+]

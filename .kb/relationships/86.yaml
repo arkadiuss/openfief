@@ -748,20 +748,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9dabc0e18e60
-  - type: covered_by
-    from: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
-    to: TEST-ui-ask-structured
-    created_at: 2026-11-14T14:57:35.060Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7190271ae0c1
-  - type: implements
-    from: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
-    to: REQ-ui-ask-model-structured-answer
-    created_at: 2026-11-14T14:57:35.101Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-748cc5f9b0aa
   - type: implements
     from: SYM-ab4-tools-askbench-report-go-passedcell
     to: REQ-askbench-grades-safety-and-quality-apart
@@ -797,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cac88179290
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ask-go-addresskey
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:43:25.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8bf35130aeb
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ask-go-addresskey
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:43:25.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa8135973400
+  - type: implements
+    from: SYM-m5-internal-modelrouter-questions-go-questionsinday
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:44:34.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4eb493232b2
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-questions-go-questionsinday
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T21:44:34.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7b29a5a8858

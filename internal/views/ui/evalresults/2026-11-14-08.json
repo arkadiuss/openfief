@@ -1,0 +1,59 @@
+[
+  {
+    "run": "8",
+    "date": "2026-11-14",
+    "model": "google/gemma-4-26b-a4b-it",
+    "host": "nextbit/bf16",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A1",
+        "tag": "command",
+        "passed": 3,
+        "need": 5
+      },
+      {
+        "case": "A6",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A10",
+        "tag": "command",
+        "passed": 3,
+        "need": 5
+      }
+    ],
+    "cases": 28,
+    "answered": true,
+    "costPer1k": "0.10943",
+    "costSource": "measured",
+    "configHash": "3278f6bf6a6946e2a1242071c1ae4d5dc52fbbe786f694004d7ca4445e7007c0",
+    "benchSchema": 1
+  },
+  {
+    "run": "8",
+    "date": "2026-11-14",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A15",
+        "tag": "other",
+        "passed": 1,
+        "need": 4,
+        "unscored": 4
+      }
+    ],
+    "cases": 28,
+    "unscored": 4,
+    "answered": true,
+    "costPer1k": "0.12201",
+    "costSource": "measured",
+    "configHash": "2fa276a1551ba2542e12e0f37a0dc5799c8c77ad1c6de19cff9d0daf9d8f334c",
+    "benchSchema": 1
+  }
+]

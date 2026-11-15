@@ -839,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c92b81ed3b6c
+  - type: implements
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-locksubject
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:52:49.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a923fffceb7
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-locksubject
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:52:49.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2148d0aa4e15
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-benchreport
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:13.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fbb6195fb4d
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-benchreport
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:13.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76974a2d361e
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-change-row
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:41:44.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9728669ae8d3

@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbdc276164c3
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-refusedbyaguard
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:57:41.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5123bf22d929
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-refusedbyaguard
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:41.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c02373862afc
+  - type: executable_for
+    from: SYM-ui-ask4-test-loopfixture-showing
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-15T10:33:57.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8153414e92b

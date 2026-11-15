@@ -31,6 +31,38 @@ unknown_variables() {
   done
 }
 
+# guard_failures prints one line for each way the demo's spend guards (D-208) are wrong in the built demo with its model layer
+# ($1, a manifest stream), and nothing when they are right: the core's flags set the budget (a positive amount), the limits
+# per session and per address (10 an hour, 30 a day), 3 calls at once, the proxy whose address header it believes and
+# Turnstile's place in its policy; and the built-in UI's config has D-208's limits of one question and a site key, with its
+# grant approving the host of turnstileVerifyUrl as an egress host and the Secret ui--turnstile-secret.
+guard_failures() {
+  local out="$1" args want flag budget
+  args="$(gojq -r --yaml-input 'select(.kind == "Deployment" and .metadata.name == "openfief-core") | .spec.template.spec.containers[0].args[]' "$out")"
+  for want in --ask-questions-per-hour=10 --ask-questions-per-day=30 --ask-concurrent-calls=3 --allow-turnstile; do
+    grep -qxF -- "$want" <<<"$args" || echo "the core's flags lack $want (D-208's guard)"
+  done
+  for flag in --client-ip-header --trusted-proxies --ask-queue-wait; do
+    grep -q -- "^$flag=." <<<"$args" || echo "the core's flags lack $flag (D-208's guards)"
+  done
+  budget="$(sed -n 's/^--model-daily-budget-usd=//p' <<<"$args")"
+  if ! [[ "$budget" =~ ^[0-9]+([.][0-9]+)?$ ]] || ! gojq -n --arg b "$budget" '($b | tonumber) > 0' | grep -q true; then
+    echo "the core's --model-daily-budget-usd is not a positive amount of dollars (D-208's daily budget)"
+  fi
+  gojq -r --yaml-input -s '
+    (map(select(.kind == "Plugin" and .metadata.name == "ui"))[0].spec.config // {}) as $c
+    | (map(select(.kind == "PluginGrant" and .metadata.name == "ui"))[0].spec // {}) as $g
+    | (($c.turnstileVerifyUrl // "") | capture("^https://(?<h>[^/:]+)") | .h) as $host
+    | [
+        (if ($c.turnstileSiteKey // "") == "" then "the UI has no Turnstile site key (D-208)" else empty end),
+        (if ($host // "") == "" or (($g.egress // []) | index($host)) == null
+          then "the UI grant does not approve the host of turnstileVerifyUrl as an egress host (D-208, D-75)" else empty end),
+        (if (($g.secrets // []) | index("ui--turnstile-secret")) == null then "the UI grant does not name the Secret ui--turnstile-secret (D-208)" else empty end),
+        (if $c.askToolRounds != 5 or $c.askToolCalls != 10 or $c.askOutputTokens != 800 or $c.askDeadline != "2m"
+          then "the UI'"'"'s limits of one question are not D-208'"'"'s: 5 rounds, 10 tool calls, 800 output tokens and 2m" else empty end)
+      ] | .[]' "$out"
+}
+
 # model_layer_failures prints one line for each way the demo's model layer (deploy/demo/model, docs/dev/demo.md) is
 # wrong, and nothing when it is right. The layer is a kustomize Component that the live demo does not list, so it must:
 # build with the demo (deploy/demo/with-model) with every image pinned by digest; stay out of the live demo
@@ -41,6 +73,9 @@ model_layer_failures() {
   [ -d "$dir/model" ] || return 0
   if kustomize build "$dir/openfief" 2>/dev/null | grep -q "$instance\|demo-model-settings"; then
     echo "the live demo ($dir/openfief) includes the model layer: it is switched on only on purpose"
+  fi
+  if kustomize build "$dir/openfief" 2>/dev/null | grep -q "REPLACE-WITH-THE-TURNSTILE-SITE-KEY"; then
+    echo "the live demo ($dir/openfief) has the placeholder Turnstile site key: the widget is made in Cloudflare and its public key put in $dir/model"
   fi
   if ! kustomize build "$dir/with-model" >"$out" 2>/dev/null; then
     echo "the model layer does not build with the demo ($dir/with-model)"
@@ -59,6 +94,7 @@ model_layer_failures() {
       echo "the model settings name $ref, which the instance $instance does not list as an entry"
     fi
   done
+  guard_failures "$out"
 }
 
 # validate_demo builds every layer and applies the checks; it reports every failure, then fails once.

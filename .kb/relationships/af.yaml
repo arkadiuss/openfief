@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91ae61ec573b
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-proxiedto
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:36.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907b85a70252
+  - type: executable_for
+    from: SYM-views-period-test-text-of
+    to: TEST-views-period
+    created_at: 2026-11-15T13:11:32.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-483dfe8d0f72

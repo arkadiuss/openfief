@@ -7,7 +7,9 @@
 // port alone.
 //
 // Toward the plugin it sets what the plugin may trust, and only that: the
-// browser's Host, the scheme the browser used in X-Forwarded-Proto, and the
+// browser's Host, the scheme the browser used in X-Forwarded-Proto, the
+// browser's address in the SDK's ClientIPHeader (ClientIPConfig says whose
+// word about it the core takes; a value the browser sent is dropped), and the
 // core's token in Authorization. Whatever a client sent in those headers,
 // or in any other X-Forwarded-* or Forwarded header, is dropped. So is the
 // browser's trace context: each request to a plugin runs in a client span
@@ -31,6 +33,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
+	"github.com/arkadiuss/openfief/sdk/go/openfief"
 	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
@@ -59,11 +62,45 @@ const (
 	schemeHTTPS = "https"
 )
 
+// TurnstileOrigin is the one third-party origin the core's policy lets a page
+// load a script and a frame from, when the installation turns Turnstile on
+// (D-208, WithTurnstile): Cloudflare's challenge, the Ask box's check that a
+// person is asking.
+const TurnstileOrigin = "https://challenges.cloudflare.com"
+
+// ViewContentSecurityPolicyWithTurnstile is ViewContentSecurityPolicy with
+// scripts and frames also allowed from TurnstileOrigin, and from nowhere else
+// beyond the core's own origin. Without a script-src of its own the policy would
+// hold scripts to default-src, the core's origin alone, which would block the
+// widget.
+const ViewContentSecurityPolicyWithTurnstile = "default-src 'self'; script-src 'self' " + TurnstileOrigin +
+	"; frame-src " + TurnstileOrigin + "; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
 // Proxy is the handler that sends browsers to view plugins.
 type Proxy struct {
-	door  *app.FrontDoor
-	proxy *httputil.ReverseProxy
-	log   *slog.Logger
+	door     *app.FrontDoor
+	proxy    *httputil.ReverseProxy
+	log      *slog.Logger
+	clientIP ClientIPConfig
+	csp      string
+}
+
+// Option changes how the proxy is made.
+type Option func(*Proxy)
+
+// WithClientIP makes the proxy find the browser's address as c says and hand
+// it to the plugin in the SDK's ClientIPHeader. Without it the address is the
+// connection's, which behind an Ingress is the Ingress's.
+func WithClientIP(c ClientIPConfig) Option {
+	return func(p *Proxy) { p.clientIP = c }
+}
+
+// WithTurnstile makes the core's content security policy
+// (ViewContentSecurityPolicyWithTurnstile) allow Cloudflare Turnstile's script
+// and frame, for the installation that shows the widget on the Ask box. The
+// policy of a view plugin that asks for more is still held to this one.
+func WithTurnstile() Option {
+	return func(p *Proxy) { p.csp = ViewContentSecurityPolicyWithTurnstile }
 }
 
 // targetKey carries the chosen target from ServeHTTP to the rewrite.
@@ -72,7 +109,7 @@ type targetKey struct{}
 // New returns the proxy over door, logging failed requests to log (nil
 // discards). Calls to plugins never go through an HTTP proxy, and each runs
 // in a client span that propagates the core's trace (telemetry.Transport).
-func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
+func New(door *app.FrontDoor, log *slog.Logger, opts ...Option) *Proxy {
 	if log == nil {
 		log = slog.New(slog.DiscardHandler)
 	}
@@ -83,11 +120,17 @@ func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
 		IdleConnTimeout:       idleConnTimeout,
 		ExpectContinueTimeout: time.Second,
 	}
-	p := &Proxy{door: door, log: log}
+	p := &Proxy{door: door, log: log, csp: ViewContentSecurityPolicy}
+	for _, o := range opts {
+		o(p)
+	}
 	p.proxy = &httputil.ReverseProxy{
-		Rewrite:        rewrite,
+		Rewrite: func(pr *httputil.ProxyRequest) {
+			rewrite(pr)
+			p.setClientIP(pr)
+		},
 		Transport:      telemetry.Transport(transport),
-		ModifyResponse: func(resp *http.Response) error { SecurityHeaders(resp.Header); return nil },
+		ModifyResponse: func(resp *http.Response) error { SecurityHeadersWith(resp.Header, p.csp); return nil },
 		ErrorHandler:   p.unreachable,
 	}
 	return p
@@ -108,7 +151,7 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // refuse answers a request the front door can't route.
 func (p *Proxy) refuse(w http.ResponseWriter, r *http.Request, err error) {
-	SecurityHeaders(w.Header())
+	SecurityHeadersWith(w.Header(), p.csp)
 	switch {
 	case errors.Is(err, views.ErrNoBrowserRoute):
 		plain(w, http.StatusNotFound, "not found")
@@ -129,8 +172,19 @@ func (p *Proxy) unreachable(w http.ResponseWriter, r *http.Request, err error) {
 		instance = t.Instance
 	}
 	p.log.Warn("view plugin did not answer", "instance", instance, "path", r.URL.Path, "error", err.Error())
-	SecurityHeaders(w.Header())
+	SecurityHeadersWith(w.Header(), p.csp)
 	plain(w, http.StatusBadGateway, "the view plugin can't be reached")
+}
+
+// setClientIP sets the SDK's ClientIPHeader toward the plugin to the browser's
+// address as the core found it, replacing whatever the browser sent in it, and
+// drops the header when the address is unknown, so a plugin never reads a value
+// the browser made up.
+func (p *Proxy) setClientIP(pr *httputil.ProxyRequest) {
+	pr.Out.Header.Del(openfief.ClientIPHeader)
+	if ip := p.clientIP.Resolve(pr.In); ip != "" {
+		pr.Out.Header.Set(openfief.ClientIPHeader, ip)
+	}
 }
 
 // rewrite points the outgoing request at the chosen plugin. Rewrite has
@@ -167,7 +221,13 @@ func rewrite(pr *httputil.ProxyRequest) {
 // content sniffing (X-Content-Type-Options nosniff) and the referrer
 // (Referrer-Policy no-referrer), each already the strictest value.
 func SecurityHeaders(h http.Header) {
-	h.Add("Content-Security-Policy", ViewContentSecurityPolicy)
+	SecurityHeadersWith(h, ViewContentSecurityPolicy)
+}
+
+// SecurityHeadersWith is SecurityHeaders with the content security policy csp
+// in place of ViewContentSecurityPolicy: the one the proxy was made with.
+func SecurityHeadersWith(h http.Header, csp string) {
+	h.Add("Content-Security-Policy", csp)
 	h.Set("X-Frame-Options", "DENY")
 	h.Set("X-Content-Type-Options", "nosniff")
 	h.Set("Referrer-Policy", "no-referrer")

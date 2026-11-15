@@ -1266,3 +1266,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1f846742dd0
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testbudgetexceededatthecap
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:39.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f6ae8ae102f
+  - type: covered_by
+    from: SYM-views-app-period-opening-day
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:42:38.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3d365cd40b
+  - type: implements
+    from: SYM-views-app-period-opening-day
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:42:38.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c55020f5d247
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-bench-rescorerun
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:11.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606eb8d38624
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-bench-rescorerun
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:11.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adf5c92c0bf9

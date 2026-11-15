@@ -986,3 +986,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abd68b65041a
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-wantonerefusalofclassbudget
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T21:43:39.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34819f30d24c
+  - type: covered_by
+    from: SYM-tooling-demo-validate-guard-failures
+    to: TEST-tooling-demo-validate
+    created_at: 2026-11-15T00:17:09.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7de1c217455
+  - type: implements
+    from: SYM-tooling-demo-validate-guard-failures
+    to: REQ-demo-model-guards-prepared
+    created_at: 2026-11-15T00:17:09.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2233b7f9e9e0
+  - type: implements
+    from: SYM-tools-askbench-premise-go-exactlywritten
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-15T15:21:54.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b967bfda370c
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-exactlywritten
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T15:21:54.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b564145350

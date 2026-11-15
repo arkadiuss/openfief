@@ -28,6 +28,15 @@ import (
 const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; " +
 	"connect-src 'self'; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
+// contentSecurityPolicyWithTurnstile is contentSecurityPolicy for an installation
+// that shows Cloudflare Turnstile on the Ask box (D-208): scripts and frames also
+// from Turnstile's origin, the only third-party script and frame the UI allows,
+// and nothing else changed. The core's own policy is widened the same way
+// (--allow-turnstile): a browser enforces both.
+const contentSecurityPolicyWithTurnstile = "default-src 'none'; script-src 'self' " + turnstileOrigin + "; frame-src " + turnstileOrigin +
+	"; style-src 'self'; font-src 'self'; img-src 'self'; " +
+	"connect-src 'self'; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
 // staticCacheControl lets browsers keep the static files for an hour: they
 // change only with the image.
 const staticCacheControl = "public, max-age=3600"
@@ -94,6 +103,15 @@ type Config struct {
 	// AskLimits are the limits of one question the Ask box sends a model;
 	// zero fields take DefaultAskLimits' (D-208).
 	AskLimits AskLimits
+	// Turnstile, when set, puts Cloudflare Turnstile in front of the Ask box's
+	// model (D-208): the page shows the widget, a question that goes to a model
+	// passes only with a token Cloudflare accepts, and the page's content
+	// security policy admits Turnstile's script and frame and nothing else from
+	// outside. It needs AskModel. Nil is how every installation but the demo runs.
+	Turnstile *TurnstileConfig
+	// AskEvalURL is the page a model's answer links to, which reports how
+	// models did in the Ask box's eval (D-222); empty takes the docs site's.
+	AskEvalURL string
 	// Maintainer calls the core's MaintainerService (D-204) like Auth: with
 	// the plugin's own token, the person's session in each request. It is
 	// optional: without it the model portfolio's page shows no note and the
@@ -155,6 +173,9 @@ type server struct {
 	// askModel is the core's router as the Ask box uses it; nil without
 	// Config.AskModel.
 	askModel askModelPort
+	// turnstile is the check in front of the Ask box's model; nil without
+	// Config.Turnstile.
+	turnstile *turnstileCheck
 	// maintainer is the core's model-portfolio maintainer (D-204); nil
 	// without Config.Maintainer.
 	maintainer portfoliov1connect.MaintainerServiceClient
@@ -196,15 +217,53 @@ func New(cfg *Config) (http.Handler, error) {
 		s.log = slog.New(slog.DiscardHandler)
 	}
 	s.ask = commandAnswerer{s: s}
+	csp, err := s.withTurnstile(cfg)
+	if err != nil {
+		return nil, err
+	}
 	if cfg.AskModel != nil {
 		s.askModel = askModelClient{c: cfg.AskModel}
 		commands := commandAnswerer{s: s}
 		s.ask = routedAnswerer{
-			commands: commands, today: s.today, log: s.log,
+			commands: commands, today: s.today, log: s.log, turnstile: s.turnstile,
 			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
 		}
 	}
-	return securityHeaders(sameOrigin(s.routes(static))), nil
+	if err := s.noteModelAnswers(cfg.AskEvalURL); err != nil {
+		return nil, err
+	}
+	return securityHeaders(csp, sameOrigin(s.routes(static))), nil
+}
+
+// withTurnstile sets up the check in front of the Ask box's model when cfg asks
+// for it, and returns the content security policy the UI serves: the strict one,
+// or with Turnstile's origin added. A config that is incomplete, or has no model
+// to protect, is an error.
+func (s *server) withTurnstile(cfg *Config) (string, error) {
+	if cfg.Turnstile == nil {
+		return contentSecurityPolicy, nil
+	}
+	if cfg.AskModel == nil {
+		return "", fmt.Errorf("%w: Turnstile guards the Ask box's model and there is none", ErrBadTurnstile)
+	}
+	if err := cfg.Turnstile.validate(); err != nil {
+		return "", err
+	}
+	s.turnstile = &turnstileCheck{cfg: *cfg.Turnstile, log: s.log}
+	return contentSecurityPolicyWithTurnstile, nil
+}
+
+// noteModelAnswers has every answer a model wrote carry its note (D-222).
+func (s *server) noteModelAnswers(evalURL string) error {
+	evaluated, err := evaluatedModels(evalResultFiles)
+	if err != nil {
+		return err
+	}
+	if evalURL == "" {
+		evalURL = defaultAskEvalURL
+	}
+	s.ask = noteAnswerer{next: s.ask, evaluated: evaluated, evalURL: evalURL}
+	return nil
 }
 
 // routes maps every path to its handler.
@@ -297,10 +356,10 @@ func healthz(w http.ResponseWriter, _ *http.Request) {
 // CSP, no sniffing, no framing, no Referer, an isolated browsing context,
 // passkeys only for the UI itself, HSTS on HTTPS, and no caching of pages,
 // which show the owner's record.
-func securityHeaders(next http.Handler) http.Handler {
+func securityHeaders(csp string, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		h := w.Header()
-		h.Set("Content-Security-Policy", contentSecurityPolicy)
+		h.Set("Content-Security-Policy", csp)
 		h.Set("X-Content-Type-Options", "nosniff")
 		h.Set("X-Frame-Options", "DENY")
 		h.Set("Referrer-Policy", "no-referrer")

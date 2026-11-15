@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-288ad144503c
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-getresetsat
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:01:56.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be3f68be5f8a
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-getresetsat
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:01:56.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b5b22efa6d
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-ask-period-card-with-amissing-basis
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:42:08.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9674a4e9b5d0

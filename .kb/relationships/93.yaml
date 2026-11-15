@@ -1427,3 +1427,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12bed99d32e5
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-questionsof
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:02.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63e8acab109
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evalresultrow
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:43.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83ba26947dd6
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-evalresultrow
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:51:43.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e50250d64832

@@ -12,6 +12,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
+	"github.com/arkadiuss/openfief/internal/views"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
@@ -145,6 +146,92 @@ func (r *readService) ListValuationTotals(_ context.Context, req *connect.Reques
 		out.Totals = append(out.Totals, r.total(v, ""))
 	}
 	return connect.NewResponse(out), nil
+}
+
+// GetPeriodChange answers how the seed's value changed over a period of days
+// with the core's own rules (views.ChangeOver): the start is the end of the day
+// before from, or the first day of the seed, and a period past the last valued
+// day is refused as the core refuses one it does not value.
+func (r *readService) GetPeriodChange(_ context.Context, req *connect.Request[viewsv1.GetPeriodChangeRequest]) (*connect.Response[viewsv1.GetPeriodChangeResponse], error) {
+	from, errFrom := kernel.ParseDate(req.Msg.GetFrom())
+	to, errTo := kernel.ParseDate(req.Msg.GetTo())
+	if errFrom != nil || errTo != nil {
+		return nil, fail(connect.CodeInvalidArgument, errSeed)
+	}
+	if err := views.ValidateRange(from, to); err != nil {
+		return nil, fail(connect.CodeInvalidArgument, err)
+	}
+	opening := from.AddDays(-1)
+	if first := r.pf.Days[0].Date; opening.Before(first) {
+		opening = first
+	}
+	if to.After(r.lastDay()) || to.Before(opening) {
+		return nil, fail(connect.CodeFailedPrecondition, views.ErrPeriodUnvalued)
+	}
+	in, err := periodInputOf(r.pf, opening, from, to)
+	if err != nil {
+		return nil, err
+	}
+	change, err := views.ChangeOver(in)
+	if err != nil {
+		return nil, fail(connect.CodeFailedPrecondition, err)
+	}
+	return connect.NewResponse(periodResponse(&change)), nil
+}
+
+// periodInputOf returns what the core computes a period's change from, over the
+// seed's days from opening to to: the series' index and flow of each day, and
+// the totals of the first and the last.
+func periodInputOf(pf *Portfolio, opening, from, to kernel.Date) (*views.PeriodInput, error) {
+	cur, err := kernel.ParseCurrency(reporting)
+	if err != nil {
+		return nil, fail(connect.CodeInternal, err)
+	}
+	in := &views.PeriodInput{From: from, To: to, Reporting: cur}
+	for d := opening; !d.After(to); d = d.AddDays(1) {
+		v, ok := pf.On(d)
+		if !ok {
+			return nil, fail(connect.CodeFailedPrecondition, views.ErrPeriodUnvalued)
+		}
+		in.Days = append(in.Days, views.PerformanceDay{Date: d, Index: v.Index, Flow: kernel.NewMoney(v.Flow, cur)})
+		if d.Equal(opening) {
+			in.Opening = dateTotal(v, cur)
+		}
+		if d.Equal(to) {
+			in.Closing = dateTotal(v, cur)
+		}
+	}
+	return in, nil
+}
+
+// dateTotal is the seed's total on a day, its three values in PLN.
+func dateTotal(v *dayValues, cur kernel.Currency) views.DateTotal {
+	gross := v.Gross()
+	return views.DateTotal{
+		Date: v.Date, Reporting: kernel.NewMoney(gross, cur), Net: kernel.NewMoney(Net(gross), cur), Liquidation: kernel.NewMoney(Liquidation(gross), cur),
+	}
+}
+
+// periodResponse writes a period's change as the read API does.
+func periodResponse(c *views.PeriodChange) *viewsv1.GetPeriodChangeResponse {
+	return &viewsv1.GetPeriodChangeResponse{
+		From: c.From.String(), To: c.To.String(), Opening: c.Opening.String(), ReportingCurrency: reporting,
+		Gross: valueChange(&c.Gross), Net: valueChange(&c.Net), Liquidation: valueChange(&c.Liquidation),
+		ReturnPercent: c.Return.String(), DepositsReporting: money(c.Deposits.Amount()), WithdrawalsReporting: money(c.Withdrawals.Amount()),
+		NetDepositsReporting: money(c.NetDeposits.Amount()),
+	}
+}
+
+// valueChange writes one value's change; none for a value the period lacks.
+func valueChange(c *views.ValueChange) *viewsv1.ValueChange {
+	if !c.Known {
+		return nil
+	}
+	out := &viewsv1.ValueChange{StartReporting: money(c.Start.Amount()), EndReporting: money(c.End.Amount()), ChangeReporting: money(c.Change.Amount())}
+	if c.HasPercent {
+		out.ChangePercent = c.Percent.String()
+	}
+	return out
 }
 
 // GetAllocation groups the gross value on a day by a dimension, the largest

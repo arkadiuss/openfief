@@ -15,7 +15,10 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
+	"time"
+	"unicode/utf8"
 )
 
 // maxReplyBytes caps what is read of the provider's reply.
@@ -45,6 +48,8 @@ type CallError struct {
 	// Timeout is true when the call ran out of time without an answer.
 	Timeout bool
 	err     error
+	// retryAfter is the answer's Retry-After header, for the retry of a 429.
+	retryAfter string
 }
 
 // Error is the text of the wrapped error.
@@ -76,11 +81,29 @@ type Client struct {
 	// nothing, the model's own default. Nothing sets it in the plugin; the Ask
 	// box bench does, to compare a model with its thinking off or turned down.
 	Reasoning string
+	// DataCollection, when not empty, sets OpenRouter's
+	// `provider.data_collection`: DataCollectionDeny lets no host serve a
+	// request that may store it or train on it, DataCollectionAllow refuses
+	// none. It joins whatever else the request's `provider` object holds
+	// (Route, require_parameters).
+	DataCollection string
 	// IncludeCost asks OpenRouter for the call's exact cost: `usage` with
 	// `include` true, which puts usage.cost (USD) and the serving `provider`
 	// in the reply. Nothing sets it in the plugin; the bench does.
 	IncludeCost bool
+	// Wait pauses for d, or until ctx ends, between a 429 and its one retry;
+	// nil waits on a timer. Now is the clock Retry-After's HTTP date is read
+	// against; nil is time.Now. Tests set both so that none sleeps.
+	Wait func(ctx context.Context, d time.Duration) error
+	Now  func() time.Time
 }
+
+// The wait before the one retry of a 429 (D-207): the provider's Retry-After
+// capped at maxRetryAfter, or defaultRetryWait when it names none.
+const (
+	maxRetryAfter    = 10 * time.Second
+	defaultRetryWait = time.Second
+)
 
 // The values of Client.Reasoning.
 const (
@@ -89,6 +112,15 @@ const (
 	ReasoningMedium = "medium"
 	ReasoningHigh   = "high"
 )
+
+// The values of Client.DataCollection.
+const (
+	DataCollectionAllow = "allow"
+	DataCollectionDeny  = "deny"
+)
+
+// ValidDataCollection reports whether v is a value of Client.DataCollection.
+func ValidDataCollection(v string) bool { return v == DataCollectionAllow || v == DataCollectionDeny }
 
 // ValidReasoning reports whether v is a value of Client.Reasoning.
 func ValidReasoning(v string) bool {
@@ -156,6 +188,11 @@ type Reply struct {
 	// prompt cache, as usage.prompt_tokens_details.cached_tokens (or the
 	// usage's own cached_tokens) reports them; 0 when the reply has none.
 	CachedTokens int64
+	// ReasoningChars is the length in characters of the reasoning the host
+	// returned with the reply (message.reasoning, else message.reasoning_content);
+	// 0 when it returned none. Only the length is kept: reasoning is never an
+	// answer and never shown, so its text is dropped here.
+	ReasoningChars int
 	// Cost is the call's cost in USD as the provider reported it (OpenRouter's
 	// usage.cost), as the number's own text; empty when the reply has none.
 	Cost string
@@ -267,14 +304,10 @@ const openRouterHost = "openrouter.ai"
 // set only when the client has a Route, which pins the hosts for every request.
 func (c *Client) RequestBody(req *Request) map[string]any {
 	body := req.body()
-	switch {
-	case !c.OnOpenRouter():
-	case len(c.Route) > 0:
-		body["provider"] = map[string]any{"order": c.Route, "allow_fallbacks": false, "require_parameters": true}
-	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
-		body["provider"] = map[string]any{"require_parameters": true}
-	}
 	if c.OnOpenRouter() {
+		if provider := c.providerPreferences(req); len(provider) > 0 {
+			body["provider"] = provider
+		}
 		c.addOpenRouterOptions(body)
 	}
 	return body
@@ -294,6 +327,25 @@ func (c *Client) OnOpenRouter() bool {
 	return host == openRouterHost || strings.HasSuffix(host, "."+openRouterHost)
 }
 
+// providerPreferences returns OpenRouter's `provider` object for req, one
+// object for every preference: the pinned hosts with no fallback and
+// require_parameters when the client has a Route, require_parameters alone for
+// a request that sends tools or a response format, and data_collection when
+// the client sets it, whatever else the request holds.
+func (c *Client) providerPreferences(req *Request) map[string]any {
+	provider := map[string]any{}
+	switch {
+	case len(c.Route) > 0:
+		provider["order"], provider["allow_fallbacks"], provider["require_parameters"] = c.Route, false, true
+	case len(req.Tools) > 0 || len(req.ResponseSchema) > 0 || req.JSONMode:
+		provider["require_parameters"] = true
+	}
+	if ValidDataCollection(c.DataCollection) {
+		provider["data_collection"] = c.DataCollection
+	}
+	return provider
+}
+
 // addOpenRouterOptions adds the reasoning and usage members the client's
 // options ask for. Both are OpenRouter's: other servers may refuse them.
 func (c *Client) addOpenRouterOptions(body map[string]any) {
@@ -308,12 +360,70 @@ func (c *Client) addOpenRouterOptions(body map[string]any) {
 	}
 }
 
-// post sends req to the provider and returns the body of its 2xx answer.
+// post sends req to the provider and returns the body of its 2xx answer. A 429
+// is retried once, after the wait retryWait gives, when that wait fits in the
+// time the call has left (D-207): the question's deadline stays the limit. Any
+// other status, a 4xx included, is never retried here.
 func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	body, err := json.Marshal(c.RequestBody(req))
 	if err != nil {
 		return nil, fmt.Errorf("%w: encoding", ErrRejected)
 	}
+	raw, err := c.send(ctx, body)
+	var ce *CallError
+	if err == nil || !errors.As(err, &ce) || ce.Status != http.StatusTooManyRequests {
+		return raw, err
+	}
+	wait := c.retryWait(ce.retryAfter)
+	if deadline, ok := ctx.Deadline(); ok && c.now().Add(wait).After(deadline) {
+		return nil, err
+	}
+	if c.pause(ctx, wait) != nil {
+		return nil, err
+	}
+	return c.send(ctx, body)
+}
+
+// retryWait is how long to wait before retrying a 429 whose Retry-After header
+// is retryAfter: the seconds or the HTTP date it holds, never past maxRetryAfter
+// and never negative; defaultRetryWait when it is empty or neither form.
+func (c *Client) retryWait(retryAfter string) time.Duration {
+	retryAfter = strings.TrimSpace(retryAfter)
+	wait := defaultRetryWait
+	if secs, err := strconv.ParseUint(retryAfter, 10, 31); err == nil {
+		wait = time.Duration(secs) * time.Second
+	} else if at, err := http.ParseTime(retryAfter); err == nil {
+		wait = max(at.Sub(c.now()), 0)
+	}
+	return min(wait, maxRetryAfter)
+}
+
+// now is the client's clock.
+func (c *Client) now() time.Time {
+	if c.Now != nil {
+		return c.Now()
+	}
+	return time.Now()
+}
+
+// pause waits d, or until ctx ends, and returns why it stopped early.
+func (c *Client) pause(ctx context.Context, d time.Duration) error {
+	if c.Wait != nil {
+		return c.Wait(ctx, d)
+	}
+	t := time.NewTimer(d)
+	defer t.Stop()
+	select {
+	case <-t.C:
+		return nil
+	case <-ctx.Done():
+		return fmt.Errorf("waiting to retry: %w", ctx.Err())
+	}
+}
+
+// send makes one POST of body and returns the body of its 2xx answer. The error
+// of a non-2xx answer keeps the answer's Retry-After header.
+func (c *Client) send(ctx context.Context, body []byte) ([]byte, error) {
 	hr, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/chat/completions", bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("%w: building the request", ErrUnavailable)
@@ -336,6 +446,9 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	raw, readErr := io.ReadAll(io.LimitReader(resp.Body, maxReplyBytes+1))
 	closeErr := resp.Body.Close()
 	if statusErr := statusError(resp.StatusCode); statusErr != nil {
+		if ce, ok := errors.AsType[*CallError](statusErr); ok {
+			ce.retryAfter = resp.Header.Get("Retry-After")
+		}
 		return nil, statusErr
 	}
 	if readErr != nil || closeErr != nil || len(raw) > maxReplyBytes {
@@ -369,6 +482,7 @@ func parseReply(raw []byte) (*Reply, error) {
 	if message.get("content", &content) && content != nil {
 		out.Content = *content
 	}
+	out.ReasoningChars = message.reasoningChars()
 	var calls []object
 	message.get("tool_calls", &calls)
 	for _, c := range calls {
@@ -391,6 +505,19 @@ func parseReply(raw []byte) (*Reply, error) {
 	}
 	top.get("provider", &out.Provider)
 	return &out, nil
+}
+
+// reasoningChars returns the length in characters of the message's reasoning,
+// where hosts put it: "reasoning", else "reasoning_content". It never returns
+// the text.
+func (o object) reasoningChars() int {
+	for _, name := range []string{"reasoning", "reasoning_content"} {
+		var text *string
+		if o.get(name, &text) && text != nil && *text != "" {
+			return utf8.RuneCountInString(*text)
+		}
+	}
+	return 0
 }
 
 // cachedTokens returns how many input tokens the host served from its cache:

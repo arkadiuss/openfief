@@ -1406,3 +1406,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6293f59e6f4c
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-suggestscommands
+    to: REQ-ui-ask-refusal-commands-are-the-boxs
+    created_at: 2026-11-15T10:33:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16784a04afee
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-withdrawals-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:47.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6a918edfc1
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-withdrawals-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:47.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46250d3f55c0
+  - type: covered_by
+    from: SYM-askbench-readservice-period-input-of
+    to: TEST-askbench-read-service
+    created_at: 2026-11-15T14:03:47.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-479c24eacd93
+  - type: implements
+    from: SYM-askbench-readservice-period-input-of
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:03:47.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-378df055389d

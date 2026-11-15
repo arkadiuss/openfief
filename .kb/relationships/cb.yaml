@@ -1028,3 +1028,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-203f6ddf941f
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-error
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:49:11.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc512285a214
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-budgetspenterror-error
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:49:11.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af65e14c77c
+  - type: specified_by
+    from: REQ-ui-turnstile-verification
+    to: SCEN-ui-turnstile-verification
+    created_at: 2026-11-14T22:47:08.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0317bb96e075
+  - type: executable_for
+    from: SYM-m5-plugins-ui-turnstile-test-go-testturnstileoffbuildsnothing
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:53:36.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f81662b5d4
+  - type: covered_by
+    from: SYM-views-ui-askperiod-command-answerer-period-performance
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:38:53.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ffe40fd2203
+  - type: implements
+    from: SYM-views-ui-askperiod-command-answerer-period-performance
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:38:53.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13f2b062081c

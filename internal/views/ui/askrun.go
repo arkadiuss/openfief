@@ -91,6 +91,11 @@ func (askModelFunc) available(context.Context, session) (bool, error) { return t
 
 func (askModelFunc) permits(context.Context, session, []string) (bool, error) { return true, nil }
 
+// admit lets every question go: a harness has no budget and no limit.
+func (askModelFunc) admit(context.Context, session, string) (askAdmission, error) {
+	return askAdmission{Kind: admitAllowed}, nil
+}
+
 func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
 	schema := ""
 	if answer {
@@ -213,6 +218,20 @@ func AskArgDefaults(tool string, latest kernel.Date) map[string]any {
 	for _, t := range askTools() {
 		if t.Name == tool && t.Defaults != nil {
 			return t.Defaults(latest)
+		}
+	}
+	return nil
+}
+
+// AskArgReplacedBy returns, for each argument of the named tool that has a
+// default, the other arguments that replace it: a call that gives one of them
+// has no use for the default, since the tool takes the argument given instead
+// (a value asked over a period has no date). It is nil for a tool with none
+// and for an unknown tool.
+func AskArgReplacedBy(tool string) map[string][]string {
+	for _, t := range askTools() {
+		if t.Name == tool {
+			return t.ReplacedBy
 		}
 	}
 	return nil

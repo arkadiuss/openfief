@@ -1161,3 +1161,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9e59e348e43
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enum
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:59:33.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c5528dd3e30
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-enum
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:59:33.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-593aa52112b7
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-parseimportargs
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:07:15.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d5931a2bc91
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-parseimportargs
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:07:15.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-744bab8d612c

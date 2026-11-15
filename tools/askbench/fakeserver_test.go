@@ -83,6 +83,9 @@ func (f *fakeModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	f.mu.Unlock()
 	w.Header().Set("Content-Type", "application/json")
 	if status != 0 {
+		if status == http.StatusTooManyRequests {
+			w.Header().Set("Retry-After", "0") // the client's one retry waits no time
+		}
 		w.WriteHeader(status)
 		say(w, failure)
 		return

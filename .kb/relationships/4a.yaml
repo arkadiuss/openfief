@@ -1140,3 +1140,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50df03c285af
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ask-go-admitdecision
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:43:06.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d33ee51f5ff8
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ask-go-admitdecision
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:43:06.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4142fbd98f6f
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-string
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:27.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b6c9f8bcc7b
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-string
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:27.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99347ee86ff0
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-costestimate
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:10:40.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40889076454c
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-costestimate
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:10:40.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6718ecda0f37

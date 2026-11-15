@@ -1147,3 +1147,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6063c8644e1
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-descriptor
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:46.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d1b4c5d80a2
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-descriptor
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:46.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74951cbf52b2
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-guards-go-budgetstatus
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T21:43:33.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3940c4f07838
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-guards-go-budgetstatus
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T21:43:33.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b474758ad6e
+  - type: implements
+    from: SYM-ask-model-asktools-go-performance-tool
+    to: REQ-ui-ask-performance-tool-names-both-languages
+    created_at: 2026-11-15T10:09:10.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c69df6020ff
+  - type: covered_by
+    from: SYM-views-period-value-change
+    to: TEST-views-period
+    created_at: 2026-11-15T12:28:27.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2922b014434b
+  - type: implements
+    from: SYM-views-period-value-change
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:34:09.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d5862fe236

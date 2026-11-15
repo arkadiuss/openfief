@@ -33,7 +33,7 @@
 // models may see which data rest on (D-206). Prices are per million tokens.
 // At OpenRouter, and only there, a model's entry may also set "hosts", the
 // OpenRouter providers to pin it to in order with no fallback to others
-// (["nextbit/bf16"]), and "reasoning" ("off", "low", "medium" or "high"); each
+// (["nextbit/bf16"]), "reasoning" ("off", "low", "medium" or "high") and "dataCollection" ("deny" lets no host that may store or train on a request serve it, "allow"); each
 // applies to that entry's requests alone, and a config that sets one for
 // another server is refused.
 // The client trusts the system's roots plus the PEM certificates of the

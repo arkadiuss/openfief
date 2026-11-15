@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"slices"
+	"strings"
 	"time"
 	"unicode/utf8"
 
@@ -131,6 +132,11 @@ type askModelPort interface {
 	// permits reports whether a model of the route may receive data of every
 	// tier together, with tools.
 	permits(ctx context.Context, sess session, tiers []string) (bool, error)
+	// admit asks, once for a question about to go to the model, whether the
+	// core lets it (D-208): the day's budget, and the limits per session and
+	// per address, which count the question when it is let go. address is the
+	// browser's, or "" when the core could not tell.
+	admit(ctx context.Context, sess session, address string) (askAdmission, error)
 	// generate asks the route's models for the next message, of at most
 	// maxTokens output tokens. With answer set the message is the structured
 	// answer (askAnswerSchemaJSON): strict structured output for a model
@@ -154,8 +160,18 @@ type modelAnswerer struct {
 	run   toolRunner
 	today func() kernel.Date
 	log   *slog.Logger
+	// now is the clock the card of a limit counts down by; nil is time.Now.
+	now func() time.Time
 	// limits are the limits of one question, with no zero field.
 	limits AskLimits
+}
+
+// clock returns the time now: the answerer's clock, or time.Now.
+func (a *modelAnswerer) clock() time.Time {
+	if a.now != nil {
+		return a.now()
+	}
+	return time.Now()
 }
 
 // ask answers question with the model: the tool loop of at most
@@ -350,7 +366,7 @@ func (c *askConversation) addResult(call *askCall, outcome, content, tier string
 // with the reason, and a second failure ends the question as a card that says
 // the model did not reply in the form the box needs (askSchemaFailure).
 func (c *askConversation) finish(ctx context.Context, question string, reply *askReply, final bool) (answerCard, error) {
-	ans, err := parseStructuredAnswer(reply.Content, len(c.used), c.a.today())
+	ans, err := c.parse(reply.Content)
 	if err == nil {
 		return c.answered(question, &ans, reply.Model), nil
 	}
@@ -364,9 +380,7 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 		c.retry(reply.Content, err)
 		attempts = 1
 	} else {
-		c.msgs = append(c.msgs,
-			askMessage{Role: roleAssistant, Content: reply.Content, Tier: mostSensitive(c.tiers)},
-			askMessage{Role: roleUser, Content: finalText, Tier: tierT2})
+		c.msgs = append(c.msgs, finalInstruction(reply.Content, mostSensitive(c.tiers))...)
 	}
 	for attempt := range attempts {
 		if c.tokens >= c.a.limits.OutputTokens {
@@ -376,7 +390,7 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 		if err != nil {
 			return c.a.failure(c.r, question, err)
 		}
-		ans, perr := parseStructuredAnswer(next.Content, len(c.used), c.a.today())
+		ans, perr := c.parse(next.Content)
 		if perr == nil {
 			return c.answered(question, &ans, next.Model), nil
 		}
@@ -392,9 +406,26 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 // retry adds the model's reply that was not an answer and the reason, so its
 // next reply can mend it. The reason is fixed words and never the reply.
 func (c *askConversation) retry(content string, why error) {
-	c.msgs = append(c.msgs,
-		askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)},
-		askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+	if strings.TrimSpace(content) != "" {
+		c.msgs = append(c.msgs, askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)})
+	}
+	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+}
+
+// finalInstruction is what the final round adds to the conversation after the
+// model's reply that was not an answer. A reply with text is kept as an
+// assistant message and asked to be put into the schema as it is (finalText). A
+// blank reply, as when the model stopped after a tool's result with nothing to
+// say, has nothing to restate: no empty assistant message is sent, and the
+// instruction asks for the answer from the cards (finalAnswerText).
+func finalInstruction(content, tier string) []askMessage {
+	if strings.TrimSpace(content) == "" {
+		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierT2}}
+	}
+	return []askMessage{
+		{Role: roleAssistant, Content: content, Tier: tier},
+		{Role: roleUser, Content: finalText, Tier: tierT2},
+	}
 }
 
 // answered is the answer card of a valid structured answer: its text, the kind,
@@ -419,9 +450,51 @@ func (c *askConversation) answered(question string, a *structuredAnswer, model s
 	case answerKindClarify:
 		card.Candidates = a.Candidates
 	case answerKindRefuse:
-		card.Suggestions = a.Suggestions
+		// The commands are the box's own, never the model's (D-194).
+		card.Suggestions = refusalSuggestions(c.a.today())
 	}
 	return card
+}
+
+// parse reads a reply as a structured answer of this question and vets what it
+// names against what the model read: parseStructuredAnswer's checks, then the
+// candidates of a clarifying answer.
+func (c *askConversation) parse(content string) (structuredAnswer, error) {
+	a, err := parseStructuredAnswer(content, len(c.used))
+	if err != nil {
+		return structuredAnswer{}, err
+	}
+	if a.Kind == answerKindClarify {
+		a.Candidates = readNames(a.Candidates, c.used)
+		if len(a.Candidates) == 0 {
+			return structuredAnswer{}, errAnswerNoChoices
+		}
+	}
+	return a, nil
+}
+
+// readNames returns the candidates that a card the model read names, in their
+// order: a candidate is a name the person can choose, so one no card holds, which
+// the model made up, is dropped (a clarifying answer left with none is no
+// answer). A name matches without regard to case, in a card's title, text, or any
+// of its rows' labels and details.
+func readNames(candidates []string, cards []answerCard) []string {
+	var haystack strings.Builder
+	for i := range cards {
+		haystack.WriteString(strings.ToLower(cards[i].Title + "\n" + cards[i].Text))
+		for _, row := range cards[i].Rows {
+			haystack.WriteString("\n" + strings.ToLower(row.Label+"\n"+row.Detail))
+		}
+		haystack.WriteString("\n")
+	}
+	text := haystack.String()
+	var out []string
+	for _, name := range candidates {
+		if n := strings.ToLower(strings.TrimSpace(name)); n != "" && strings.Contains(text, n) {
+			out = append(out, name)
+		}
+	}
+	return out
 }
 
 // tool returns the tool called name.
@@ -451,6 +524,9 @@ func tierList(set map[string]bool) []string {
 // question or any answer (GR-12).
 func (a *modelAnswerer) failure(r *http.Request, question string, err error) (answerCard, error) {
 	code := connect.CodeOf(err)
+	if card, ok := refusedByAGuard(question, err, a.clock()); ok {
+		return card, nil
+	}
 	switch {
 	case code == connect.CodeUnauthenticated:
 		return answerCard{}, err
@@ -508,6 +584,9 @@ type routedAnswerer struct {
 	model    *modelAnswerer
 	today    func() kernel.Date
 	log      *slog.Logger
+	// turnstile is the check a question to the model passes first (D-208); nil
+	// is none.
+	turnstile *turnstileCheck
 }
 
 // boxAnswersItself reports whether the box answers question on today without its
@@ -541,7 +620,44 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	if !ok {
 		return a.commands.answer(r, sess, question)
 	}
+	if card, stopped, err := a.guard(r, sess, question); stopped || err != nil {
+		return card, err
+	}
 	return a.model.ask(r, sess, question)
+}
+
+// checked runs the Turnstile check, when the installation has one, on the token
+// the widget put in the question's request: the card that says why the question
+// stops, and true, or false for one that goes on. It comes before the core
+// counts the question, so a bot that passes no check spends no one's allowance.
+func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, bool) {
+	if a.turnstile == nil {
+		return answerCard{}, false
+	}
+	verdict := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	return turnstileAnswer(question, verdict)
+}
+
+// guard runs what stands before a question that goes to the model (D-208): the
+// check that a person is asking, then the core counts it, once, before the first call of its loop, against its budget
+// for the day and its limits per session and per address. It returns the card
+// that says why the question stops, and true, or false for one that goes on;
+// an error ends the request, as a session that is no longer valid does.
+func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, error) {
+	if card, stopped := a.checked(r, question); stopped {
+		return card, true, nil
+	}
+	adm, err := a.model.model.admit(r.Context(), sess, clientAddress(r))
+	if err != nil {
+		if connect.CodeOf(err) == connect.CodeUnauthenticated {
+			return answerCard{}, true, fmt.Errorf("admitting a question to the model: %w", err)
+		}
+		a.log.WarnContext(r.Context(), "ask admission failed", "code", connect.CodeOf(err).String())
+		return modelCard(question, "The model couldn't be checked",
+			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil
+	}
+	card, refused := admissionAnswer(question, adm, a.model.clock())
+	return card, refused, nil
 }
 
 // askHasModel reports whether the Ask box has a model for sess, so the box

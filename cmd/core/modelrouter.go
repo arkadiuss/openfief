@@ -192,6 +192,10 @@ func (a modelAudit) RecordResult(ctx context.Context, c *modelsapp.CallResult) e
 		outcome = identity.OutcomeOK
 	case modelsapp.OutcomeRefused:
 		outcome = identity.OutcomeRefused
+		// A guard's refusal (D-208) says which guard: budget or busy.
+		if c.Class != "" {
+			refs = append(refs, identity.Ref{Kind: identity.RefModelError, ID: string(c.Class)})
+		}
 	case modelsapp.OutcomeFailed:
 		outcome = identity.OutcomeFailed
 		refs = append(refs, identity.Ref{Kind: identity.RefModelError, ID: string(c.Class)})
@@ -307,6 +311,17 @@ type agentModels struct {
 	store *modelspg.Store
 	pool  *pgxpool.Pool
 	now   func() time.Time
+	// guards are the router's limits (D-208), and limits the Ask box's questions
+	// per session and per address; the zero values limit nothing.
+	guards modelsapp.Guards
+	limits modelsdomain.QuestionLimits
+}
+
+// modelGuardSetup is what the guards (D-208) are made from: the flags, and the
+// time zone the day's budget is counted in, the core's own.
+type modelGuardSetup struct {
+	cfg  *guardConfig
+	zone *time.Location
 }
 
 // newAgentModels wires the models context over pool: the settings in the
@@ -330,12 +345,18 @@ func newAgentModels(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, ori
 // router raises its items on them. extra are the other checks that need the
 // owner, such as the view plugins without a grant (D-196, D-209).
 func newAgentsAndAttention(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, origins identity.Origins, l *ledgerapp.Ledger,
-	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger, extra ...attentionapp.Check,
-) (*agentModels, *attention) {
+	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger, setup modelGuardSetup,
+	extra ...attentionapp.Check,
+) (*agentModels, *attention, error) {
 	agents := newAgentModels(pool, out, auth, origins, now)
+	guards, err := setup.cfg.routerGuards(agents.store, setup.zone)
+	if err != nil {
+		return nil, nil, err
+	}
+	agents.guards, agents.limits = guards, setup.cfg.limits()
 	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, origins), now, log, append([]attentionapp.Check{agents.routeCheck()}, extra...)...)
 	agents.attend(attn.items)
-	return agents, attn
+	return agents, attn, nil
 }
 
 // routeCheck is the attention check of the routes in use (D-196): each route
@@ -365,9 +386,9 @@ func routeCheckOver(settings modelsapp.SettingsStore, instances modelsapp.Provid
 func (a *agentModels) attend(items attentionItems) {
 	a.router = modelsapp.NewRouter(&modelsapp.RouterPorts{
 		Settings: a.store, Providers: a.providers, Audit: modelAudit{log: identitypg.New(a.pool)},
-		Attention: valuationAttention{items: items}, CallIDs: newCallID, Now: a.now,
+		Attention: valuationAttention{items: items}, CallIDs: newCallID, Now: a.now, Guards: a.guards,
 	})
-	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router)
+	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router).WithQuestionLimits(a.store, a.limits)
 }
 
 // withAskModelService returns h with the AskModelService mounted next to it

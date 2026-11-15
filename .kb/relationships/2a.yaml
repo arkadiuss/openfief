@@ -1175,3 +1175,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f4d035538d1
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-askguards-test-go-testadmissionanswereachrefusalsayswhyandwhenandkeepsthecommands
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:55.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28de621da157
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: REQ-ui-ask-final-round-keeps-reply-meaning
+    created_at: 2026-11-15T00:04:06.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13185eb90f20
+  - type: executable_for
+    from: SYM-openaichat-ratelimit-helper-step
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:42:39.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85f16344cf13
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: REQ-ui-ask-final-round-empty-reply-asks-answer
+    created_at: 2026-11-15T12:22:25.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75c0a481efa
+  - type: covered_by
+    from: SYM-ab3-internal-views-ui-askmodel-go-askconversation-retry
+    to: TEST-ui-ask-final-round-empty-reply
+    created_at: 2026-11-15T12:22:25.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4875c6813c00
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testregradingareportofschemaonerebuildsthecardsfromthecallsandgradesasbefore
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:05.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d0012b10b24

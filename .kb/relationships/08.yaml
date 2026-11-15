@@ -1280,3 +1280,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffe948015843
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-fakesiteverify-serve
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:50:46.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af85283ad672
+  - type: verified_by
+    from: SCEN-ui-ask-final-round-empty-reply-asks-answer
+    to: TEST-ui-ask-final-round-empty-reply
+    created_at: 2026-11-15T12:21:58.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf361c29cfb5
+  - type: verified_by
+    from: SCEN-ui-ask-final-round-empty-reply-asks-answer
+    to: TEST-askbench-final-round-empty-reply
+    created_at: 2026-11-15T12:21:59.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eea5d9c2872c
+  - type: implements
+    from: SYM-tools-askbench-premise-go-monthchanges
+    to: REQ-askbench-false-premise-case
+    created_at: 2026-11-15T15:22:02.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27b9f358a889
+  - type: covered_by
+    from: SYM-tools-askbench-premise-go-monthchanges
+    to: TEST-askbench-premise
+    created_at: 2026-11-15T15:22:02.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-121d22143743

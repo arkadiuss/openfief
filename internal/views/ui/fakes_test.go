@@ -618,6 +618,11 @@ type fakeRead struct {
 	// GetModelPortfolio ones.
 	performance []*viewsv1.GetPerformanceRequest
 	model       []*viewsv1.GetModelPortfolioRequest
+	// periods are the GetPeriodChange requests; periodErr is what it fails
+	// with, and periodMissing leaves the liquidation value out of its answer.
+	periods       []*viewsv1.GetPeriodChangeRequest
+	periodErr     error
+	periodMissing bool
 	// chartStarts are the charts' starts the owner saved through the fake
 	// SettingsService (D-167), by account, the portfolio's under "".
 	chartStarts map[string]string
@@ -720,6 +725,45 @@ func (f *fakeRead) GetAllocation(_ context.Context, r *connect.Request[viewsv1.G
 			{Key: "cash", ValueReporting: pln("500.00")},
 		},
 	}), nil
+}
+
+// GetPeriodChange answers a period with figures of a rise in value with
+// deposits and a fall in return, the way the core computes them, the day
+// before from as its opening day.
+func (f *fakeRead) GetPeriodChange(_ context.Context, r *connect.Request[viewsv1.GetPeriodChangeRequest]) (*connect.Response[viewsv1.GetPeriodChangeResponse], error) {
+	if err := f.check(r.Header()); err != nil {
+		return nil, err
+	}
+	var fail error
+	var missing bool
+	f.locked(func() {
+		f.periods = append(f.periods, r.Msg)
+		fail, missing = f.periodErr, f.periodMissing
+	})
+	if fail != nil {
+		return nil, fail
+	}
+	from, err := kernel.ParseDate(r.Msg.GetFrom())
+	if err != nil {
+		return nil, codeErr(connect.CodeInvalidArgument, err)
+	}
+	resp := &viewsv1.GetPeriodChangeResponse{
+		From: r.Msg.GetFrom(), To: r.Msg.GetTo(), Opening: from.AddDays(-1).String(), ReportingCurrency: "PLN", RevaluationPending: true,
+		Gross: &viewsv1.ValueChange{
+			StartReporting: pln("56719.52"), EndReporting: pln("58686.37"), ChangeReporting: pln("1966.85"), ChangePercent: "3.47",
+		},
+		Net: &viewsv1.ValueChange{
+			StartReporting: pln("55000"), EndReporting: pln("56925.78"), ChangeReporting: pln("1925.78"), ChangePercent: "3.5",
+		},
+		Liquidation: &viewsv1.ValueChange{
+			StartReporting: pln("56500"), EndReporting: pln("58392.94"), ChangeReporting: pln("1892.94"), ChangePercent: "3.35",
+		},
+		ReturnPercent: "-1.2", DepositsReporting: pln("2000"), WithdrawalsReporting: pln("0"), NetDepositsReporting: pln("2000"),
+	}
+	if missing {
+		resp.Liquidation = nil
+	}
+	return connect.NewResponse(resp), nil
 }
 
 func (f *fakeRead) ListValuationTotals(_ context.Context, r *connect.Request[viewsv1.ListValuationTotalsRequest]) (*connect.Response[viewsv1.ListValuationTotalsResponse], error) {
@@ -965,6 +1009,13 @@ func newHarness(t *testing.T) *harness {
 // discards.
 func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	t.Helper()
+	return newHarnessWith(t, log, nil)
+}
+
+// newHarnessWith is newHarnessLogging with the UI's config changed by mod before
+// the UI is made; nil changes nothing.
+func newHarnessWith(t *testing.T, log *slog.Logger, mod func(*Config)) *harness {
+	t.Helper()
 	h := &harness{
 		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
 		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(), checks: &fakePriceChecks{},
@@ -1005,7 +1056,7 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 	t.Cleanup(core.Close)
 	h.tokenFile = filepath.Join(t.TempDir(), "token")
 	h.writeToken(t, pluginToken)
-	handler, err := New(&Config{
+	cfg := &Config{
 		Auth:            identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Model:           portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		BondLots:        ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
@@ -1027,7 +1078,11 @@ func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
 		Instruments:     ledgerv1connect.NewInstrumentServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		CashCheckpoints: ledgerv1connect.NewCashCheckpointServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Log:             log,
-	})
+	}
+	if mod != nil {
+		mod(cfg)
+	}
+	handler, err := New(cfg)
 	if err != nil {
 		t.Fatalf("New: %v", err)
 	}

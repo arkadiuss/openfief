@@ -221,8 +221,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	agents, attn := newAgentsAndAttention(pool, changes, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
-		ungrantedViewPluginsIn(cfg, installed, acc.grants))
+	agents, attn, err := newAgentsAndAttention(pool, changes, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
+		modelGuardSetup{cfg: &cfg.Guards, zone: cfg.EndOfDay.Location}, ungrantedViewPluginsIn(cfg, installed, acc.grants))
+	if err != nil {
+		return nil, err
+	}
 	rv, err := newRevaluation(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err

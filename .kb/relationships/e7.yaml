@@ -1392,3 +1392,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21b0c8d1023b
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-protoreflect
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:01:37.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-087fdaa195a0
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionresponse-protoreflect
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:01:37.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d13c7d79cad5
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-turnstileharness
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:51:58.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90127ceaa905

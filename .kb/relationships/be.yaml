@@ -1196,3 +1196,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5a51c81936b
+  - type: implements
+    from: SYM-models-openaichat-provider-preferences
+    to: REQ-models-entry-data-collection
+    created_at: 2026-11-14T19:05:07.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dcf14a88825
+  - type: covered_by
+    from: SYM-models-openaichat-provider-preferences
+    to: TEST-plugins-model-openai-chat-data-collection
+    created_at: 2026-11-14T19:05:07.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d0f1faa5667
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-testgenerateaskrefusedasbusywhenthecallsatoncearetaken
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:51:14.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb396ae2262
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-trimreport
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:01:33.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-946e0fddebeb
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-trimreport
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:01:33.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5379c3def1
+  - type: covered_by
+    from: SYM-askbench-readservice-date-total
+    to: TEST-askbench-read-service
+    created_at: 2026-11-15T14:03:55.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665709ec071b
+  - type: implements
+    from: SYM-askbench-readservice-date-total
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:03:55.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1700ed8d3797
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-checksbyrun
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:44:44.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32b29cfc0e1f

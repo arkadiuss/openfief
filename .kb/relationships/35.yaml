@@ -1070,3 +1070,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8ec46ea251e
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ask-go-ask-withquestionlimits
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:43:00.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13d8353e382c
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ask-go-ask-withquestionlimits
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:43:00.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00bb0f548249
+  - type: implements
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-store-spent
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:52:23.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa31b905157c
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-store-spent
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:52:23.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33e249f3f8fa
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxturnstilewithacorethatfailsstillkeepsthecheckfirst
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:53:00.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89cf9d0fa120

@@ -1350,3 +1350,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7661bd61a1c8
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-admitkind
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:56:29.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e840440dd19
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-admitkind
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:56:29.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d5376a49684
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-modelsv1connect-ask-connect-go-unimplementedaskmodelservicehandler-admitaskquestion
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:02:09.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acf4347ff0a7
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-modelsv1connect-ask-connect-go-unimplementedaskmodelservicehandler-admitaskquestion
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:02:09.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-284e591774f9

@@ -2,6 +2,7 @@ package ui
 
 import (
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 
@@ -47,7 +48,53 @@ func TestParseAsk(t *testing.T) {
 		{q: "performance in 2025", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodCalendarYear, Year: 2025}}, ok: true},
 		{q: "performance since 2026-01-15", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodSince, Since: day("2026-01-15")}}, ok: true},
 		{q: "performance since tomorrow", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodSince}}},
+		{q: "performance in November 2025", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true},
+		{q: "performance november 2025", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true},
+		{q: "return for nov 2025", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true},
+		{q: "twr 2025-11", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true},
+		{
+			q:    "performance from 2025-11-01 to 2025-11-30",
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: day("2025-11-01"), To: day("2025-11-30")}}, ok: true,
+		},
+		{
+			q:    "Performance between 1.11.2025 and 30.11.2025?",
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: day("2025-11-01"), To: day("2025-11-30")}}, ok: true,
+		},
+		{
+			q:    "performance from 2025-11-30 to 2025-11-01",
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: day("2025-11-30"), To: day("2025-11-01")}}, ok: true,
+		},
+		{q: "performance in 2025-13", want: askQuery{Command: askPerformance}},
+		{q: "performance in smarch 2025", want: askQuery{Command: askPerformance}},
+		{q: "performance from 2025-11-31 to 2025-12-01", want: askQuery{Command: askPerformance}},
+		{q: "performance from 2025-11-01", want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodSince, Since: day("2025-11-01")}}, ok: true},
 		{q: "value", want: askQuery{Command: askValue}, ok: true},
+		{
+			q:    "value change in November 2025",
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true,
+		},
+		{
+			q:    "change in value in November 2025",
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true,
+		},
+		{
+			q:    "value change from 2025-11-01 to 2025-11-30",
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodBetween, Since: day("2025-11-01"), To: day("2025-11-30")}}, ok: true,
+		},
+		{
+			q:    "value from 2025-11-01 to 2025-11-30",
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodBetween, Since: day("2025-11-01"), To: day("2025-11-30")}}, ok: true,
+		},
+		{
+			q:    "value between 2025-11-01 and 2025-11-30",
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodBetween, Since: day("2025-11-01"), To: day("2025-11-30")}}, ok: true,
+		},
+		{q: "value in november 2025", want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}}, ok: true},
+		{q: "value for 2025", want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodCalendarYear, Year: 2025}}, ok: true},
+		{q: "value change", want: askQuery{Command: askValue}},
+		{q: "value change last autumn", want: askQuery{Command: askValue}},
+		{q: "value in the autumn", want: askQuery{Command: askValue}},
+		{q: "value from 2025-11-01", want: askQuery{Command: askValue}},
 		{q: "value on 2026-02-27", want: askQuery{Command: askValue, Date: day("2026-02-27")}, ok: true},
 		{q: "value on 27.2.2026", want: askQuery{Command: askValue, Date: day("2026-02-27")}, ok: true},
 		{q: "value yesterday", want: askQuery{Command: askValue, Date: day("2026-03-30")}, ok: true},
@@ -91,6 +138,9 @@ func TestPeriodRange(t *testing.T) {
 		{askPeriod{Kind: periodAll}, "0001-01-01", askToday, "since tracking began"},
 		{askPeriod{Kind: periodSince, Since: since}, "2026-01-15", askToday, "since 2026-01-15"},
 		{askPeriod{Kind: periodCalendarYear, Year: 2026}, "2026-01-01", askToday, "in 2026"},
+		{askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}, "2025-11-01", "2025-11-30", "in November 2025"},
+		{askPeriod{Kind: periodMonthOf, Year: 2026, Month: time.December}, "2026-12-01", "2026-12-31", "in December 2026"},
+		{askPeriod{Kind: periodBetween, Since: since, To: to}, "2026-01-15", askToday, "from 2026-01-15 to 2026-03-31"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.lb, func(t *testing.T) {

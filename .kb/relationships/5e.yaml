@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52228fe2418e
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-askguards-test-go-testaskboxwhenthecorecannotadmitfallsbacktothecommands
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:58:15.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce2cea006e18

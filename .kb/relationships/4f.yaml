@@ -1098,3 +1098,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d467270a270
+  - type: specified_by
+    from: REQ-ui-ask-guard-messages
+    to: SCEN-ui-ask-guard-messages
+    created_at: 2026-11-14T20:38:10.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f17b98ef5c6
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-guards-go-router-acquire
+    to: REQ-models-ask-concurrent-calls
+    created_at: 2026-11-14T20:44:02.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50f27d4fe3f4
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-guards-go-router-acquire
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:44:02.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7040bd00b36c
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-reporting-currency
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:18:09.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e22a80f01cdc
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-reporting-currency
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:18:10.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba7425edf172
+  - type: covered_by
+    from: SYM-views-ui-askperiod-parse-bounded
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:37:21.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f981fb35bc
+  - type: implements
+    from: SYM-views-ui-askperiod-parse-bounded
+    to: REQ-ui-ask-period-commands
+    created_at: 2026-11-15T13:37:21.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74caaf45a72e

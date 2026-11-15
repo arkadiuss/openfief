@@ -66,11 +66,16 @@ func referencePages(repo fs.FS, packagesFile, tasksFile, coverageFile string) (m
 	if err != nil {
 		return nil, fmt.Errorf("read design: %w", err)
 	}
+	results, err := loadResults(repo)
+	if err != nil {
+		return nil, fmt.Errorf("load Ask box results: %w", err)
+	}
 	return map[string]string{
 		"status.md":                     statusPage(parseDecisions(string(design)), coverage.Rows),
 		"reference/code-map.md":         codeMapPage(module, pkgs),
 		"reference/custom-resources.md": crdPage(crds),
 		"reference/tasks.md":            tasksPage(tasks),
+		"reference/ask-eval.md":         askEvalPage(results),
 	}, nil
 }
 

@@ -1,0 +1,87 @@
+[
+  {
+    "run": "14-2",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "pass",
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 260,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.14399",
+    "costSource": "measured",
+    "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  },
+  {
+    "run": "14-2",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "deepinfra/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A3",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 293,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.11504",
+    "costSource": "measured",
+    "configHash": "ce822f46af0da96144a346619dbb8204d9cc774dfe8b0472c82ae30f655e91c8",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  },
+  {
+    "run": "14-2",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "near-ai/fp4",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A8",
+        "tag": "command",
+        "passed": 3,
+        "need": 5
+      },
+      {
+        "case": "A9",
+        "tag": "command",
+        "passed": 2,
+        "need": 5
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 274,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.05701",
+    "costSource": "measured",
+    "configHash": "c41317124bd2e53b80d61f1fb053e3d51ad79e0ca9d3c837b019d8e9e71baeab",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  }
+]

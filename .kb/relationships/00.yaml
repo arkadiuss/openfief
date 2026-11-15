@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0496c19ccde
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-addresslimitanswer
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:57:14.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad16fbd23001
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-addresslimitanswer
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:14.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20f6ab927b44
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:14:11.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2a21a37c32e
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:14:11.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb4b8f7f7a93
+  - type: executable_for
+    from: SYM-askbench-cases-test-test-a19-and-a19b-accept-the-months-period-and-nothing-else
+    to: TEST-askbench-cases
+    created_at: 2026-11-15T14:04:51.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90da6d13800b

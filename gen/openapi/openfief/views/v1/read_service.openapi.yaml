@@ -1048,6 +1048,87 @@ components:
              named from.
       title: GetPerformanceResponse
       additionalProperties: false
+    openfief.views.v1.GetPeriodChangeRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: The first day of the period, YYYY-MM-DD.
+        to:
+          type: string
+          title: to
+          description: |-
+            The last day of the period, inclusive, YYYY-MM-DD; not before from and
+             at most 3700 days after it.
+      title: GetPeriodChangeRequest
+      additionalProperties: false
+    openfief.views.v1.GetPeriodChangeResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: The period as asked, YYYY-MM-DD.
+        to:
+          type: string
+          title: to
+        opening:
+          type: string
+          title: opening
+          description: |-
+            The day whose end values are the start: the day before from, or from
+             itself when from is the first day recorded or earlier.
+        gross:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValueChange'
+          title: gross
+        net:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValueChange'
+          title: net
+          description: Unset when a valued holding or cash lacks the value at either end.
+        liquidation:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ValueChange'
+          title: liquidation
+        returnPercent:
+          type: string
+          title: return_percent
+          description: |-
+            The time-weighted return over the period (D-61), chained from the end
+             of the opening day, as a percentage, half-even to two places, signed
+             with a minus: "3.45", "-1.20".
+        depositsReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: deposits_reporting
+          description: |-
+            Money paid in and out in the days after opening through to, each a
+             non-negative amount; a day's deposits and withdrawals net against each
+             other, and transfers between the owner's own accounts that the owner
+             confirmed (D-105) are in neither.
+        withdrawalsReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: withdrawals_reporting
+        netDepositsReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: net_deposits_reporting
+          description: deposits_reporting minus withdrawals_reporting.
+        reportingCurrency:
+          type: string
+          title: reporting_currency
+          description: The currency of every *_reporting value.
+        revaluationPending:
+          type: boolean
+          title: revaluation_pending
+          description: |-
+            A revaluation of some account is pending or running, so the figures
+             may change.
+      title: GetPeriodChangeResponse
+      additionalProperties: false
     openfief.views.v1.GetSettingsRequest:
       type: object
       title: GetSettingsRequest
@@ -2773,6 +2854,36 @@ components:
       title: ValuationStatus
       additionalProperties: false
       description: ValuationStatus says how current an account's stored valuations are.
+    openfief.views.v1.ValueChange:
+      type: object
+      properties:
+        startReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: start_reporting
+          description: The value at the end of the opening day.
+        endReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: end_reporting
+          description: The value at the end of the period's last day.
+        changeReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: change_reporting
+          description: end_reporting minus start_reporting.
+        changePercent:
+          type: string
+          title: change_percent
+          description: |-
+            The change as a percentage of start_reporting, half-even to two
+             places, signed with a minus: "3.45", "-1.20". Empty when the start is
+             not positive.
+      title: ValueChange
+      additionalProperties: false
+      description: |-
+        ValueChange is how one of the portfolio's three values (D-77) changed over
+         a period, in the reporting currency.
     openfief.views.v1.ValueKind:
       type: string
       title: ValueKind
@@ -3844,6 +3955,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetPerformanceResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
+  /v1/period-change:
+    get:
+      tags:
+        - ReadService
+      summary: GetPeriodChange
+      description: |-
+        GetPeriodChange returns how the portfolio's value changed over a period
+         of days, from and to both inclusive, in the reporting currency: its
+         gross, net and liquidation values (D-77) at the start and the end, the
+         change in money and in percent, the period's time-weighted return
+         (D-61) and the deposits and withdrawals in it, which are not return.
+         The start is the end of the day before from, or of from itself when
+         that is the first day recorded. The core computes every figure, so a
+         client shows them without arithmetic of its own. A period that ends
+         after the day every account is valued through is refused.
+      operationId: openfief.views.v1.ReadService.GetPeriodChange
+      parameters:
+        - name: from
+          in: query
+          description: The first day of the period, YYYY-MM-DD.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: |-
+            The last day of the period, inclusive, YYYY-MM-DD; not before from and
+             at most 3700 days after it.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetPeriodChangeResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
         "401":

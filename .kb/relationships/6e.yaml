@@ -1105,3 +1105,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b42586d4472
+  - type: verified_by
+    from: SCEN-ui-ask-guard-messages
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:38:09.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f7db20f0aef
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-fakeusage
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:44:23.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2287278ac10b
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-addresskeysbysession
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T21:44:28.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df1609c08f83
+  - type: verified_by
+    from: SCEN-ui-ask-shows-model-and-disclaimer
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:51:11.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b1d9491e40c
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:15:28.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e93ffe741a91
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-string
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:15:28.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52da0fdb4449

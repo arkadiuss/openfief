@@ -1,4 +1,4 @@
-{{/* The Ask box (D-194, D-203): a fixed set of commands, answered from the read API alone and at once. With a model
+{{/* The Ask box (D-194, D-203, D-208): a fixed set of commands, answered from the read API alone and at once. With a model
      configured, any other question goes to the model, which may only call the same read-only answerers and whose answer
      shows the cards it read. The question is never logged. Each answer is a card (answerCard). */}}
 {{define "ask-box"}}
@@ -10,8 +10,10 @@
       placeholder="Ask: what needs me, show bonds, why is xtb failing" aria-describedby="ask-help">
     <kbd class="key" title="Press / to ask">/</kbd>
   </div>
+  {{if .TurnstileSiteKey}}<div class="ask-check cf-turnstile" data-sitekey="{{.TurnstileSiteKey}}" data-appearance="interaction-only" data-theme="auto"></div>{{end}}
   <button type="submit" class="primary">Ask</button>
 </form>
+{{if .TurnstileSiteKey}}<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{{end}}
 {{with .Suggestions}}<div class="chips" role="group" aria-label="Suggestions">{{range .}}<a class="chip" href="{{askLink .}}" hx-get="{{askGet .}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
 <div id="answer" aria-live="polite">{{with .Answer}}{{template "ask-answer" .}}{{end}}</div>
 {{if .Model}}<p class="muted" id="ask-help">Commands answer at once from your own record and never leave it. Any other question goes to the model the owner set up, with the cards it reads from your record to answer it. It can only read through the same commands and changes nothing; OpenFief never logs the question or the answer.</p>
@@ -30,6 +32,7 @@
     {{with .Used}}<div class="used-cards" role="group" aria-label="Cards the model read">{{range .}}
       <section class="used-card"><p class="answer-title">{{.Title}}</p>{{with .Text}}<p>{{.}}</p>{{end}}{{template "ask-card-body" .}}</section>{{end}}
     </div>{{end}}
+    {{with .Note}}<p class="muted ask-note" role="note">{{if eq $.Kind "answer"}}Answered by{{else}}From{{end}} {{.Name}}{{if not .Evaluated}} (not evaluated by OpenFief){{end}}. AI can be wrong; check the cards. Not investment advice. <a class="ask-eval-link" href="{{.EvalURL}}" rel="noopener noreferrer">How models did in our evaluation &rarr;</a></p>{{end}}
     {{range .Withheld}}<p class="withheld" role="note">Withheld from the model: the {{.Label}} card. It holds {{.Data}} ({{.Tier}}), which no model on the route is allowed to receive.</p>{{end}}
   </div>
 </div>

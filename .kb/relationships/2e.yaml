@@ -1224,3 +1224,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61cb27482fba
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof-record
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:49:56.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f1c672fe07
+  - type: covered_by
+    from: SYM-views-pb-value-change-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:12:45.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b824527d66ea
+  - type: implements
+    from: SYM-views-pb-value-change-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:12:45.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51986335cc37

@@ -36,6 +36,11 @@ type HistoryEntry struct {
 	// TransportFailureRate is the run's rate, for the reader of the file.
 	TransportFailureRate float64 `json:"transportFailureRate"`
 	ConfigHash           string  `json:"configHash"`
+	// ScorerVersion is the version of the scoring rules that graded the run
+	// (ScorerVersion); an entry without one is from before versioning. It is
+	// for the reader and does not end a streak; the entry of a run that was
+	// re-scored (rescore.go) is edited to the version that graded it.
+	ScorerVersion int `json:"scorerVersion,omitempty"`
 }
 
 // passed is whether the run passed D-221's bar: the verdict and the reliability.
@@ -201,6 +206,7 @@ func (r *Report) applyHistory(h *History, members []string, date string) {
 			continue
 		}
 		if e, ok := entryOf(m, date); ok && whole {
+			e.ScorerVersion = scorerOf(r)
 			h.Add(m.Model, &e)
 			route.Recorded = true
 		}

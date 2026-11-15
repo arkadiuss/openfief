@@ -92,7 +92,7 @@ func failedTwice(r *RunReport) bool {
 
 func TestA4xxIsNeverRetried(t *testing.T) {
 	t.Parallel()
-	for _, status := range []int{400, 401, 402, 404, 429} {
+	for _, status := range []int{400, 401, 402, 404} {
 		t.Run(strconv.Itoa(status), func(t *testing.T) {
 			t.Parallel()
 			f := newFakeModel(t)
@@ -109,6 +109,41 @@ func TestA4xxIsNeverRetried(t *testing.T) {
 				t.Errorf("reliability = %+v, want a 4xx not counted against the host", r)
 			}
 		})
+	}
+}
+
+// A 429 is retried once inside the chat client, after Retry-After; a bench call
+// that got through on the retry is one call, and one that is still a 429 is a
+// transport failure, the one 4xx that counts against the host (D-207), with no
+// retry of the bench's own.
+func TestA429ThatTheClientsRetryMendsIsOneAnsweredCall(t *testing.T) {
+	t.Parallel()
+	f := newFakeModel(t)
+	f.failFirst, f.failStatus = 1, 429
+	got := runBench(t, f.url, "-case", "R1")
+	first := got.caseOf(t, "R1").Detail[0]
+	if first.Errored || first.Attempts != 1 || len(first.Retries) != 0 || first.TransportFailures != 0 {
+		t.Errorf("first run = %+v, want one answered call: the client's retry hid the 429", first)
+	}
+	if r := got.report.Models[0].Reliability; r.TransportFailures != 0 || r.Failed {
+		t.Errorf("reliability = %+v, want a mended 429 not counted", r)
+	}
+}
+
+func TestAStill429IsATransportFailureTheBenchDoesNotRetry(t *testing.T) {
+	t.Parallel()
+	f := newFakeModel(t)
+	f.failFirst, f.failStatus = 2, 429 // the first call and the client's retry
+	got := runBench(t, f.url, "-case", "R1")
+	first := got.caseOf(t, "R1").Detail[0]
+	if !first.Errored || first.Attempts != 1 || len(first.Retries) != 0 || first.TransportFailures != 1 {
+		t.Errorf("first run = %+v, want one failed call counted as a transport failure and no bench retry", first)
+	}
+	if f.seen != 6 { // two requests for the first question, one for each of the other four
+		t.Errorf("requests = %d, want 6", f.seen)
+	}
+	if r := got.report.Models[0].Reliability; r.TransportFailures != 1 || r.Calls != 5 || !r.Failed {
+		t.Errorf("reliability = %+v, want 1 of 5 calls a transport failure, over the threshold", r)
 	}
 }
 

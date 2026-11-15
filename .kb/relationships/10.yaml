@@ -1175,3 +1175,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb076596951f
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-wantaddresseskeyedashashes
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T21:44:15.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca4771108430
+  - type: specified_by
+    from: REQ-models-chat-client-retries-429-once
+    to: SCEN-models-chat-client-retries-429-once
+    created_at: 2026-11-15T09:14:03.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d95c26ce08
+  - type: executable_for
+    from: SYM-views-connectapi-connect-test-test-connect-period-change-refusals
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T12:42:56.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b031de14fdb

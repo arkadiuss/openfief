@@ -1203,3 +1203,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c12a6204305a
+  - type: executable_for
+    from: SYM-m5-scripts-tests-demo-secret-test-sh-check
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-14T19:53:40.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36c58492df4b
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testroutercountsthedayinitszone
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:45:15.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67b4b8496cee
+  - type: implements
+    from: SYM-openaichat-client-retrywait
+    to: REQ-models-chat-client-retries-429-once
+    created_at: 2026-11-15T09:15:12.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73798be881c1
+  - type: covered_by
+    from: SYM-openaichat-client-retrywait
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:15:12.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a545a9333728

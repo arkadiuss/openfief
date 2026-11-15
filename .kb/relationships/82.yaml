@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa9ae89cd4b3
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testtherescoreflagguardsitsoutput
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:51:14.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b7cdebb7a35

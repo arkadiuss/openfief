@@ -930,3 +930,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb33275138f9
+  - type: executable_for
+    from: SYM-m5-plugins-model-openai-openaichat-datacollection-test-go-testdatacollectionjoinstheproviderobjectonopenrouteronly
+    to: TEST-plugins-model-openai-chat-data-collection
+    created_at: 2026-11-14T19:53:27.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f87812724b6e
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-routerfixture-generateasync
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:23.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8cd71783d63
+  - type: verified_by
+    from: SCEN-views-period-change
+    to: TEST-views-period
+    created_at: 2026-11-15T12:27:13.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d4a727ee7af
+  - type: verified_by
+    from: SCEN-views-period-change
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:27:13.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8bb090bb38
+  - type: verified_by
+    from: SCEN-views-period-change
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T12:27:13.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd1f2a8b3397
+  - type: verified_by
+    from: SCEN-views-period-change
+    to: TEST-views-connectapi-rest
+    created_at: 2026-11-15T12:27:13.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe855af2c0e8

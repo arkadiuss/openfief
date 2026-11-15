@@ -1217,3 +1217,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35fe50246458
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterreleasestheslotwhenacallfails
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:42.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f84e0659c09
+  - type: implements
+    from: SYM-m5-internal-views-ui-askguards-go-sessionlimitanswer
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:57:07.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e4d371c33f
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askguards-go-sessionlimitanswer
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:07.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32d1d5c6409d
+  - type: covered_by
+    from: SYM-views-ui-askperiod-month-of
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:37:29.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9d5159e34a
+  - type: implements
+    from: SYM-views-ui-askperiod-month-of
+    to: REQ-ui-ask-period-commands
+    created_at: 2026-11-15T13:37:29.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-175802d279be

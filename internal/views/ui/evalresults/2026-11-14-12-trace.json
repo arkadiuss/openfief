@@ -1,0 +1,52 @@
+[
+  {
+    "run": "12-trace",
+    "date": "2026-11-14",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "pass",
+    "diagnostic": [
+      "R1",
+      "R2",
+      "A1"
+    ],
+    "cases": 3,
+    "answered": true,
+    "reliability": {
+      "calls": 22,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.10362",
+    "costSource": "measured",
+    "configHash": "508e591fbed662ef4ef2d5a14bda1cb46d02db488a933954202eddb8c1e0fa8b",
+    "benchSchema": 1
+  },
+  {
+    "run": "12-trace",
+    "date": "2026-11-14",
+    "model": "openai/gpt-oss-120b",
+    "host": "deepinfra/bf16",
+    "reasoning": "low",
+    "verdict": "pass",
+    "diagnostic": [
+      "R1",
+      "R2",
+      "A1"
+    ],
+    "cases": 3,
+    "answered": true,
+    "reliability": {
+      "calls": 20,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.06735",
+    "costSource": "measured",
+    "configHash": "755d54c6d26aebe2f1a5f85bd6c5a0bf826375e8e0902c575b7b16e237bdb4a9",
+    "benchSchema": 1
+  }
+]

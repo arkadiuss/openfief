@@ -4,6 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/netip"
+	"strings"
+	"time"
 
 	"github.com/arkadiuss/openfief/internal/modelrouter"
 )
@@ -32,6 +35,10 @@ type Ask struct {
 	askers   Askers
 	settings SettingsStore
 	router   *Router
+	// questions and limits count each question to a model per session and per
+	// address (D-208); nil questions or no limit lets every question through.
+	questions QuestionStore
+	limits    modelrouter.QuestionLimits
 }
 
 // NewAsk returns the Ask box's door over router, with sessions checked by
@@ -39,6 +46,100 @@ type Ask struct {
 func NewAsk(askers Askers, settings SettingsStore, router *Router) *Ask {
 	return &Ask{askers: askers, settings: settings, router: router}
 }
+
+// WithQuestionLimits returns a with each question to a model counted in store
+// and held to limits per session and per address (D-208). Limits that set
+// none leave the door as it was.
+func (a *Ask) WithQuestionLimits(store QuestionStore, limits modelrouter.QuestionLimits) *Ask {
+	out := *a
+	out.questions, out.limits = store, limits
+	return &out
+}
+
+// AdmitDecision is the Ask box's door's answer to a question that is about to
+// go to a model.
+type AdmitDecision string
+
+// The decisions on a question.
+const (
+	// AdmitAllowed: the question may go to the model; it is counted.
+	AdmitAllowed AdmitDecision = "allowed"
+	// AdmitBudgetSpent: the day's budget is used up; nothing was counted.
+	AdmitBudgetSpent AdmitDecision = "budget-spent"
+	// AdmitSessionLimit: the session asked as many questions as it may.
+	AdmitSessionLimit AdmitDecision = "session-limit"
+	// AdmitAddressLimit: the address asked as many as it may.
+	AdmitAddressLimit AdmitDecision = "address-limit"
+)
+
+// Admission is a decision with, when the question is not allowed, when the
+// reason ends: the budget's next day, or the moment enough of the subject's
+// earlier questions have left the window.
+type Admission struct {
+	Decision AdmitDecision
+	ResetsAt time.Time
+}
+
+// Admit decides whether a question the Ask box is about to send a model may
+// go, once per question and not per call of its tool loop, and counts it when
+// it may. It does so before the first call: first the day's budget, which
+// costs the person nothing when it is spent, then the limits per session and,
+// when address is known, per address. address is the IP address of the asker
+// as the core's front door found it, which this does not check beyond its
+// form: an unparseable one counts as unknown and leaves the address limit
+// out. An IPv6 address is counted as its /64, since a person with one has
+// the whole network. It writes no audit entry: nothing is called, and a
+// refused call is audited when one is made.
+func (a *Ask) Admit(ctx context.Context, origin, sessionToken, address string) (Admission, error) {
+	who, err := a.asker(ctx, origin, sessionToken)
+	if err != nil {
+		return Admission{}, err
+	}
+	state, err := a.router.BudgetState(ctx)
+	if err != nil {
+		return Admission{}, fmt.Errorf("reading the day's budget: %w", err)
+	}
+	if state.Spent {
+		return Admission{Decision: AdmitBudgetSpent, ResetsAt: state.ResetsAt}, nil
+	}
+	if a.questions == nil || !a.limits.Enabled() {
+		return Admission{Decision: AdmitAllowed}, nil
+	}
+	q := QuestionAsked{At: a.router.now(), Session: who.ID, Address: addressKey(address), Limits: a.limits}
+	ruling, err := a.questions.Admit(ctx, &q)
+	if err != nil {
+		return Admission{}, fmt.Errorf("counting a question: %w", err)
+	}
+	switch {
+	case ruling.Allowed:
+		return Admission{Decision: AdmitAllowed}, nil
+	case ruling.Subject == SubjectAddress:
+		return Admission{Decision: AdmitAddressLimit, ResetsAt: ruling.ResetsAt}, nil
+	}
+	return Admission{Decision: AdmitSessionLimit, ResetsAt: ruling.ResetsAt}, nil
+}
+
+// addressKey returns the address a question is counted under: an IPv4 address
+// as written in its canonical form, an IPv6 address as its /64 network, and ""
+// for text that is no address.
+func addressKey(s string) string {
+	addr, err := netip.ParseAddr(strings.TrimSpace(s))
+	if err != nil {
+		return ""
+	}
+	addr = addr.Unmap().WithZone("")
+	if addr.Is6() {
+		prefix, err := addr.Prefix(ipv6Network)
+		if err != nil {
+			return ""
+		}
+		return prefix.String()
+	}
+	return addr.String()
+}
+
+// ipv6Network is the prefix length an IPv6 address is counted under.
+const ipv6Network = 64
 
 // Available reports whether the Ask box has a model for the person with the
 // session: the one switch and the Ask box's toggle are on and its route has a

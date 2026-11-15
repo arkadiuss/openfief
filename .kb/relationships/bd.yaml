@@ -1112,3 +1112,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a92b7fb69c19
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-slowprovider-generate
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:22.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e779f77002cf
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-striptoschemaone
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:44:30.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c76e72ad4655

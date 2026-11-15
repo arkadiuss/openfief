@@ -1147,3 +1147,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8326f086183e
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:59:27.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e7369743945
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:59:27.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-999da27419a7
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getclientaddress
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:01:05.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d9721f8b0e2
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-getclientaddress
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:01:05.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d952e9d84dee
+  - type: covered_by
+    from: SYM-views-app-period-views-period-change
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:28:56.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c951dda995b3
+  - type: implements
+    from: SYM-views-app-period-views-period-change
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:28:56.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-244e805cc8d6
+  - type: covered_by
+    from: SYM-views-pb-value-change-get-start-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:12:57.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-554ac657f658
+  - type: implements
+    from: SYM-views-pb-value-change-get-start-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:12:57.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-599e19e97eec
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:13:48.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64d6cf5b7b6e
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:13:48.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-100afb8f5099
+  - type: covered_by
+    from: SYM-views-ui-askperiod-period-problem
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:38:24.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28e27a89899b
+  - type: implements
+    from: SYM-views-ui-askperiod-period-problem
+    to: REQ-ui-ask-period-refused-not-guessed
+    created_at: 2026-11-15T13:38:24.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154250e149cf
+  - type: covered_by
+    from: SYM-askbench-toolcalls-given
+    to: TEST-askbench-period
+    created_at: 2026-11-15T14:04:35.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-828390cbd0a6
+  - type: implements
+    from: SYM-askbench-toolcalls-given
+    to: REQ-askbench-month-cases-ask-the-period
+    created_at: 2026-11-15T14:04:36.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91aeb62de3f3

@@ -70,6 +70,9 @@ type askBox struct {
 	// model (D-203): the box says so, since the question then leaves the
 	// UI for the model the owner chose.
 	Model bool
+	// TurnstileSiteKey, when set, is the public key of the Turnstile widget the
+	// box shows beside the field (D-208); empty shows none.
+	TurnstileSiteKey string
 }
 
 // statusLine is the overview's sentence of status (D-193): the day

@@ -909,3 +909,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56d6368d7362
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testnewbudget
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:46.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-719bc7de0150
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-number
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:02.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce155e88824
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-number
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:02.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd9740104f30
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-protoreflect
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:00:40.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d28310667b1b
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-admitaskquestionrequest-protoreflect
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T21:00:40.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15339463481c
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalfailing
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:15:12.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bfe2130f929
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalfailing
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:15:12.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-515247655440
+  - type: executable_for
+    from: SYM-views-app-period-test-test-period-change
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:30:35.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e38f00bef57

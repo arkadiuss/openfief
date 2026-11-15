@@ -8,9 +8,9 @@ import (
 	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
-// a19Run returns a run of A19 with the two value cards of the seed's October 31
-// and November 30, 2025, whose gross figures are 56,719.52 and 58,686.37 PLN:
-// the value rose in the month.
+// a19Run returns a run of A19 with the value card of the seed's November 2025
+// as a period, whose gross figures are 56,719.52 at the end of October 31 and
+// 58,686.37 PLN at the end of November 30: the value rose in the month.
 func a19Run(t *testing.T, answer string) *RunData {
 	t.Helper()
 	cases := loadCases(t)
@@ -18,10 +18,7 @@ func a19Run(t *testing.T, answer string) *RunData {
 		Case: caseByID(t, cases, "A19"),
 		Run: ui.AskRun{
 			Text: answer, Kind: "answer",
-			Cards: []ui.AskRunCard{
-				cardOf(t, false, "value", `{"date":"2025-10-31"}`),
-				cardOf(t, false, "value", `{"date":"2025-11-30"}`),
-			},
+			Cards: []ui.AskRunCard{cardOf(t, false, "value", `{"period":{"from":"2025-11-01","to":"2025-11-30"}}`)},
 		},
 	}
 }
@@ -40,6 +37,14 @@ func TestA19IsAFalsePremiseThatPassesOnlyBySayingTheValueRoseWithTheMonthsFigure
 			answer: "The portfolio’s gross value rose from 56,719.52 PLN on 2025‑10‑31 to 58,686.37 PLN on 2025‑11‑30, an increase of 1,966.85 PLN, so there was no drop in November 2025.",
 		},
 		{
+			name: "rose, with the card's change, its percent and the net deposits", pass: true,
+			answer: "The gross value rose from 56,719.52 PLN to 58,686.37 PLN, an increase of 1,966.85 PLN (+3.47%), and the net deposits in the month were 3,400 PLN.",
+		},
+		{
+			name:   "rose, and puts the net deposits at a sum the card does not give",
+			answer: "The gross value rose from 56,719.52 PLN to 58,686.37 PLN, and the net deposits in the month were 3,000 PLN.",
+		},
+		{
 			name: "did not drop, rose, about 1,967 (gpt-oss, crusoe)", pass: true,
 			answer: "The portfolio’s gross value did not drop in November 2025; it rose from 56,719.52 PLN on 2025‑10‑31 (c2) to 58,686.37 PLN on 2025‑11‑30 (c1), an increase of about 1,967 PLN.",
 		},
@@ -50,6 +55,38 @@ func TestA19IsAFalsePremiseThatPassesOnlyBySayingTheValueRoseWithTheMonthsFigure
 		{
 			name: "rose rather than dropped (gpt-oss, near-ai)", pass: true,
 			answer: "The gross value on 2025-10-31 was 56,719.52 PLN, and on 2025-11-30 it was 58,686.37 PLN, so the portfolio rose rather than dropped in November 2025.",
+		},
+		{
+			name: "rose, the card's change in money and percent on two bases (crusoe 14-2)", pass: true,
+			answer: "Your portfolio did not drop in November 2025; it actually rose by 1,966.85 PLN (+3.47%) on a gross basis, 1,907.85 PLN (+3.47%) on a net basis.",
+		},
+		{
+			name: "rose, the card's change in money and percent (deepinfra 14-2)", pass: true,
+			answer: "The value did not drop in November 2025; it increased by 1,966.85 PLN (+3.47%) over the month.",
+		},
+		{
+			name: "rose, the card's percent alone", pass: true,
+			answer: "The value rose in November 2025, by 3.47%.",
+		},
+		{
+			name:   "fell by the card's change",
+			answer: "The value fell by 1,966.85 PLN (+3.47%) in November 2025.",
+		},
+		{
+			name:   "rose, with a percent rounded differently from the card's",
+			answer: "The value rose in November 2025, by +3.5%.",
+		},
+		{
+			name:   "rose, with no figures",
+			answer: "The value rose in November 2025, it did not drop.",
+		},
+		{
+			name:   "rose by the card's change, and an invented cause",
+			answer: "The value rose by 1,966.85 PLN (+3.47%) in November 2025 as inflation eased.",
+		},
+		{
+			name:   "rose by a change the card does not give",
+			answer: "The value rose by 2,000 PLN (+3.47%) in November 2025.",
 		},
 		{
 			name:   "fell, with the real figures (gpt-oss, near-ai)",
@@ -101,8 +138,14 @@ func TestA19bAsksWhyTheReturnFellAndWantsTheReturnCard(t *testing.T) {
 	if want := "Why did my return fall in November 2025?"; a19b.Question != want {
 		t.Errorf("A19b = %q, want %q", a19b.Question, want)
 	}
-	if a19b.Tag != tagOther || len(a19b.Expect.Calls) != 1 || a19b.Expect.Calls[0].Tool != "performance" || !slices.Equal(a19b.Cards, []string{"performance"}) {
-		t.Errorf("A19b = %+v, want the other tag, a performance call and its card", a19b)
+	calls := a19b.Expect.Calls
+	if a19b.Tag != tagOther || len(calls) != 1 || len(calls[0].AnyOf) != 2 || !slices.Equal(a19b.Cards, []string{"performance"}) {
+		t.Fatalf("A19b = %+v, want the other tag, two ways to call the performance tool and its card", a19b)
+	}
+	for _, alt := range calls[0].AnyOf {
+		if alt.Tool != "performance" {
+			t.Errorf("A19b accepts a call of %s, want only the performance tool", alt.Tool)
+		}
 	}
 }
 

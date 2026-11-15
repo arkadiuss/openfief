@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fbac6209198
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitaddresskeys
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:47:25.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d16fb57186a

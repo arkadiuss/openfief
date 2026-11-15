@@ -106,8 +106,9 @@ type ModelCall struct {
 	// Provider is the host that served the call, "" when the reply named none.
 	Provider string
 	// Transport is true when the call failed at the transport level: no HTTP
-	// answer, a timeout or a 5xx, the provider's fault and not the request's
-	// (D-207). Such a call is retried once.
+	// answer, a timeout, a 5xx or a 429 that its retry did not mend, the
+	// provider's fault and not the request's (D-207). Such a call is retried
+	// once, a 429 by the chat client before it gets here.
 	Transport bool
 	// Retry is true for the second attempt of a call that failed at the
 	// transport level; Retried is true for the failed first attempt, and
@@ -222,7 +223,9 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 	}
 	// A transport failure is retried once, and the retry is a call of its own:
 	// it spends the budget and its cost. An answer of any kind, and a 4xx, never
-	// are retried.
+	// are retried; a 429 was already retried once inside the chat client, after
+	// Retry-After, so one that is still a 429 is a transport failure with no
+	// retry of the bench's own.
 	first := len(r.calls) - 1
 	retried, retryErr := r.attempt(ctx, req, len(tools), true)
 	if errors.Is(retryErr, ErrBudget) {
@@ -233,9 +236,14 @@ func (r *modelRun) Generate(ctx context.Context, msgs []ui.AskMessage, tools []u
 }
 
 // retryable reports whether the call that just failed is worth one more: it
-// failed at the transport level, and the question still has time.
+// failed at the transport level, and the question still has time. A 429 is not:
+// the chat client retried it once already.
 func (r *modelRun) retryable(ctx context.Context) bool {
-	return len(r.calls) > 0 && r.calls[len(r.calls)-1].Transport && ctx.Err() == nil
+	if len(r.calls) == 0 {
+		return false
+	}
+	last := &r.calls[len(r.calls)-1]
+	return last.Transport && last.Status != http.StatusTooManyRequests && ctx.Err() == nil
 }
 
 // attempt makes one call to the model and records it. It fails with ErrBudget,
@@ -274,15 +282,18 @@ func (r *modelRun) attempt(ctx context.Context, req *openaichat.Request, toolsOf
 }
 
 // isTransportFailure reports whether a call failed at the transport level: the
-// chat client got no HTTP answer (nothing came, or it timed out) or the
-// provider answered 5xx. A 4xx, a refused key, a rate limit and a bad reply are
-// the request's or the model's, not the host's, and are not.
+// chat client got no HTTP answer (nothing came, or it timed out), the provider
+// answered 5xx, or it answered 429 twice (the client retries a 429 once, after
+// Retry-After): a host that rate-limits its callers is not reliable (D-207). Any
+// other 4xx, a refused key and a bad reply are the request's or the model's, not
+// the host's, and are not.
 func isTransportFailure(err error) bool {
 	var ce *openaichat.CallError
 	if !errors.As(err, &ce) {
 		return false
 	}
-	return ce.Status == 0 || (ce.Status >= http.StatusInternalServerError && ce.Status < statusCeiling)
+	return ce.Status == 0 || ce.Status == http.StatusTooManyRequests ||
+		(ce.Status >= http.StatusInternalServerError && ce.Status < statusCeiling)
 }
 
 // The labels of a failed call, a fixed set: a status and one of these say what

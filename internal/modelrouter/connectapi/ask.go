@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/modelrouter"
@@ -39,6 +41,43 @@ func NewAsk(ask *app.Ask, callers connect.Interceptor, log *slog.Logger) (string
 type askService struct {
 	ask *app.Ask
 	log *slog.Logger
+}
+
+// The metadata a guard's refusal of GenerateAsk carries (D-208): which guard,
+// and, for the budget, when the day ends. The Ask box reads them to say so.
+const (
+	// RefusalHeader names the guard that refused a call: RefusalBudget or
+	// RefusalBusy.
+	RefusalHeader = "Openfief-Refusal"
+	// ResetsAtHeader is when the day's budget starts over, RFC 3339.
+	ResetsAtHeader = "Openfief-Resets-At"
+	// RefusalBudget: the day's budget is spent.
+	RefusalBudget = "budget"
+	// RefusalBusy: the Ask box's calls at once were all taken.
+	RefusalBusy = "busy"
+)
+
+// AdmitAskQuestion decides on a question the Ask box is about to send a model.
+func (s *askService) AdmitAskQuestion(ctx context.Context, req *connect.Request[modelsv1.AdmitAskQuestionRequest]) (*connect.Response[modelsv1.AdmitAskQuestionResponse], error) {
+	got, err := s.ask.Admit(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetClientAddress())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &modelsv1.AdmitAskQuestionResponse{}
+	switch got.Decision {
+	case app.AdmitAllowed:
+		out.Admission = modelsv1.AskAdmission_ASK_ADMISSION_ALLOWED
+	case app.AdmitBudgetSpent:
+		out.Admission = modelsv1.AskAdmission_ASK_ADMISSION_BUDGET_SPENT
+	case app.AdmitSessionLimit:
+		out.Admission = modelsv1.AskAdmission_ASK_ADMISSION_SESSION_LIMIT
+	case app.AdmitAddressLimit:
+		out.Admission = modelsv1.AskAdmission_ASK_ADMISSION_ADDRESS_LIMIT
+	}
+	if !got.ResetsAt.IsZero() {
+		out.ResetsAt = timestamppb.New(got.ResetsAt)
+	}
+	return connect.NewResponse(out), nil
 }
 
 // GetAskModel says whether the Ask box has a model.
@@ -175,6 +214,17 @@ func (s *askService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodePermissionDenied, modelrouter.ErrDataTierDenied)
 	case errors.Is(err, modelrouter.ErrSwitchOff), errors.Is(err, modelrouter.ErrFeatureOff), errors.Is(err, modelrouter.ErrNoRoute):
 		return connect.NewError(connect.CodeFailedPrecondition, modelrouter.ErrSwitchOff)
+	case errors.Is(err, modelrouter.ErrBudgetSpent):
+		out := connect.NewError(connect.CodeResourceExhausted, modelrouter.ErrBudgetSpent)
+		out.Meta().Set(RefusalHeader, RefusalBudget)
+		if spent, ok := errors.AsType[*modelrouter.BudgetSpentError](err); ok {
+			out.Meta().Set(ResetsAtHeader, spent.ResetsAt.UTC().Format(time.RFC3339))
+		}
+		return out
+	case errors.Is(err, app.ErrBusy):
+		out := connect.NewError(connect.CodeResourceExhausted, app.ErrBusy)
+		out.Meta().Set(RefusalHeader, RefusalBusy)
+		return out
 	case errors.Is(err, app.ErrNoAnswer), errors.Is(err, app.ErrProviderUnavailable), errors.Is(err, context.DeadlineExceeded):
 		return connect.NewError(connect.CodeUnavailable, app.ErrNoAnswer)
 	case errors.Is(err, context.Canceled):

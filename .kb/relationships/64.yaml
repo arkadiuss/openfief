@@ -1175,3 +1175,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d23b88fcb089
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-slowprovider
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:15.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7357f92177e
+  - type: executable_for
+    from: SYM-m5-plugins-ui-turnstile-test-go-testturnstilefromconfig
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:53:31.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6617204b44d5
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-a19report
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:45:13.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d7e095238b3

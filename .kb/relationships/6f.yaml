@@ -1126,3 +1126,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02d526d0d785
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterrefusesathirdcallatonceafterthequeuewait
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:29.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd17763fef4
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-guardedask
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:28.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f5c7528f83
+  - type: executable_for
+    from: SYM-ab9-internal-views-ui-askevalnote-test-go-testevaluatedmodelscountsonlyfullrunswithaverdict
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:53:27.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48bf815703e8
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:15:50.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26944e404032
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:15:50.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c02676f8e91f
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-limitsof
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:42:02.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-233ac96195a0
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-limitsof
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:42:02.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d17d2537639

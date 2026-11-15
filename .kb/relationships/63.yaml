@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e42a83d501b8
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-testparseclientipconfig
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:17.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a23c1d52d2
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-benchverdict
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:07:34.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4648dc7bdf35
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-benchverdict
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:07:34.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b8406269868

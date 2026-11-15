@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccaa93c19229
+  - type: implements
+    from: SYM-m5-plugins-ui-config-go-rawconfig-turnstileon
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:53:13.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7557553de96
+  - type: covered_by
+    from: SYM-m5-plugins-ui-config-go-rawconfig-turnstileon
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:53:13.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-942881284988

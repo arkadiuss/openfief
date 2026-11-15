@@ -1238,3 +1238,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29de1f9c52af
+  - type: implements
+    from: SYM-m5-internal-views-ui-server-go-server-withturnstile
+    to: REQ-ui-ask-turnstile
+    created_at: 2026-11-14T22:49:18.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c4e149639ef
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-server-go-server-withturnstile
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:18.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a474fb061389
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalresult-full
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:15:58.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede874add142
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalresult-full
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:15:58.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-414b4fccb8f6

@@ -846,3 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-adb886422280
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-decimal
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:20.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f75b31bff3f1
+  - type: specified_by
+    from: REQ-askeval-results-page-from-committed-results
+    to: SCEN-askeval-results-page
+    created_at: 2026-11-15T08:59:32.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9ba4ae66e94
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-liquidation
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:10.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff30a4307e5
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-liquidation
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:10.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52602c9ee618

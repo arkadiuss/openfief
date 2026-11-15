@@ -1049,3 +1049,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa9663a05f8c
+  - type: verified_by
+    from: SCEN-ui-turnstile-verification
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:47:06.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333b6359b8b3
+  - type: verified_by
+    from: SCEN-ui-turnstile-verification
+    to: TEST-plugins-ui-turnstile
+    created_at: 2026-11-14T22:47:06.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-902acf0b0d4f
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-modelnote
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:36.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b12d54eec98
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-modelnote
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:51:36.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56a38514dc42
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-modelname
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:52:19.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcebb9d61dde
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-modelname
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:52:19.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e03effde5f0
+  - type: covered_by
+    from: SYM-views-ui-ask-parse-value
+    to: TEST-ui-ask
+    created_at: 2026-11-15T13:39:50.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba1c685701d
+  - type: implements
+    from: SYM-views-ui-ask-parse-value
+    to: REQ-ui-ask-period-commands
+    created_at: 2026-11-15T13:39:50.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92bb30a412d7

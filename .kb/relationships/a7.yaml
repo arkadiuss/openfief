@@ -1000,3 +1000,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7249e04c3a83
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ports-go-usagestore
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:48:03.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5387f2299775
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ports-go-usagestore
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:48:03.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7cedbf11900
+  - type: implements
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-descriptor
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:59:48.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dd740083995
+  - type: covered_by
+    from: SYM-m5-sdk-go-gen-openfief-models-v1-ask-pb-go-askadmission-descriptor
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:59:48.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c025ec0f46da
+  - type: implements
+    from: SYM-tools-askbench-report-go-rowreport
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:43:37.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7c5ed2482d4
+  - type: covered_by
+    from: SYM-tools-askbench-report-go-rowreport
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:43:37.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4036d7224787
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testregradingareportofthebenchchangesnothingandcallsnomodel
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:44:58.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8fc4e47b730

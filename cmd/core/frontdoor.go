@@ -30,9 +30,29 @@ func withFrontDoor(api, browser http.Handler) http.Handler {
 
 // newFrontDoor returns, in cluster cl, the view plugins that serve
 // browsers, to start, and the proxy to them, which presents the core's own
-// token for each instance (D-59) as serviceAccount.
-func newFrontDoor(cl *cluster, serviceAccount string, now func() time.Time, log *slog.Logger) (*viewskube.Browser, http.Handler) {
+// token for each instance (D-59) as serviceAccount. opts say how it finds the
+// browser's address and which content security policy it serves
+// (guardConfig.proxyOptions, D-208).
+func newFrontDoor(cl *cluster, serviceAccount string, now func() time.Time, log *slog.Logger, opts ...browserproxy.Option) (*viewskube.Browser, http.Handler) {
 	browser := viewskube.NewBrowser(cl.dynamic, cl.client, cl.namespace, discoveryResync)
 	tokens := identitykube.NewCoreTokens(cl.client, cl.namespace, serviceAccount, now)
-	return browser, browserproxy.New(&viewsapp.FrontDoor{Views: browser, Tokens: tokens}, log)
+	return browser, browserproxy.New(&viewsapp.FrontDoor{Views: browser, Tokens: tokens}, log, opts...)
+}
+
+// putFrontDoor puts the front door before the browser port's read API: the proxy
+// to the view plugins that serve browsers, with the browser's address and the
+// content security policy as cfg's guard flags say (D-208). Outside a cluster
+// there is no view plugin to proxy to and it does nothing.
+func (c *core) putFrontDoor(cl *cluster, cfg *serveConfig, now func() time.Time, log *slog.Logger) error {
+	if cl == nil {
+		return nil
+	}
+	opts, err := cfg.Guards.proxyOptions()
+	if err != nil {
+		return err
+	}
+	var proxy http.Handler
+	c.browser, proxy = newFrontDoor(cl, cfg.Sync.ServiceAccount, now, log, opts...)
+	c.browserPort = withFrontDoor(c.browserPort, proxy)
+	return nil
 }

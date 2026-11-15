@@ -1084,3 +1084,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-103052d770b3
+  - type: implements
+    from: SYM-m5-internal-modelrouter-questions-go-questionwindow
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T21:44:40.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67fd68138ab1
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-questions-go-questionwindow
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T21:44:40.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1698d3d9c3f
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-emptyaftertoolmodel
+    to: TEST-askbench-final-round-empty-reply
+    created_at: 2026-11-15T13:14:00.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2762fb6e08ce
+  - type: executable_for
+    from: SYM-askbench-finalround-test-go-emptyaftertoolmodel
+    to: TEST-askbench-reasoning-length-trace
+    created_at: 2026-11-15T13:14:01.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63d0c8424edc
+  - type: executable_for
+    from: SYM-views-period-test-change-text
+    to: TEST-views-period
+    created_at: 2026-11-15T13:11:14.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ab2693c7ce

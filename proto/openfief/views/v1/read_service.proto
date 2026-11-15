@@ -177,6 +177,20 @@ service ReadService {
     option (google.api.http) = {get: "/v1/performance"};
   }
 
+  // GetPeriodChange returns how the portfolio's value changed over a period
+  // of days, from and to both inclusive, in the reporting currency: its
+  // gross, net and liquidation values (D-77) at the start and the end, the
+  // change in money and in percent, the period's time-weighted return
+  // (D-61) and the deposits and withdrawals in it, which are not return.
+  // The start is the end of the day before from, or of from itself when
+  // that is the first day recorded. The core computes every figure, so a
+  // client shows them without arithmetic of its own. A period that ends
+  // after the day every account is valued through is refused.
+  rpc GetPeriodChange(GetPeriodChangeRequest) returns (GetPeriodChangeResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/period-change"};
+  }
+
   // ListTransfers returns the transfers between the owner's own accounts
   // (D-105): those suggested for the owner to confirm or reject, and the
   // pairs the owner confirmed or rejected. A withdrawal is suggested with
@@ -1091,6 +1105,59 @@ message GetPerformanceResponse {
   // is stored, and the charts start on default_from unless the request
   // named from.
   string chosen_from = 9;
+}
+
+// ValueChange is how one of the portfolio's three values (D-77) changed over
+// a period, in the reporting currency.
+message ValueChange {
+  // The value at the end of the opening day.
+  Money start_reporting = 1;
+  // The value at the end of the period's last day.
+  Money end_reporting = 2;
+  // end_reporting minus start_reporting.
+  Money change_reporting = 3;
+  // The change as a percentage of start_reporting, half-even to two
+  // places, signed with a minus: "3.45", "-1.20". Empty when the start is
+  // not positive.
+  string change_percent = 4;
+}
+
+message GetPeriodChangeRequest {
+  // The first day of the period, YYYY-MM-DD.
+  string from = 1;
+  // The last day of the period, inclusive, YYYY-MM-DD; not before from and
+  // at most 3700 days after it.
+  string to = 2;
+}
+
+message GetPeriodChangeResponse {
+  // The period as asked, YYYY-MM-DD.
+  string from = 1;
+  string to = 2;
+  // The day whose end values are the start: the day before from, or from
+  // itself when from is the first day recorded or earlier.
+  string opening = 3;
+  ValueChange gross = 4;
+  // Unset when a valued holding or cash lacks the value at either end.
+  ValueChange net = 5;
+  ValueChange liquidation = 6;
+  // The time-weighted return over the period (D-61), chained from the end
+  // of the opening day, as a percentage, half-even to two places, signed
+  // with a minus: "3.45", "-1.20".
+  string return_percent = 7;
+  // Money paid in and out in the days after opening through to, each a
+  // non-negative amount; a day's deposits and withdrawals net against each
+  // other, and transfers between the owner's own accounts that the owner
+  // confirmed (D-105) are in neither.
+  Money deposits_reporting = 8;
+  Money withdrawals_reporting = 9;
+  // deposits_reporting minus withdrawals_reporting.
+  Money net_deposits_reporting = 10;
+  // The currency of every *_reporting value.
+  string reporting_currency = 11;
+  // A revaluation of some account is pending or running, so the figures
+  // may change.
+  bool revaluation_pending = 12;
 }
 
 // ModelTargetKind says what a model portfolio target is.

@@ -67,6 +67,13 @@ spec:
                   "minimum": 0,
                   "type": "integer"
                 },
+                "dataCollection": {
+                  "description": "OpenRouter only: deny lets no host that may store requests or train on them serve this model; unset leaves the default of OpenRouter",
+                  "enum": [
+                    "allow",
+                    "deny"
+                  ]
+                },
                 "hosts": {
                   "description": "OpenRouter only: pin this model to these OpenRouter providers (their slugs, such as groq or nextbit/bf16), tried in this order, with no fallback to other hosts",
                   "items": {
@@ -183,6 +190,7 @@ spec:
     timeout: 60s
     location: third_party_cloud
     # OpenRouter's terms as the owner states them (the router shows them, D-206): nothing here is the demo's own data.
+    # Source: NextBit ToS §5.3, R-32 (docs/research.md): the worst case of the EU and Global endpoints.
     retention: {days: 30, mayTrain: false}
     models:
       - id: google/gemma-4-26b-a4b-it
@@ -192,6 +200,9 @@ spec:
         toolCalling: true
         structuredOutput: true
         hosts: [nextbit/bf16]
+        # OpenRouter's provider.data_collection: deny, on every request of this entry, so a host that may store a request
+        # or train on it can never serve the demo, whatever the pin above says or a later edit of it makes of it.
+        dataCollection: deny
 ---
 apiVersion: openfief.io/v1alpha1
 kind: PluginGrant

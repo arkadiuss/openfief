@@ -1014,3 +1014,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-062ae064f5d2
+  - type: specified_by
+    from: REQ-tooling-demo-secret-over-ssh
+    to: SCEN-tooling-demo-secret-over-ssh
+    created_at: 2026-11-14T19:05:46.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba44e11140ff
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testrouterwaitendswiththecallerscontext
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:46:48.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-343bf0440cd5
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testaskboxasingleusetokencannotasktwice
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:52:42.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b9a74dfe2c3

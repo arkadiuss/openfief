@@ -28,10 +28,23 @@ syntax = "proto3";
 
 package openfief.models.v1;
 
+import "google/protobuf/timestamp.proto";
 import "openfief/models/v1/provider.proto";
 
 // AskModelService is the Ask box's door to the model router.
 service AskModelService {
+  // AdmitAskQuestion is asked once for each question the Ask box is about to
+  // send a model, before the first GenerateAsk of its tool loop, never for one
+  // of the box's fixed commands (D-208). The core decides, and counts the
+  // question when it lets it go: first whether the day's budget for model
+  // calls is spent (which counts nothing), then the limits of questions per
+  // session and, when the address is known, per address, each as a rolling
+  // hour and a rolling day. A question that is not allowed says when its
+  // reason ends. With no budget and no limit configured, which is what an
+  // installation that sets none has, every question is allowed and nothing is
+  // counted. It writes no audit entry: nothing is called.
+  rpc AdmitAskQuestion(AdmitAskQuestionRequest) returns (AdmitAskQuestionResponse);
+
   // GetAskModel says whether the Ask box has a model: the one switch is on,
   // the Ask box's toggle is on and its route has a model (D-212). It writes
   // no audit entry: nothing is asked.
@@ -54,7 +67,43 @@ service AskModelService {
   // refuses a conversation with a message that carries none, or that no
   // model of the route may receive (PERMISSION_DENIED), and writes the two
   // audit entries of each call (D-211).
+  //
+  // A call the guards refuse (D-208) fails with RESOURCE_EXHAUSTED and the
+  // error's metadata "Openfief-Refusal" set to "budget" (the day's budget is
+  // spent, and "Openfief-Resets-At" holds when it starts over, RFC 3339) or to
+  // "busy" (the Ask box's calls at once were all taken for the whole queue
+  // wait), and writes the refusal as an audit entry that names the same class.
   rpc GenerateAsk(GenerateAskRequest) returns (GenerateAskResponse);
+}
+
+message AdmitAskQuestionRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The asker's IP address as the core's front door found it: the connection's,
+  // or the header of the proxy the core is configured to trust, and the one the
+  // core hands the view plugin. Empty when unknown, which leaves out the limit
+  // per address. An IPv6 address is counted as its /64.
+  string client_address = 3;
+}
+
+// AskAdmission is the core's decision on a question about to go to a model.
+enum AskAdmission {
+  ASK_ADMISSION_UNSPECIFIED = 0;
+  // The question may go on; it was counted.
+  ASK_ADMISSION_ALLOWED = 1;
+  // The day's budget for model calls is spent; nothing was counted.
+  ASK_ADMISSION_BUDGET_SPENT = 2;
+  // The session asked as many questions as it may in the hour or the day.
+  ASK_ADMISSION_SESSION_LIMIT = 3;
+  // The address asked as many questions as it may in the hour or the day.
+  ASK_ADMISSION_ADDRESS_LIMIT = 4;
+}
+
+message AdmitAskQuestionResponse {
+  AskAdmission admission = 1;
+  // When the reason of a refusal ends: the start of the budget's next day, or
+  // the moment the subject may ask again. Unset for an allowed question.
+  google.protobuf.Timestamp resets_at = 2;
 }
 
 message GetAskModelRequest {

@@ -194,7 +194,8 @@ func TestChecks(t *testing.T) {
 		{name: "ambiguous: asks which in words, as an answer", check: asksWhichOne, run: answered(&Case{}, "Which ETF do you mean?", nil), fail: "not clarify"},
 		{name: "ambiguous: clarify with no candidates", check: asksWhichOne, run: kinded(answered(&Case{}, "Which ETF do you mean?", nil), "clarify", nil, nil), fail: "no candidates"},
 		// The box's commands a refusal offers.
-		{name: "suggests commands", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, []string{"What needs me?", "Allocation by currency"})},
+		{name: "suggests the box's commands", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, ui.AskRefusalSuggestions(kernel.Date{}))},
+		{name: "suggests commands that are not the box's own", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, []string{"What needs me?", "Allocation by currency"}), fail: "not the box's own"},
 		{name: "suggests no command", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, nil), fail: "no command"},
 		{name: "suggests what is no command", check: suggestsCommands, run: kinded(answered(&Case{}, "No.", nil), "refuse", nil, []string{"What needs me?", "Write me a poem"}), fail: "no command of the box"},
 		// The kind of an answer.

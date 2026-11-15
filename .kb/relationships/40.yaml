@@ -874,3 +874,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b61ba8cbe2b
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-proxy-go-securityheaderswith
+    to: REQ-views-turnstile-csp
+    created_at: 2026-11-14T20:56:22.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92cc976e0439
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-proxy-go-securityheaderswith
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:56:22.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c57ac1faa719
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileconfigvalidate
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:51:51.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c87cebc1d919
+  - type: specified_by
+    from: REQ-views-period-change
+    to: SCEN-views-period-change
+    created_at: 2026-11-15T12:27:21.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1db50a7f39

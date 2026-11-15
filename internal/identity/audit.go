@@ -417,13 +417,16 @@ func (r Ref) validateModel() error {
 // plugin's key ("unavailable"); the provider or its plugin rejected the
 // request ("rejected"); the caller gave up ("canceled"); the route names a
 // provider instance that is missing or is not a model provider
-// ("misconfigured"); anything else ("internal"). A maintainer run (D-204)
+// ("misconfigured"); anything else ("internal"). A call the router refused
+// for a guard (D-208) names "budget" (the day's budget is spent, or the call
+// can't be priced against it) or "busy" (the Ask box's calls at once were all
+// taken). A maintainer run (D-204)
 // adds three of its own: the router refused the data, the route or the
 // feature's toggle ("denied"), the model's answer was no usable note
 // ("invalid_output"), and OpenFief had no portfolio figures to send
 // ("no_figures").
 func ModelErrorClasses() []string {
-	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal", "denied", "invalid_output", "no_figures"}
+	return []string{"unavailable", "rejected", "canceled", "misconfigured", "internal", "denied", "invalid_output", "no_figures", "budget", "busy"}
 }
 
 // maintainerOutcomes are the outcomes the entries of each maintainer action
@@ -499,13 +502,19 @@ func sentEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
 
 // resultEntryShape reports whether an ActionModelCallResult entry of outcome
 // that names count of each kind of record is as D-211 asks: not sent; with a
-// model unless refused; with an error class if and only if failed.
+// model unless refused; with an error class if and only if failed, except that
+// a refusal may name the class of the guard that refused it (D-208: budget or
+// busy) and otherwise names none.
 func resultEntryShape(outcome AuditOutcome, count map[RefKind]int) bool {
 	if outcome == OutcomeSent {
 		return false
 	}
 	modelOK := outcome == OutcomeRefused || count[RefModel] == 1
-	return modelOK && (count[RefModelError] == 1) == (outcome == OutcomeFailed)
+	classOK := (count[RefModelError] == 1) == (outcome == OutcomeFailed)
+	if outcome == OutcomeRefused {
+		classOK = count[RefModelError] <= 1
+	}
+	return modelOK && classOK
 }
 
 // validModelRef reports whether id is a model reference: a provider

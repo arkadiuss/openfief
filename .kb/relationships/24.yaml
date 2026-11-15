@@ -972,3 +972,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c164a6034eb1
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-testbudgetspenterroriserrbudgetspent
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:52:00.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d20a9bb61f17
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-testproxyhandstheplugintheaddressitfoundandnoothervalue
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:55:42.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-720cf262d481
+  - type: executable_for
+    from: SYM-tools-askbench-rescore-test-go-testtherescoreflagregradesofflineandwritesthenewreport
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:51:07.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fe0b0c1f532

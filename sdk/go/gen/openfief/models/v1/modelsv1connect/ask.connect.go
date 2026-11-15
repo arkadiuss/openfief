@@ -60,6 +60,9 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// AskModelServiceAdmitAskQuestionProcedure is the fully-qualified name of the AskModelService's
+	// AdmitAskQuestion RPC.
+	AskModelServiceAdmitAskQuestionProcedure = "/openfief.models.v1.AskModelService/AdmitAskQuestion"
 	// AskModelServiceGetAskModelProcedure is the fully-qualified name of the AskModelService's
 	// GetAskModel RPC.
 	AskModelServiceGetAskModelProcedure = "/openfief.models.v1.AskModelService/GetAskModel"
@@ -73,6 +76,17 @@ const (
 
 // AskModelServiceClient is a client for the openfief.models.v1.AskModelService service.
 type AskModelServiceClient interface {
+	// AdmitAskQuestion is asked once for each question the Ask box is about to
+	// send a model, before the first GenerateAsk of its tool loop, never for one
+	// of the box's fixed commands (D-208). The core decides, and counts the
+	// question when it lets it go: first whether the day's budget for model
+	// calls is spent (which counts nothing), then the limits of questions per
+	// session and, when the address is known, per address, each as a rolling
+	// hour and a rolling day. A question that is not allowed says when its
+	// reason ends. With no budget and no limit configured, which is what an
+	// installation that sets none has, every question is allowed and nothing is
+	// counted. It writes no audit entry: nothing is called.
+	AdmitAskQuestion(context.Context, *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error)
 	// GetAskModel says whether the Ask box has a model: the one switch is on,
 	// the Ask box's toggle is on and its route has a model (D-212). It writes
 	// no audit entry: nothing is asked.
@@ -89,6 +103,12 @@ type AskModelServiceClient interface {
 	// refuses a conversation with a message that carries none, or that no
 	// model of the route may receive (PERMISSION_DENIED), and writes the two
 	// audit entries of each call (D-211).
+	//
+	// A call the guards refuse (D-208) fails with RESOURCE_EXHAUSTED and the
+	// error's metadata "Openfief-Refusal" set to "budget" (the day's budget is
+	// spent, and "Openfief-Resets-At" holds when it starts over, RFC 3339) or to
+	// "busy" (the Ask box's calls at once were all taken for the whole queue
+	// wait), and writes the refusal as an audit entry that names the same class.
 	GenerateAsk(context.Context, *connect.Request[v1.GenerateAskRequest]) (*connect.Response[v1.GenerateAskResponse], error)
 }
 
@@ -103,6 +123,12 @@ func NewAskModelServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 	baseURL = strings.TrimRight(baseURL, "/")
 	askModelServiceMethods := v1.File_openfief_models_v1_ask_proto.Services().ByName("AskModelService").Methods()
 	return &askModelServiceClient{
+		admitAskQuestion: connect.NewClient[v1.AdmitAskQuestionRequest, v1.AdmitAskQuestionResponse](
+			httpClient,
+			baseURL+AskModelServiceAdmitAskQuestionProcedure,
+			connect.WithSchema(askModelServiceMethods.ByName("AdmitAskQuestion")),
+			connect.WithClientOptions(opts...),
+		),
 		getAskModel: connect.NewClient[v1.GetAskModelRequest, v1.GetAskModelResponse](
 			httpClient,
 			baseURL+AskModelServiceGetAskModelProcedure,
@@ -128,9 +154,15 @@ func NewAskModelServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 
 // askModelServiceClient implements AskModelServiceClient.
 type askModelServiceClient struct {
-	getAskModel   *connect.Client[v1.GetAskModelRequest, v1.GetAskModelResponse]
-	checkAskTiers *connect.Client[v1.CheckAskTiersRequest, v1.CheckAskTiersResponse]
-	generateAsk   *connect.Client[v1.GenerateAskRequest, v1.GenerateAskResponse]
+	admitAskQuestion *connect.Client[v1.AdmitAskQuestionRequest, v1.AdmitAskQuestionResponse]
+	getAskModel      *connect.Client[v1.GetAskModelRequest, v1.GetAskModelResponse]
+	checkAskTiers    *connect.Client[v1.CheckAskTiersRequest, v1.CheckAskTiersResponse]
+	generateAsk      *connect.Client[v1.GenerateAskRequest, v1.GenerateAskResponse]
+}
+
+// AdmitAskQuestion calls openfief.models.v1.AskModelService.AdmitAskQuestion.
+func (c *askModelServiceClient) AdmitAskQuestion(ctx context.Context, req *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error) {
+	return c.admitAskQuestion.CallUnary(ctx, req)
 }
 
 // GetAskModel calls openfief.models.v1.AskModelService.GetAskModel.
@@ -150,6 +182,17 @@ func (c *askModelServiceClient) GenerateAsk(ctx context.Context, req *connect.Re
 
 // AskModelServiceHandler is an implementation of the openfief.models.v1.AskModelService service.
 type AskModelServiceHandler interface {
+	// AdmitAskQuestion is asked once for each question the Ask box is about to
+	// send a model, before the first GenerateAsk of its tool loop, never for one
+	// of the box's fixed commands (D-208). The core decides, and counts the
+	// question when it lets it go: first whether the day's budget for model
+	// calls is spent (which counts nothing), then the limits of questions per
+	// session and, when the address is known, per address, each as a rolling
+	// hour and a rolling day. A question that is not allowed says when its
+	// reason ends. With no budget and no limit configured, which is what an
+	// installation that sets none has, every question is allowed and nothing is
+	// counted. It writes no audit entry: nothing is called.
+	AdmitAskQuestion(context.Context, *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error)
 	// GetAskModel says whether the Ask box has a model: the one switch is on,
 	// the Ask box's toggle is on and its route has a model (D-212). It writes
 	// no audit entry: nothing is asked.
@@ -166,6 +209,12 @@ type AskModelServiceHandler interface {
 	// refuses a conversation with a message that carries none, or that no
 	// model of the route may receive (PERMISSION_DENIED), and writes the two
 	// audit entries of each call (D-211).
+	//
+	// A call the guards refuse (D-208) fails with RESOURCE_EXHAUSTED and the
+	// error's metadata "Openfief-Refusal" set to "budget" (the day's budget is
+	// spent, and "Openfief-Resets-At" holds when it starts over, RFC 3339) or to
+	// "busy" (the Ask box's calls at once were all taken for the whole queue
+	// wait), and writes the refusal as an audit entry that names the same class.
 	GenerateAsk(context.Context, *connect.Request[v1.GenerateAskRequest]) (*connect.Response[v1.GenerateAskResponse], error)
 }
 
@@ -176,6 +225,12 @@ type AskModelServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewAskModelServiceHandler(svc AskModelServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	askModelServiceMethods := v1.File_openfief_models_v1_ask_proto.Services().ByName("AskModelService").Methods()
+	askModelServiceAdmitAskQuestionHandler := connect.NewUnaryHandler(
+		AskModelServiceAdmitAskQuestionProcedure,
+		svc.AdmitAskQuestion,
+		connect.WithSchema(askModelServiceMethods.ByName("AdmitAskQuestion")),
+		connect.WithHandlerOptions(opts...),
+	)
 	askModelServiceGetAskModelHandler := connect.NewUnaryHandler(
 		AskModelServiceGetAskModelProcedure,
 		svc.GetAskModel,
@@ -198,6 +253,8 @@ func NewAskModelServiceHandler(svc AskModelServiceHandler, opts ...connect.Handl
 	)
 	return "/openfief.models.v1.AskModelService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case AskModelServiceAdmitAskQuestionProcedure:
+			askModelServiceAdmitAskQuestionHandler.ServeHTTP(w, r)
 		case AskModelServiceGetAskModelProcedure:
 			askModelServiceGetAskModelHandler.ServeHTTP(w, r)
 		case AskModelServiceCheckAskTiersProcedure:
@@ -212,6 +269,10 @@ func NewAskModelServiceHandler(svc AskModelServiceHandler, opts ...connect.Handl
 
 // UnimplementedAskModelServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedAskModelServiceHandler struct{}
+
+func (UnimplementedAskModelServiceHandler) AdmitAskQuestion(context.Context, *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.AskModelService.AdmitAskQuestion is not implemented"))
+}
 
 func (UnimplementedAskModelServiceHandler) GetAskModel(context.Context, *connect.Request[v1.GetAskModelRequest]) (*connect.Response[v1.GetAskModelResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.AskModelService.GetAskModel is not implemented"))

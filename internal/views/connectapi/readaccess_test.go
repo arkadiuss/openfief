@@ -44,6 +44,7 @@ func readAccess() map[protoreflect.Name]string {
 		"ListValuationStatuses": "valuations",
 		"GetAllocation":         "allocation",
 		"GetPerformance":        "performance",
+		"GetPeriodChange":       "performance",
 		"GetModelPortfolio":     "model portfolio",
 		"ListPriceChecks":       "price checks",
 		"ListTransfers":         "transfers",

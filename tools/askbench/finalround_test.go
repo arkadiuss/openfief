@@ -181,3 +181,90 @@ func TestARoundKeepsTheCachedTokensAndToolNamesAndCutsLongText(t *testing.T) {
 		}
 	}
 }
+
+// reasoningText is a synthetic reasoning the fake host returns; it must be in no report.
+const reasoningText = "synthetic-reasoning-the-model-thought-about-the-card"
+
+// emptyAfterToolModel plays a model that calls the value tool in round 1, says
+// nothing after its result in round 2 (its reasoning aside), and in the final
+// round answers from the card when it is asked for the answer and refuses when
+// it is asked to restate a previous reply there is none of. It records the body
+// of every request.
+func emptyAfterToolModel(mu *sync.Mutex, bodies *[]string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		raw, err := io.ReadAll(r.Body)
+		var body map[string]any
+		if err != nil || json.Unmarshal(raw, &body) != nil {
+			http.Error(w, "unreadable request", http.StatusBadRequest)
+			return
+		}
+		text := string(raw)
+		mu.Lock()
+		*bodies = append(*bodies, text)
+		mu.Unlock()
+		w.Header().Set("Content-Type", "application/json")
+		results := conversationOf(body).results
+		switch {
+		case len(results) == 0:
+			say(w, toolCallsReply([2]string{"value", "{}"}))
+		case !strings.Contains(text, `"response_format"`):
+			say(w, strings.Replace(textReply(""), `"content":""`, `"content":"","reasoning":"`+reasoningText+`"`, 1))
+		case strings.Contains(text, "Answer the user's question in this schema, using only the cards above."):
+			say(w, answerReply("answer", "Your portfolio is worth "+grossFigure(results[0])+" gross.", "c1"))
+		default:
+			say(w, kindReply("refuse", "I'm sorry, I can't modify my previous reply.", []string{}, []string{}))
+		}
+	}
+}
+
+func TestAnEmptyReplyAfterAToolIsFollowedByTheAnswerInstructionAndGradesAsAPass(t *testing.T) {
+	t.Parallel()
+	var mu sync.Mutex
+	var bodies []string
+	srv := httptest.NewServer(emptyAfterToolModel(&mu, &bodies))
+	t.Cleanup(srv.Close)
+	got := runBench(t, srv.URL+"/v1", "-case", "A1", "-parallel", "1")
+	a1 := got.caseOf(t, "A1")
+	if !a1.PassAll || a1.Passed != a1.Runs {
+		t.Fatalf("A1 = %+v, want every run passed", a1)
+	}
+	for _, run := range a1.Detail {
+		checkEmptyReplyRun(t, &run)
+	}
+	checkNoReasoningTextInReport(t, got.dir)
+	mu.Lock()
+	defer mu.Unlock()
+	for i, body := range bodies {
+		if strings.Contains(body, `"response_format"`) && (strings.Contains(body, "previous reply") || strings.Contains(body, reasoningText)) {
+			t.Errorf("request %d asks to restate a reply or carries the reasoning", i)
+		}
+	}
+}
+
+// checkEmptyReplyRun checks one run of the empty-reply path: three calls, the
+// final round's roles, and the reasoning's length on the empty round.
+func checkEmptyReplyRun(t *testing.T, run *RunReport) {
+	t.Helper()
+	if run.Kind != "answer" || run.ModelCalls != 3 || len(run.Rounds) != 3 {
+		t.Fatalf("run %d: kind %q, %d calls, %d rounds; want the answer after three calls", run.Run, run.Kind, run.ModelCalls, len(run.Rounds))
+	}
+	if got, want := strings.Join(run.Rounds[2].Roles, ","), "system,user,assistant,tool,user"; got != want {
+		t.Errorf("run %d final round sent roles %s, want %s", run.Run, got, want)
+	}
+	if want := len([]rune(reasoningText)); run.Rounds[1].ReasoningChars != want {
+		t.Errorf("run %d round 2 reasoning chars = %d, want %d", run.Run, run.Rounds[1].ReasoningChars, want)
+	}
+}
+
+// checkNoReasoningTextInReport checks that report.json holds the reasoning's
+// length and none of its text.
+func checkNoReasoningTextInReport(t *testing.T, dir string) {
+	t.Helper()
+	raw, err := readOut(dir, "report.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(raw), reasoningText) || !strings.Contains(string(raw), `"reasoningChars"`) {
+		t.Error("report.json must hold the reasoning's length and none of its text")
+	}
+}

@@ -102,6 +102,9 @@ const (
 	// ReadServiceGetPerformanceProcedure is the fully-qualified name of the ReadService's
 	// GetPerformance RPC.
 	ReadServiceGetPerformanceProcedure = "/openfief.views.v1.ReadService/GetPerformance"
+	// ReadServiceGetPeriodChangeProcedure is the fully-qualified name of the ReadService's
+	// GetPeriodChange RPC.
+	ReadServiceGetPeriodChangeProcedure = "/openfief.views.v1.ReadService/GetPeriodChange"
 	// ReadServiceListTransfersProcedure is the fully-qualified name of the ReadService's ListTransfers
 	// RPC.
 	ReadServiceListTransfersProcedure = "/openfief.views.v1.ReadService/ListTransfers"
@@ -213,6 +216,16 @@ type ReadServiceClient interface {
 	// day every account is valued for, and says why. With an account ID it is
 	// that account's instead. It names the charts' default start (D-138).
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
+	// GetPeriodChange returns how the portfolio's value changed over a period
+	// of days, from and to both inclusive, in the reporting currency: its
+	// gross, net and liquidation values (D-77) at the start and the end, the
+	// change in money and in percent, the period's time-weighted return
+	// (D-61) and the deposits and withdrawals in it, which are not return.
+	// The start is the end of the day before from, or of from itself when
+	// that is the first day recorded. The core computes every figure, so a
+	// client shows them without arithmetic of its own. A period that ends
+	// after the day every account is valued through is refused.
+	GetPeriodChange(context.Context, *connect.Request[v1.GetPeriodChangeRequest]) (*connect.Response[v1.GetPeriodChangeResponse], error)
 	// ListTransfers returns the transfers between the owner's own accounts
 	// (D-105): those suggested for the owner to confirm or reject, and the
 	// pairs the owner confirmed or rejected. A withdrawal is suggested with
@@ -422,6 +435,13 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		getPeriodChange: connect.NewClient[v1.GetPeriodChangeRequest, v1.GetPeriodChangeResponse](
+			httpClient,
+			baseURL+ReadServiceGetPeriodChangeProcedure,
+			connect.WithSchema(readServiceMethods.ByName("GetPeriodChange")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		listTransfers: connect.NewClient[v1.ListTransfersRequest, v1.ListTransfersResponse](
 			httpClient,
 			baseURL+ReadServiceListTransfersProcedure,
@@ -523,6 +543,7 @@ type readServiceClient struct {
 	listPriceChecks            *connect.Client[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse]
 	getAllocation              *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
 	getPerformance             *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
+	getPeriodChange            *connect.Client[v1.GetPeriodChangeRequest, v1.GetPeriodChangeResponse]
 	listTransfers              *connect.Client[v1.ListTransfersRequest, v1.ListTransfersResponse]
 	getModelPortfolio          *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
 	listPlugins                *connect.Client[v1.ListPluginsRequest, v1.ListPluginsResponse]
@@ -629,6 +650,11 @@ func (c *readServiceClient) GetAllocation(ctx context.Context, req *connect.Requ
 // GetPerformance calls openfief.views.v1.ReadService.GetPerformance.
 func (c *readServiceClient) GetPerformance(ctx context.Context, req *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error) {
 	return c.getPerformance.CallUnary(ctx, req)
+}
+
+// GetPeriodChange calls openfief.views.v1.ReadService.GetPeriodChange.
+func (c *readServiceClient) GetPeriodChange(ctx context.Context, req *connect.Request[v1.GetPeriodChangeRequest]) (*connect.Response[v1.GetPeriodChangeResponse], error) {
+	return c.getPeriodChange.CallUnary(ctx, req)
 }
 
 // ListTransfers calls openfief.views.v1.ReadService.ListTransfers.
@@ -763,6 +789,16 @@ type ReadServiceHandler interface {
 	// day every account is valued for, and says why. With an account ID it is
 	// that account's instead. It names the charts' default start (D-138).
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
+	// GetPeriodChange returns how the portfolio's value changed over a period
+	// of days, from and to both inclusive, in the reporting currency: its
+	// gross, net and liquidation values (D-77) at the start and the end, the
+	// change in money and in percent, the period's time-weighted return
+	// (D-61) and the deposits and withdrawals in it, which are not return.
+	// The start is the end of the day before from, or of from itself when
+	// that is the first day recorded. The core computes every figure, so a
+	// client shows them without arithmetic of its own. A period that ends
+	// after the day every account is valued through is refused.
+	GetPeriodChange(context.Context, *connect.Request[v1.GetPeriodChangeRequest]) (*connect.Response[v1.GetPeriodChangeResponse], error)
 	// ListTransfers returns the transfers between the owner's own accounts
 	// (D-105): those suggested for the owner to confirm or reject, and the
 	// pairs the owner confirmed or rejected. A withdrawal is suggested with
@@ -968,6 +1004,13 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceGetPeriodChangeHandler := connect.NewUnaryHandler(
+		ReadServiceGetPeriodChangeProcedure,
+		svc.GetPeriodChange,
+		connect.WithSchema(readServiceMethods.ByName("GetPeriodChange")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	readServiceListTransfersHandler := connect.NewUnaryHandler(
 		ReadServiceListTransfersProcedure,
 		svc.ListTransfers,
@@ -1085,6 +1128,8 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceGetAllocationHandler.ServeHTTP(w, r)
 		case ReadServiceGetPerformanceProcedure:
 			readServiceGetPerformanceHandler.ServeHTTP(w, r)
+		case ReadServiceGetPeriodChangeProcedure:
+			readServiceGetPeriodChangeHandler.ServeHTTP(w, r)
 		case ReadServiceListTransfersProcedure:
 			readServiceListTransfersHandler.ServeHTTP(w, r)
 		case ReadServiceGetModelPortfolioProcedure:
@@ -1190,6 +1235,10 @@ func (UnimplementedReadServiceHandler) GetAllocation(context.Context, *connect.R
 
 func (UnimplementedReadServiceHandler) GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetPerformance is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) GetPeriodChange(context.Context, *connect.Request[v1.GetPeriodChangeRequest]) (*connect.Response[v1.GetPeriodChangeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetPeriodChange is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error) {

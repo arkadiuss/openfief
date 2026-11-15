@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b67d20fc8ca
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitkeepsonlyasaltedhashoftheaddressandforgetsoldquestions
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:46.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-223e3e3c568a
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-clientip-go-validheadername
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:54:45.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e7cac4af809
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-clientip-go-validheadername
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:54:45.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf2e81f4a92

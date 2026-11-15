@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3a07023d197
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-clientip-go-parseclientipconfig
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:54:32.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e16a906d09d
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-clientip-go-parseclientipconfig
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:54:32.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1a21497a575
+  - type: executable_for
+    from: SYM-views-app-period-test-new-period-fixture
+    to: TEST-views-app-period
+    created_at: 2026-11-15T13:10:21.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f080954b87d

@@ -448,3 +448,23 @@ func checkDisagreements(t *testing.T, got benchRun) {
 		t.Error("summary.md does not list the disagreements")
 	}
 }
+
+// The bench asks three questions at once unless told otherwise: D-208 caps the
+// box at three model calls at once, and a question makes one call at a time.
+func TestTheBenchAsksAsManyQuestionsAtOnceAsTheBoxAllowsCallsByDefault(t *testing.T) {
+	t.Parallel()
+	env := func(k string) string {
+		if k == keyEnv {
+			return testKey
+		}
+		return ""
+	}
+	cfg, err := parseArgs([]string{"-model", "test/model", "-price", "test/model=1:2"}, env, &bytes.Buffer{})
+	if err != nil || cfg.opts.Parallel != 3 {
+		t.Fatalf("parallel = %+v, %v; want 3", cfg, err)
+	}
+	cfg, err = parseArgs([]string{"-model", "test/model", "-price", "test/model=1:2", "-parallel", "1"}, env, &bytes.Buffer{})
+	if err != nil || cfg.opts.Parallel != 1 {
+		t.Fatalf("parallel with the flag = %+v, %v; want 1", cfg, err)
+	}
+}

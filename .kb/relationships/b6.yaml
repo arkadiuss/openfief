@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83c5a3c174a9
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-postgres-guards-test-go-testadmitletsexactlythelimitthroughwhenquestionsarriveatonce
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:53:40.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5be936e11cb8

@@ -1049,3 +1049,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa4a4e5e0476
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-guards-test-go-currency
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:51:26.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c75dca16bef
+  - type: covered_by
+    from: SYM-views-app-period-views-total-on
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:29:06.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea9d21913fa9
+  - type: implements
+    from: SYM-views-app-period-views-total-on
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:29:06.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a322801a7444
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-regrade
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:52:57.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9cad945dadd
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-regrade
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:52:57.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9dfda85dce

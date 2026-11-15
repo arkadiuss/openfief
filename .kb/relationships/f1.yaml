@@ -1168,3 +1168,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba283da1fb5b
+  - type: covered_by
+    from: SYM-views-ui-askperiod-core-refusal
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:47:40.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87cdfd439a11
+  - type: implements
+    from: SYM-views-ui-askperiod-core-refusal
+    to: REQ-ui-ask-period-refused-not-guessed
+    created_at: 2026-11-15T13:47:40.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd5c3e448b1e

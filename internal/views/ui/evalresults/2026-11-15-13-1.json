@@ -1,0 +1,122 @@
+[
+  {
+    "run": "13-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A19",
+        "tag": "other",
+        "passed": 0,
+        "need": 4
+      },
+      {
+        "case": "A19b",
+        "tag": "other",
+        "passed": 3,
+        "need": 4
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 265,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.12853",
+    "costSource": "measured",
+    "configHash": "1336aed93200401b8bb1dac96cc8a8f007942c23bec077809827ae4bea57abf4",
+    "benchSchema": 1
+  },
+  {
+    "run": "13-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "deepinfra/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A9",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A19",
+        "tag": "other",
+        "passed": 1,
+        "need": 4
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 283,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.09778",
+    "costSource": "measured",
+    "configHash": "ba3a065ce116abd31d00050321ae388464353a8555fac21ffababcb65302f365",
+    "benchSchema": 1
+  },
+  {
+    "run": "13-1",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "near-ai/fp4",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A2",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A7",
+        "tag": "command",
+        "passed": 3,
+        "need": 5
+      },
+      {
+        "case": "A9",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A19",
+        "tag": "other",
+        "passed": 1,
+        "need": 4
+      },
+      {
+        "case": "A19b",
+        "tag": "other",
+        "passed": 2,
+        "need": 4
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 276,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.05242",
+    "costSource": "measured",
+    "configHash": "69ff19681f5b5bde8c2b351ca54de2df1f348af8d608d8c26ddb61adef858483",
+    "benchSchema": 1
+  }
+]

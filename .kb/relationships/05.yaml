@@ -1021,3 +1021,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ca810c492fe
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: REQ-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:52:10.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c616f277b060
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: REQ-decision-d222-1-model-answer-shows-name-line-and-link
+    created_at: 2026-11-15T09:52:10.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6760a54444a4
+  - type: implements
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: REQ-decision-d222-3-commands-show-no-model-note
+    created_at: 2026-11-15T09:52:10.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75424aaa648d
+  - type: covered_by
+    from: SYM-ab9-internal-views-ui-askevalnote-go-noteanswerer-answer
+    to: TEST-ui-ask-eval-note
+    created_at: 2026-11-15T09:52:10.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9843463542e

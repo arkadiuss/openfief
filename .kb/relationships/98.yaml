@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f245b5e47b92
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-testaskadmitrefusesaninvalidsessionandfailsclosedonstoreerrors
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:47:51.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ab5c37df3fb

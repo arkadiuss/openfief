@@ -73,10 +73,21 @@ type askTool struct {
 	// compares calls (AskArgDefaults), and the descriptions below say the same
 	// in words. Nil when no argument has a default.
 	Defaults func(latest kernel.Date) map[string]any
+	// ReplacedBy names, for an argument that has a default, the arguments that
+	// say the same thing another way: a call that gives one of them has no use
+	// for the default, so a harness that fills defaults in leaves it out
+	// (AskArgReplacedBy). Nil when none does.
+	ReplacedBy map[string][]string
 	// query turns the model's arguments, a JSON object text, into the
 	// command the answerer runs, today being today.
 	query func(args string, today kernel.Date) (askQuery, error)
 }
+
+// The names of the arguments more than one tool or table spells.
+const (
+	argPeriod = "period"
+	argFrom   = "from"
+)
 
 // askTools returns the tools, in the order the model is told them. Every
 // tool's card is T0: it holds whole-portfolio holdings, amounts or tax data,
@@ -152,15 +163,21 @@ func allocationTool() askTool {
 func performanceTool() askTool {
 	return askTool{
 		Name: "performance",
-		Description: "The time-weighted return over a period, with the portfolio's value at its start and end. Deposits, withdrawals and " +
-			"confirmed transfers don't count as return.",
+		Description: "Answers questions about return and performance over a period (in Polish, \"stopa zwrotu\" and \"wynik\"): the time-weighted " +
+			"return, with the portfolio's value at its start and end and, for a month or two days, the deposits and withdrawals in it. " +
+			"Deposits, withdrawals and confirmed transfers don't count as return. A period is a calendar month, a calendar year, a first " +
+			"and a last day, a first day onward or a named period.",
 		Schema: `{"type":"object","properties":{"period":{"type":"string","enum":["this_year","this_month","last_12_months","last_year","all"],` +
-			`"description":"A period; this_year when omitted. Ignored when year or since is given."},` +
+			`"description":"A named period; this_year when omitted. Ignored when from and to, month, year or since is given."},` +
+			`"from":{"type":"string","description":"The first day of a period, as YYYY-MM-DD; given with to."},` +
+			`"to":{"type":"string","description":"The last day of a period, as YYYY-MM-DD; given with from."},` +
+			`"month":{"type":"string","description":"A calendar month, as YYYY-MM."},` +
 			`"year":{"type":"integer","description":"A calendar year, such as 2025."},` +
 			`"since":{"type":"string","description":"A first day, as YYYY-MM-DD."}},"additionalProperties":false}`,
 		Label: "Performance", Tier: tierT0,
-		Defaults: func(kernel.Date) map[string]any { return map[string]any{"period": "this_year"} },
-		query:    performanceQuery,
+		Defaults:   func(kernel.Date) map[string]any { return map[string]any{argPeriod: "this_year"} },
+		ReplacedBy: map[string][]string{argPeriod: {argFrom, "to", "month", "year", "since"}},
+		query:      performanceQuery,
 	}
 }
 
@@ -168,9 +185,12 @@ func valueTool() askTool {
 	return askTool{
 		Name: "value",
 		Description: "The portfolio's gross, net and liquidation value on a day, in the reporting currency; the latest valued day when " +
-			"no date is given.",
-		Schema: `{"type":"object","properties":{"date":{"type":"string","description":"The day, as YYYY-MM-DD; omitted for the latest valued day."}},` +
-			`"additionalProperties":false}`,
+			"no date is given. With a period instead, the three values at its start and end, their change in money and in percent, and " +
+			"the deposits and withdrawals in it.",
+		Schema: `{"type":"object","properties":{"date":{"type":"string","description":"The day, as YYYY-MM-DD; omitted for the latest valued day. Not given with period."},` +
+			`"period":{"type":"object","description":"A period of days, both inclusive, instead of a day.","properties":` +
+			`{"from":{"type":"string","description":"The first day, as YYYY-MM-DD."},"to":{"type":"string","description":"The last day, as YYYY-MM-DD."}},` +
+			`"required":["from","to"],"additionalProperties":false}},"additionalProperties":false}`,
 		Label: "Value", Tier: tierT0,
 		Defaults: func(latest kernel.Date) map[string]any {
 			if latest.IsZero() {
@@ -178,7 +198,8 @@ func valueTool() askTool {
 			}
 			return map[string]any{"date": latest.String()}
 		},
-		query: valueQuery,
+		ReplacedBy: map[string][]string{"date": {argPeriod}},
+		query:      valueQuery,
 	}
 }
 
@@ -190,6 +211,10 @@ var (
 	errNoName   = errors.New("a name is needed")
 	errBadEnum  = errors.New("the argument is none of the values the schema lists")
 	errToolDate = errors.New("the date is not a valid day, YYYY-MM-DD")
+	// errPeriodBounds and errDateAndPeriod refuse a period without both of
+	// its days, and a value asked on a day and over a period at once.
+	errPeriodBounds  = errors.New("a period needs both a first day, from, and a last day, to")
+	errDateAndPeriod = errors.New("a value is asked on a date or over a period, not both")
 )
 
 // decodeArgs reads args, a JSON object text, into dst, failing on a field the
@@ -254,44 +279,110 @@ func parseAllocationWord(word string) (askQuery, error) {
 	return q, nil
 }
 
-// performanceQuery maps the performance tool's arguments to its command. A
-// year or a first day names the period; else the period's own word.
+// performanceArgs are the performance tool's arguments.
+type performanceArgs struct {
+	Period string `json:"period"`
+	Year   int    `json:"year"`
+	Since  string `json:"since"`
+	Month  string `json:"month"`
+	From   string `json:"from"`
+	To     string `json:"to"`
+}
+
+// performanceQuery maps the performance tool's arguments to its command. Two
+// days, a month, a year or a first day name the period, in that order; else
+// the period's own word.
 func performanceQuery(args string, today kernel.Date) (askQuery, error) {
-	var a struct {
-		Period string `json:"period"`
-		Year   int    `json:"year"`
-		Since  string `json:"since"`
-	}
+	var a performanceArgs
 	if err := decodeArgs(args, &a); err != nil {
 		return askQuery{}, err
+	}
+	p, err := a.period(today)
+	if err != nil {
+		return askQuery{}, err
+	}
+	return askQuery{Command: askPerformance, Period: p}, nil
+}
+
+// period returns the period the arguments name, today being today.
+func (a *performanceArgs) period(today kernel.Date) (askPeriod, error) {
+	switch {
+	case a.From != "" || a.To != "":
+		return boundedArgs(a.From, a.To, today)
+	case a.Month != "":
+		p, ok := parseBounded(strings.ToLower(strings.TrimSpace(a.Month)), today)
+		if !ok || p.Kind != periodMonthOf {
+			return askPeriod{}, errToolDate
+		}
+		return p, nil
+	}
+	word, err := a.word()
+	if err != nil {
+		return askPeriod{}, err
+	}
+	p, valid := parsePeriod(word, today)
+	if !valid {
+		return askPeriod{}, errToolDate
+	}
+	return p, nil
+}
+
+// word returns the words of the year, the first day or the named period the
+// arguments give, in that order.
+func (a *performanceArgs) word() (string, error) {
+	switch {
+	case a.Year != 0:
+		return strconv.Itoa(a.Year), nil
+	case a.Since != "":
+		return "since " + a.Since, nil
 	}
 	words := map[string]string{
 		"": "", "this_year": labelThisYear, "this_month": labelThisMonth, "last_12_months": "last 12 months", "last_year": labelLastYear, tabAll: tabAll,
 	}
 	word, ok := words[a.Period]
-	switch {
-	case a.Year != 0:
-		word, ok = strconv.Itoa(a.Year), true
-	case a.Since != "":
-		word, ok = "since "+a.Since, true
-	}
 	if !ok {
-		return askQuery{}, errBadEnum
+		return "", errBadEnum
 	}
-	p, valid := parsePeriod(word, today)
-	if !valid {
-		return askQuery{}, errToolDate
-	}
-	return askQuery{Command: askPerformance, Period: p}, nil
+	return word, nil
 }
 
-// valueQuery maps the value tool's arguments to its command.
+// boundedArgs returns the period of two days a tool's arguments give, today
+// being today. The days are not put in order or checked against the valued
+// days here: the answer says when they can't be answered.
+func boundedArgs(from, to string, today kernel.Date) (askPeriod, error) {
+	if from == "" || to == "" {
+		return askPeriod{}, errPeriodBounds
+	}
+	first, okFrom := parseAskDate(from, today)
+	last, okTo := parseAskDate(to, today)
+	if !okFrom || !okTo || first.IsZero() || last.IsZero() {
+		return askPeriod{}, errToolDate
+	}
+	return askPeriod{Kind: periodBetween, Since: first, To: last}, nil
+}
+
+// valueQuery maps the value tool's arguments to its command: the value on a
+// day, or its change over a period of two days.
 func valueQuery(args string, today kernel.Date) (askQuery, error) {
 	var a struct {
-		Date string `json:"date"`
+		Date   string `json:"date"`
+		Period *struct {
+			From string `json:"from"`
+			To   string `json:"to"`
+		} `json:"period"`
 	}
 	if err := decodeArgs(args, &a); err != nil {
 		return askQuery{}, err
+	}
+	if a.Period != nil {
+		if a.Date != "" {
+			return askQuery{}, errDateAndPeriod
+		}
+		p, err := boundedArgs(a.Period.From, a.Period.To, today)
+		if err != nil {
+			return askQuery{}, err
+		}
+		return askQuery{Command: askValue, Change: &p}, nil
 	}
 	d, ok := parseAskDate(a.Date, today)
 	if !ok || d.After(today) {

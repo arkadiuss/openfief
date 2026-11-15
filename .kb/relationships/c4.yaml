@@ -1203,3 +1203,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb2ca5541523
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig-validate
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:49:30.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58ef52067de4
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileconfig-validate
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:30.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c15689e478e
+  - type: covered_by
+    from: SYM-views-app-period-period-change
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:29:16.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82eb0170ef71
+  - type: implements
+    from: SYM-views-app-period-period-change
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:33:43.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad0fc86181d5
+  - type: implements
+    from: SYM-ab6-tools-askbench-history-go-historyentry
+    to: REQ-askbench-scorer-version
+    created_at: 2026-11-15T15:46:47.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfc8b86df824
+  - type: covered_by
+    from: SYM-ab6-tools-askbench-history-go-historyentry
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:46:47.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee9490a75c5

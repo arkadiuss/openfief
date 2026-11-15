@@ -68,6 +68,15 @@ func TestModelProviderConfig(t *testing.T) {
 			wantHosts: []plugins.ConfigHost{{Field: "baseUrl", Host: plugins.EgressHost{Host: "openrouter.ai", Port: 443}}},
 		},
 		{
+			name:      "an OpenRouter model that denies data collection",
+			config:    `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"vendor/synthetic","hosts":["nextbit/bf16"],"dataCollection":"deny"}]}`,
+			wantHosts: []plugins.ConfigHost{{Field: "baseUrl", Host: plugins.EgressHost{Host: "openrouter.ai", Port: 443}}},
+		},
+		{
+			name: "an unknown data collection setting", refused: true,
+			config: `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"m","dataCollection":"maybe"}]}`,
+		},
+		{
 			name: "a host that is not a slug", refused: true,
 			config: `{"baseUrl":"https://openrouter.ai/api/v1","location":"third_party_cloud","retention":{"days":30,"mayTrain":false},"models":[{"id":"m","hosts":["Next Bit"]}]}`,
 		},

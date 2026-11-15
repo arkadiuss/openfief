@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c766832a9ed7
+  - type: executable_for
+    from: SYM-views-period-test-period-day
+    to: TEST-views-period
+    created_at: 2026-11-15T13:11:05.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23fe0fe4c0b8

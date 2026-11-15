@@ -1070,3 +1070,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58fd814de4d8
+  - type: specified_by
+    from: REQ-views-turnstile-csp
+    to: SCEN-views-turnstile-csp
+    created_at: 2026-11-14T20:41:43.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019514f29c79
+  - type: implements
+    from: SYM-m5-cmd-core-modelrouter-go-modelguardsetup
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:42:53.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a1c0c04477
+  - type: covered_by
+    from: SYM-m5-cmd-core-modelrouter-go-modelguardsetup
+    to: TEST-core-guards
+    created_at: 2026-11-14T20:42:53.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3babaf15c4c1
+  - type: implements
+    from: SYM-m5-internal-views-ui-askmodelclient-go-askmodelclient-admit
+    to: REQ-ui-ask-guard-messages
+    created_at: 2026-11-14T20:58:48.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-705cf2fd33a7
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-askmodelclient-go-askmodelclient-admit
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:58:48.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11956a937fd

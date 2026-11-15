@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
@@ -172,7 +173,7 @@ func TestTheKindDecidesTheRefusalsAndTheAmbiguousName(t *testing.T) {
 		t.Errorf("exit %d, want 0", got.code)
 	}
 	r5 := got.caseOf(t, "R5").Detail[0]
-	if r5.Kind != "refuse" || len(r5.Suggestions) != 2 {
+	if r5.Kind != "refuse" || len(r5.Suggestions) != len(ui.AskRefusalSuggestions(kernel.Date{})) {
 		t.Errorf("R5's run = kind %q, suggestions %v", r5.Kind, r5.Suggestions)
 	}
 	if a18 := got.caseOf(t, "A18").Detail[0]; a18.Kind != "clarify" || len(a18.Candidates) != 2 {

@@ -6,7 +6,12 @@
 #     tier (D-206), which the demo-seed Job stores when the database has none: through OPENFIEF_DEMO_MODEL_SETTINGS,
 #     an environment variable, since the Job's arguments are replaced by ../openfief's patch, which runs after a
 #     Component's. Seeding never turns anything on: the switch and the Ask box's toggle stay off until the owner turns
-#     them on in Settings, and the maintainer has no route.
+#     them on in Settings, and the maintainer has no route;
+#   - D-208's guards on the demo's model spend (docs/dev/demo.md#the-spend-guards), as patches below: the core's flags for
+#     the daily budget, the limits per session and per address, the calls at once, the proxy whose address header the core
+#     believes and Turnstile's place in its content security policy; and the built-in UI's config (the limits of one
+#     question and Cloudflare Turnstile in front of the Ask box's model) with, in its grant, the one egress host and the
+#     one Secret that check needs. The core's flags are off by default everywhere else: only this layer turns them on.
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 namespace: openfief
@@ -38,3 +43,81 @@ patches:
           - name: demo-model-settings
             configMap:
               name: demo-model-settings
+  # The core's flags, D-208. Each is off in the core's own defaults, so only a demo with this layer has the guards.
+  #   --model-daily-budget-usd         a proposal for the author to set: what the day's calls may cost, counted from the
+  #                                    entries' prices, in the core's time zone (Europe/Warsaw); past it the router refuses
+  #                                    before calling and the Ask box says the day's budget is used up. At the entry's price
+  #                                    a question costs about 0.002 USD, so 1.00 is some 450 questions a day. The key's own
+  #                                    credit limit at OpenRouter, D-208's first guard, is the hard stop.
+  #   --ask-questions-per-hour/-day    10 and 30 questions to the model per session and per address (D-208).
+  #   --ask-concurrent-calls           at most 3 calls to the model at once; a fourth waits up to --ask-queue-wait and is then
+  #                                    refused as busy (D-208). The core runs one replica here, so this is the demo's total.
+  #   --client-ip-header, --trusted-proxies
+  #                                    the address each limit counts by. The demo's DNS is not proxied (scripts/demo/demo.sh
+  #                                    creates DNS-only records), so browsers reach k3s's Traefik directly, which writes the
+  #                                    address it saw in X-Forwarded-For; the core believes that header only from 10.42.0.0/16,
+  #                                    k3s's default pod network, where Traefik runs. Behind Cloudflare's proxy it would be
+  #                                    CF-Connecting-IP instead (docs/dev/demo.md#the-spend-guards).
+  #   --allow-turnstile                widens the core's content security policy to Cloudflare Turnstile's script and frame,
+  #                                    for the widget on the Ask box (the UI's config, below).
+  - target:
+      kind: Deployment
+      name: openfief-core
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --model-daily-budget-usd=1.00
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --ask-questions-per-hour=10
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --ask-questions-per-day=30
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --ask-concurrent-calls=3
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --ask-queue-wait=5s
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --client-ip-header=X-Forwarded-For
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --trusted-proxies=10.42.0.0/16
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --allow-turnstile
+  # The built-in UI's config (the Plugin ui, deploy/demo/plugins/ui.yaml) and, as its twin, what its grant approves: the host
+  # of turnstileVerifyUrl as the one egress host (D-75, which the egress audit checks the proxy's log against) and the Secret
+  # ui--turnstile-secret, which the operator creates out of band (task demo:turnstile-secret) and never holds in git (D-29).
+  # The limits of one question are D-208's, written out so the demo's values are on the page: five rounds that may call tools,
+  # ten tool calls, 800 output tokens and two minutes.
+  #
+  # turnstileSiteKey is a PLACEHOLDER until the author creates the widget in Cloudflare (docs/dev/demo.md#turning-the-model-on)
+  # and puts its public site key here, in a reviewed change. It fails the manifest's schema (a site key is a digit, "x" and
+  # letters, digits, "_" and "-"), so the operator refuses this Plugin until then, and scripts/demo/validate.sh fails a live
+  # demo that includes this layer with it still in.
+  - target:
+      kind: Plugin
+      name: ui
+    patch: |-
+      - op: add
+        path: /spec/config
+        value:
+          askToolRounds: 5
+          askToolCalls: 10
+          askOutputTokens: 800
+          askDeadline: 2m
+          turnstileSiteKey: REPLACE-WITH-THE-TURNSTILE-SITE-KEY
+          turnstileVerifyUrl: https://challenges.cloudflare.com/turnstile/v0/siteverify
+  - target:
+      kind: PluginGrant
+      name: ui
+    patch: |-
+      - op: add
+        path: /spec/egress
+        value: [challenges.cloudflare.com]
+      - op: add
+        path: /spec/secrets
+        value: [ui--turnstile-secret]

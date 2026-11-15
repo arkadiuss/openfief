@@ -1448,5 +1448,41 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-9626b9882cbc
+      },
+    {
+        type: specified_by,
+        from: REQ-views-client-address-trusted-proxy,
+        to: SCEN-views-client-address-trusted-proxy,
+        created_at: 2026-11-14T20:38:08.820Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-b153421a044d
+      },
+    {
+        type: verified_by,
+        from: SCEN-ui-ask-turnstile,
+        to: TEST-ui-turnstile,
+        created_at: 2026-11-14T22:47:05.562Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-351aee353b9b
+      },
+    {
+        type: implements,
+        from: SYM-tools-askbench-report-go-cardreport,
+        to: REQ-askbench-rescores-offline,
+        created_at: 2026-11-15T15:43:30.324Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-1c1cdb3683fd
+      },
+    {
+        type: covered_by,
+        from: SYM-tools-askbench-report-go-cardreport,
+        to: TEST-askbench-rescore,
+        created_at: 2026-11-15T15:43:30.401Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-11a8ff73e445
       }
   ]

@@ -191,7 +191,7 @@ func checkNoProviderWords(t *testing.T, got benchRun) {
 func TestAPartialOutageIsScoredAndItsErrorsAreListedNotCountedAsFailures(t *testing.T) {
 	t.Parallel()
 	f := newFakeModel(t)
-	f.failFirst, f.failStatus = 5, 429
+	f.failFirst, f.failStatus = 10, 429 // two requests a question: the call and the client's retry
 	got := runBench(t, f.url, "-case", "A1,R1")
 	if got.code != exitOK {
 		t.Fatalf("exit %d, want %d; stdout %q", got.code, exitOK, got.stdout)

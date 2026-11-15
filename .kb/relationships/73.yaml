@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f234169b7ad
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-app-guards-test-go-decimalof
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:44:09.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-138b2e00b1cd
+  - type: implements
+    from: SYM-tools-docgen-askevalresults-go-evalresult-scorertext
+    to: REQ-askbench-scorer-version
+    created_at: 2026-11-15T15:44:16.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c73ba2762deb
+  - type: covered_by
+    from: SYM-tools-docgen-askevalresults-go-evalresult-scorertext
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T15:44:16.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24e50c38dc57

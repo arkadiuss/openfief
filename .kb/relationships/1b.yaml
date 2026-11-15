@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99b23a9e63de
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-budgetof
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:50:54.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e7fe559e806
+  - type: covered_by
+    from: SYM-views-pb-value-change-proto-message
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:12:23.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-858df97b0401
+  - type: implements
+    from: SYM-views-pb-value-change-proto-message
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:12:23.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5acbab0a07f
+  - type: covered_by
+    from: SYM-views-ui-askperiod-pending-text
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:39:33.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9bdd2a2c12f
+  - type: implements
+    from: SYM-views-ui-askperiod-pending-text
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:39:33.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cc4c712ec1e

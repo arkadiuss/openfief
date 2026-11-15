@@ -1147,3 +1147,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07c311bc499e
+  - type: executable_for
+    from: SYM-m5-internal-modelrouter-connectapi-ask-guards-test-go-usageof-spent
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:49:49.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d0c1af428bf
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-loadreport
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:41:30.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5d5a02fada6
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-loadreport
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:41:30.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf9c838a568

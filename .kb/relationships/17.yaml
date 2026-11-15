@@ -972,3 +972,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15dc4e2a2425
+  - type: specified_by
+    from: REQ-ui-ask-turnstile
+    to: SCEN-ui-ask-turnstile
+    created_at: 2026-11-14T22:47:07.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d4e6b28bb39
+  - type: executable_for
+    from: SYM-ui-ask4-test-hastoolresult
+    to: TEST-ui-ask-model-page
+    created_at: 2026-11-15T10:34:03.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47bda3ca0ef5
+  - type: executable_for
+    from: SYM-views-period-test-period-total-build
+    to: TEST-views-period
+    created_at: 2026-11-15T13:10:56.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-270120c55999
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-parse-change
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:41:03.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90e1bf5d3eea

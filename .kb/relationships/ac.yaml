@@ -937,3 +937,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1275b1264bb
+  - type: executable_for
+    from: SYM-plugins-model-openai-openaichat-cached-test-go-testcompletereadsthelengthofthereasoningandneveritstext
+    to: TEST-plugins-model-openai-reasoning-length
+    created_at: 2026-11-15T12:22:49.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6b7eb8671e6
+  - type: covered_by
+    from: SYM-views-ui-askrun-ask-arg-replaced-by
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-15T13:40:46.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295fb0297a50
+  - type: implements
+    from: SYM-views-ui-askrun-ask-arg-replaced-by
+    to: REQ-ui-ask-tools-take-a-period
+    created_at: 2026-11-15T13:40:46.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-525d9ad17b8b

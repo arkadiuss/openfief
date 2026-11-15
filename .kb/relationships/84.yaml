@@ -1203,3 +1203,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3e742b28925
+  - type: implements
+    from: SYM-m5-cmd-core-guards-go-guardconfig-proxyoptions
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:42:28.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cff5d112d5
+  - type: covered_by
+    from: SYM-m5-cmd-core-guards-go-guardconfig-proxyoptions
+    to: TEST-core-guards
+    created_at: 2026-11-14T20:42:28.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b9fa8788cb2
+  - type: implements
+    from: SYM-m5-internal-modelrouter-budget-go-callcost
+    to: REQ-models-daily-budget
+    created_at: 2026-11-14T20:49:24.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab2b44f6357
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-budget-go-callcost
+    to: TEST-models-domain-guards
+    created_at: 2026-11-14T20:49:24.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd2fccb21ef
+  - type: specified_by
+    from: REQ-decision-d222-1-model-answer-shows-name-line-and-link
+    to: SCEN-ui-ask-shows-model-and-disclaimer
+    created_at: 2026-11-15T09:51:16.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3cff0d62f0
+  - type: specified_by
+    from: REQ-decision-d222-1-model-answer-shows-name-line-and-link
+    to: SCEN-askeval-results-page
+    created_at: 2026-11-15T09:51:16.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9106aec14b64
+  - type: executable_for
+    from: SYM-openaichat-ratelimit-helper-nowait
+    to: TEST-plugins-model-openai-chat
+    created_at: 2026-11-15T09:42:24.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9cef9f94fe
+  - type: covered_by
+    from: SYM-views-period-flows-over
+    to: TEST-views-period
+    created_at: 2026-11-15T12:28:18.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebd62d2cf6c6
+  - type: implements
+    from: SYM-views-period-flows-over
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:28:18.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28cfd2459c7b
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-deposits-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:36.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-869dcb963b5c
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-deposits-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:37.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-071dd7aa2f3d

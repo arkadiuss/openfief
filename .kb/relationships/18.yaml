@@ -1217,3 +1217,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-531189a6b3c9
+  - type: executable_for
+    from: SYM-m5-internal-views-browserproxy-clientip-test-go-proxied
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T21:44:52.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49bfc2ab4216
+  - type: implements
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalreliability
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:15:24.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3235388bde2a
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askevalresults-go-evalreliability
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:15:24.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bae1019b503

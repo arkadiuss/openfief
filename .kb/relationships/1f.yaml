@@ -1182,3 +1182,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02ca57e04a5f
+  - type: implements
+    from: SYM-m5-cmd-core-guards-go-guardconfig-limits
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:42:15.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-451de401dc45
+  - type: covered_by
+    from: SYM-m5-cmd-core-guards-go-guardconfig-limits
+    to: TEST-core-guards
+    created_at: 2026-11-14T20:42:15.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de48472d3627
+  - type: implements
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-store-admit
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:52:36.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ae8eceed38
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-postgres-guards-go-store-admit
+    to: TEST-models-postgres-guards
+    created_at: 2026-11-14T20:52:36.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4fe2f7b3440
+  - type: executable_for
+    from: SYM-askbench-cases-test-check-a19-period
+    to: TEST-askbench-cases
+    created_at: 2026-11-15T14:04:43.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46543fb3d1e2

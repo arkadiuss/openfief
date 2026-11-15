@@ -993,3 +993,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c281d0a10e6
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-askguards-test-go-testhumanwaitroundsupandspeaksofhoursfromtwo
+    to: TEST-ui-ask-guards
+    created_at: 2026-11-14T20:57:48.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d0cadd15790
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-siteverifyreply
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-14T22:49:49.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e6f8946b40d
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-siteverifyreply
+    to: TEST-ui-turnstile
+    created_at: 2026-11-14T22:49:49.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8102789059c4
+  - type: implements
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel-answered
+    to: REQ-askeval-results-page-from-committed-results
+    created_at: 2026-11-15T09:07:55.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-579735d9b790
+  - type: covered_by
+    from: SYM-ab9-tools-docgen-askeval-go-benchmodel-answered
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T09:07:55.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b0d2a53fd8

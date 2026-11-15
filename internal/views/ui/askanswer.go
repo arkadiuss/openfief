@@ -43,6 +43,10 @@ type answerCard struct {
 	// Model is the model that wrote Text, as "provider/model", when a model
 	// answered (D-203); empty for the commands' own answers.
 	Model string
+	// Note is what a model's answer says under it: its name, that it can be
+	// wrong and the link to the eval (D-222); nil for the commands' own
+	// answers and for a card about a model that did not answer.
+	Note *modelNote
 	// Source, when set, is what the card's header says in place of "Answered
 	// from your data": a card about a model that did not answer.
 	Source string
@@ -51,8 +55,8 @@ type answerCard struct {
 	Kind string
 	// Candidates are the names a clarifying answer asks the person to choose
 	// from, each asked as a show command; Suggestions are the commands a
-	// refusing answer offers instead, each a chip. Both are checked
-	// (parseStructuredAnswer) to be what the box understands.
+	// refusing answer offers instead, each a chip: the candidates are names a
+	// card the model read holds, the suggestions the box's own commands.
 	Candidates  []string
 	Suggestions []string
 	// Used are the cards the model read and named in its answer, shown under
@@ -140,7 +144,7 @@ func (a commandAnswerer) run(r *http.Request, sess session, q *askQuery) (answer
 	case askPerformance:
 		card, err = a.performance(r, sess, q.Period, date)
 	case askValue:
-		card, err = a.value(r, sess, q.Date, date)
+		card, err = a.valueAnswer(r, sess, q, date)
 	case askUnknown:
 		return unknownAnswer(""), nil
 	}
@@ -575,6 +579,9 @@ func (a commandAnswerer) allocation(r *http.Request, sess session, d dimension, 
 
 // performance answers the time-weighted return over p, up to date.
 func (a commandAnswerer) performance(r *http.Request, sess session, p askPeriod, date kernel.Date) (answerCard, error) {
+	if p.bounded() {
+		return a.periodPerformance(r, sess, boundedSpan(p), date)
+	}
 	days := periodRange(p, date)
 	label := days.Label
 	resp, err := a.s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{From: optionalString(days.From), To: days.To.String()}, sess))
@@ -619,6 +626,15 @@ func returnPercent(first, last string, f numberFormat) string {
 		digits += ".0"
 	}
 	return sign + f.amount(digits) + "%"
+}
+
+// valueAnswer answers a value command: its change over a period when it asks
+// for one, else the three values on its day.
+func (a commandAnswerer) valueAnswer(r *http.Request, sess session, q *askQuery, latest kernel.Date) (answerCard, error) {
+	if q.Change != nil {
+		return a.periodValue(r, sess, boundedSpan(*q.Change), latest)
+	}
+	return a.value(r, sess, q.Date, latest)
 }
 
 // value answers the portfolio's three values on day, or on latest, the

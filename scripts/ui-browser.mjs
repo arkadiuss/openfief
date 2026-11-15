@@ -16,6 +16,9 @@
 // session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
 // granted nothing sees "Nothing has been shared with you yet" on every page (D-210); Settings' Audit log filters by its form and, while
 // changes' entries wait to enter the log, shows the audit-log-behind item's words in a banner (D-211).
+// With Cloudflare Turnstile in front of the Ask box's model (D-208), on a second UI over the fakes whose Cloudflare is a fake too: the policy
+// allows Cloudflare's script and frame and nothing else outside, a question goes with the widget's one-time token and is answered, the token is
+// renewed, one without a token is stopped with the box's commands, a command needs none and the console holds no policy violation; the first UI has no widget.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -33,15 +36,18 @@ if (!out) {
 mkdirSync(out, { recursive: true });
 const addr = process.env.ADDR || 'localhost:8099';
 const base = `http://${addr}`;
+// A second UI over the fakes has Cloudflare Turnstile in front of the Ask box's model (D-208), checked against a fake Cloudflare.
+const turnstileAddr = process.env.ADDR_TURNSTILE || 'localhost:8098';
+const turnstileBase = `http://${turnstileAddr}`;
 
-// serve starts the UI over its fakes in a process group of its own and waits until it answers.
-async function serve() {
+// serve starts the UI over its fakes on at, with the environment extra, in a process group of its own and waits until it answers.
+async function serve(at = addr, extra = {}) {
   const server = spawn('go', ['test', './internal/views/ui/', '-run', '^TestServeForBrowser$', '-count=1', '-timeout', '15m'], {
-    env: { ...process.env, OPENFIEF_UI_SERVE: addr }, stdio: ['ignore', 'inherit', 'inherit'], detached: true,
+    env: { ...process.env, OPENFIEF_UI_SERVE: at, ...extra }, stdio: ['ignore', 'inherit', 'inherit'], detached: true,
   });
   for (let i = 0; i < 120; i++) {
     try {
-      if ((await fetch(base + '/healthz')).ok) {
+      if ((await fetch(`http://${at}/healthz`)).ok) {
         return server;
       }
     } catch {
@@ -50,7 +56,7 @@ async function serve() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
   process.kill(-server.pid);
-  throw new Error(`the UI over its fakes did not answer on ${base}`);
+  throw new Error(`the UI over its fakes did not answer on http://${at}`);
 }
 
 // The fakes' one account is acc-synthetic-1 (internal/views/ui/fakes_test.go).
@@ -250,16 +256,23 @@ async function askModelBox(browser) {
     const text = await page.textContent('#answer .model-text');
     check(text.includes('Most of it is listed.') && text.includes('The rest is cash.'), `phone ${scheme}: the model's text is not shown`);
     check((await page.textContent('#answer .used-card')).includes('By asset class'), `phone ${scheme}: the card the model read is not shown`);
+    // D-222: a model's answer says who answered, that it can be wrong, and links to the eval's results.
+    const note = await page.textContent('#answer .ask-note');
+    check(note.includes('Answered by') && note.includes('AI can be wrong; check the cards. Not investment advice.') && note.includes('How models did in our evaluation'),
+      `phone ${scheme}: a model's answer does not show its name, the disclaimer and the link to the evaluation`);
+    const evalHref = await page.getAttribute('#answer .ask-note a.ask-eval-link', 'href');
+    check(evalHref === 'https://openfief.dev/docs/reference/ask-eval/', `phone ${scheme}: the evaluation link is ${evalHref}`);
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model.png`), fullPage: true });
     await ask('allocation by currency', '#answer:has-text("By currency")');
+    check((await page.locator('#answer .ask-note').count()) === 0, `phone ${scheme}: a command's answer shows the model note`);
     check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a command is not answered by the box itself`);
-    // A refusal: the model's words, and the box's commands it offers as chips.
+    // A refusal: the model's words, and the box's own four commands as chips (D-194).
     await ask('sell everything', '#answer .ask-suggestions .chip');
     const refusal = await page.textContent('#answer');
-    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 2
+    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 4
       && (await page.locator('#answer .ask-choices').count()) === 0 && (await page.locator('#answer .used-card').count()) === 0,
-      `phone ${scheme}: a refusal does not show the model's words and two command chips`);
+      `phone ${scheme}: a refusal does not show the model's words and the box's four command chips`);
     check((await page.locator('#answer .ask-suggestions .chip').first().boundingBox()).height >= 44, `phone ${scheme}: a command chip is under 44 px tall`);
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refuse.png`), fullPage: true });
     await page.click('#answer .ask-suggestions .chip:has-text("Allocation by currency")');
@@ -289,6 +302,98 @@ async function askModelBox(browser) {
 }
 
 // sideways returns how many pixels the page scrolls sideways.
+// The widget's script, as Cloudflare would serve it, for the page to load where the check's script is allowed: it puts a one-time
+// token ("ok-browser-N", which the fake Cloudflare accepts once) in the Ask form's field and makes a new one on reset.
+const fakeTurnstileScript = `(function () {
+  var n = 0;
+  function mount() {
+    document.querySelectorAll('.cf-turnstile').forEach(function (div) {
+      var form = div.closest('form');
+      var input = form && form.querySelector('input[name="cf-turnstile-response"]');
+      if (form && !input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'cf-turnstile-response';
+        div.appendChild(input);
+      }
+      if (input) {
+        n += 1;
+        input.value = 'ok-browser-' + n;
+      }
+    });
+  }
+  window.turnstile = { reset: mount };
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', mount); } else { mount(); }
+})();`;
+
+// turnstileBox checks the Ask box with Turnstile in front of its model (D-208) at phone width: the page's policy allows
+// Cloudflare's script and frame and no other outside host and the widget loads (a fake of Cloudflare's script answers where the page asks
+// for it, so the script is loaded only if the policy lets it); a question to the model goes with the widget's token and is
+// answered; the token is renewed for the next question; a question with no token is stopped with the box's words and nothing
+// sent; a command needs no token; and the console holds no policy violation.
+async function turnstileBox(browser) {
+  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
+  await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
+  const page = await ctx.newPage();
+  const violations = [];
+  page.on('console', (message) => {
+    if (message.text().includes('Content Security Policy')) {
+      violations.push(message.text());
+    }
+  });
+  await page.goto(turnstileBase + '/test/sign-in');
+  const response = await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+  const policy = response.headers()['content-security-policy'] || '';
+  check(policy.includes('script-src \'self\' https://challenges.cloudflare.com') && policy.includes('frame-src https://challenges.cloudflare.com')
+    && (policy.match(/https:\/\//g) || []).length === 2 && !policy.includes('unsafe'), `turnstile: the page's policy is ${policy}`);
+  check((await page.locator('.ask-form .cf-turnstile[data-sitekey]').count()) === 1, 'turnstile: the Ask form shows no widget');
+  const token = () => page.inputValue('input[name="cf-turnstile-response"]');
+  check((await token()) === 'ok-browser-1', `turnstile: the widget made no token (${await token()})`);
+  const [request] = await Promise.all([
+    page.waitForRequest((r) => r.url().includes('/ask?') && r.url().includes('cf-turnstile-response=ok-browser-1')),
+    page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
+  ]);
+  check(new URL(request.url()).searchParams.get('q') === 'how diversified am I', 'turnstile: the question did not go with its token');
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  check((await page.textContent('#answer')).includes('Answered by'), 'turnstile: a question with a good token was not answered by the model');
+  await page.waitForFunction(() => document.querySelector('input[name="cf-turnstile-response"]').value === 'ok-browser-2', null, { timeout: 5000 });
+  const [second] = await Promise.all([
+    page.waitForResponse((r) => r.url().includes('/ask?') && r.url().includes('cf-turnstile-response=ok-browser-2')),
+    page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
+  ]);
+  check((await second.text()).includes('Answered by'), 'turnstile: the second question did not go with a renewed token and get an answer');
+  // No token: the box says a check comes first, and keeps its commands.
+  await page.evaluate(() => { document.querySelector('input[name="cf-turnstile-response"]').value = ''; });
+  await page.fill('#ask-q', 'how diversified am I really');
+  await page.click('.ask-form button[type="submit"]');
+  await page.waitForSelector('#answer:has-text("A check comes before the model answers")', { timeout: 5000 });
+  check((await page.locator('#answer .ask-help li').count()) > 0 && !(await page.textContent('#answer')).includes('Answered by'),
+    'turnstile: a question with no token was not stopped with the box\'s commands');
+  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile.png'), fullPage: true });
+  // A command needs no token.
+  await page.fill('#ask-q', 'what needs me');
+  await page.click('.ask-form button[type="submit"]');
+  await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
+  check(violations.length === 0, `turnstile: the console holds policy violations: ${violations.join('; ')}`);
+  await ctx.close();
+}
+
+// withoutTurnstile checks that the first UI, which has no Turnstile, has no widget and loads nothing from Cloudflare.
+async function withoutTurnstile(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  const outside = [];
+  page.on('request', (r) => {
+    if (!r.url().startsWith(base)) {
+      outside.push(r.url());
+    }
+  });
+  const response = await page.goto(base + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+  check(!(response.headers()['content-security-policy'] || '').includes('cloudflare'), 'no turnstile: the page\'s policy names Cloudflare');
+  check((await page.locator('.cf-turnstile').count()) === 0 && outside.length === 0, `no turnstile: the page shows a widget or loads ${outside.join(', ')}`);
+  await ctx.close();
+}
+
 async function sideways(page) {
   return page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 }
@@ -611,6 +716,7 @@ async function keptOverview() {
 }
 
 const server = await serve();
+const turnstileServer = await serve(turnstileAddr, { OPENFIEF_UI_TURNSTILE: '1' });
 const browser = await chromium.launch(browserOptions());
 try {
   for (const scheme of ['light', 'dark']) {
@@ -623,6 +729,8 @@ try {
   await removedRedirect(browser);
   await askBox(browser);
   await askModelBox(browser);
+  await withoutTurnstile(browser);
+  await turnstileBox(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
   await people(browser);
@@ -633,6 +741,7 @@ try {
 } finally {
   await browser.close();
   process.kill(-server.pid);
+  process.kill(-turnstileServer.pid);
 }
 if (failures.length > 0) {
   console.error(`${failures.length} browser check(s) failed`);

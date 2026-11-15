@@ -1294,3 +1294,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdcfc5f66ae3
+  - type: implements
+    from: SYM-m5-internal-views-browserproxy-proxy-go-proxy-setclientip
+    to: REQ-views-client-address-trusted-proxy
+    created_at: 2026-11-14T20:56:15.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-428269eabc1f
+  - type: covered_by
+    from: SYM-m5-internal-views-browserproxy-proxy-go-proxy-setclientip
+    to: TEST-views-browserproxy-clientip
+    created_at: 2026-11-14T20:56:15.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dfc34fa188e
+  - type: executable_for
+    from: SYM-ui-ask4-test-testarefusalwithanythinginsuggestionsisacceptedatoncewiththeboxscommands
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-15T10:33:44.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-235773524fe2
+  - type: implements
+    from: SYM-tools-askbench-rescore-go-rescorereport-keep
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T15:50:31.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9139d5a461fd
+  - type: covered_by
+    from: SYM-tools-askbench-rescore-go-rescorereport-keep
+    to: TEST-askbench-rescore
+    created_at: 2026-11-15T15:50:32.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf0030bd5988

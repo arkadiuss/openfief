@@ -1273,3 +1273,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60f204435a40
+  - type: verified_by
+    from: SCEN-models-ask-concurrent-calls
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:38:05.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7221b3312276
+  - type: verified_by
+    from: SCEN-models-ask-concurrent-calls
+    to: TEST-models-connectapi-ask-guards
+    created_at: 2026-11-14T20:38:05.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-591872b9ee97
+  - type: implements
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionstore
+    to: REQ-models-ask-question-limits
+    created_at: 2026-11-14T20:48:28.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2efbe508006f
+  - type: covered_by
+    from: SYM-m5-internal-modelrouter-app-ports-go-questionstore
+    to: TEST-models-app-guards
+    created_at: 2026-11-14T20:48:28.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25ef064fcbb
+  - type: covered_by
+    from: SYM-views-period-percent-of
+    to: TEST-views-period
+    created_at: 2026-11-15T12:27:50.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9511288627
+  - type: implements
+    from: SYM-views-period-percent-of
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:27:50.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3037a1598a9
+  - type: covered_by
+    from: SYM-views-pb-value-change-proto-reflect
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:12:34.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-400a693a8a48
+  - type: implements
+    from: SYM-views-pb-value-change-proto-reflect
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:12:34.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0111c24333fc
