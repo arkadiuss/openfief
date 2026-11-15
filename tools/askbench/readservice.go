@@ -263,9 +263,10 @@ func (r *readService) GetAllocation(_ context.Context, req *connect.Request[view
 }
 
 // GetPerformance returns the daily value and time-weighted return index over a
-// range.
+// range, and names the seed's first day as the charts' default start, which the
+// Ask box asks for the day tracking began.
 func (r *readService) GetPerformance(_ context.Context, req *connect.Request[viewsv1.GetPerformanceRequest]) (*connect.Response[viewsv1.GetPerformanceResponse], error) {
-	out := &viewsv1.GetPerformanceResponse{From: req.Msg.GetFrom(), To: req.Msg.GetTo()}
+	out := &viewsv1.GetPerformanceResponse{From: req.Msg.GetFrom(), To: req.Msg.GetTo(), DefaultFrom: r.pf.Days[0].Date.String()}
 	for _, v := range r.daysBetween(req.Msg.GetFrom(), req.Msg.GetTo()) {
 		out.Days = append(out.Days, &viewsv1.PerformanceDay{
 			Date: v.Date.String(), Index: v.Index.String(), ValueReporting: money(v.Gross()), FlowReporting: money(v.Flow),
