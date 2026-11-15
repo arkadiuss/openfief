@@ -1,0 +1,43 @@
+[
+  {
+    "run": "15",
+    "date": "2026-11-15",
+    "model": "openai/gpt-oss-120b",
+    "host": "crusoe/bf16",
+    "reasoning": "low",
+    "verdict": "fail",
+    "failing": [
+      {
+        "case": "A2",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A4",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      },
+      {
+        "case": "A9",
+        "tag": "command",
+        "passed": 4,
+        "need": 5
+      }
+    ],
+    "cases": 29,
+    "answered": true,
+    "reliability": {
+      "calls": 263,
+      "transportFailures": 0,
+      "rate": 0,
+      "failed": false
+    },
+    "costPer1k": "0.14717",
+    "costSource": "measured",
+    "configHash": "7456f58e589e0182b530062cf71ccd2d129a8d52fa7e91095658408c804c40f9",
+    "benchSchema": 2,
+    "scorerVersion": 2
+  }
+]
