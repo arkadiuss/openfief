@@ -11,8 +11,8 @@ const maxTransportFailurePercent = 5
 const percent = 100
 
 // Reliability is how a host held up in one run of a model@host: the share of
-// its calls that failed at the transport level (no HTTP answer, a timeout or a
-// 5xx), counted before any retry hides them. Every call counts, retries
+// its calls that failed at the transport level (no HTTP answer, a timeout, a
+// 5xx or a 429 that its retry did not mend), counted before any retry hides them. Every call counts, retries
 // included, since each is a call made.
 type Reliability struct {
 	// Calls is how many calls were made and TransportFailures how many of them

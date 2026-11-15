@@ -15,7 +15,9 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
+	"time"
 )
 
 // maxReplyBytes caps what is read of the provider's reply.
@@ -45,6 +47,8 @@ type CallError struct {
 	// Timeout is true when the call ran out of time without an answer.
 	Timeout bool
 	err     error
+	// retryAfter is the answer's Retry-After header, for the retry of a 429.
+	retryAfter string
 }
 
 // Error is the text of the wrapped error.
@@ -86,7 +90,19 @@ type Client struct {
 	// `include` true, which puts usage.cost (USD) and the serving `provider`
 	// in the reply. Nothing sets it in the plugin; the bench does.
 	IncludeCost bool
+	// Wait pauses for d, or until ctx ends, between a 429 and its one retry;
+	// nil waits on a timer. Now is the clock Retry-After's HTTP date is read
+	// against; nil is time.Now. Tests set both so that none sleeps.
+	Wait func(ctx context.Context, d time.Duration) error
+	Now  func() time.Time
 }
+
+// The wait before the one retry of a 429 (D-207): the provider's Retry-After
+// capped at maxRetryAfter, or defaultRetryWait when it names none.
+const (
+	maxRetryAfter    = 10 * time.Second
+	defaultRetryWait = time.Second
+)
 
 // The values of Client.Reasoning.
 const (
@@ -338,12 +354,70 @@ func (c *Client) addOpenRouterOptions(body map[string]any) {
 	}
 }
 
-// post sends req to the provider and returns the body of its 2xx answer.
+// post sends req to the provider and returns the body of its 2xx answer. A 429
+// is retried once, after the wait retryWait gives, when that wait fits in the
+// time the call has left (D-207): the question's deadline stays the limit. Any
+// other status, a 4xx included, is never retried here.
 func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	body, err := json.Marshal(c.RequestBody(req))
 	if err != nil {
 		return nil, fmt.Errorf("%w: encoding", ErrRejected)
 	}
+	raw, err := c.send(ctx, body)
+	var ce *CallError
+	if err == nil || !errors.As(err, &ce) || ce.Status != http.StatusTooManyRequests {
+		return raw, err
+	}
+	wait := c.retryWait(ce.retryAfter)
+	if deadline, ok := ctx.Deadline(); ok && c.now().Add(wait).After(deadline) {
+		return nil, err
+	}
+	if c.pause(ctx, wait) != nil {
+		return nil, err
+	}
+	return c.send(ctx, body)
+}
+
+// retryWait is how long to wait before retrying a 429 whose Retry-After header
+// is retryAfter: the seconds or the HTTP date it holds, never past maxRetryAfter
+// and never negative; defaultRetryWait when it is empty or neither form.
+func (c *Client) retryWait(retryAfter string) time.Duration {
+	retryAfter = strings.TrimSpace(retryAfter)
+	wait := defaultRetryWait
+	if secs, err := strconv.ParseUint(retryAfter, 10, 31); err == nil {
+		wait = time.Duration(secs) * time.Second
+	} else if at, err := http.ParseTime(retryAfter); err == nil {
+		wait = max(at.Sub(c.now()), 0)
+	}
+	return min(wait, maxRetryAfter)
+}
+
+// now is the client's clock.
+func (c *Client) now() time.Time {
+	if c.Now != nil {
+		return c.Now()
+	}
+	return time.Now()
+}
+
+// pause waits d, or until ctx ends, and returns why it stopped early.
+func (c *Client) pause(ctx context.Context, d time.Duration) error {
+	if c.Wait != nil {
+		return c.Wait(ctx, d)
+	}
+	t := time.NewTimer(d)
+	defer t.Stop()
+	select {
+	case <-t.C:
+		return nil
+	case <-ctx.Done():
+		return fmt.Errorf("waiting to retry: %w", ctx.Err())
+	}
+}
+
+// send makes one POST of body and returns the body of its 2xx answer. The error
+// of a non-2xx answer keeps the answer's Retry-After header.
+func (c *Client) send(ctx context.Context, body []byte) ([]byte, error) {
 	hr, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/chat/completions", bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("%w: building the request", ErrUnavailable)
@@ -366,6 +440,9 @@ func (c *Client) post(ctx context.Context, req *Request) ([]byte, error) {
 	raw, readErr := io.ReadAll(io.LimitReader(resp.Body, maxReplyBytes+1))
 	closeErr := resp.Body.Close()
 	if statusErr := statusError(resp.StatusCode); statusErr != nil {
+		if ce, ok := errors.AsType[*CallError](statusErr); ok {
+			ce.retryAfter = resp.Header.Get("Retry-After")
+		}
 		return nil, statusErr
 	}
 	if readErr != nil || closeErr != nil || len(raw) > maxReplyBytes {

@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-917bca5254ac
+  - type: executable_for
+    from: SYM-openaichat-ratelimit-test-testa429isretriedonceafterthewaitretryaftergives
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:14:11.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a8780ce570e

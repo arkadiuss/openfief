@@ -1,5 +1,5 @@
 ---
-title: A transport failure is retried once, a 4xx or an answer never, and a host over five percent fails reliability
+title: A transport failure is retried once, a 429 once inside the chat client, any other 4xx or an answer never, and a host over five percent fails reliability
 sourceFile: tools/askbench/retry_test.go
 verification_scope: integration
 origin:
@@ -10,4 +10,4 @@ status: active
 id: TEST-askbench-retry
 type: test
 ---
-Runs the bench and the model's calls against a server that drops connections and answers 5xx and 4xx: a failed call is retried once and scored when the retry answers, two failures leave the question not scored, a 4xx or an answer is never retried, the retry spends the budget, the rate is transport-failed calls over calls made, the 5% threshold is exact, and the ranking leaves out an unreliable host.
+Runs the bench and the model's calls against a server that drops connections and answers 5xx and 4xx: a failed call is retried once and scored when the retry answers, two failures leave the question not scored, a 429 is retried inside the chat client and one that stays a 429 counts as a transport failure without a bench retry, any other 4xx or an answer is never retried, the retry spends the budget, the rate is transport-failed calls over calls made, the 5% threshold is exact, and the ranking leaves out an unreliable host.

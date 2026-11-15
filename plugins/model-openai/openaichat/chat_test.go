@@ -1,6 +1,7 @@
 package openaichat
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -54,7 +56,7 @@ func newFake(t *testing.T, reply string) (*fakeProvider, *Client) {
 	f := &fakeProvider{status: http.StatusOK, reply: reply}
 	srv := httptest.NewServer(f)
 	t.Cleanup(srv.Close)
-	return f, &Client{HTTP: srv.Client(), BaseURL: srv.URL + "/v1", Key: func() (string, error) { return fakeKey, nil }}
+	return f, &Client{HTTP: srv.Client(), BaseURL: srv.URL + "/v1", Key: func() (string, error) { return fakeKey, nil }, Wait: noWait}
 }
 
 const textReply = `{"choices":[{"message":{"role":"assistant","content":"synthetic answer"},"finish_reason":"stop"}],
@@ -512,3 +514,7 @@ func TestCompleteReadsTheCostAndTheServingProvider(t *testing.T) {
 		})
 	}
 }
+
+// noWait is the Wait of a client whose test does not look at the wait before a
+// 429's retry: it returns at once.
+func noWait(context.Context, time.Duration) error { return nil }

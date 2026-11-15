@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2fea9b2967b
+  - type: executable_for
+    from: SYM-openaichat-ratelimit-test-testatwice429isanunavailableproviderwiththestatus
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:14:20.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e55112a801

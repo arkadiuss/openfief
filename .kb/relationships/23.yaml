@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4840245fa46c
+  - type: implements
+    from: SYM-openaichat-client-send
+    to: REQ-models-chat-client-retries-429-once
+    created_at: 2026-11-15T09:15:04.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2dd2a05f8fc
+  - type: covered_by
+    from: SYM-openaichat-client-send
+    to: TEST-plugins-model-openai-ratelimit
+    created_at: 2026-11-15T09:15:04.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c11e84024af8

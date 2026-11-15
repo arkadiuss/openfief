@@ -185161,6 +185161,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-model-openai-chat
+      - type: covered_by
+        target: TEST-plugins-model-openai-ratelimit
+      - type: implements
+        target: REQ-models-chat-client-retries-429-once
       - type: implements
         target: REQ-models-openai-compatible-plugin
   - id: SYM-models-plugins-model-openai-chat-parse-reply
@@ -230567,3 +230571,202 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-final-round
+  - id: SYM-openaichat-ratelimit-test-testa429isretriedonceafterthewaitretryaftergives
+    title: TestA429IsRetriedOnceAfterTheWaitRetryAfterGives
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:05.821Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-test-testatwice429isanunavailableproviderwiththestatus
+    title: TestATwice429IsAnUnavailableProviderWithTheStatus
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:15.171Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-test-testotherstatusesareneverretried
+    title: TestOtherStatusesAreNeverRetried
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:23.375Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-test-testa429isnotretriedwhenthewaitdoesnotfitinthedeadline
+    title: TestA429IsNotRetriedWhenTheWaitDoesNotFitInTheDeadline
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:31.794Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-test-testa429isnotretriedwhenthewaitiscut
+    title: TestA429IsNotRetriedWhenTheWaitIsCut
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:40.642Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-client-send
+    title: Client.send
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:14:58.645Z
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-ratelimit
+      - type: implements
+        target: REQ-models-chat-client-retries-429-once
+  - id: SYM-openaichat-client-retrywait
+    title: Client.retryWait
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:15:07.212Z
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-ratelimit
+      - type: implements
+        target: REQ-models-chat-client-retries-429-once
+  - id: SYM-openaichat-client-pause
+    title: Client.pause
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:15:15.656Z
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-ratelimit
+      - type: implements
+        target: REQ-models-chat-client-retries-429-once
+  - id: SYM-openaichat-client-now
+    title: Client.now
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:15:24.912Z
+    sourceFile: plugins/model-openai/openaichat/chat.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-model-openai-ratelimit
+      - type: implements
+        target: REQ-models-chat-client-retries-429-once
+  - id: SYM-askbench-retry-test-testa429thattheclientsretrymendsisoneansweredcall
+    title: TestA429ThatTheClientsRetryMendsIsOneAnsweredCall
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:15:33.381Z
+    sourceFile: tools/askbench/retry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-askbench-retry-test-testastill429isatransportfailurethebenchdoesnotretry
+    title: TestAStill429IsATransportFailureTheBenchDoesNotRetry
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:15:41.692Z
+    sourceFile: tools/askbench/retry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-retry
+  - id: SYM-openaichat-ratelimit-helper-nowait
+    title: noWait
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:42:19.322Z
+    sourceFile: plugins/model-openai/openaichat/chat_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-chat
+  - id: SYM-openaichat-ratelimit-helper-step
+    title: step
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:42:35.211Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-helper-clocknow
+    title: clockNow
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:43:03.960Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-helper-scriptedclient
+    title: scriptedClient
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:43:11.472Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-helper-chatrequest
+    title: chatRequest
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:43:19.155Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
+  - id: SYM-openaichat-ratelimit-helper-rig
+    title: rig
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: 429 handling, retried once honouring Retry-After (D-207), 2026-11-15'
+      recorded_at: 2026-11-15T09:52:24.193Z
+    sourceFile: plugins/model-openai/openaichat/ratelimit_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-model-openai-ratelimit
