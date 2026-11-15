@@ -69,6 +69,55 @@ fresh
 rm "$work/repo/deploy/demo/model/openrouter.yaml"
 expect "a model layer that does not build" fail "the model layer does not build with the demo"
 
+# D-208's guards in the model layer: the core's flags, the UI's config and its grant.
+fresh
+sed -i 's/value: --ask-concurrent-calls=3/value: --ask-concurrent-calls=30/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "calls at once that are not D-208's" fail "the core's flags lack --ask-concurrent-calls=3"
+
+fresh
+sed -i 's/value: --ask-questions-per-hour=10/value: --ask-questions-per-hour=100/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "an hourly limit that is not D-208's" fail "the core's flags lack --ask-questions-per-hour=10"
+
+fresh
+sed -i 's/value: --ask-questions-per-day=30/value: --ask-questions-per-day=300/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a daily limit that is not D-208's" fail "the core's flags lack --ask-questions-per-day=30"
+
+fresh
+sed -i 's/value: --allow-turnstile/value: --allow-turnstile-not/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "no place for Turnstile in the core's policy" fail "the core's flags lack --allow-turnstile"
+
+fresh
+sed -i 's/value: --trusted-proxies=10.42.0.0\/16/value: --trusted-proxies-not/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "no trusted proxy for the address header" fail "the core's flags lack --trusted-proxies"
+
+fresh
+sed -i 's/value: --model-daily-budget-usd=1.00/value: --model-daily-budget-usd=lots/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a budget that is no amount" fail "the core's --model-daily-budget-usd is not a positive amount"
+
+fresh
+sed -i 's/value: --model-daily-budget-usd=1.00/value: --model-daily-budget-usd=0/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a budget of nothing" fail "the core's --model-daily-budget-usd is not a positive amount"
+
+fresh
+sed -i 's/value: \[challenges.cloudflare.com\]/value: [elsewhere.example.com]/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a grant that does not approve Turnstile's host" fail "the UI grant does not approve the host of turnstileVerifyUrl"
+
+fresh
+sed -i 's/value: \[ui--turnstile-secret\]/value: [ui--other]/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a grant that does not name the Turnstile Secret" fail "the UI grant does not name the Secret ui--turnstile-secret"
+
+fresh
+sed -i 's/askOutputTokens: 800/askOutputTokens: 1600/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "limits of one question that are not D-208's" fail "the UI's limits of one question are not D-208's"
+
+fresh
+printf '\ncomponents:\n  - ../model\n' >>"$work/repo/deploy/demo/openfief/kustomization.yaml"
+expect "the placeholder site key in a live demo" fail "has the placeholder Turnstile site key"
+
+fresh
+sed -i 's/REPLACE-WITH-THE-TURNSTILE-SITE-KEY/0x4AAAAAAAxxxxxxxxxxxxxx/' "$work/repo/deploy/demo/model/kustomization.yaml"
+expect "a model layer with a site key" pass "every image is pinned by digest"
+
 if [ "$failures" -ne 0 ]; then
   echo "demo-validate: $failures of $cases cases failed" >&2
   exit 1

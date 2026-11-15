@@ -229893,3 +229893,17 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-ui-turnstile
+  - id: SYM-tooling-demo-validate-guard-failures
+    title: guard_failures
+    status: active
+    sourceFile: scripts/demo/validate.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'M5 brief from the design session: the demo''s spend guards (D-208), plus the M4 follow-ups, 2026-11-14'
+      recorded_at: 2026-11-15T00:17:06.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-demo-model-guards-prepared

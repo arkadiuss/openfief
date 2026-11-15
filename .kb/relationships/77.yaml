@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00cdd1370ea6
+  - type: specified_by
+    from: REQ-demo-model-guards-prepared
+    to: SCEN-demo-model-guards-prepared
+    created_at: 2026-11-15T00:17:05.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56ed07a32ca1
