@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63d0c8424edc
+  - type: executable_for
+    from: SYM-views-period-test-change-text
+    to: TEST-views-period
+    created_at: 2026-11-15T13:11:14.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90ab2693c7ce

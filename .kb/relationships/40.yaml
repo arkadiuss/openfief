@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c87cebc1d919
+  - type: specified_by
+    from: REQ-views-period-change
+    to: SCEN-views-period-change
+    created_at: 2026-11-15T12:27:21.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1db50a7f39

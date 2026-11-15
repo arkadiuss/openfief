@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6cad724bc6c
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-string
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:13:59.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-636c4bfa2a5e
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-string
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:13:59.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5cdd6c70ca0

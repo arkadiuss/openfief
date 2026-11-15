@@ -1175,3 +1175,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d952e9d84dee
+  - type: covered_by
+    from: SYM-views-app-period-views-period-change
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:28:56.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c951dda995b3
+  - type: implements
+    from: SYM-views-app-period-views-period-change
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:28:56.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-244e805cc8d6
+  - type: covered_by
+    from: SYM-views-pb-value-change-get-start-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:12:57.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-554ac657f658
+  - type: implements
+    from: SYM-views-pb-value-change-get-start-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:12:57.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-599e19e97eec
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-reset
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:13:48.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64d6cf5b7b6e
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-reset
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:13:48.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-100afb8f5099

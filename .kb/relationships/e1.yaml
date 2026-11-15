@@ -1000,3 +1000,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b9668ca55a4
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-to
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:16:23.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10e734700b51
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-to
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:16:23.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b446d16c515

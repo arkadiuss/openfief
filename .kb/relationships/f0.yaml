@@ -1056,3 +1056,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c75dca16bef
+  - type: covered_by
+    from: SYM-views-app-period-views-total-on
+    to: TEST-views-app-period
+    created_at: 2026-11-15T12:29:06.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea9d21913fa9
+  - type: implements
+    from: SYM-views-app-period-views-total-on
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:29:06.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a322801a7444

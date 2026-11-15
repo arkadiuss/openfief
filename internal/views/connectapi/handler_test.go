@@ -137,6 +137,7 @@ func TestREST(t *testing.T) {
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_SLEEVE", http.StatusOK},
 		{"/v1/performance", http.StatusOK},
 		{"/v1/performance?from=2026-03-01&to=2026-03-04", http.StatusOK},
+		{"/v1/period-change?from=2026-03-02&to=2026-03-02", http.StatusOK},
 		{"/v1/transfers", http.StatusOK},
 		{"/v1/settings", http.StatusOK},
 		{"/v1/yearly-taxes?year=2026", http.StatusOK},
@@ -157,6 +158,11 @@ func TestREST(t *testing.T) {
 		{"/v1/allocation?date=2026-03-02", http.StatusBadRequest},
 		{"/v1/performance?from=yesterday", http.StatusBadRequest},
 		{"/v1/performance?from=2026-03-02&to=2026-03-01", http.StatusBadRequest},
+		{"/v1/period-change?from=2026-03-02&to=2026-03-01", http.StatusBadRequest},
+		{"/v1/period-change?from=2026-03-02&to=2026-03-04", http.StatusBadRequest},
+		{"/v1/period-change?from=2000-01-01&to=2026-03-02", http.StatusBadRequest},
+		{"/v1/period-change?from=yesterday&to=2026-03-02", http.StatusBadRequest},
+		{"/v1/period-change?to=2026-03-02", http.StatusBadRequest},
 	}
 	for _, tt := range tests {
 		t.Run(tt.target, func(t *testing.T) {

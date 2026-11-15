@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d43cc79de13
+  - type: covered_by
+    from: SYM-views-period-paid-flows
+    to: TEST-views-period
+    created_at: 2026-11-15T12:42:30.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750e1c1525c7
+  - type: implements
+    from: SYM-views-period-paid-flows
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:45:11.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c6f4de52343

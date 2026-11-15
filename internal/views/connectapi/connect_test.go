@@ -2,12 +2,14 @@ package connectapi_test
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/google/go-cmp/cmp"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -86,6 +88,71 @@ func TestConnectPerformance(t *testing.T) {
 	}
 	if got.Msg.GetDefaultFrom() != "2026-03-02" {
 		t.Errorf("GetPerformance().DefaultFrom = %q, want 2026-03-02, the day acc-1 was seeded", got.Msg.GetDefaultFrom())
+	}
+}
+
+// periodSummary is what the Connect test checks of a period's change.
+type periodSummary struct {
+	From, To, Opening, Currency                 string
+	Pending                                     bool
+	GrossStart, GrossEnd, GrossChange, GrossPct string
+	NetEnd                                      string
+	HasLiquidation                              bool
+	Return, NetDeposits                         string
+}
+
+// TestConnectPeriodChange checks the period's change as the core computes it
+// (D-61, D-77): acc-1 is seeded on 2026-03-02, so the period starts on that
+// day's end, and its opening lot is in the start, not a deposit in the
+// period; a value the account lacks, here its liquidation value, is left out.
+func TestConnectPeriodChange(t *testing.T) {
+	t.Parallel()
+	c := newClient(t, newLedger(t))
+	got, err := c.GetPeriodChange(context.Background(), authed(goodToken, &viewsv1.GetPeriodChangeRequest{From: "2026-03-02", To: "2026-03-02"}))
+	if err != nil {
+		t.Fatalf("GetPeriodChange() error = %v", err)
+	}
+	m := got.Msg
+	have := periodSummary{
+		From: m.GetFrom(), To: m.GetTo(), Opening: m.GetOpening(), Currency: m.GetReportingCurrency(), Pending: m.GetRevaluationPending(),
+		GrossStart: m.GetGross().GetStartReporting().GetAmount(), GrossEnd: m.GetGross().GetEndReporting().GetAmount(),
+		GrossChange: m.GetGross().GetChangeReporting().GetAmount(), GrossPct: m.GetGross().GetChangePercent(),
+		NetEnd: m.GetNet().GetEndReporting().GetAmount(), HasLiquidation: m.GetLiquidation() != nil,
+		Return: m.GetReturnPercent(), NetDeposits: m.GetNetDepositsReporting().GetAmount(),
+	}
+	// acc-1 is in an IKZE and the owner set no marginal rate, so its liquidation value is missing (D-78) and the period has none.
+	want := periodSummary{
+		From: "2026-03-02", To: "2026-03-02", Opening: "2026-03-02", Currency: "PLN", Pending: true,
+		GrossStart: "809.21", GrossEnd: "809.21", GrossChange: "0", GrossPct: "0", NetEnd: "728.29", Return: "0", NetDeposits: "0",
+	}
+	if diff := cmp.Diff(want, have); diff != "" {
+		t.Errorf("GetPeriodChange() (-want +got):\n%s", diff)
+	}
+}
+
+// TestConnectPeriodChangeRefusals checks that a period the portfolio is not
+// valued for is a failed precondition and a reversed one or a bad date an
+// invalid argument, each with a fixed text that quotes nothing asked.
+func TestConnectPeriodChangeRefusals(t *testing.T) {
+	t.Parallel()
+	c := newClient(t, newLedger(t))
+	ctx := context.Background()
+	tests := []struct {
+		name     string
+		from, to string
+		want     connect.Code
+		text     string
+	}{
+		{"after the valued-through date", "2026-03-02", "2026-03-03", connect.CodeFailedPrecondition, "the portfolio is not valued for the whole period"},
+		{"reversed", "2026-03-03", "2026-03-02", connect.CodeInvalidArgument, "the date range ends before it starts or is too long"},
+		{"not a date", "yesterday", "2026-03-02", connect.CodeInvalidArgument, "a request field is missing or malformed"},
+	}
+	for _, tt := range tests {
+		_, err := c.GetPeriodChange(ctx, authed(goodToken, &viewsv1.GetPeriodChangeRequest{From: tt.from, To: tt.to}))
+		var ce *connect.Error
+		if !errors.As(err, &ce) || ce.Code() != tt.want || ce.Message() != tt.text {
+			t.Errorf("GetPeriodChange(%s) error = %v, want %v: %s", tt.name, err, tt.want, tt.text)
+		}
 	}
 }
 

@@ -336,6 +336,24 @@ func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[v
 	return connect.NewResponse(pbPerformance(&p, s.views.ReportingCurrency())), nil
 }
 
+// GetPeriodChange answers GET /v1/period-change: how the portfolio's value
+// changed over a period of days (D-61, D-77).
+func (s *readService) GetPeriodChange(ctx context.Context, req *connect.Request[viewsv1.GetPeriodChangeRequest]) (*connect.Response[viewsv1.GetPeriodChangeResponse], error) {
+	from, err := parseDate(req.Msg.GetFrom())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	to, err := parseDate(req.Msg.GetTo())
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	c, err := s.views.PeriodChange(ctx, from, to)
+	if err != nil {
+		return nil, toConnectError(ctx, s.log, err)
+	}
+	return connect.NewResponse(pbPeriodChange(&c, s.views.ReportingCurrency())), nil
+}
+
 // ListTransfers answers GET /v1/transfers (D-105).
 func (s *readService) ListTransfers(ctx context.Context, _ *connect.Request[viewsv1.ListTransfersRequest]) (*connect.Response[viewsv1.ListTransfersResponse], error) {
 	ts, err := s.views.Transfers(ctx)

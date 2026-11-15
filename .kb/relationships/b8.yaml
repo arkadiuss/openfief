@@ -1217,3 +1217,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-608a82b2fead
+  - type: covered_by
+    from: SYM-views-connectapi-convert-pb-value-change
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T12:29:45.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2496d31a6aec
+  - type: implements
+    from: SYM-views-connectapi-convert-pb-value-change
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:29:46.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ed695962654
+  - type: executable_for
+    from: SYM-views-period-test-period-want
+    to: TEST-views-period
+    created_at: 2026-11-15T13:11:23.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21dee0aa9a87
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-gross
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:16:46.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e57e80e21b43
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-gross
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:16:46.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a35045f20074

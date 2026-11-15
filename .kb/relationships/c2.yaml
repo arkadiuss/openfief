@@ -1077,3 +1077,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28f02f062830
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-request-descriptor
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:14:34.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1465a7db07b
+  - type: implements
+    from: SYM-views-pb-get-period-change-request-descriptor
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:14:35.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c20e611f38c
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-return-percent
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:24.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6edac5b96ce1
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-return-percent
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:24.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e63f2b9efe2e

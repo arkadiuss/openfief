@@ -1126,3 +1126,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb9145ca5c9a
+  - type: covered_by
+    from: SYM-views-period-change-of-known
+    to: TEST-views-period
+    created_at: 2026-11-15T12:42:04.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f520f2ca189
+  - type: implements
+    from: SYM-views-period-change-of-known
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:42:04.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa59e30476b

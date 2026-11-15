@@ -298,6 +298,29 @@ func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPe
 	return out
 }
 
+// pbPeriodChange converts how the portfolio's value changed over a period.
+func pbPeriodChange(c *app.PeriodChange, reporting kernel.Currency) *viewsv1.GetPeriodChangeResponse {
+	return &viewsv1.GetPeriodChangeResponse{
+		From: pbDate(c.From), To: pbDate(c.To), Opening: pbDate(c.Opening),
+		Gross: pbValueChange(&c.Gross), Net: pbValueChange(&c.Net), Liquidation: pbValueChange(&c.Liquidation),
+		ReturnPercent: c.Return.String(), DepositsReporting: pbMoney(c.Deposits), WithdrawalsReporting: pbMoney(c.Withdrawals),
+		NetDepositsReporting: pbMoney(c.NetDeposits), ReportingCurrency: reporting.String(), RevaluationPending: c.Pending,
+	}
+}
+
+// pbValueChange converts the change of one value over a period, nil for a
+// value the period lacks.
+func pbValueChange(c *views.ValueChange) *viewsv1.ValueChange {
+	if !c.Known {
+		return nil
+	}
+	out := &viewsv1.ValueChange{StartReporting: pbMoney(c.Start), EndReporting: pbMoney(c.End), ChangeReporting: pbMoney(c.Change)}
+	if c.HasPercent {
+		out.ChangePercent = c.Percent.String()
+	}
+	return out
+}
+
 // pbTransfers converts transfers between the owner's accounts (D-105).
 func pbTransfers(ts []views.Transfer) []*viewsv1.Transfer {
 	out := make([]*viewsv1.Transfer, 0, len(ts))

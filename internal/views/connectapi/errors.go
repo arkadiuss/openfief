@@ -20,20 +20,21 @@ var errBadParameter = errors.New("invalid parameter")
 // What clients see of an error: fixed texts, because an error's own text can
 // quote account IDs, amounts or what was asked for.
 var (
-	errNoSuchAccount = errors.New("no such account")
-	errNoInstrument  = errors.New("no such instrument")
-	errNoInstance    = errors.New("no such connector instance")
-	errModelOff      = errors.New("no model portfolio")
-	errNoPlugins     = errors.New("the installed plugins can't be read now")
-	errBadRange      = errors.New("the date range ends before it starts or is too long")
-	errBadPageToken  = errors.New("the page token is not one this API returned")
-	errBadPageSize   = errors.New("the page size is out of range")
-	errBadDimension  = errors.New("the allocation dimension is not known")
-	errBadField      = errors.New("a request field is missing or malformed")
-	errFailed        = errors.New("the request failed; its request ID names it in the server log")
-	errTokenRequired = errors.New("a bearer token is required")
-	errTokenNotValid = errors.New("the bearer token is not valid")
-	errNoTaxRate     = errors.New("an FX rate the yearly tax needs is not stored yet")
+	errNoSuchAccount  = errors.New("no such account")
+	errNoInstrument   = errors.New("no such instrument")
+	errNoInstance     = errors.New("no such connector instance")
+	errModelOff       = errors.New("no model portfolio")
+	errNoPlugins      = errors.New("the installed plugins can't be read now")
+	errBadRange       = errors.New("the date range ends before it starts or is too long")
+	errBadPageToken   = errors.New("the page token is not one this API returned")
+	errBadPageSize    = errors.New("the page size is out of range")
+	errBadDimension   = errors.New("the allocation dimension is not known")
+	errBadField       = errors.New("a request field is missing or malformed")
+	errFailed         = errors.New("the request failed; its request ID names it in the server log")
+	errTokenRequired  = errors.New("a bearer token is required")
+	errTokenNotValid  = errors.New("the bearer token is not valid")
+	errNoTaxRate      = errors.New("an FX rate the yearly tax needs is not stored yet")
+	errPeriodUnvalued = errors.New("the portfolio is not valued for the whole period")
 )
 
 // invalidMessage returns what a client sees of an error that means the
@@ -58,7 +59,8 @@ func invalidMessage(err error) error {
 // unknown account, instrument or connector instance, invalid argument for
 // an invalid request, unavailable while the installed plugins can't be
 // read or the authorization model can't answer (fail closed, D-164),
-// failed precondition while a yearly tax lacks an FX rate (D-127), and
+// failed precondition while a yearly tax lacks an FX rate (D-127) or the
+// portfolio is not valued for a whole period (GetPeriodChange), and
 // internal, logged under the request ID only, for anything else. Vanguard
 // maps these codes to HTTP statuses for REST (404, 400, 503, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
@@ -82,6 +84,9 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	if errors.Is(err, views.ErrTaxConversion) {
 		return connect.NewError(connect.CodeFailedPrecondition, errNoTaxRate)
+	}
+	if errors.Is(err, views.ErrPeriodUnvalued) {
+		return connect.NewError(connect.CodeFailedPrecondition, errPeriodUnvalued)
 	}
 	if msg := invalidMessage(err); msg != nil {
 		return connect.NewError(connect.CodeInvalidArgument, msg)

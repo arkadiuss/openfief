@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99663758c0cc
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-net
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:16:57.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba53ebf5c46
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-net
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:16:57.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed20a60710b0

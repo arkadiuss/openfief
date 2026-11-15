@@ -231017,3 +231017,990 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-askbench-reasoning-length-trace
+  - id: SYM-views-period-percent-of
+    title: percentOf
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:27:46.050Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-change-of
+    title: changeOf
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:27:55.142Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-change-over
+    title: ChangeOver
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:28:03.459Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-flows-over
+    title: flowsOver
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:28:13.152Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-value-change
+    title: ValueChange
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:28:23.133Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-period-change
+    title: PeriodChange
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:28:32.200Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-app-period-views-period-change
+    title: Views.PeriodChange
+    status: active
+    sourceFile: internal/views/app/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:28:51.376Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-app-period-views-total-on
+    title: Views.totalOn
+    status: active
+    sourceFile: internal/views/app/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:29:01.661Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-app-period-period-change
+    title: PeriodChange
+    status: active
+    sourceFile: internal/views/app/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:29:11.875Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-connectapi-server-read-service-get-period-change
+    title: readService.GetPeriodChange
+    status: active
+    sourceFile: internal/views/connectapi/server.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:29:20.924Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-connectapi-convert-pb-period-change
+    title: pbPeriodChange
+    status: active
+    sourceFile: internal/views/connectapi/convert.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:29:30.319Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-connectapi-convert-pb-value-change
+    title: pbValueChange
+    status: active
+    sourceFile: internal/views/connectapi/convert.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:29:41.086Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-test-test-change-over
+    title: TestChangeOver
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:30:02.157Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-test-change-over-refuses-an-unvalued-period
+    title: TestChangeOverRefusesAnUnvaluedPeriod
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:30:11.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-test-change-over-refuses-another-currency
+    title: TestChangeOverRefusesAnotherCurrency
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:30:20.748Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-app-period-test-test-period-change
+    title: TestPeriodChange
+    status: active
+    sourceFile: internal/views/app/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:30:31.229Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period
+  - id: SYM-views-connectapi-connect-test-test-connect-period-change
+    title: TestConnectPeriodChange
+    status: active
+    sourceFile: internal/views/connectapi/connect_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:30:59.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-views-period-change-of-known
+    title: changeOfKnown
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:00.278Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-period-input-check
+    title: PeriodInput.check
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:09.041Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-period-input-time-weighted-return
+    title: PeriodInput.timeWeightedReturn
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:17.705Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-paid-flows
+    title: paidFlows
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:25.919Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-app-period-opening-day
+    title: openingDay
+    status: active
+    sourceFile: internal/views/app/period.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:34.179Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-app-period-test-test-period-change-refusals
+    title: TestPeriodChangeRefusals
+    status: active
+    sourceFile: internal/views/app/period_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:42.621Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period
+  - id: SYM-views-connectapi-connect-test-test-connect-period-change-refusals
+    title: TestConnectPeriodChangeRefusals
+    status: active
+    sourceFile: internal/views/connectapi/connect_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: the Ask box''s performance and value tools answer for a bounded period, a gap against D-194 (D-203: the read API answers first), 2026-11-15'
+      recorded_at: 2026-11-15T12:42:52.004Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-views-app-period-test-period-figures
+    title: periodFigures
+    status: active
+    sourceFile: internal/views/app/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:09:59.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period
+  - id: SYM-views-app-period-test-figures-of
+    title: figuresOf
+    status: active
+    sourceFile: internal/views/app/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:08.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period
+  - id: SYM-views-app-period-test-new-period-fixture
+    title: newPeriodFixture
+    status: active
+    sourceFile: internal/views/app/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:17.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-period
+  - id: SYM-views-connectapi-connect-test-period-summary
+    title: periodSummary
+    status: active
+    sourceFile: internal/views/connectapi/connect_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:26.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-views-period-period-input
+    title: PeriodInput
+    status: active
+    sourceFile: internal/views/period.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:33.697Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-period
+      - type: implements
+        target: REQ-views-period-change
+  - id: SYM-views-period-test-period-total
+    title: periodTotal
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:42.728Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-period-total-build
+    title: periodTotal.build
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:10:51.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-period-day
+    title: periodDay
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:00.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-change-text
+    title: changeText
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:10.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-period-want
+    title: periodWant
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:18.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-text-of
+    title: textOf
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:28.288Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-period-test-normalized
+    title: normalized
+    status: active
+    sourceFile: internal/views/period_test.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:37.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-period
+  - id: SYM-views-pb-value-change
+    title: ValueChange
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:45.713Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-reset
+    title: ValueChange.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:11:56.744Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-string
+    title: ValueChange.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:12:07.400Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-proto-message
+    title: ValueChange.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:12:18.833Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-proto-reflect
+    title: ValueChange.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:12:29.807Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-descriptor
+    title: ValueChange.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:12:41.140Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-get-start-reporting
+    title: ValueChange.GetStartReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:12:52.265Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-get-end-reporting
+    title: ValueChange.GetEndReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:03.303Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-get-change-reporting
+    title: ValueChange.GetChangeReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:14.533Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-value-change-get-change-percent
+    title: ValueChange.GetChangePercent
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:25.642Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request
+    title: GetPeriodChangeRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:34.367Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-reset
+    title: GetPeriodChangeRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:43.771Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-string
+    title: GetPeriodChangeRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:13:54.651Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-proto-message
+    title: GetPeriodChangeRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:14:06.200Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-proto-reflect
+    title: GetPeriodChangeRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:14:17.869Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-descriptor
+    title: GetPeriodChangeRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:14:30.250Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-get-from
+    title: GetPeriodChangeRequest.GetFrom
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:14:41.342Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-request-get-to
+    title: GetPeriodChangeRequest.GetTo
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:14:52.169Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response
+    title: GetPeriodChangeResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:01.339Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-reset
+    title: GetPeriodChangeResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:12.020Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-string
+    title: GetPeriodChangeResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:22.911Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-proto-message
+    title: GetPeriodChangeResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:34.846Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-proto-reflect
+    title: GetPeriodChangeResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:45.844Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-descriptor
+    title: GetPeriodChangeResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:15:56.773Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-from
+    title: GetPeriodChangeResponse.GetFrom
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:16:07.142Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-to
+    title: GetPeriodChangeResponse.GetTo
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:16:18.741Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-opening
+    title: GetPeriodChangeResponse.GetOpening
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:16:30.082Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-gross
+    title: GetPeriodChangeResponse.GetGross
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:16:41.117Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-net
+    title: GetPeriodChangeResponse.GetNet
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:16:52.183Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-liquidation
+    title: GetPeriodChangeResponse.GetLiquidation
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:17:05.041Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-return-percent
+    title: GetPeriodChangeResponse.GetReturnPercent
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:17:18.690Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-deposits-reporting
+    title: GetPeriodChangeResponse.GetDepositsReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:17:32.434Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-withdrawals-reporting
+    title: GetPeriodChangeResponse.GetWithdrawalsReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:17:43.131Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-net-deposits-reporting
+    title: GetPeriodChangeResponse.GetNetDepositsReporting
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:17:54.043Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-reporting-currency
+    title: GetPeriodChangeResponse.GetReportingCurrency
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:18:05.192Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-period-change-response-get-revaluation-pending
+    title: GetPeriodChangeResponse.GetRevaluationPending
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:18:16.096Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-read-service-client-get-period-change
+    title: readServiceClient.GetPeriodChange
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:18:26.974Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-get-period-change
+    title: UnimplementedReadServiceHandler.GetPeriodChange
+    status: active
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    origin:
+      kind: agent
+      ref: Design session decision for the Ask box period tools, a gap against D-194 and D-203, 2026-11-15
+      recorded_at: 2026-11-15T13:18:36.979Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract

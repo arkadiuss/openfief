@@ -1252,3 +1252,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba9cef9f94fe
+  - type: covered_by
+    from: SYM-views-period-flows-over
+    to: TEST-views-period
+    created_at: 2026-11-15T12:28:18.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebd62d2cf6c6
+  - type: implements
+    from: SYM-views-period-flows-over
+    to: REQ-views-period-change
+    created_at: 2026-11-15T12:28:18.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28cfd2459c7b
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-deposits-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:36.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-869dcb963b5c
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-deposits-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:37.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-071dd7aa2f3d

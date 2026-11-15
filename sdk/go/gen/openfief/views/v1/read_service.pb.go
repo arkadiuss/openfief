@@ -5648,6 +5648,284 @@ func (x *GetPerformanceResponse) GetChosenFrom() string {
 	return ""
 }
 
+// ValueChange is how one of the portfolio's three values (D-77) changed over
+// a period, in the reporting currency.
+type ValueChange struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The value at the end of the opening day.
+	StartReporting *Money `protobuf:"bytes,1,opt,name=start_reporting,json=startReporting,proto3" json:"start_reporting,omitempty"`
+	// The value at the end of the period's last day.
+	EndReporting *Money `protobuf:"bytes,2,opt,name=end_reporting,json=endReporting,proto3" json:"end_reporting,omitempty"`
+	// end_reporting minus start_reporting.
+	ChangeReporting *Money `protobuf:"bytes,3,opt,name=change_reporting,json=changeReporting,proto3" json:"change_reporting,omitempty"`
+	// The change as a percentage of start_reporting, half-even to two
+	// places, signed with a minus: "3.45", "-1.20". Empty when the start is
+	// not positive.
+	ChangePercent string `protobuf:"bytes,4,opt,name=change_percent,json=changePercent,proto3" json:"change_percent,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValueChange) Reset() {
+	*x = ValueChange{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValueChange) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValueChange) ProtoMessage() {}
+
+func (x *ValueChange) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValueChange.ProtoReflect.Descriptor instead.
+func (*ValueChange) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *ValueChange) GetStartReporting() *Money {
+	if x != nil {
+		return x.StartReporting
+	}
+	return nil
+}
+
+func (x *ValueChange) GetEndReporting() *Money {
+	if x != nil {
+		return x.EndReporting
+	}
+	return nil
+}
+
+func (x *ValueChange) GetChangeReporting() *Money {
+	if x != nil {
+		return x.ChangeReporting
+	}
+	return nil
+}
+
+func (x *ValueChange) GetChangePercent() string {
+	if x != nil {
+		return x.ChangePercent
+	}
+	return ""
+}
+
+type GetPeriodChangeRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The first day of the period, YYYY-MM-DD.
+	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	// The last day of the period, inclusive, YYYY-MM-DD; not before from and
+	// at most 3700 days after it.
+	To            string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPeriodChangeRequest) Reset() {
+	*x = GetPeriodChangeRequest{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPeriodChangeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPeriodChangeRequest) ProtoMessage() {}
+
+func (x *GetPeriodChangeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPeriodChangeRequest.ProtoReflect.Descriptor instead.
+func (*GetPeriodChangeRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *GetPeriodChangeRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type GetPeriodChangeResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The period as asked, YYYY-MM-DD.
+	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To   string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	// The day whose end values are the start: the day before from, or from
+	// itself when from is the first day recorded or earlier.
+	Opening string       `protobuf:"bytes,3,opt,name=opening,proto3" json:"opening,omitempty"`
+	Gross   *ValueChange `protobuf:"bytes,4,opt,name=gross,proto3" json:"gross,omitempty"`
+	// Unset when a valued holding or cash lacks the value at either end.
+	Net         *ValueChange `protobuf:"bytes,5,opt,name=net,proto3" json:"net,omitempty"`
+	Liquidation *ValueChange `protobuf:"bytes,6,opt,name=liquidation,proto3" json:"liquidation,omitempty"`
+	// The time-weighted return over the period (D-61), chained from the end
+	// of the opening day, as a percentage, half-even to two places, signed
+	// with a minus: "3.45", "-1.20".
+	ReturnPercent string `protobuf:"bytes,7,opt,name=return_percent,json=returnPercent,proto3" json:"return_percent,omitempty"`
+	// Money paid in and out in the days after opening through to, each a
+	// non-negative amount; a day's deposits and withdrawals net against each
+	// other, and transfers between the owner's own accounts that the owner
+	// confirmed (D-105) are in neither.
+	DepositsReporting    *Money `protobuf:"bytes,8,opt,name=deposits_reporting,json=depositsReporting,proto3" json:"deposits_reporting,omitempty"`
+	WithdrawalsReporting *Money `protobuf:"bytes,9,opt,name=withdrawals_reporting,json=withdrawalsReporting,proto3" json:"withdrawals_reporting,omitempty"`
+	// deposits_reporting minus withdrawals_reporting.
+	NetDepositsReporting *Money `protobuf:"bytes,10,opt,name=net_deposits_reporting,json=netDepositsReporting,proto3" json:"net_deposits_reporting,omitempty"`
+	// The currency of every *_reporting value.
+	ReportingCurrency string `protobuf:"bytes,11,opt,name=reporting_currency,json=reportingCurrency,proto3" json:"reporting_currency,omitempty"`
+	// A revaluation of some account is pending or running, so the figures
+	// may change.
+	RevaluationPending bool `protobuf:"varint,12,opt,name=revaluation_pending,json=revaluationPending,proto3" json:"revaluation_pending,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetPeriodChangeResponse) Reset() {
+	*x = GetPeriodChangeResponse{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPeriodChangeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPeriodChangeResponse) ProtoMessage() {}
+
+func (x *GetPeriodChangeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPeriodChangeResponse.ProtoReflect.Descriptor instead.
+func (*GetPeriodChangeResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *GetPeriodChangeResponse) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeResponse) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeResponse) GetOpening() string {
+	if x != nil {
+		return x.Opening
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeResponse) GetGross() *ValueChange {
+	if x != nil {
+		return x.Gross
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetNet() *ValueChange {
+	if x != nil {
+		return x.Net
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetLiquidation() *ValueChange {
+	if x != nil {
+		return x.Liquidation
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetReturnPercent() string {
+	if x != nil {
+		return x.ReturnPercent
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeResponse) GetDepositsReporting() *Money {
+	if x != nil {
+		return x.DepositsReporting
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetWithdrawalsReporting() *Money {
+	if x != nil {
+		return x.WithdrawalsReporting
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetNetDepositsReporting() *Money {
+	if x != nil {
+		return x.NetDepositsReporting
+	}
+	return nil
+}
+
+func (x *GetPeriodChangeResponse) GetReportingCurrency() string {
+	if x != nil {
+		return x.ReportingCurrency
+	}
+	return ""
+}
+
+func (x *GetPeriodChangeResponse) GetRevaluationPending() bool {
+	if x != nil {
+		return x.RevaluationPending
+	}
+	return false
+}
+
 // ModelTarget is one instrument or index of the model portfolio, with its
 // weight.
 type ModelTarget struct {
@@ -5670,7 +5948,7 @@ type ModelTarget struct {
 
 func (x *ModelTarget) Reset() {
 	*x = ModelTarget{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5682,7 +5960,7 @@ func (x *ModelTarget) String() string {
 func (*ModelTarget) ProtoMessage() {}
 
 func (x *ModelTarget) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5695,7 +5973,7 @@ func (x *ModelTarget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelTarget.ProtoReflect.Descriptor instead.
 func (*ModelTarget) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{65}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *ModelTarget) GetKind() ModelTargetKind {
@@ -5751,7 +6029,7 @@ type Drawdown struct {
 
 func (x *Drawdown) Reset() {
 	*x = Drawdown{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5763,7 +6041,7 @@ func (x *Drawdown) String() string {
 func (*Drawdown) ProtoMessage() {}
 
 func (x *Drawdown) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5776,7 +6054,7 @@ func (x *Drawdown) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Drawdown.ProtoReflect.Descriptor instead.
 func (*Drawdown) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{66}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *Drawdown) GetPeakDate() string {
@@ -5832,7 +6110,7 @@ type ModelTargetHistory struct {
 
 func (x *ModelTargetHistory) Reset() {
 	*x = ModelTargetHistory{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5844,7 +6122,7 @@ func (x *ModelTargetHistory) String() string {
 func (*ModelTargetHistory) ProtoMessage() {}
 
 func (x *ModelTargetHistory) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5857,7 +6135,7 @@ func (x *ModelTargetHistory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelTargetHistory.ProtoReflect.Descriptor instead.
 func (*ModelTargetHistory) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{67}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *ModelTargetHistory) GetTarget() *ModelTarget {
@@ -5909,7 +6187,7 @@ type BacktestDay struct {
 
 func (x *BacktestDay) Reset() {
 	*x = BacktestDay{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5921,7 +6199,7 @@ func (x *BacktestDay) String() string {
 func (*BacktestDay) ProtoMessage() {}
 
 func (x *BacktestDay) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5934,7 +6212,7 @@ func (x *BacktestDay) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BacktestDay.ProtoReflect.Descriptor instead.
 func (*BacktestDay) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{68}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *BacktestDay) GetDate() string {
@@ -5967,7 +6245,7 @@ type GetModelPortfolioRequest struct {
 
 func (x *GetModelPortfolioRequest) Reset() {
 	*x = GetModelPortfolioRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5979,7 +6257,7 @@ func (x *GetModelPortfolioRequest) String() string {
 func (*GetModelPortfolioRequest) ProtoMessage() {}
 
 func (x *GetModelPortfolioRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5992,7 +6270,7 @@ func (x *GetModelPortfolioRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelPortfolioRequest.ProtoReflect.Descriptor instead.
 func (*GetModelPortfolioRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{69}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *GetModelPortfolioRequest) GetFrom() string {
@@ -6037,7 +6315,7 @@ type GetModelPortfolioResponse struct {
 
 func (x *GetModelPortfolioResponse) Reset() {
 	*x = GetModelPortfolioResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6049,7 +6327,7 @@ func (x *GetModelPortfolioResponse) String() string {
 func (*GetModelPortfolioResponse) ProtoMessage() {}
 
 func (x *GetModelPortfolioResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6062,7 +6340,7 @@ func (x *GetModelPortfolioResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelPortfolioResponse.ProtoReflect.Descriptor instead.
 func (*GetModelPortfolioResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{70}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *GetModelPortfolioResponse) GetFrom() string {
@@ -6137,7 +6415,7 @@ type ListPluginsRequest struct {
 
 func (x *ListPluginsRequest) Reset() {
 	*x = ListPluginsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6149,7 +6427,7 @@ func (x *ListPluginsRequest) String() string {
 func (*ListPluginsRequest) ProtoMessage() {}
 
 func (x *ListPluginsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6162,7 +6440,7 @@ func (x *ListPluginsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPluginsRequest.ProtoReflect.Descriptor instead.
 func (*ListPluginsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{71}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{74}
 }
 
 // ListPluginsResponse lists the installed plugin instances.
@@ -6175,7 +6453,7 @@ type ListPluginsResponse struct {
 
 func (x *ListPluginsResponse) Reset() {
 	*x = ListPluginsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6187,7 +6465,7 @@ func (x *ListPluginsResponse) String() string {
 func (*ListPluginsResponse) ProtoMessage() {}
 
 func (x *ListPluginsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6200,7 +6478,7 @@ func (x *ListPluginsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPluginsResponse.ProtoReflect.Descriptor instead.
 func (*ListPluginsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{72}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *ListPluginsResponse) GetPlugins() []*Plugin {
@@ -6280,7 +6558,7 @@ type Plugin struct {
 
 func (x *Plugin) Reset() {
 	*x = Plugin{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6292,7 +6570,7 @@ func (x *Plugin) String() string {
 func (*Plugin) ProtoMessage() {}
 
 func (x *Plugin) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6305,7 +6583,7 @@ func (x *Plugin) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Plugin.ProtoReflect.Descriptor instead.
 func (*Plugin) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{73}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *Plugin) GetInstance() string {
@@ -6472,7 +6750,7 @@ type AttentionItemChange struct {
 
 func (x *AttentionItemChange) Reset() {
 	*x = AttentionItemChange{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6484,7 +6762,7 @@ func (x *AttentionItemChange) String() string {
 func (*AttentionItemChange) ProtoMessage() {}
 
 func (x *AttentionItemChange) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6497,7 +6775,7 @@ func (x *AttentionItemChange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttentionItemChange.ProtoReflect.Descriptor instead.
 func (*AttentionItemChange) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{74}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *AttentionItemChange) GetSeq() int32 {
@@ -6582,7 +6860,7 @@ type AttentionItem struct {
 
 func (x *AttentionItem) Reset() {
 	*x = AttentionItem{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[75]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6594,7 +6872,7 @@ func (x *AttentionItem) String() string {
 func (*AttentionItem) ProtoMessage() {}
 
 func (x *AttentionItem) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[75]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6607,7 +6885,7 @@ func (x *AttentionItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttentionItem.ProtoReflect.Descriptor instead.
 func (*AttentionItem) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{75}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *AttentionItem) GetId() int64 {
@@ -6711,7 +6989,7 @@ type ListAttentionItemsRequest struct {
 
 func (x *ListAttentionItemsRequest) Reset() {
 	*x = ListAttentionItemsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[76]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6723,7 +7001,7 @@ func (x *ListAttentionItemsRequest) String() string {
 func (*ListAttentionItemsRequest) ProtoMessage() {}
 
 func (x *ListAttentionItemsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[76]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6736,7 +7014,7 @@ func (x *ListAttentionItemsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAttentionItemsRequest.ProtoReflect.Descriptor instead.
 func (*ListAttentionItemsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{76}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *ListAttentionItemsRequest) GetView() AttentionView {
@@ -6783,7 +7061,7 @@ type ListAttentionItemsResponse struct {
 
 func (x *ListAttentionItemsResponse) Reset() {
 	*x = ListAttentionItemsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[77]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6795,7 +7073,7 @@ func (x *ListAttentionItemsResponse) String() string {
 func (*ListAttentionItemsResponse) ProtoMessage() {}
 
 func (x *ListAttentionItemsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[77]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6808,7 +7086,7 @@ func (x *ListAttentionItemsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAttentionItemsResponse.ProtoReflect.Descriptor instead.
 func (*ListAttentionItemsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{77}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *ListAttentionItemsResponse) GetItems() []*AttentionItem {
@@ -6878,7 +7156,7 @@ type ActivityBatch struct {
 
 func (x *ActivityBatch) Reset() {
 	*x = ActivityBatch{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[78]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6890,7 +7168,7 @@ func (x *ActivityBatch) String() string {
 func (*ActivityBatch) ProtoMessage() {}
 
 func (x *ActivityBatch) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[78]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6903,7 +7181,7 @@ func (x *ActivityBatch) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivityBatch.ProtoReflect.Descriptor instead.
 func (*ActivityBatch) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{78}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *ActivityBatch) GetBatchId() string {
@@ -7007,7 +7285,7 @@ type BatchAccount struct {
 
 func (x *BatchAccount) Reset() {
 	*x = BatchAccount{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[79]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7019,7 +7297,7 @@ func (x *BatchAccount) String() string {
 func (*BatchAccount) ProtoMessage() {}
 
 func (x *BatchAccount) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[79]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7032,7 +7310,7 @@ func (x *BatchAccount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchAccount.ProtoReflect.Descriptor instead.
 func (*BatchAccount) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{79}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *BatchAccount) GetAccountId() string {
@@ -7095,7 +7373,7 @@ type ActivityChange struct {
 
 func (x *ActivityChange) Reset() {
 	*x = ActivityChange{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[80]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7107,7 +7385,7 @@ func (x *ActivityChange) String() string {
 func (*ActivityChange) ProtoMessage() {}
 
 func (x *ActivityChange) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[80]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7120,7 +7398,7 @@ func (x *ActivityChange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivityChange.ProtoReflect.Descriptor instead.
 func (*ActivityChange) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{80}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *ActivityChange) GetAccountId() string {
@@ -7208,7 +7486,7 @@ type Activity struct {
 
 func (x *Activity) Reset() {
 	*x = Activity{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[81]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7220,7 +7498,7 @@ func (x *Activity) String() string {
 func (*Activity) ProtoMessage() {}
 
 func (x *Activity) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[81]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7233,7 +7511,7 @@ func (x *Activity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Activity.ProtoReflect.Descriptor instead.
 func (*Activity) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{81}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *Activity) GetKind() ActivityKind {
@@ -7290,7 +7568,7 @@ type ListActivityRequest struct {
 
 func (x *ListActivityRequest) Reset() {
 	*x = ListActivityRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[82]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7302,7 +7580,7 @@ func (x *ListActivityRequest) String() string {
 func (*ListActivityRequest) ProtoMessage() {}
 
 func (x *ListActivityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[82]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7315,7 +7593,7 @@ func (x *ListActivityRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityRequest.ProtoReflect.Descriptor instead.
 func (*ListActivityRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{82}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *ListActivityRequest) GetPageSize() int32 {
@@ -7345,7 +7623,7 @@ type ListActivityResponse struct {
 
 func (x *ListActivityResponse) Reset() {
 	*x = ListActivityResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[83]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7357,7 +7635,7 @@ func (x *ListActivityResponse) String() string {
 func (*ListActivityResponse) ProtoMessage() {}
 
 func (x *ListActivityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[83]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7370,7 +7648,7 @@ func (x *ListActivityResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityResponse.ProtoReflect.Descriptor instead.
 func (*ListActivityResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{83}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *ListActivityResponse) GetActivities() []*Activity {
@@ -7419,7 +7697,7 @@ type SyncAttempt struct {
 
 func (x *SyncAttempt) Reset() {
 	*x = SyncAttempt{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[84]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7431,7 +7709,7 @@ func (x *SyncAttempt) String() string {
 func (*SyncAttempt) ProtoMessage() {}
 
 func (x *SyncAttempt) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[84]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7444,7 +7722,7 @@ func (x *SyncAttempt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncAttempt.ProtoReflect.Descriptor instead.
 func (*SyncAttempt) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{84}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *SyncAttempt) GetConnectorInstance() string {
@@ -7543,7 +7821,7 @@ type SyncStatus struct {
 
 func (x *SyncStatus) Reset() {
 	*x = SyncStatus{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[85]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7555,7 +7833,7 @@ func (x *SyncStatus) String() string {
 func (*SyncStatus) ProtoMessage() {}
 
 func (x *SyncStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[85]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7568,7 +7846,7 @@ func (x *SyncStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncStatus.ProtoReflect.Descriptor instead.
 func (*SyncStatus) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{85}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *SyncStatus) GetConnectorInstance() string {
@@ -7635,7 +7913,7 @@ type ListSyncStatusesRequest struct {
 
 func (x *ListSyncStatusesRequest) Reset() {
 	*x = ListSyncStatusesRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[86]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7647,7 +7925,7 @@ func (x *ListSyncStatusesRequest) String() string {
 func (*ListSyncStatusesRequest) ProtoMessage() {}
 
 func (x *ListSyncStatusesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[86]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7660,7 +7938,7 @@ func (x *ListSyncStatusesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncStatusesRequest.ProtoReflect.Descriptor instead.
 func (*ListSyncStatusesRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{86}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{89}
 }
 
 type ListSyncStatusesResponse struct {
@@ -7672,7 +7950,7 @@ type ListSyncStatusesResponse struct {
 
 func (x *ListSyncStatusesResponse) Reset() {
 	*x = ListSyncStatusesResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[87]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7684,7 +7962,7 @@ func (x *ListSyncStatusesResponse) String() string {
 func (*ListSyncStatusesResponse) ProtoMessage() {}
 
 func (x *ListSyncStatusesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[87]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7697,7 +7975,7 @@ func (x *ListSyncStatusesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncStatusesResponse.ProtoReflect.Descriptor instead.
 func (*ListSyncStatusesResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{87}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *ListSyncStatusesResponse) GetStatuses() []*SyncStatus {
@@ -7720,7 +7998,7 @@ type ListSyncAttemptsRequest struct {
 
 func (x *ListSyncAttemptsRequest) Reset() {
 	*x = ListSyncAttemptsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[88]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7732,7 +8010,7 @@ func (x *ListSyncAttemptsRequest) String() string {
 func (*ListSyncAttemptsRequest) ProtoMessage() {}
 
 func (x *ListSyncAttemptsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[88]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7745,7 +8023,7 @@ func (x *ListSyncAttemptsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncAttemptsRequest.ProtoReflect.Descriptor instead.
 func (*ListSyncAttemptsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{88}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *ListSyncAttemptsRequest) GetConnectorInstance() string {
@@ -7783,7 +8061,7 @@ type ListSyncAttemptsResponse struct {
 
 func (x *ListSyncAttemptsResponse) Reset() {
 	*x = ListSyncAttemptsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[89]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7795,7 +8073,7 @@ func (x *ListSyncAttemptsResponse) String() string {
 func (*ListSyncAttemptsResponse) ProtoMessage() {}
 
 func (x *ListSyncAttemptsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[89]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7808,7 +8086,7 @@ func (x *ListSyncAttemptsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncAttemptsResponse.ProtoReflect.Descriptor instead.
 func (*ListSyncAttemptsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{89}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *ListSyncAttemptsResponse) GetStatus() *SyncStatus {
@@ -7852,7 +8130,7 @@ type InstrumentPrice struct {
 
 func (x *InstrumentPrice) Reset() {
 	*x = InstrumentPrice{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[90]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7864,7 +8142,7 @@ func (x *InstrumentPrice) String() string {
 func (*InstrumentPrice) ProtoMessage() {}
 
 func (x *InstrumentPrice) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[90]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7877,7 +8155,7 @@ func (x *InstrumentPrice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentPrice.ProtoReflect.Descriptor instead.
 func (*InstrumentPrice) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{90}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *InstrumentPrice) GetInstrument() *Instrument {
@@ -7929,7 +8207,7 @@ type InstrumentListing struct {
 
 func (x *InstrumentListing) Reset() {
 	*x = InstrumentListing{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[91]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7941,7 +8219,7 @@ func (x *InstrumentListing) String() string {
 func (*InstrumentListing) ProtoMessage() {}
 
 func (x *InstrumentListing) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[91]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7954,7 +8232,7 @@ func (x *InstrumentListing) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentListing.ProtoReflect.Descriptor instead.
 func (*InstrumentListing) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{91}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *InstrumentListing) GetInstrument() *Instrument {
@@ -7997,7 +8275,7 @@ type InstrumentExemptionClass struct {
 
 func (x *InstrumentExemptionClass) Reset() {
 	*x = InstrumentExemptionClass{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[92]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8009,7 +8287,7 @@ func (x *InstrumentExemptionClass) String() string {
 func (*InstrumentExemptionClass) ProtoMessage() {}
 
 func (x *InstrumentExemptionClass) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[92]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8022,7 +8300,7 @@ func (x *InstrumentExemptionClass) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentExemptionClass.ProtoReflect.Descriptor instead.
 func (*InstrumentExemptionClass) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{92}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *InstrumentExemptionClass) GetWrapper() string {
@@ -8078,7 +8356,7 @@ type InstrumentDetail struct {
 
 func (x *InstrumentDetail) Reset() {
 	*x = InstrumentDetail{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[93]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8090,7 +8368,7 @@ func (x *InstrumentDetail) String() string {
 func (*InstrumentDetail) ProtoMessage() {}
 
 func (x *InstrumentDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[93]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8103,7 +8381,7 @@ func (x *InstrumentDetail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentDetail.ProtoReflect.Descriptor instead.
 func (*InstrumentDetail) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{93}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *InstrumentDetail) GetIsin() string {
@@ -8188,7 +8466,7 @@ type BondSeriesTerms struct {
 
 func (x *BondSeriesTerms) Reset() {
 	*x = BondSeriesTerms{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[94]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8200,7 +8478,7 @@ func (x *BondSeriesTerms) String() string {
 func (*BondSeriesTerms) ProtoMessage() {}
 
 func (x *BondSeriesTerms) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[94]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8213,7 +8491,7 @@ func (x *BondSeriesTerms) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BondSeriesTerms.ProtoReflect.Descriptor instead.
 func (*BondSeriesTerms) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{94}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *BondSeriesTerms) GetSeries() string {
@@ -8290,7 +8568,7 @@ type BondTermsAttribution struct {
 
 func (x *BondTermsAttribution) Reset() {
 	*x = BondTermsAttribution{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[95]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8302,7 +8580,7 @@ func (x *BondTermsAttribution) String() string {
 func (*BondTermsAttribution) ProtoMessage() {}
 
 func (x *BondTermsAttribution) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[95]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8315,7 +8593,7 @@ func (x *BondTermsAttribution) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BondTermsAttribution.ProtoReflect.Descriptor instead.
 func (*BondTermsAttribution) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{95}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *BondTermsAttribution) GetPublisher() string {
@@ -8376,7 +8654,7 @@ type GetInstrumentRequest struct {
 
 func (x *GetInstrumentRequest) Reset() {
 	*x = GetInstrumentRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[96]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8388,7 +8666,7 @@ func (x *GetInstrumentRequest) String() string {
 func (*GetInstrumentRequest) ProtoMessage() {}
 
 func (x *GetInstrumentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[96]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8401,7 +8679,7 @@ func (x *GetInstrumentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInstrumentRequest.ProtoReflect.Descriptor instead.
 func (*GetInstrumentRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{96}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *GetInstrumentRequest) GetIsin() string {
@@ -8420,7 +8698,7 @@ type GetInstrumentResponse struct {
 
 func (x *GetInstrumentResponse) Reset() {
 	*x = GetInstrumentResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[97]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8432,7 +8710,7 @@ func (x *GetInstrumentResponse) String() string {
 func (*GetInstrumentResponse) ProtoMessage() {}
 
 func (x *GetInstrumentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[97]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8445,7 +8723,7 @@ func (x *GetInstrumentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInstrumentResponse.ProtoReflect.Descriptor instead.
 func (*GetInstrumentResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{97}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *GetInstrumentResponse) GetInstrument() *InstrumentDetail {
@@ -8467,7 +8745,7 @@ type ListInstrumentPricesRequest struct {
 
 func (x *ListInstrumentPricesRequest) Reset() {
 	*x = ListInstrumentPricesRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[98]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8479,7 +8757,7 @@ func (x *ListInstrumentPricesRequest) String() string {
 func (*ListInstrumentPricesRequest) ProtoMessage() {}
 
 func (x *ListInstrumentPricesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[98]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8492,7 +8770,7 @@ func (x *ListInstrumentPricesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInstrumentPricesRequest.ProtoReflect.Descriptor instead.
 func (*ListInstrumentPricesRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{98}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *ListInstrumentPricesRequest) GetIsin() string {
@@ -8527,7 +8805,7 @@ type ListInstrumentPricesResponse struct {
 
 func (x *ListInstrumentPricesResponse) Reset() {
 	*x = ListInstrumentPricesResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[99]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8539,7 +8817,7 @@ func (x *ListInstrumentPricesResponse) String() string {
 func (*ListInstrumentPricesResponse) ProtoMessage() {}
 
 func (x *ListInstrumentPricesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[99]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8552,7 +8830,7 @@ func (x *ListInstrumentPricesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInstrumentPricesResponse.ProtoReflect.Descriptor instead.
 func (*ListInstrumentPricesResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{99}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *ListInstrumentPricesResponse) GetIsin() string {
@@ -8584,7 +8862,7 @@ type InstrumentHolding struct {
 
 func (x *InstrumentHolding) Reset() {
 	*x = InstrumentHolding{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[100]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8596,7 +8874,7 @@ func (x *InstrumentHolding) String() string {
 func (*InstrumentHolding) ProtoMessage() {}
 
 func (x *InstrumentHolding) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[100]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8609,7 +8887,7 @@ func (x *InstrumentHolding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentHolding.ProtoReflect.Descriptor instead.
 func (*InstrumentHolding) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{100}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *InstrumentHolding) GetAccountId() string {
@@ -8651,7 +8929,7 @@ type ListInstrumentHoldingsRequest struct {
 
 func (x *ListInstrumentHoldingsRequest) Reset() {
 	*x = ListInstrumentHoldingsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[101]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8663,7 +8941,7 @@ func (x *ListInstrumentHoldingsRequest) String() string {
 func (*ListInstrumentHoldingsRequest) ProtoMessage() {}
 
 func (x *ListInstrumentHoldingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[101]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8676,7 +8954,7 @@ func (x *ListInstrumentHoldingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInstrumentHoldingsRequest.ProtoReflect.Descriptor instead.
 func (*ListInstrumentHoldingsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{101}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *ListInstrumentHoldingsRequest) GetIsin() string {
@@ -8705,7 +8983,7 @@ type ListInstrumentHoldingsResponse struct {
 
 func (x *ListInstrumentHoldingsResponse) Reset() {
 	*x = ListInstrumentHoldingsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[102]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8717,7 +8995,7 @@ func (x *ListInstrumentHoldingsResponse) String() string {
 func (*ListInstrumentHoldingsResponse) ProtoMessage() {}
 
 func (x *ListInstrumentHoldingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[102]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8730,7 +9008,7 @@ func (x *ListInstrumentHoldingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInstrumentHoldingsResponse.ProtoReflect.Descriptor instead.
 func (*ListInstrumentHoldingsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{102}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *ListInstrumentHoldingsResponse) GetIsin() string {
@@ -8767,7 +9045,7 @@ type ListInstrumentTransactionsRequest struct {
 
 func (x *ListInstrumentTransactionsRequest) Reset() {
 	*x = ListInstrumentTransactionsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[103]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8779,7 +9057,7 @@ func (x *ListInstrumentTransactionsRequest) String() string {
 func (*ListInstrumentTransactionsRequest) ProtoMessage() {}
 
 func (x *ListInstrumentTransactionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[103]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8792,7 +9070,7 @@ func (x *ListInstrumentTransactionsRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListInstrumentTransactionsRequest.ProtoReflect.Descriptor instead.
 func (*ListInstrumentTransactionsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{103}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *ListInstrumentTransactionsRequest) GetIsin() string {
@@ -8828,7 +9106,7 @@ type ListInstrumentTransactionsResponse struct {
 
 func (x *ListInstrumentTransactionsResponse) Reset() {
 	*x = ListInstrumentTransactionsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[104]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8840,7 +9118,7 @@ func (x *ListInstrumentTransactionsResponse) String() string {
 func (*ListInstrumentTransactionsResponse) ProtoMessage() {}
 
 func (x *ListInstrumentTransactionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[104]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8853,7 +9131,7 @@ func (x *ListInstrumentTransactionsResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListInstrumentTransactionsResponse.ProtoReflect.Descriptor instead.
 func (*ListInstrumentTransactionsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{104}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *ListInstrumentTransactionsResponse) GetTransactions() []*Transaction {
@@ -9220,7 +9498,29 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency\x12!\n" +
 	"\fdefault_from\x18\b \x01(\tR\vdefaultFrom\x12\x1f\n" +
 	"\vchosen_from\x18\t \x01(\tR\n" +
-	"chosenFrom\"\xdd\x01\n" +
+	"chosenFrom\"\xfb\x01\n" +
+	"\vValueChange\x12A\n" +
+	"\x0fstart_reporting\x18\x01 \x01(\v2\x18.openfief.views.v1.MoneyR\x0estartReporting\x12=\n" +
+	"\rend_reporting\x18\x02 \x01(\v2\x18.openfief.views.v1.MoneyR\fendReporting\x12C\n" +
+	"\x10change_reporting\x18\x03 \x01(\v2\x18.openfief.views.v1.MoneyR\x0fchangeReporting\x12%\n" +
+	"\x0echange_percent\x18\x04 \x01(\tR\rchangePercent\"<\n" +
+	"\x16GetPeriodChangeRequest\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\"\xf0\x04\n" +
+	"\x17GetPeriodChangeResponse\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x12\x18\n" +
+	"\aopening\x18\x03 \x01(\tR\aopening\x124\n" +
+	"\x05gross\x18\x04 \x01(\v2\x1e.openfief.views.v1.ValueChangeR\x05gross\x120\n" +
+	"\x03net\x18\x05 \x01(\v2\x1e.openfief.views.v1.ValueChangeR\x03net\x12@\n" +
+	"\vliquidation\x18\x06 \x01(\v2\x1e.openfief.views.v1.ValueChangeR\vliquidation\x12%\n" +
+	"\x0ereturn_percent\x18\a \x01(\tR\rreturnPercent\x12G\n" +
+	"\x12deposits_reporting\x18\b \x01(\v2\x18.openfief.views.v1.MoneyR\x11depositsReporting\x12M\n" +
+	"\x15withdrawals_reporting\x18\t \x01(\v2\x18.openfief.views.v1.MoneyR\x14withdrawalsReporting\x12N\n" +
+	"\x16net_deposits_reporting\x18\n" +
+	" \x01(\v2\x18.openfief.views.v1.MoneyR\x14netDepositsReporting\x12-\n" +
+	"\x12reporting_currency\x18\v \x01(\tR\x11reportingCurrency\x12/\n" +
+	"\x13revaluation_pending\x18\f \x01(\bR\x12revaluationPending\"\xdd\x01\n" +
 	"\vModelTarget\x126\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\".openfief.views.v1.ModelTargetKindR\x04kind\x12=\n" +
 	"\n" +
@@ -9613,7 +9913,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x18SYNC_ERROR_CLASS_BOOKING\x10\x06\x12 \n" +
 	"\x1cSYNC_ERROR_CLASS_INTERRUPTED\x10\a\x12\x1a\n" +
 	"\x16SYNC_ERROR_CLASS_OTHER\x10\b\x12%\n" +
-	"!SYNC_ERROR_CLASS_DELIVERY_TIMEOUT\x10\t2\x81\"\n" +
+	"!SYNC_ERROR_CLASS_DELIVERY_TIMEOUT\x10\t2\x8a#\n" +
 	"\vReadService\x12t\n" +
 	"\vListSleeves\x12%.openfief.views.v1.ListSleevesRequest\x1a&.openfief.views.v1.ListSleevesResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/sleeves\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListSleeveKinds\x12).openfief.views.v1.ListSleeveKindsRequest\x1a*.openfief.views.v1.ListSleeveKindsResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/sleeve-kinds\x90\x02\x01\x12u\n" +
@@ -9634,7 +9934,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x15ListValuationStatuses\x12/.openfief.views.v1.ListValuationStatusesRequest\x1a0.openfief.views.v1.ListValuationStatusesResponse\"\x1f\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/valuation-status\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListPriceChecks\x12).openfief.views.v1.ListPriceChecksRequest\x1a*.openfief.views.v1.ListPriceChecksResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/price-checks\x90\x02\x01\x12}\n" +
 	"\rGetAllocation\x12'.openfief.views.v1.GetAllocationRequest\x1a(.openfief.views.v1.GetAllocationResponse\"\x19\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/allocation\x90\x02\x01\x12\x81\x01\n" +
-	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01\x12|\n" +
+	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01\x12\x86\x01\n" +
+	"\x0fGetPeriodChange\x12).openfief.views.v1.GetPeriodChangeRequest\x1a*.openfief.views.v1.GetPeriodChangeResponse\"\x1c\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/period-change\x90\x02\x01\x12|\n" +
 	"\rListTransfers\x12'.openfief.views.v1.ListTransfersRequest\x1a(.openfief.views.v1.ListTransfersResponse\"\x18\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/transfers\x90\x02\x01\x12\x8e\x01\n" +
 	"\x11GetModelPortfolio\x12+.openfief.views.v1.GetModelPortfolioRequest\x1a,.openfief.views.v1.GetModelPortfolioResponse\"\x1e\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/model-portfolio\x90\x02\x01\x12t\n" +
 	"\vListPlugins\x12%.openfief.views.v1.ListPluginsRequest\x1a&.openfief.views.v1.ListPluginsResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/plugins\x90\x02\x01\x12\x91\x01\n" +
@@ -9661,7 +9962,7 @@ func file_openfief_views_v1_read_service_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 19)
-var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 105)
+var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 108)
 var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(SleeveRole)(0),                            // 0: openfief.views.v1.SleeveRole
 	(BondPayout)(0),                            // 1: openfief.views.v1.BondPayout
@@ -9747,46 +10048,49 @@ var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(*ListTransfersResponse)(nil),              // 81: openfief.views.v1.ListTransfersResponse
 	(*GetPerformanceRequest)(nil),              // 82: openfief.views.v1.GetPerformanceRequest
 	(*GetPerformanceResponse)(nil),             // 83: openfief.views.v1.GetPerformanceResponse
-	(*ModelTarget)(nil),                        // 84: openfief.views.v1.ModelTarget
-	(*Drawdown)(nil),                           // 85: openfief.views.v1.Drawdown
-	(*ModelTargetHistory)(nil),                 // 86: openfief.views.v1.ModelTargetHistory
-	(*BacktestDay)(nil),                        // 87: openfief.views.v1.BacktestDay
-	(*GetModelPortfolioRequest)(nil),           // 88: openfief.views.v1.GetModelPortfolioRequest
-	(*GetModelPortfolioResponse)(nil),          // 89: openfief.views.v1.GetModelPortfolioResponse
-	(*ListPluginsRequest)(nil),                 // 90: openfief.views.v1.ListPluginsRequest
-	(*ListPluginsResponse)(nil),                // 91: openfief.views.v1.ListPluginsResponse
-	(*Plugin)(nil),                             // 92: openfief.views.v1.Plugin
-	(*AttentionItemChange)(nil),                // 93: openfief.views.v1.AttentionItemChange
-	(*AttentionItem)(nil),                      // 94: openfief.views.v1.AttentionItem
-	(*ListAttentionItemsRequest)(nil),          // 95: openfief.views.v1.ListAttentionItemsRequest
-	(*ListAttentionItemsResponse)(nil),         // 96: openfief.views.v1.ListAttentionItemsResponse
-	(*ActivityBatch)(nil),                      // 97: openfief.views.v1.ActivityBatch
-	(*BatchAccount)(nil),                       // 98: openfief.views.v1.BatchAccount
-	(*ActivityChange)(nil),                     // 99: openfief.views.v1.ActivityChange
-	(*Activity)(nil),                           // 100: openfief.views.v1.Activity
-	(*ListActivityRequest)(nil),                // 101: openfief.views.v1.ListActivityRequest
-	(*ListActivityResponse)(nil),               // 102: openfief.views.v1.ListActivityResponse
-	(*SyncAttempt)(nil),                        // 103: openfief.views.v1.SyncAttempt
-	(*SyncStatus)(nil),                         // 104: openfief.views.v1.SyncStatus
-	(*ListSyncStatusesRequest)(nil),            // 105: openfief.views.v1.ListSyncStatusesRequest
-	(*ListSyncStatusesResponse)(nil),           // 106: openfief.views.v1.ListSyncStatusesResponse
-	(*ListSyncAttemptsRequest)(nil),            // 107: openfief.views.v1.ListSyncAttemptsRequest
-	(*ListSyncAttemptsResponse)(nil),           // 108: openfief.views.v1.ListSyncAttemptsResponse
-	(*InstrumentPrice)(nil),                    // 109: openfief.views.v1.InstrumentPrice
-	(*InstrumentListing)(nil),                  // 110: openfief.views.v1.InstrumentListing
-	(*InstrumentExemptionClass)(nil),           // 111: openfief.views.v1.InstrumentExemptionClass
-	(*InstrumentDetail)(nil),                   // 112: openfief.views.v1.InstrumentDetail
-	(*BondSeriesTerms)(nil),                    // 113: openfief.views.v1.BondSeriesTerms
-	(*BondTermsAttribution)(nil),               // 114: openfief.views.v1.BondTermsAttribution
-	(*GetInstrumentRequest)(nil),               // 115: openfief.views.v1.GetInstrumentRequest
-	(*GetInstrumentResponse)(nil),              // 116: openfief.views.v1.GetInstrumentResponse
-	(*ListInstrumentPricesRequest)(nil),        // 117: openfief.views.v1.ListInstrumentPricesRequest
-	(*ListInstrumentPricesResponse)(nil),       // 118: openfief.views.v1.ListInstrumentPricesResponse
-	(*InstrumentHolding)(nil),                  // 119: openfief.views.v1.InstrumentHolding
-	(*ListInstrumentHoldingsRequest)(nil),      // 120: openfief.views.v1.ListInstrumentHoldingsRequest
-	(*ListInstrumentHoldingsResponse)(nil),     // 121: openfief.views.v1.ListInstrumentHoldingsResponse
-	(*ListInstrumentTransactionsRequest)(nil),  // 122: openfief.views.v1.ListInstrumentTransactionsRequest
-	(*ListInstrumentTransactionsResponse)(nil), // 123: openfief.views.v1.ListInstrumentTransactionsResponse
+	(*ValueChange)(nil),                        // 84: openfief.views.v1.ValueChange
+	(*GetPeriodChangeRequest)(nil),             // 85: openfief.views.v1.GetPeriodChangeRequest
+	(*GetPeriodChangeResponse)(nil),            // 86: openfief.views.v1.GetPeriodChangeResponse
+	(*ModelTarget)(nil),                        // 87: openfief.views.v1.ModelTarget
+	(*Drawdown)(nil),                           // 88: openfief.views.v1.Drawdown
+	(*ModelTargetHistory)(nil),                 // 89: openfief.views.v1.ModelTargetHistory
+	(*BacktestDay)(nil),                        // 90: openfief.views.v1.BacktestDay
+	(*GetModelPortfolioRequest)(nil),           // 91: openfief.views.v1.GetModelPortfolioRequest
+	(*GetModelPortfolioResponse)(nil),          // 92: openfief.views.v1.GetModelPortfolioResponse
+	(*ListPluginsRequest)(nil),                 // 93: openfief.views.v1.ListPluginsRequest
+	(*ListPluginsResponse)(nil),                // 94: openfief.views.v1.ListPluginsResponse
+	(*Plugin)(nil),                             // 95: openfief.views.v1.Plugin
+	(*AttentionItemChange)(nil),                // 96: openfief.views.v1.AttentionItemChange
+	(*AttentionItem)(nil),                      // 97: openfief.views.v1.AttentionItem
+	(*ListAttentionItemsRequest)(nil),          // 98: openfief.views.v1.ListAttentionItemsRequest
+	(*ListAttentionItemsResponse)(nil),         // 99: openfief.views.v1.ListAttentionItemsResponse
+	(*ActivityBatch)(nil),                      // 100: openfief.views.v1.ActivityBatch
+	(*BatchAccount)(nil),                       // 101: openfief.views.v1.BatchAccount
+	(*ActivityChange)(nil),                     // 102: openfief.views.v1.ActivityChange
+	(*Activity)(nil),                           // 103: openfief.views.v1.Activity
+	(*ListActivityRequest)(nil),                // 104: openfief.views.v1.ListActivityRequest
+	(*ListActivityResponse)(nil),               // 105: openfief.views.v1.ListActivityResponse
+	(*SyncAttempt)(nil),                        // 106: openfief.views.v1.SyncAttempt
+	(*SyncStatus)(nil),                         // 107: openfief.views.v1.SyncStatus
+	(*ListSyncStatusesRequest)(nil),            // 108: openfief.views.v1.ListSyncStatusesRequest
+	(*ListSyncStatusesResponse)(nil),           // 109: openfief.views.v1.ListSyncStatusesResponse
+	(*ListSyncAttemptsRequest)(nil),            // 110: openfief.views.v1.ListSyncAttemptsRequest
+	(*ListSyncAttemptsResponse)(nil),           // 111: openfief.views.v1.ListSyncAttemptsResponse
+	(*InstrumentPrice)(nil),                    // 112: openfief.views.v1.InstrumentPrice
+	(*InstrumentListing)(nil),                  // 113: openfief.views.v1.InstrumentListing
+	(*InstrumentExemptionClass)(nil),           // 114: openfief.views.v1.InstrumentExemptionClass
+	(*InstrumentDetail)(nil),                   // 115: openfief.views.v1.InstrumentDetail
+	(*BondSeriesTerms)(nil),                    // 116: openfief.views.v1.BondSeriesTerms
+	(*BondTermsAttribution)(nil),               // 117: openfief.views.v1.BondTermsAttribution
+	(*GetInstrumentRequest)(nil),               // 118: openfief.views.v1.GetInstrumentRequest
+	(*GetInstrumentResponse)(nil),              // 119: openfief.views.v1.GetInstrumentResponse
+	(*ListInstrumentPricesRequest)(nil),        // 120: openfief.views.v1.ListInstrumentPricesRequest
+	(*ListInstrumentPricesResponse)(nil),       // 121: openfief.views.v1.ListInstrumentPricesResponse
+	(*InstrumentHolding)(nil),                  // 122: openfief.views.v1.InstrumentHolding
+	(*ListInstrumentHoldingsRequest)(nil),      // 123: openfief.views.v1.ListInstrumentHoldingsRequest
+	(*ListInstrumentHoldingsResponse)(nil),     // 124: openfief.views.v1.ListInstrumentHoldingsResponse
+	(*ListInstrumentTransactionsRequest)(nil),  // 125: openfief.views.v1.ListInstrumentTransactionsRequest
+	(*ListInstrumentTransactionsResponse)(nil), // 126: openfief.views.v1.ListInstrumentTransactionsResponse
 }
 var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	0,   // 0: openfief.views.v1.Sleeve.role:type_name -> openfief.views.v1.SleeveRole
@@ -9875,119 +10179,130 @@ var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	78,  // 83: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
 	9,   // 84: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
 	79,  // 85: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
-	10,  // 86: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
-	20,  // 87: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
-	84,  // 88: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
-	11,  // 89: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
-	85,  // 90: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
-	84,  // 91: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
-	87,  // 92: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
-	85,  // 93: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
-	86,  // 94: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
-	92,  // 95: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
-	12,  // 96: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
-	13,  // 97: openfief.views.v1.AttentionItemChange.state:type_name -> openfief.views.v1.AttentionItemState
-	14,  // 98: openfief.views.v1.AttentionItemChange.reason:type_name -> openfief.views.v1.AttentionItemReason
-	13,  // 99: openfief.views.v1.AttentionItem.state:type_name -> openfief.views.v1.AttentionItemState
-	93,  // 100: openfief.views.v1.AttentionItem.history:type_name -> openfief.views.v1.AttentionItemChange
-	15,  // 101: openfief.views.v1.AttentionItem.group:type_name -> openfief.views.v1.AttentionItemGroup
-	16,  // 102: openfief.views.v1.ListAttentionItemsRequest.view:type_name -> openfief.views.v1.AttentionView
-	94,  // 103: openfief.views.v1.ListAttentionItemsResponse.items:type_name -> openfief.views.v1.AttentionItem
-	98,  // 104: openfief.views.v1.ActivityBatch.accounts:type_name -> openfief.views.v1.BatchAccount
-	4,   // 105: openfief.views.v1.ActivityChange.kind:type_name -> openfief.views.v1.TransactionKind
-	20,  // 106: openfief.views.v1.ActivityChange.instrument:type_name -> openfief.views.v1.Instrument
-	19,  // 107: openfief.views.v1.ActivityChange.amount:type_name -> openfief.views.v1.Money
-	17,  // 108: openfief.views.v1.Activity.kind:type_name -> openfief.views.v1.ActivityKind
-	97,  // 109: openfief.views.v1.Activity.batch:type_name -> openfief.views.v1.ActivityBatch
-	103, // 110: openfief.views.v1.Activity.attempt:type_name -> openfief.views.v1.SyncAttempt
-	99,  // 111: openfief.views.v1.Activity.change:type_name -> openfief.views.v1.ActivityChange
-	100, // 112: openfief.views.v1.ListActivityResponse.activities:type_name -> openfief.views.v1.Activity
-	18,  // 113: openfief.views.v1.SyncAttempt.error_class:type_name -> openfief.views.v1.SyncErrorClass
-	98,  // 114: openfief.views.v1.SyncAttempt.accounts:type_name -> openfief.views.v1.BatchAccount
-	18,  // 115: openfief.views.v1.SyncStatus.last_error_class:type_name -> openfief.views.v1.SyncErrorClass
-	104, // 116: openfief.views.v1.ListSyncStatusesResponse.statuses:type_name -> openfief.views.v1.SyncStatus
-	104, // 117: openfief.views.v1.ListSyncAttemptsResponse.status:type_name -> openfief.views.v1.SyncStatus
-	103, // 118: openfief.views.v1.ListSyncAttemptsResponse.attempts:type_name -> openfief.views.v1.SyncAttempt
-	20,  // 119: openfief.views.v1.InstrumentPrice.instrument:type_name -> openfief.views.v1.Instrument
-	19,  // 120: openfief.views.v1.InstrumentPrice.close:type_name -> openfief.views.v1.Money
-	20,  // 121: openfief.views.v1.InstrumentListing.instrument:type_name -> openfief.views.v1.Instrument
-	109, // 122: openfief.views.v1.InstrumentListing.latest_price:type_name -> openfief.views.v1.InstrumentPrice
-	110, // 123: openfief.views.v1.InstrumentDetail.listings:type_name -> openfief.views.v1.InstrumentListing
-	111, // 124: openfief.views.v1.InstrumentDetail.exemption_classes:type_name -> openfief.views.v1.InstrumentExemptionClass
-	113, // 125: openfief.views.v1.InstrumentDetail.bond_terms:type_name -> openfief.views.v1.BondSeriesTerms
-	19,  // 126: openfief.views.v1.BondSeriesTerms.early_redemption_fee:type_name -> openfief.views.v1.Money
-	114, // 127: openfief.views.v1.BondSeriesTerms.attribution:type_name -> openfief.views.v1.BondTermsAttribution
-	112, // 128: openfief.views.v1.GetInstrumentResponse.instrument:type_name -> openfief.views.v1.InstrumentDetail
-	109, // 129: openfief.views.v1.ListInstrumentPricesResponse.prices:type_name -> openfief.views.v1.InstrumentPrice
-	20,  // 130: openfief.views.v1.InstrumentHolding.instrument:type_name -> openfief.views.v1.Instrument
-	33,  // 131: openfief.views.v1.InstrumentHolding.lots:type_name -> openfief.views.v1.Lot
-	119, // 132: openfief.views.v1.ListInstrumentHoldingsResponse.holdings:type_name -> openfief.views.v1.InstrumentHolding
-	31,  // 133: openfief.views.v1.ListInstrumentTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
-	41,  // 134: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
-	43,  // 135: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
-	47,  // 136: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
-	50,  // 137: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
-	52,  // 138: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
-	45,  // 139: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
-	54,  // 140: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
-	56,  // 141: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
-	58,  // 142: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
-	60,  // 143: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
-	62,  // 144: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
-	64,  // 145: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
-	66,  // 146: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
-	68,  // 147: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
-	70,  // 148: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
-	72,  // 149: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
-	74,  // 150: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
-	76,  // 151: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
-	82,  // 152: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
-	80,  // 153: openfief.views.v1.ReadService.ListTransfers:input_type -> openfief.views.v1.ListTransfersRequest
-	88,  // 154: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
-	90,  // 155: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
-	95,  // 156: openfief.views.v1.ReadService.ListAttentionItems:input_type -> openfief.views.v1.ListAttentionItemsRequest
-	101, // 157: openfief.views.v1.ReadService.ListActivity:input_type -> openfief.views.v1.ListActivityRequest
-	105, // 158: openfief.views.v1.ReadService.ListSyncStatuses:input_type -> openfief.views.v1.ListSyncStatusesRequest
-	107, // 159: openfief.views.v1.ReadService.ListSyncAttempts:input_type -> openfief.views.v1.ListSyncAttemptsRequest
-	115, // 160: openfief.views.v1.ReadService.GetInstrument:input_type -> openfief.views.v1.GetInstrumentRequest
-	117, // 161: openfief.views.v1.ReadService.ListInstrumentPrices:input_type -> openfief.views.v1.ListInstrumentPricesRequest
-	120, // 162: openfief.views.v1.ReadService.ListInstrumentHoldings:input_type -> openfief.views.v1.ListInstrumentHoldingsRequest
-	122, // 163: openfief.views.v1.ReadService.ListInstrumentTransactions:input_type -> openfief.views.v1.ListInstrumentTransactionsRequest
-	42,  // 164: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
-	44,  // 165: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
-	48,  // 166: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
-	51,  // 167: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
-	53,  // 168: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
-	46,  // 169: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
-	55,  // 170: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
-	57,  // 171: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
-	59,  // 172: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
-	61,  // 173: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
-	63,  // 174: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
-	65,  // 175: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
-	67,  // 176: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
-	69,  // 177: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
-	71,  // 178: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
-	73,  // 179: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
-	75,  // 180: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
-	77,  // 181: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
-	83,  // 182: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
-	81,  // 183: openfief.views.v1.ReadService.ListTransfers:output_type -> openfief.views.v1.ListTransfersResponse
-	89,  // 184: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
-	91,  // 185: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
-	96,  // 186: openfief.views.v1.ReadService.ListAttentionItems:output_type -> openfief.views.v1.ListAttentionItemsResponse
-	102, // 187: openfief.views.v1.ReadService.ListActivity:output_type -> openfief.views.v1.ListActivityResponse
-	106, // 188: openfief.views.v1.ReadService.ListSyncStatuses:output_type -> openfief.views.v1.ListSyncStatusesResponse
-	108, // 189: openfief.views.v1.ReadService.ListSyncAttempts:output_type -> openfief.views.v1.ListSyncAttemptsResponse
-	116, // 190: openfief.views.v1.ReadService.GetInstrument:output_type -> openfief.views.v1.GetInstrumentResponse
-	118, // 191: openfief.views.v1.ReadService.ListInstrumentPrices:output_type -> openfief.views.v1.ListInstrumentPricesResponse
-	121, // 192: openfief.views.v1.ReadService.ListInstrumentHoldings:output_type -> openfief.views.v1.ListInstrumentHoldingsResponse
-	123, // 193: openfief.views.v1.ReadService.ListInstrumentTransactions:output_type -> openfief.views.v1.ListInstrumentTransactionsResponse
-	164, // [164:194] is the sub-list for method output_type
-	134, // [134:164] is the sub-list for method input_type
-	134, // [134:134] is the sub-list for extension type_name
-	134, // [134:134] is the sub-list for extension extendee
-	0,   // [0:134] is the sub-list for field type_name
+	19,  // 86: openfief.views.v1.ValueChange.start_reporting:type_name -> openfief.views.v1.Money
+	19,  // 87: openfief.views.v1.ValueChange.end_reporting:type_name -> openfief.views.v1.Money
+	19,  // 88: openfief.views.v1.ValueChange.change_reporting:type_name -> openfief.views.v1.Money
+	84,  // 89: openfief.views.v1.GetPeriodChangeResponse.gross:type_name -> openfief.views.v1.ValueChange
+	84,  // 90: openfief.views.v1.GetPeriodChangeResponse.net:type_name -> openfief.views.v1.ValueChange
+	84,  // 91: openfief.views.v1.GetPeriodChangeResponse.liquidation:type_name -> openfief.views.v1.ValueChange
+	19,  // 92: openfief.views.v1.GetPeriodChangeResponse.deposits_reporting:type_name -> openfief.views.v1.Money
+	19,  // 93: openfief.views.v1.GetPeriodChangeResponse.withdrawals_reporting:type_name -> openfief.views.v1.Money
+	19,  // 94: openfief.views.v1.GetPeriodChangeResponse.net_deposits_reporting:type_name -> openfief.views.v1.Money
+	10,  // 95: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
+	20,  // 96: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
+	87,  // 97: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
+	11,  // 98: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
+	88,  // 99: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
+	87,  // 100: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
+	90,  // 101: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
+	88,  // 102: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
+	89,  // 103: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
+	95,  // 104: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
+	12,  // 105: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
+	13,  // 106: openfief.views.v1.AttentionItemChange.state:type_name -> openfief.views.v1.AttentionItemState
+	14,  // 107: openfief.views.v1.AttentionItemChange.reason:type_name -> openfief.views.v1.AttentionItemReason
+	13,  // 108: openfief.views.v1.AttentionItem.state:type_name -> openfief.views.v1.AttentionItemState
+	96,  // 109: openfief.views.v1.AttentionItem.history:type_name -> openfief.views.v1.AttentionItemChange
+	15,  // 110: openfief.views.v1.AttentionItem.group:type_name -> openfief.views.v1.AttentionItemGroup
+	16,  // 111: openfief.views.v1.ListAttentionItemsRequest.view:type_name -> openfief.views.v1.AttentionView
+	97,  // 112: openfief.views.v1.ListAttentionItemsResponse.items:type_name -> openfief.views.v1.AttentionItem
+	101, // 113: openfief.views.v1.ActivityBatch.accounts:type_name -> openfief.views.v1.BatchAccount
+	4,   // 114: openfief.views.v1.ActivityChange.kind:type_name -> openfief.views.v1.TransactionKind
+	20,  // 115: openfief.views.v1.ActivityChange.instrument:type_name -> openfief.views.v1.Instrument
+	19,  // 116: openfief.views.v1.ActivityChange.amount:type_name -> openfief.views.v1.Money
+	17,  // 117: openfief.views.v1.Activity.kind:type_name -> openfief.views.v1.ActivityKind
+	100, // 118: openfief.views.v1.Activity.batch:type_name -> openfief.views.v1.ActivityBatch
+	106, // 119: openfief.views.v1.Activity.attempt:type_name -> openfief.views.v1.SyncAttempt
+	102, // 120: openfief.views.v1.Activity.change:type_name -> openfief.views.v1.ActivityChange
+	103, // 121: openfief.views.v1.ListActivityResponse.activities:type_name -> openfief.views.v1.Activity
+	18,  // 122: openfief.views.v1.SyncAttempt.error_class:type_name -> openfief.views.v1.SyncErrorClass
+	101, // 123: openfief.views.v1.SyncAttempt.accounts:type_name -> openfief.views.v1.BatchAccount
+	18,  // 124: openfief.views.v1.SyncStatus.last_error_class:type_name -> openfief.views.v1.SyncErrorClass
+	107, // 125: openfief.views.v1.ListSyncStatusesResponse.statuses:type_name -> openfief.views.v1.SyncStatus
+	107, // 126: openfief.views.v1.ListSyncAttemptsResponse.status:type_name -> openfief.views.v1.SyncStatus
+	106, // 127: openfief.views.v1.ListSyncAttemptsResponse.attempts:type_name -> openfief.views.v1.SyncAttempt
+	20,  // 128: openfief.views.v1.InstrumentPrice.instrument:type_name -> openfief.views.v1.Instrument
+	19,  // 129: openfief.views.v1.InstrumentPrice.close:type_name -> openfief.views.v1.Money
+	20,  // 130: openfief.views.v1.InstrumentListing.instrument:type_name -> openfief.views.v1.Instrument
+	112, // 131: openfief.views.v1.InstrumentListing.latest_price:type_name -> openfief.views.v1.InstrumentPrice
+	113, // 132: openfief.views.v1.InstrumentDetail.listings:type_name -> openfief.views.v1.InstrumentListing
+	114, // 133: openfief.views.v1.InstrumentDetail.exemption_classes:type_name -> openfief.views.v1.InstrumentExemptionClass
+	116, // 134: openfief.views.v1.InstrumentDetail.bond_terms:type_name -> openfief.views.v1.BondSeriesTerms
+	19,  // 135: openfief.views.v1.BondSeriesTerms.early_redemption_fee:type_name -> openfief.views.v1.Money
+	117, // 136: openfief.views.v1.BondSeriesTerms.attribution:type_name -> openfief.views.v1.BondTermsAttribution
+	115, // 137: openfief.views.v1.GetInstrumentResponse.instrument:type_name -> openfief.views.v1.InstrumentDetail
+	112, // 138: openfief.views.v1.ListInstrumentPricesResponse.prices:type_name -> openfief.views.v1.InstrumentPrice
+	20,  // 139: openfief.views.v1.InstrumentHolding.instrument:type_name -> openfief.views.v1.Instrument
+	33,  // 140: openfief.views.v1.InstrumentHolding.lots:type_name -> openfief.views.v1.Lot
+	122, // 141: openfief.views.v1.ListInstrumentHoldingsResponse.holdings:type_name -> openfief.views.v1.InstrumentHolding
+	31,  // 142: openfief.views.v1.ListInstrumentTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
+	41,  // 143: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
+	43,  // 144: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
+	47,  // 145: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
+	50,  // 146: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
+	52,  // 147: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
+	45,  // 148: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
+	54,  // 149: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
+	56,  // 150: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
+	58,  // 151: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
+	60,  // 152: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
+	62,  // 153: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
+	64,  // 154: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
+	66,  // 155: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
+	68,  // 156: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
+	70,  // 157: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
+	72,  // 158: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
+	74,  // 159: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
+	76,  // 160: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
+	82,  // 161: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
+	85,  // 162: openfief.views.v1.ReadService.GetPeriodChange:input_type -> openfief.views.v1.GetPeriodChangeRequest
+	80,  // 163: openfief.views.v1.ReadService.ListTransfers:input_type -> openfief.views.v1.ListTransfersRequest
+	91,  // 164: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
+	93,  // 165: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
+	98,  // 166: openfief.views.v1.ReadService.ListAttentionItems:input_type -> openfief.views.v1.ListAttentionItemsRequest
+	104, // 167: openfief.views.v1.ReadService.ListActivity:input_type -> openfief.views.v1.ListActivityRequest
+	108, // 168: openfief.views.v1.ReadService.ListSyncStatuses:input_type -> openfief.views.v1.ListSyncStatusesRequest
+	110, // 169: openfief.views.v1.ReadService.ListSyncAttempts:input_type -> openfief.views.v1.ListSyncAttemptsRequest
+	118, // 170: openfief.views.v1.ReadService.GetInstrument:input_type -> openfief.views.v1.GetInstrumentRequest
+	120, // 171: openfief.views.v1.ReadService.ListInstrumentPrices:input_type -> openfief.views.v1.ListInstrumentPricesRequest
+	123, // 172: openfief.views.v1.ReadService.ListInstrumentHoldings:input_type -> openfief.views.v1.ListInstrumentHoldingsRequest
+	125, // 173: openfief.views.v1.ReadService.ListInstrumentTransactions:input_type -> openfief.views.v1.ListInstrumentTransactionsRequest
+	42,  // 174: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
+	44,  // 175: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
+	48,  // 176: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
+	51,  // 177: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
+	53,  // 178: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
+	46,  // 179: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
+	55,  // 180: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
+	57,  // 181: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
+	59,  // 182: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
+	61,  // 183: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
+	63,  // 184: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
+	65,  // 185: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
+	67,  // 186: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
+	69,  // 187: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
+	71,  // 188: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
+	73,  // 189: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
+	75,  // 190: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
+	77,  // 191: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
+	83,  // 192: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
+	86,  // 193: openfief.views.v1.ReadService.GetPeriodChange:output_type -> openfief.views.v1.GetPeriodChangeResponse
+	81,  // 194: openfief.views.v1.ReadService.ListTransfers:output_type -> openfief.views.v1.ListTransfersResponse
+	92,  // 195: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
+	94,  // 196: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
+	99,  // 197: openfief.views.v1.ReadService.ListAttentionItems:output_type -> openfief.views.v1.ListAttentionItemsResponse
+	105, // 198: openfief.views.v1.ReadService.ListActivity:output_type -> openfief.views.v1.ListActivityResponse
+	109, // 199: openfief.views.v1.ReadService.ListSyncStatuses:output_type -> openfief.views.v1.ListSyncStatusesResponse
+	111, // 200: openfief.views.v1.ReadService.ListSyncAttempts:output_type -> openfief.views.v1.ListSyncAttemptsResponse
+	119, // 201: openfief.views.v1.ReadService.GetInstrument:output_type -> openfief.views.v1.GetInstrumentResponse
+	121, // 202: openfief.views.v1.ReadService.ListInstrumentPrices:output_type -> openfief.views.v1.ListInstrumentPricesResponse
+	124, // 203: openfief.views.v1.ReadService.ListInstrumentHoldings:output_type -> openfief.views.v1.ListInstrumentHoldingsResponse
+	126, // 204: openfief.views.v1.ReadService.ListInstrumentTransactions:output_type -> openfief.views.v1.ListInstrumentTransactionsResponse
+	174, // [174:205] is the sub-list for method output_type
+	143, // [143:174] is the sub-list for method input_type
+	143, // [143:143] is the sub-list for extension type_name
+	143, // [143:143] is the sub-list for extension extendee
+	0,   // [0:143] is the sub-list for field type_name
 }
 
 func init() { file_openfief_views_v1_read_service_proto_init() }
@@ -10001,7 +10316,7 @@ func file_openfief_views_v1_read_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_views_v1_read_service_proto_rawDesc), len(file_openfief_views_v1_read_service_proto_rawDesc)),
 			NumEnums:      19,
-			NumMessages:   105,
+			NumMessages:   108,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

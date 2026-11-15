@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2759878fa2ef
+  - type: executable_for
+    from: SYM-views-connectapi-connect-test-period-summary
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:10:30.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a27316ee2cd2

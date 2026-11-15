@@ -1413,3 +1413,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16784a04afee
+  - type: covered_by
+    from: SYM-views-pb-get-period-change-response-get-withdrawals-reporting
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-15T13:17:47.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6a918edfc1
+  - type: implements
+    from: SYM-views-pb-get-period-change-response-get-withdrawals-reporting
+    to: REQ-views-api-contract
+    created_at: 2026-11-15T13:17:47.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46250d3f55c0
