@@ -1217,3 +1217,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-100afb8f5099
+  - type: covered_by
+    from: SYM-views-ui-askperiod-period-problem
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:38:24.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28e27a89899b
+  - type: implements
+    from: SYM-views-ui-askperiod-period-problem
+    to: REQ-ui-ask-period-refused-not-guessed
+    created_at: 2026-11-15T13:38:24.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154250e149cf

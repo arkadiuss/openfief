@@ -6,6 +6,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 
@@ -115,6 +116,33 @@ func TestAskToolArguments(t *testing.T) {
 			tool: "performance", args: `{"since":"2026-01-15"}`,
 			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodSince, Since: mustDate(t, "2026-01-15")}},
 		},
+		{
+			tool: "performance", args: `{"month":"2025-11"}`,
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.November}},
+		},
+		{
+			tool: "performance", args: `{"from":"2025-11-01","to":"2025-11-30"}`,
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: mustDate(t, "2025-11-01"), To: mustDate(t, "2025-11-30")}},
+		},
+		{
+			tool: "performance", args: `{"from":"2025-11-01","to":"2025-11-30","month":"2025-10","year":2024,"since":"2026-01-01","period":"all"}`,
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: mustDate(t, "2025-11-01"), To: mustDate(t, "2025-11-30")}},
+		},
+		{
+			tool: "performance", args: `{"month":"2025-10","year":2024}`,
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodMonthOf, Year: 2025, Month: time.October}},
+		},
+		{
+			tool: "performance", args: `{"from":"2025-11-30","to":"2025-11-01"}`,
+			want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodBetween, Since: mustDate(t, "2025-11-30"), To: mustDate(t, "2025-11-01")}},
+		},
+		{tool: "performance", args: `{"from":"2025-11-01"}`, wantErr: errPeriodBounds},
+		{tool: "performance", args: `{"to":"2025-11-30"}`, wantErr: errPeriodBounds},
+		{tool: "performance", args: `{"from":"2025-11-31","to":"2025-12-01"}`, wantErr: errToolDate},
+		{tool: "performance", args: `{"from":"soon","to":"2025-12-01"}`, wantErr: errToolDate},
+		{tool: "performance", args: `{"month":"2025-13"}`, wantErr: errToolDate},
+		{tool: "performance", args: `{"month":"2025"}`, wantErr: errToolDate},
+		{tool: "performance", args: `{"month":"2025-11-01 to 2025-11-30"}`, wantErr: errToolDate},
 		{tool: "performance", args: `{"year":2025,"period":"all"}`, want: askQuery{Command: askPerformance, Period: askPeriod{Kind: periodCalendarYear, Year: 2025}}},
 		{tool: "performance", args: `{"period":"fortnight"}`, wantErr: errBadEnum},
 		{tool: "performance", args: `{"year":2999}`, wantErr: errToolDate},
@@ -123,6 +151,16 @@ func TestAskToolArguments(t *testing.T) {
 		{tool: "performance", args: `{"since":"2027-01-01"}`, wantErr: errToolDate},
 		{tool: "value", args: `{}`, want: askQuery{Command: askValue}},
 		{tool: "value", args: `{"date":"2026-02-27"}`, want: askQuery{Command: askValue, Date: mustDate(t, "2026-02-27")}},
+		{
+			tool: "value", args: `{"period":{"from":"2025-11-01","to":"2025-11-30"}}`,
+			want: askQuery{Command: askValue, Change: &askPeriod{Kind: periodBetween, Since: mustDate(t, "2025-11-01"), To: mustDate(t, "2025-11-30")}},
+		},
+		{tool: "value", args: `{"period":{"from":"2025-11-01"}}`, wantErr: errPeriodBounds},
+		{tool: "value", args: `{"period":{}}`, wantErr: errPeriodBounds},
+		{tool: "value", args: `{"period":{"from":"2025-11-01","to":"never"}}`, wantErr: errToolDate},
+		{tool: "value", args: `{"period":{"from":"2025-11-01","to":"2025-11-30","extra":1}}`, wantErr: errBadArgs},
+		{tool: "value", args: `{"period":"2025-11"}`, wantErr: errBadArgs},
+		{tool: "value", args: `{"date":"2025-11-30","period":{"from":"2025-11-01","to":"2025-11-30"}}`, wantErr: errDateAndPeriod},
 		{tool: "value", args: `{"date":"2026-02-30"}`, wantErr: errToolDate},
 		{tool: "value", args: `{"date":"2027-01-01"}`, wantErr: errToolDate},
 		{tool: "value", args: `{"date":"someday"}`, wantErr: errToolDate},

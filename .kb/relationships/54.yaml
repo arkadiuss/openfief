@@ -1301,3 +1301,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28870df064a8
+  - type: covered_by
+    from: SYM-views-ui-askperiod-month-end
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:38:14.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c74b4f05f506
+  - type: implements
+    from: SYM-views-ui-askperiod-month-end
+    to: REQ-ui-ask-period-commands
+    created_at: 2026-11-15T13:38:14.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb0ec6654e19

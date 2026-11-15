@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-039f24396ea8
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-period-problem
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:41:19.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d209495f9a8

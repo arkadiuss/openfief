@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c6f4de52343
+  - type: specified_by
+    from: REQ-ui-ask-period-commands
+    to: SCEN-ui-ask-period-commands
+    created_at: 2026-11-15T13:36:14.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef5a2a4ee80b

@@ -1091,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e03effde5f0
+  - type: covered_by
+    from: SYM-views-ui-ask-parse-value
+    to: TEST-ui-ask
+    created_at: 2026-11-15T13:39:50.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba1c685701d
+  - type: implements
+    from: SYM-views-ui-ask-parse-value
+    to: REQ-ui-ask-period-commands
+    created_at: 2026-11-15T13:39:50.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92bb30a412d7

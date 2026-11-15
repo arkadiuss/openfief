@@ -223,6 +223,20 @@ func AskArgDefaults(tool string, latest kernel.Date) map[string]any {
 	return nil
 }
 
+// AskArgReplacedBy returns, for each argument of the named tool that has a
+// default, the other arguments that replace it: a call that gives one of them
+// has no use for the default, since the tool takes the argument given instead
+// (a value asked over a period has no date). It is nil for a tool with none
+// and for an unknown tool.
+func AskArgReplacedBy(tool string) map[string][]string {
+	for _, t := range askTools() {
+		if t.Name == tool {
+			return t.ReplacedBy
+		}
+	}
+	return nil
+}
+
 // AskAnswersItself reports whether the Ask box answers question on today itself,
 // at once, without asking its model (D-203): the fixed commands, and a question
 // the box does not send a model. A harness that grades the model leaves such a

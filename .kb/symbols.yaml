@@ -232004,3 +232004,486 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-views-ui-askperiod-month-named
+    title: monthNamed
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:06.548Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-parse-bounded
+    title: parseBounded
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:17.117Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-month-of
+    title: monthOf
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:25.517Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-parse-change
+    title: parseChange
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:33.384Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-ask-period-bounded
+    title: askPeriod.bounded
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:41.861Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-bounded-span
+    title: boundedSpan
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:49.981Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-first-of-month
+    title: firstOfMonth
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:37:59.537Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-month-end
+    title: monthEnd
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:09.342Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askperiod-period-problem
+    title: periodProblem
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:19.590Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-refused-not-guessed
+  - id: SYM-views-ui-askperiod-problem-card
+    title: problemCard
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:29.304Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-refused-not-guessed
+  - id: SYM-views-ui-askperiod-command-answerer-period-change
+    title: commandAnswerer.periodChange
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:39.849Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-refused-not-guessed
+  - id: SYM-views-ui-askperiod-command-answerer-period-performance
+    title: commandAnswerer.periodPerformance
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:48.454Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-askperiod-command-answerer-period-value
+    title: commandAnswerer.periodValue
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:38:57.702Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-askperiod-change-row
+    title: changeRow
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:08.409Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-askperiod-moved
+    title: moved
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:18.460Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-askperiod-pending-text
+    title: pendingText
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:28.838Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-askperiod-percent-text
+    title: percentText
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:38.012Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-ask-parse-value
+    title: parseValue
+    status: active
+    sourceFile: internal/views/ui/ask.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:46.448Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-period-commands
+  - id: SYM-views-ui-askanswer-command-answerer-value-answer
+    title: commandAnswerer.valueAnswer
+    status: active
+    sourceFile: internal/views/ui/askanswer.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:39:55.349Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-cards-from-core
+  - id: SYM-views-ui-asktools-performance-args
+    title: performanceArgs
+    status: active
+    sourceFile: internal/views/ui/asktools.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:03.656Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-ui-ask-tools-take-a-period
+  - id: SYM-views-ui-asktools-performance-args-period
+    title: performanceArgs.period
+    status: active
+    sourceFile: internal/views/ui/asktools.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:13.267Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-ui-ask-tools-take-a-period
+  - id: SYM-views-ui-asktools-performance-args-word
+    title: performanceArgs.word
+    status: active
+    sourceFile: internal/views/ui/asktools.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:24.012Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-ui-ask-tools-take-a-period
+  - id: SYM-views-ui-asktools-bounded-args
+    title: boundedArgs
+    status: active
+    sourceFile: internal/views/ui/asktools.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:33.020Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-ui-ask-tools-take-a-period
+  - id: SYM-views-ui-askrun-ask-arg-replaced-by
+    title: AskArgReplacedBy
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:42.053Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-ui-ask-tools-take-a-period
+  - id: SYM-views-ui-askperiod-test-test-parse-bounded
+    title: TestParseBounded
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:50.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-parse-change
+    title: TestParseChange
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:40:58.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-bounded-span
+    title: TestBoundedSpan
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:07.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-period-problem
+    title: TestPeriodProblem
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:15.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-percent-text
+    title: TestPercentText
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:23.487Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-moved
+    title: TestMoved
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:32.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-change-row
+    title: TestChangeRow
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:39.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-ask-period-cards
+    title: TestAskPeriodCards
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:48.376Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-ask-period-refusals
+    title: TestAskPeriodRefusals
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:41:56.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-ask-period-card-with-amissing-basis
+    title: TestAskPeriodCardWithAMissingBasis
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:42:04.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-test-test-the-models-period-calls-ask-what-the-typed-commands-ask
+    title: TestTheModelsPeriodCallsAskWhatTheTypedCommandsAsk
+    status: active
+    sourceFile: internal/views/ui/askperiod_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:42:12.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period
+  - id: SYM-views-ui-askperiod-core-refusal
+    title: coreRefusal
+    status: active
+    sourceFile: internal/views/ui/askperiod.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:47:36.162Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-period
+      - type: implements
+        target: REQ-ui-ask-period-refused-not-guessed
+  - id: SYM-views-ui-fakes-test-fake-read-get-period-change
+    title: fakeRead.GetPeriodChange
+    status: active
+    sourceFile: internal/views/ui/fakes_test.go
+    origin:
+      kind: agent
+      ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
+      recorded_at: 2026-11-15T13:47:44.791Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-period

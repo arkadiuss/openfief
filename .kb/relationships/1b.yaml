@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5acbab0a07f
+  - type: covered_by
+    from: SYM-views-ui-askperiod-pending-text
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:39:33.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9bdd2a2c12f
+  - type: implements
+    from: SYM-views-ui-askperiod-pending-text
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:39:33.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cc4c712ec1e

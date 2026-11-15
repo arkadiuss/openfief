@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1898a4854806
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-percent-text
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:41:28.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5ebb75df407

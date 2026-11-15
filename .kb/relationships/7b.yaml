@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83019404d317
+  - type: specified_by
+    from: REQ-ui-ask-tools-take-a-period
+    to: SCEN-ui-ask-tools-take-a-period
+    created_at: 2026-11-15T13:36:22.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f468b326dac3

@@ -1455,3 +1455,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ff4e0c2c436
+  - type: covered_by
+    from: SYM-views-ui-askperiod-moved
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:39:22.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f8c8129854b
+  - type: implements
+    from: SYM-views-ui-askperiod-moved
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:39:23.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc5d649804a3

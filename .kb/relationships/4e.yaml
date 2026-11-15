@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76974a2d361e
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-change-row
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:41:44.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9728669ae8d3

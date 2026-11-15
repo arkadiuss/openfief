@@ -1322,3 +1322,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c117d550f86
+  - type: covered_by
+    from: SYM-views-ui-asktools-performance-args-word
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-15T13:40:28.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f289d152cdb0
+  - type: implements
+    from: SYM-views-ui-asktools-performance-args-word
+    to: REQ-ui-ask-tools-take-a-period
+    created_at: 2026-11-15T13:40:28.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46534f9d4cb

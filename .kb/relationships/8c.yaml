@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cfa126a36b0d
+  - type: covered_by
+    from: SYM-views-ui-askperiod-percent-text
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:39:42.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2dc55ee2ea5
+  - type: implements
+    from: SYM-views-ui-askperiod-percent-text
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:39:42.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c70ed5bd91

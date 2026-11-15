@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4957c4f6f5d3
+  - type: verified_by
+    from: SCEN-ui-ask-tools-take-a-period
+    to: TEST-ui-ask-tools
+    created_at: 2026-11-15T13:36:28.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df4c42f9c59
+  - type: verified_by
+    from: SCEN-ui-ask-tools-take-a-period
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:36:28.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99fe47b1afee

@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33b5b22efa6d
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-ask-period-card-with-amissing-basis
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:42:08.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9674a4e9b5d0

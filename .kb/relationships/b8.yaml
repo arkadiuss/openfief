@@ -1252,3 +1252,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a35045f20074
+  - type: verified_by
+    from: SCEN-ui-ask-period-refused-not-guessed
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:36:27.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3073fdbc4b1
+  - type: covered_by
+    from: SYM-views-ui-askperiod-command-answerer-period-change
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:38:44.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-095f48d7b42e
+  - type: implements
+    from: SYM-views-ui-askperiod-command-answerer-period-change
+    to: REQ-ui-ask-period-refused-not-guessed
+    created_at: 2026-11-15T13:38:44.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7bb5c199098

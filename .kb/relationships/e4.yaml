@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d40aa26f1fc3
+  - type: covered_by
+    from: SYM-views-ui-askperiod-change-row
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:39:13.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcf8a025b553
+  - type: implements
+    from: SYM-views-ui-askperiod-change-row
+    to: REQ-ui-ask-period-cards-from-core
+    created_at: 2026-11-15T13:39:13.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-764f4daac9e7

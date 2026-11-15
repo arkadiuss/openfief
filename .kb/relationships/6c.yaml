@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-975cef0e388b
+  - type: executable_for
+    from: SYM-views-ui-askperiod-test-test-ask-period-refusals
+    to: TEST-ui-ask-period
+    created_at: 2026-11-15T13:42:00.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a0ff2ade02

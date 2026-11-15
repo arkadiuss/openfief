@@ -144,7 +144,7 @@ func (a commandAnswerer) run(r *http.Request, sess session, q *askQuery) (answer
 	case askPerformance:
 		card, err = a.performance(r, sess, q.Period, date)
 	case askValue:
-		card, err = a.value(r, sess, q.Date, date)
+		card, err = a.valueAnswer(r, sess, q, date)
 	case askUnknown:
 		return unknownAnswer(""), nil
 	}
@@ -579,6 +579,9 @@ func (a commandAnswerer) allocation(r *http.Request, sess session, d dimension, 
 
 // performance answers the time-weighted return over p, up to date.
 func (a commandAnswerer) performance(r *http.Request, sess session, p askPeriod, date kernel.Date) (answerCard, error) {
+	if p.bounded() {
+		return a.periodPerformance(r, sess, boundedSpan(p), date)
+	}
 	days := periodRange(p, date)
 	label := days.Label
 	resp, err := a.s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{From: optionalString(days.From), To: days.To.String()}, sess))
@@ -623,6 +626,15 @@ func returnPercent(first, last string, f numberFormat) string {
 		digits += ".0"
 	}
 	return sign + f.amount(digits) + "%"
+}
+
+// valueAnswer answers a value command: its change over a period when it asks
+// for one, else the three values on its day.
+func (a commandAnswerer) valueAnswer(r *http.Request, sess session, q *askQuery, latest kernel.Date) (answerCard, error) {
+	if q.Change != nil {
+		return a.periodValue(r, sess, boundedSpan(*q.Change), latest)
+	}
+	return a.value(r, sess, q.Date, latest)
 }
 
 // value answers the portfolio's three values on day, or on latest, the

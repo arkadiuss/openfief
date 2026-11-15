@@ -112,7 +112,7 @@ func knownCommands() []askHelp {
 		{"Show an account, a sleeve or an instrument", "Show bonds"},
 		{"Why a sync fails", "Why is xtb failing?"},
 		{"Allocation by asset class, currency, institution or sleeve", "Allocation by currency"},
-		{"Performance this year, this month, last 12 months, last year, in a year, since a date or all", "Performance this year"},
-		{"Value on a date, today, yesterday or at the end of last month", "Value on 2026-01-31"},
+		{"Performance this year, this month, last 12 months, last year, in a year or a month, between two dates, since a date or all", "Performance this year"},
+		{"Value on a date, today, yesterday or at the end of last month, or its change in a month, a year or between two dates", "Value on 2026-01-31"},
 	}
 }
