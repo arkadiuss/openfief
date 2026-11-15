@@ -222231,6 +222231,8 @@ symbols:
         target: TEST-ui-ask-structured
       - type: implements
         target: REQ-ui-ask-model-structured-answer
+      - type: implements
+        target: REQ-ui-ask-refusal-commands-are-the-boxs
   - id: SYM-ab3-internal-views-ui-askmodel-go-askschemafailure
     title: askSchemaFailure
     status: active
@@ -222329,6 +222331,8 @@ symbols:
         target: TEST-ui-ask-structured
       - type: implements
         target: REQ-ui-ask-model-structured-answer
+      - type: implements
+        target: REQ-ui-ask-refusal-commands-are-the-boxs
   - id: SYM-ab3-internal-views-ui-askstructured-go-structuredanswer-check
     title: structuredAnswer.check
     status: active
@@ -222457,20 +222461,6 @@ symbols:
         target: TEST-ui-ask-structured
       - type: implements
         target: REQ-ui-ask-final-round-keeps-reply-meaning
-      - type: implements
-        target: REQ-ui-ask-model-structured-answer
-  - id: SYM-ab3-internal-views-ui-askstructured-go-answerexamples
-    title: answerExamples
-    status: active
-    sourceFile: internal/views/ui/askstructured.go
-    origin:
-      kind: agent
-      ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
-      recorded_at: 2026-11-14T14:57:32.309Z
-    symbol_role: behavioral
-    relationships:
-      - type: covered_by
-        target: TEST-ui-ask-structured
       - type: implements
         target: REQ-ui-ask-model-structured-answer
   - id: SYM-ab3-internal-views-ui-askstructured-test-go-testparsestructuredanswer
@@ -222943,6 +222933,8 @@ symbols:
         target: TEST-askbench-scorers
       - type: implements
         target: REQ-askbench-grades-by-the-structured-answer
+      - type: implements
+        target: REQ-ui-ask-refusal-commands-are-the-boxs
   - id: SYM-ab3-tools-askbench-scorers-test-go-kinded
     title: kinded
     status: active
@@ -230796,3 +230788,114 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-tools
+  - id: SYM-ui-ask-refusal-suggestions
+    title: refusalSuggestions
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:32:49.122Z
+    sourceFile: internal/views/ui/askstructured.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-refusal-commands-are-the-boxs
+  - id: SYM-ui-ask-refusal-suggestions-exported
+    title: AskRefusalSuggestions
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:32:56.462Z
+    sourceFile: internal/views/ui/askstructured.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-refusal-commands-are-the-boxs
+  - id: SYM-ui-ask-conversation-parse
+    title: askConversation.parse
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:03.944Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-clarify-names-come-from-cards
+  - id: SYM-ui-ask-read-names
+    title: readNames
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:10.842Z
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-clarify-names-come-from-cards
+  - id: SYM-ui-ask4-test-testarefusalwithanythinginsuggestionsisacceptedatoncewiththeboxscommands
+    title: TestARefusalWithAnythingInSuggestionsIsAcceptedAtOnceWithTheBoxsCommands
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:39.751Z
+    sourceFile: internal/views/ui/askstructured_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ui-ask4-test-testaclarifyinganswerkeepsonlythenamesacardholds
+    title: TestAClarifyingAnswerKeepsOnlyTheNamesACardHolds
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:46.774Z
+    sourceFile: internal/views/ui/askstructured_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ui-ask4-test-loopfixture-showing
+    title: loopFixture.showing
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:53.652Z
+    sourceFile: internal/views/ui/askmodel_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-structured
+  - id: SYM-ui-ask4-test-hastoolresult
+    title: hasToolResult
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:33:59.911Z
+    sourceFile: internal/views/ui/askmodel_fakes_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-page
+  - id: SYM-ui-ask4-test-fundreply
+    title: fundReply
+    status: active
+    origin:
+      kind: agent
+      ref: 'Design session decision: the box owns a refusal''s command suggestions and vets clarify candidates (D-194), 2026-11-15'
+      recorded_at: 2026-11-15T10:37:50.798Z
+    sourceFile: internal/views/ui/askmodel_fakes_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-page

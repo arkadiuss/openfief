@@ -1252,3 +1252,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da8e97df841e
+  - type: implements
+    from: SYM-ab3-internal-views-ui-askstructured-go-parsestructuredanswer
+    to: REQ-ui-ask-refusal-commands-are-the-boxs
+    created_at: 2026-11-15T10:33:23.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dea629f35662

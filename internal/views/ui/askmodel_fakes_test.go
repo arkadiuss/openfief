@@ -232,11 +232,9 @@ func browserSetUpAskModel(f *fakeAskModel, tiers string) {
 		// asked about, with the choices; any other reads the allocation.
 		switch question := firstUser(msgs); {
 		case strings.Contains(question, "sell"):
-			return scriptedReply{text: answerJSON(answerKindRefuse, "I can only read, so I can't sell anything.", nil,
-				[]string{"What needs me?", "Allocation by currency"}, nil)}
+			return scriptedReply{text: answerJSON(answerKindRefuse, "I can only read, so I can't sell anything.", nil, nil, nil)}
 		case strings.Contains(question, "fund"):
-			return scriptedReply{text: answerJSON(answerKindClarify, "Which one do you mean?", nil, nil,
-				[]string{"Synthetic brokerage", "Synthetic Fund"})}
+			return fundReply(msgs)
 		}
 		for _, m := range msgs {
 			if m.GetMessage().GetRole() != modelsv1.MessageRole_MESSAGE_ROLE_TOOL {
@@ -249,6 +247,25 @@ func browserSetUpAskModel(f *fakeAskModel, tiers string) {
 		}
 		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"asset_class"}`)}}
 	}
+}
+
+// fundReply is the fake model's answer to a question that names the fund: it
+// reads the show card, then offers the names the card holds.
+func fundReply(msgs []*modelsv1.AskMessage) scriptedReply {
+	if !hasToolResult(msgs) {
+		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("show", `{"name":"Synthetic"}`)}}
+	}
+	return scriptedReply{text: answerJSON(answerKindClarify, "Which one do you mean?", nil, nil, []string{"Synthetic brokerage", "Synthetic Fund"})}
+}
+
+// hasToolResult reports whether the conversation holds a tool's result.
+func hasToolResult(msgs []*modelsv1.AskMessage) bool {
+	for _, m := range msgs {
+		if m.GetMessage().GetRole() == modelsv1.MessageRole_MESSAGE_ROLE_TOOL {
+			return true
+		}
+	}
+	return false
 }
 
 // firstUser is the first user message of a conversation: the question.

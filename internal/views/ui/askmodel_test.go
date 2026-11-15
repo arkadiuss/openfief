@@ -111,7 +111,12 @@ func answerJSON(kind, text string, cards, suggestions, candidates []string) stri
 	if candidates == nil {
 		candidates = []string{}
 	}
-	b, err := json.Marshal(structuredAnswer{Kind: kind, Text: text, Cards: cards, Suggestions: suggestions, Candidates: candidates})
+	// A model may still write suggestions, which the box ignores (D-194).
+	b, err := json.Marshal(struct {
+		structuredAnswer
+
+		Suggestions []string `json:"suggestions"`
+	}{structuredAnswer{Kind: kind, Text: text, Cards: cards, Candidates: candidates}, suggestions})
 	if err != nil {
 		panic(err)
 	}
@@ -184,6 +189,19 @@ func newLoopFixture(t *testing.T, allowed ...string) *loopFixture {
 
 func (f *loopFixture) ask(question string) (answerCard, error) {
 	return f.a.ask(httptest.NewRequestWithContext(context.Background(), http.MethodGet, "/ask", http.NoBody), session{Token: "t", Origin: "o"}, question)
+}
+
+// showing makes every card the fixture's tools produce also list names as rows,
+// so a clarifying answer can choose among them.
+func (f *loopFixture) showing(names ...string) {
+	run := f.a.run
+	f.a.run = func(r *http.Request, s session, q *askQuery) (answerCard, error) {
+		card, err := run(r, s, q)
+		for _, n := range names {
+			card.Rows = append(card.Rows, answerRow{Label: n})
+		}
+		return card, err
+	}
 }
 
 func titles(cards []answerCard) []string {

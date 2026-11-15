@@ -19,7 +19,6 @@ import (
 
 func TestParseStructuredAnswer(t *testing.T) {
 	t.Parallel()
-	today := mustDate(t, askToday)
 	tests := []struct {
 		name    string
 		content string
@@ -29,17 +28,23 @@ func TestParseStructuredAnswer(t *testing.T) {
 	}{
 		{
 			name: "an answer", content: answerText("It is 10.", "c1"), cards: 1,
-			want: structuredAnswer{Kind: "answer", Text: "It is 10.", Cards: []string{"c1"}, Suggestions: []string{}, Candidates: []string{}},
+			want: structuredAnswer{Kind: "answer", Text: "It is 10.", Cards: []string{"c1"}, Candidates: []string{}},
 		},
-		{name: "the text is trimmed", content: answerText("  It is 10.  "), want: structuredAnswer{Kind: "answer", Text: "It is 10.", Cards: []string{}, Suggestions: []string{}, Candidates: []string{}}},
+		{name: "the text is trimmed", content: answerText("  It is 10.  "), want: structuredAnswer{Kind: "answer", Text: "It is 10.", Cards: []string{}, Candidates: []string{}}},
 		{
-			name: "a refusal with commands", content: answerJSON("refuse", "No.", nil, []string{"What needs me?", "Allocation by currency", "Show bonds"}, nil),
-			want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Suggestions: []string{"What needs me?", "Allocation by currency", "Show bonds"}, Candidates: []string{}},
+			name: "a refusal's suggestions are ignored", content: answerJSON("refuse", "No.", nil, []string{"What needs me?", "Allocation by currency", "Show bonds"}, nil),
+			want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}},
 		},
 		{
 			name: "a clarifying answer with its choices", content: answerJSON("clarify", "Which?", nil, nil, []string{"Demo World ETF", "Demo Emerging Markets ETF"}),
-			want: structuredAnswer{Kind: "clarify", Text: "Which?", Cards: []string{}, Suggestions: []string{}, Candidates: []string{"Demo World ETF", "Demo Emerging Markets ETF"}},
+			want: structuredAnswer{Kind: "clarify", Text: "Which?", Cards: []string{}, Candidates: []string{"Demo World ETF", "Demo Emerging Markets ETF"}},
 		},
+		// A slip in suggestions never fails a reply: the box ignores them.
+		{name: "suggestions that are no commands", content: answerJSON("refuse", "No.", nil, []string{"Write me a poem", "buy more bonds"}, nil), want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}}},
+		{name: "too many suggestions", content: answerJSON("refuse", "No.", nil, slices.Repeat([]string{"What needs me?"}, 20), nil), want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}}},
+		{name: "suggestions of the wrong type", content: `{"kind":"refuse","text":"No.","cards":[],"suggestions":"What needs me?","candidates":[]}`, want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}}},
+		{name: "suggestions that are an object", content: `{"kind":"refuse","text":"No.","cards":[],"suggestions":{"a":1},"candidates":[]}`, want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}}},
+		{name: "no suggestions member", content: `{"kind":"refuse","text":"No.","cards":[],"candidates":[]}`, want: structuredAnswer{Kind: "refuse", Text: "No.", Cards: []string{}, Candidates: []string{}}},
 		{name: "null lists are empty", content: `{"kind":"answer","text":"x","cards":null,"suggestions":null,"candidates":null}`, want: structuredAnswer{Kind: "answer", Text: "x"}},
 		// What is not an answer.
 		{name: "not JSON", content: "It is 10.", err: errAnswerNotJSON},
@@ -58,19 +63,15 @@ func TestParseStructuredAnswer(t *testing.T) {
 		{name: "c01", content: answerText("x", "c01"), cards: 3, err: errAnswerUnknownCard},
 		{name: "a capital C", content: answerText("x", "C1"), cards: 3, err: errAnswerUnknownCard},
 		{name: "a card's title instead of its id", content: answerText("x", "By currency"), cards: 3, err: errAnswerUnknownCard},
-		{name: "a suggestion that is no command", content: answerJSON("refuse", "No.", nil, []string{"Write me a poem"}, nil), err: errAnswerBadCommand},
-		{name: "a good suggestion and a bad one", content: answerJSON("refuse", "No.", nil, []string{"What needs me?", "buy more bonds"}, nil), err: errAnswerBadCommand},
-		{name: "a suggestion on an answer is checked too", content: answerJSON("answer", "x", nil, []string{"buy more bonds"}, nil), err: errAnswerBadCommand},
 		{name: "a clarifying answer with no choices", content: answerJSON("clarify", "Which?", nil, nil, nil), err: errAnswerNoChoices},
 		{name: "an empty choice", content: answerJSON("clarify", "Which?", nil, nil, []string{"a", " "}), err: errAnswerNoChoices},
 		{name: "a choice that is a paragraph", content: answerJSON("clarify", "Which?", nil, nil, []string{strings.Repeat("a", maxCandidateRunes+1)}), err: errAnswerNoChoices},
-		{name: "too many suggestions", content: answerJSON("refuse", "No.", nil, slices.Repeat([]string{"What needs me?"}, maxAnswerSuggestions+1), nil), err: errAnswerTooMany},
 		{name: "too many choices", content: answerJSON("clarify", "Which?", nil, nil, slices.Repeat([]string{"a"}, maxAnswerCandidates+1)), err: errAnswerTooMany},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := parseStructuredAnswer(tt.content, tt.cards, today)
+			got, err := parseStructuredAnswer(tt.content, tt.cards)
 			if !errors.Is(err, tt.err) {
 				t.Fatalf("error = %v, want %v", err, tt.err)
 			}
@@ -193,7 +194,8 @@ func TestAnAnswerShowsNoCardItDoesNotName(t *testing.T) {
 
 func TestTheKindDecidesWhatThePageDraws(t *testing.T) {
 	t.Parallel()
-	choices, commands := []string{"Demo World ETF", "Demo Emerging Markets ETF"}, []string{"What needs me?", "Show bonds"}
+	choices, junk := []string{"Demo World ETF", "Demo Emerging Markets ETF"}, []string{"Write me a poem", "Show bonds"}
+	commands := refusalSuggestions(mustDate(t, askToday))
 	tests := []struct {
 		name          string
 		reply         askReply
@@ -204,16 +206,18 @@ func TestTheKindDecidesWhatThePageDraws(t *testing.T) {
 	}{
 		{name: "an answer", reply: sayKind("answer", "It is 10.", nil, nil), wantKind: "answer", wantTextShown: "It is 10."},
 		{name: "a clarifying answer shows its choices", reply: sayKind("clarify", "Which?", nil, choices), wantKind: "clarify", wantChoices: choices, wantTextShown: "Which?"},
-		{name: "a refusal shows its commands", reply: sayKind("refuse", "No.", commands, nil), wantKind: "refuse", wantCommands: commands, wantTextShown: "No."},
-		{name: "an answer's choices and commands are not drawn", reply: sayKind("answer", "It is 10.", commands, choices), wantKind: "answer", wantTextShown: "It is 10."},
-		{name: "a refusal's choices are not drawn", reply: sayKind("refuse", "No.", nil, choices), wantKind: "refuse", wantTextShown: "No."},
-		{name: "a clarifying answer's commands are not drawn", reply: sayKind("clarify", "Which?", commands, choices), wantKind: "clarify", wantChoices: choices, wantTextShown: "Which?"},
+		{name: "a refusal shows the box's commands", reply: sayKind("refuse", "No.", nil, nil), wantKind: "refuse", wantCommands: commands, wantTextShown: "No."},
+		{name: "a refusal shows the box's commands, not the model's", reply: sayKind("refuse", "No.", junk, nil), wantKind: "refuse", wantCommands: commands, wantTextShown: "No."},
+		{name: "an answer's choices and commands are not drawn", reply: sayKind("answer", "It is 10.", junk, choices), wantKind: "answer", wantTextShown: "It is 10."},
+		{name: "a refusal's choices are not drawn", reply: sayKind("refuse", "No.", nil, choices), wantKind: "refuse", wantCommands: commands, wantTextShown: "No."},
+		{name: "a clarifying answer's commands are not drawn", reply: sayKind("clarify", "Which?", junk, choices), wantKind: "clarify", wantChoices: choices, wantTextShown: "Which?"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			f := newLoopFixture(t, tierT0, tierT2)
-			f.port.replies = []askReply{tt.reply}
+			f.showing(choices...)
+			f.port.replies = []askReply{calling(askCall{ID: "1", Name: "show", Args: `{"name":"etf"}`}), tt.reply}
 			got, err := f.ask("q")
 			if err != nil {
 				t.Fatal(err)
@@ -395,8 +399,18 @@ func TestSuggestionsAreCommandsTheBoxUnderstands(t *testing.T) {
 			t.Errorf("%q is a command", text)
 		}
 	}
-	if !strings.Contains(askSystemPrompt(today), answerExamples()) {
-		t.Error("the prompt does not offer the box's examples")
+	// The box offers these with a refusal itself, never the model's words.
+	got := refusalSuggestions(today)
+	if diff := cmp.Diff([]string{"What needs me?", "Allocation by currency", "Performance this year", "Value on 2026-01-31"}, got); diff != "" {
+		t.Errorf("a refusal's suggestions (-want +got):\n%s", diff)
+	}
+	for _, s := range got {
+		if !IsAskCommand(s, today) {
+			t.Errorf("the suggestion %q is no command the box understands", s)
+		}
+	}
+	if strings.Contains(askSystemPrompt(today), "suggestions") {
+		t.Error("the prompt still asks the model for suggestions")
 	}
 }
 
@@ -404,8 +418,8 @@ func TestThePromptSaysWhatEachFieldIsFor(t *testing.T) {
 	t.Parallel()
 	prompt := askSystemPrompt(mustDate(t, askToday))
 	for _, want := range []string{
-		"JSON object", "kind, text, cards, suggestions and candidates", `"answer"`, `"clarify"`, `"refuse"`,
-		"never guess", "candidates", "suggestions", "advice",
+		"JSON object", "kind, text, cards and candidates", `"answer"`, `"clarify"`, `"refuse"`,
+		"never guess", "candidates", "the box adds the commands", "advice",
 	} {
 		if !strings.Contains(prompt, want) {
 			t.Errorf("the prompt lacks %q", want)
@@ -484,27 +498,29 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		t.Parallel()
 		h := newHarness(t)
 		h.askModel.turnOn("T0", "T2")
-		h.askModel.say(scriptedReply{text: answerJSON("clarify", "Which fund do you mean?", nil, nil, []string{"Synthetic Fund", "Demo <b>Fund</b>"})})
+		h.askModel.say(scriptedReply{calls: []*modelsv1.ToolCall{toolCall("show", `{"name":"Synthetic"}`)}},
+			scriptedReply{text: answerJSON("clarify", "Which fund do you mean?", nil, nil, []string{"Synthetic Fund", "Synthetic brokerage", "Demo <b>Fund</b>"})})
 		rec := h.asks(t, ownerSession, "I mean the fund")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
 			"Which fund do you mean?", "From p/m · it asks which you mean", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
-			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-get="/ask?q=Show&#43;Synthetic&#43;Fund"`, `>Synthetic Fund</a>`, "Demo &lt;b&gt;Fund&lt;/b&gt;",
+			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-get="/ask?q=Show&#43;Synthetic&#43;Fund"`, `>Synthetic Fund</a>`, `>Synthetic brokerage</a>`,
 		)
-		wantNoBody(t, rec, `class="chips ask-suggestions"`, "Answered by", "Demo <b>Fund</b>")
+		// A name no card the model read holds is dropped, and never drawn.
+		wantNoBody(t, rec, `class="chips ask-suggestions"`, "Answered by", "Demo <b>Fund</b>", "Demo &lt;b&gt;Fund")
 	})
-	t.Run("a refusal draws its suggestions as the box's command chips", func(t *testing.T) {
+	t.Run("a refusal draws the box's own commands as chips, not the model's", func(t *testing.T) {
 		t.Parallel()
 		h := newHarness(t)
 		h.askModel.turnOn("T0", "T2")
-		h.askModel.say(scriptedReply{text: answerJSON("refuse", "I can only read, so I can't sell anything.", nil, []string{"What needs me?", "Allocation by currency"}, nil)})
+		h.askModel.say(scriptedReply{text: answerJSON("refuse", "I can only read, so I can't sell anything.", nil, []string{"Write me a poem", "Allocation by currency"}, nil)})
 		rec := h.asks(t, ownerSession, "sell everything")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
 			"I can only read, so I can&#39;t sell anything.", "From p/m · it can't do that", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
-			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-get="/ask?q=Allocation&#43;by&#43;currency"`, `>Allocation by currency</a>`,
+			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-get="/ask?q=Allocation&#43;by&#43;currency"`, `>Allocation by currency</a>`, `>Performance this year</a>`,
 		)
-		wantNoBody(t, rec, `class="chips ask-choices"`, "Answered by", `class="used-card"`)
+		wantNoBody(t, rec, `class="chips ask-choices"`, "Answered by", `class="used-card"`, "Write me a poem")
 	})
 	t.Run("a refusal's chip is answered by the box itself, at once", func(t *testing.T) {
 		t.Parallel()
@@ -527,4 +543,65 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		wantBody(t, rec, "The model couldn&#39;t answer", "reply in the form the box needs", "The model gave no answer", "What needs me")
 		wantNoBody(t, rec, "Answered by", "From p/m", "plain again")
 	})
+}
+
+// A slip in a refusal's suggestions, which the box no longer asks of the model,
+// neither fails the refusal nor forces another round (D-194): the commands are
+// the box's own.
+func TestARefusalWithAnythingInSuggestionsIsAcceptedAtOnceWithTheBoxsCommands(t *testing.T) {
+	t.Parallel()
+	for name, content := range map[string]string{
+		"commands the box does not know": answerJSON("refuse", "I can't sell.", nil, []string{"Write me a poem"}, nil),
+		"too many":                       answerJSON("refuse", "I can't sell.", nil, slices.Repeat([]string{"What needs me?"}, 30), nil),
+		"the wrong type":                 `{"kind":"refuse","text":"I can't sell.","cards":[],"suggestions":"What needs me?","candidates":[]}`,
+		"none":                           `{"kind":"refuse","text":"I can't sell.","cards":[],"candidates":[]}`,
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			f := newLoopFixture(t, tierT0, tierT2)
+			f.port.replies = []askReply{{Content: content, Model: "p/m"}}
+			got, conv, err := f.askConv("Sell all my DTEC and buy bonds")
+			if err != nil || got.Kind != answerKindRefuse || conv.rounds != 1 || conv.invalid != 0 {
+				t.Fatalf("answer = %+v, %v after %d calls and %d invalid; want the refusal at once", got, err, conv.rounds, conv.invalid)
+			}
+			if diff := cmp.Diff(refusalSuggestions(mustDate(t, askToday)), got.Suggestions); diff != "" {
+				t.Errorf("suggestions (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// A clarifying answer offers names from the cards the model read: one no card
+// holds is dropped, and an answer left with none is no answer, so the model is
+// asked once more.
+func TestAClarifyingAnswerKeepsOnlyTheNamesACardHolds(t *testing.T) {
+	t.Parallel()
+	f := newLoopFixture(t, tierT0, tierT2)
+	f.showing("Demo World ETF", "Demo Emerging Markets ETF")
+	f.port.replies = []askReply{
+		calling(askCall{ID: "1", Name: "show", Args: `{"name":"etf"}`}),
+		sayKind("clarify", "Which?", nil, []string{"demo world etf", "Made Up Fund"}),
+	}
+	got, conv, err := f.askConv("etf")
+	if err != nil || got.Kind != answerKindClarify || conv.invalid != 0 {
+		t.Fatalf("answer = %+v, %v with %d invalid; want the clarifying answer", got, err, conv.invalid)
+	}
+	if diff := cmp.Diff([]string{"demo world etf"}, got.Candidates); diff != "" {
+		t.Errorf("candidates (-want +got):\n%s", diff)
+	}
+
+	g := newLoopFixture(t, tierT0, tierT2)
+	g.showing("Demo World ETF")
+	g.port.replies = []askReply{
+		calling(askCall{ID: "1", Name: "show", Args: `{"name":"etf"}`}),
+		sayKind("clarify", "Which?", nil, []string{"Made Up Fund"}),
+		sayKind("clarify", "Which?", nil, []string{"Demo World ETF"}),
+	}
+	got, conv, err = g.askConv("etf")
+	if err != nil || conv.rounds != 3 || !slices.Equal(got.Candidates, []string{"Demo World ETF"}) {
+		t.Fatalf("answer = %+v, %v after %d calls; want a third call, then the name the card holds", got, err, conv.rounds)
+	}
+	if again := g.port.requests[len(g.port.requests)-1]; again[len(again)-1].Content != finalText {
+		t.Errorf("the model was told %q, want the final round's instruction %q", again[len(again)-1].Content, finalText)
+	}
 }

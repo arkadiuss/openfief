@@ -1,22 +1,22 @@
 ---
-title: 'The Ask box draws a model''s answer from its structured fields and nothing else the model wrote: its text, exactly the cards it names in the order it names them, a clarifying answer''s candidates as choices that ask the box''s own show command, and a refusing answer''s suggestions as the box''s command chips.'
+title: and, for a refusing answer, the box's own command chips
 status: open
 firmness: default
 required_evidence: unverified
-semantic_text: 'The Ask box draws a model''s answer from its structured fields and nothing else the model wrote: its text, exactly the cards it names in the order it names them, a clarifying answer''s candidates as choices that ask the box''s own show command, and a refusing answer''s suggestions as the box''s command chips.'
+semantic_text: and, for a refusing answer, the box's own command chips
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 730fc3ac745200df33dd9c8e92a6a11fa8acc35271128d2ac8b17d4299a0266c
+semantic_source_hash: 6da811c73fb6022a14f4dd2975abd53a006ba4a11e63fe4f3fc79cb1d4d7d466
 semantic_inventory:
-  - claim_key: CLAIM-D85E46758D9FA6F6
-    claim_text: 'The Ask box draws a model''s answer from its structured fields and nothing else the model wrote: its text, exactly the cards it names in the order it names them, a clarifying answer''s candidates as choices that ask the box''s own show command, and a refusing answer''s suggestions as the box''s command chips'
+  - claim_key: CLAIM-6DA811C73FB6022A
+    claim_text: and, for a refusing answer, the box's own command chips
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 0
-      end: 304
+      end: 55
 logic_claims:
-  - CLAIM-D85E46758D9FA6F6
+  - CLAIM-6DA811C73FB6022A
 origin:
   kind: agent
   ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
@@ -26,11 +26,11 @@ tags:
 id: REQ-ui-ask-model-answer-drawn-from-fields
 type: req
 ---
-The Ask box draws a model's answer from its structured fields and nothing else the model wrote: its text, exactly the cards it names in the order it names them, a clarifying answer's candidates as choices that ask the box's own show command, and a refusing answer's suggestions as the box's command chips.
+The Ask box draws a model's answer from its structured fields and nothing else the model wrote: its text, exactly the cards it names in the order it names them, a clarifying answer's candidates as choices that ask the box's own show command, and, for a refusing answer, the box's own command chips.
 
 ## Context
 
-D-203 has the model show the answer cards it used. With the answer as data the page can show exactly those, offer the choices of a name that is several things, and offer the box's commands when the model declines, each of which the box answers itself, at once.
+D-203 has the model show the answer cards it used. With the answer as data the page can show exactly those, offer the choices of a name that is several things, and offer the box's commands when the model declines, each of which the box answers itself, at once. Changed 2026-11-15 by the design session (D-194): the chips are the box's, not the model's words.
 
 ## Source
 

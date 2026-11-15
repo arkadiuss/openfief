@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4ef7386e41b
+  - type: implements
+    from: SYM-ui-ask-conversation-parse
+    to: REQ-ui-ask-clarify-names-come-from-cards
+    created_at: 2026-11-15T10:33:08.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2bc10fa1d44
+  - type: covered_by
+    from: SYM-ui-ask-conversation-parse
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-15T10:33:08.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eff214840d2

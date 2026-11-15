@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"slices"
+	"strings"
 	"time"
 	"unicode/utf8"
 
@@ -365,7 +366,7 @@ func (c *askConversation) addResult(call *askCall, outcome, content, tier string
 // with the reason, and a second failure ends the question as a card that says
 // the model did not reply in the form the box needs (askSchemaFailure).
 func (c *askConversation) finish(ctx context.Context, question string, reply *askReply, final bool) (answerCard, error) {
-	ans, err := parseStructuredAnswer(reply.Content, len(c.used), c.a.today())
+	ans, err := c.parse(reply.Content)
 	if err == nil {
 		return c.answered(question, &ans, reply.Model), nil
 	}
@@ -391,7 +392,7 @@ func (c *askConversation) finish(ctx context.Context, question string, reply *as
 		if err != nil {
 			return c.a.failure(c.r, question, err)
 		}
-		ans, perr := parseStructuredAnswer(next.Content, len(c.used), c.a.today())
+		ans, perr := c.parse(next.Content)
 		if perr == nil {
 			return c.answered(question, &ans, next.Model), nil
 		}
@@ -434,9 +435,51 @@ func (c *askConversation) answered(question string, a *structuredAnswer, model s
 	case answerKindClarify:
 		card.Candidates = a.Candidates
 	case answerKindRefuse:
-		card.Suggestions = a.Suggestions
+		// The commands are the box's own, never the model's (D-194).
+		card.Suggestions = refusalSuggestions(c.a.today())
 	}
 	return card
+}
+
+// parse reads a reply as a structured answer of this question and vets what it
+// names against what the model read: parseStructuredAnswer's checks, then the
+// candidates of a clarifying answer.
+func (c *askConversation) parse(content string) (structuredAnswer, error) {
+	a, err := parseStructuredAnswer(content, len(c.used))
+	if err != nil {
+		return structuredAnswer{}, err
+	}
+	if a.Kind == answerKindClarify {
+		a.Candidates = readNames(a.Candidates, c.used)
+		if len(a.Candidates) == 0 {
+			return structuredAnswer{}, errAnswerNoChoices
+		}
+	}
+	return a, nil
+}
+
+// readNames returns the candidates that a card the model read names, in their
+// order: a candidate is a name the person can choose, so one no card holds, which
+// the model made up, is dropped (a clarifying answer left with none is no
+// answer). A name matches without regard to case, in a card's title, text, or any
+// of its rows' labels and details.
+func readNames(candidates []string, cards []answerCard) []string {
+	var haystack strings.Builder
+	for i := range cards {
+		haystack.WriteString(strings.ToLower(cards[i].Title + "\n" + cards[i].Text))
+		for _, row := range cards[i].Rows {
+			haystack.WriteString("\n" + strings.ToLower(row.Label+"\n"+row.Detail))
+		}
+		haystack.WriteString("\n")
+	}
+	text := haystack.String()
+	var out []string
+	for _, name := range candidates {
+		if n := strings.ToLower(strings.TrimSpace(name)); n != "" && strings.Contains(text, n) {
+			out = append(out, name)
+		}
+	}
+	return out
 }
 
 // tool returns the tool called name.

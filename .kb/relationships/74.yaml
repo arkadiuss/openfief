@@ -1406,3 +1406,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6293f59e6f4c
+  - type: implements
+    from: SYM-ab3-tools-askbench-scorers-go-suggestscommands
+    to: REQ-ui-ask-refusal-commands-are-the-boxs
+    created_at: 2026-11-15T10:33:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16784a04afee

@@ -1427,3 +1427,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a51259d3e42e
+  - type: verified_by
+    from: SCEN-ui-ask-clarify-names-come-from-cards
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-15T10:32:48.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4be723f50fc0

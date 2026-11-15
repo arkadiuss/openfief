@@ -293,8 +293,9 @@ func wasAnswered(d *RunData) string {
 
 // followsSchema fails a run whose model did not end with the structured answer
 // the box draws from, after its one retry: a reply that is not one JSON object of
-// the five fields, or one that names a card it did not read, offers a command the
-// box does not understand, or says nothing. A model whose first reply was not an
+// the four fields, or one that names a card it did not read, clarifies with names
+// no card holds, or says nothing. What the model writes in suggestions is
+// ignored, so it is not graded here. A model whose first reply was not an
 // answer and whose retry was has passed it.
 func followsSchema(d *RunData) string {
 	if d.Run.SchemaError == "" {
@@ -598,9 +599,10 @@ func declinesScope(d *RunData) string {
 	return ""
 }
 
-// suggestsCommands checks the refusal offers commands of the box to ask instead:
-// at least one, and every one a command the box understands (D-194), which the
-// loop already checks and the bench checks again on its own day.
+// suggestsCommands checks the refusal carries the box's own commands to ask
+// instead (D-194): the box attaches them to a refusal, not the model, so they are
+// exactly the box's list on the bench's day, each one a command it understands.
+// Nothing the model wrote in suggestions is graded.
 func suggestsCommands(d *RunData) string {
 	if len(d.Run.Suggestions) == 0 {
 		return "offers no command of the box"
@@ -609,6 +611,9 @@ func suggestsCommands(d *RunData) string {
 		if !ui.IsAskCommand(s, d.Today) {
 			return "offers a suggestion that is no command of the box"
 		}
+	}
+	if !slices.Equal(d.Run.Suggestions, ui.AskRefusalSuggestions(d.Today)) {
+		return "offers commands that are not the box's own"
 	}
 	return ""
 }

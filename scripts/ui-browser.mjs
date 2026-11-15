@@ -267,12 +267,12 @@ async function askModelBox(browser) {
     check((await page.locator('#answer .ask-note').count()) === 0, `phone ${scheme}: a command's answer shows the model note`);
     check((await page.textContent('#answer')).includes('no AI model') && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a command is not answered by the box itself`);
-    // A refusal: the model's words, and the box's commands it offers as chips.
+    // A refusal: the model's words, and the box's own four commands as chips (D-194).
     await ask('sell everything', '#answer .ask-suggestions .chip');
     const refusal = await page.textContent('#answer');
-    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 2
+    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 4
       && (await page.locator('#answer .ask-choices').count()) === 0 && (await page.locator('#answer .used-card').count()) === 0,
-      `phone ${scheme}: a refusal does not show the model's words and two command chips`);
+      `phone ${scheme}: a refusal does not show the model's words and the box's four command chips`);
     check((await page.locator('#answer .ask-suggestions .chip').first().boundingBox()).height >= 44, `phone ${scheme}: a command chip is under 44 px tall`);
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refuse.png`), fullPage: true });
     await page.click('#answer .ask-suggestions .chip:has-text("Allocation by currency")');

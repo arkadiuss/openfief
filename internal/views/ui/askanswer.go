@@ -55,8 +55,8 @@ type answerCard struct {
 	Kind string
 	// Candidates are the names a clarifying answer asks the person to choose
 	// from, each asked as a show command; Suggestions are the commands a
-	// refusing answer offers instead, each a chip. Both are checked
-	// (parseStructuredAnswer) to be what the box understands.
+	// refusing answer offers instead, each a chip: the candidates are names a
+	// card the model read holds, the suggestions the box's own commands.
 	Candidates  []string
 	Suggestions []string
 	// Used are the cards the model read and named in its answer, shown under
