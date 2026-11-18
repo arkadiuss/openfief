@@ -6,6 +6,11 @@
 # directory, and publishes it as the signed OCI artifact that Flux on the demo machine follows (../stack.yaml).
 # PLACEHOLDER: sha256 of 64 zeros. The real digests are never committed here; CI fills them in each time.
 #
+# The demo's model layer (../model, docs/dev/demo.md#the-demo-model) is included: the OpenRouter provider instance, the
+# route and tier lists the demo-seed Job stores when the database has none, and D-208's spend guards. The switch is still
+# the owner's: nothing here turns the model or the Ask box's toggle on, which stays an audited owner action in Settings >
+# Models (docs/dev/demo.md#turning-the-model-on).
+#
 # The core and the demo-seed Job start together (docs/dev/demo.md#demo-data). They don't clash because:
 #   - the Job runs without --reset-demo: it loads an empty database, or loads the same day again with the same build,
 #     which changes nothing; a reseed drops only the ledger, valuation and portfolio schemas, never River's;
@@ -30,6 +35,8 @@ resources:
   - ../../demo-data
   - ../plugins
   - core-from-traefik.yaml
+components:
+  - ../model
 configurations:
   - image-fields.yaml
 patches:
@@ -85,4 +92,6 @@ images:
   - name: ghcr.io/arkadiuss/openfief/nbp-fx
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
   - name: ghcr.io/arkadiuss/openfief/ui
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  - name: ghcr.io/arkadiuss/openfief/model-openai
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000

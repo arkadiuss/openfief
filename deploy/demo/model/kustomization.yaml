@@ -1,5 +1,5 @@
-# The demo's model, ready and off (D-207, D-205, D-208, D-212): a kustomize Component that nothing lists, so the live demo
-# is unchanged by it. docs/dev/demo.md#turning-the-model-on says how to include it. It brings:
+# The demo's model, included and off (D-207, D-205, D-208, D-212): a kustomize Component that ../openfief lists, so the live
+# demo has it; the switch and the Ask box's toggle stay the owner's (docs/dev/demo.md#turning-the-model-on). It brings:
 #   - the OpenRouter provider instance and its grant (openrouter.yaml): the model-openai plugin, egress to openrouter.ai
 #     only, its key in the Secret openrouter--api-key that the operator creates out of band;
 #   - the ConfigMap demo-model-settings (settings.json), the route of the Ask box and the models allowed for each data
@@ -66,7 +66,7 @@ patches:
     patch: |-
       - op: add
         path: /spec/template/spec/containers/0/args/-
-        value: --model-daily-budget-usd=1.00
+        value: --model-daily-budget-usd=0.25
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --ask-questions-per-hour=10
@@ -97,7 +97,7 @@ patches:
   # turnstileSiteKey is the public site key of the Turnstile widget the author made in Cloudflare for demo.openfief.dev
   # (docs/dev/demo.md#turning-the-model-on). It is public by design (the page embeds it); the widget's secret key is never
   # here: it is the Secret ui--turnstile-secret, created over SSH (task demo:turnstile-secret). scripts/demo/validate.sh still
-  # fails a live demo that includes this layer with the placeholder REPLACE-WITH-THE-TURNSTILE-SITE-KEY.
+  # fails the demo with the placeholder REPLACE-WITH-THE-TURNSTILE-SITE-KEY.
   - target:
       kind: Plugin
       name: ui

@@ -64,22 +64,20 @@ guard_failures() {
 }
 
 # model_layer_failures prints one line for each way the demo's model layer (deploy/demo/model, docs/dev/demo.md) is
-# wrong, and nothing when it is right. The layer is a kustomize Component that the live demo does not list, so it must:
-# build with the demo (deploy/demo/with-model) with every image pinned by digest; stay out of the live demo
-# (deploy/demo/openfief); route only the Ask box (the maintainer has no route on the demo); and route, and allow for
-# the data tiers, only models that its provider instance lists as entries, at that instance.
+# wrong, and nothing when it is right. The layer is a kustomize Component that the live demo (deploy/demo/openfief)
+# includes, so the live demo's build is the layer's build and it must: build, with every image pinned by digest; not
+# hold the placeholder Turnstile site key; route only the Ask box (the maintainer has no route on the demo); route, and
+# allow for the data tiers, only models that its provider instance lists as entries, at that instance; and have D-208's
+# spend guards right (guard_failures). Whether the switch is on is not in the manifests: it is the owner's, in Settings.
 model_layer_failures() {
   local dir="$1" out="$2" instance="openrouter" listed refs ref
   [ -d "$dir/model" ] || return 0
-  if kustomize build "$dir/openfief" 2>/dev/null | grep -q "$instance\|demo-model-settings"; then
-    echo "the live demo ($dir/openfief) includes the model layer: it is switched on only on purpose"
-  fi
-  if kustomize build "$dir/openfief" 2>/dev/null | grep -q "REPLACE-WITH-THE-TURNSTILE-SITE-KEY"; then
-    echo "the live demo ($dir/openfief) has the placeholder Turnstile site key: the widget is made in Cloudflare and its public key put in $dir/model"
-  fi
-  if ! kustomize build "$dir/with-model" >"$out" 2>/dev/null; then
-    echo "the model layer does not build with the demo ($dir/with-model)"
+  if ! kustomize build "$dir/openfief" >"$out" 2>/dev/null; then
+    echo "the model layer does not build with the demo ($dir/openfief)"
     return 0
+  fi
+  if grep -q "REPLACE-WITH-THE-TURNSTILE-SITE-KEY" "$out"; then
+    echo "the demo ($dir/openfief) has the placeholder Turnstile site key: the widget is made in Cloudflare and its public key put in $dir/model"
   fi
   if [ -n "$(unpinned_images "$out")" ]; then
     echo "the model layer deploys images not pinned by digest: $(unpinned_images "$out" | tr '\n' ' ')"

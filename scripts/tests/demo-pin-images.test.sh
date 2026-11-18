@@ -14,6 +14,7 @@ co='sha256:3333333333333333333333333333333333333333333333333333333333333333'
 ds='sha256:4444444444444444444444444444444444444444444444444444444444444444'
 nf='sha256:5555555555555555555555555555555555555555555555555555555555555555'
 ui='sha256:6666666666666666666666666666666666666666666666666666666666666666'
+mo='sha256:7777777777777777777777777777777777777777777777777777777777777777'
 
 # The fake cosign logs its arguments and "verifies" only the images listed in FAKE_SIGNED (image:tag=digest).
 mkdir -p "$work/bin"
@@ -60,6 +61,7 @@ yes_if() {
 images="ghcr.io/arkadiuss/openfief/operator:sha-1a2b3c4=$op ghcr.io/arkadiuss/openfief/egress-proxy:sha-1a2b3c4=$eg"
 images="$images ghcr.io/arkadiuss/openfief/core:sha-1a2b3c4=$co ghcr.io/arkadiuss/openfief/demo-seed:sha-1a2b3c4=$ds"
 images="$images ghcr.io/arkadiuss/openfief/nbp-fx:sha-1a2b3c4=$nf ghcr.io/arkadiuss/openfief/ui:sha-1a2b3c4=$ui"
+images="$images ghcr.io/arkadiuss/openfief/model-openai:sha-1a2b3c4=$mo"
 if pin "$images" sha-1a2b3c4; then r=yes; else r=no; fi
 check "every image signed: pinning succeeds" "$r"
 check "operator digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$op" '.images[] | select(.name | endswith("/operator")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
@@ -67,6 +69,7 @@ check "egress-proxy digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$e
 check "core digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$co" '.images[] | select(.name | endswith("/core")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "demo-seed digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$ds" '.images[] | select(.name | endswith("/demo-seed")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "nbp-fx digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$nf" '.images[] | select(.name | endswith("/nbp-fx")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
+check "model-openai digest is pinned" "$(yes_if gojq --yaml-input -e --arg d "$mo" '.images[] | select(.name | endswith("/model-openai")) | .digest == $d' "$work/demo/openfief/kustomization.yaml")"
 check "the credentials Job's name carries the first 12 hex digits of the core's digest" "$(yes_if grep -q '^ *value: openfief-init-credentials-333333333333$' "$work/demo/openfief/kustomization.yaml")"
 # Render the pinned kustomization with the rest of deploy/, which it builds on.
 rm -rf "$work/deploy"
@@ -75,6 +78,7 @@ cp "$work/demo/openfief/kustomization.yaml" "$work/deploy/demo/openfief/kustomiz
 kustomize build "$work/deploy/demo/openfief" >"$work/rendered.yaml" 2>"$work/out" || true
 check "the nbp Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/nbp-fx@$nf" 'select(.kind == "Plugin" and .metadata.name == "nbp") | .spec.image == $i' "$work/rendered.yaml")"
 check "the ui Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/ui@$ui" 'select(.kind == "Plugin" and .metadata.name == "ui") | .spec.image == $i' "$work/rendered.yaml")"
+check "the openrouter Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -e --arg i "ghcr.io/arkadiuss/openfief/model-openai@$mo" 'select(.kind == "Plugin" and .metadata.name == "openrouter") | .spec.image == $i' "$work/rendered.yaml")"
 check "the rendered credentials Job is named for the core's digest, keeps its label and has no force annotation" "$(yes_if gojq --yaml-input -e 'select(.kind == "Job" and .metadata.labels["app.kubernetes.io/name"] == "openfief-init-credentials") | .metadata.name == "openfief-init-credentials-333333333333" and (.metadata.annotations // {} | has("kustomize.toolkit.fluxcd.io/force") | not)' "$work/rendered.yaml")"
 check "comments survive" "$(yes_if grep -q '^# OpenFief on the demo machine' "$work/demo/openfief/kustomization.yaml")"
 check "no placeholder is left" "$(yes_if bash -c "! grep -q 'sha256:0000\|credentials-000000000000' '$work/demo/openfief/kustomization.yaml'")"

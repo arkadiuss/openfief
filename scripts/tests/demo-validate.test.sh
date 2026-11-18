@@ -52,7 +52,7 @@ fresh
 sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/openfief.yaml"
 expect "a variable the demo settings don't define" fail "uses variables the demo settings don't define: DEMO_HOSTNAME"
 
-# The model layer (deploy/demo/model) is ready and off: a Component the live demo does not list.
+# The model layer (deploy/demo/model) is a Component the live demo includes; its switch is the owner's, not the manifests'.
 fresh
 sed -i 's#"openrouter/openai/gpt-oss-120b"#"openrouter/google/gemma-4-26b-a4b-it"#' "$work/repo/deploy/demo/model/settings.json"
 expect "a route to a model the provider instance does not list" fail "name openrouter/google/gemma-4-26b-a4b-it, which the instance openrouter does not list"
@@ -62,8 +62,8 @@ sed -i 's#"routes": {#"routes": {\n    "maintainer": ["openrouter/openai/gpt-oss
 expect "a route for the maintainer" fail "route something other than the Ask box"
 
 fresh
-printf '\ncomponents:\n  - ../model\n' >>"$work/repo/deploy/demo/openfief/kustomization.yaml"
-expect "the model layer listed by the live demo" fail "the live demo (deploy/demo/openfief) includes the model layer"
+sed -i '/^components:/,/^  - ..\/model/d' "$work/repo/deploy/demo/openfief/kustomization.yaml"
+expect "the model layer left out of the live demo" fail "the core's flags lack --ask-questions-per-hour=10"
 
 fresh
 rm "$work/repo/deploy/demo/model/openrouter.yaml"
@@ -91,11 +91,11 @@ sed -i 's/value: --trusted-proxies=10.42.0.0\/16/value: --trusted-proxies-not/' 
 expect "no trusted proxy for the address header" fail "the core's flags lack --trusted-proxies"
 
 fresh
-sed -i 's/value: --model-daily-budget-usd=1.00/value: --model-daily-budget-usd=lots/' "$work/repo/deploy/demo/model/kustomization.yaml"
+sed -i 's/value: --model-daily-budget-usd=0.25/value: --model-daily-budget-usd=lots/' "$work/repo/deploy/demo/model/kustomization.yaml"
 expect "a budget that is no amount" fail "the core's --model-daily-budget-usd is not a positive amount"
 
 fresh
-sed -i 's/value: --model-daily-budget-usd=1.00/value: --model-daily-budget-usd=0/' "$work/repo/deploy/demo/model/kustomization.yaml"
+sed -i 's/value: --model-daily-budget-usd=0.25/value: --model-daily-budget-usd=0/' "$work/repo/deploy/demo/model/kustomization.yaml"
 expect "a budget of nothing" fail "the core's --model-daily-budget-usd is not a positive amount"
 
 fresh
@@ -112,8 +112,7 @@ expect "limits of one question that are not D-208's" fail "the UI's limits of on
 
 fresh
 sed -i 's/turnstileSiteKey: .*/turnstileSiteKey: REPLACE-WITH-THE-TURNSTILE-SITE-KEY/' "$work/repo/deploy/demo/model/kustomization.yaml"
-printf '\ncomponents:\n  - ../model\n' >>"$work/repo/deploy/demo/openfief/kustomization.yaml"
-expect "the placeholder site key in a live demo" fail "has the placeholder Turnstile site key"
+expect "the placeholder site key in the live demo" fail "has the placeholder Turnstile site key"
 
 fresh
 sed -i 's/turnstileSiteKey: .*/turnstileSiteKey: 0x4AAAAAAAxxxxxxxxxxxxxx/' "$work/repo/deploy/demo/model/kustomization.yaml"
