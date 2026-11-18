@@ -196263,7 +196263,7 @@ symbols:
       - type: implements
         target: REQ-identity-viewer-views-granted-accounts
   - id: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
-    title: GrantPolicy.viewerAccounts
+    title: GrantPolicy.holderAccounts
     status: active
     sourceFile: internal/identity/app/grantpolicy.go
     symbol_role: behavioral
@@ -196274,6 +196274,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-grants-limit-tokens-under-policy
       - type: implements
         target: REQ-identity-viewer-views-granted-accounts
   - id: SYM-viewers-internal-identity-app-grantpolicy-toset
@@ -235330,3 +235332,1731 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-turnstile
+  - id: SYM-views-mcpserver-server-go
+    title: mcpserver server
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'D-213 with D-212, D-211, D-209 and D-203: the MCP server brief from the design session, 2026-11-18'
+      recorded_at: 2026-11-18T09:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-ui-toolbox-go
+    title: ui toolbox
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'D-213 with D-212, D-211, D-209 and D-203: the MCP server brief from the design session, 2026-11-18'
+      recorded_at: 2026-11-18T09:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-core-mcp-go
+    title: core mcp wiring
+    status: active
+    sourceFile: cmd/core/mcp.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'D-213 with D-212, D-211, D-209 and D-203: the MCP server brief from the design session, 2026-11-18'
+      recorded_at: 2026-11-18T09:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+      - type: implements
+        target: REQ-views-mcp-door
+      - type: implements
+        target: REQ-views-mcp-only-as-d213-allows
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-identity-auditmcp-go
+    title: identity MCP audit entry
+    status: active
+    sourceFile: internal/identity/auditmcp.go
+    symbol_role: behavioral
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      ref: 'D-213 with D-212, D-211, D-209 and D-203: the MCP server brief from the design session, 2026-11-18'
+      recorded_at: 2026-11-18T09:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-mcp
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+  - id: SYM-mcp-mcp-with-mcp
+    title: withMCP
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:23.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-settings
+    title: mcpSettings
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:30.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-gate
+    title: mcpGate
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:36.501Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-gate-enabled
+    title: mcpGate.Enabled
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:42.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-tokens
+    title: mcpTokens
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:49.005Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-tokens-authenticate
+    title: mcpTokens.Authenticate
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:51:55.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-ui-toolbox
+    title: uiToolbox
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:01.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-tools
+    title: mcpTools
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:08.038Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-tools-tools
+    title: mcpTools.Tools
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:14.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-tools-call
+    title: mcpTools.Call
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:20.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-audit
+    title: mcpAudit
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:26.937Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-audit-record-call
+    title: mcpAudit.RecordCall
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:33.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-core-mount-browser-port
+    title: core.mountBrowserPort
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:39.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-core-mount-mcp
+    title: core.mountMCP
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:45.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-mcp-endpoint
+    title: mcpEndpoint
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:52.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-in-process
+    title: inProcess
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:52:58.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-handler-transport
+    title: handlerTransport
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:04.861Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-handler-transport-round-trip
+    title: handlerTransport.RoundTrip
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:11.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-buffered-response
+    title: bufferedResponse
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:17.784Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-buffered-response-header
+    title: bufferedResponse.Header
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:23.913Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-buffered-response-write-header
+    title: bufferedResponse.WriteHeader
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:30.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-buffered-response-write
+    title: bufferedResponse.Write
+    status: active
+    sourceFile: cmd/core/mcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:36.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-mcp-test-mcp-reply
+    title: mcpReply
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:41.938Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-post
+    title: mcpPost
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:47.859Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-call
+    title: mcpCall
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:53:53.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-answer
+    title: mcpAnswer
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:00.209Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-reply-decode
+    title: mcpReply.decode
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:06.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-queryer
+    title: queryer
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:13.488Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-audit-text
+    title: auditText
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:20.285Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture
+    title: mcpFixture
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:27.113Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-new-mcpfixture
+    title: newMCPFixture
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:33.921Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-off-by-default
+    title: mcpFixture.checkOffByDefault
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:40.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-door
+    title: mcpFixture.checkDoor
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:46.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-tools
+    title: mcpFixture.checkTools
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:52.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-session
+    title: mcpFixture.checkSession
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:54:58.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-audit
+    title: mcpFixture.checkAudit
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:04.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-fixture-check-stops-at-once
+    title: mcpFixture.checkStopsAtOnce
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:10.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-test-mcpserved-on-the-browser-port
+    title: TestMCPServedOnTheBrowserPort
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:17.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-test-mcppath-belongs-to-the-core
+    title: TestMCPPathBelongsToTheCore
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:23.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-fake-switch
+    title: fakeSwitch
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:30.739Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-fake-switch-switch
+    title: fakeSwitch.Switch
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:37.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-test-mcpgate
+    title: TestMCPGate
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:44.889Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-log
+    title: mcpLog
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:55:52.435Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-mcp-log-append-audit
+    title: mcpLog.AppendAudit
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:00.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-test-mcpaudit-entry
+    title: TestMCPAuditEntry
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:07.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-test-mcptokens
+    title: TestMCPTokens
+    status: active
+    sourceFile: cmd/core/mcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:13.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-tokens-tokens-verify-mcp
+    title: Tokens.VerifyMCP
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:19.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-tokens-tokens-verified
+    title: Tokens.verified
+    status: active
+    sourceFile: internal/identity/app/tokens.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:26.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-tokens-test-test-verify-mcp
+    title: TestVerifyMCP
+    status: active
+    sourceFile: internal/identity/app/tokens_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:32.382Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-mcp-tokens-test-fixture-allow-mcp
+    title: fixture.allowMCP
+    status: active
+    sourceFile: internal/identity/app/tokens_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:38.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app
+  - id: SYM-mcp-auditmcp-valid-mcptool
+    title: validMCPTool
+    status: active
+    sourceFile: internal/identity/auditmcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:45.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-mcp
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+  - id: SYM-mcp-auditmcp-mcp-outcomes
+    title: mcpOutcomes
+    status: active
+    sourceFile: internal/identity/auditmcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:51.524Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-mcp
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+  - id: SYM-mcp-auditmcp-validate-mcpentry
+    title: validateMCPEntry
+    status: active
+    sourceFile: internal/identity/auditmcp.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:56:58.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-audit-mcp
+      - type: implements
+        target: REQ-identity-audit-mcp-calls
+  - id: SYM-mcp-auditmcp-test-test-mcpcall-entry
+    title: TestMCPCallEntry
+    status: active
+    sourceFile: internal/identity/auditmcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:05.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-mcp
+  - id: SYM-mcp-auditmcp-test-test-mcptool-ref-is-aname
+    title: TestMCPToolRefIsAName
+    status: active
+    sourceFile: internal/identity/auditmcp_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:12.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-audit-mcp
+  - id: SYM-mcp-ports-gate
+    title: Gate
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:19.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-tokens
+    title: Tokens
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:26.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-tool
+    title: Tool
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:34.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-outcome
+    title: Outcome
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:41.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-result
+    title: Result
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:47.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-toolbox
+    title: Toolbox
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:57:53.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-call
+    title: Call
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:00.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-ports-auditor
+    title: Auditor
+    status: active
+    sourceFile: internal/views/mcpserver/ports.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:06.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-config
+    title: Config
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:12.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-handler
+    title: handler
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:18.384Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-caller-key
+    title: callerKey
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:24.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-caller
+    title: caller
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:31.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-new
+    title: New
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:37.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-handler-serve-http
+    title: handler.ServeHTTP
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:44.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-handler-server-for
+    title: handler.serverFor
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:51.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-handler-call
+    title: handler.call
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:58:57.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-handler-run
+    title: handler.run
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:03.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-text-result
+    title: textResult
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:09.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-bearer-token
+    title: bearerToken
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:16.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-plain
+    title: plain
+    status: active
+    sourceFile: internal/views/mcpserver/server.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:22.792Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-mcp-server-test-fake-gate
+    title: fakeGate
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:29.264Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-gate-enabled
+    title: fakeGate.Enabled
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:35.792Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-gate-set
+    title: fakeGate.set
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:42.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-tokens
+    title: fakeTokens
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:48.488Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-tokens-authenticate
+    title: fakeTokens.Authenticate
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T15:59:55.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-read-call
+    title: readCall
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:02.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-toolbox
+    title: fakeToolbox
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:08.733Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-toolbox-tools
+    title: fakeToolbox.Tools
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:15.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-toolbox-call
+    title: fakeToolbox.Call
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:22.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-toolbox-ran
+    title: fakeToolbox.ran
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:28.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-auditor
+    title: fakeAuditor
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:35.454Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-auditor-record-call
+    title: fakeAuditor.RecordCall
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:42.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fake-auditor-recorded
+    title: fakeAuditor.recorded
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:48.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fixture
+    title: fixture
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:00:54.818Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-new-fixture
+    title: newFixture
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:00.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-reply
+    title: reply
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:06.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fixture-post
+    title: fixture.post
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:12.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-do
+    title: do
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:19.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-call-tool
+    title: callTool
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:25.408Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-rpc
+    title: rpc
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:32.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-decode
+    title: decode
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:38.964Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-endpoint-refuses-before-any-tool
+    title: TestEndpointRefusesBeforeAnyTool
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:45.786Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-fixture-check-refused
+    title: fixture.checkRefused
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:52.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-turning-off-stops-answers-at-once
+    title: TestTurningOffStopsAnswersAtOnce
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:01:58.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-mcpsession
+    title: TestMCPSession
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:04.924Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-check-tool-list
+    title: checkToolList
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:11.233Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-each-call-reads-as-its-own-token
+    title: TestEachCallReadsAsItsOwnToken
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:17.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-call-outcomes-are-audited
+    title: TestCallOutcomesAreAudited
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:24.525Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-acall-the-log-cannot-record-shows-nothing
+    title: TestACallTheLogCannotRecordShowsNothing
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:31.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-only-post-is-answered
+    title: TestOnlyPostIsAnswered
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:37.491Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-new-needs-its-ports
+    title: TestNewNeedsItsPorts
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:44.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-bearer-transport
+    title: bearerTransport
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:50.738Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-bearer-transport-round-trip
+    title: bearerTransport.RoundTrip
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:02:57.636Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-check-sdkcalls
+    title: checkSDKCalls
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:04.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-server-test-test-the-sdks-own-client-works
+    title: TestTheSDKsOwnClientWorks
+    status: active
+    sourceFile: internal/views/mcpserver/server_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:11.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-mcp-server
+  - id: SYM-mcp-toolbox-tool-info
+    title: ToolInfo
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:19.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-tool-outcome
+    title: ToolOutcome
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:26.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-tool-result
+    title: ToolResult
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:35.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-toolbox-config
+    title: ToolboxConfig
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:42.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-toolbox
+    title: Toolbox
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:49.218Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-new-toolbox
+    title: NewToolbox
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:03:55.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-toolbox-tools
+    title: Toolbox.Tools
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:02.280Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-toolbox-call
+    title: Toolbox.Call
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:08.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-toolbox-request
+    title: Toolbox.request
+    status: active
+    sourceFile: internal/views/ui/toolbox.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:15.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-toolbox
+      - type: implements
+        target: REQ-views-mcp-tools-are-ask-box-tools
+  - id: SYM-mcp-toolbox-test-new-toolbox
+    title: newToolbox
+    status: active
+    sourceFile: internal/views/ui/toolbox_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:21.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-mcp-toolbox-test-test-toolbox-offers-the-ask-boxs-tools
+    title: TestToolboxOffersTheAskBoxsTools
+    status: active
+    sourceFile: internal/views/ui/toolbox_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:27.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-mcp-toolbox-test-test-toolbox-calls-read-with-the-callers-own-token
+    title: TestToolboxCallsReadWithTheCallersOwnToken
+    status: active
+    sourceFile: internal/views/ui/toolbox_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:33.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-mcp-toolbox-test-test-toolbox-call-outcomes
+    title: TestToolboxCallOutcomes
+    status: active
+    sourceFile: internal/views/ui/toolbox_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:38.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-mcp-toolbox-test-test-toolbox-needs-aread
+    title: TestToolboxNeedsARead
+    status: active
+    sourceFile: internal/views/ui/toolbox_test.go
+    origin:
+      kind: agent
+      ref: D-213 MCP server, 2026-11-18
+      recorded_at: 2026-11-18T16:04:44.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-grants-grant-enforcer
+    title: GrantEnforcer
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/identity/app/access.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-needs-grant-enforcement
+  - id: SYM-grants-enforces-token-grants
+    title: EnforcesTokenGrants
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/identity/app/access.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-needs-grant-enforcement
+  - id: SYM-grants-grantpolicy-enforces-token-grants
+    title: GrantPolicy.EnforcesTokenGrants
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-needs-grant-enforcement
+  - id: SYM-grants-spicedb-enforces-token-grants
+    title: Authorizer.EnforcesTokenGrants
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/identity/spicedb/authorizer.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-needs-grant-enforcement
+  - id: SYM-grants-grant-holder-of
+    title: grantHolderOf
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/identity/app/grantpolicy.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-identity-grant-policy
+      - type: implements
+        target: REQ-identity-grants-limit-tokens-under-policy
+  - id: SYM-mcp-mcp-deps
+    title: mcpDeps
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: cmd/core/mcp.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-needs-grant-enforcement
+  - id: SYM-mcp-handler-unauthenticated
+    title: handler.unauthenticated
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/views/mcpserver/server.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-mcp-server
+      - type: implements
+        target: REQ-identity-audit-mcp-not-allowed
+  - id: SYM-mcp-mcp-test-check-grants
+    title: mcpFixture.checkGrantsLimitWhatIsRead
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: cmd/core/mcp_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-mcp-mcp-test-grantless
+    title: grantless
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: cmd/core/mcp_test.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-mcp
+  - id: SYM-views-attention-test-unbound-owner-only
+    title: TestRESTAttentionItemsOfNoAccountAreTheOwnersAlone
+    status: active
+    origin:
+      kind: agent
+      ref: the design session's answers on D-213, D-209, D-165 and D-199, relayed by the coordinator, 2026-11-18
+      recorded_at: 2026-11-18T17:00:00.000Z
+    sourceFile: internal/views/connectapi/attention_test.go
+    symbol_role: behavioral
+    relationships:
+      - type: executable_for
+        target: TEST-views-attention-unbound-owner-only
+  - id: SYM-core-test-helper-start-core-as-owner
+    title: startCoreAsOwner
+    status: active
+    sourceFile: cmd/core/model_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T16:50:43.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention

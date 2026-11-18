@@ -17,7 +17,7 @@ OpenFief can ask a language model questions, and it never does so unless the own
 
 ## Concepts
 
-**One switch.** [Agents and models](../glossary.md) are off by default, behind one switch in Settings, with a toggle under it for each feature: the Ask box's model, the maintainer and the MCP server (D-212). The switch and the toggles are stored with the owner's other settings in the `modelrouter` schema and only the owner changes them. With the switch off nothing calls a model, whatever the toggles say; with it on, a feature still runs only if its own toggle is on.
+**One switch.** [Agents and models](../glossary.md) are off by default, behind one switch in Settings, with a toggle under it for each feature: the Ask box's model, the maintainer and the [MCP server](mcp.md) (D-212). The switch and the toggles are stored with the owner's other settings in the `modelrouter` schema and only the owner changes them. With the switch off nothing calls a model, whatever the toggles say; with it on, a feature still runs only if its own toggle is on.
 
 **Model-provider plugin.** A [model provider](../glossary.md) is a plugin with the `model-provider` capability (D-205). It holds its provider's key, reaches only its provider's host through the [egress proxy](egress.md) like any network plugin, says where its models run and what the provider keeps of what it receives, lists its models, and generates. It never sees a role, a data tier or who asked: it sends what the core hands it.
 
@@ -180,7 +180,6 @@ D-217, D-218, D-219 and D-220 (the Ask box's eval, its bar and the bench that ru
 - The Models page ([Built-in UI](ui.md)) reads a provider's terms and models on each visit, with no cache and no refresh button, and it can't install a provider: that is the Plugins page's.
 - A change of the settings is audited by what it changed, not to what: the entry names `route:ask` and not the models the route now holds.
 - The Ask box's guards (D-208) are built and off unless configured, Turnstile too. The budget counts only answered calls (a call that fails after the provider billed it, such as a timeout, costs nothing in the count, which the provider's own credit limit covers), the calls-at-once limit is per process, and the limits per address rest on the proxy's header being the one the core is told to trust (see above).
-- The MCP server (D-213) and its toggle's effect: the toggle is stored, and no endpoint exists to answer.
 - The demo's model is prepared, not on ([Demo environment](../dev/demo.md#the-demo-model)): it has no fallback model until another host is a D-221 member, and turning it on waits for the author's quality bar and for the guards above, which D-208 sets as the demo's limit on spend, and for the turn-on steps on the demo page, which also hold what the demo sets for each guard and what to check before the model is on.
 - Spend and token budgets (D-208): the router keeps no usage, and the provider plugin only reports it.
 - Streaming, the Anthropic and Gemini wire protocols, and the model entries' prices in any decision.

@@ -930,3 +930,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a6e49ffc246
+  - type: implements
+    from: SYM-mcp-server-caller
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:58:34.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f392ff9586
+  - type: covered_by
+    from: SYM-mcp-server-caller
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:58:34.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8f9a0914044
+  - type: executable_for
+    from: SYM-mcp-server-test-read-call
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:05.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b3410be2c4c
+  - type: executable_for
+    from: SYM-mcp-server-test-fixture-post
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:16.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db3ea464eee0
+  - type: implements
+    from: SYM-mcp-handler-unauthenticated
+    to: REQ-identity-audit-mcp-not-allowed
+    created_at: 2026-11-18T16:28:42.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a425e2d18e4
+  - type: covered_by
+    from: SYM-mcp-handler-unauthenticated
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:28:42.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-776636b6bf4d

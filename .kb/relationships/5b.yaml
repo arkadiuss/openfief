@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-285119e9595e
+  - type: executable_for
+    from: SYM-mcp-mcp-test-test-mcptokens
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:56:16.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8d480606c35

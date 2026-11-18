@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb55047056ae
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-toolbox-ran
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:31.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b02905d25be0

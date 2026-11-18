@@ -1147,3 +1147,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0277e1092fa
+  - type: implements
+    from: SYM-mcp-mcp-with-mcp
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:51:26.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9687fa020882
+  - type: covered_by
+    from: SYM-mcp-mcp-with-mcp
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:51:26.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-496d9c2786a4

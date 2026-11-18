@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ff08716aefc
+  - type: executable_for
+    from: SYM-mcp-mcp-test-mcp-log-append-audit
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:56:03.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d16e146ac563

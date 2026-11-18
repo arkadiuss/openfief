@@ -1336,3 +1336,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e57cc76e4b0
+  - type: specified_by
+    from: REQ-identity-audit-mcp-not-allowed
+    to: SCEN-identity-audit-mcp-not-allowed
+    created_at: 2026-11-18T16:28:05.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa2b4d564bf
+  - type: verified_by
+    from: REQ-identity-audit-mcp-not-allowed
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:28:05.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0da089dea7
+  - type: verified_by
+    from: REQ-identity-audit-mcp-not-allowed
+    to: TEST-identity-audit-mcp
+    created_at: 2026-11-18T16:28:05.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96c9330da732

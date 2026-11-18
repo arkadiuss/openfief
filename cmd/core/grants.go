@@ -228,16 +228,17 @@ func grantsOnUninstall(ctx context.Context, grants *identityapp.Grants, log *slo
 }
 
 // grantsStartup is what the core does about grants at start, after the
-// accounts and sleeves are wired: with SpiceDB, the cutover (D-209), once;
+// accounts and sleeves are wired: the cutover (D-209), once, under the policy
+// too, since the policy limits script tokens and view plugins to their grants;
 // then the sweep of grants that outlived the holder or the target they name;
 // and, when a grant could not be passed on to SpiceDB, a reconcile. It
 // retries what fails until it succeeds or ctx ends: the installed plugins
 // are read in the background, and SpiceDB may not be up yet. A failure is
 // logged without a credential or anything granted.
-func grantsStartup(ctx context.Context, grants *identityapp.Grants, spicedbOn bool, reconcile func(context.Context) error, log *slog.Logger) {
+func grantsStartup(ctx context.Context, grants *identityapp.Grants, reconcile func(context.Context) error, log *slog.Logger) {
 	reconcileNeeded := false
 	for {
-		err := grantsStep(ctx, grants, spicedbOn, reconcile, &reconcileNeeded, log)
+		err := grantsStep(ctx, grants, reconcile, &reconcileNeeded, log)
 		if err == nil {
 			return
 		}
@@ -255,21 +256,19 @@ func grantsStartup(ctx context.Context, grants *identityapp.Grants, spicedbOn bo
 	}
 }
 
-// grantsStep runs the start's steps once: the cutover when SpiceDB answers,
-// the sweep, and the reconcile when a change could not be passed on.
-func grantsStep(ctx context.Context, grants *identityapp.Grants, spicedbOn bool, reconcile func(context.Context) error, reconcileNeeded *bool, log *slog.Logger) error {
-	if spicedbOn {
-		n, err := grants.Cutover(ctx, systemActor())
-		if errors.Is(err, identityapp.ErrGrantNotProjected) {
-			*reconcileNeeded = true
-			err = nil
-		}
-		if err != nil {
-			return fmt.Errorf("the cutover: %w", err)
-		}
-		if n > 0 {
-			log.Info("gave the household grant to every script token and view plugin that held read access", "grants", n)
-		}
+// grantsStep runs the start's steps once: the cutover, the sweep, and the
+// reconcile when a change could not be passed on.
+func grantsStep(ctx context.Context, grants *identityapp.Grants, reconcile func(context.Context) error, reconcileNeeded *bool, log *slog.Logger) error {
+	n, err := grants.Cutover(ctx, systemActor())
+	if errors.Is(err, identityapp.ErrGrantNotProjected) {
+		*reconcileNeeded = true
+		err = nil
+	}
+	if err != nil {
+		return fmt.Errorf("the cutover: %w", err)
+	}
+	if n > 0 {
+		log.Info("gave the household grant to every script token and view plugin that held read access", "grants", n)
 	}
 	swept, err := grants.Sweep(ctx, systemActor())
 	if err != nil {

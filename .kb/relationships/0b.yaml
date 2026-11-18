@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45457208eee8
+  - type: executable_for
+    from: SYM-mcp-server-test-new-fixture
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:03.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b169e73a82d

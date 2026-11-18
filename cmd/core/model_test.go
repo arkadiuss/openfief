@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/jackc/pgx/v5/pgxpool"
 
 	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
@@ -34,6 +35,22 @@ func modelClient(srv *httptest.Server, token string) modelAPI {
 type ownerCore struct {
 	srv     *httptest.Server
 	session string
+}
+
+// startCoreAsOwner starts the core over dsn with a plugin port the view plugin ui may call, enrolls a passkey
+// and logs in with it, and returns the core, its browser port, its pool and the owner's session. What is tied to
+// no account is the owner's alone (D-165), so a test that reads it reads as the owner.
+func startCoreAsOwner(t *testing.T, dsn string) (*core, *httptest.Server, *pgxpool.Pool, string) {
+	t.Helper()
+	out := enrollCmd(t, dsn)
+	link, _, _ := strings.Cut(out, "\n")
+	code, ok := strings.CutPrefix(link, localUI+"/enroll#code=")
+	if !ok {
+		t.Fatalf("enroll-link printed %q", out)
+	}
+	c, ports, pool := startCorePorts(t, dsn, viewCluster(t), func(*serveConfig) {})
+	cl := authClient(ports.plugin.URL, ports.plugin.Client(), uiCaller)
+	return c, ports.browser, pool, passkeyLogin(t, cl, passkeyEnroll(t, cl, code))
 }
 
 // ownerSession enrolls a passkey on a fresh core and logs in with it.

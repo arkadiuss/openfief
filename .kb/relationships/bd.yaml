@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f44e3a4d15eb
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-auditor-record-call
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:45.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055ea478fa63

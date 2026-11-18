@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a05d43d3b9bb
+  - type: executable_for
+    from: SYM-mcp-server-test-rpc
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:35.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25d9fb5fec4e

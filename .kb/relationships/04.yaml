@@ -1182,3 +1182,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6706505b468f
+  - type: executable_for
+    from: SYM-mcp-mcp-test-mcp-fixture-check-stops-at-once
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:55:13.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce1ceeff8e83
+  - type: executable_for
+    from: SYM-mcp-server-test-call-tool
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:28.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e85cd62cff4

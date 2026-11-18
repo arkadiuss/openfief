@@ -1021,3 +1021,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63b564145350
+  - type: implements
+    from: SYM-mcp-ports-call
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:58:03.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ad23b893d4f
+  - type: covered_by
+    from: SYM-mcp-ports-call
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:58:03.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64cf33562e7
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-tokens
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:59:51.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-294846b338b1

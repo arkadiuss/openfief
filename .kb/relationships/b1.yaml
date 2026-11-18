@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-857e1c94b830
+  - type: validates
+    from: TEST-ui-toolbox
+    to: SCEN-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T15:27:36.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-187c097bd3e4

@@ -31,13 +31,19 @@ const (
 
 var errStore = errors.New("store unavailable")
 
-// fakeVerifier accepts goodToken as a script token, cannot check
-// brokenToken and rejects anything else.
+// scriptToken is the secret of a script token, which sees only what its grants
+// cover and what is tied to an account (D-165, D-209).
+const scriptToken = "synthetic-script-token"
+
+// fakeVerifier accepts goodToken as the owner's, scriptToken as a script token,
+// cannot check brokenToken and rejects anything else.
 type fakeVerifier struct{}
 
 func (fakeVerifier) VerifyToken(_ context.Context, token string) (identity.Caller, error) {
 	switch token {
 	case goodToken:
+		return identity.Caller{Holder: identity.HolderOwner, ID: "test"}, nil
+	case scriptToken:
 		return identity.Caller{Holder: identity.HolderScriptToken, ID: "test"}, nil
 	case brokenToken:
 		return identity.Caller{}, errStore

@@ -1560,3 +1560,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fd1c6f97938
+  - type: executable_for
+    from: SYM-mcp-server-test-check-sdkcalls
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:03:07.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efc544541783

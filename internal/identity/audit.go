@@ -46,10 +46,10 @@ const (
 	// ActorOperator is the operator, the controller that installs, upgrades
 	// and removes plugins from their Plugin resources (D-211): the core
 	// records what it observes the operator did, and the actor's ID is
-	// "operator". A script token and a plugin are no actor kinds: a script
-	// token only reads (D-6), and a plugin changes nothing with its own
+	// "operator". A plugin is no actor kind: it changes nothing with its own
 	// identity, since the built-in UI relays the owner's session and the core
-	// is what calls connectors and model providers.
+	// is what calls connectors and model providers. A script token is the
+	// actor of its MCP calls alone (ActorScriptToken).
 	ActorOperator ActorKind = "operator"
 	// ActorAdmin is the administrator at the core's command line, such as
 	// `core token issue`, the break-glass way to a script token (D-67), and
@@ -58,6 +58,11 @@ const (
 	// "admin". The core's own work, such as a scheduled sync, stays the
 	// system actor.
 	ActorAdmin ActorKind = "admin"
+	// ActorScriptToken is a script token calling the MCP server (D-213,
+	// D-211): the actor's ID is the token's ID, never its secret. A token
+	// still changes nothing, so it is the actor of usage entries only
+	// (ActionMCPCall).
+	ActorScriptToken ActorKind = "script_token"
 )
 
 // SystemActorID is the ID of the system actor.
@@ -86,6 +91,10 @@ func (a Actor) Validate() error {
 	case ActorEnrollmentCode:
 		if !isHexID(a.ID) {
 			return fmt.Errorf("%w: an enrollment code actor is named by the code's ID", ErrInvalidAuditEntry)
+		}
+	case ActorScriptToken:
+		if !isHexID(a.ID) {
+			return fmt.Errorf("%w: a script token actor is named by the token's ID", ErrInvalidAuditEntry)
 		}
 	case ActorSystem, ActorOperator, ActorAdmin, ActorAnonymous:
 		return a.validateFixed()
@@ -184,6 +193,12 @@ const (
 	// changed (RefModelSetting), never the models listed; the settings
 	// themselves hold those.
 	ActionModelSettingsChanged AuditAction = "model_settings_changed"
+	// ActionMCPCall is a script token's call of an MCP tool (D-213, D-211):
+	// usage only. The actor is the token (ActorScriptToken), the entry names
+	// the tool (RefMCPTool) and says how the call ended: ok, refused (the
+	// arguments were not accepted) or failed (the data could not be read).
+	// Never an argument, a result, an amount or a question's text.
+	ActionMCPCall AuditAction = "mcp_call"
 )
 
 // actionKinds maps each action to the kinds of record its entries may name.
@@ -212,6 +227,7 @@ func actionKinds() map[AuditAction][]RefKind {
 		ActionMaintainerProposalApplied:   {RefMaintainerRun},
 		ActionMaintainerProposalDismissed: {RefMaintainerRun},
 		ActionModelSettingsChanged:        {RefModelSetting},
+		ActionMCPCall:                     {RefMCPTool},
 	}
 	maps.Copy(out, changeActionKinds())
 	return out
@@ -338,7 +354,7 @@ func (r Ref) Validate() error {
 		return r.validateGrantRef()
 	case RefPasskey:
 		return r.validatePasskeyRef()
-	case RefModelRole, RefModel, RefModelCall, RefModelError:
+	case RefModelRole, RefModel, RefModelCall, RefModelError, RefMCPTool:
 		return r.validateModel()
 	case RefModelSetting:
 		if !validModelSetting(r.ID) {
@@ -379,7 +395,7 @@ func (r Ref) validateGrantRef() error {
 		ok = isRecordID(r.ID) && !looksLikeSecret(r.ID)
 	case RefHousehold:
 		ok = r.ID == HouseholdID
-	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
+	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool,
 		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 	}
 	if !ok {
@@ -403,6 +419,8 @@ func (r Ref) validateModel() error {
 		ok = isHexID(r.ID)
 	case RefModelError:
 		ok = slices.Contains(ModelErrorClasses(), r.ID)
+	case RefMCPTool:
+		ok = validMCPTool(r.ID)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting,
 		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 	}
@@ -628,6 +646,8 @@ func (e *AuditEntry) validateShape() error {
 		return validateModelEntry(e)
 	case e.Action == ActionModelSettingsChanged:
 		return validateSettingsEntry(e)
+	case e.Action == ActionMCPCall:
+		return validateMCPEntry(e)
 	case isChangeAction(e.Action):
 		return validateChange(e)
 	case e.Action == ActionMaintainerRun, e.Action == ActionMaintainerProposalDropped,
@@ -800,7 +820,7 @@ func (f *AuditFilter) inRange(at time.Time) bool {
 // knownActorKind reports whether k is one of the actor kinds.
 func knownActorKind(k ActorKind) bool {
 	switch k {
-	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAdmin, ActorAnonymous:
+	case ActorOwner, ActorViewer, ActorEnrollmentCode, ActorSystem, ActorOperator, ActorAdmin, ActorAnonymous, ActorScriptToken:
 		return true
 	}
 	return false

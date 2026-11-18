@@ -65,15 +65,15 @@ func (v *Views) viewable(ctx context.Context, accounts []ledger.Account) ([]ledg
 }
 
 // unboundVisible reports whether the caller in ctx may see what is tied to
-// a connector instance and to no account (D-165, D-199): the owner and the
-// other holders of read access (D-137), script tokens, view plugins and
-// demo sessions, which view every account until SpiceDB answers (D-163),
-// and nobody else, so a viewer (D-65) never does.
+// a connector instance and to no account (D-165, D-199): the owner, and demo
+// sessions, which view every account, and nobody else. A viewer (D-65), a
+// script token and a view plugin never do, whatever their grants: a grant
+// covers accounts, and this is tied to none.
 func unboundVisible(ctx context.Context) bool {
 	switch identityapp.CallerFrom(ctx).Holder {
-	case identity.HolderOwner, identity.HolderScriptToken, identity.HolderViewPlugin, identity.HolderDemoSession:
+	case identity.HolderOwner, identity.HolderDemoSession:
 		return true
-	case identity.HolderViewer:
+	case identity.HolderViewer, identity.HolderScriptToken, identity.HolderViewPlugin:
 		return false
 	}
 	return false

@@ -1112,3 +1112,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ec74ad715e3
+  - type: implements
+    from: SYM-mcp-mcp-handler-transport
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:53:07.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d45d7e70cc49
+  - type: covered_by
+    from: SYM-mcp-mcp-handler-transport
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:53:07.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45fcf429e71d
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-auditor
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:38.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cf8b3932bde

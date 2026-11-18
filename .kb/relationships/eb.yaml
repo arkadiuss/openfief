@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bc172f94e5f
+  - type: executable_for
+    from: SYM-core-test-helper-start-core-as-owner
+    to: TEST-core-attention
+    created_at: 2026-11-18T16:50:46.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928903f31ea2

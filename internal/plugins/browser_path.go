@@ -9,10 +9,10 @@ import (
 const maxBrowserPathLen = 256
 
 // coreOwnPaths returns the paths the core serves itself, which no view
-// plugin may serve to browsers: the health endpoints and the read API's REST
-// paths. Every Connect service's path, /openfief.<context>.v1.<Service>/, is
+// plugin may serve to browsers: the health endpoints, the read API's REST
+// paths and the MCP endpoint (D-213). Every Connect service's path, /openfief.<context>.v1.<Service>/, is
 // the core's too (CoreServesPath).
-func coreOwnPaths() []string { return []string{"/healthz", "/readyz", "/v1"} }
+func coreOwnPaths() []string { return []string{"/healthz", "/readyz", "/v1", "/mcp"} }
 
 // coreServicePrefix starts the first path segment of every Connect service
 // the core serves, such as /openfief.views.v1.ReadService/.

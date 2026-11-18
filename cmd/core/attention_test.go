@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"net/http/httptest"
-	"strings"
 	"testing"
 
 	"connectrpc.com/connect"
@@ -79,7 +78,7 @@ func checkUnmappedItem(t *testing.T, got *viewsv1.ListAttentionItemsResponse) {
 func TestAttentionChecksRaiseItems(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
-	c, srv, pool := startCore(t, dsn)
+	c, srv, pool, secret := startCoreAsOwner(t, dsn)
 	day, err := kernel.ParseDate("2026-10-27")
 	if err != nil {
 		t.Fatalf("ParseDate: %v", err)
@@ -90,8 +89,6 @@ func TestAttentionChecksRaiseItems(t *testing.T) {
 	for range 2 {
 		c.attention.tick(t.Context(), quiet())
 	}
-	issued := tokenCmd(t, dsn, "issue", "--name", "attention-test", "--ttl", "1h")
-	secret, _, _ := strings.Cut(issued, "\n")
 	var got viewsv1.ListAttentionItemsResponse
 	getJSON(t, srv, "/v1/attention-items", secret, &got)
 	checkUnmappedItem(t, &got)

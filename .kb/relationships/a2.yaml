@@ -1084,3 +1084,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d51e4ebb7ea
+  - type: implements
+    from: SYM-mcp-mcp-buffered-response-write
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:53:38.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c9b405e6a9c
+  - type: covered_by
+    from: SYM-mcp-mcp-buffered-response-write
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:53:38.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0d6e35bab56
+  - type: executable_for
+    from: SYM-mcp-auditmcp-test-test-mcpcall-entry
+    to: TEST-identity-audit-mcp
+    created_at: 2026-11-18T15:57:09.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b2779d2de23

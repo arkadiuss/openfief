@@ -1245,3 +1245,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51986335cc37
+  - type: implements
+    from: SYM-mcp-toolbox-new-toolbox
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T16:03:58.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee984aeedd4f
+  - type: covered_by
+    from: SYM-mcp-toolbox-new-toolbox
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:03:58.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85ffa734f131
+  - type: implements
+    from: SYM-mcp-toolbox-toolbox-call
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T16:04:11.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2b99f6ae51
+  - type: covered_by
+    from: SYM-mcp-toolbox-toolbox-call
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:04:11.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abc4dab28936

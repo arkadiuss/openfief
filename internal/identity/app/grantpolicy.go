@@ -22,12 +22,13 @@ type TargetCover interface {
 	TargetAccounts(ctx context.Context, t identity.GrantTarget) ([]string, error)
 }
 
-// GrantPolicy is the Authorizer under --authz=policy once viewers exist
-// (D-65): everyone is answered as identity.MayAct answers, except a viewer,
-// who may view exactly the accounts their grants cover (D-209) and change
-// none. It fails closed: an error reading the grants or the accounts is a
-// refusal. Script tokens and view plugins keep viewing every account under
-// the policy, as before; their grants take effect under SpiceDB.
+// GrantPolicy is the Authorizer under --authz=policy (D-65, D-209): the owner
+// and a demo session are answered as identity.MayAct answers, and a viewer, a
+// script token and a view plugin may view exactly the accounts their grants
+// cover and change none. D-163's interim rule that every other holder of read
+// access views every account ended when the grants became the truth: existing
+// tokens and plugins were migrated to explicit household grants. It fails
+// closed: an error reading the grants or the accounts is a refusal.
 type GrantPolicy struct {
 	grants GrantReader
 	cover  TargetCover
@@ -44,15 +45,20 @@ func NewGrantPolicy(grants GrantReader, cover TargetCover) *GrantPolicy {
 	return &GrantPolicy{grants: grants, cover: cover}
 }
 
+// EnforcesTokenGrants reports that the policy limits script tokens and view
+// plugins to their grants.
+func (*GrantPolicy) EnforcesTokenGrants() bool { return true }
+
 // MayAct implements Authorizer.
 func (p *GrantPolicy) MayAct(ctx context.Context, c identity.Caller, a identity.Action, account string) (bool, error) {
-	if c.Holder != identity.HolderViewer {
+	holder, granted := grantHolderOf(c)
+	if !granted {
 		return identity.MayAct(c, a), nil
 	}
 	if a != identity.ActionView {
 		return false, nil
 	}
-	set, err := p.viewerAccounts(ctx, c.ID)
+	set, err := p.holderAccounts(ctx, holder)
 	if err != nil {
 		return false, err
 	}
@@ -60,14 +66,14 @@ func (p *GrantPolicy) MayAct(ctx context.Context, c identity.Caller, a identity.
 	return ok, nil
 }
 
-// ActableAccounts implements AccountLister: for a viewer the accounts their
-// grants cover, for any other caller every account or none, as MayAct says.
+// ActableAccounts implements AccountLister: for a holder of grants the accounts
+// they cover, for any other caller every account or none, as MayAct says.
 func (p *GrantPolicy) ActableAccounts(ctx context.Context, c identity.Caller, a identity.Action) (map[string]struct{}, error) {
-	if c.Holder == identity.HolderViewer {
+	if holder, granted := grantHolderOf(c); granted {
 		if a != identity.ActionView {
 			return map[string]struct{}{}, nil
 		}
-		return p.viewerAccounts(ctx, c.ID)
+		return p.holderAccounts(ctx, holder)
 	}
 	if !identity.MayAct(c, a) {
 		return map[string]struct{}{}, nil
@@ -79,16 +85,26 @@ func (p *GrantPolicy) ActableAccounts(ctx context.Context, c identity.Caller, a 
 	return toSet(all), nil
 }
 
-// viewerAccounts returns the accounts the grants in force of the viewer
-// person cover.
-func (p *GrantPolicy) viewerAccounts(ctx context.Context, person string) (map[string]struct{}, error) {
-	holder := identity.GrantHolder{Kind: identity.GrantHolderPerson, ID: person}
+// grantHolderOf returns the holder of the grants that limit c, and whether c
+// is limited by grants: a viewer, a script token or a view plugin is.
+func grantHolderOf(c identity.Caller) (identity.GrantHolder, bool) {
+	kinds := map[identity.Holder]identity.GrantHolderKind{
+		identity.HolderViewer:      identity.GrantHolderPerson,
+		identity.HolderScriptToken: identity.GrantHolderScriptToken,
+		identity.HolderViewPlugin:  identity.GrantHolderViewPlugin,
+	}
+	kind, ok := kinds[c.Holder]
+	return identity.GrantHolder{Kind: kind, ID: c.ID}, ok
+}
+
+// holderAccounts returns the accounts the grants in force of holder cover.
+func (p *GrantPolicy) holderAccounts(ctx context.Context, holder identity.GrantHolder) (map[string]struct{}, error) {
 	if err := holder.Validate(); err != nil {
-		return map[string]struct{}{}, nil //nolint:nilerr // a caller whose ID is no person's holds nothing
+		return map[string]struct{}{}, nil //nolint:nilerr // a caller whose ID is no holder's holds nothing
 	}
 	grants, err := p.grants.Grants(ctx, identity.GrantMatch{Holder: holder}, true)
 	if err != nil {
-		return nil, fmt.Errorf("reading a viewer's grants: %w", err)
+		return nil, fmt.Errorf("reading a holder's grants: %w", err)
 	}
 	out := map[string]struct{}{}
 	for i := range grants {

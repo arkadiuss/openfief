@@ -593,6 +593,9 @@ enum AuditActorKind {
   // The administrator at the core's command line, such as `core token issue`
   // and `core connector bind`; the id is "admin".
   AUDIT_ACTOR_KIND_ADMIN = 7;
+  // A script token calling the MCP server (D-213); the actor's id is the
+  // token's id, never its secret.
+  AUDIT_ACTOR_KIND_SCRIPT_TOKEN = 8;
 }
 
 // AuditAction is what an audit entry records, a closed set: it carries no
@@ -722,6 +725,10 @@ enum AuditAction {
   // transactions in and how many of each kind of record it wrote, never an
   // amount.
   AUDIT_ACTION_CONNECTOR_SYNCED = 64;
+  // A script token calling an MCP tool (D-213, D-211): usage only. The actor
+  // is the token, and the entry names the tool and how the call ended, never
+  // an argument or a result.
+  AUDIT_ACTION_MCP_CALL = 65;
 }
 
 // AuditOutcome is how the recorded change ended.
@@ -791,6 +798,8 @@ enum AuditRefKind {
   // How many records of one kind a sync wrote, as "<kind>:<count>" with the
   // kind "transactions", "prices" or "bond_terms".
   AUDIT_REF_KIND_SYNC_COUNT = 40;
+  // An MCP tool, by its name, such as "allocation".
+  AUDIT_REF_KIND_MCP_TOOL = 41;
 }
 
 // AuditActor is who made the change.

@@ -1245,3 +1245,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb7760490d03
+  - type: implements
+    from: SYM-mcp-mcp-core-mount-mcp
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:52:48.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3308f80fd326
+  - type: covered_by
+    from: SYM-mcp-mcp-core-mount-mcp
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:52:48.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1b8697744f8

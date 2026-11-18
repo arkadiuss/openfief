@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb055b6e6fd9
+  - type: executable_for
+    from: SYM-mcp-mcp-test-test-mcppath-belongs-to-the-core
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:55:27.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d764e13149

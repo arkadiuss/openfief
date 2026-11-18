@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f20a018ba8b
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-gate
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:59:32.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-982faaf8539e

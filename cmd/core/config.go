@@ -416,7 +416,7 @@ func parseIssue(args []string, getenv func(string) string) (issueArgs, error) {
 	var a issueArgs
 	fs.StringVar(&a.Name, "name", "", "the token's name, such as the script that uses it")
 	fs.DurationVar(&a.TTL, "ttl", defaultTokenTTL, "how long the token is valid, at most 8760h")
-	fs.BoolVar(&a.Household, "grant-household", false, "also give the token the household grant, so under --authz=spicedb it views every account, present and future; without it a token views nothing there until the owner grants it (D-209)")
+	fs.BoolVar(&a.Household, "grant-household", false, "also give the token the household grant, so it views every account, present and future; without it a token views nothing until the owner grants it, under either --authz mode (D-209)")
 	fs.DurationVar(&a.Wait, "spicedb-wait", defaultSpiceDBWait, "how long to wait for SpiceDB to answer before issuing a token with --grant-household under --authz=spicedb; if it doesn't, nothing is issued")
 	authzFlags(fs, &a.Authz)
 	if err := fs.Parse(args); err != nil {

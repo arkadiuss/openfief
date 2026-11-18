@@ -31,6 +31,19 @@ type Policy struct{}
 
 var _ Authorizer = Policy{}
 
+// GrantEnforcer is what an Authorizer that limits script tokens and view
+// plugins to their grants (D-209) says of itself. An Authorizer without it, or
+// that answers false, lets a token read what identity.MayAct lets it.
+type GrantEnforcer interface {
+	EnforcesTokenGrants() bool
+}
+
+// EnforcesTokenGrants reports whether a limits script tokens to their grants.
+func EnforcesTokenGrants(a Authorizer) bool {
+	e, ok := a.(GrantEnforcer)
+	return ok && e.EnforcesTokenGrants()
+}
+
 // MayAct implements Authorizer with identity.MayAct, for every account.
 func (Policy) MayAct(_ context.Context, c identity.Caller, a identity.Action, _ string) (bool, error) {
 	return identity.MayAct(c, a), nil

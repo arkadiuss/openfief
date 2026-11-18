@@ -21,6 +21,9 @@ var (
 	// unknown, not matching its stored hash, expired, revoked or without the
 	// scope. Verify returns it wrapped, with the reason but never the secret.
 	ErrInvalidToken = errors.New("invalid script token")
+	// ErrMCPNotAllowed reports a valid script token the owner did not allow
+	// to use MCP (D-213).
+	ErrMCPNotAllowed = errors.New("script token not allowed to use MCP")
 )
 
 // Store keeps script tokens with the SHA-256 hash of their key, never the
@@ -63,7 +66,7 @@ func (t *Tokens) Issue(ctx context.Context, name string, ttl time.Duration) (ide
 
 // IssueWith creates a token as Issue does, and records whether the owner
 // allowed it to use MCP (D-210, D-213): a flag that is stored with the token
-// and changes nothing until the MCP server is served.
+// and lets it authenticate to the MCP server (VerifyMCP).
 func (t *Tokens) IssueWith(ctx context.Context, name string, ttl time.Duration, mcpAllowed bool) (identity.ScriptToken, string, error) {
 	idBytes := make([]byte, identity.IDBytes)
 	key := make([]byte, identity.KeyBytes)
@@ -90,24 +93,27 @@ func (t *Tokens) IssueWith(ctx context.Context, name string, ttl time.Duration, 
 // ErrInvalidToken, or another error when the store fails. The error never
 // contains the secret.
 func (t *Tokens) Verify(ctx context.Context, secret string, want identity.Scope) error {
-	id, key, err := identity.ParseSecret(secret)
+	_, err := t.verified(ctx, secret, want)
+	return err
+}
+
+// VerifyMCP returns the token of secret when it may authenticate to the MCP
+// server (D-213): a stored token that matches its hash, is read-scoped, is
+// neither expired nor revoked and that the owner allowed to use MCP. A
+// secret that may not be used at all fails with an error wrapping
+// ErrInvalidToken, a valid token the owner did not allow with one wrapping
+// ErrMCPNotAllowed, with the token returned so that the refusal can be entered
+// in the audit log, and a failing store with another error. The errors never
+// contain the secret.
+func (t *Tokens) VerifyMCP(ctx context.Context, secret string) (identity.ScriptToken, error) {
+	tok, err := t.verified(ctx, secret, identity.ScopeRead)
 	if err != nil {
-		return fmt.Errorf("%w: %w", ErrInvalidToken, err)
+		return identity.ScriptToken{}, err
 	}
-	tok, hash, err := t.store.ScriptToken(ctx, id)
-	if errors.Is(err, ErrUnknownToken) {
-		return fmt.Errorf("%w: unknown", ErrInvalidToken)
+	if !tok.MCPAllowed {
+		return tok, fmt.Errorf("%w: token %s", ErrMCPNotAllowed, tok.ID)
 	}
-	if err != nil {
-		return fmt.Errorf("verifying a script token: %w", err)
-	}
-	if !identity.KeyMatches(key, hash) {
-		return fmt.Errorf("%w: key does not match", ErrInvalidToken)
-	}
-	if err := tok.Check(t.now(), want); err != nil {
-		return fmt.Errorf("%w: %w", ErrInvalidToken, err)
-	}
-	return nil
+	return tok, nil
 }
 
 // Revoke revokes the token id from now on. Revoking a revoked token again
@@ -140,6 +146,28 @@ func (t *Tokens) List(ctx context.Context) ([]identity.ScriptToken, error) {
 		return nil, fmt.Errorf("listing script tokens: %w", err)
 	}
 	return toks, nil
+}
+
+// verified is Verify returning the token it verified.
+func (t *Tokens) verified(ctx context.Context, secret string, want identity.Scope) (identity.ScriptToken, error) {
+	id, key, err := identity.ParseSecret(secret)
+	if err != nil {
+		return identity.ScriptToken{}, fmt.Errorf("%w: %w", ErrInvalidToken, err)
+	}
+	tok, hash, err := t.store.ScriptToken(ctx, id)
+	if errors.Is(err, ErrUnknownToken) {
+		return identity.ScriptToken{}, fmt.Errorf("%w: unknown", ErrInvalidToken)
+	}
+	if err != nil {
+		return identity.ScriptToken{}, fmt.Errorf("verifying a script token: %w", err)
+	}
+	if !identity.KeyMatches(key, hash) {
+		return identity.ScriptToken{}, fmt.Errorf("%w: key does not match", ErrInvalidToken)
+	}
+	if err := tok.Check(t.now(), want); err != nil {
+		return identity.ScriptToken{}, fmt.Errorf("%w: %w", ErrInvalidToken, err)
+	}
+	return tok, nil
 }
 
 // auditedAtomic is what a token's creation or revocation needs of a store

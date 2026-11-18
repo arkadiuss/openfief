@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f080954b87d
+  - type: executable_for
+    from: SYM-mcp-mcp-test-test-mcpserved-on-the-browser-port
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:55:20.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd734813fd9
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-toolbox-call
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:25.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d5c01c0fc85

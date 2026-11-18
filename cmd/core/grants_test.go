@@ -177,8 +177,7 @@ func (f *grantsFixture) trail(t *testing.T) []string {
 // TestGrantsStartupCutsOverOnce checks D-209's step for the day SpiceDB takes
 // over, as the core runs it at start: every script token and every installed
 // view plugin without a grant gets the household grant, each with the core's
-// own audit entry, written to SpiceDB; a second start writes nothing; and under
-// the policy the start gives nobody a grant.
+// own audit entry, written to SpiceDB; and a second start writes nothing.
 func TestGrantsStartupCutsOverOnce(t *testing.T) {
 	t.Parallel()
 	f := newGrantsFixture(t)
@@ -190,13 +189,8 @@ func TestGrantsStartupCutsOverOnce(t *testing.T) {
 	}
 	log := quiet()
 
-	grantsStartup(ctx, f.grants, false, nil, log)
 	issued := []string{"admin script_token_created ok"}
-	if got := f.trail(t); !slices.Equal(got, issued) {
-		t.Fatalf("a start under the policy left %v, want only the token's creation", got)
-	}
-
-	grantsStartup(ctx, f.grants, true, nil, log)
+	grantsStartup(ctx, f.grants, nil, log)
 	want := []string{
 		"OPERATION_TOUCH household:home#reader@script_token:" + string(tok.ID),
 		"OPERATION_TOUCH household:home#reader@view_plugin:ui",
@@ -212,7 +206,7 @@ func TestGrantsStartupCutsOverOnce(t *testing.T) {
 	if _, _, issueErr := f.tokens.Issue(ctx, "later", time.Hour, false); issueErr != nil {
 		t.Fatalf("Issue: %v", issueErr)
 	}
-	grantsStartup(ctx, f.grants, true, nil, log)
+	grantsStartup(ctx, f.grants, nil, log)
 	if len(f.spicedb.writes) != len(want) {
 		t.Errorf("a second start wrote %v", f.spicedb.writes[len(want):])
 	}
@@ -232,7 +226,7 @@ func TestGrantsStartupWaitsForThePlugins(t *testing.T) {
 	f.plugins.records = []views.PluginRecord{{Instance: "ui", Effective: []string{"view"}}}
 	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Millisecond)
 	defer cancel()
-	grantsStartup(ctx, f.grants, true, nil, quiet())
+	grantsStartup(ctx, f.grants, nil, quiet())
 	if got := f.trail(t); len(got) != 0 {
 		t.Errorf("a cutover that couldn't read the plugins wrote %v", got)
 	}
@@ -322,7 +316,7 @@ func TestGrantsStartupSweepsWhatWentWhileTheCoreWasDown(t *testing.T) {
 	f := newFollowing(t)
 	ctx := t.Context()
 	f.plugins.records = f.plugins.records[:1] // the ghost plugin is gone behind the core's back
-	grantsStartup(ctx, f.grants, false, nil, quiet())
+	grantsStartup(ctx, f.grants, nil, quiet())
 	inForce, err := f.grants.InForce(ctx)
 	if err != nil {
 		t.Fatalf("InForce: %v", err)

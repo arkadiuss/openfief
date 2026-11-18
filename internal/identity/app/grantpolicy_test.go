@@ -52,12 +52,13 @@ func (f fakeCover) TargetAccounts(_ context.Context, t identity.GrantTarget) ([]
 	return nil, nil
 }
 
-// TestGrantPolicy checks that under the policy a viewer views exactly the
-// accounts their grants cover and changes none, while every other caller is
-// answered as identity.MayAct answers, and that errors refuse (D-65, D-209).
+// TestGrantPolicy checks that under the policy a viewer, a script token and a
+// view plugin view exactly the accounts their grants cover and change none,
+// while the owner is answered as identity.MayAct answers, and that errors
+// refuse (D-65, D-209).
 func TestGrantPolicy(t *testing.T) {
 	t.Parallel()
-	const alice, bob = "0123456789abcdef", "fedcba9876543210"
+	const alice, bob, tokenOne, tokenHousehold, tokenNone = "0123456789abcdef", "fedcba9876543210", "1111111111111111", "2222222222222222", "3333333333333333"
 	holder := func(id string) identity.GrantHolder {
 		return identity.GrantHolder{Kind: identity.GrantHolderPerson, ID: id}
 	}
@@ -65,7 +66,11 @@ func TestGrantPolicy(t *testing.T) {
 		{Holder: holder(alice), Target: sleeve("core")},
 		{Holder: holder(alice), Target: account("a3")},
 		{Holder: holder(bob), Target: identity.Household()},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: tokenOne}, Target: account("a1")},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: tokenHousehold}, Target: identity.Household()},
+		{Holder: identity.GrantHolder{Kind: identity.GrantHolderViewPlugin, ID: "ghostfolio"}, Target: sleeve("core")},
 	}
+	token := func(id string) identity.Caller { return identity.Caller{Holder: identity.HolderScriptToken, ID: id} }
 	p := app.NewGrantPolicy(fakeGrantReader{grants: grants}, fakeCover{})
 	viewer := func(id string) identity.Caller { return identity.Caller{Holder: identity.HolderViewer, ID: id} }
 	tests := []struct {
@@ -84,8 +89,16 @@ func TestGrantPolicy(t *testing.T) {
 		{"a viewer with no ID", viewer(""), identity.ActionView, "a1", false},
 		{"the owner views", identity.Caller{Holder: identity.HolderOwner, ID: "s"}, identity.ActionView, "a9", true},
 		{"the owner changes", identity.Caller{Holder: identity.HolderOwner, ID: "s"}, identity.ActionChange, "a9", true},
-		{"a script token views every account", identity.Caller{Holder: identity.HolderScriptToken, ID: "t"}, identity.ActionView, "a9", true},
-		{"a script token changes none", identity.Caller{Holder: identity.HolderScriptToken, ID: "t"}, identity.ActionChange, "a1", false},
+		{"a token granted one account views it", token(tokenOne), identity.ActionView, "a1", true},
+		{"a token granted one account views no other", token(tokenOne), identity.ActionView, "a2", false},
+		{"a token with the household grant views every account", token(tokenHousehold), identity.ActionView, "a3", true},
+		{"a token with no grant views none", token(tokenNone), identity.ActionView, "a1", false},
+		{"a token changes none", token(tokenHousehold), identity.ActionChange, "a1", false},
+		{"a token with no ID", token(""), identity.ActionView, "a1", false},
+		{"a view plugin views its sleeve", identity.Caller{Holder: identity.HolderViewPlugin, ID: "ghostfolio"}, identity.ActionView, "a2", true},
+		{"a view plugin views nothing outside its grant", identity.Caller{Holder: identity.HolderViewPlugin, ID: "ghostfolio"}, identity.ActionView, "a3", false},
+		{"a view plugin with no grant", identity.Caller{Holder: identity.HolderViewPlugin, ID: "other"}, identity.ActionView, "a1", false},
+		{"a demo session views as before", identity.Caller{Holder: identity.HolderDemoSession, ID: "d"}, identity.ActionView, "a3", true},
 		{"nobody", identity.Caller{}, identity.ActionView, "a1", false},
 	}
 	for _, tt := range tests {

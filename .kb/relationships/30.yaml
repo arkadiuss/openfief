@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b36aa85b380
+  - type: executable_for
+    from: SYM-mcp-server-test-test-endpoint-refuses-before-any-tool
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:48.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f570e5d1c48

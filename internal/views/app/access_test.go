@@ -116,7 +116,7 @@ func TestViewsComputeOverViewableAccounts(t *testing.T) {
 	if diff := cmp.Diff([]ingest.Binding{{Instance: "ibkr-main", Account: "acc-1"}}, bindings); err != nil || diff != "" {
 		t.Errorf("ConnectorBindings = %v (-want +got):\n%s", err, diff)
 	}
-	if want := map[identity.Caller]bool{{Holder: identity.HolderScriptToken, ID: "test"}: true}; !cmp.Equal(want, authz.asked) {
+	if want := map[identity.Caller]bool{{Holder: identity.HolderOwner, ID: "test"}: true}; !cmp.Equal(want, authz.asked) {
 		t.Errorf("the authorizer was asked about %v, want only the request's caller", authz.asked)
 	}
 }

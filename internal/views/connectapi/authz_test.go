@@ -24,7 +24,7 @@ import (
 type acc1Only struct{}
 
 func (acc1Only) MayAct(_ context.Context, c identity.Caller, a identity.Action, account string) (bool, error) {
-	return c == identity.Caller{Holder: identity.HolderScriptToken, ID: "test"} && a == identity.ActionView && account == "acc-1", nil
+	return c.ID == "test" && a == identity.ActionView && account == "acc-1", nil
 }
 
 // TestRESTServesOnlyViewableAccounts checks, through the REST transcoding,

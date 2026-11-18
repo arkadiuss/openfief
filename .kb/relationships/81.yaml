@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4374ce1a8bd7
+  - type: implements
+    from: SYM-mcp-toolbox-toolbox-request
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T16:04:18.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f816bfee1897
+  - type: covered_by
+    from: SYM-mcp-toolbox-toolbox-request
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:04:18.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db079913c8db

@@ -303,3 +303,73 @@ func TestRevoke(t *testing.T) {
 		}
 	}
 }
+
+// TestVerifyMCP checks which tokens may authenticate to the MCP server
+// (D-213): a valid token the owner allowed to use MCP, and no other; a valid
+// token without the flag is told apart from an invalid one, and a store
+// failure from both.
+func TestVerifyMCP(t *testing.T) {
+	t.Parallel()
+	expires := issuedAt().Truncate(time.Second).Add(24 * time.Hour)
+	allowed := func(t *testing.T, f *fixture) {
+		t.Helper()
+		f.allowMCP()
+	}
+	allowedAt := func(at time.Time) func(t *testing.T, f *fixture) {
+		return func(t *testing.T, f *fixture) {
+			t.Helper()
+			allowed(t, f)
+			f.clock.set(at)
+		}
+	}
+	allowedThenRevoked := func(t *testing.T, f *fixture) {
+		t.Helper()
+		allowed(t, f)
+		revoke(t, f)
+	}
+	tests := []struct {
+		name    string
+		secret  func(f *fixture) string
+		prepare func(t *testing.T, f *fixture)
+		wantErr []error
+	}{
+		{name: "allowed token", secret: (*fixture).issued, prepare: allowed},
+		{name: "allowed token just before expiry", secret: (*fixture).issued, prepare: allowedAt(expires.Add(-time.Second))},
+		{name: "token without the MCP flag", secret: (*fixture).issued, wantErr: []error{app.ErrMCPNotAllowed}},
+		{name: "allowed token at expiry", secret: (*fixture).issued, prepare: allowedAt(expires), wantErr: []error{app.ErrInvalidToken, identity.ErrTokenExpired}},
+		{name: "allowed token revoked", secret: (*fixture).issued, prepare: allowedThenRevoked, wantErr: []error{app.ErrInvalidToken, identity.ErrTokenRevoked}},
+		{name: "malformed", secret: func(*fixture) string { return "not-a-token" }, wantErr: []error{app.ErrInvalidToken}},
+		{name: "a session token", secret: func(*fixture) string { return identity.SessionPrefix + "0123456789abcdef_" + strings.Repeat("A", 43) }, wantErr: []error{app.ErrInvalidToken}},
+		{name: "unknown ID", secret: (*fixture).otherID, wantErr: []error{app.ErrInvalidToken}},
+		{name: "wrong key", secret: (*fixture).otherKey, prepare: allowed, wantErr: []error{app.ErrInvalidToken}},
+		{name: "store fails", secret: (*fixture).issued, prepare: failStore, wantErr: []error{errStore}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFixture(t)
+			if tt.prepare != nil {
+				tt.prepare(t, f)
+			}
+			secret := tt.secret(f)
+			tok, err := f.tokens.VerifyMCP(t.Context(), secret)
+			checkVerified(t, err, secret, tt.wantErr)
+			if len(tt.wantErr) == 0 && tok.ID != f.token.ID {
+				t.Errorf("VerifyMCP token = %s, want %s", tok.ID, f.token.ID)
+			}
+			if errors.Is(err, app.ErrMCPNotAllowed) && errors.Is(err, app.ErrInvalidToken) {
+				t.Error("a token the owner did not allow was reported as an invalid one")
+			}
+		})
+	}
+}
+
+// allowMCP marks the fixture's stored token as allowed to use MCP, keeping its
+// ID and key, so the issued secret stays the fixture's.
+func (f *fixture) allowMCP() {
+	f.store.mu.Lock()
+	defer f.store.mu.Unlock()
+	s := f.store.tokens[f.token.ID]
+	s.token.MCPAllowed = true
+	f.store.tokens[f.token.ID] = s
+}

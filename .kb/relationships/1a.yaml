@@ -1063,3 +1063,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e6ce73e9c4d
+  - type: executable_for
+    from: SYM-mcp-toolbox-test-test-toolbox-needs-aread
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:04:47.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19c4de7abbdf

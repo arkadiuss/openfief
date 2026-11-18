@@ -1308,3 +1308,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1751b675b4dc
+  - type: implements
+    from: SYM-mcp-server-handler-run
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:59:06.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-271a8fc342b1
+  - type: covered_by
+    from: SYM-mcp-server-handler-run
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:59:06.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c86e20d97e89

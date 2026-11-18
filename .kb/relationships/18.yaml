@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b305d98cce7a
+  - type: executable_for
+    from: SYM-mcp-server-test-test-each-call-reads-as-its-own-token
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:02:20.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d64f7f33d5b

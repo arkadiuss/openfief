@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90da6d13800b
+  - type: executable_for
+    from: SYM-mcp-server-test-bearer-transport-round-trip
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:03:00.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c052e345e78d

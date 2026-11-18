@@ -43,6 +43,35 @@ type attentionBody struct {
 	Open int `json:"open"`
 }
 
+// TestRESTAttentionItemsOfNoAccountAreTheOwnersAlone checks D-165 for a script
+// token, whatever it is granted: an item tied to no account is never listed
+// to it, nor counted open, while it is listed to the owner.
+func TestRESTAttentionItemsOfNoAccountAreTheOwnersAlone(t *testing.T) {
+	t.Parallel()
+	at := time.Date(2026, 3, 2, 10, 0, 0, 0, time.UTC)
+	items := fakeItems{
+		{ID: 1, Kind: attention.KindImportProblems, Subject: "b-7", Changes: []attention.Change{
+			{Seq: 1, State: attention.StateOpen, Reason: attention.ReasonRaised, Detail: "flex-main: 2 rows left out", At: at},
+		}},
+	}
+	var log bytes.Buffer
+	h, err := connectapi.New(newViews(t, newLedger(t), app.WithJurisdiction(pl.NewPack(), fakeTerms{}), app.WithAttention(items),
+		app.WithAuthorizer(acc1Only{})), fakeVerifier{}, connectapi.WithLogger(slog.New(slog.NewJSONHandler(&log, nil))))
+	if err != nil {
+		t.Fatalf("connectapi.New: %v", err)
+	}
+	for token, want := range map[string]int{goodToken: 1, scriptToken: 0} {
+		_, rec := api{handler: h, log: &log}.serve(t, http.MethodGet, "/v1/attention-items", token)
+		var body attentionBody
+		if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil || rec.Code != http.StatusOK {
+			t.Fatalf("GET /v1/attention-items = %d, %v\n%s", rec.Code, err, rec.Body)
+		}
+		if len(body.Items) != want || body.Open != want {
+			t.Errorf("with token %q: %d items, %d open, want %d of each", token, len(body.Items), body.Open, want)
+		}
+	}
+}
+
 func TestRESTAttentionItems(t *testing.T) {
 	t.Parallel()
 	at := time.Date(2026, 3, 2, 10, 0, 0, 0, time.UTC)
