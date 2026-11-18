@@ -18,6 +18,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/operator"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
@@ -405,7 +406,8 @@ func (p *dataPath) instrumentCharts(isin, date string) func(context.Context) (dr
 // requests in it. The core logs every call of a service only plugins
 // reach with its procedure and the calling plugin, and every read API
 // request without either (cmd/core); the UI reaches nothing else
-// (checkUIReachesOnlyCore).
+// (checkUIReachesOnlyCore) but Turnstile's siteverify host, through the
+// egress proxy.
 func checkUICalls(t *testing.T, k *kube, started time.Time, windows []pageWindow) {
 	t.Helper()
 	calls, err := chartcheck.Calls(coreLogs(t, k, started.Add(-logSlack)))
@@ -445,21 +447,37 @@ func coreLogs(t *testing.T, k *kube, since time.Time) []byte {
 }
 
 // checkUIReachesOnlyCore checks what the operator made for the built-in
-// UI: its NetworkPolicy lets it reach the core's plugin port alone, and it
-// has no proxy settings, no egress token, no host on its allow-list and no
-// effective egress host (D-32, D-63), so the core is the only place its
-// pages' data can come from.
+// UI: its NetworkPolicy lets it reach the core's plugin port and the egress
+// proxy, and the proxy lets it reach one host, Turnstile's siteverify host,
+// the host of its turnstileVerifyUrl config that its grant approves (D-208,
+// D-75). The proxy and the egress token are only for that host: the core
+// stays the only place its pages' data can come from (D-32, D-63), which
+// checkUICalls checks in the core's log.
 func checkUIReachesOnlyCore(t *testing.T, k *kube) {
 	t.Helper()
 	core := k.getService(t, coreService)
+	proxy := k.getService(t, proxyService)
 	want := &pluginNetwork{
-		Egress:       []string{fmt.Sprintf("pods %s: TCP/%d", selectorString(core.Spec.Selector), podTargetPort(t, core, "connect"))},
-		EgressPolicy: true, TokenAudiences: []string{plugins.CoreAudience}, Listed: true,
+		Egress: []string{
+			fmt.Sprintf("pods %s: TCP/%d", selectorString(core.Spec.Selector), podTargetPort(t, core, "connect")),
+			fmt.Sprintf("pods %s: TCP/%d", selectorString(proxy.Spec.Selector), podTargetPort(t, proxy, "proxy")),
+		},
+		EgressPolicy:   true,
+		Env:            []string{plugins.EnvHTTPSProxy, plugins.EnvNoProxy, operator.EnvEgressIdentityFile},
+		TokenAudiences: []string{plugins.CoreAudience, plugins.EgressAudience},
+		Listed:         true,
+		AllowList:      uiTurnstileHost + ":443\n",
+		Effective:      []string{uiTurnstileHost + ":443"},
 	}
 	if diff := cmp.Diff(want, networkOf(t, k, uiPlugin), cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("the UI plugin's network (-want +got):\n%s", diff)
 	}
 }
+
+// uiTurnstileHost is the host of the built-in UI's turnstileVerifyUrl in
+// the demo's model layer (deploy/demo/model/kustomization.yaml), the one
+// egress host its grant approves (D-208).
+const uiTurnstileHost = "challenges.cloudflare.com"
 
 // look opens path in the owner's signed-in tab and returns what its charts
 // draw.
