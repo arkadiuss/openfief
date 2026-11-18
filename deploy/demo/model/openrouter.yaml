@@ -1,12 +1,13 @@
 # The demo's model: an instance of the first-party OpenAI-compatible model-provider plugin (plugins/model-openai) at
 # OpenRouter (D-205, D-207), with the owner's approval of exactly what it requests: the model-provider capability,
-# openrouter.ai through the egress proxy (the host of its baseUrl config, D-75) and the instance's one Secret,
-# openrouter--api-key. The key is never in git (D-29): the operator creates the Secret out of band
-# (docs/dev/demo.md#the-demo-model).
+# openrouter.ai through the egress proxy (the host of its baseUrl config, D-75) and the instance's two optional Secrets:
+# openrouter--api-key, the key, which is never in git (D-29) and which the operator creates out of band
+# (docs/dev/demo.md#the-demo-model), and openrouter--ca-bundle, the extra CA bundle the manifest may mount, which the
+# demo never creates (as nbp--ca-bundle in ../plugins/nbp.yaml). A grant that leaves out either keeps the Plugin
+# AwaitingApproval, never Ready.
 #
-# Not applied: ../model is a kustomize Component that ../openfief does not list, so the live demo has no model
-# provider, makes no model call and shows nothing of one until the layer is switched on
-# (docs/dev/demo.md#turning-the-model-on).
+# ../model is a kustomize Component that ../openfief lists, so the live demo has this provider installed; it makes
+# no model call until the owner turns models on in Settings > Models (docs/dev/demo.md#turning-the-model-on).
 #
 # spec.manifest must equal the image's signed label, plugins/model-openai/manifest.json (`task plugins:labels:check`
 # compares them). The digest is a placeholder that ../openfief's `images:` sets (scripts/demo/pin-images.sh).
@@ -204,4 +205,4 @@ metadata:
 spec:
   capabilities: [model-provider]
   egress: [openrouter.ai]
-  secrets: [openrouter--api-key]
+  secrets: [openrouter--api-key, openrouter--ca-bundle]

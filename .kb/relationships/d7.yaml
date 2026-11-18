@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ffe08051563
+  - type: validates
+    from: TEST-tooling-demo-validate
+    to: REQ-tooling-demo-grants-cover-manifests
+    created_at: 2026-11-18T08:39:49.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3738b5d9d11

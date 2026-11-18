@@ -63,6 +63,21 @@ guard_failures() {
       ] | .[]' "$out"
 }
 
+# grant_failures prints one line for each Secret a Plugin's manifest asks for that the Plugin's PluginGrant does not
+# approve, in the live demo's build ($1, a manifest stream), and nothing when every grant covers its manifest. The
+# operator names an instance's Secret <instance>--<role> and keeps a Plugin AwaitingApproval, never Ready, while its
+# grant leaves out any of them, optional ones included: the demo's openrouter grant once lacked openrouter--ca-bundle
+# and only e2e's five-minute wait found it.
+grant_failures() {
+  gojq -r --yaml-input -s '
+    (map(select(.kind == "PluginGrant")) | map({key: .metadata.name, value: (.spec.secrets // [])}) | from_entries) as $grants
+    | map(select(.kind == "Plugin"))[]
+    | .metadata.name as $n
+    | [.spec.manifest.secrets[]? | "\($n)--\(.role)"] - ($grants[$n] // [])
+    | .[]
+    | "the PluginGrant \($n) does not approve the Secret \(.), which the Plugin \($n)'"'"'s manifest asks for: the Plugin would stay AwaitingApproval"' "$1"
+}
+
 # model_layer_failures prints one line for each way the demo's model layer (deploy/demo/model, docs/dev/demo.md) is
 # wrong, and nothing when it is right. The layer is a kustomize Component that the live demo (deploy/demo/openfief)
 # includes, so the live demo's build is the layer's build and it must: build, with every image pinned by digest; not
@@ -93,6 +108,7 @@ model_layer_failures() {
     fi
   done
   guard_failures "$out"
+  grant_failures "$out"
 }
 
 # validate_demo builds every layer and applies the checks; it reports every failure, then fails once.

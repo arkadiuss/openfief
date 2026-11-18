@@ -52,6 +52,10 @@ fresh
 sed -i 's/[$]{DEMO_HOST}/${DEMO_HOSTNAME}/' "$work/repo/deploy/demo/routes/openfief.yaml"
 expect "a variable the demo settings don't define" fail "uses variables the demo settings don't define: DEMO_HOSTNAME"
 
+fresh
+sed -i 's/  secrets: \[openrouter--api-key, openrouter--ca-bundle\]/  secrets: [openrouter--api-key]/' "$work/repo/deploy/demo/model/openrouter.yaml"
+expect "a grant that leaves out a Secret its Plugin's manifest asks for" fail "PluginGrant openrouter does not approve the Secret openrouter--ca-bundle"
+
 # The model layer (deploy/demo/model) is a Component the live demo includes; its switch is the owner's, not the manifests'.
 fresh
 sed -i 's#"openrouter/openai/gpt-oss-120b"#"openrouter/google/gemma-4-26b-a4b-it"#' "$work/repo/deploy/demo/model/settings.json"

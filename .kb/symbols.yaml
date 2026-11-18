@@ -235204,3 +235204,16 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-crd-enums
+  - id: SYM-tooling-demo-validate-grant-failures
+    title: grant_failures
+    status: active
+    sourceFile: scripts/demo/validate.sh
+    origin:
+      kind: agent
+      ref: Orchestrating session, after e2e run 44262665311, 2026-11-18
+      recorded_at: 2026-11-18T08:39:50.921Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-tooling-demo-grants-cover-manifests
