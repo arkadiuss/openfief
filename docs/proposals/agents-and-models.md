@@ -93,4 +93,3 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 - **[OQ-6]** Which local model runs the GR-4 maintainer role on the author's hardware? (Depends on OQ-18.)
 - **[OQ-12]** Who sets the size of the offensive part: the owner, the model portfolio, or the maintainer? D-204 settles that the maintainer places no trades.
 - **[OQ-18]** What hardware is available for local models?
-- **[OQ-29]** May raw market-data prices reach a cloud-hosted model (GR-8)? EODHD's terms forbid redistributing its data to others (R-16, D-51). Derived figures such as portfolio values are probably fine; raw price series sent to a model provider may not be.
