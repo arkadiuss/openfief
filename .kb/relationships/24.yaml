@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fe0b0c1f532
+  - type: executable_for
+    from: SYM-plugins-operator-crd-enums-arr
+    to: TEST-plugins-crd-enums
+    created_at: 2026-11-18T08:13:28.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78b6765864d4

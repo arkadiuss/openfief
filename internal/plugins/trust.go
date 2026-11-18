@@ -71,6 +71,12 @@ const (
 	SignerOwner SignerKind = "Owner"
 )
 
+// SignerKinds returns the kinds of trusted signer; the operator's API types
+// enumerate exactly these in the CRDs.
+func SignerKinds() []SignerKind {
+	return []SignerKind{SignerOpenFiefCI, SignerPublisher, SignerOwner}
+}
+
 // SignerIdentity is who made a signature. A keyless identity is the OIDC
 // issuer and subject that Fulcio certified, the subject given exactly or as
 // an RE2 pattern that must match all of it, and optionally the Source the
@@ -315,6 +321,12 @@ const (
 	// it to that signer (D-43, D-45).
 	Unverified Trust = "Unverified"
 )
+
+// Trusts returns the trust levels of a deployable image; the operator's API
+// types enumerate exactly these in the CRDs.
+func Trusts() []Trust {
+	return []Trust{Verified, Unverified}
+}
 
 // SignedImage is what the registry holds for an image, checked
 // cryptographically by an adapter: the identities whose signatures over the

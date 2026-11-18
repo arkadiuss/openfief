@@ -22,12 +22,15 @@ const (
 	CapabilityModelProvider Capability = "model-provider"
 )
 
+// Capabilities returns every capability a manifest may declare. The parser
+// accepts exactly these, and the Enum markers of the operator's API types, so
+// the generated CRDs, must list the same values.
+func Capabilities() []Capability {
+	return []Capability{CapabilityConnector, CapabilityView, CapabilityModelProvider}
+}
+
 func (c Capability) known() bool {
-	switch c {
-	case CapabilityConnector, CapabilityView, CapabilityModelProvider:
-		return true
-	}
-	return false
+	return slices.Contains(Capabilities(), c)
 }
 
 // DataTier names a class of data a plugin asks to see. Tiers are declared and

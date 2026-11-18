@@ -235086,3 +235086,121 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-demo-stack
+  - id: SYM-plugins-capabilities
+    title: Capabilities
+    status: active
+    sourceFile: internal/plugins/manifest.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:12:42.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-crd-enums
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: implements
+        target: REQ-plugins-manifest-validation
+  - id: SYM-plugins-signer-kinds
+    title: SignerKinds
+    status: active
+    sourceFile: internal/plugins/trust.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:12:51.542Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-trust-decision
+  - id: SYM-plugins-trusts
+    title: Trusts
+    status: active
+    sourceFile: internal/plugins/trust.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:00.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-trust-decision
+  - id: SYM-plugins-operator-crd-enums-names
+    title: names
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:08.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-obj
+    title: obj
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:16.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-arr
+    title: arr
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:24.341Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-child
+    title: child
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:32.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-schema-at
+    title: schemaAt
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:40.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-crd-enum
+    title: crdEnum
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:48.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
+  - id: SYM-plugins-operator-crd-enums-test-crd-enums-match-go
+    title: TestCRDEnumsMatchGo
+    status: active
+    sourceFile: internal/plugins/operator/crd_enums_test.go
+    origin:
+      kind: agent
+      ref: 'Design session, on the author''s behalf: CRD enum drift test after 0a9c935, 2026-11-18'
+      recorded_at: 2026-11-18T08:13:56.757Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-crd-enums
