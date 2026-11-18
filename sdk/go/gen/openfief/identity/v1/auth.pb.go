@@ -298,6 +298,9 @@ const (
 	// The administrator at the core's command line, such as `core token issue`
 	// and `core connector bind`; the id is "admin".
 	AuditActorKind_AUDIT_ACTOR_KIND_ADMIN AuditActorKind = 7
+	// A script token calling the MCP server (D-213); the actor's id is the
+	// token's id, never its secret.
+	AuditActorKind_AUDIT_ACTOR_KIND_SCRIPT_TOKEN AuditActorKind = 8
 )
 
 // Enum value maps for AuditActorKind.
@@ -311,6 +314,7 @@ var (
 		5: "AUDIT_ACTOR_KIND_VIEWER",
 		6: "AUDIT_ACTOR_KIND_OPERATOR",
 		7: "AUDIT_ACTOR_KIND_ADMIN",
+		8: "AUDIT_ACTOR_KIND_SCRIPT_TOKEN",
 	}
 	AuditActorKind_value = map[string]int32{
 		"AUDIT_ACTOR_KIND_UNSPECIFIED":     0,
@@ -321,6 +325,7 @@ var (
 		"AUDIT_ACTOR_KIND_VIEWER":          5,
 		"AUDIT_ACTOR_KIND_OPERATOR":        6,
 		"AUDIT_ACTOR_KIND_ADMIN":           7,
+		"AUDIT_ACTOR_KIND_SCRIPT_TOKEN":    8,
 	}
 )
 
@@ -480,6 +485,10 @@ const (
 	// transactions in and how many of each kind of record it wrote, never an
 	// amount.
 	AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED AuditAction = 64
+	// A script token calling an MCP tool (D-213, D-211): usage only. The actor
+	// is the token, and the entry names the tool and how the call ended, never
+	// an argument or a result.
+	AuditAction_AUDIT_ACTION_MCP_CALL AuditAction = 65
 )
 
 // Enum value maps for AuditAction.
@@ -537,6 +546,7 @@ var (
 		62: "AUDIT_ACTION_PLUGIN_UPGRADED",
 		63: "AUDIT_ACTION_PLUGIN_REMOVED",
 		64: "AUDIT_ACTION_CONNECTOR_SYNCED",
+		65: "AUDIT_ACTION_MCP_CALL",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":                   0,
@@ -591,6 +601,7 @@ var (
 		"AUDIT_ACTION_PLUGIN_UPGRADED":               62,
 		"AUDIT_ACTION_PLUGIN_REMOVED":                63,
 		"AUDIT_ACTION_CONNECTOR_SYNCED":              64,
+		"AUDIT_ACTION_MCP_CALL":                      65,
 	}
 )
 
@@ -737,6 +748,8 @@ const (
 	// How many records of one kind a sync wrote, as "<kind>:<count>" with the
 	// kind "transactions", "prices" or "bond_terms".
 	AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT AuditRefKind = 40
+	// An MCP tool, by its name, such as "allocation".
+	AuditRefKind_AUDIT_REF_KIND_MCP_TOOL AuditRefKind = 41
 )
 
 // Enum value maps for AuditRefKind.
@@ -767,6 +780,7 @@ var (
 		38: "AUDIT_REF_KIND_SETTING",
 		39: "AUDIT_REF_KIND_IMPORT_BATCH",
 		40: "AUDIT_REF_KIND_SYNC_COUNT",
+		41: "AUDIT_REF_KIND_MCP_TOOL",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":       0,
@@ -794,6 +808,7 @@ var (
 		"AUDIT_REF_KIND_SETTING":           38,
 		"AUDIT_REF_KIND_IMPORT_BATCH":      39,
 		"AUDIT_REF_KIND_SYNC_COUNT":        40,
+		"AUDIT_REF_KIND_MCP_TOOL":          41,
 	}
 )
 
@@ -2600,11 +2615,11 @@ type CreateScriptTokenRequest struct {
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// How long the token is valid, at most a year; unset is 30 days.
 	Ttl *durationpb.Duration `protobuf:"bytes,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	// Whether the token may use the MCP server (D-213). Stored only.
+	// Whether the token may use the MCP server (D-213). Fixed at creation.
 	McpAllowed bool `protobuf:"varint,5,opt,name=mcp_allowed,json=mcpAllowed,proto3" json:"mcp_allowed,omitempty"`
 	// What the token may view (D-209): accounts, sleeves or the household. Each
-	// must exist (NOT_FOUND). None leaves a token that views nothing while the
-	// core runs with --authz=spicedb.
+	// must exist (NOT_FOUND). None leaves a token that views nothing, under either
+	// --authz mode.
 	Grants        []*GrantTarget `protobuf:"bytes,6,rep,name=grants,proto3" json:"grants,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -5664,7 +5679,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1fSCRIPT_TOKEN_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aSCRIPT_TOKEN_STATUS_ACTIVE\x10\x01\x12\x1f\n" +
 	"\x1bSCRIPT_TOKEN_STATUS_EXPIRED\x10\x02\x12\x1f\n" +
-	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\x89\x02\n" +
+	"\x1bSCRIPT_TOKEN_STATUS_REVOKED\x10\x03*\xac\x02\n" +
 	"\x0eAuditActorKind\x12 \n" +
 	"\x1cAUDIT_ACTOR_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_ACTOR_KIND_OWNER\x10\x01\x12$\n" +
@@ -5673,7 +5688,8 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1aAUDIT_ACTOR_KIND_ANONYMOUS\x10\x04\x12\x1b\n" +
 	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05\x12\x1d\n" +
 	"\x19AUDIT_ACTOR_KIND_OPERATOR\x10\x06\x12\x1a\n" +
-	"\x16AUDIT_ACTOR_KIND_ADMIN\x10\a*\xe1\x0e\n" +
+	"\x16AUDIT_ACTOR_KIND_ADMIN\x10\a\x12!\n" +
+	"\x1dAUDIT_ACTOR_KIND_SCRIPT_TOKEN\x10\b*\xfc\x0e\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5727,13 +5743,14 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1dAUDIT_ACTION_PLUGIN_INSTALLED\x10=\x12 \n" +
 	"\x1cAUDIT_ACTION_PLUGIN_UPGRADED\x10>\x12\x1f\n" +
 	"\x1bAUDIT_ACTION_PLUGIN_REMOVED\x10?\x12!\n" +
-	"\x1dAUDIT_ACTION_CONNECTOR_SYNCED\x10@*\x90\x01\n" +
+	"\x1dAUDIT_ACTION_CONNECTOR_SYNCED\x10@\x12\x19\n" +
+	"\x15AUDIT_ACTION_MCP_CALL\x10A*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\x94\x06\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xb1\x06\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5760,7 +5777,8 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	" AUDIT_REF_KIND_PLUGIN_GENERATION\x10%\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SETTING\x10&\x12\x1f\n" +
 	"\x1bAUDIT_REF_KIND_IMPORT_BATCH\x10'\x12\x1d\n" +
-	"\x19AUDIT_REF_KIND_SYNC_COUNT\x10(*\x99\x01\n" +
+	"\x19AUDIT_REF_KIND_SYNC_COUNT\x10(\x12\x1b\n" +
+	"\x17AUDIT_REF_KIND_MCP_TOOL\x10)*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

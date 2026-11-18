@@ -24,7 +24,7 @@ func TestSuggestedTransfersRaiseItems(t *testing.T) {
 	l := ledgerapp.New(ledgerpg.New(pool))
 	pair := importSuggestedPair(t, l)
 	c.attention.tick(ctx, quiet())
-	issued := tokenCmd(t, dsn, "issue", "--name", "suggested-test", "--ttl", "1h")
+	issued := tokenCmd(t, dsn, "issue", "--name", "suggested-test", "--ttl", "1h", "--grant-household")
 	secret, _, _ := strings.Cut(issued, "\n")
 	var got viewsv1.ListAttentionItemsResponse
 	getJSON(t, srv, "/v1/attention-items", secret, &got)

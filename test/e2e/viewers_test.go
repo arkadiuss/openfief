@@ -45,7 +45,7 @@ func TestViewersAndTokensReadOnlyTheirGrants(t *testing.T) {
 	waitSeedComplete(t, k)
 	waitSpiceDBAvailable(t, k)
 	waitPluginReady(t, k, uiPlugin)
-	waitLogLine(t, k, coreDeployment, reconciledLine)
+	waitReconciled(t, k)
 	owner := newOwnerAPI(t, k)
 	sleeve := []*identityv1.GrantTarget{{Kind: identityv1.GrantTargetKind_GRANT_TARGET_KIND_SLEEVE, Id: string(demo.DefensiveSleeve)}}
 	bonds := []string{string(demo.BondsAccount)}

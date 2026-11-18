@@ -32,6 +32,7 @@ func TestAccessPage(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
 		"Script tokens", "backup-script", "fedcba9876543210", "active", "2026-02-01", "allowed", "Sleeve Core",
+		"Whatever this token can read may be sent to the model its client uses.",
 		`action="/access/tokens/fedcba9876543210/revoke"`, `action="/access/tokens/fedcba9876543210/grants"`,
 		"old-script", "revoked",
 		"View plugins", "ghostfolio", "Account Synthetic brokerage (synthetic-broker)", "sheets", "Nothing",

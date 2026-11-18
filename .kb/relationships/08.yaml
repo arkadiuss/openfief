@@ -1315,3 +1315,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-121d22143743
+  - type: implements
+    from: SYM-mcp-mcp-core-mount-browser-port
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:52:42.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5920e9e95b86
+  - type: covered_by
+    from: SYM-mcp-mcp-core-mount-browser-port
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:52:42.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3adeb56f3058
+  - type: executable_for
+    from: SYM-mcp-server-test-decode
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:01:42.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-459881bf3202

@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d4338ea2a90
+  - type: implements
+    from: SYM-askbench-runner-run-report-settle
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:54:28.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d39fab81444b
+  - type: covered_by
+    from: SYM-askbench-runner-run-report-settle
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:54:28.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f23d8c7d180

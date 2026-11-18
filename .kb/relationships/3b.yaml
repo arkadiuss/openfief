@@ -1112,3 +1112,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0264bae54ec5
+  - type: executable_for
+    from: SYM-askbench-rescorefaults-test-go-check-all
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T20:20:40.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a795460a6639
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:15:55.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c160299d76e
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-18T15:15:55.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e468c57b66
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T15:15:55.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab96fb017f90
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-auditor-recorded
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:51.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-058529916b1b
+  - type: executable_for
+    from: SYM-mcp-server-test-test-the-sdks-own-client-works
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:03:15.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb5f2fa02ca

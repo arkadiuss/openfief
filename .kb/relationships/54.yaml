@@ -1315,3 +1315,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb0ec6654e19
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-judge
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:27.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80aaa58adce1
+  - type: executable_for
+    from: SYM-mcp-tokens-test-test-verify-mcp
+    to: TEST-identity-app
+    created_at: 2026-11-18T15:56:35.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa61bcd07ae8
+  - type: implements
+    from: SYM-grants-spicedb-enforces-token-grants
+    to: REQ-views-mcp-needs-grant-enforcement
+    created_at: 2026-11-18T16:28:26.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a86e3c53562
+  - type: covered_by
+    from: SYM-grants-spicedb-enforces-token-grants
+    to: TEST-core-mcp
+    created_at: 2026-11-18T16:28:26.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07318fbf733a

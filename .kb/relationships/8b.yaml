@@ -1259,3 +1259,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c0cac7a3fe7
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-check-each-call
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:19:59.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95da780c4431
+  - type: implements
+    from: SYM-mcp-mcp-deps
+    to: REQ-views-mcp-needs-grant-enforcement
+    created_at: 2026-11-18T16:28:37.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4ea2d839d3d
+  - type: covered_by
+    from: SYM-mcp-mcp-deps
+    to: TEST-core-mcp
+    created_at: 2026-11-18T16:57:54.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f8b95b7dba

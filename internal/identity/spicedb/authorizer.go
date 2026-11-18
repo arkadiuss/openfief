@@ -126,6 +126,10 @@ func subject(c identity.Caller) (*v1.SubjectReference, error) {
 	return &v1.SubjectReference{Object: &v1.ObjectReference{ObjectType: typ, ObjectId: id}}, nil
 }
 
+// EnforcesTokenGrants reports that SpiceDB limits script tokens and view
+// plugins to their grants.
+func (*Authorizer) EnforcesTokenGrants() bool { return true }
+
 // MayAct reports whether c holds permission a on account in SpiceDB. A
 // caller that is no holder, or an action that is none, may do nothing, with
 // no call to SpiceDB. Any error is a refusal: the answer is false with the

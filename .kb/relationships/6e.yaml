@@ -1154,3 +1154,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34197674ef22
+  - type: executable_for
+    from: SYM-askbench-retry-test-go-test-the-rate-is-failed-questions-over-questions-and-calls-are-counted-beside
+    to: TEST-askbench-retry
+    created_at: 2026-11-15T19:59:46.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fc2ac88300e
+  - type: implements
+    from: SYM-ui-toolbox-go
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T15:27:47.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62abf71093d2
+  - type: covered_by
+    from: SYM-ui-toolbox-go
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T15:27:47.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31842ec667d2

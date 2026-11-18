@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d308070e0fd1
+  - type: executable_for
+    from: SYM-mcp-server-test-test-turning-off-stops-answers-at-once
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:02:01.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1135a30a3d9b
+  - type: implements
+    from: SYM-mcp-toolbox-tool-result
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T16:03:39.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eab85550750b
+  - type: covered_by
+    from: SYM-mcp-toolbox-tool-result
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:03:39.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41283d7dc94

@@ -1140,3 +1140,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd514a59428f
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-a-rejection-is-decided-by-the-request-not-the-models-name
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:58:01.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0277e1092fa
+  - type: implements
+    from: SYM-mcp-mcp-with-mcp
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:51:26.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9687fa020882
+  - type: covered_by
+    from: SYM-mcp-mcp-with-mcp
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:51:26.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-496d9c2786a4

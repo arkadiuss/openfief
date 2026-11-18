@@ -1091,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-598d9b0b8038
+  - type: implements
+    from: SYM-grants-grantpolicy-enforces-token-grants
+    to: REQ-views-mcp-needs-grant-enforcement
+    created_at: 2026-11-18T16:28:21.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e42aed87439a
+  - type: covered_by
+    from: SYM-grants-grantpolicy-enforces-token-grants
+    to: TEST-core-mcp
+    created_at: 2026-11-18T16:28:21.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5c0f95989e1

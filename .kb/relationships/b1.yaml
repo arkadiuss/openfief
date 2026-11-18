@@ -888,3 +888,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-218b1d1bce2d
+  - type: implements
+    from: SYM-askbench-rejections-request-hash
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:53:45.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d9a5e4d4837
+  - type: covered_by
+    from: SYM-askbench-rejections-request-hash
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:53:45.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03704b34655a
+  - type: implements
+    from: SYM-askbench-report-error-key
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T20:40:30.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e095a66dbb5f
+  - type: covered_by
+    from: SYM-askbench-report-error-key
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:40:30.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-857e1c94b830
+  - type: validates
+    from: TEST-ui-toolbox
+    to: SCEN-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T15:27:36.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-187c097bd3e4

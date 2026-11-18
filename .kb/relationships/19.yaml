@@ -944,3 +944,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a86a987265ec
+  - type: implements
+    from: SYM-core-mcp-go
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:27:53.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dcb2525442d
+  - type: implements
+    from: SYM-core-mcp-go
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T15:27:53.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dca94b38dd2
+  - type: implements
+    from: SYM-core-mcp-go
+    to: REQ-identity-audit-mcp-calls
+    created_at: 2026-11-18T15:27:53.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58d83484746b
+  - type: implements
+    from: SYM-core-mcp-go
+    to: REQ-views-mcp-only-as-d213-allows
+    created_at: 2026-11-18T15:27:53.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a4512a09b8c
+  - type: covered_by
+    from: SYM-core-mcp-go
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:27:53.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ce60d90947e
+  - type: executable_for
+    from: SYM-mcp-mcp-test-mcp-fixture
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:54:30.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958a50c69706
+  - type: executable_for
+    from: SYM-mcp-toolbox-test-test-toolbox-calls-read-with-the-callers-own-token
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:04:35.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51eb7852c9f9

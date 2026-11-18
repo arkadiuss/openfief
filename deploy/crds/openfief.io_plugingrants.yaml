@@ -71,6 +71,7 @@ spec:
                   enum:
                   - connector
                   - view
+                  - model-provider
                   type: string
                 type: array
                 x-kubernetes-list-type: set

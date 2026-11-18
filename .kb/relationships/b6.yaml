@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5be936e11cb8
+  - type: executable_for
+    from: SYM-mcp-mcp-test-mcp-reply
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:53:44.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da77c48e20ca

@@ -634,8 +634,8 @@ func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, b
 	if a.turnstile == nil {
 		return answerCard{}, false
 	}
-	verdict := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
-	return turnstileAnswer(question, verdict)
+	outcome := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	return turnstileAnswer(question, outcome)
 }
 
 // guard runs what stands before a question that goes to the model (D-208): the

@@ -1210,3 +1210,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a52031d7dcea
+  - type: specified_by
+    from: REQ-views-mcp-door
+    to: SCEN-views-mcp-door
+    created_at: 2026-11-18T15:27:24.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de2bd39fac67
+  - type: verified_by
+    from: REQ-views-mcp-door
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:27:24.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8abc751b2c21
+  - type: verified_by
+    from: REQ-views-mcp-door
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:27:24.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4752089160c3
+  - type: implements
+    from: SYM-grants-enforces-token-grants
+    to: REQ-views-mcp-needs-grant-enforcement
+    created_at: 2026-11-18T16:28:16.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2e218abd143
+  - type: covered_by
+    from: SYM-grants-enforces-token-grants
+    to: TEST-core-mcp
+    created_at: 2026-11-18T16:28:16.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b6b9989e3a

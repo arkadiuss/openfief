@@ -14,7 +14,7 @@ import (
 )
 
 // TestAuditLogTakesEveryDomainAction checks that the database's closed set of
-// actions is the domain's (migration 0014): a row of every action
+// actions is the domain's (migrations 0014 to 0016): a row of every action
 // identity.AuditActions lists is accepted, and the operator is an actor with
 // its own ID and no other.
 func TestAuditLogTakesEveryDomainAction(t *testing.T) {
@@ -38,6 +38,9 @@ func TestAuditLogTakesEveryDomainAction(t *testing.T) {
 		{name: "the administrator", kind: "admin", id: "admin"},
 		{name: "the administrator as the core", kind: "admin", id: "core", wantErr: true},
 		{name: "the core as the administrator", kind: "system", id: "admin", wantErr: true},
+		{name: "a script token, by its ID", kind: "script_token", id: "0123456789abcdef"},
+		{name: "a script token with no ID", kind: "script_token", id: "", wantErr: true},
+		{name: "a script token as the core", kind: "script_token", id: "core", wantErr: true},
 	} {
 		_, err := pool.Exec(t.Context(), insert, tc.kind, tc.id, "plugin_installed", "ok")
 		if gotErr := err != nil; gotErr != tc.wantErr {

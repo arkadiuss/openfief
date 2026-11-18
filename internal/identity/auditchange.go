@@ -332,7 +332,7 @@ func (r Ref) validateChangeRef() error {
 	case RefSyncCount:
 		ok = isSyncCount(r.ID)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
-		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting:
+		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -386,7 +386,7 @@ func ParseRefKind(s string) (RefKind, error) {
 	k := RefKind(s)
 	switch k {
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
-		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting,
+		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool,
 		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
 		return k, nil
 	}

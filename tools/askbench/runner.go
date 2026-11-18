@@ -117,6 +117,7 @@ func (b *Bench) Run(ctx context.Context) (*Report, error) {
 		}
 	}
 	results, stopped := b.work(ctx, tasks)
+	resolveRejections(tasks, results)
 	return b.report(tasks, results, stopped)
 }
 
@@ -222,7 +223,8 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 }
 
 // addOutcomes counts the answered calls of the run and lists the calls that
-// ended it in failure, and marks the run void when the bench's fault is one.
+// ended it in failure, and marks the run void when a fault of the bench's or of
+// the credentials is one.
 func (r *RunReport) addOutcomes(calls []ModelCall) {
 	for i := range calls {
 		c := &calls[i]
@@ -232,11 +234,34 @@ func (r *RunReport) addOutcomes(calls []ModelCall) {
 		case !c.Retried:
 			// A failed call that was retried is told by its retry's outcome, and in
 			// the reliability counts: only the call that ended the attempt is an error.
-			r.CallErrors = append(r.CallErrors, CallErrorReport{Status: c.Status, Label: c.Label, Class: c.Error, Fault: c.Fault})
-			r.Void = r.Void || c.Fault == faultBench
+			ce := CallErrorReport{Status: c.Status, Label: c.Label, Class: c.Error, Fault: c.Fault, Rule: c.Rule}
+			if isEvidenceRejection(c.Status) {
+				ce.RequestHash = c.RequestHash
+			}
+			r.CallErrors = append(r.CallErrors, ce)
 		}
 	}
+	r.settle()
+}
+
+// settle decides from the run's call errors whether a failed call ended it and
+// whether it is void: a bench's fault or a refused key or no credits make it
+// void, the credentials' reason winning, since it says that nothing of the run
+// can be trusted. A void run is no host's or model's. It is called again when
+// the evidence of the whole run has decided a 4xx (resolveRejections).
+func (r *RunReport) settle() {
 	r.Errored = len(r.CallErrors) > 0
+	r.Void, r.VoidReason = false, ""
+	for i := range r.CallErrors {
+		switch r.CallErrors[i].Fault {
+		case faultCredentials:
+			r.Void, r.VoidReason = true, voidCredentials
+		case faultBench:
+			if r.VoidReason == "" {
+				r.Void, r.VoidReason = true, voidBench
+			}
+		}
+	}
 }
 
 // addCall adds a call of the run to its tokens, its estimated-cost count and the
@@ -245,7 +270,7 @@ func (r *RunReport) addCall(c *ModelCall) {
 	r.InputTokens += c.InputTokens
 	r.OutputTokens += c.OutputTokens
 	r.Attempts++
-	if c.Transport {
+	if c.Error != "" && c.Fault == faultHost {
 		r.TransportFailures++
 	}
 	if c.Retried {
@@ -253,6 +278,9 @@ func (r *RunReport) addCall(c *ModelCall) {
 	}
 	if c.Error != "" {
 		return
+	}
+	if c.RequestHash != "" {
+		r.accepted = append(r.accepted, c.RequestHash)
 	}
 	if !c.Measured {
 		r.EstimatedCalls++

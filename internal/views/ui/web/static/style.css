@@ -314,6 +314,8 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
 .ask .status-links { margin-bottom: var(--space-3); }
 .ask-form { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0; }
 .ask-check { flex: 1 1 100%; }
+.ask-status { flex: 1 1 100%; margin: 0; }
+.ask-status:empty { display: none; }
 .ask-field {
   flex: 1 1 18rem; display: flex; align-items: center; gap: var(--space-2); min-height: 52px; min-width: 0;
   padding: 0 var(--space-3); border: 1.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--muted);

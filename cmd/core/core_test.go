@@ -298,7 +298,7 @@ func getJSON(t *testing.T, srv *httptest.Server, path, token string, msg proto.M
 
 // waitValued polls GET /v1/valuation-status until the XTB and bond accounts
 // are valued through today with nothing pending or running.
-func waitValued(t *testing.T, srv *httptest.Server, token string, ds *demo.Dataset) *viewsv1.ListValuationStatusesResponse {
+func waitValued(t *testing.T, srv *httptest.Server, token string, ds *demo.Dataset) {
 	t.Helper()
 	deadline := time.Now().Add(2 * time.Minute)
 	loaded := map[string]bool{string(demo.XTBAccount): true, string(demo.BondsAccount): true}
@@ -312,7 +312,7 @@ func waitValued(t *testing.T, srv *httptest.Server, token string, ds *demo.Datas
 			}
 		}
 		if valued == len(loaded) {
-			return &got
+			return
 		}
 		if time.Now().After(deadline) {
 			t.Fatalf("not valued through %s in time: %v", ds.Today, &got)
@@ -341,7 +341,7 @@ func TestCoreServesTheReadAPI(t *testing.T) {
 	dsn := emptyDatabase(t)
 	_, srv, pool := startCore(t, dsn)
 	ds := loadDemo(t, pool)
-	issued := tokenCmd(t, dsn, "issue", "--name", "integration-test", "--ttl", "1h")
+	issued := tokenCmd(t, dsn, "issue", "--name", "integration-test", "--ttl", "1h", "--grant-household")
 	secret, _, _ := strings.Cut(issued, "\n")
 	if !strings.HasPrefix(secret, "ofs_") {
 		t.Fatalf("token issue printed %q first, want the secret", secret)
@@ -394,7 +394,7 @@ func checkTokenAudit(t *testing.T, pool *pgxpool.Pool, secret string) {
 	if err != nil {
 		t.Fatalf("reading the audit log: %v", err)
 	}
-	if want := []string{"admin script_token_created ok", "admin script_token_revoked ok"}; !slices.Equal(got, want) {
+	if want := []string{"admin script_token_created ok", "admin grant_created ok", "admin script_token_revoked ok", "admin grant_revoked ok"}; !slices.Equal(got, want) {
 		t.Errorf("audit log = %v, want %v", got, want)
 	}
 	var dump string

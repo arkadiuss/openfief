@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9674a4e9b5d0
+  - type: executable_for
+    from: SYM-askbench-retry-test-go-check-still429
+    to: TEST-askbench-retry
+    created_at: 2026-11-15T20:20:48.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83e81414b466

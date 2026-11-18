@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed9dfda85dce
+  - type: specified_by
+    from: REQ-askbench-retries-transport-and-reports-reliability
+    to: SCEN-askbench-reliability-counts-questions
+    created_at: 2026-11-15T19:50:37.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc0ce6eb8c5a

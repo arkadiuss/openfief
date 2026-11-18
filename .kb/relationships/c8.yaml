@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94b8389c741b
+  - type: implements
+    from: SYM-askbench-report-write-failed-calls
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:56:41.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1de4090ba183
+  - type: covered_by
+    from: SYM-askbench-report-write-failed-calls
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:56:41.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b7256426f20
+  - type: implements
+    from: SYM-askbench-cases-check-payload-calls
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-15T20:19:35.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad29d8d7b36a
+  - type: covered_by
+    from: SYM-askbench-cases-check-payload-calls
+    to: TEST-askbench-split
+    created_at: 2026-11-15T20:19:35.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350fd679ac85

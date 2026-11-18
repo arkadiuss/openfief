@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac4b9463ed02
+  - type: implements
+    from: SYM-askbench-main-exit-code
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:56:48.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64275f1b54d0
+  - type: covered_by
+    from: SYM-askbench-main-exit-code
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:56:48.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54c3155ea2cd

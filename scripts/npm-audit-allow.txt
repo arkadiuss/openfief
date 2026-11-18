@@ -1,0 +1,6 @@
+# Advisories `npm audit` may report without failing scripts/vulncheck.sh, each until its expiry (UTC day, inclusive).
+# Only for the npm dev tooling (package.json has devDependencies only: kibi and patch-package; nothing ships in an image).
+# Add one only when no fixed release exists or the fix needs a breaking change, with the reason and a short expiry; past
+# the expiry the check fails again, so someone looks. Overrides in package.json are preferred where a fix exists.
+# Format: <advisory id> <expiry YYYY-MM-DD> <reason>
+GHSA-fc5q-39xc-vjpf 2026-12-09 picomatch ReDoS: no fixed release yet (4.0.7, the latest, is affected); reached only through micromatch in kibi's ts-morph/fast-glob and patch-package's find-yarn-workspace-root

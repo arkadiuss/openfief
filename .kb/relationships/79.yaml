@@ -1378,3 +1378,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-284e591774f9
+  - type: implements
+    from: SYM-mcp-auditmcp-validate-mcpentry
+    to: REQ-identity-audit-mcp-calls
+    created_at: 2026-11-18T15:57:01.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cb393be5c92
+  - type: covered_by
+    from: SYM-mcp-auditmcp-validate-mcpentry
+    to: TEST-identity-audit-mcp
+    created_at: 2026-11-18T15:57:01.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac03862b98c3
+  - type: implements
+    from: SYM-mcp-toolbox-tool-outcome
+    to: REQ-views-mcp-tools-are-ask-box-tools
+    created_at: 2026-11-18T16:03:30.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff5aeb7f25c8
+  - type: covered_by
+    from: SYM-mcp-toolbox-tool-outcome
+    to: TEST-ui-toolbox
+    created_at: 2026-11-18T16:03:30.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e6af8a26094

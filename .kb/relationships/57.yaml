@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f551a6e1ec17
+  - type: specified_by
+    from: REQ-views-mcp-needs-grant-enforcement
+    to: SCEN-views-mcp-needs-grant-enforcement
+    created_at: 2026-11-18T16:28:03.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6e02b679de2
+  - type: verified_by
+    from: REQ-views-mcp-needs-grant-enforcement
+    to: TEST-core-mcp
+    created_at: 2026-11-18T16:28:03.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ef5809c538

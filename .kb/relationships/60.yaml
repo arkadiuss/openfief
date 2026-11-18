@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b7c15bedbf3
+  - type: executable_for
+    from: SYM-mcp-server-test-test-acall-the-log-cannot-record-shows-nothing
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:02:34.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d7410b6ba4d

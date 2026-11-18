@@ -71,6 +71,8 @@ func resultCells(r *evalResult) []string {
 // scorer version, since nothing was graded.
 func verdictText(r *evalResult) string {
 	switch {
+	case r.VoidCredentials > 0:
+		return "void (credentials/credit)"
 	case r.Void > 0:
 		return "void (bench fault)"
 	case !r.Answered:
@@ -110,6 +112,9 @@ func reliabilityText(r *evalResult) string {
 	text := "not recorded"
 	if rel := r.Reliability; rel != nil {
 		text = fmt.Sprintf("%.1f%% transport failures (%d of %d calls)", rel.Rate*percentFactor, rel.TransportFailures, rel.Calls)
+		if rel.Questions > 0 {
+			text = fmt.Sprintf("%.1f%% of questions failed (%d of %d; %d failed calls)", rel.Rate*percentFactor, rel.FailedQuestions, rel.Questions, rel.TransportFailures)
+		}
 		if rel.Failed {
 			text += ", fails"
 		}

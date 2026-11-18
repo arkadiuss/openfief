@@ -1210,3 +1210,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-836cb7abdb51
+  - type: implements
+    from: SYM-mcp-ports-tool
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:57:37.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41407b54aa91
+  - type: covered_by
+    from: SYM-mcp-ports-tool
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:57:37.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fddaf36e6325

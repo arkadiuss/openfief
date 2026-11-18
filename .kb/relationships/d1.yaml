@@ -965,3 +965,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e38f00bef57
+  - type: executable_for
+    from: SYM-mcp-mcp-test-mcp-reply-decode
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:54:09.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c01e6846e0d8
+  - type: executable_for
+    from: SYM-mcp-mcp-test-new-mcpfixture
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:54:36.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19bd4be59a24
+  - type: implements
+    from: SYM-mcp-server-bearer-token
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:59:19.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb6243e6018f
+  - type: covered_by
+    from: SYM-mcp-server-bearer-token
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:59:19.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf2e4abb604
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-gate-enabled
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:59:38.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4319d0ee7320
+  - type: executable_for
+    from: SYM-mcp-server-test-check-tool-list
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:02:14.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2325f3d01ee7

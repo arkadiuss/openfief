@@ -110,6 +110,7 @@ func actionWords(a identityv1.AuditAction) string {
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_UPGRADED:               "Plugin upgraded",
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED:                "Plugin removed",
 		identityv1.AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED:              "Connector synced",
+		identityv1.AuditAction_AUDIT_ACTION_MCP_CALL:                      "MCP tool called",
 	}
 	if w, ok := words[a]; ok {
 		return w
@@ -134,6 +135,8 @@ func actorKindWords(k identityv1.AuditActorKind) string {
 		return "The administrator"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:
 		return "Nobody signed in"
+	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SCRIPT_TOKEN:
+		return "A script token"
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED:
 	}
 	return unknownWord
@@ -248,7 +251,7 @@ func (n *auditNames) ref(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:
 		return changeRef(r)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_UNSPECIFIED:
 	}
@@ -270,6 +273,7 @@ func changeRef(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING:           "Setting ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH:      "Batch ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:        "Wrote ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:          "Tool ",
 	}
 	return prefixes[r.GetKind()] + r.GetId()
 }
@@ -321,7 +325,7 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:
 	}
 	return "Record " + short(id)
 }
@@ -349,6 +353,8 @@ func (n *auditNames) actor(a *identityv1.AuditActor) string {
 			return "Invitation link for " + name
 		}
 		return "Enrollment link " + short(a.GetId())
+	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SCRIPT_TOKEN:
+		return named(n.tokens, "Script token", a.GetId(), "not listed")
 	case identityv1.AuditActorKind_AUDIT_ACTOR_KIND_UNSPECIFIED, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OWNER,
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_SYSTEM, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_OPERATOR,
 		identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ADMIN, identityv1.AuditActorKind_AUDIT_ACTOR_KIND_ANONYMOUS:

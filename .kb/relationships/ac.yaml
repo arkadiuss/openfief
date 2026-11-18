@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-525d9ad17b8b
+  - type: implements
+    from: SYM-mcp-auditmcp-valid-mcptool
+    to: REQ-identity-audit-mcp-calls
+    created_at: 2026-11-18T15:56:48.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc55289e87f1
+  - type: covered_by
+    from: SYM-mcp-auditmcp-valid-mcptool
+    to: TEST-identity-audit-mcp
+    created_at: 2026-11-18T15:56:48.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc5c4a5ed931

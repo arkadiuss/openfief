@@ -1,5 +1,5 @@
-# The demo's model, ready and off (D-207, D-205, D-208, D-212): a kustomize Component that nothing lists, so the live demo
-# is unchanged by it. docs/dev/demo.md#turning-the-model-on says how to include it. It brings:
+# The demo's model, included and off (D-207, D-205, D-208, D-212): a kustomize Component that ../openfief lists, so the live
+# demo has it; the switch and the Ask box's toggle stay the owner's (docs/dev/demo.md#turning-the-model-on). It brings:
 #   - the OpenRouter provider instance and its grant (openrouter.yaml): the model-openai plugin, egress to openrouter.ai
 #     only, its key in the Secret openrouter--api-key that the operator creates out of band;
 #   - the ConfigMap demo-model-settings (settings.json), the route of the Ask box and the models allowed for each data
@@ -47,7 +47,7 @@ patches:
   #   --model-daily-budget-usd         a proposal for the author to set: what the day's calls may cost, counted from the
   #                                    entries' prices, in the core's time zone (Europe/Warsaw); past it the router refuses
   #                                    before calling and the Ask box says the day's budget is used up. At the entry's price
-  #                                    a question costs about 0.002 USD, so 1.00 is some 450 questions a day. The key's own
+  #                                    a question costs about 0.000115 USD (the bench's 0.115 per 1,000), so 1.00 is some 8,700 questions a day. The key's own
   #                                    credit limit at OpenRouter, D-208's first guard, is the hard stop.
   #   --ask-questions-per-hour/-day    10 and 30 questions to the model per session and per address (D-208).
   #   --ask-concurrent-calls           at most 3 calls to the model at once; a fourth waits up to --ask-queue-wait and is then
@@ -66,7 +66,7 @@ patches:
     patch: |-
       - op: add
         path: /spec/template/spec/containers/0/args/-
-        value: --model-daily-budget-usd=1.00
+        value: --model-daily-budget-usd=0.25
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --ask-questions-per-hour=10
@@ -97,7 +97,7 @@ patches:
   # turnstileSiteKey is the public site key of the Turnstile widget the author made in Cloudflare for demo.openfief.dev
   # (docs/dev/demo.md#turning-the-model-on). It is public by design (the page embeds it); the widget's secret key is never
   # here: it is the Secret ui--turnstile-secret, created over SSH (task demo:turnstile-secret). scripts/demo/validate.sh still
-  # fails a live demo that includes this layer with the placeholder REPLACE-WITH-THE-TURNSTILE-SITE-KEY.
+  # fails the demo with the placeholder REPLACE-WITH-THE-TURNSTILE-SITE-KEY.
   - target:
       kind: Plugin
       name: ui

@@ -1196,3 +1196,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c417fdd3678
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkrefusedanswer
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:08.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b37acf552ec
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkrefusedanswer
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-18T15:16:08.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ddaed49d8c2
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-checkrefusedanswer
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T15:16:08.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be0f771a45aa

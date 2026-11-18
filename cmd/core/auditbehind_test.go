@@ -81,8 +81,7 @@ func (w *behindWatch) wantNone(why string) {
 func newBehindWatch(t *testing.T) (*behindWatch, *pgxpool.Pool) {
 	t.Helper()
 	dsn := emptyDatabase(t)
-	c, srv, pool := startCore(t, dsn)
-	secret, _, _ := strings.Cut(tokenCmd(t, dsn, "issue", "--name", "behind-test", "--ttl", "1h"), "\n")
+	c, srv, pool, secret := startCoreAsOwner(t, dsn)
 	w := &behindWatch{t: t, c: c}
 	w.list = func() *viewsv1.ListAttentionItemsResponse {
 		var got viewsv1.ListAttentionItemsResponse

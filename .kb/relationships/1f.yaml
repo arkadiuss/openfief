@@ -1217,3 +1217,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46543fb3d1e2
+  - type: implements
+    from: SYM-askbench-scorers-count-calls
+    to: REQ-askbench-grades-safety-and-quality-apart
+    created_at: 2026-11-15T20:01:54.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77689de0730e
+  - type: covered_by
+    from: SYM-askbench-scorers-count-calls
+    to: TEST-askbench-split
+    created_at: 2026-11-15T20:01:54.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19566e02980e
+  - type: executable_for
+    from: SYM-mcp-server-test-test-mcpsession
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:02:07.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd31d900e79d

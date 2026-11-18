@@ -1126,3 +1126,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c76e72ad4655
+  - type: implements
+    from: SYM-askbench-rescore-legacy-fault
+    to: REQ-askbench-retries-transport-and-reports-reliability
+    created_at: 2026-11-15T19:55:05.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5d6bf13b0b4
+  - type: implements
+    from: SYM-askbench-rescore-legacy-fault
+    to: REQ-askbench-rescores-offline
+    created_at: 2026-11-15T19:55:05.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2ceae12a741
+  - type: covered_by
+    from: SYM-askbench-rescore-legacy-fault
+    to: TEST-askbench-rescore-faults
+    created_at: 2026-11-15T19:55:05.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe64a0e3f0c3
+  - type: implements
+    from: SYM-askbench-report-calls-by-rule
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:56:00.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28f506aec185
+  - type: covered_by
+    from: SYM-askbench-report-calls-by-rule
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:56:00.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44e3a4d15eb
+  - type: executable_for
+    from: SYM-mcp-server-test-fake-auditor-record-call
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T16:00:45.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055ea478fa63

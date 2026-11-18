@@ -1,6 +1,6 @@
 ---
 title: The vulnerability check must fail when govulncheck or npm audit reports a vulnerability.
-status: open
+status: closed
 text_ref: docs/dev/sdlc.md
 tags:
   - strict-modeling

@@ -1392,3 +1392,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a7bd758a29b
+  - type: implements
+    from: SYM-askbench-main-fault-lines
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:56:21.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b1428335f0
+  - type: covered_by
+    from: SYM-askbench-main-fault-lines
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:56:21.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccab7803a59b
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-check-texts
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:20:07.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a0fa3ae711

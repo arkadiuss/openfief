@@ -1231,3 +1231,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-613e77005aa1
+  - type: implements
+    from: SYM-askbench-report-case-report-count-errored
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T20:19:27.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbf4832592f
+  - type: covered_by
+    from: SYM-askbench-report-case-report-count-errored
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T20:19:27.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7a51043d44
+  - type: implements
+    from: SYM-identity-auditmcp-go
+    to: REQ-identity-audit-mcp-calls
+    created_at: 2026-11-18T15:27:58.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a30d88a8920
+  - type: covered_by
+    from: SYM-identity-auditmcp-go
+    to: TEST-identity-audit-mcp
+    created_at: 2026-11-18T15:27:59.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e09dbdc8c8d0

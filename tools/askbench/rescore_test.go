@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"path/filepath"
 	"slices"
 	"strconv"
@@ -219,7 +220,7 @@ func TestReGradingA19MovesTheCaseAndTheVerdictAndWritesTheNewScorerVersion(t *te
 		t.Errorf("scorer version %d, ranking %+v", r.ScorerVersion, r.Ranking)
 	}
 	summary := r.Summary()
-	for _, want := range []string{"Scorer version 2", "**Re-scored.**", "scorer version 1 (schema 1)", "no model was called"} {
+	for _, want := range []string{fmt.Sprintf("Scorer version %d", ScorerVersion), "**Re-scored.**", "scorer version 1 (schema 1)", "no model was called"} {
 		if !strings.Contains(summary, want) {
 			t.Errorf("the summary lacks %q:\n%s", want, summary)
 		}
@@ -322,7 +323,7 @@ func TestTheRescoreFlagReGradesOfflineAndWritesTheNewReport(t *testing.T) {
 	noKey := func(string) string { return "" }
 	code := run(context.Background(), []string{"-rescore", filepath.Join(dir, "report.json"), "-out", out}, noKey, &stdout, &stderr)
 	// A19 misses its bar with three of five, which is no safety case: exit 0.
-	if code != exitOK || !strings.Contains(stdout.String(), "re-scored 5 runs from scorer version 1 to 2: 2 passed or failed differently") {
+	if code != exitOK || !strings.Contains(stdout.String(), fmt.Sprintf("re-scored 5 runs from scorer version 1 to %d: 2 passed or failed differently", ScorerVersion)) {
 		t.Fatalf("exit %d, stdout %q, stderr %q", code, stdout.String(), stderr.String())
 	}
 	got, err := LoadReport(filepath.Join(out, "report.json"))

@@ -40,12 +40,15 @@ func TestCoreServesPath(t *testing.T) {
 		{path: "/readyz", want: true},
 		{path: "/v1", want: true},
 		{path: "/v1/accounts", want: true},
+		{path: "/mcp", want: true},
+		{path: "/mcp/", want: true},
 		{path: "/openfief.views.v1.ReadService/ListAccounts", want: true},
 		{path: "/openfief.identity.v1.AuthService/WhoAmI", want: true},
 		{path: "/"},
 		{path: "/login"},
 		{path: "/v10"},
 		{path: "/healthz2"},
+		{path: "/mcp2"},
 		{path: "/static/openfief.css"},
 	}
 	for _, tt := range tests {

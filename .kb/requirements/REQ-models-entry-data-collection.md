@@ -43,7 +43,7 @@ An entry of a model-openai instance at OpenRouter may set dataCollection to deny
 
 ## Context
 
-NextBit's terms (R-32) put the worst case of its endpoints at 30 days of retention for a legal obligation and no training, but a pin can be edited and a fallback added later, and OpenRouter can route to hosts whose terms are worse. data_collection: deny makes OpenRouter itself refuse any host that may store or train on a request, whatever the pin says. It is OpenRouter's request member, so it is sent only to OpenRouter and refused in the config of another server, like hosts and reasoning (REQ-models-entry-hosts-reasoning).
+R-33 puts DeepInfra's terms (section 7(b), Zero Data Retention) at no retention and no training, and the demo's route is the one member openai/gpt-oss-120b on deepinfra/bf16 (D-207, D-221), but a pin can be edited and a fallback added later, and OpenRouter can route to hosts whose terms are worse. data_collection: deny makes OpenRouter itself refuse any host that may store or train on a request, whatever the pin says. It is OpenRouter's request member, so it is sent only to OpenRouter and refused in the config of another server, like hosts and reasoning (REQ-models-entry-hosts-reasoning).
 
 ## Source
 

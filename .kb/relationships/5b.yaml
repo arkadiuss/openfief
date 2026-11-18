@@ -1056,3 +1056,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-285119e9595e
+  - type: executable_for
+    from: SYM-mcp-mcp-test-test-mcptokens
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:56:16.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8d480606c35
+  - type: executable_for
+    from: SYM-core-grants-test-cutover-one-shot
+    to: TEST-core-grants
+    created_at: 2026-11-18T17:19:37.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d35e59adf83d
+  - type: executable_for
+    from: SYM-e2e-policy-grants-restore-core
+    to: TEST-e2e-policy-grants
+    created_at: 2026-11-18T19:14:41.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1209bd676aa

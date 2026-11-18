@@ -37,7 +37,7 @@ MCP must be served only as D-213 allows.
 
 ## Context
 
-Author decision D-6, the read-only public API. Its last sentence used to keep MCP out until M2, so that a model reached holdings only through the model router. D-213 has since decided an MCP server for external agents: the core can serve MCP at /mcp on its browser port with the read API's read-only answerers as tools, for a script token the owner allowed to use MCP, limited by its grants (D-209), never changing anything and audited as usage (D-211). Nothing serves MCP yet, so no code implements this requirement.
+Author decision D-6, the read-only public API. Its last sentence used to keep MCP out until M2, so that a model reached holdings only through the model router. D-213 has since decided an MCP server for external agents: the core can serve MCP at /mcp on its browser port with the read API's read-only answerers as tools, for a script token the owner allowed to use MCP, limited by its grants (D-209), never changing anything and audited as usage (D-211). The core serves it now: the door, the tools and the audit entries are REQ-views-mcp-door, REQ-views-mcp-tools-are-ask-box-tools and REQ-identity-audit-mcp-calls, and the code that serves it implements this requirement too.
 
 ## Source
 

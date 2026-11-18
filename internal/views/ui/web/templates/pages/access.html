@@ -146,7 +146,7 @@
       <td>{{.Token.Name}}<br><code>{{.ID}}</code></td>
       <td>{{if eq .Token.Status.String "SCRIPT_TOKEN_STATUS_ACTIVE"}}<span class="pill pill-ok">{{enum .Token.Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{else}}<span class="pill pill-neutral">{{enum .Token.Status.String "SCRIPT_TOKEN_STATUS_"}}</span>{{end}}</td>
       <td class="mono">{{.Token.CreatedAt.AsTime.Format "2006-01-02"}}</td><td class="mono">{{.Token.ExpiresAt.AsTime.Format "2006-01-02"}}</td>
-      <td>{{if .Token.McpAllowed}}allowed{{else}}no{{end}}</td>
+      <td>{{if .Token.McpAllowed}}allowed<br><span class="help">Whatever this token can read may be sent to the model its client uses.</span>{{else}}no{{end}}</td>
       <td>{{template "holds" .}}
         {{if .Editable}}<details class="change">
           <summary>Change what it may view</summary>
@@ -178,7 +178,7 @@
     </div>
     {{template "grant-choices" .New}}
     <label class="check" for="token-mcp"><input type="checkbox" id="token-mcp" name="mcp"{{with .Posted}}{{if .MCP}} checked{{end}}{{end}}> May use MCP</label>
-    <p class="help">Saved with the token. The core doesn't serve MCP yet, so this changes nothing today; when it does, only tokens you allowed here may connect, and they still view only what they are granted.</p>
+    <p class="help">Saved with the token and fixed once it is made. Only a token you allowed here may connect to the MCP server, and it still views only what it is granted. Whatever this token can read may be sent to the model its client uses.</p>
     <div class="actions"><button type="submit" class="primary">Create script token</button></div>
   </form>
 </section>

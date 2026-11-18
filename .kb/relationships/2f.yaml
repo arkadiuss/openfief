@@ -1049,3 +1049,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-393e0911e12b
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-a-rejection-another-entry-accepted-is-the-hosts-fault
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:57:28.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eebfe22e2f7
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-test-the-credentials-exit-code-is-distinct-and-comes-first
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:58:28.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-912e3c17ceef
+  - type: implements
+    from: SYM-mcp-tokens-tokens-verified
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:56:29.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d799f8ed42b1
+  - type: covered_by
+    from: SYM-mcp-tokens-tokens-verified
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:56:29.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b63043201b5

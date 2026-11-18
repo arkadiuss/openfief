@@ -1154,3 +1154,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6c536a73384
+  - type: implements
+    from: SYM-askbench-main-result-text
+    to: REQ-askbench-decides-4xx-by-evidence
+    created_at: 2026-11-15T19:56:56.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-402c8bd841c6
+  - type: covered_by
+    from: SYM-askbench-main-result-text
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:56:56.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-935e9bf179c6
+  - type: relates_to
+    from: REQ-ui-turnstile-failures-visible
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-18T15:15:42.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9cb55ddef4b
+  - type: specified_by
+    from: REQ-ui-turnstile-failures-visible
+    to: SCEN-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:15:43.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ed37bb0d13

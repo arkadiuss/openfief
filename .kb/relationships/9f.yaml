@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0eff214840d2
+  - type: implements
+    from: SYM-viewers-internal-identity-app-grantpolicy-grantpolicy-vieweraccounts
+    to: REQ-identity-grants-limit-tokens-under-policy
+    created_at: 2026-11-18T16:31:32.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470492925345

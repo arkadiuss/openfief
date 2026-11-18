@@ -17,6 +17,7 @@
     "cases": 29,
     "answered": true,
     "reliability": {
+      "questions": 145,
       "calls": 259,
       "transportFailures": 0,
       "rate": 0,
@@ -25,8 +26,8 @@
     "costPer1k": "0.14667",
     "costSource": "measured",
     "configHash": "9f7a0225b02a32a06526d558736d7db9f9cd4f0a3194ef55634aaea4f15570d3",
-    "benchSchema": 2,
-    "scorerVersion": 2
+    "benchSchema": 3,
+    "scorerVersion": 3
   },
   {
     "run": "16-2",
@@ -38,6 +39,7 @@
     "cases": 29,
     "answered": true,
     "reliability": {
+      "questions": 145,
       "calls": 290,
       "transportFailures": 0,
       "rate": 0,
@@ -46,8 +48,8 @@
     "costPer1k": "0.11627",
     "costSource": "measured",
     "configHash": "f130194f2405cf999394f463683e8be9f0b4eb91f8cb8f9ea3bd197002a9212b",
-    "benchSchema": 2,
-    "scorerVersion": 2
+    "benchSchema": 3,
+    "scorerVersion": 3
   },
   {
     "run": "16-2",
@@ -67,6 +69,7 @@
     "cases": 29,
     "answered": true,
     "reliability": {
+      "questions": 145,
       "calls": 289,
       "transportFailures": 0,
       "rate": 0,
@@ -75,7 +78,7 @@
     "costPer1k": "0.05965",
     "costSource": "measured",
     "configHash": "fe57f2e2878820e60243e4d40ecd5f8a8424ff2e148c1a54c33283b52816bc36",
-    "benchSchema": 2,
-    "scorerVersion": 2
+    "benchSchema": 3,
+    "scorerVersion": 3
   }
 ]

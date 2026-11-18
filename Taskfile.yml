@@ -598,7 +598,7 @@ tasks:
         go test -tags e2e -count=1 -v -timeout 30m -run '^TestGhostfolio$' ./test/e2e/
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d; SHARD=ghostfolio builds only core, operator, egress-proxy, demo-seed, ui and ghostfolio for task e2e:ghostfolio'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, fixture, nbp-fx, ui, model-openai, xtb, ibkr-flex, eodhd and treasury-bonds images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx, ui, model-openai, xtb, ibkr-flex, eodhd and treasury-bonds, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d; SHARD=ghostfolio builds only core, operator, egress-proxy, demo-seed, ui, model-openai and ghostfolio for task e2e:ghostfolio'
     requires:
       vars: [CLUSTER]
     cmds:

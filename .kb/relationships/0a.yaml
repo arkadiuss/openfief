@@ -1308,3 +1308,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b57336bd02bf
+  - type: executable_for
+    from: SYM-askbench-rejections-test-go-two-entries
+    to: TEST-askbench-rejections
+    created_at: 2026-11-15T19:57:12.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fe49126d1d1
+  - type: implements
+    from: SYM-mcp-ports-auditor
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:58:09.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d378bc29cb76
+  - type: covered_by
+    from: SYM-mcp-ports-auditor
+    to: TEST-views-mcp-server
+    created_at: 2026-11-18T15:58:09.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0024bc1716a

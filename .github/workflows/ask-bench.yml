@@ -81,7 +81,7 @@ jobs:
           if [ "$BENCH_JUDGE" = true ]; then flags+=(-judge); fi
           task ask:bench MODEL="$BENCH_MODEL" BUDGET="$BENCH_BUDGET" OUT="$RUNNER_TEMP/ask-bench" -- \
             -demo-route deploy/demo/model -history tools/askbench/history.json "${flags[@]}"
-          # a bench that exits non-zero, a failing route member (exit 4) included, fails the step, and the report
+          # a bench that exits non-zero, a failing route member (exit 4) or a refused key or no credits (exit 5) included, fails the step, and the report
           # and the updated history below are uploaded either way
       - name: Summary
         if: always() && steps.key.outputs.present == 'true'

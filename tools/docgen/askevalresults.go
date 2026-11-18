@@ -33,6 +33,11 @@ type evalFailing struct {
 
 // evalReliability is D-207's measure of a host in one run.
 type evalReliability struct {
+	// Questions and FailedQuestions are the rule's counts (D-207, from scorer
+	// version 3): the rate is over questions. A result before it has none, and
+	// its rate is over calls.
+	Questions         int     `json:"questions,omitempty"`
+	FailedQuestions   int     `json:"failedQuestions,omitempty"`
 	Calls             int     `json:"calls"`
 	TransportFailures int     `json:"transportFailures"`
 	Rate              float64 `json:"rate"`
@@ -63,6 +68,9 @@ type evalResult struct {
 	// Void is how many of those runs the bench's own fault ended: the result
 	// is void, and the model is run again after the fix.
 	Void int `json:"void,omitempty"`
+	// VoidCredentials is how many of the void runs a refused key or no credits
+	// ended: they are no host's or model's.
+	VoidCredentials int `json:"voidCredentials,omitempty"`
 	// Answered is false when no call of the model got an answer.
 	Answered    bool             `json:"answered"`
 	Reliability *evalReliability `json:"reliability,omitempty"`

@@ -29,8 +29,8 @@ func TestModelsPageShowsTheSwitchTheProvidersTheTiersAndTheRoutes(t *testing.T) 
 	wantBody(t, rec,
 		// The switch is off, and says what that means.
 		`id="switch-title"`, "Turn agents and models on", "nothing calls a model",
-		// The features, the MCP server's plainly not built.
-		"Ask box model", "Maintainer", "MCP server", "Not built yet", "no MCP endpoint exists",
+		// The features, the MCP server's too, with where it answers.
+		"Ask box model", "Maintainer", "MCP server", "at /mcp on this address", "script token you allowed to use MCP",
 		`action="/settings/models/features/mcp"`,
 		// The providers with the terms they declare, prices and flags.
 		`id="providers-title"`, "cloud", "Its models run in a third party&#39;s cloud.", "keeps a request and its answer for 30 days",
@@ -47,7 +47,7 @@ func TestModelsPageShowsTheSwitchTheProvidersTheTiersAndTheRoutes(t *testing.T) 
 		// The settings navigation names the page.
 		`<a href="/settings/models" aria-current="page">Models</a>`,
 	)
-	wantNoBody(t, rec, `aria-label="Allow cloud/openai/gpt-x to receive T0" checked`)
+	wantNoBody(t, rec, `aria-label="Allow cloud/openai/gpt-x to receive T0" checked`, "Not built yet")
 }
 
 func TestModelsPageShowsABrokenRouteEntryWithAFix(t *testing.T) {

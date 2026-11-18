@@ -73,13 +73,13 @@ func modelRoles() []roleInfo {
 	}
 }
 
-// modelFeatures describes each feature's toggle. NotBuilt is true for the one
-// that is stored and does nothing yet.
+// modelFeatures describes each feature's toggle. NotBuilt is true for one that
+// is stored and does nothing yet; every feature is built now.
 func modelFeatures() []featureInfo {
 	return []featureInfo{
 		{roleAsk, "Ask box model", "Sends the Ask box's questions that are not one of its commands to the model on its route (D-203).", false},
 		{roleMaintainer, "Maintainer", "A model writes a note about the model portfolio every Monday and when you ask, and may propose target changes for you to apply or dismiss (D-204).", false},
-		{featureMCP, "MCP server", "Not built yet: the toggle is stored, and no MCP endpoint exists to answer (D-213).", true},
+		{featureMCP, "MCP server", "Serves the Ask box's read-only tools at /mcp on this address to an external agent that presents a script token you allowed to use MCP on the Access page, limited by that token's grants. It never changes anything, and each call enters the audit log (D-213).", false},
 	}
 }
 

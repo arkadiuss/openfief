@@ -1,33 +1,25 @@
 # The demo's model: an instance of the first-party OpenAI-compatible model-provider plugin (plugins/model-openai) at
 # OpenRouter (D-205, D-207), with the owner's approval of exactly what it requests: the model-provider capability,
-# openrouter.ai through the egress proxy (the host of its baseUrl config, D-75) and the instance's one Secret,
-# openrouter--api-key. The key is never in git (D-29): the operator creates the Secret out of band
-# (docs/dev/demo.md#the-demo-model).
+# openrouter.ai through the egress proxy (the host of its baseUrl config, D-75) and the instance's two optional Secrets:
+# openrouter--api-key, the key, which is never in git (D-29) and which the operator creates out of band
+# (docs/dev/demo.md#the-demo-model), and openrouter--ca-bundle, the extra CA bundle the manifest may mount, which the
+# demo never creates (as nbp--ca-bundle in ../plugins/nbp.yaml). A grant that leaves out either keeps the Plugin
+# AwaitingApproval, never Ready.
 #
-# Not applied: ../model is a kustomize Component that ../openfief does not list, so the live demo has no model
-# provider, makes no model call and shows nothing of one until the layer is switched on
-# (docs/dev/demo.md#turning-the-model-on).
+# ../model is a kustomize Component that ../openfief lists, so the live demo has this provider installed; it makes
+# no model call until the owner turns models on in Settings > Models (docs/dev/demo.md#turning-the-model-on).
 #
 # spec.manifest must equal the image's signed label, plugins/model-openai/manifest.json (`task plugins:labels:check`
 # compares them). The digest is a placeholder that ../openfief's `images:` sets (scripts/demo/pin-images.sh).
 #
-# Model entries (D-205), prices per million tokens in USD as OpenRouter lists them:
-#   - google/gemma-4-26b-a4b-it, the demo's model (D-207): tools and structured output, pinned to the host nextbit/bf16
-#     with no fallback to others. contextTokens and maxOutputTokens are left out: docs/research.md holds no limit for
-#     it, so none is set; the Ask box asks for at most 800 output tokens itself (D-208).
-#   - openai/gpt-oss-120b, the fallback (D-205): NOT LISTED YET. Add the entry below and its reference to
-#     settings.json (route ask and the four tiers) once the next bench run names the one host to pin it to, Groq or
-#     Crusoe (its OpenRouter provider slug, such as groq or crusoe):
-#       - id: openai/gpt-oss-120b
-#         inputPrice: "<from the bench's listing>"
-#         outputPrice: "<from the bench's listing>"
-#         priceCurrency: USD
-#         toolCalling: true
-#         structuredOutput: true
-#         reasoning: low
-#         hosts: [<the pinned host's slug>]
-#     A placeholder host would be a pin to a host that does not exist, so the entry stays out of the plugin and the
-#     route until then (scripts/demo/validate.sh keeps the route to listed entries).
+# Model entries (D-205), prices per million tokens in USD as OpenRouter lists them for the pinned host:
+#   - openai/gpt-oss-120b, the demo's model (D-207, D-221): tools and structured output, reasoning low, pinned to the host
+#     deepinfra/bf16 with no fallback to others, the one member of D-221's route so far. It has no fallback model on the
+#     route: Crusoe is not a D-221 member yet, so if DeepInfra is down the Ask box still answers its fixed commands (D-203)
+#     and says the model is unavailable for the rest. The prices are OpenRouter's listing for deepinfra/bf16
+#     (/api/v1/models/openai/gpt-oss-120b/endpoints); the bench measured about USD 0.115 per 1,000 questions at them
+#     (runs 16-2 and 17, scorer version 3). contextTokens and maxOutputTokens are left out; the Ask box asks for at most
+#     800 output tokens itself (D-208).
 apiVersion: openfief.io/v1alpha1
 kind: Plugin
 metadata:
@@ -190,16 +182,17 @@ spec:
     timeout: 60s
     location: third_party_cloud
     # OpenRouter's terms as the owner states them (the router shows them, D-206): nothing here is the demo's own data.
-    # Source: NextBit ToS §5.3, R-32 (docs/research.md): the worst case of the EU and Global endpoints.
-    retention: {days: 30, mayTrain: false}
+    # Source: DeepInfra Terms §7(b) Zero Data Retention; R-33
+    retention: {days: 0, mayTrain: false}
     models:
-      - id: google/gemma-4-26b-a4b-it
-        inputPrice: "0.0675"
-        outputPrice: "0.225"
+      - id: openai/gpt-oss-120b
+        inputPrice: "0.037"
+        outputPrice: "0.17"
         priceCurrency: USD
         toolCalling: true
         structuredOutput: true
-        hosts: [nextbit/bf16]
+        reasoning: low
+        hosts: [deepinfra/bf16]
         # OpenRouter's provider.data_collection: deny, on every request of this entry, so a host that may store a request
         # or train on it can never serve the demo, whatever the pin above says or a later edit of it makes of it.
         dataCollection: deny
@@ -212,4 +205,4 @@ metadata:
 spec:
   capabilities: [model-provider]
   egress: [openrouter.ai]
-  secrets: [openrouter--api-key]
+  secrets: [openrouter--api-key, openrouter--ca-bundle]

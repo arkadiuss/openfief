@@ -25,11 +25,11 @@ const (
 
 var errStore = errors.New("store unavailable")
 
-// reader returns t's context carrying a holder of read access, a script
-// token, who may view every account under identityapp.Policy (D-163).
+// reader returns t's context carrying the owner, who may view every account
+// under identityapp.Policy (D-163) and sees what is tied to no account (D-165).
 func reader(t *testing.T) context.Context {
 	t.Helper()
-	return identityapp.WithCaller(t.Context(), identity.Caller{Holder: identity.HolderScriptToken, ID: "test"})
+	return identityapp.WithCaller(t.Context(), identity.Caller{Holder: identity.HolderOwner, ID: "test"})
 }
 
 // fakeLedger answers the ledger queries from fixed data, like

@@ -923,3 +923,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24e50c38dc57
+  - type: executable_for
+    from: SYM-docgen-askeval-test-go-test-arun-void-for-its-credentials-shows-as-such
+    to: TEST-docgen-askeval
+    created_at: 2026-11-15T20:40:47.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bfcf0b254cb
+  - type: executable_for
+    from: SYM-e2e-policy-grants-test-policy-mode-grants
+    to: TEST-e2e-policy-grants
+    created_at: 2026-11-18T17:18:36.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c905be61aa

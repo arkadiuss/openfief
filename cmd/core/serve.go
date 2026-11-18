@@ -318,7 +318,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err != nil {
 		return nil, err
 	}
-	if err := c.putFrontDoor(cl, cfg, now, log); err != nil {
+	if err := c.mountBrowserPort(pool, cl, cfg, now, log); err != nil {
 		return nil, err
 	}
 	// The workers outlive ctx: shutdown stops them gracefully.
@@ -328,7 +328,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	go c.attention.run(ctx, attentionEvery, log)
 	// The cutover waits for the installed plugins to be read, so it runs in the background: until it has,
 	// a holder that is to be given the household grant views nothing under SpiceDB.
-	go c.settleGrants(ctx, cfg.Authz.Mode == authzSpiceDB, log)
+	go c.settleGrants(ctx, log)
 	startCluster(ctx, c, cfg, cl, log)
 	startPluginAudit(ctx, pool, installed, now, log)
 	return c, nil
@@ -337,11 +337,11 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 // settleGrants runs grantsStartup, once SpiceDB has its key when that is still
 // to come: until then every change is refused, and the cutover would only
 // retry.
-func (c *core) settleGrants(ctx context.Context, spicedbOn bool, log *slog.Logger) {
+func (c *core) settleGrants(ctx context.Context, log *slog.Logger) {
 	if g := c.access.gate; g != nil && !g.wait(ctx) {
 		return // stopped while waiting for SpiceDB's key
 	}
-	grantsStartup(ctx, c.access.grants, spicedbOn, c.access.reconcile, log)
+	grantsStartup(ctx, c.access.grants, c.access.reconcile, log)
 }
 
 // startCluster starts, when the core runs in cluster cl, the watch of the

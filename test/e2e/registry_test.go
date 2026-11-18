@@ -62,18 +62,20 @@ var (
 
 // pluginImages are the plugin images task e2e:images pushes to the
 // registry, which the suite signs: the NBP FX connector, the built-in UI,
-// which the operator deploys for the demo's ui instance (editApp), and the
+// which the operator deploys for the demo's ui instance (editApp), the
+// model-provider model-openai, which it deploys for the demo's openrouter
+// instance (the model layer, included and off), and the
 // suite's synthetic connector's two images (test/e2e/connector), and the
 // XTB connector, which isolation_test.go installs, and the IBKR Flex, EODHD
 // and treasury bond connectors, which the data path installs
 // (datapath_test.go). The Ghostfolio shard's task e2e:images builds only
-// the UI and the Ghostfolio view (ghostfolio_test.go), which are all it
-// signs.
+// the UI, model-openai and the Ghostfolio view (ghostfolio_test.go), which
+// are all it signs.
 func pluginImages() []string {
 	if os.Getenv(shardEnv) == shardGhostfolio {
-		return []string{uiImage, ghostfolioImage}
+		return []string{uiImage, modelImage, ghostfolioImage}
 	}
-	return []string{fxImage, uiImage, connectorImage, connectorEgressImage, xtbImage, ibkrImage, eodhdImage, bondsImage}
+	return []string{fxImage, uiImage, modelImage, connectorImage, connectorEgressImage, xtbImage, ibkrImage, eodhdImage, bondsImage}
 }
 
 // pluginResource is the operator's Plugin resource.
@@ -193,21 +195,35 @@ func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(stri
 // demo's Plugin ui the built-in UI's image in the suite's registry, which
 // the suite signed, as the cluster names it; and the egress proxy, when
 // exempt is set, the test-only exemption of D-215 (egressallowed_test.go).
-func editApp(signersHash string, ui plugins.ImageRef, exempt egress.Exemption) func(*unstructured.Unstructured) error {
+func editApp(signersHash string, ui, model plugins.ImageRef, exempt egress.Exemption) func(*unstructured.Unstructured) error {
 	return func(obj *unstructured.Unstructured) error {
 		switch {
 		case exempt.IsSet() && obj.GetKind() == "Deployment" && obj.GetName() == proxyService:
 			return exemptProxy(obj, exempt)
 		case obj.GetKind() == "Deployment" && obj.GetName() == operatorDeployment:
-			err := unstructured.SetNestedField(obj.Object, signersHash, "spec", "template", "metadata", "annotations", signersAnnotation)
-			if err != nil {
-				return fmt.Errorf("operator: %w", err)
-			}
+			return annotateOperator(obj, signersHash)
 		case obj.GetKind() == "Plugin" && obj.GetName() == uiPlugin:
-			if err := unstructured.SetNestedField(obj.Object, ui.String(), "spec", "image"); err != nil {
-				return fmt.Errorf("plugin %s: %w", uiPlugin, err)
-			}
+			return setPluginImage(obj, ui)
+		case obj.GetKind() == "Plugin" && obj.GetName() == modelPlugin:
+			return setPluginImage(obj, model)
 		}
 		return nil
 	}
+}
+
+// setPluginImage points Plugin obj at image, as the cluster names it.
+func setPluginImage(obj *unstructured.Unstructured, image plugins.ImageRef) error {
+	if err := unstructured.SetNestedField(obj.Object, image.String(), "spec", "image"); err != nil {
+		return fmt.Errorf("plugin %s: %w", obj.GetName(), err)
+	}
+	return nil
+}
+
+// annotateOperator puts the trusted signers' hash on the operator's pod template.
+func annotateOperator(obj *unstructured.Unstructured, signersHash string) error {
+	err := unstructured.SetNestedField(obj.Object, signersHash, "spec", "template", "metadata", "annotations", signersAnnotation)
+	if err != nil {
+		return fmt.Errorf("operator: %w", err)
+	}
+	return nil
 }

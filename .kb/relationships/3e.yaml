@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b82ab05a51c
+  - type: implements
+    from: SYM-mcp-mcp-mcp-settings
+    to: REQ-views-mcp-door
+    created_at: 2026-11-18T15:51:33.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be68b569a88f
+  - type: covered_by
+    from: SYM-mcp-mcp-mcp-settings
+    to: TEST-core-mcp
+    created_at: 2026-11-18T15:51:33.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94afaab7b9c1
