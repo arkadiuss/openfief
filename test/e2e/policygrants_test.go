@@ -3,6 +3,7 @@
 package e2e
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -47,17 +48,15 @@ func TestPolicyModeGrantsLimitTokensAndKeepThePagesWorking(t *testing.T) {
 	waitPluginReady(t, k, uiPlugin)
 	waitReconciled(t, k)
 
-	original := setCoreArgs(t, k, func(args []string) []string {
+	original := setCoreArgs(t.Context(), t, k, func(args []string) []string {
 		return slices.DeleteFunc(slices.Clone(args), func(a string) bool {
 			return strings.HasPrefix(a, "--authz") || strings.HasPrefix(a, "--spicedb")
 		})
 	})
-	t.Cleanup(func() {
-		setCoreArgs(t, k, func([]string) []string { return original })
-		waitCoreRolledOut(t, k)
-		waitSpiceDBAvailable(t, k)
-		waitReconciled(t, k)
-	})
+	// Whatever happens, put the core back on SpiceDB before the next test: those after this one in the order
+	// (TestSpiceDBFailsClosed, TestViewersAndTokensReadOnlyTheirGrants and every parallel test) need it. A
+	// Cleanup runs after the test's own context is canceled, so it works in a context of its own.
+	t.Cleanup(func() { restoreCore(t, k, original) })
 	waitCoreRolledOut(t, k)
 
 	base := forwardCore(t, k)
@@ -85,10 +84,30 @@ func TestPolicyModeGrantsLimitTokensAndKeepThePagesWorking(t *testing.T) {
 	checkPagesRender(t, owner, base)
 }
 
-// setCoreArgs replaces the args of the core container with what edit makes of them and returns the ones it had.
-func setCoreArgs(t *testing.T, k *kube, edit func([]string) []string) []string {
+// restoreCore puts the core's args back as they were and waits until the core runs them, ready, with SpiceDB
+// answering and the core's authorization reconciled with it. It fails the test, without stopping it, when it
+// can't.
+func restoreCore(t *testing.T, k *kube, original []string) {
 	t.Helper()
-	d, err := k.clients.AppsV1().Deployments(namespace).Get(t.Context(), coreDeployment, metav1.GetOptions{})
+	ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), 3*coreTimeout)
+	defer cancel()
+	setCoreArgs(ctx, t, k, func([]string) []string { return original })
+	if err := waitRolledOut(ctx, k, coreDeployment); err != nil {
+		t.Errorf("waiting for the core to roll back to SpiceDB: %v", err)
+		return
+	}
+	err := waitFor(ctx, spicedbTimeout, func(ctx context.Context) (string, bool, error) {
+		return "not reconciled yet", bytes.Contains(podLogs(ctx, t, k, coreDeployment), []byte(reconciledLine)), nil
+	})
+	if err != nil {
+		t.Errorf("waiting for the restored core to reconcile with SpiceDB: %v", err)
+	}
+}
+
+// setCoreArgs replaces the args of the core container with what edit makes of them and returns the ones it had.
+func setCoreArgs(ctx context.Context, t *testing.T, k *kube, edit func([]string) []string) []string {
+	t.Helper()
+	d, err := k.clients.AppsV1().Deployments(namespace).Get(ctx, coreDeployment, metav1.GetOptions{})
 	if err != nil {
 		t.Fatalf("getting Deployment %s: %v", coreDeployment, err)
 	}
@@ -99,7 +118,7 @@ func setCoreArgs(t *testing.T, k *kube, edit func([]string) []string) []string {
 		}
 		before := slices.Clone(c.Args)
 		c.Args = edit(before)
-		if _, err := k.clients.AppsV1().Deployments(namespace).Update(t.Context(), d, metav1.UpdateOptions{}); err != nil {
+		if _, err := k.clients.AppsV1().Deployments(namespace).Update(ctx, d, metav1.UpdateOptions{}); err != nil {
 			t.Fatalf("updating Deployment %s: %v", coreDeployment, err)
 		}
 		return before
@@ -115,16 +134,21 @@ func enableMCP(t *testing.T, k *kube, owner *ownerAPI) {
 	bearer := connectrpc.WithInterceptors(withBearer(k.token(t, plugins.ServiceAccountName(uiPlugin), plugins.CoreAudience)))
 	settings := modelsv1connect.NewModelSettingsServiceClient(http.DefaultClient, owner.base, bearer)
 	origin := "http://" + enrollHost
-	set := func(on bool) {
-		if _, err := settings.SetAgentsEnabled(t.Context(), connectrpc.NewRequest(&modelsv1.SetAgentsEnabledRequest{Origin: origin, SessionToken: owner.session, Enabled: on})); err != nil {
-			t.Fatalf("SetAgentsEnabled(%v): %v", on, err)
+	set := func(ctx context.Context, on bool) {
+		if _, err := settings.SetAgentsEnabled(ctx, connectrpc.NewRequest(&modelsv1.SetAgentsEnabledRequest{Origin: origin, SessionToken: owner.session, Enabled: on})); err != nil {
+			t.Errorf("SetAgentsEnabled(%v): %v", on, err)
 		}
-		if _, err := settings.SetFeatureEnabled(t.Context(), connectrpc.NewRequest(&modelsv1.SetFeatureEnabledRequest{Origin: origin, SessionToken: owner.session, Feature: "mcp", Enabled: on})); err != nil {
-			t.Fatalf("SetFeatureEnabled(mcp, %v): %v", on, err)
+		if _, err := settings.SetFeatureEnabled(ctx, connectrpc.NewRequest(&modelsv1.SetFeatureEnabledRequest{Origin: origin, SessionToken: owner.session, Feature: "mcp", Enabled: on})); err != nil {
+			t.Errorf("SetFeatureEnabled(mcp, %v): %v", on, err)
 		}
 	}
-	set(true)
-	t.Cleanup(func() { set(false) })
+	set(t.Context(), true)
+	// The switch goes off again in a context of its own: a Cleanup runs after the test's is canceled.
+	t.Cleanup(func() {
+		ctx, cancel := context.WithTimeout(context.WithoutCancel(t.Context()), requestTimeout)
+		defer cancel()
+		set(ctx, false)
+	})
 }
 
 // createMCPToken makes a script token that may use MCP and is granted one target, as the Access page does, and
