@@ -40,7 +40,7 @@ func TestGrantsLimitWhatAScriptTokenViews(t *testing.T) {
 	waitSeedComplete(t, k)
 	waitSpiceDBAvailable(t, k)
 	waitPluginReady(t, k, uiPlugin)
-	waitLogLine(t, k, coreDeployment, reconciledLine)
+	waitReconciled(t, k)
 	owner := newOwnerAPI(t, k)
 	token := issueTokenWith(t, k)
 	secret, tokenID := token.secret, token.id

@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db079913c8db
+  - type: executable_for
+    from: SYM-core-grants-test-check-token-views
+    to: TEST-core-grants
+    created_at: 2026-11-18T17:21:01.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48ffb09853cc

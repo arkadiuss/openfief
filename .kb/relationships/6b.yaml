@@ -1357,3 +1357,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96c9330da732
+  - type: executable_for
+    from: SYM-e2e-policy-grants-ui-page
+    to: TEST-e2e-policy-grants
+    created_at: 2026-11-18T17:19:09.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b909c57ab49

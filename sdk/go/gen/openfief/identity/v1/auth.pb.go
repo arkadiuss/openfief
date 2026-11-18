@@ -2615,11 +2615,11 @@ type CreateScriptTokenRequest struct {
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// How long the token is valid, at most a year; unset is 30 days.
 	Ttl *durationpb.Duration `protobuf:"bytes,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	// Whether the token may use the MCP server (D-213). Stored only.
+	// Whether the token may use the MCP server (D-213). Fixed at creation.
 	McpAllowed bool `protobuf:"varint,5,opt,name=mcp_allowed,json=mcpAllowed,proto3" json:"mcp_allowed,omitempty"`
 	// What the token may view (D-209): accounts, sleeves or the household. Each
-	// must exist (NOT_FOUND). None leaves a token that views nothing while the
-	// core runs with --authz=spicedb.
+	// must exist (NOT_FOUND). None leaves a token that views nothing, under either
+	// --authz mode.
 	Grants        []*GrantTarget `protobuf:"bytes,6,rep,name=grants,proto3" json:"grants,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

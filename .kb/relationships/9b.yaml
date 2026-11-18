@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28b064c7960b
+  - type: executable_for
+    from: SYM-core-grants-test-two-accounts-target-accounts
+    to: TEST-core-grants
+    created_at: 2026-11-18T17:19:31.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a50dfdc15d

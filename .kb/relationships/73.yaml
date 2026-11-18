@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3bfcf0b254cb
+  - type: executable_for
+    from: SYM-e2e-policy-grants-test-policy-mode-grants
+    to: TEST-e2e-policy-grants
+    created_at: 2026-11-18T17:18:36.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6c905be61aa

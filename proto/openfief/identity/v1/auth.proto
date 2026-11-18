@@ -483,11 +483,11 @@ message CreateScriptTokenRequest {
   string name = 3;
   // How long the token is valid, at most a year; unset is 30 days.
   google.protobuf.Duration ttl = 4;
-  // Whether the token may use the MCP server (D-213). Stored only.
+  // Whether the token may use the MCP server (D-213). Fixed at creation.
   bool mcp_allowed = 5;
   // What the token may view (D-209): accounts, sleeves or the household. Each
-  // must exist (NOT_FOUND). None leaves a token that views nothing while the
-  // core runs with --authz=spicedb.
+  // must exist (NOT_FOUND). None leaves a token that views nothing, under either
+  // --authz mode.
   repeated GrantTarget grants = 6;
 }
 

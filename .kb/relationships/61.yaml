@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03260ea9f6ea
+  - type: executable_for
+    from: SYM-e2e-policy-grants-do-reply
+    to: TEST-e2e-policy-grants
+    created_at: 2026-11-18T17:19:15.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a0dedb36844

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"maps"
 	"slices"
 	"strings"
 	"testing"
@@ -444,5 +445,88 @@ func TestGrantDirectoryAccessViewPlugins(t *testing.T) {
 	plugins.unsynced = true
 	if _, err := d.AccessViewPlugins(ctx); !errors.Is(err, identityapp.ErrDirectoryUnknown) {
 		t.Errorf("AccessViewPlugins before the cache synced = %v, want ErrDirectoryUnknown", err)
+	}
+}
+
+// twoAccounts covers the household with the accounts "main" and "other", and an
+// account with itself.
+type twoAccounts struct{}
+
+func (twoAccounts) TargetAccounts(_ context.Context, t identity.GrantTarget) ([]string, error) {
+	if t.Kind == identity.GrantTargetHousehold {
+		return []string{"main", "other"}, nil
+	}
+	return []string{t.ID}, nil
+}
+
+// TestCutoverIsOneShotAndTheGrantsStayAsMade checks, over a real database under
+// the policy, what a restart does (D-209): a database where the cutover never
+// ran gives the household grant once, audited once per grant; a token made
+// afterwards with no grant, and one granted an account, keep exactly that
+// across two more starts; and the policy then lets the first read both
+// accounts, the second its own alone, and the third nothing.
+func TestCutoverIsOneShotAndTheGrantsStayAsMade(t *testing.T) {
+	t.Parallel()
+	f := newGrantsFixture(t)
+	ctx := t.Context()
+	old, _, err := f.tokens.Issue(ctx, "old", time.Hour, false)
+	if err != nil {
+		t.Fatalf("Issue: %v", err)
+	}
+	grantsStartup(ctx, f.grants, nil, quiet())
+	if diff := cmp.Diff([]string{"admin script_token_created ok", "system grant_created ok"}, f.trail(t)); diff != "" {
+		t.Fatalf("audit log after the first start (-want +got):\n%s", diff)
+	}
+
+	bare, _, err := f.tokens.Issue(ctx, "bare", time.Hour, false)
+	if err != nil {
+		t.Fatalf("Issue: %v", err)
+	}
+	narrow, _, err := f.tokens.Issue(ctx, "narrow", time.Hour, false)
+	if err != nil {
+		t.Fatalf("Issue: %v", err)
+	}
+	holder := identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: string(narrow.ID)}
+	if _, createErr := f.grants.Create(ctx, adminActor(), holder, identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: "main"}); createErr != nil {
+		t.Fatalf("Create: %v", createErr)
+	}
+	checkRestartsChangeNoGrant(t, f)
+
+	checkTokenViews(t, identitypg.New(f.pool), old.ID, narrow.ID, bare.ID)
+}
+
+// checkTokenViews checks, under the policy over the grants store, that the household's token views both
+// accounts, the narrow one's its own alone and the bare one's none.
+func checkTokenViews(t *testing.T, grants identityapp.GrantReader, household, narrow, bare identity.ScriptTokenID) {
+	t.Helper()
+	ctx := t.Context()
+	p := identityapp.NewGrantPolicy(grants, twoAccounts{})
+	for _, tc := range []struct {
+		name string
+		id   identity.ScriptTokenID
+		want []string
+	}{{"the household's", household, []string{"main", "other"}}, {"the narrow one's", narrow, []string{"main"}}, {"the bare one's", bare, nil}} {
+		set, listErr := p.ActableAccounts(ctx, identity.Caller{Holder: identity.HolderScriptToken, ID: string(tc.id)}, identity.ActionView)
+		if listErr != nil || !slices.Equal(slices.Sorted(maps.Keys(set)), tc.want) {
+			t.Errorf("%s accounts = %v, %v, want %v", tc.name, slices.Sorted(maps.Keys(set)), listErr, tc.want)
+		}
+	}
+}
+
+// checkRestartsChangeNoGrant restarts the core's grant start twice and fails unless the grants in force are the
+// two they were, the household's and the narrow token's.
+func checkRestartsChangeNoGrant(t *testing.T, f *grantsFixture) {
+	t.Helper()
+	ctx := t.Context()
+	before, err := f.grants.InForce(ctx)
+	if err != nil {
+		t.Fatalf("InForce: %v", err)
+	}
+	for range 2 {
+		grantsStartup(ctx, f.grants, nil, quiet())
+	}
+	after, err := f.grants.InForce(ctx)
+	if err != nil || !cmp.Equal(before, after) || len(after) != 2 {
+		t.Fatalf("grants in force after restarts = %v, %v, want the two as before: %v", after, err, before)
 	}
 }

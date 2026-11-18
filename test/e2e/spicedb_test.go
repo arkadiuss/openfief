@@ -455,7 +455,7 @@ func TestSpiceDBFailsClosed(t *testing.T) {
 		t.Fatalf("the core runs without %s: the suite's overlay (test/e2e/overlays/openfief) must switch it to SpiceDB", authzSpiceDBFlag)
 	}
 	checkCoreKeyIsMounted(t, core)
-	waitLogLine(t, k, coreDeployment, reconciledLine)
+	waitReconciled(t, k)
 	ungranted := issueTokenWith(t, k).secret
 	granted := issueToken(t, k)
 
@@ -554,14 +554,14 @@ func waitAccounts(t *testing.T, k *kube, token string, accept func([]string) boo
 	return slices.Clone(ids)
 }
 
-// waitLogLine waits until a pod labelled app logs a line holding text.
-func waitLogLine(t *testing.T, k *kube, app, text string) {
+// waitReconciled waits until the core's pod logs that it reconciled SpiceDB with what it owns.
+func waitReconciled(t *testing.T, k *kube) {
 	t.Helper()
 	err := waitFor(t.Context(), spicedbTimeout, func(ctx context.Context) (string, bool, error) {
-		return "not logged yet", bytes.Contains(podLogs(ctx, t, k, app), []byte(text)), nil
+		return "not logged yet", bytes.Contains(podLogs(ctx, t, k, coreDeployment), []byte(reconciledLine)), nil
 	})
 	if err != nil {
-		t.Fatalf("waiting for %s to log %q: %v", app, text, err)
+		t.Fatalf("waiting for %s to log %q: %v", coreDeployment, reconciledLine, err)
 	}
 }
 
