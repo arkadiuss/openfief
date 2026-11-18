@@ -311,7 +311,14 @@ async function askModelBox(browser) {
 const fakeTurnstileScript = `(function () {
   var n = window.__fakeTurnstileManual ? 100 : 0; // a token is good once, so the manual run's differ from the automatic run's
   var manual = !!window.__fakeTurnstileManual;
+  var renders = []; // what turnstile.render was called with, for the test to read
+  var removes = 0;
   function call(div, attribute, argument) {
+    // A widget rendered explicitly calls the callbacks it was given; one rendered implicitly calls the globals its div names.
+    if (div.__fakeOptions) {
+      var given = div.__fakeOptions[attribute.replace(/^data-/, '')];
+      return typeof given === 'function' ? given(argument) : undefined;
+    }
     var name = div.getAttribute(attribute);
     return name && typeof window[name] === 'function' ? window[name](argument) : undefined;
   }
@@ -342,12 +349,28 @@ const fakeTurnstileScript = `(function () {
     return result;
   }
   window.turnstile = {
+    // render and remove model what the page's fallback needs: a widget rendered again in a container, with its own callbacks. In the
+    // manual run (the stall) it makes no token by itself; otherwise it does, as the real widget does once it is shown.
+    remove: function (div) {
+      removes += 1;
+      div.__fakeOptions = null;
+      var input = div.querySelector('input[name="cf-turnstile-response"]');
+      if (input) { input.remove(); }
+    },
+    render: function (div, options) {
+      renders.push({ sitekey: options.sitekey, appearance: options.appearance, callbacks: Object.keys(options).filter(function (k) { return typeof options[k] === 'function'; }).sort() });
+      div.__fakeOptions = options;
+      if (!manual) { succeed(); }
+      return 'fake-widget-' + renders.length;
+    },
     reset: function () {
       document.querySelectorAll('.cf-turnstile').forEach(function (div) { var input = field(div); if (input) { input.value = ''; } });
       if (!manual) { succeed(); }
     }
   };
   window.__fakeTurnstile = {
+    renders: function () { return renders; },
+    removes: function () { return removes; },
     succeed: succeed,
     fail: function (code) { return each('data-error-callback', code); },
     expire: function () { return each('data-expired-callback'); },
@@ -388,6 +411,7 @@ async function turnstileBox(browser) {
     page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
   ]);
   check(new URL(request.url()).searchParams.get('q') === 'how diversified am I', 'turnstile: the question did not go with its token');
+  check(new URL(request.url()).searchParams.get('ask-check-path') === 'invisible', 'turnstile: a check that finished by itself did not say it was the invisible path');
   await page.waitForSelector('#answer .used-card', { timeout: 5000 });
   check((await page.textContent('#answer')).includes('Answered by'), 'turnstile: a question with a good token was not answered by the model');
   await page.waitForFunction(() => document.querySelector('input[name="cf-turnstile-response"]').value === 'ok-browser-2', null, { timeout: 5000 });
@@ -466,6 +490,71 @@ async function turnstileStatus(browser) {
   const said = await gone.textContent('#ask-check-status');
   check(said === 'Your browser blocked the check; allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.', `turnstile status: with the script blocked the line says ${said}`);
   await blocked.close();
+}
+
+// turnstileFallback checks what the Ask box does when the invisible check stalls, as on Brave for Android, where the widget's script
+// loads but no token, no before-interactive callback and no error ever arrive (D-208): about ten seconds after the page (a fake
+// clock) the widget is removed and rendered again as the visible one, the line says to complete the check below, and once a token
+// comes the line says "Ready" and the next question carries the token and the path "visible-fallback". A check that completes by
+// itself never gets a second widget, and a widget that asked for a click (before-interactive) is left alone.
+async function turnstileFallback(browser) {
+  const phone = { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true };
+  const fresh = async (stall) => {
+    const ctx = await browser.newContext(phone);
+    await ctx.addInitScript((manual) => { window.__fakeTurnstileManual = manual; }, stall);
+    await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
+    await ctx.clock.install();
+    const page = await ctx.newPage();
+    await page.goto(turnstileBase + '/test/sign-in');
+    await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+    return { ctx, page };
+  };
+  const checking = 'Checking you\'re a person…';
+  // The stall: nothing ever calls back.
+  const { ctx, page } = await fresh(true);
+  const text = () => page.textContent('#ask-check-status');
+  const renders = () => page.evaluate(() => window.__fakeTurnstile.renders());
+  await ctx.clock.fastForward(9000);
+  check((await text()) === checking && (await renders()).length === 0, `turnstile fallback: before ten seconds the line says ${await text()} with ${(await renders()).length} renders`);
+  check((await page.inputValue('#ask-check-path')) === 'invisible', 'turnstile fallback: the path was not invisible before the fallback');
+  await ctx.clock.fastForward(1500);
+  const rendered = await renders();
+  check(rendered.length === 1 && rendered[0].appearance === 'always' && rendered[0].sitekey.length > 0
+    && rendered[0].callbacks.join() === 'before-interactive-callback,callback,error-callback,expired-callback',
+  `turnstile fallback: the widget was rendered as ${JSON.stringify(rendered)}, not once, visible, with its four callbacks`);
+  check((await page.evaluate(() => window.__fakeTurnstile.removes())) === 1, 'turnstile fallback: the invisible widget was not removed first');
+  check((await text()) === 'The check didn\'t finish by itself. Complete the check below.', `turnstile fallback: after the fallback the line says ${await text()}`);
+  check((await page.inputValue('#ask-check-path')) === 'visible-fallback', 'turnstile fallback: the path field does not say visible-fallback');
+  await ctx.clock.fastForward(11000);
+  check((await text()) === 'The person check is still waiting. Complete the check below. Or reload the page.', `turnstile fallback: after twenty seconds the line says ${await text()}`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-fallback.png'), fullPage: true });
+  // The person ticks the box: a token arrives.
+  await page.evaluate(() => window.__fakeTurnstile.succeed());
+  check((await text()) === 'Ready', `turnstile fallback: with a token the line says ${await text()}`);
+  const token = await page.inputValue('input[name="cf-turnstile-response"]');
+  await page.fill('#ask-q', 'how diversified am I');
+  const [request] = await Promise.all([
+    page.waitForRequest((r) => r.url().includes('/ask?')),
+    page.click('.ask-form button[type="submit"]'),
+  ]);
+  const sent = new URL(request.url()).searchParams;
+  check(token.startsWith('ok-browser-') && sent.get('cf-turnstile-response') === token && sent.get('ask-check-path') === 'visible-fallback',
+    `turnstile fallback: the next question carried ${request.url()}, not the token ${token} and the path visible-fallback`);
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  await ctx.close();
+  // A widget that asked for a click is already visible: no second widget.
+  const asked = await fresh(true);
+  await asked.page.evaluate(() => window.__fakeTurnstile.interactive());
+  await asked.ctx.clock.fastForward(15000);
+  check((await asked.page.evaluate(() => window.__fakeTurnstile.renders())).length === 0, 'turnstile fallback: a widget that asked for a click was rendered again');
+  check((await asked.page.inputValue('#ask-check-path')) === 'invisible', 'turnstile fallback: a widget that asked for a click changed the path');
+  await asked.ctx.close();
+  // A check that completes by itself is left alone.
+  const quick = await fresh(false);
+  await quick.ctx.clock.fastForward(15000);
+  check((await quick.page.evaluate(() => window.__fakeTurnstile.renders())).length === 0 && (await quick.page.textContent('#ask-check-status')) === 'Ready',
+    'turnstile fallback: a check that finished by itself was rendered again or is not Ready');
+  await quick.ctx.close();
 }
 
 // withoutTurnstile checks that the first UI, which has no Turnstile, has no widget and loads nothing from Cloudflare.
@@ -822,6 +911,7 @@ try {
   await withoutTurnstile(browser);
   await turnstileBox(browser);
   await turnstileStatus(browser);
+  await turnstileFallback(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
   await people(browser);

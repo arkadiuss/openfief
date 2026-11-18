@@ -22,6 +22,9 @@ import (
 const (
 	// turnstileField is the form field the widget puts its token in.
 	turnstileField = "cf-turnstile-response"
+	// checkPathField is the hidden form field that says which way the check
+	// completed, so the log shows how often the invisible one stalls.
+	checkPathField = "ask-check-path"
 	// maxTurnstileToken is the longest token Cloudflare issues.
 	maxTurnstileToken = 2048
 	// turnstileTimeout bounds the call to Cloudflare: the visitor waits for it.
@@ -91,6 +94,43 @@ const (
 	// closed: the question is not sent.
 	turnstileUnavailable
 )
+
+// String is the verdict as a fixed word for the log.
+func (v turnstileVerdict) String() string {
+	switch v {
+	case turnstileNoToken:
+		return "no-token"
+	case turnstileRejected:
+		return "rejected"
+	case turnstileWrongHost:
+		return "wrong-host"
+	case turnstilePassed:
+		return "passed"
+	case turnstileUnavailable:
+		return "unavailable"
+	}
+	return "unknown"
+}
+
+// The ways the check can complete, as the page's script names them in
+// checkPathField: "invisible" is the widget's own interaction-only run, and
+// "visible-fallback" the visible widget the script renders when that one stalls.
+const (
+	checkPathInvisible = "invisible"
+	checkPathVisible   = "visible-fallback"
+	checkPathUnknown   = "unknown"
+)
+
+// checkPath returns raw when it is one of the two fixed words, and "unknown" for
+// anything else, including no field: typed data from the browser is never kept,
+// logged or shown.
+func checkPath(raw string) string {
+	switch raw {
+	case checkPathInvisible, checkPathVisible:
+		return raw
+	}
+	return checkPathUnknown
+}
 
 // turnstileOutcome is a verdict with what the visitor may be told of it. The
 // detail is only ever Cloudflare's fixed error codes and two host names: no

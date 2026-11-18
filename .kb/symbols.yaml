@@ -229369,6 +229369,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-turnstile
       - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+      - type: implements
         target: REQ-ui-turnstile-verification
   - id: SYM-m5-internal-views-ui-fakes-test-go-newharnesswith
     title: newHarnessWith
@@ -237250,3 +237252,49 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-policy-grants
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict-string
+    title: turnstileVerdict.String
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:31.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+  - id: SYM-m5-internal-views-ui-turnstile-go-checkpath
+    title: checkPath
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:37.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+  - id: SYM-m5-internal-views-ui-turnstile-path-test-go-testcheckpathkeepsonlythetwofixedwords
+    title: TestCheckPathKeepsOnlyTheTwoFixedWords
+    status: active
+    sourceFile: internal/views/ui/turnstile_path_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:44.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-path-test-go-testaskboxlogswhichpathmadethetokenandneverechoesit
+    title: TestAskBoxLogsWhichPathMadeTheTokenAndNeverEchoesIt
+    status: active
+    sourceFile: internal/views/ui/turnstile_path_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:50.263Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile

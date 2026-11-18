@@ -11,6 +11,11 @@
   var shown = ""; // what the line says, kept for a status set before the page has the line
   var timer = null;
   var slowTimer = null;
+  var fallbackTimer = null;
+  var FALLBACK_AFTER = 10000; // ms without a token before the invisible check is swapped for a visible one
+  var COMPLETE_BELOW = "Complete the check below.";
+  var visible = false; // the visible widget has replaced the invisible one
+  var interactive = false; // Cloudflare itself asked for a click, so its widget is already showing
   var BLOCKED = "Your browser blocked the check; allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.";
 
   function setStatus(next, text) {
@@ -22,11 +27,53 @@
     }
   }
 
+  // On some browsers (Brave for Android) the invisible challenge never calls back at all: no token, no before-interactive, no
+  // error. So when no token has come after FALLBACK_AFTER, the widget is rendered again in its "always" form, a checkbox the
+  // person can tick. The form's hidden ask-check-path field then says "visible-fallback" instead of "invisible", which the server
+  // logs (one of those two fixed words, nothing typed), so we learn how often this path is the one that completes.
+  function fallbackToVisible(tries) {
+    var div = document.querySelector(".ask-check");
+    if (state !== "checking" || visible || interactive || !div) {
+      return;
+    }
+    if (!window.turnstile) {
+      // The script has not loaded (yet): the 8 s line already says so; look again shortly, for a slow connection.
+      if (tries < 15) {
+        fallbackTimer = window.setTimeout(function () { fallbackToVisible(tries + 1); }, 2000);
+      }
+      return;
+    }
+    try {
+      window.turnstile.remove(div);
+    } catch (err) {
+      // Nothing to remove: the widget never got as far as rendering; render it anyway.
+    }
+    div.removeAttribute("data-appearance");
+    var path = document.getElementById("ask-check-path");
+    if (path) {
+      path.value = "visible-fallback";
+    }
+    visible = true;
+    setStatus("checking", "The check didn't finish by itself. " + COMPLETE_BELOW);
+    window.turnstile.render(div, {
+      sitekey: div.getAttribute("data-sitekey"),
+      appearance: "always",
+      theme: "auto",
+      callback: window.openfiefCheckDone,
+      "error-callback": window.openfiefCheckError,
+      "expired-callback": window.openfiefCheckExpired,
+      "before-interactive-callback": window.openfiefCheckInteractive
+    });
+  }
+
   // watch says what is wrong if no token or error has come after a while: Cloudflare's script never loaded, which means something
   // blocked it (an extension, Brave's Shields) or there is no connection, so the line says to allow it; or the check is only slow.
+  // After FALLBACK_AFTER it also swaps a silent check that stalled for a visible one.
   function watch() {
     window.clearTimeout(timer);
     window.clearTimeout(slowTimer);
+    window.clearTimeout(fallbackTimer);
+    fallbackTimer = window.setTimeout(function () { fallbackToVisible(0); }, FALLBACK_AFTER);
     timer = window.setTimeout(function () {
       if (state === "checking" && !window.turnstile) {
         setStatus("checking", BLOCKED);
@@ -34,13 +81,16 @@
     }, 8000);
     slowTimer = window.setTimeout(function () {
       if (state === "checking" && window.turnstile) {
-        setStatus("checking", "The person check is taking a while. Wait for it, or reload the page.");
+        setStatus("checking", visible
+          ? "The person check is still waiting. " + COMPLETE_BELOW + " Or reload the page."
+          : "The person check is taking a while. Wait for it, or reload the page.");
       }
     }, 20000);
   }
 
   function checking() {
-    setStatus("checking", CHECKING);
+    interactive = false;
+    setStatus("checking", visible ? CHECKING + " " + COMPLETE_BELOW : CHECKING);
     watch();
   }
 
@@ -48,6 +98,7 @@
   window.openfiefCheckDone = function () {
     window.clearTimeout(timer);
     window.clearTimeout(slowTimer);
+    window.clearTimeout(fallbackTimer);
     setStatus("ready", "Ready");
   };
   // The widget failed. Returning true tells Turnstile the error is handled, so it doesn't log it to the console; its own retry
@@ -55,6 +106,7 @@
   window.openfiefCheckError = function (code) {
     window.clearTimeout(timer);
     window.clearTimeout(slowTimer);
+    window.clearTimeout(fallbackTimer);
     setStatus("failed", "The person check failed (Cloudflare error " + code + "). Reload the page; if it keeps failing, this browser or a blocker may be stopping challenges.cloudflare.com.");
     return true;
   };
@@ -64,7 +116,8 @@
   };
   // Cloudflare needs a click: the widget is about to show itself.
   window.openfiefCheckInteractive = function () {
-    setStatus("checking", CHECKING + " Complete the check if it asks.");
+    interactive = true; // its own widget is showing now: no fallback needed
+    setStatus("checking", CHECKING + (visible ? " " + COMPLETE_BELOW : " Complete the check if it asks."));
     watch();
   };
 

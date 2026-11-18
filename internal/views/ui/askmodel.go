@@ -635,6 +635,9 @@ func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, b
 		return answerCard{}, false
 	}
 	outcome := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	// The verdict and the path that made the token, both fixed words: nothing the browser typed is logged.
+	a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question",
+		"verdict", outcome.verdict.String(), "path", checkPath(r.URL.Query().Get(checkPathField)))
 	return turnstileAnswer(question, outcome)
 }
 

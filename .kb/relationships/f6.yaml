@@ -1203,3 +1203,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bd845198cdc
+  - type: verified_by
+    from: SCEN-ui-turnstile-stalled-check-falls-back-visible
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T21:25:36.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-599eb7397f84
+  - type: verified_by
+    from: SCEN-ui-turnstile-stalled-check-falls-back-visible
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-18T21:25:36.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1557f3f6df6

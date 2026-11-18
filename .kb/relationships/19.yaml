@@ -993,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51eb7852c9f9
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-path-test-go-testcheckpathkeepsonlythetwofixedwords
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T21:37:47.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b7abe32e24
