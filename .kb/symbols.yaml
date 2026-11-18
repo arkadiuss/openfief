@@ -235046,3 +235046,43 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-docgen-askeval
+  - id: SYM-e2e-wait-model-layer-ready
+    title: waitModelLayerReady
+    status: active
+    sourceFile: test/e2e/main_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T07:36:55.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-await-plugin-ready
+    title: awaitPluginReady
+    status: active
+    sourceFile: test/e2e/plugins_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T07:37:03.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-set-plugin-image
+    title: setPluginImage
+    status: active
+    sourceFile: test/e2e/registry_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T07:37:11.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-annotate-operator
+    title: annotateOperator
+    status: active
+    sourceFile: test/e2e/registry_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T07:37:18.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-demo-stack

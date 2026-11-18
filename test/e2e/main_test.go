@@ -127,6 +127,7 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	var (
 		signers string
 		ui      registryImage
+		model   registryImage
 		exempt  egress.Exemption
 	)
 	steps := []func() error{
@@ -146,6 +147,9 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 			if ui, imageErr = reg.image(ctx, uiImage); imageErr != nil {
 				return imageErr
 			}
+			if model, imageErr = reg.image(ctx, modelImage); imageErr != nil {
+				return imageErr
+			}
 			// The connector test installs and uninstalls with the CLI, as the
 			// bundle run's first run does (connector_test.go).
 			return buildCLI(ctx, reg, signer, logf)
@@ -156,13 +160,28 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 			exempt, fixtureErr = installEgressFixture(ctx, k, logf)
 			return fixtureErr
 		},
-		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster, exempt)) },
+		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster, model.cluster, exempt)) },
+		func() error { return waitModelLayerReady(ctx, k, logf) },
 		func() error { return installClients(ctx, k, logf) },
 	}
 	for _, step := range steps {
 		if stepErr := step(); stepErr != nil {
 			return stepErr
 		}
+	}
+	return nil
+}
+
+// waitModelLayerReady waits until the demo's model layer, the Plugin openrouter
+// (model-openai at OpenRouter), is Ready. The layer is included and off, with
+// no provider key (the owner creates the Secret openrouter--api-key out of band,
+// D-205, and no model call is made), so the plugin must start from the optional
+// Secret's absence; a provider that needed its key at start would fail here, at
+// the install, instead of on the demo after e2e passed.
+func waitModelLayerReady(ctx context.Context, k *kube, logf func(string, ...any)) error {
+	logf("e2e: waiting for the demo's model layer, Plugin %s, to be ready with the switch off and no key", modelPlugin)
+	if _, err := awaitPluginReady(ctx, k, modelPlugin); err != nil {
+		return fmt.Errorf("waiting for the model layer, Plugin %s: %w", modelPlugin, err)
 	}
 	return nil
 }

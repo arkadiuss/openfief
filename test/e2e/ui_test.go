@@ -18,6 +18,12 @@ const (
 	uiPlugin = "ui"
 	// uiImage is the UI's image in the suite's registry.
 	uiImage = "ui"
+	// modelPlugin is the demo's model layer (deploy/demo/model/openrouter.yaml): the
+	// model-openai image at OpenRouter, included and off, with no key Secret in the
+	// suite. modelImage is its image in the suite's registry, which the operator
+	// deploys from (editApp).
+	modelPlugin = "openrouter"
+	modelImage  = "model-openai"
 	// uiBrowserPath is the browser path its manifest declares and its grant
 	// approves (D-81).
 	uiBrowserPath = "/"

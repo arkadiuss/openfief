@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4d7277f0166
+  - type: executable_for
+    from: SYM-e2e-wait-model-layer-ready
+    to: TEST-e2e-demo-stack
+    created_at: 2026-11-18T07:36:59.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba2670e57ea

@@ -186,8 +186,18 @@ func (k *kube) getPlugin(ctx context.Context, name string) (*v1alpha1.Plugin, er
 // can't start, and returns it.
 func waitPluginReady(t *testing.T, k *kube, name string) *v1alpha1.Plugin {
 	t.Helper()
+	ready, err := awaitPluginReady(t.Context(), k, name)
+	if err != nil {
+		t.Fatalf("waiting for plugin %s to be ready: %v", name, err)
+	}
+	return ready
+}
+
+// awaitPluginReady is waitPluginReady for a caller with no test, such as the
+// install in TestMain.
+func awaitPluginReady(ctx context.Context, k *kube, name string) (*v1alpha1.Plugin, error) {
 	var ready *v1alpha1.Plugin
-	err := waitFor(t.Context(), pluginTimeout, func(ctx context.Context) (string, bool, error) {
+	err := waitFor(ctx, pluginTimeout, func(ctx context.Context) (string, bool, error) {
 		p, err := k.getPlugin(ctx, name)
 		if err != nil {
 			return "", false, fmt.Errorf("%w: %w", errRetry, err)
@@ -205,10 +215,7 @@ func waitPluginReady(t *testing.T, k *kube, name string) *v1alpha1.Plugin {
 		pods, err := k.pluginPodsState(ctx, name)
 		return state + "; " + pods, false, err
 	})
-	if err != nil {
-		t.Fatalf("waiting for plugin %s to be ready: %v", name, err)
-	}
-	return ready
+	return ready, err
 }
 
 // conditionsState describes a Plugin's conditions in a line.

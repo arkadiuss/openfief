@@ -120,7 +120,7 @@ type ClusterServiceRequest struct {
 type Manifest struct {
 	// Capabilities are what the plugin acts as.
 	// +kubebuilder:validation:MinItems=1
-	// +kubebuilder:validation:items:Enum=connector;view
+	// +kubebuilder:validation:items:Enum=connector;view;model-provider
 	// +listType=set
 	Capabilities []string `json:"capabilities"`
 
@@ -245,7 +245,7 @@ type SecretMount struct {
 type Permissions struct {
 	// Capabilities are what the plugin may act as.
 	// +optional
-	// +kubebuilder:validation:items:Enum=connector;view
+	// +kubebuilder:validation:items:Enum=connector;view;model-provider
 	// +listType=set
 	Capabilities []string `json:"capabilities,omitempty"`
 	// Egress lists hosts as "host" (port 443) or "host:port".

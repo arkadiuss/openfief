@@ -5,7 +5,8 @@
 #     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them), and so is the suite's institution
 #     fixture server (test/e2e/fixture), openfief.test/fixture:e2e, which serves synthetic IBKR Flex, EODHD and NBP
 #     answers over HTTPS with a certificate from a CA the suite makes for each run;
-#   - the plugin images the operator deploys, nbp-fx, the built-in UI, xtb, ibkr-flex, eodhd, treasury-bonds and the
+#   - the plugin images the operator deploys, nbp-fx, the built-in UI, the model-provider model-openai (the demo's
+#     model layer, included and off), xtb, ibkr-flex, eodhd, treasury-bonds and the
 #     suite's synthetic connector (test/e2e/connector, two images with different manifests), go to the suite's
 #     registry, because the operator deploys a plugin only after it has read the image's signature from its registry
 #     (D-56, D-57). The suite signs them there with a key it makes at run time (test/e2e/registry_test.go);
@@ -20,7 +21,7 @@
 # e2e passes to the suite.
 # The shard picks the images: `all`, the default, builds every image above for task e2e; `ghostfolio` builds only what
 # the Ghostfolio shard runs (task e2e:ghostfolio): core, operator, egress-proxy and demo-seed for the demo's stack, and
-# the UI, which the demo's stack deploys, and the Ghostfolio view as plugins, with no bundle images.
+# the UI and model-openai, which the demo's stack deploys, and the Ghostfolio view as plugins, with no bundle images.
 # Usage: e2e-images.sh <k3d|kind> <cluster name> <env file> [all|ghostfolio]
 set -euo pipefail
 shopt -s inherit_errexit
@@ -53,13 +54,14 @@ case "$shard" in
     bundle=(core operator egress-proxy)
     dockerfiles=(cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile
       test/e2e/fixture/Dockerfile plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile
-      plugins/ibkr-flex/Dockerfile plugins/eodhd/Dockerfile plugins/treasury-bonds/Dockerfile)
+      plugins/ibkr-flex/Dockerfile plugins/eodhd/Dockerfile plugins/treasury-bonds/Dockerfile
+      plugins/model-openai/Dockerfile)
     connectors=(e2e-connector:manifest.json e2e-connector-egress:manifest-egress.json)
     ;;
   ghostfolio)
     bundle=()
     dockerfiles=(cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile
-      plugins/ui/Dockerfile plugins/ghostfolio/Dockerfile)
+      plugins/ui/Dockerfile plugins/model-openai/Dockerfile plugins/ghostfolio/Dockerfile)
     connectors=()
     ;;
   *)
