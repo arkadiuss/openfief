@@ -1315,3 +1315,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb0ec6654e19
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstilecheck-judge
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:27.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80aaa58adce1

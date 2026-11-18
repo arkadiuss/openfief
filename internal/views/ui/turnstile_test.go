@@ -121,18 +121,18 @@ func TestTurnstileVerifyByVerdict(t *testing.T) {
 	}{
 		{name: "a good token", token: "ok-1", remote: "198.51.100.7", host: testHost, want: turnstilePassed, calls: 1},
 		{name: "a good token made on the host that asks, with its port", token: "ok-1", host: "localhost:8080", hostname: "localhost", want: turnstilePassed, calls: 1},
-		{name: "a good token made on another host", token: "ok-1", host: testHost, hostname: "evil.example.com", want: turnstileRefused, calls: 1},
+		{name: "a good token made on another host", token: "ok-1", host: testHost, hostname: "evil.example.com", want: turnstileWrongHost, calls: 1},
 		{name: "a good token, the host in another case", token: "ok-1", host: "Ui.Example.com", hostname: "ui.example.com", want: turnstilePassed, calls: 1},
-		{name: "an invalid token", token: "forged", host: testHost, want: turnstileRefused, calls: 1},
-		{name: "no token", token: "", host: testHost, want: turnstileRefused, calls: 0},
-		{name: "a token longer than Cloudflare issues", token: strings.Repeat("a", maxTurnstileToken+1), host: testHost, want: turnstileRefused, calls: 0},
+		{name: "an invalid token", token: "forged", host: testHost, want: turnstileRejected, calls: 1},
+		{name: "no token", token: "", host: testHost, want: turnstileNoToken, calls: 0},
+		{name: "a token longer than Cloudflare issues", token: strings.Repeat("a", maxTurnstileToken+1), host: testHost, want: turnstileNoToken, calls: 0},
 		{name: "no secret to ask with", token: "ok-1", host: testHost, secret: func() (string, error) { return "", nil }, want: turnstileUnavailable, calls: 0},
 		{name: "a secret that can't be read", token: "ok-1", host: testHost, secret: func() (string, error) { return "", errBoomTurnstile }, want: turnstileUnavailable, calls: 0},
 		{name: "Cloudflare answers an error", token: "ok-1", host: testHost, status: http.StatusInternalServerError, body: "upstream trouble", want: turnstileUnavailable, calls: 1},
 		{name: "Cloudflare answers no JSON", token: "ok-1", host: testHost, body: "<html>blocked</html>", want: turnstileUnavailable, calls: 1},
 		{name: "Cloudflare refuses the secret", token: "ok-1", host: testHost, body: `{"success":false,"error-codes":["invalid-input-secret"]}`, want: turnstileUnavailable, calls: 1},
 		{name: "Cloudflare finds no secret", token: "ok-1", host: testHost, body: `{"success":false,"error-codes":["missing-input-secret"]}`, want: turnstileUnavailable, calls: 1},
-		{name: "a token Cloudflare calls a duplicate", token: "ok-1", host: testHost, body: `{"success":false,"error-codes":["timeout-or-duplicate"]}`, want: turnstileRefused, calls: 1},
+		{name: "a token Cloudflare calls a duplicate", token: "ok-1", host: testHost, body: `{"success":false,"error-codes":["timeout-or-duplicate"]}`, want: turnstileRejected, calls: 1},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -143,7 +143,7 @@ func TestTurnstileVerifyByVerdict(t *testing.T) {
 			if tt.secret != nil {
 				check.cfg.Secret = tt.secret
 			}
-			if got := check.verify(t.Context(), tt.token, tt.remote, tt.host); got != tt.want {
+			if got := check.verify(t.Context(), tt.token, tt.remote, tt.host).verdict; got != tt.want {
 				t.Errorf("verdict = %d, want %d", got, tt.want)
 			}
 			if got := len(f.calls()); got != tt.calls {
@@ -159,7 +159,7 @@ func TestTurnstileVerifySendsTheSecretTheTokenAndTheAddressOnly(t *testing.T) {
 	t.Parallel()
 	f := newFakeSiteverify(t)
 	check := f.check(slog.New(slog.DiscardHandler))
-	if got := check.verify(t.Context(), "ok-abc", "198.51.100.7", testHost); got != turnstilePassed {
+	if got := check.verify(t.Context(), "ok-abc", "198.51.100.7", testHost).verdict; got != turnstilePassed {
 		t.Fatalf("verdict = %d, want passed", got)
 	}
 	want := url.Values{"secret": {secretForTests}, "response": {"ok-abc"}, "remoteip": {"198.51.100.7"}}
@@ -167,7 +167,7 @@ func TestTurnstileVerifySendsTheSecretTheTokenAndTheAddressOnly(t *testing.T) {
 		t.Errorf("what Cloudflare was sent (-want +got):\n%s", diff)
 	}
 	// With no address known, none is sent.
-	if got := check.verify(t.Context(), "ok-def", "", testHost); got != turnstilePassed {
+	if got := check.verify(t.Context(), "ok-def", "", testHost).verdict; got != turnstilePassed {
 		t.Fatalf("verdict = %d, want passed", got)
 	}
 	if got := f.calls()[1]; got.Has("remoteip") || len(got) != 2 {
@@ -179,11 +179,11 @@ func TestTurnstileVerifyOfAUsedTokenIsRefused(t *testing.T) {
 	t.Parallel()
 	f := newFakeSiteverify(t)
 	check := f.check(slog.New(slog.DiscardHandler))
-	if got := check.verify(t.Context(), "ok-once", "", testHost); got != turnstilePassed {
+	if got := check.verify(t.Context(), "ok-once", "", testHost).verdict; got != turnstilePassed {
 		t.Fatalf("first use: %d", got)
 	}
-	if got := check.verify(t.Context(), "ok-once", "", testHost); got != turnstileRefused {
-		t.Errorf("second use: %d, want refused", got)
+	if got := check.verify(t.Context(), "ok-once", "", testHost).verdict; got != turnstileRejected {
+		t.Errorf("second use: %d, want rejected", got)
 	}
 }
 
@@ -192,13 +192,13 @@ func TestTurnstileVerifyWithCloudflareUnreachableFailsClosed(t *testing.T) {
 	f := newFakeSiteverify(t)
 	check := f.check(slog.New(slog.DiscardHandler))
 	f.srv.Close()
-	if got := check.verify(t.Context(), "ok-1", "", testHost); got != turnstileUnavailable {
+	if got := check.verify(t.Context(), "ok-1", "", testHost).verdict; got != turnstileUnavailable {
 		t.Errorf("verdict = %d, want unavailable", got)
 	}
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 	f2 := newFakeSiteverify(t)
-	if got := f2.check(slog.New(slog.DiscardHandler)).verify(ctx, "ok-1", "", testHost); got != turnstileUnavailable {
+	if got := f2.check(slog.New(slog.DiscardHandler)).verify(ctx, "ok-1", "", testHost).verdict; got != turnstileUnavailable {
 		t.Errorf("a cancelled request: verdict = %d, want unavailable", got)
 	}
 }
@@ -288,13 +288,15 @@ func TestAskBoxShowsTheWidgetOnlyWhereTurnstileIsOnAndAModelAnswers(t *testing.T
 	h, _, _ := turnstileHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `class="ask-check cf-turnstile"`, `data-sitekey="`+siteKeyForTests+`"`, script)
+	wantBody(t, rec, `class="ask-check cf-turnstile"`, `data-sitekey="`+siteKeyForTests+`"`, `data-appearance="interaction-only"`, script,
+		`data-callback="openfiefCheckDone"`, `data-error-callback="openfiefCheckError"`, `data-expired-callback="openfiefCheckExpired"`,
+		`data-before-interactive-callback="openfiefCheckInteractive"`, `id="ask-check-status"`, `role="status"`, `aria-live="polite"`)
 	// Without Turnstile there is no widget and no script.
 	plain := newHarness(t)
 	plain.askModel.turnOn("T0", "T2")
 	rec = plain.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantNoBody(t, rec, "cf-turnstile", "challenges.cloudflare.com", "data-sitekey")
+	wantNoBody(t, rec, "cf-turnstile", "challenges.cloudflare.com", "data-sitekey", "ask-check-status")
 }
 
 func TestAskBoxShowsNoWidgetWhenNoModelAnswers(t *testing.T) {
@@ -348,34 +350,176 @@ func TestAskBoxPassesAQuestionWithAGoodToken(t *testing.T) {
 
 func TestAskBoxStopsAQuestionTheCheckRefusesBeforeAnythingIsSentOrCounted(t *testing.T) {
 	t.Parallel()
+	const never = "Answered by"
 	tests := []struct {
-		name  string
-		token string
-		down  bool
-		want  []string
+		name     string
+		token    string
+		body     string
+		hostname string
+		down     bool
+		want     []string
+		wantNo   []string
 	}{
-		{name: "no token", want: []string{"A check comes before the model answers", "reload the page"}},
-		{name: "a forged token", token: "forged", want: []string{"A check comes before the model answers"}},
-		{name: "Cloudflare down", token: "ok-1", down: true, want: []string{"The check couldn&#39;t run", "nothing was sent to the model"}},
+		{
+			name:   "no token",
+			want:   []string{"A check comes before the model answers", "No result of the check reached OpenFief", "reload the page", "challenges.cloudflare.com", "in Brave: turn Shields off for it"},
+			wantNo: []string{"Cloudflare refused the check", "another host", "error codes"},
+		},
+		{
+			name: "a forged token", token: "forged",
+			want:   []string{"Cloudflare refused the check", "error codes: invalid-input-response", "A new check is being made; ask again"},
+			wantNo: []string{"A check comes before the model answers", "forged"},
+		},
+		{
+			name: "a used token", token: "ok-1", body: `{"success":false,"error-codes":["timeout-or-duplicate","internal-error"]}`,
+			want:   []string{"Cloudflare refused the check", "error codes: timeout-or-duplicate, internal-error"},
+			wantNo: []string{"A check comes before the model answers", "ok-1"},
+		},
+		{
+			name: "a refusal with no code", token: "ok-1", body: `{"success":false}`,
+			want: []string{"Cloudflare refused the check", "it gave no error code"},
+		},
+		{
+			name: "codes that are no fixed words", token: "ok-1", body: `{"success":false,"error-codes":["bad-token","<script>alert(1)</script>","SECRET value"]}`,
+			want:   []string{"error codes: bad-token)"},
+			wantNo: []string{"<script>", "SECRET"},
+		},
+		{
+			name: "a token made for another host", token: "ok-1", hostname: "evil.example.com",
+			want:   []string{"The check was made for another host", "made for evil.example.com", "came from " + testHost},
+			wantNo: []string{"A check comes before the model answers", "Cloudflare refused the check"},
+		},
+		{
+			name: "Cloudflare down", token: "ok-1", down: true,
+			want:   []string{"The check couldn&#39;t run", "nothing was sent to the model"},
+			wantNo: []string{"Cloudflare refused the check", "A check comes before the model answers"},
+		},
 	}
 	for _, tt := range tests {
 		for _, session := range []string{ownerSession, readSession} {
 			t.Run(tt.name+" "+session, func(t *testing.T) {
 				t.Parallel()
 				h, f, logs := turnstileHarness(t)
+				f.body = tt.body
+				if tt.hostname != "" {
+					f.hostname = tt.hostname
+				}
 				if tt.down {
 					f.srv.Close()
 				}
 				rec := h.asksWithToken(t, session, "how diversified am I?", tt.token)
 				wantStatus(t, rec, http.StatusOK)
 				wantBody(t, rec, append(tt.want, "The model gave no answer", `class="ask-help"`, "What needs me")...)
-				wantNoBody(t, rec, "Answered by")
+				wantNoBody(t, rec, append(tt.wantNo, never)...)
 				wantNothingSentOrCounted(t, h)
-				if strings.Contains(logs.String(), secretForTests) || strings.Contains(rec.Body.String(), secretForTests) {
-					t.Error("the secret key reached the log or the page")
-				}
+				wantNothingLeaked(t, rec, logs.String(), tt.token)
 			})
 		}
+	}
+}
+
+// wantNothingLeaked checks that neither the secret key nor the question reached
+// the log or the page's card, and that the token did not reach the log.
+func wantNothingLeaked(t *testing.T, rec *httptest.ResponseRecorder, logs, token string) {
+	t.Helper()
+	if strings.Contains(logs, secretForTests) || strings.Contains(rec.Body.String(), secretForTests) {
+		t.Error("the secret key reached the log or the page")
+	}
+	if strings.Contains(logs, "how diversified") {
+		t.Errorf("the question reached the log:\n%s", logs)
+	}
+	if token != "" && strings.Contains(logs, token) {
+		t.Errorf("the token reached the log:\n%s", logs)
+	}
+}
+
+func TestTurnstileOutcomeCarriesOnlyWhatMayBeShown(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		body string
+		host string
+		want turnstileOutcome
+	}{
+		{
+			name: "codes in order", body: `{"success":false,"error-codes":["timeout-or-duplicate","invalid-input-response"]}`, host: testHost,
+			want: turnstileOutcome{verdict: turnstileRejected, codes: []string{"timeout-or-duplicate", "invalid-input-response"}},
+		},
+		{
+			name: "codes that are not fixed words are dropped", body: `{"success":false,"error-codes":["Has Space","ok-code",""]}`, host: testHost,
+			want: turnstileOutcome{verdict: turnstileRejected, codes: []string{"ok-code"}},
+		},
+		{name: "no codes", body: `{"success":false}`, host: testHost, want: turnstileOutcome{verdict: turnstileRejected}},
+		{
+			name: "the other host and the asking host, without its port", body: `{"success":true,"hostname":"other.example.org"}`, host: "ui.example.com:8443",
+			want: turnstileOutcome{verdict: turnstileWrongHost, reported: "other.example.org", asked: "ui.example.com"},
+		},
+		{name: "a passed token shows nothing", body: `{"success":true,"hostname":"ui.example.com"}`, host: testHost, want: turnstileOutcome{verdict: turnstilePassed}},
+		{
+			name: "an unavailable check shows nothing", body: `{"success":false,"error-codes":["invalid-input-secret","timeout-or-duplicate"]}`, host: testHost,
+			want: turnstileOutcome{verdict: turnstileUnavailable},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFakeSiteverify(t)
+			f.body = tt.body
+			got := f.check(slog.New(slog.DiscardHandler)).verify(t.Context(), "ok-1", "", tt.host)
+			if diff := cmp.Diff(tt.want, got, cmp.AllowUnexported(turnstileOutcome{})); diff != "" {
+				t.Errorf("outcome (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestTurnstileAnswerByVerdict(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		outcome turnstileOutcome
+		stopped bool
+		title   string
+		text    []string
+	}{
+		{
+			name: "no token", outcome: turnstileOutcome{verdict: turnstileNoToken}, stopped: true, title: "A check comes before the model answers",
+			text: []string{"No result of the check reached OpenFief", "JavaScript", "challenges.cloudflare.com", "in Brave: turn Shields off for it"},
+		},
+		{
+			name: "refused with codes", outcome: turnstileOutcome{verdict: turnstileRejected, codes: []string{"timeout-or-duplicate"}}, stopped: true, title: "Cloudflare refused the check",
+			text: []string{"error codes: timeout-or-duplicate", "A new check is being made"},
+		},
+		{
+			name: "refused with none", outcome: turnstileOutcome{verdict: turnstileRejected}, stopped: true, title: "Cloudflare refused the check",
+			text: []string{"it gave no error code"},
+		},
+		{
+			name: "another host", outcome: turnstileOutcome{verdict: turnstileWrongHost, reported: "a.example.org", asked: "b.example.org"}, stopped: true,
+			title: "The check was made for another host", text: []string{"made for a.example.org", "came from b.example.org"},
+		},
+		{
+			name: "unavailable", outcome: turnstileOutcome{verdict: turnstileUnavailable}, stopped: true, title: "The check couldn't run",
+			text: []string{"nothing was sent to the model"},
+		},
+		{name: "passed", outcome: turnstileOutcome{verdict: turnstilePassed}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			card, stopped := turnstileAnswer("how diversified am I?", tt.outcome)
+			if stopped != tt.stopped {
+				t.Fatalf("stopped = %v, want %v", stopped, tt.stopped)
+			}
+			if card.Title != tt.title {
+				t.Errorf("title = %q, want %q", card.Title, tt.title)
+			}
+			for _, want := range tt.text {
+				if !strings.Contains(card.Text, want) {
+					t.Errorf("text %q lacks %q", card.Text, want)
+				}
+			}
+		})
 	}
 }
 
@@ -397,7 +541,7 @@ func TestAskBoxASingleUseTokenCannotAskTwice(t *testing.T) {
 	first := h.asksWithToken(t, ownerSession, "how diversified am I?", "ok-1")
 	wantBody(t, first, "Answered by p/m")
 	again := h.asksWithToken(t, ownerSession, "and by currency?", "ok-1")
-	wantBody(t, again, "A check comes before the model answers")
+	wantBody(t, again, "Cloudflare refused the check", "timeout-or-duplicate")
 	wantNoBody(t, again, "Answered by")
 	if got := h.askModel.generated(); got == 0 {
 		t.Fatal("the first question never reached the model")

@@ -1119,3 +1119,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a795460a6639
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:15:55.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c160299d76e
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-18T15:15:55.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3e468c57b66
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-safecodes
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T15:15:55.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab96fb017f90

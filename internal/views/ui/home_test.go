@@ -95,7 +95,7 @@ func TestOverviewHome(t *testing.T) {
 		`id="sleeve-core"`, `<a class="account-row" href="/accounts/acc-synthetic-1">`, "Valued 2026-03-31", `id="sleeve-core"`,
 		`hx-get="/over-time?by=asset-class&amp;date=2026-03-31&amp;over=allocation&amp;value=gross"`,
 		`id="activity-title">Recent activity`, "Synced · ibkr-main · 4 new transactions", "Coupon booked",
-		`<script src="/static/ask.js" defer></script>`,
+		`<script src="/static/ask.js"></script>`,
 	)
 	wantNoBody(t, rec, "<script>", "style=")
 }

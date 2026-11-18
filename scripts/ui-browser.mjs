@@ -303,34 +303,65 @@ async function askModelBox(browser) {
 
 // sideways returns how many pixels the page scrolls sideways.
 // The widget's script, as Cloudflare would serve it, for the page to load where the check's script is allowed: it puts a one-time
-// token ("ok-browser-N", which the fake Cloudflare accepts once) in the Ask form's field and makes a new one on reset.
+// token ("ok-browser-N", which the fake Cloudflare accepts once) in the Ask form's field, calls the widget's data-callback with it,
+// and makes a new one on reset. Like the real widget it calls the callbacks the div names (data-callback, data-error-callback,
+// data-expired-callback, data-before-interactive-callback) by their global names. With window.__fakeTurnstileManual set before the
+// page's scripts run it makes no token by itself; the test drives it through window.__fakeTurnstile instead: succeed(), fail(code),
+// expire() and interactive(), the last three returning what the page's callback returned.
 const fakeTurnstileScript = `(function () {
-  var n = 0;
-  function mount() {
+  var n = window.__fakeTurnstileManual ? 100 : 0; // a token is good once, so the manual run's differ from the automatic run's
+  var manual = !!window.__fakeTurnstileManual;
+  function call(div, attribute, argument) {
+    var name = div.getAttribute(attribute);
+    return name && typeof window[name] === 'function' ? window[name](argument) : undefined;
+  }
+  function field(div) {
+    var form = div.closest('form');
+    var input = form && form.querySelector('input[name="cf-turnstile-response"]');
+    if (form && !input) {
+      input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'cf-turnstile-response';
+      div.appendChild(input);
+    }
+    return input;
+  }
+  function succeed() {
     document.querySelectorAll('.cf-turnstile').forEach(function (div) {
-      var form = div.closest('form');
-      var input = form && form.querySelector('input[name="cf-turnstile-response"]');
-      if (form && !input) {
-        input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'cf-turnstile-response';
-        div.appendChild(input);
-      }
+      var input = field(div);
       if (input) {
         n += 1;
         input.value = 'ok-browser-' + n;
+        call(div, 'data-callback', input.value);
       }
     });
   }
-  window.turnstile = { reset: mount };
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', mount); } else { mount(); }
+  function each(attribute, argument) {
+    var result;
+    document.querySelectorAll('.cf-turnstile').forEach(function (div) { result = call(div, attribute, argument); });
+    return result;
+  }
+  window.turnstile = {
+    reset: function () {
+      document.querySelectorAll('.cf-turnstile').forEach(function (div) { var input = field(div); if (input) { input.value = ''; } });
+      if (!manual) { succeed(); }
+    }
+  };
+  window.__fakeTurnstile = {
+    succeed: succeed,
+    fail: function (code) { return each('data-error-callback', code); },
+    expire: function () { return each('data-expired-callback'); },
+    interactive: function () { return each('data-before-interactive-callback'); }
+  };
+  function start() { if (!manual) { succeed(); } }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
 })();`;
 
 // turnstileBox checks the Ask box with Turnstile in front of its model (D-208) at phone width: the page's policy allows
 // Cloudflare's script and frame and no other outside host and the widget loads (a fake of Cloudflare's script answers where the page asks
 // for it, so the script is loaded only if the policy lets it); a question to the model goes with the widget's token and is
 // answered; the token is renewed for the next question; a question with no token is stopped with the box's words and nothing
-// sent; a command needs no token; and the console holds no policy violation.
+// sent; a command needs no token; and the console holds no policy violation. The status line is turnstileStatus's.
 async function turnstileBox(browser) {
   const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
   await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
@@ -349,6 +380,9 @@ async function turnstileBox(browser) {
   check((await page.locator('.ask-form .cf-turnstile[data-sitekey]').count()) === 1, 'turnstile: the Ask form shows no widget');
   const token = () => page.inputValue('input[name="cf-turnstile-response"]');
   check((await token()) === 'ok-browser-1', `turnstile: the widget made no token (${await token()})`);
+  const status = () => page.textContent('#ask-check-status');
+  await page.waitForFunction(() => document.querySelector('#ask-check-status').textContent === 'Ready', null, { timeout: 5000 });
+  check((await status()) === 'Ready', `turnstile: with a token the status line says ${await status()}`);
   const [request] = await Promise.all([
     page.waitForRequest((r) => r.url().includes('/ask?') && r.url().includes('cf-turnstile-response=ok-browser-1')),
     page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
@@ -376,6 +410,62 @@ async function turnstileBox(browser) {
   await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
   check(violations.length === 0, `turnstile: the console holds policy violations: ${violations.join('; ')}`);
   await ctx.close();
+}
+
+// turnstileStatus checks the Ask box's status line (D-208) against a fake widget that makes no token until the test says so: it is a
+// polite live region under the field, "Checking you're a person…" while the check runs and when a token expires, a note that a click
+// may be needed before the widget shows itself, Cloudflare's error code in words that say what to do when the widget fails (and the
+// callback tells Turnstile the error is handled), and "Ready" once a token arrives. Cloudflare's widget is interaction-only, so
+// without this line a pending or failed check is invisible.
+async function turnstileStatus(browser) {
+  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
+  await ctx.addInitScript(() => { window.__fakeTurnstileManual = true; });
+  await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
+  const page = await ctx.newPage();
+  await page.goto(turnstileBase + '/test/sign-in');
+  await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+  const line = page.locator('#ask-check-status');
+  const text = () => line.textContent();
+  const checking = 'Checking you\'re a person\u2026';
+  check((await line.getAttribute('role')) === 'status' && (await line.getAttribute('aria-live')) === 'polite',
+    'turnstile status: the line is not a polite live region');
+  check((await text()) === checking, `turnstile status: while the check runs the line says ${await text()}`);
+  check((await line.isVisible()) && (await line.evaluate((el) => getComputedStyle(el).color)) === (await page.locator('#ask-help').evaluate((el) => getComputedStyle(el).color)),
+    'turnstile status: the line is hidden or not in the muted color');
+  await page.evaluate(() => window.__fakeTurnstile.interactive());
+  check((await text()).startsWith(checking) && (await text()).includes('Complete the check'), `turnstile status: before the widget shows itself the line says ${await text()}`);
+  const handled = await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
+  check(handled === true, `turnstile status: the error callback returned ${handled}, not true`);
+  check((await text()) === 'The person check failed (Cloudflare error 110200). Reload the page; if it keeps failing, this browser or a blocker may be stopping challenges.cloudflare.com.',
+    `turnstile status: after an error the line says ${await text()}`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-error.png'), fullPage: true });
+  await page.evaluate(() => window.__fakeTurnstile.succeed());
+  check((await text()) === 'Ready', `turnstile status: with a token the line says ${await text()}`);
+  await page.evaluate(() => window.__fakeTurnstile.expire());
+  check((await text()) === checking, `turnstile status: after the token expired the line says ${await text()}`);
+  await page.evaluate(() => window.__fakeTurnstile.succeed());
+  check((await text()) === 'Ready', `turnstile status: with a new token the line says ${await text()}`);
+  // After a question the widget makes a new token, and the line follows it.
+  await page.fill('#ask-q', 'how diversified am I');
+  await page.click('.ask-form button[type="submit"]');
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  check((await text()) === checking, `turnstile status: after a question the line says ${await text()}`);
+  // With no new token the next question is stopped with the card that says none reached OpenFief.
+  await page.fill('#ask-q', 'and by currency');
+  await page.click('.ask-form button[type="submit"]');
+  await page.waitForSelector('#answer:has-text("No result of the check reached OpenFief")', { timeout: 5000 });
+  await ctx.close();
+  // Where Cloudflare's script is blocked (an extension, a filter): no widget ever calls back, and the line says so.
+  const blocked = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
+  await blocked.route('https://challenges.cloudflare.com/**', (route) => route.abort());
+  await blocked.clock.install();
+  const gone = await blocked.newPage();
+  await gone.goto(turnstileBase + '/test/sign-in');
+  await gone.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+  await blocked.clock.fastForward(9000);
+  const said = await gone.textContent('#ask-check-status');
+  check(said === 'Your browser blocked the check; allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.', `turnstile status: with the script blocked the line says ${said}`);
+  await blocked.close();
 }
 
 // withoutTurnstile checks that the first UI, which has no Turnstile, has no widget and loads nothing from Cloudflare.
@@ -731,6 +821,7 @@ try {
   await askModelBox(browser);
   await withoutTurnstile(browser);
   await turnstileBox(browser);
+  await turnstileStatus(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
   await people(browser);

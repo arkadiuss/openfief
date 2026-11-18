@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6284fa44d58
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-turnstile-test-go-testturnstileoutcomecarriesonlywhatmaybeshown
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T15:44:18.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e1a9b3f798f

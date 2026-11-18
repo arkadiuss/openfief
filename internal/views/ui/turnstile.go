@@ -74,9 +74,16 @@ type turnstileVerdict int
 
 // The verdicts. The zero one passes nothing.
 const (
-	// turnstileRefused: no token, or one Cloudflare did not accept: expired, used
-	// before, made for another host or for another widget.
-	turnstileRefused turnstileVerdict = iota
+	// turnstileNoToken: no usable token reached the UI: the widget had not
+	// finished, did not load (JavaScript off, challenges.cloudflare.com
+	// blocked), or sent one longer than Cloudflare issues.
+	turnstileNoToken turnstileVerdict = iota
+	// turnstileRejected: Cloudflare did not accept the token: expired, used
+	// before, forged or made for another widget. Its error codes say which.
+	turnstileRejected
+	// turnstileWrongHost: Cloudflare accepted the token, but it was made on
+	// another host than the one asking.
+	turnstileWrongHost
 	// turnstilePassed: Cloudflare accepted the token.
 	turnstilePassed
 	// turnstileUnavailable: the check could not be made: Cloudflare could not be
@@ -84,6 +91,19 @@ const (
 	// closed: the question is not sent.
 	turnstileUnavailable
 )
+
+// turnstileOutcome is a verdict with what the visitor may be told of it. The
+// detail is only ever Cloudflare's fixed error codes and two host names: no
+// token, no secret, no question.
+type turnstileOutcome struct {
+	verdict turnstileVerdict
+	// codes are Cloudflare's error codes for turnstileRejected, cleaned by
+	// safeCodes.
+	codes []string
+	// reported is the host Cloudflare says the token was made on, and asked the
+	// host that is asking, both for turnstileWrongHost.
+	reported, asked string
+}
 
 // turnstileCheck verifies tokens with Cloudflare for the Ask box.
 type turnstileCheck struct {
@@ -118,16 +138,16 @@ func decodeSiteverify(body []byte) (siteverifyReply, error) {
 }
 
 // verify asks Cloudflare whether token is one it issued for host, and passes it
-// along with the visitor's address when the core knew it. Only the verdict
-// comes back; nothing of the exchange but Cloudflare's error codes, which are
+// along with the visitor's address when the core knew it. Only the verdict and
+// what may be shown of it come back; nothing of the exchange but Cloudflare's error codes, which are
 // fixed words, is logged, and never a token, the secret or a question.
-func (t *turnstileCheck) verify(ctx context.Context, token, remoteIP, host string) turnstileVerdict {
+func (t *turnstileCheck) verify(ctx context.Context, token, remoteIP, host string) turnstileOutcome {
 	if token == "" || len(token) > maxTurnstileToken {
-		return turnstileRefused
+		return turnstileOutcome{verdict: turnstileNoToken}
 	}
 	reply, ok := t.ask(ctx, token, remoteIP)
 	if !ok {
-		return turnstileUnavailable
+		return turnstileOutcome{verdict: turnstileUnavailable}
 	}
 	return t.judge(ctx, &reply, host)
 }
@@ -171,24 +191,60 @@ func (t *turnstileCheck) ask(ctx context.Context, token, remoteIP string) (sitev
 // judge turns Cloudflare's answer into a verdict. A token that fails is the
 // visitor's to retry; a secret Cloudflare doesn't accept is the installation's,
 // and fails closed as unavailable.
-func (t *turnstileCheck) judge(ctx context.Context, reply *siteverifyReply, host string) turnstileVerdict {
+func (t *turnstileCheck) judge(ctx context.Context, reply *siteverifyReply, host string) turnstileOutcome {
 	if !reply.Success {
 		for _, code := range reply.ErrorCodes {
 			if code == "missing-input-secret" || code == "invalid-input-secret" {
 				t.log.WarnContext(ctx, "turnstile refused the secret key", "codes", strings.Join(reply.ErrorCodes, ","))
-				return turnstileUnavailable
+				return turnstileOutcome{verdict: turnstileUnavailable}
 			}
 		}
-		t.log.InfoContext(ctx, "turnstile refused a token", "codes", strings.Join(reply.ErrorCodes, ","))
-		return turnstileRefused
+		codes := safeCodes(reply.ErrorCodes)
+		t.log.InfoContext(ctx, "turnstile refused a token", "codes", strings.Join(codes, ","))
+		return turnstileOutcome{verdict: turnstileRejected, codes: codes}
 	}
 	// A token made on another site with the same key would pass Cloudflare's
 	// check; it must have been made on the host that is asking.
 	if reply.Hostname != "" && !strings.EqualFold(reply.Hostname, hostOnly(host)) {
-		t.log.InfoContext(ctx, "turnstile token was made for another host")
-		return turnstileRefused
+		out := turnstileOutcome{verdict: turnstileWrongHost, reported: safeHost(reply.Hostname), asked: safeHost(hostOnly(host))}
+		t.log.InfoContext(ctx, "turnstile token was made for another host", "reported", out.reported, "asked", out.asked)
+		return out
 	}
-	return turnstilePassed
+	return turnstileOutcome{verdict: turnstilePassed}
+}
+
+const (
+	// maxShownCodes and maxCodeLen bound the error codes shown to a visitor; a
+	// real one is a short fixed word such as timeout-or-duplicate.
+	maxShownCodes = 8
+	maxCodeLen    = 48
+	// maxHostLen is the longest DNS name.
+	maxHostLen = 253
+)
+
+// safeCodes keeps the error codes that look like Cloudflare's fixed words
+// (lower-case letters, digits and hyphens), so that nothing else a reply holds
+// reaches a page or a log.
+func safeCodes(codes []string) []string {
+	var kept []string
+	for _, c := range codes {
+		if len(kept) == maxShownCodes {
+			break
+		}
+		if c != "" && len(c) <= maxCodeLen && strings.Trim(c, "abcdefghijklmnopqrstuvwxyz0123456789-") == "" {
+			kept = append(kept, c)
+		}
+	}
+	return kept
+}
+
+// safeHost returns host cut to a DNS name's length; a host name is no secret,
+// and the template escapes it.
+func safeHost(host string) string {
+	if len(host) > maxHostLen {
+		return host[:maxHostLen]
+	}
+	return host
 }
 
 // hostOnly returns host without its port.
@@ -199,12 +255,37 @@ func hostOnly(host string) string {
 	return host
 }
 
-// checkNeededAnswer is the answer to a question whose token was missing or not
-// accepted: the model answers only after the check, which runs in the browser.
+// checkNeededAnswer is the answer to a question that came with no token: the
+// widget had not finished or did not load. The check runs in the browser, so
+// nothing was sent to Cloudflare.
 func checkNeededAnswer(question string) answerCard {
 	return modelCard(question, "A check comes before the model answers",
-		"The model answers only after a quick check that a person is asking, and it didn't pass or didn't run. "+
-			"If you see no check next to the Ask field, reload the page (the check needs JavaScript and a connection to Cloudflare), then ask again. "+
+		"No result of the check reached OpenFief with your question: it hadn't finished, or it didn't load. "+
+			"Wait until the line under the Ask field says it is ready, then ask again, or reload the page. "+
+			"The check needs JavaScript and a connection to challenges.cloudflare.com, which some browsers or blockers stop. "+
+			"If your browser blocked it, allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload. "+
+			"The commands answer without it.")
+}
+
+// checkRefusedAnswer is the answer to a question whose token Cloudflare refused,
+// with Cloudflare's error codes: fixed words such as timeout-or-duplicate.
+func checkRefusedAnswer(question string, codes []string) answerCard {
+	shown := "it gave no error code"
+	if len(codes) > 0 {
+		shown = "error codes: " + strings.Join(codes, ", ")
+	}
+	return modelCard(question, "Cloudflare refused the check",
+		"Cloudflare didn't accept the result of the check ("+shown+"). "+
+			"A new check is being made; ask again in a moment. "+
+			"The commands answer without it.")
+}
+
+// checkWrongHostAnswer is the answer to a question whose token Cloudflare
+// accepted for another host than the one asking. Host names are no secret.
+func checkWrongHostAnswer(question, reported, asked string) answerCard {
+	return modelCard(question, "The check was made for another host",
+		"Cloudflare says the check was made for "+reported+", but the question came from "+asked+". "+
+			"Reload the page from the address you are using, then ask again. "+
 			"The commands answer without it.")
 }
 
@@ -215,15 +296,19 @@ func checkUnavailableAnswer(question string) answerCard {
 			"Try again in a moment; the commands answer from your own record.")
 }
 
-// turnstileAnswer returns the card of a verdict that stops the question, or
+// turnstileAnswer returns the card of an outcome that stops the question, or
 // false for one that lets it go on.
-func turnstileAnswer(question string, v turnstileVerdict) (answerCard, bool) {
-	switch v {
+func turnstileAnswer(question string, o turnstileOutcome) (answerCard, bool) {
+	switch o.verdict {
 	case turnstilePassed:
 		return answerCard{}, false
 	case turnstileUnavailable:
 		return checkUnavailableAnswer(question), true
-	case turnstileRefused:
+	case turnstileRejected:
+		return checkRefusedAnswer(question, o.codes), true
+	case turnstileWrongHost:
+		return checkWrongHostAnswer(question, o.reported, o.asked), true
+	case turnstileNoToken:
 	}
 	return checkNeededAnswer(question), true
 }

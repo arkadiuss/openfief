@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c82424f964f5
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:21.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e6ce73e9c4d

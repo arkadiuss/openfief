@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01d980279a56
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkneededanswer
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:33.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f99c2240692

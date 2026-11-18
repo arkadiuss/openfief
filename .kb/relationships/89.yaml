@@ -1119,3 +1119,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b59403c72f43
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkwronghostanswer
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T15:16:15.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58c723754bfd
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-checkwronghostanswer
+    to: REQ-ui-turnstile-verification
+    created_at: 2026-11-18T15:16:15.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f8ff3093060
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-checkwronghostanswer
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T15:16:15.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35e5ce9be4ae
