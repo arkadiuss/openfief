@@ -21,13 +21,37 @@ for module in "$@"; do
   fi
 done
 
-if ! out="$(npm audit --audit-level=high 2>&1)"; then
-  echo "vulncheck: npm audit failed:" >&2
-  echo "$out" >&2
+# npm audit: every high or critical advisory fails the check, except one listed in scripts/npm-audit-allow.txt before
+# its expiry; an entry past its expiry fails it too. A report that is no JSON (no network, no registry) fails it.
+allow="$(dirname "$0")/npm-audit-allow.txt"
+today="$(date -u +%Y-%m-%d)"
+report="$(npm audit --json 2>/dev/null)"
+if ! found="$(gojq -r '[.vulnerabilities[]?.via[]? | objects | select(.severity == "high" or .severity == "critical")
+    | .url | sub("^.*/"; "")] | unique[]' <<<"$report" 2>/dev/null)" || ! gojq -e '.vulnerabilities' <<<"$report" >/dev/null 2>&1; then
+  echo "vulncheck: npm audit failed: no audit report (is the registry reachable?)" >&2
+  npm audit --audit-level=high >&2 2>&1 || true
   status=1
+else
+  blocking=""
+  for id in $found; do
+    expiry="$( [ -f "$allow" ] && awk -v id="$id" '$1 == id {print $2}' "$allow" | head -1)"
+    if [ -n "$expiry" ] && [[ ! "$today" > "$expiry" ]]; then
+      echo "vulncheck: npm audit: $id allowed until $expiry (scripts/npm-audit-allow.txt)"
+    elif [ -n "$expiry" ]; then
+      echo "vulncheck: npm audit: $id was allowed until $expiry, which has passed (scripts/npm-audit-allow.txt)" >&2
+      blocking="$blocking $id"
+    else
+      blocking="$blocking $id"
+    fi
+  done
+  if [ -n "$blocking" ]; then
+    echo "vulncheck: npm audit failed:$blocking" >&2
+    npm audit --audit-level=high >&2 2>&1 || true
+    status=1
+  fi
 fi
 
 if [ "$status" -eq 0 ]; then
-  echo "vulncheck: no known vulnerabilities"
+  echo "vulncheck: no known vulnerabilities outside scripts/npm-audit-allow.txt"
 fi
 exit "$status"
