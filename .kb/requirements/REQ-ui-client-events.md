@@ -31,6 +31,7 @@ logic_claims:
   - CLAIM-DDE087F0E34353DE
   - CLAIM-97451A713DF3BAA7
 text_ref: design-decisions:D-227#1
+required_evidence: asserted
 ---
 The built-in UI's pages report a fixed set of client events to the UI: Turnstile's states and error codes with their timings, uncaught script errors as script, line and a short message from its own scripts only, failed requests by status, and the browser's family and version; every field is validated against a fixed vocabulary and what does not fit is dropped, nothing typed, no amount, identifier, token or page content is ever reported, reports are size-capped and rate-limited per address, become log records without the address and OpenTelemetry metrics, it is on by default and can be turned off, and then the page sends nothing and the endpoint discards (D-227).
 
