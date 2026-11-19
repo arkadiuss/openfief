@@ -229430,6 +229430,7 @@ symbols:
       kind: agent
       recorded_at: 2026-11-14T22:49:34.080Z
     symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ui-turnstile
