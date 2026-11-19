@@ -18,6 +18,36 @@
   var interactive = false; // Cloudflare itself asked for a click, so its widget is already showing
   var BLOCKED = "Your browser blocked the check; allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.";
 
+  // Client events (D-227): every state change of the check is reported, with the milliseconds since this round of the check began,
+  // to events.js, which is on the page only while the owner has reporting on. Only fixed words and numbers are reported: the
+  // widget's own error code, never anything typed, and never a token.
+  var began = 0;
+  var scriptSeen = false;
+  function pathNow() {
+    return visible ? "visible-fallback" : "invisible";
+  }
+  function report(kind, fields) {
+    if (typeof window.openfiefReport !== "function") {
+      return;
+    }
+    var f = fields || {};
+    f.ms = Math.round(window.performance.now() - began);
+    window.openfiefReport(kind, f);
+  }
+  // pollScript reports when Cloudflare's script has loaded, which the page cannot otherwise see: it looks every quarter second,
+  // for the first 30 seconds.
+  function pollScript(left) {
+    if (scriptSeen || left <= 0) {
+      return;
+    }
+    if (window.turnstile) {
+      scriptSeen = true;
+      report("turnstile-script-loaded");
+      return;
+    }
+    window.setTimeout(function () { pollScript(left - 1); }, 250);
+  }
+
   function setStatus(next, text) {
     state = next;
     shown = text;
@@ -53,7 +83,9 @@
     if (path) {
       path.value = "visible-fallback";
     }
+    report("turnstile-timeout");
     visible = true;
+    report("turnstile-fallback-shown");
     setStatus("checking", "The check didn't finish by itself. " + COMPLETE_BELOW);
     window.turnstile.render(div, {
       sitekey: div.getAttribute("data-sitekey"),
@@ -62,7 +94,8 @@
       callback: window.openfiefCheckDone,
       "error-callback": window.openfiefCheckError,
       "expired-callback": window.openfiefCheckExpired,
-      "before-interactive-callback": window.openfiefCheckInteractive
+      "before-interactive-callback": window.openfiefCheckInteractive,
+      "unsupported-callback": window.openfiefCheckUnsupported
     });
   }
 
@@ -76,11 +109,13 @@
     fallbackTimer = window.setTimeout(function () { fallbackToVisible(0); }, FALLBACK_AFTER);
     timer = window.setTimeout(function () {
       if (state === "checking" && !window.turnstile) {
+        report("turnstile-blocked-script");
         setStatus("checking", BLOCKED);
       }
     }, 8000);
     slowTimer = window.setTimeout(function () {
       if (state === "checking" && window.turnstile) {
+        report("turnstile-slow");
         setStatus("checking", visible
           ? "The person check is still waiting. " + COMPLETE_BELOW + " Or reload the page."
           : "The person check is taking a while. Wait for it, or reload the page.");
@@ -90,6 +125,7 @@
 
   function checking() {
     interactive = false;
+    began = window.performance.now();
     setStatus("checking", visible ? CHECKING + " " + COMPLETE_BELOW : CHECKING);
     watch();
   }
@@ -99,6 +135,7 @@
     window.clearTimeout(timer);
     window.clearTimeout(slowTimer);
     window.clearTimeout(fallbackTimer);
+    report("turnstile-success", { path: pathNow() });
     setStatus("ready", "Ready");
   };
   // The widget failed. Returning true tells Turnstile the error is handled, so it doesn't log it to the console; its own retry
@@ -107,16 +144,27 @@
     window.clearTimeout(timer);
     window.clearTimeout(slowTimer);
     window.clearTimeout(fallbackTimer);
+    report("turnstile-error", { code: String(code).slice(0, 48), path: pathNow() });
     setStatus("failed", "The person check failed (Cloudflare error " + code + "). Reload the page; if it keeps failing, this browser or a blocker may be stopping challenges.cloudflare.com.");
     return true;
   };
   // The token ran out unused: the widget makes a new one by itself.
   window.openfiefCheckExpired = function () {
+    report("turnstile-expired");
     checking();
+  };
+  // The browser can't run the widget at all.
+  window.openfiefCheckUnsupported = function () {
+    window.clearTimeout(timer);
+    window.clearTimeout(slowTimer);
+    window.clearTimeout(fallbackTimer);
+    report("turnstile-unsupported");
+    setStatus("failed", "This browser can't run the person check. Try another browser, or ask the commands that need none.");
   };
   // Cloudflare needs a click: the widget is about to show itself.
   window.openfiefCheckInteractive = function () {
     interactive = true; // its own widget is showing now: no fallback needed
+    report("turnstile-before-interactive");
     setStatus("checking", CHECKING + (visible ? " " + COMPLETE_BELOW : " Complete the check if it asks."));
     watch();
   };
@@ -125,6 +173,7 @@
     var line = document.getElementById("ask-check-status");
     if (line && state === "idle") {
       checking();
+      pollScript(120);
     } else if (line) {
       line.textContent = shown;
     }

@@ -237298,3 +237298,478 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-clientevents-go-validclientevent
+    title: validClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:19.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-scriptandmessage
+    title: scriptAndMessage
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:25.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-browserof
+    title: browserOf
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:32.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-majorafter
+    title: majorAfter
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:38.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    title: addressLimit.allow
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:44.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-newclientevents
+    title: newClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:50.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents-handler
+    title: clientEvents.handler
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:57.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents-record
+    title: clientEvents.record
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:03.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-rawclientevent
+    title: rawClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:10.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevent
+    title: clientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:17.656Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-browser
+    title: browser
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:24.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-addresslimit
+    title: addressLimit
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:30.377Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientwindow
+    title: clientWindow
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:36.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents
+    title: clientEvents
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:42.394Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testvalidclientevent
+    title: TestValidClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:53.898Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testbrowserof
+    title: TestBrowserOf
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:59.377Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testaddresslimit
+    title: TestAddressLimit
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:04.892Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testaddresslimitforgetsoldaddressesandrefusesnewoneswhenfull
+    title: TestAddressLimitForgetsOldAddressesAndRefusesNewOnesWhenFull
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:10.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-clienteventsharness
+    title: clientEventsHarness
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:16.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-report
+    title: report
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:21.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsareloggedwithouttheaddressandcounted
+    title: TestClientEventsAreLoggedWithoutTheAddressAndCounted
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:27.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsrefusals
+    title: TestClientEventsRefusals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:32.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsratelimitperaddress
+    title: TestClientEventsRateLimitPerAddress
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:38.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventscapthenumberofeventsinonereport
+    title: TestClientEventsCapTheNumberOfEventsInOneReport
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:44.362Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventstoggle
+    title: TestClientEventsToggle
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:50.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsneednosessionandkeepthesameoriginrule
+    title: TestClientEventsNeedNoSessionAndKeepTheSameOriginRule
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:55.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-plugins-ui-clientevents-config-test-go-testclienteventsareonunlesstheconfigturnsthemoff
+    title: TestClientEventsAreOnUnlessTheConfigTurnsThemOff
+    status: active
+    sourceFile: plugins/ui/clientevents_config_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:00:01.849Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-plugins-ui-config-go-rawconfig-clienteventsoff
+    title: rawConfig.clientEventsOff
+    status: active
+    sourceFile: plugins/ui/config.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:00:07.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-inrange
+    title: inRange
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:45.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevent-setnumbers
+    title: clientEvent.setNumbers
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:52.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-knownclientkind
+    title: knownClientKind
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:59.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-tokenbuckets
+    title: tokenBuckets
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:05.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-readreport
+    title: readReport
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:12.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-logattrs
+    title: logAttrs
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:18.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-scriptreport
+    title: scriptReport
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:25.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-metrictotals
+    title: metricTotals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:32.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-totals
+    title: totals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:39.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-server-go-server-filldefaults
+    title: server.fillDefaults
+    status: active
+    sourceFile: internal/views/ui/server.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:45.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-server-go-server-setupclientevents
+    title: server.setUpClientEvents
+    status: active
+    sourceFile: internal/views/ui/server.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:52.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-num
+    title: num
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:13:43.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events

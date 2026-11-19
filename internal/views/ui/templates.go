@@ -28,6 +28,9 @@ var errNoPage = errors.New("no such page template")
 // page's own content and the shared fragments.
 type pages struct {
 	sets map[string]*template.Template
+	// clientEvents is whether the layout loads the script that reports the
+	// page's events (D-227).
+	clientEvents bool
 }
 
 // page is what every page template gets: its title, the session (nil on
@@ -64,6 +67,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"themeColor":   themeColor,
 		"waitingRows":  waitingRows,
 		"signed":       f.signed,
+		"clientEvents": func() bool { return false }, // execute sets the real answer
 		"askLink":      askLink,
 		"askGet":       askGet,
 		"needsAction":  needsAction,
@@ -130,7 +134,9 @@ func (p *pages) execute(name, tmpl string, data any, f numberFormat) ([]byte, er
 		return nil, fmt.Errorf("clone %s: %w", name, err)
 	}
 	var buf bytes.Buffer
-	if err := set.Funcs(templateFuncs(f)).ExecuteTemplate(&buf, tmpl, data); err != nil {
+	funcs := templateFuncs(f)
+	funcs["clientEvents"] = func() bool { return p.clientEvents }
+	if err := set.Funcs(funcs).ExecuteTemplate(&buf, tmpl, data); err != nil {
 		return nil, fmt.Errorf("render %s: %w", name, err)
 	}
 	return buf.Bytes(), nil

@@ -1420,3 +1420,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d729e336b785
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-clientevents-test-go-testaddresslimit
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:59:07.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64db6701715

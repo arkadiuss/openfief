@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-496d9c2786a4
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-inrange
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T22:10:49.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3d9c7b8f00
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-inrange
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T22:10:49.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8798c7e016b

@@ -1196,3 +1196,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f16d33496096
+  - type: implements
+    from: SYM-m5-plugins-ui-config-go-rawconfig-clienteventsoff
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T22:00:10.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef975dbb790
+  - type: covered_by
+    from: SYM-m5-plugins-ui-config-go-rawconfig-clienteventsoff
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T22:00:10.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-732b53dc0713

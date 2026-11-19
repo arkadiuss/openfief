@@ -148,6 +148,8 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Attention:       attentionv1connect.NewAttentionServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Instruments:     ledgerv1connect.NewInstrumentServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		CashCheckpoints: ledgerv1connect.NewCashCheckpointServiceClient(authClient(openfief.TokenFile{}), coreURL),
+
+		DisableClientEvents: raw.clientEventsOff(),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)

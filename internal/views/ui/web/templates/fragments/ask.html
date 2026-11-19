@@ -11,7 +11,7 @@
     <kbd class="key" title="Press / to ask">/</kbd>
   </div>
   {{if .TurnstileSiteKey}}<div class="ask-check cf-turnstile" data-sitekey="{{.TurnstileSiteKey}}" data-appearance="interaction-only" data-theme="auto"
-    data-callback="openfiefCheckDone" data-error-callback="openfiefCheckError" data-expired-callback="openfiefCheckExpired" data-before-interactive-callback="openfiefCheckInteractive"></div>
+    data-callback="openfiefCheckDone" data-error-callback="openfiefCheckError" data-expired-callback="openfiefCheckExpired" data-before-interactive-callback="openfiefCheckInteractive" data-unsupported-callback="openfiefCheckUnsupported"></div>
   <input type="hidden" name="ask-check-path" id="ask-check-path" value="invisible">
   <p class="ask-status muted" id="ask-check-status" role="status" aria-live="polite"></p>{{end}}
   <button type="submit" class="primary">Ask</button>

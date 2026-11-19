@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3eab685bfeec
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventstoggle
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:59:53.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d61267669f

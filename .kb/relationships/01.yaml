@@ -1322,3 +1322,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16b5f4884b04
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T21:57:47.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91697df252b0
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:57:47.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee945b177912

@@ -374,7 +374,8 @@ const fakeTurnstileScript = `(function () {
     succeed: succeed,
     fail: function (code) { return each('data-error-callback', code); },
     expire: function () { return each('data-expired-callback'); },
-    interactive: function () { return each('data-before-interactive-callback'); }
+    interactive: function () { return each('data-before-interactive-callback'); },
+    unsupported: function () { return each('data-unsupported-callback'); }
   };
   function start() { if (!manual) { succeed(); } }
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
@@ -505,13 +506,16 @@ async function turnstileFallback(browser) {
     await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
     await ctx.clock.install();
     const page = await ctx.newPage();
+    // What the page reports about itself (D-227): the bodies of its posts to /client-events.
+    const posts = [];
+    page.on('request', (r) => { if (r.method() === 'POST' && r.url().endsWith('/client-events')) { posts.push(r.postData() || ''); } });
     await page.goto(turnstileBase + '/test/sign-in');
     await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
-    return { ctx, page };
+    return { ctx, page, posts };
   };
   const checking = 'Checking you\'re a person…';
   // The stall: nothing ever calls back.
-  const { ctx, page } = await fresh(true);
+  const { ctx, page, posts } = await fresh(true);
   const text = () => page.textContent('#ask-check-status');
   const renders = () => page.evaluate(() => window.__fakeTurnstile.renders());
   await ctx.clock.fastForward(9000);
@@ -520,8 +524,8 @@ async function turnstileFallback(browser) {
   await ctx.clock.fastForward(1500);
   const rendered = await renders();
   check(rendered.length === 1 && rendered[0].appearance === 'always' && rendered[0].sitekey.length > 0
-    && rendered[0].callbacks.join() === 'before-interactive-callback,callback,error-callback,expired-callback',
-  `turnstile fallback: the widget was rendered as ${JSON.stringify(rendered)}, not once, visible, with its four callbacks`);
+    && rendered[0].callbacks.join() === 'before-interactive-callback,callback,error-callback,expired-callback,unsupported-callback',
+  `turnstile fallback: the widget was rendered as ${JSON.stringify(rendered)}, not once, visible, with its five callbacks`);
   check((await page.evaluate(() => window.__fakeTurnstile.removes())) === 1, 'turnstile fallback: the invisible widget was not removed first');
   check((await text()) === 'The check didn\'t finish by itself. Complete the check below.', `turnstile fallback: after the fallback the line says ${await text()}`);
   check((await page.inputValue('#ask-check-path')) === 'visible-fallback', 'turnstile fallback: the path field does not say visible-fallback');
@@ -541,6 +545,27 @@ async function turnstileFallback(browser) {
   check(token.startsWith('ok-browser-') && sent.get('cf-turnstile-response') === token && sent.get('ask-check-path') === 'visible-fallback',
     `turnstile fallback: the next question carried ${request.url()}, not the token ${token} and the path visible-fallback`);
   await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  // The page reported each state change (D-227): the script loading, the timeout, the fallback, the token and its path, and a
+  // payload that holds no word the person typed and no token.
+  await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
+  await page.evaluate(() => window.__fakeTurnstile.unsupported());
+  await ctx.clock.fastForward(3000);
+  await new Promise((resolve) => setTimeout(resolve, 500)); // the beacons leave the page after the clock moves
+  const sentEvents = posts.flatMap((p) => JSON.parse(p).events);
+  const kinds = sentEvents.map((e) => e.k);
+  check(['turnstile-script-loaded', 'turnstile-timeout', 'turnstile-fallback-shown', 'turnstile-success', 'turnstile-error', 'turnstile-unsupported']
+    .every((k) => kinds.includes(k)), `client events: the page reported ${kinds.join(', ')}`);
+  check(kinds.indexOf('turnstile-timeout') < kinds.indexOf('turnstile-fallback-shown') && kinds.indexOf('turnstile-fallback-shown') < kinds.indexOf('turnstile-success'),
+    `client events: the states came in the order ${kinds.join(', ')}`);
+  const success = sentEvents.find((e) => e.k === 'turnstile-success');
+  check(success && success.path === 'visible-fallback' && Number.isInteger(success.ms) && success.ms >= 10000, `client events: the success was ${JSON.stringify(success)}`);
+  const failure = sentEvents.find((e) => e.k === 'turnstile-error');
+  check(failure && failure.code === '110200', `client events: the error was ${JSON.stringify(failure)}`);
+  const everything = posts.join('\n');
+  check(!everything.includes('how diversified') && !everything.includes(token) && !/ok-browser-/.test(everything),
+    'client events: the payload holds what was typed or a token');
+  const allowed = new Set(['k', 'ms', 'code', 'path', 'msg', 'src', 'line', 'status', 'brave']);
+  check(sentEvents.every((e) => Object.keys(e).every((key) => allowed.has(key))), 'client events: an event carries a field outside the vocabulary');
   await ctx.close();
   // A widget that asked for a click is already visible: no second widget.
   const asked = await fresh(true);

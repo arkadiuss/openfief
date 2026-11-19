@@ -50,6 +50,9 @@ spec:
           maxLength: 2048
           pattern: ^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\s]*)?$
           description: The siteverify URL of Cloudflare, https://challenges.cloudflare.com/turnstile/v0/siteverify; the install shows its host and the grant approves it
+        clientEvents:
+          type: boolean
+          description: Whether the pages report a fixed set of events about themselves (the person check states and error codes, script errors, failed requests, the browser family and version) to the UI log and metrics, never anything typed (D-227); unset is true
       additionalProperties: false
     egressFromConfig: [turnstileVerifyUrl]
     secrets:
