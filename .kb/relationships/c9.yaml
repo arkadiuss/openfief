@@ -1217,3 +1217,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d57ee1e267c3
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-answered-and-forwarded
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:06.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-201604579032
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:37.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e48c18effa1
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:37.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d08d276366d1
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:37.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041803980470

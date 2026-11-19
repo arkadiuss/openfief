@@ -1238,3 +1238,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac1ac33f82e1
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:19:15.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-843ee62afe6d
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:19:15.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c24c37363b

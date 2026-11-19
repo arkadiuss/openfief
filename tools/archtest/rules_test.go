@@ -385,6 +385,54 @@ func main() { _ = ui.Use }
 			"cmd/core/main_test.go -> internal/views/ui",
 			"cmd/core/sub -> internal/views/ui",
 		}},
+		{"plugin otlp: no plugin or view package imports an exporter, or in its code an SDK provider; the SDK's telemetry package, the core and a test's in-memory reader may", archtest.PluginOTLP, otelFixture + `
+-- plugins/ui/main.go --
+package main
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+func main() { _ = otlpmetrichttp.Use }
+-- plugins/ui/main_test.go --
+package main
+import "testing"
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+func TestX(t *testing.T) { _ = otlpmetrichttp.Use }
+-- plugins/ui/reader_test.go --
+package main
+import "testing"
+import "go.opentelemetry.io/otel/sdk/metric"
+func TestY(t *testing.T) { _ = metric.Use }
+-- plugins/ok/main.go --
+package main
+import apimetric "go.opentelemetry.io/otel/metric"
+import "go.opentelemetry.io/otel"
+func main() { _, _ = apimetric.Use, otel.Use }
+-- internal/views/ui/u.go --
+package ui
+import "go.opentelemetry.io/otel/sdk/metric"
+var _ = metric.Use
+-- internal/views/ghostfolio/g.go --
+package ghostfolio
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+var _ = otlpmetrichttp.Use
+-- sdk/go/openfief/o.go --
+package openfief
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+var _ = otlpmetrichttp.Use
+-- sdk/go/telemetry/t.go --
+package telemetry
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+import "go.opentelemetry.io/otel/sdk/metric"
+var _, _ = otlpmetrichttp.Use, metric.Use
+-- cmd/core/main.go --
+package main
+import "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
+func main() { _ = otlpmetrichttp.Use }
+`, []string{
+			"internal/views/ghostfolio -> go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp",
+			"internal/views/ui -> go.opentelemetry.io/otel/sdk/metric",
+			"plugins/ui -> go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp",
+			"plugins/ui/main_test.go -> go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp",
+			"sdk/go/openfief -> go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp",
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -400,6 +448,28 @@ func main() { _ = ui.Use }
 		})
 	}
 }
+
+// otelFixture is a stand-in for OpenTelemetry: its API, its metric SDK and an
+// exporter, reached through a replace directive like goeval, since the
+// fixtures load offline.
+const otelFixture = `require go.opentelemetry.io/otel v0.0.0
+replace go.opentelemetry.io/otel => ./otel
+-- otel/go.mod --
+module go.opentelemetry.io/otel
+go 1.26.0
+-- otel/o.go --
+package otel
+var Use = 1
+-- otel/metric/m.go --
+package metric
+var Use = 1
+-- otel/sdk/metric/m.go --
+package metric
+var Use = 1
+-- otel/exporters/otlp/otlpmetric/otlpmetrichttp/e.go --
+package otlpmetrichttp
+var Use = 1
+`
 
 // goevalFixture is a stand-in for goeval, which the fixtures reach through a
 // replace directive, since they load offline: its three light packages, its

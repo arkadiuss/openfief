@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19c4de7abbdf
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-new-meter-provider
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:57.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e5768d6da2
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-new-meter-provider
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:57.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5091ca8450b8

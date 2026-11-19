@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48705d384b77
+  - type: specified_by
+    from: REQ-telemetry-private-metrics
+    to: SCEN-telemetry-private-metrics
+    created_at: 2026-11-19T17:14:04.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3a5949203b8
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-test-filter-otlpmetrics
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:22:39.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef146e76d9c3

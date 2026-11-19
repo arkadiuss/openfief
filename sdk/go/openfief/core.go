@@ -15,13 +15,24 @@ import (
 // Each call runs in a client span that propagates the trace to the core
 // (telemetry.Transport).
 func CoreHTTPClient(tokens TokenSource) *http.Client {
+	return coreClient(tokens, true)
+}
+
+// coreClient is CoreHTTPClient with or without a client span per call: the
+// plugin's metrics report is sent without, since a span for each report would
+// only trace the sending of what is measured.
+func coreClient(tokens TokenSource, traced bool) *http.Client {
 	base, ok := http.DefaultTransport.(*http.Transport)
 	if !ok {
 		base = &http.Transport{}
 	}
 	t := base.Clone()
 	t.Proxy = nil
-	return &http.Client{Transport: &bearerTransport{base: telemetry.Transport(t), tokens: tokens}}
+	var rt http.RoundTripper = t
+	if traced {
+		rt = telemetry.Transport(t)
+	}
+	return &http.Client{Transport: &bearerTransport{base: rt, tokens: tokens}}
 }
 
 // bearerTransport sets the Authorization header of every request it sends.

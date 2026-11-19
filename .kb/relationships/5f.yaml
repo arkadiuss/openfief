@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33dd66185910
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-exportable-metric-key
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:18:55.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-588f39976644
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-exportable-metric-key
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:18:55.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b4025e4d47

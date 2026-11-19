@@ -239065,3 +239065,1260 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-demo-secret
+  - id: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics
+    title: withPluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:06.074Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics-from-env
+    title: withPluginMetricsFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:13.244Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-forwarder
+    title: pluginMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:20.207Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics
+    title: pluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:26.844Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-serve-http
+    title: pluginMetrics.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:33.725Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-caller-check
+    title: callerCheck
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:40.810Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-verify
+    title: pluginMetrics.verify
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:47.476Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-refusal-text
+    title: refusalText
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:53.743Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-test-metrics-callers
+    title: metricsCallers
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:00.668Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-metrics-callers-verify-caller
+    title: metricsCallers.VerifyCaller
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:07.531Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-plugin-report
+    title: pluginReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:14.433Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream
+    title: upstream
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:21.027Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream-serve-http
+    title: upstream.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:27.546Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream-take
+    title: upstream.take
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:34.358Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-report-server
+    title: reportServer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:40.977Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-new-report-server
+    title: newReportServer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:47.903Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-report-server-post
+    title: reportServer.post
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:54.801Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-answered-and-forwarded
+    title: TestPluginMetricsAreAnsweredAndForwarded
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:01.696Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-forwarded-filtered-and-named-by-the-verified-plugin
+    title: TestPluginMetricsAreForwardedFilteredAndNamedByTheVerifiedPlugin
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:08.406Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-an-upstream-that-is-down-does-not-fail-the-plugin
+    title: TestAnUpstreamThatIsDownDoesNotFailThePlugin
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:14.768Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-without-an-otlpendpoint-are-dropped
+    title: TestPluginMetricsWithoutAnOTLPEndpointAreDropped
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:21.271Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-path-leaves-every-other-call-to-the-plugin-port
+    title: TestPluginMetricsPathLeavesEveryOtherCallToThePluginPort
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:27.964Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-forwarder-from-env
+    title: TestPluginMetricsForwarderFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:35.549Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-sdk-go-openfief-core-core-client
+    title: coreClient
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:43.176Z
+    sourceFile: sdk/go/openfief/core.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-start-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-openfief-metrics-test-static-token
+    title: staticToken
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:50.761Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-static-token-token
+    title: staticToken.Token
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:57.949Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core
+    title: fakeCore
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:04.710Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core-serve-http
+    title: fakeCore.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:11.238Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core-got
+    title: fakeCore.got
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:17.758Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-count-once
+    title: countOnce
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:24.358Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-test-start-metrics
+    title: TestStartMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:30.932Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-test-start-metrics-is-off-when-asked-and-refuses-without-acore
+    title: TestStartMetricsIsOffWhenAskedAndRefusesWithoutACore
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:37.785Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-telemetry-start-metrics
+    title: StartMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:46.130Z
+    sourceFile: sdk/go/openfief/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-start-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-telemetry-config-config-metrics-enabled
+    title: Config.MetricsEnabled
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:55.412Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-parse-transport
+    title: Config.parseTransport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:04.217Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-parse-endpoints
+    title: Config.parseEndpoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:11.693Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-off-switches
+    title: offSwitches
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:18.426Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-export-switches
+    title: exportSwitches
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:24.678Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-metrics-off
+    title: MetricsOff
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:31.173Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-metrics-endpoint
+    title: Config.metricsEndpoint
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:38.052Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-exportable-metric
+    title: exportableMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:44.843Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-exportable-metric-key
+    title: exportableMetricKey
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:51.424Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-metrics
+    title: RedactMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:57.869Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter
+    title: RedactingMetricExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:04.301Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    title: RedactingMetricExporter.Export
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:10.859Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-resource-metrics
+    title: redactResourceMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:17.638Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-into
+    title: redactInto
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:24.069Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-points
+    title: redactPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:30.817Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-histogram-points
+    title: redactHistogramPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:37.738Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-keep-labels
+    title: keepLabels
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:44.317Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-otlpmetrics
+    title: FilterOTLPMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:51.003Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-scopes
+    title: filterScopes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:57.858Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-metric
+    title: filterMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:04.678Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-keep-attributes
+    title: keepAttributes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:11.875Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-truncated
+    title: truncated
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:18.952Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder
+    title: MetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:25.776Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    title: MetricsForwarderFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:32.820Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-metrics-forwarder
+    title: NewMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:39.796Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-forward
+    title: MetricsForwarder.Forward
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:46.321Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-meter-provider
+    title: newMeterProvider
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:53.027Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-metrics-exporter
+    title: newMetricsExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:59.729Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-service-only
+    title: serviceOnly
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:06.477Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-service-resource
+    title: serviceResource
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:12.896Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-scope-named
+    title: scopeNamed
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:19.472Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics
+    title: TestParseConfigMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:25.787Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics-refuses
+    title: TestParseConfigMetricsRefuses
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:32.080Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-fake-exporter
+    title: fakeExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:38.372Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-fake-exporter-export
+    title: fakeExporter.Export
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:44.728Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-leaky
+    title: leaky
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:51.088Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-leaky-metrics
+    title: leakyMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:57.195Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics
+    title: TestRedactMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:03.355Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-redacted-points
+    title: checkRedactedPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:09.723Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics-exports-nothing-when-nothing-is-left
+    title: TestRedactMetricsExportsNothingWhenNothingIsLeft
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:15.955Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics-returns-the-exporters-error
+    title: TestRedactMetricsReturnsTheExportersError
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:22.496Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-received-request
+    title: receivedRequest
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:29.147Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-filter-otlpmetrics
+    title: TestFilterOTLPMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:35.615Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-filtered-scope
+    title: checkFilteredScope
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:42.209Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-filter-otlpmetrics-of-nothing
+    title: TestFilterOTLPMetricsOfNothing
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:48.868Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-filtered-metric
+    title: checkFilteredMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:55.392Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering
+    title: collectorAnswering
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:01.771Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering-serve-http
+    title: collectorAnswering.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:08.200Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-metrics-forwarder
+    title: TestMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:14.857Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-no-metrics-forwarder-drops-the-report
+    title: TestNoMetricsForwarderDropsTheReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:21.188Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-telemetry-start-metrics-to
+    title: StartMetricsTo
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:27.478Z
+    sourceFile: sdk/go/telemetry/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-telemetry-telemetry-start-traces
+    title: startTraces
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:33.455Z
+    sourceFile: sdk/go/telemetry/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-collector-metrics-requests
+    title: collector.metricsRequests
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:39.748Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-collector-last-auth
+    title: collector.lastAuth
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:45.731Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-metric-counter
+    title: metricCounter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:51.687Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-count-leaky-events
+    title: countLeakyEvents
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:58.094Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-bearer
+    title: bearer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:04.494Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-bearer-round-trip
+    title: bearer.RoundTrip
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:10.508Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-check-plugin-metrics
+    title: checkPluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:17.017Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-check-metrics-exported
+    title: checkMetricsExported
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:23.581Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-attribute-keys
+    title: attributeKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:29.740Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-tools-archtest-imports-plugin-code
+    title: pluginCode
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:35.954Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-plugin-otlp
+    title: PluginOTLP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:42.077Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-configures-otlp
+    title: configuresOTLP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:48.281Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-import-paths
+    title: importPaths
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:54.400Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-sdk-go-openfief-metrics-test-received
+    title: received
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:35:36.864Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics

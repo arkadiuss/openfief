@@ -10,10 +10,12 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/propagation"
+	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/trace"
@@ -21,11 +23,14 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Telemetry is a process's tracing, as Start set it up. Shut it down before
-// the process exits, so the spans still buffered are sent.
+// Telemetry is a process's tracing and metrics, as Start set them up. Shut it
+// down before the process exits, so the spans and metrics still buffered are
+// sent.
 type Telemetry struct {
 	// provider exports spans; nil when export is off.
 	provider *sdktrace.TracerProvider
+	// meters exports metrics; nil when metrics are off.
+	meters *sdkmetric.MeterProvider
 }
 
 // StartFromEnv is Start with the Config ParseConfig reads from the process
@@ -38,17 +43,52 @@ func StartFromEnv(ctx context.Context, defaultService string) (*Telemetry, error
 	return Start(ctx, &cfg)
 }
 
-// Start sets up the process's tracing as cfg says and installs it as
-// OpenTelemetry's global tracer provider and propagator, which the
-// instrumentation in this package and the libraries OpenFief uses read.
-// The propagator is always W3C trace context alone, never baggage, so a
-// trace continues across a process that exports nothing. With export off
-// the provider is a no-op: no span is recorded and nothing is sent. With
-// it on, spans are sampled as cfg says, batched, passed through Redact and
-// sent to cfg's endpoint, straight to it and never through a proxy; the
-// first export opens the connection.
+// Start sets up the process's tracing and metrics as cfg says and installs
+// them as OpenTelemetry's global tracer and meter providers and propagator,
+// which the instrumentation in this package and the libraries OpenFief uses
+// read. The propagator is always W3C trace context alone, never baggage, so
+// a trace continues across a process that exports nothing. With export off
+// the tracer provider is a no-op: no span is recorded and nothing is sent.
+// With it on, spans are sampled as cfg says, batched, passed through Redact
+// and sent to cfg's endpoint, straight to it and never through a proxy; the
+// first export opens the connection. With a metrics endpoint, every metric
+// passes RedactMetrics and goes to it the same way, every minute.
 func Start(ctx context.Context, cfg *Config) (*Telemetry, error) {
 	otel.SetTextMapPropagator(propagation.TraceContext{})
+	t, err := startTraces(ctx, cfg)
+	if err != nil {
+		return nil, err
+	}
+	if !cfg.MetricsEnabled() {
+		return t, nil
+	}
+	exp, err := newMetricsExporter(ctx, cfg)
+	if err != nil {
+		return nil, errors.Join(err, t.Shutdown(ctx))
+	}
+	t.meters = newMeterProvider(exp, cfg.ServiceName)
+	otel.SetMeterProvider(t.meters)
+	return t, nil
+}
+
+// StartMetricsTo sends the process's metrics, redacted, to endpoint over
+// OTLP/HTTP with client and installs the meter provider as the global one, for
+// a plugin that sends its metrics to the core, which forwards them through its
+// own allow-list, and never to a collector itself (D-172). client carries the
+// plugin's token. Shut the result down before the process exits.
+func StartMetricsTo(ctx context.Context, endpoint string, client *http.Client, service string) (*Telemetry, error) {
+	exp, err := otlpmetrichttp.New(ctx, otlpmetrichttp.WithEndpointURL(endpoint), otlpmetrichttp.WithHTTPClient(client))
+	if err != nil {
+		return nil, fmt.Errorf("OTLP HTTP metrics exporter: %w", err)
+	}
+	t := &Telemetry{meters: newMeterProvider(exp, service)}
+	otel.SetMeterProvider(t.meters)
+	return t, nil
+}
+
+// startTraces sets up tracing as cfg says: a no-op provider without an
+// endpoint.
+func startTraces(ctx context.Context, cfg *Config) (*Telemetry, error) {
 	if !cfg.Enabled() {
 		otel.SetTracerProvider(noop.NewTracerProvider())
 		return &Telemetry{}, nil
@@ -73,16 +113,24 @@ func Start(ctx context.Context, cfg *Config) (*Telemetry, error) {
 	return &Telemetry{provider: tp}, nil
 }
 
-// Shutdown sends the spans still buffered and stops exporting, waiting at
-// most until ctx is done. With export off it does nothing.
+// Shutdown sends the spans and metrics still buffered and stops exporting,
+// waiting at most until ctx is done. With export off it does nothing.
 func (t *Telemetry) Shutdown(ctx context.Context) error {
-	if t == nil || t.provider == nil {
+	if t == nil {
 		return nil
 	}
-	if err := t.provider.Shutdown(ctx); err != nil {
-		return fmt.Errorf("shut down tracing: %w", err)
+	var errs []error
+	if t.provider != nil {
+		if err := t.provider.Shutdown(ctx); err != nil {
+			errs = append(errs, fmt.Errorf("shut down tracing: %w", err))
+		}
 	}
-	return nil
+	if t.meters != nil {
+		if err := t.meters.Shutdown(ctx); err != nil {
+			errs = append(errs, fmt.Errorf("shut down metrics: %w", err))
+		}
+	}
+	return errors.Join(errs...)
 }
 
 // newExporter returns the OTLP exporter cfg names, sending to its endpoint

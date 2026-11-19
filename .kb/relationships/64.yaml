@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c2fdc099690
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-metrics-callers
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:15:05.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edf1d8e0b857

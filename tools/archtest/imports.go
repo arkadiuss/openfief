@@ -1,6 +1,7 @@
 package archtest
 
 import (
+	"go/ast"
 	"path"
 	"slices"
 	"strconv"
@@ -204,6 +205,74 @@ func Bench(r *Repo) []Violation {
 		check(f.Path, path.Dir(f.Path), imports)
 	}
 	return dedupe(out)
+}
+
+// otelExporters and otelSDK are the OpenTelemetry packages that configure where
+// telemetry goes: its exporters, and the SDK's providers, readers and
+// processors that carry it to them.
+const (
+	otelExporters = "go.opentelemetry.io/otel/exporters"
+	otelSDK       = "go.opentelemetry.io/otel/sdk"
+)
+
+// pluginCode reports whether the package at from runs inside a plugin: under
+// plugins/, a view plugin's own packages (the built-in UI's pages and the
+// Ghostfolio view), and the SDK but for sdk/go/telemetry, its one place to
+// configure OpenTelemetry.
+func pluginCode(from string) bool {
+	switch {
+	case under(from, "sdk/go/telemetry"):
+		return false
+	case under(from, "plugins"), under(from, "sdk"), under(from, uiPackage), under(from, "internal/views/ghostfolio"):
+		return true
+	}
+	return false
+}
+
+// PluginOTLP checks that no plugin configures an OpenTelemetry exporter, or
+// the provider that feeds one, itself (D-172): plugins send their metrics to
+// the core through the SDK (openfief.StartMetrics, which calls
+// sdk/go/telemetry), and the core exports them through its allow-list, so no
+// plugin reaches a collector. Plugin code imports the OpenTelemetry API, such
+// as go.opentelemetry.io/otel/metric, and nothing that sets where telemetry
+// goes. A test may use the SDK's in-memory readers and recorders to look at
+// what the code measures, so tests are held to the exporters alone.
+func PluginOTLP(r *Repo) []Violation {
+	var out []Violation
+	check := func(key, from string, imports []string, test bool) {
+		if !pluginCode(from) {
+			return
+		}
+		for _, imp := range imports {
+			if configuresOTLP(imp, test) {
+				out = append(out, Violation{RulePluginOTLP, key + " -> " + imp, "a plugin never configures an OpenTelemetry exporter or provider: it sends its metrics to the core through openfief.StartMetrics (D-172)"})
+			}
+		}
+	}
+	for _, p := range r.Packages {
+		check(p.Path, p.Path, p.Imports, false)
+	}
+	for _, f := range r.Tests {
+		check(f.Path, path.Dir(f.Path), importPaths(f.Syntax.Imports), true)
+	}
+	return dedupe(out)
+}
+
+// configuresOTLP reports whether importing imp sets where telemetry goes: an
+// exporter, or in code that is no test the SDK's providers.
+func configuresOTLP(imp string, test bool) bool {
+	return under(imp, otelExporters) || (!test && under(imp, otelSDK))
+}
+
+// importPaths returns the import paths of a file's import specs.
+func importPaths(specs []*ast.ImportSpec) []string {
+	var out []string
+	for _, spec := range specs {
+		if imp, err := strconv.Unquote(spec.Path.Value); err == nil {
+			out = append(out, imp)
+		}
+	}
+	return out
 }
 
 // uiPackage is the built-in UI, the view plugin's pages and design system.

@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9df9be658ab
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-keep-labels
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:19:48.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9be818e788ac
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-keep-labels
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:19:48.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72edb24541e9

@@ -1329,3 +1329,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf0030bd5988
+  - type: executable_for
+    from: SYM-m6-sdk-go-openfief-metrics-test-static-token-token
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:17:02.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f6dfdcc51cf

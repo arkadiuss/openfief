@@ -1,7 +1,7 @@
 # The demo's OpenTelemetry Collector (contrib) configuration (docs/dev/demo.md#telemetry). The DaemonSet mounts it at
 # /etc/otelcol-contrib/config.yaml, from the ConfigMap kustomize makes of this file.
 #
-# What goes in: the core's and the operator's OTLP over HTTP (traces now, metrics once the core exports them, D-172),
+# What goes in: the core's and the operator's OTLP over HTTP (traces and metrics, D-172),
 # and the standard output of every pod in the namespace openfief, which the filelog receiver reads from the node's
 # /var/log/pods. What comes out: one OTLP/HTTP exporter to the Grafana Cloud OTLP gateway. Nothing else leaves.
 #

@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-940d50b79e36
+  - type: executable_for
+    from: SYM-m6-sdk-go-openfief-metrics-test-fake-core-got
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:17:22.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a13e7175fb36

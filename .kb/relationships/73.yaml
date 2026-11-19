@@ -937,3 +937,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6c905be61aa
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-forwarded-filtered-and-named-by-the-verified-plugin
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:12.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9b3b1a4278
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-fake-exporter
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:21:42.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d7d2506eaf
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-received-request
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:22:33.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6989ddf5d5d6

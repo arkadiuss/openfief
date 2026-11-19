@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-539f89263d5e
+  - type: covered_by
+    from: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics-from-env
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:17.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d5b879d3b00
+  - type: implements
+    from: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics-from-env
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:17.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abbb320c46ff

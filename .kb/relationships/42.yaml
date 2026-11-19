@@ -1189,3 +1189,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-982faaf8539e
+  - type: covered_by
+    from: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-serve-http
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:38.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-932035060ee2
+  - type: implements
+    from: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-serve-http
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:38.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61092138a11e
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:21:29.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adaf84218c3

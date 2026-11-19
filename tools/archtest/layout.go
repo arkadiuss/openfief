@@ -23,6 +23,7 @@ const (
 	RuleNoNetwork    = "no-network-in-transactions"
 	RuleBench        = "bench"
 	RuleCoreNoUI     = "core-no-ui"
+	RulePluginOTLP   = "plugin-otlp"
 )
 
 // Violation is one break of a rule. Key identifies it stably across edits
@@ -56,6 +57,7 @@ func ruleTitle(rule string) string {
 		RuleNoNetwork:    "No network in transactions",
 		RuleBench:        "Ask box bench",
 		RuleCoreNoUI:     "Core without the UI",
+		RulePluginOTLP:   "No OTLP exporter in a plugin",
 	}
 	if title, ok := titles[rule]; ok {
 		return title

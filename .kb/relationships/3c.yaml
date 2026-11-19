@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f9baef2525f
+  - type: specified_by
+    from: REQ-plugin-metrics-through-core
+    to: SCEN-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:04.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90b858d96e5

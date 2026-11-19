@@ -40,6 +40,11 @@ const (
 	EnvSDKDisabled = "OTEL_SDK_DISABLED"
 	// EnvTracesExporter names the exporter: otlp, the default, or none.
 	EnvTracesExporter = "OTEL_TRACES_EXPORTER"
+	// EnvMetricsEndpoint is the full URL metrics are sent to.
+	EnvMetricsEndpoint = "OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"
+	// EnvMetricsExporter names the metrics exporter: otlp, the default, or
+	// none.
+	EnvMetricsExporter = "OTEL_METRICS_EXPORTER"
 )
 
 // Protocol is an OTLP transport.
@@ -76,8 +81,10 @@ const (
 	defaultSamplerRatio = 1.0
 	// floatBits is the precision EnvSamplerArg is parsed with.
 	floatBits = 64
-	// httpTracesPath is appended to a base endpoint for http/protobuf.
-	httpTracesPath = "/v1/traces"
+	// httpTracesPath and httpMetricsPath are appended to a base endpoint for
+	// http/protobuf.
+	httpTracesPath  = "/v1/traces"
+	httpMetricsPath = "/v1/metrics"
 )
 
 // Configuration errors. None of them quotes a header's or an endpoint's
@@ -92,8 +99,9 @@ var (
 	ErrBadHeaders = errors.New("OTLP headers must be comma-separated key=value pairs")
 	// ErrBadSampler reports an unknown sampler or a ratio outside 0 to 1.
 	ErrBadSampler = errors.New("bad trace sampler")
-	// ErrBadExporter reports a traces exporter other than otlp and none.
-	ErrBadExporter = errors.New("traces exporter must be otlp or none")
+	// ErrBadExporter reports a traces or metrics exporter other than otlp
+	// and none.
+	ErrBadExporter = errors.New("exporter must be otlp or none")
 	// ErrBadBool reports a boolean variable that is neither true nor false.
 	ErrBadBool = errors.New("must be true or false")
 	// ErrBadResource reports resource attributes that are not key=value
@@ -110,6 +118,11 @@ type Config struct {
 	// URL, ending in /v1/traces for a base URL; for grpc the collector's
 	// URL. Empty turns export off.
 	Endpoint string
+	// MetricsEndpoint is the URL metrics are sent to, over http/protobuf
+	// alone: the metrics endpoint as it is, or a base endpoint with
+	// /v1/metrics. Empty turns metrics off, as it is when the protocol is
+	// grpc and no metrics endpoint names an http one.
+	MetricsEndpoint string
 	// Protocol is the OTLP transport.
 	Protocol Protocol
 	// Sampler names the sampler, one of the specification's names, and
@@ -124,6 +137,10 @@ type Config struct {
 
 // Enabled reports whether spans are exported: an endpoint is configured.
 func (c *Config) Enabled() bool { return c.Endpoint != "" }
+
+// MetricsEnabled reports whether metrics are exported: a metrics endpoint is
+// configured.
+func (c *Config) MetricsEnabled() bool { return c.MetricsEndpoint != "" }
 
 // ParseConfig reads the standard OpenTelemetry variables through getenv,
 // such as os.Getenv. Without an endpoint, with OTEL_SDK_DISABLED=true or
@@ -140,32 +157,84 @@ func ParseConfig(getenv func(string) string, defaultService string) (Config, err
 	if _, err := keyValues(getenv(EnvResourceAttributes)); err != nil {
 		return Config{}, ErrBadResource
 	}
-	off, err := exportOff(getenv)
+	off, err := exportSwitches(getenv)
 	if err != nil {
 		return Config{}, err
 	}
-	if samplerErr := cfg.parseSampler(getenv(EnvSampler), getenv(EnvSamplerArg)); samplerErr != nil {
-		return Config{}, samplerErr
+	if transportErr := cfg.parseTransport(getenv); transportErr != nil {
+		return Config{}, transportErr
 	}
-	if protocolErr := cfg.parseProtocol(first(getenv, EnvTracesProtocol, EnvProtocol)); protocolErr != nil {
-		return Config{}, protocolErr
-	}
-	if cfg.headers, err = keyValues(first(getenv, EnvTracesHeaders, EnvHeaders)); err != nil {
-		return Config{}, ErrBadHeaders
-	}
-	endpoint, err := cfg.endpoint(getenv(EnvTracesEndpoint), getenv(EnvEndpoint))
-	if err != nil {
-		return Config{}, err
-	}
-	if !off {
-		cfg.Endpoint = endpoint
+	if endpointErr := cfg.parseEndpoints(getenv, off); endpointErr != nil {
+		return Config{}, endpointErr
 	}
 	return cfg, nil
 }
 
-// exportOff reports whether OTEL_SDK_DISABLED or OTEL_TRACES_EXPORTER turn
-// export off.
-func exportOff(getenv func(string) string) (bool, error) {
+// parseTransport sets the sampler, the protocol and the headers.
+func (c *Config) parseTransport(getenv func(string) string) error {
+	if err := c.parseSampler(getenv(EnvSampler), getenv(EnvSamplerArg)); err != nil {
+		return err
+	}
+	if err := c.parseProtocol(first(getenv, EnvTracesProtocol, EnvProtocol)); err != nil {
+		return err
+	}
+	headers, err := keyValues(first(getenv, EnvTracesHeaders, EnvHeaders))
+	if err != nil {
+		return ErrBadHeaders
+	}
+	c.headers = headers
+	return nil
+}
+
+// parseEndpoints checks both endpoints, whether export is on or not, and
+// sets those whose signal is not switched off.
+func (c *Config) parseEndpoints(getenv func(string) string, off offSwitches) error {
+	endpoint, err := c.endpoint(getenv(EnvTracesEndpoint), getenv(EnvEndpoint))
+	if err != nil {
+		return err
+	}
+	metrics, err := c.metricsEndpoint(getenv(EnvMetricsEndpoint), getenv(EnvEndpoint))
+	if err != nil {
+		return err
+	}
+	if !off.traces {
+		c.Endpoint = endpoint
+	}
+	if !off.metrics {
+		c.MetricsEndpoint = metrics
+	}
+	return nil
+}
+
+// offSwitches says which signals the environment switches off.
+type offSwitches struct{ traces, metrics bool }
+
+// exportSwitches reads whether export of spans, and of metrics, is switched
+// off.
+func exportSwitches(getenv func(string) string) (offSwitches, error) {
+	traces, err := exportOff(getenv, EnvTracesExporter)
+	if err != nil {
+		return offSwitches{}, err
+	}
+	metrics, err := exportOff(getenv, EnvMetricsExporter)
+	if err != nil {
+		return offSwitches{}, err
+	}
+	return offSwitches{traces: traces, metrics: metrics}, nil
+}
+
+// MetricsOff reports whether getenv turns metrics export off whatever else
+// it sets: OTEL_SDK_DISABLED=true or OTEL_METRICS_EXPORTER=none. A value it
+// can't read counts as off, which ParseConfig reports as an error.
+func MetricsOff(getenv func(string) string) bool {
+	off, err := exportOff(getenv, EnvMetricsExporter)
+	return off || err != nil
+}
+
+// exportOff reports whether OTEL_SDK_DISABLED or the exporter variable named
+// exporterVar, OTEL_TRACES_EXPORTER or OTEL_METRICS_EXPORTER, turn export
+// off.
+func exportOff(getenv func(string) string, exporterVar string) (bool, error) {
 	switch strings.ToLower(strings.TrimSpace(getenv(EnvSDKDisabled))) {
 	case "true":
 		return true, nil
@@ -173,13 +242,13 @@ func exportOff(getenv func(string) string) (bool, error) {
 	default:
 		return false, fmt.Errorf("%s %w", EnvSDKDisabled, ErrBadBool)
 	}
-	switch strings.TrimSpace(getenv(EnvTracesExporter)) {
+	switch strings.TrimSpace(getenv(exporterVar)) {
 	case "", exporterOTLP:
 		return false, nil
 	case exporterNone:
 		return true, nil
 	}
-	return false, fmt.Errorf("%w: %s", ErrBadExporter, EnvTracesExporter)
+	return false, fmt.Errorf("%w: %s", ErrBadExporter, exporterVar)
 }
 
 // first returns the first of names that getenv holds a value for.
@@ -222,6 +291,31 @@ func (c *Config) endpoint(traces, base string) (string, error) {
 	}
 	if traces == "" && c.Protocol == ProtocolHTTP {
 		u.Path = strings.TrimSuffix(u.Path, "/") + httpTracesPath
+	}
+	return u.String(), nil
+}
+
+// metricsEndpoint returns the URL metrics go to: the metrics endpoint as it
+// is, or base with /v1/metrics when the protocol is http/protobuf, or "" when
+// neither applies. Metrics go over http/protobuf alone.
+func (c *Config) metricsEndpoint(metrics, base string) (string, error) {
+	metrics, base = strings.TrimSpace(metrics), strings.TrimSpace(base)
+	if metrics == "" && c.Protocol != ProtocolHTTP {
+		return "", nil
+	}
+	raw := metrics
+	if raw == "" {
+		raw = base
+	}
+	if raw == "" {
+		return "", nil
+	}
+	u, err := url.Parse(raw)
+	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+		return "", ErrBadEndpoint
+	}
+	if metrics == "" {
+		u.Path = strings.TrimSuffix(u.Path, "/") + httpMetricsPath
 	}
 	return u.String(), nil
 }

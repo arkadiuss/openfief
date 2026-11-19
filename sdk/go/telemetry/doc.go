@@ -16,4 +16,13 @@
 // Connect calls between OpenFief's processes and propagate W3C trace
 // context; nothing propagates it to the internet. Run runs a domain
 // operation in a named span.
+//
+// Metrics go the same way (D-172). With a metrics endpoint, Start exports
+// OpenTelemetry's global meter every minute over OTLP/HTTP, and every metric
+// passes RedactMetrics, which keeps only the instruments and attributes named
+// in metrics.go. A plugin never reaches a collector: it calls StartMetricsTo
+// with the core's address, and the core takes its report on the plugin port,
+// filters it again (FilterOTLPMetrics), names its service after the plugin its
+// token proved, and forwards it with a MetricsForwarder to its own endpoint,
+// or drops it when the core exports no metrics.
 package telemetry

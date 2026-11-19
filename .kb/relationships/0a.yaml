@@ -1343,3 +1343,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7f61a2a6a96
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-path-leaves-every-other-call-to-the-plugin-port
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:33.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86fc80eef218

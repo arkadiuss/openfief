@@ -1154,3 +1154,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c09dd4b06cdf
+  - type: verified_by
+    from: SCEN-telemetry-private-metrics
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:14:03.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff37ef645ace
+  - type: verified_by
+    from: SCEN-telemetry-private-metrics
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:14:03.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54098379cb04
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-telemetry-test-count-leaky-events
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:24:02.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ede5cc3c7b

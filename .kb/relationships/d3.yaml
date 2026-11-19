@@ -1217,3 +1217,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e91d75fb2aa3
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-without-an-otlpendpoint-are-dropped
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:25.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cfaf178deab
+  - type: executable_for
+    from: SYM-m6-sdk-go-openfief-metrics-test-fake-core-serve-http
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:17:15.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59725e7668de

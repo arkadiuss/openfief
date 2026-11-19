@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecd07d1e6163
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-config-off-switches
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:18:22.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-670ef0ae5a97
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-config-off-switches
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:18:22.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b1a424dd6bf
