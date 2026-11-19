@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d41310039178
+  - type: implements
+    from: SYM-answer-links-nolinks-inboxitem
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:12:49.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a389eea710b0
+  - type: covered_by
+    from: SYM-answer-links-nolinks-inboxitem
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:12:49.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-030c32841873

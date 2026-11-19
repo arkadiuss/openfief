@@ -1336,3 +1336,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-459881bf3202
+  - type: implements
+    from: SYM-ui-askcards-cardof
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:15:28.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ad6f88fdad5
+  - type: covered_by
+    from: SYM-ui-askcards-cardof
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:15:28.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e016f030e3bf

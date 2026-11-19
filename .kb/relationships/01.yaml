@@ -1336,3 +1336,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee945b177912
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-19T11:07:17.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e41f006adf10
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-11-19T11:07:17.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14c9153b0bb7
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-19T11:07:18.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b7be161e399
+  - type: covered_by
+    from: SYM-answer-attention-kindlabel
+    to: TEST-ui-attention
+    created_at: 2026-11-19T11:07:18.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc25b1ad826b
+  - type: covered_by
+    from: SYM-answer-attention-kindlabel
+    to: TEST-ui-audit-log-banner
+    created_at: 2026-11-19T11:07:18.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae356d79c371

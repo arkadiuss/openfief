@@ -1280,3 +1280,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40ca5ad34957
+  - type: implements
+    from: SYM-answer-links-nolinks-performancechart
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:13:51.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37d4e45bbf04
+  - type: covered_by
+    from: SYM-answer-links-nolinks-performancechart
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:13:51.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04168e78978a

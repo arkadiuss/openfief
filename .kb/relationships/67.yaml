@@ -1301,3 +1301,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94f805db3885
+  - type: implements
+    from: SYM-answer-links-nolinks-instrument
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:13:20.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce82f878b0b
+  - type: covered_by
+    from: SYM-answer-links-nolinks-instrument
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:13:21.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c18b0e53e1e

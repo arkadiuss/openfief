@@ -71,9 +71,9 @@ func (m askModelClient) admit(ctx context.Context, sess session, address string)
 }
 
 // generate asks the route's models for the next message of the conversation.
-func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
+func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
 	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens}
-	if answer {
+	if structured {
 		req.ResponseSchemaJson = askAnswerSchemaJSON
 	}
 	for i := range msgs {

@@ -12,7 +12,6 @@ COPY sdk/go/ sdk/go/
 COPY authz/ authz/
 COPY cmd/ cmd/
 COPY internal/ internal/
-COPY design/ design/
 ARG TARGETOS
 ARG TARGETARCH
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags='-s -w' -o /out/core ./cmd/core

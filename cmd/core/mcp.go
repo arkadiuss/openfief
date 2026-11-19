@@ -18,8 +18,8 @@ import (
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	modelsdomain "github.com/arkadiuss/openfief/internal/modelrouter"
+	viewsanswer "github.com/arkadiuss/openfief/internal/views/app/answer"
 	"github.com/arkadiuss/openfief/internal/views/mcpserver"
-	"github.com/arkadiuss/openfief/internal/views/ui"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
@@ -96,17 +96,17 @@ func (t mcpTokens) Authenticate(ctx context.Context, secret string) (string, err
 	return "", fmt.Errorf("verifying a token for MCP: %w", err)
 }
 
-// uiToolbox is the UI's toolbox, the Ask box's read-only tools: *ui.Toolbox
+// answerToolbox is the Ask box's read-only tools: *viewsanswer.Toolbox
 // implements it.
-type uiToolbox interface {
-	Tools() []ui.ToolInfo
-	Call(ctx context.Context, token, name, args string) ui.ToolResult
+type answerToolbox interface {
+	Tools() []viewsanswer.ToolInfo
+	Call(ctx context.Context, token, name, args string) viewsanswer.ToolResult
 }
 
 // mcpTools is the MCP server's Toolbox over the Ask box's tools (D-213,
 // D-203): the same table, the same answerers and the same read API, with the
 // caller's own token.
-type mcpTools struct{ box uiToolbox }
+type mcpTools struct{ box answerToolbox }
 
 var _ mcpserver.Toolbox = mcpTools{}
 
@@ -125,11 +125,11 @@ func (m mcpTools) Call(ctx context.Context, secret, name, args string) mcpserver
 	res := m.box.Call(ctx, secret, name, args)
 	outcome := mcpserver.OutcomeReadFailed
 	switch res.Outcome {
-	case ui.ToolRan:
+	case viewsanswer.ToolRan:
 		outcome = mcpserver.OutcomeRan
-	case ui.ToolUnknown, ui.ToolBadArguments:
+	case viewsanswer.ToolUnknown, viewsanswer.ToolBadArguments:
 		outcome = mcpserver.OutcomeBadArguments
-	case ui.ToolReadFailed, ui.ToolUnauthenticated:
+	case viewsanswer.ToolReadFailed, viewsanswer.ToolUnauthenticated:
 	}
 	return mcpserver.Result{Outcome: outcome, Text: res.Text}
 }
@@ -216,7 +216,7 @@ func mcpEndpoint(api http.Handler, d *mcpDeps) (http.Handler, error) {
 	if err != nil {
 		return nil, fmt.Errorf("MCP metric: %w", err)
 	}
-	box, err := ui.NewToolbox(&ui.ToolboxConfig{Read: viewsv1connect.NewReadServiceClient(inProcess(api), "http://core.invalid")})
+	box, err := viewsanswer.NewToolbox(&viewsanswer.ToolboxConfig{Read: viewsv1connect.NewReadServiceClient(inProcess(api), "http://core.invalid")})
 	if err != nil {
 		return nil, fmt.Errorf("MCP tools: %w", err)
 	}

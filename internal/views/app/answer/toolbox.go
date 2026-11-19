@@ -1,15 +1,15 @@
-package ui
+package answer
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"net/http"
+	"time"
 
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
-	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
 // ToolInfo is a tool as a client is told it: its name, what it does and the
@@ -43,12 +43,18 @@ type ToolResult struct {
 	Text    string
 }
 
+// ErrMissingDependency reports a Toolbox built without a read client.
+var ErrMissingDependency = errors.New("a dependency is missing")
+
+// ToolTimeout bounds one tool, which reads the core a few times.
+const ToolTimeout = 20 * time.Second
+
 // ToolboxConfig is what a Toolbox needs.
 type ToolboxConfig struct {
 	// Read answers the tools' reads, as the core's read API does for a
 	// session or a script token. Every call carries the caller's token, so
 	// the caller's grants limit what a tool sees.
-	Read viewsv1connect.ReadServiceClient
+	Read Reader
 	// Today returns the date of the call; nil is the UTC date of the clock.
 	Today func() kernel.Date
 }
@@ -58,11 +64,12 @@ type ToolboxConfig struct {
 // (D-213). It is the same table and the same answerers the page's loop uses,
 // reading the read API with the caller's own token, so nothing a tool shows
 // goes beyond what the token's grants cover. It holds nothing between calls,
-// logs nothing and changes nothing.
+// logs nothing and changes nothing. It draws no page, so its cards have no
+// links.
 type Toolbox struct {
-	s        *server
-	commands commandAnswerer
-	tools    []askTool
+	read     Reader
+	commands *Commands
+	tools    []Tool
 }
 
 // NewToolbox returns a Toolbox over cfg; it fails with ErrMissingDependency
@@ -71,11 +78,7 @@ func NewToolbox(cfg *ToolboxConfig) (*Toolbox, error) {
 	if cfg.Read == nil {
 		return nil, ErrMissingDependency
 	}
-	s := &server{read: cfg.Read, today: cfg.Today}
-	if s.today == nil {
-		s.today = utcToday
-	}
-	return &Toolbox{s: s, commands: commandAnswerer{s: s}, tools: askTools()}, nil
+	return &Toolbox{read: cfg.Read, commands: NewCommands(cfg.Read, cfg.Today, NoLinks{}), tools: Tools()}, nil
 }
 
 // Tools returns the tools, in the order the Ask box's model is told them.
@@ -91,47 +94,44 @@ func (t *Toolbox) Tools() []ToolInfo {
 // a script token's secret or a session's token the read API accepts. The
 // result's text is never logged here, and the arguments are in no error.
 func (t *Toolbox) Call(ctx context.Context, token, name, args string) ToolResult {
-	var tool *askTool
+	var tool *Tool
 	for i := range t.tools {
 		if t.tools[i].Name == name {
 			tool = &t.tools[i]
 		}
 	}
 	if tool == nil {
-		return ToolResult{Outcome: ToolUnknown, Text: toolFailure("there is no tool called %s", name)}
+		return ToolResult{Outcome: ToolUnknown, Text: ToolFailure("there is no tool called %s", name)}
 	}
-	q, err := tool.query(args, t.s.today())
+	q, err := tool.Query(args, t.commands.Today())
 	if err != nil {
-		return ToolResult{Outcome: ToolBadArguments, Text: toolFailure("%s", err.Error())}
+		return ToolResult{Outcome: ToolBadArguments, Text: ToolFailure("%s", err.Error())}
 	}
-	ctx, cancel := context.WithTimeout(ctx, askToolTimeout)
+	ctx, cancel := context.WithTimeout(ctx, ToolTimeout)
 	defer cancel()
-	sess := session{Token: token}
-	r, err := t.request(ctx, sess)
+	caller, err := t.caller(ctx, token)
 	if err == nil {
-		var card answerCard
-		if card, err = t.commands.run(r, sess, &q); err == nil {
-			return ToolResult{Outcome: ToolRan, Text: cardResult(&card, cardID(1))}
+		var card Card
+		if card, err = t.commands.Run(ctx, caller, &q); err == nil {
+			return ToolResult{Outcome: ToolRan, Text: CardResult(&card, CardID(1))}
 		}
 	}
 	if connect.CodeOf(err) == connect.CodeUnauthenticated {
-		return ToolResult{Outcome: ToolUnauthenticated, Text: toolFailure("the token is not accepted")}
+		return ToolResult{Outcome: ToolUnauthenticated, Text: ToolFailure("the token is not accepted")}
 	}
 	// What failed is not the caller's to see: the result says only that the
 	// read did not work.
-	return ToolResult{Outcome: ToolReadFailed, Text: toolFailure("the data could not be read")}
+	return ToolResult{Outcome: ToolReadFailed, Text: ToolFailure("the data could not be read")}
 }
 
-// request returns the request the answerers read under: ctx and the number
-// format of the owner's settings (D-113), which the read API tells the token.
-func (t *Toolbox) request(ctx context.Context, sess session) (*http.Request, error) {
-	r, err := http.NewRequestWithContext(ctx, http.MethodPost, "/mcp", http.NoBody)
+// caller returns who the answerers read as: the token and the number format
+// of the owner's settings (D-113), which the read API tells the token.
+func (t *Toolbox) caller(ctx context.Context, token string) (Caller, error) {
+	c := Caller{Token: token}
+	settings, err := t.read.GetSettings(ctx, bearer(&viewsv1.GetSettingsRequest{}, c))
 	if err != nil {
-		return nil, fmt.Errorf("starting the call: %w", err)
+		return Caller{}, fmt.Errorf("GetSettings: %w", err)
 	}
-	settings, err := t.s.read.GetSettings(ctx, bearer(&viewsv1.GetSettingsRequest{}, sess))
-	if err != nil {
-		return nil, fmt.Errorf("GetSettings: %w", err)
-	}
-	return withFormat(r, formatOf(settings.Msg.GetNumberFormat())), nil
+	c.Format = FormatOf(settings.Msg.GetNumberFormat())
+	return c, nil
 }

@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0293853a2a54
+  - type: implements
+    from: SYM-answer-cards-newcommands
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:09:23.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5532461766d9
+  - type: covered_by
+    from: SYM-answer-cards-newcommands
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:09:24.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f585eda1db6

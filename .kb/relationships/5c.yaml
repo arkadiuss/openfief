@@ -1168,3 +1168,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7e5aacda6d8
+  - type: implements
+    from: SYM-answer-attention-groupindex
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-19T11:07:58.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-073e36984a9b
+  - type: covered_by
+    from: SYM-answer-attention-groupindex
+    to: TEST-ui-attention
+    created_at: 2026-11-19T11:07:58.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15fe642e6e39

@@ -14,8 +14,11 @@ import (
 
 // TestReadsOnlyThroughPublicAPI checks D-6 at the source: the UI's code
 // imports no OpenFief package but the design system's files, the shared
-// kernel and the SDK's generated clients, so it can reach the record only through the public
-// read API, never the core's own contexts or adapters. The AuthService,
+// kernel, the Ask box's answerers (internal/views/app/answer, which itself
+// imports only the kernel and the SDK's generated clients, see its own
+// boundary test) and the SDK's generated clients, so it can reach the record
+// only through the public read API, never the core's own contexts or
+// adapters. The AuthService,
 // ModelPortfolioService, BondLotService and StatementService clients are
 // the core's contracts for view plugins: they log the owner in and hand
 // the model portfolio (D-52), manual bond lots (D-9, D-49) and uploaded
@@ -35,6 +38,7 @@ func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	allowed := []string{
 		"github.com/arkadiuss/openfief/design",
 		"github.com/arkadiuss/openfief/internal/kernel",
+		"github.com/arkadiuss/openfief/internal/views/app/answer",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1",

@@ -1105,3 +1105,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab28ff025739
+  - type: implements
+    from: SYM-answer-attention-tone
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-19T11:07:34.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e58e9138c5
+  - type: implements
+    from: SYM-answer-attention-tone
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:07:34.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5b5152f6ce6
+  - type: covered_by
+    from: SYM-answer-attention-tone
+    to: TEST-ui-inbox
+    created_at: 2026-11-19T11:07:34.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f98912f926f
+  - type: covered_by
+    from: SYM-answer-attention-tone
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:07:34.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95fb9049e3f8

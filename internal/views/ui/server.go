@@ -15,6 +15,7 @@ import (
 
 	"github.com/arkadiuss/openfief/design"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -240,7 +241,7 @@ func New(cfg *Config) (http.Handler, error) {
 		commands := commandAnswerer{s: s}
 		s.ask = routedAnswerer{
 			commands: commands, today: s.today, log: s.log, turnstile: s.turnstile,
-			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
+			model: &modelAnswerer{model: s.askModel, tools: answer.Tools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
 		}
 	}
 	if err := s.noteModelAnswers(cfg.AskEvalURL); err != nil {

@@ -1133,3 +1133,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42d3de903f6a
+  - type: implements
+    from: SYM-answer-format-summoney
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-19T11:11:08.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-094d4109338a
+  - type: implements
+    from: SYM-answer-format-summoney
+    to: REQ-ui-overview-places
+    created_at: 2026-11-19T11:11:08.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c59631f39ad6
+  - type: covered_by
+    from: SYM-answer-format-summoney
+    to: TEST-ui-home-unit
+    created_at: 2026-11-19T11:11:08.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05b04ce6d9db

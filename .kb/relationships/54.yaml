@@ -1343,3 +1343,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07318fbf733a
+  - type: implements
+    from: SYM-answer-links-nolinks-allocation
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:13:30.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c2c1602f59a
+  - type: covered_by
+    from: SYM-answer-links-nolinks-allocation
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:13:30.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd301e1d9327

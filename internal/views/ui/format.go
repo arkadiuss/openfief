@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -11,11 +12,7 @@ import (
 const (
 	// narrowSpace is how a space group separator is written: a narrow
 	// no-break space, so an amount never wraps.
-	narrowSpace = "\u202f"
-	// groupDigits is how many digits a thousands group has.
-	groupDigits = 3
-	// sharePlaces is how many decimal places a share in percent shows.
-	sharePlaces = 1
+	narrowSpace = answer.NarrowSpace
 	// hundred turns a fraction into percent.
 	hundred = 100
 )
@@ -33,26 +30,18 @@ type numberFormat struct {
 
 // plainFormat writes amounts as the read API sends them, grouped with a
 // narrow space. Only pages without a session, which show no amount, use it.
-func plainFormat() numberFormat { return numberFormat{Group: narrowSpace, Decimal: "."} }
+func plainFormat() numberFormat { return numberFormat(answer.PlainFormat()) }
 
 // formatOf returns the number format the read API's settings name, a
 // space written as the narrow no-break space; a format without a decimal
 // separator is the plain format.
-func formatOf(f *viewsv1.NumberFormat) numberFormat {
-	return separators(f.GetGroupSeparator(), f.GetDecimalSeparator())
-}
+func formatOf(f *viewsv1.NumberFormat) numberFormat { return numberFormat(answer.FormatOf(f)) }
 
 // separators returns the number format with group and decimal as the
 // settings name them, a space group written as the narrow no-break space;
 // no decimal separator is the plain format.
 func separators(group, decimal string) numberFormat {
-	if decimal == "" {
-		return plainFormat()
-	}
-	if group == " " {
-		group = narrowSpace
-	}
-	return numberFormat{Group: group, Decimal: decimal}
+	return numberFormat(answer.Separators(group, decimal))
 }
 
 // amount writes an exact decimal amount in the format: its integer digits
@@ -60,50 +49,15 @@ func separators(group, decimal string) numberFormat {
 // space and a decimal comma "-1234567.80" becomes "-1 234 567,80".
 // Anything that isn't a decimal is returned as is, so the page shows what
 // the read API sent rather than nothing.
-func (f numberFormat) amount(amount string) string {
-	if _, err := kernel.ParseDecimal(amount); err != nil {
-		return amount
-	}
-	sign, digits := "", amount
-	if strings.HasPrefix(digits, "-") || strings.HasPrefix(digits, "+") {
-		sign, digits = digits[:1], digits[1:]
-	}
-	if sign == "+" {
-		sign = ""
-	}
-	whole, frac, hasFrac := strings.Cut(digits, ".")
-	var b strings.Builder
-	b.WriteString(sign)
-	for i, r := range whole {
-		if i > 0 && (len(whole)-i)%groupDigits == 0 {
-			b.WriteString(f.Group)
-		}
-		b.WriteRune(r)
-	}
-	if hasFrac {
-		b.WriteString(f.Decimal + frac)
-	}
-	return b.String()
-}
+func (f numberFormat) amount(amount string) string { return answer.NumberFormat(f).Amount(amount) }
 
 // money writes a Money as its amount in the format and its currency code;
 // an unset Money is empty.
-func (f numberFormat) money(m *viewsv1.Money) string {
-	if m == nil {
-		return ""
-	}
-	return f.amount(m.GetAmount()) + " " + m.GetCurrency()
-}
+func (f numberFormat) money(m *viewsv1.Money) string { return answer.NumberFormat(f).Money(m) }
 
 // signed writes a change of money with its sign, "+8 214,90 PLN" or
 // "-3,10 PLN"; an unset Money is empty.
-func (f numberFormat) signed(m *viewsv1.Money) string {
-	out := f.money(m)
-	if out != "" && !strings.HasPrefix(out, "-") {
-		return "+" + out
-	}
-	return out
-}
+func (f numberFormat) signed(m *viewsv1.Money) string { return answer.NumberFormat(f).Signed(m) }
 
 // balance writes a balance of a ledger account, such as a balance
 // assertion's reported or derived balance, with its unit: a holding's is a
@@ -119,38 +73,20 @@ func (f numberFormat) balance(b *viewsv1.Book, balance string) string {
 // share returns part as a percentage of total, rounded half-even to one
 // decimal place, such as "42.5%". It is empty when either is not a decimal
 // or total is zero: a share of nothing is not shown.
-func share(part, total string) string {
-	p, err := kernel.ParseDecimal(part)
-	if err != nil {
-		return ""
-	}
-	t, err := kernel.ParseDecimal(total)
-	if err != nil || t.IsZero() {
-		return ""
-	}
-	q, err := p.Mul(kernel.NewDecimal(hundred, 0)).Quo(t, sharePlaces, kernel.RoundHalfEven)
-	if err != nil {
-		return ""
-	}
-	return q.String() + "%"
-}
+func share(part, total string) string { return answer.Share(part, total) }
 
 // dimension is one way to split the allocation (D-30): its query value,
 // its label and the read API's enum.
-type dimension struct {
-	Key   string
-	Label string
-	Enum  viewsv1.AllocationDimension
-}
+type dimension = answer.Dimension
 
 // dimensions are the allocation's dimensions in the order the switch shows
 // them; the first is the default.
 // The allocation's dimension keys, as its switch's links name them.
 const (
-	dimAssetClass  = "asset-class"
-	dimCurrency    = "currency"
-	dimInstitution = "institution"
-	dimSleeve      = "sleeve"
+	dimAssetClass  = answer.DimAssetClass
+	dimCurrency    = answer.DimCurrency
+	dimInstitution = answer.DimInstitution
+	dimSleeve      = answer.DimSleeve
 )
 
 // pluginsPath is the installed plugins' page, and openPlugins the words
@@ -160,26 +96,11 @@ const (
 	openPlugins = "Open the plugins"
 )
 
-func dimensions() []dimension {
-	return []dimension{
-		{Key: dimAssetClass, Label: "Asset class", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS},
-		{Key: dimCurrency, Label: "Currency", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_CURRENCY},
-		{Key: dimInstitution, Label: "Institution", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_INSTITUTION},
-		{Key: dimSleeve, Label: "Sleeve", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_SLEEVE},
-	}
-}
+func dimensions() []dimension { return answer.Dimensions() }
 
 // parseDimension returns the dimension a query value names, and the default
 // (asset class) for an empty or unknown one.
-func parseDimension(key string) dimension {
-	all := dimensions()
-	for _, d := range all {
-		if d.Key == key {
-			return d
-		}
-	}
-	return all[0]
-}
+func parseDimension(key string) dimension { return answer.ParseDimension(key) }
 
 // bookLabel names a ledger account: a holding by its instrument, any other
 // kind by its kind and currency.
@@ -192,20 +113,12 @@ func bookLabel(b *viewsv1.Book) string {
 
 // instrumentLabel names an instrument by its display name, when it has
 // one, before its venue symbol and ISIN (D-197).
-func instrumentLabel(i *viewsv1.Instrument) string {
-	label := i.GetSymbol() + " (" + i.GetIsin() + ")"
-	if name := i.GetName(); name != "" {
-		return name + " · " + label
-	}
-	return label
-}
+func instrumentLabel(i *viewsv1.Instrument) string { return answer.InstrumentLabel(i) }
 
 // enumLabel turns a protobuf enum value name into words: the prefix is
 // dropped and underscores become spaces, so TRANSACTION_KIND_OPENING_LOT
 // reads "opening lot".
-func enumLabel(name, prefix string) string {
-	return strings.ToLower(strings.ReplaceAll(strings.TrimPrefix(name, prefix), "_", " "))
-}
+func enumLabel(name, prefix string) string { return answer.EnumLabel(name, prefix) }
 
 // scopeLabel names a session scope for the page header.
 func scopeLabel(s identityv1.SessionScope) string {
@@ -222,4 +135,30 @@ func percent(fraction string) string {
 		return ""
 	}
 	return d.Mul(kernel.NewDecimal(hundred, 0)).String() + "%"
+}
+
+// twrPlaces is how many decimal places a return in percent shows.
+const twrPlaces = 1
+
+// returnPercent is the return from index first to index last in percent,
+// signed, half-even to one place, in the number format f: "+9,4%"; empty
+// when either isn't a decimal or first is zero.
+func returnPercent(first, last string, f numberFormat) string {
+	a, errA := kernel.ParseDecimal(first)
+	b, errB := kernel.ParseDecimal(last)
+	if errA != nil || errB != nil || a.IsZero() {
+		return ""
+	}
+	q, err := b.Sub(a).Mul(kernel.NewDecimal(hundred, 0)).Quo(a, twrPlaces, kernel.RoundHalfEven)
+	if err != nil {
+		return ""
+	}
+	sign, digits := "", q.String()
+	if q.Sign() >= 0 {
+		sign = "+"
+	}
+	if !strings.Contains(digits, ".") {
+		digits += ".0"
+	}
+	return sign + f.amount(digits) + "%"
 }

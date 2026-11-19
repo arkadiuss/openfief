@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99fbbbae96a7
+  - type: implements
+    from: SYM-answer-tools-cardid
+    to: REQ-ui-ask-model-structured-answer
+    created_at: 2026-11-19T11:15:09.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7cf6f6cbead
+  - type: covered_by
+    from: SYM-answer-tools-cardid
+    to: TEST-ui-ask-structured
+    created_at: 2026-11-19T11:15:09.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf019139c5e

@@ -1301,3 +1301,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-048e46e0a99a
+  - type: implements
+    from: SYM-answer-format-share
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-11-19T11:11:00.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea81375617c3
+  - type: implements
+    from: SYM-answer-format-share
+    to: REQ-ui-overview-values
+    created_at: 2026-11-19T11:11:00.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47f0a315c127
+  - type: covered_by
+    from: SYM-answer-format-share
+    to: TEST-ui-format
+    created_at: 2026-11-19T11:11:00.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9230f5142f2e

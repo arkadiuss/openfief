@@ -52311,21 +52311,6 @@ symbols:
         target: REQ-ui-formatting-number-format
       - type: implements
         target: REQ-ui-overview-values
-  - id: SYM-ui-dimension
-    title: dimension
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:53:10.432Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-68636F42D98D4CF7
-      - type: implements
-        target: REQ-ui-overview-values
   - id: SYM-ui-dimensions
     title: dimensions
     sourceFile: internal/views/ui/format.go
@@ -143732,7 +143717,7 @@ symbols:
         target: REQ-views-syncs-for-viewers
   - id: SYM-ui-fixed-titles
     title: fixedTitles
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145296,8 +145281,8 @@ symbols:
       - type: executable_for
         target: TEST-browserproxy-logs
   - id: SYM-ui-ask-command
-    title: askCommand
-    sourceFile: internal/views/ui/ask.go
+    title: Command
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145311,8 +145296,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-period
-    title: askPeriod
-    sourceFile: internal/views/ui/ask.go
+    title: Period
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145326,8 +145311,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-query
-    title: askQuery
-    sourceFile: internal/views/ui/ask.go
+    title: Query
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145342,7 +145327,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-first-group
     title: firstGroup
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145356,8 +145341,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-month-start
-    title: monthStart
-    sourceFile: internal/views/ui/ask.go
+    title: MonthStart
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145371,8 +145356,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-normalize-question
-    title: normalizeQuestion
-    sourceFile: internal/views/ui/ask.go
+    title: NormalizeQuestion
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145387,7 +145372,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-pad2
     title: pad2
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145402,7 +145387,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-allocation
     title: parseAllocation
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145416,8 +145401,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-ask
-    title: parseAsk
-    sourceFile: internal/views/ui/ask.go
+    title: Parse
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145432,7 +145417,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-ask-date
     title: parseAskDate
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145447,7 +145432,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-period
     title: parsePeriod
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145461,8 +145446,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-period-kind
-    title: periodKind
-    sourceFile: internal/views/ui/ask.go
+    title: PeriodKind
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145477,7 +145462,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-period-range
     title: periodRange
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145501,8 +145486,8 @@ symbols:
       - type: implements
         target: REQ-views-period-return-from-opening-close
   - id: SYM-ui-show-kind
-    title: showKind
-    sourceFile: internal/views/ui/ask.go
+    title: ShowKind
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145517,7 +145502,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-show-kind-of
     title: showKindOf
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145532,7 +145517,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-span
     title: span
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145546,8 +145531,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-year-start
-    title: yearStart
-    sourceFile: internal/views/ui/ask.go
+    title: YearStart
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145572,7 +145557,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-known-commands-are-understood
     title: TestKnownCommandsAreUnderstood
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145582,7 +145567,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-match-instance
     title: TestMatchInstance
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145592,7 +145577,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-match-target
     title: TestMatchTarget
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145602,7 +145587,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-parse-ask
     title: TestParseAsk
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145612,7 +145597,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-period-range
     title: TestPeriodRange
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145631,8 +145616,8 @@ symbols:
       - type: executable_for
         target: TEST-ui-ask
   - id: SYM-ui-answer-card
-    title: answerCard
-    sourceFile: internal/views/ui/askanswer.go
+    title: Card
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145646,8 +145631,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-answer-link
-    title: answerLink
-    sourceFile: internal/views/ui/askanswer.go
+    title: Link
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145661,8 +145646,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-answer-row
-    title: answerRow
-    sourceFile: internal/views/ui/askanswer.go
+    title: Row
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145677,7 +145662,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-answerer
     title: answerer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145692,7 +145677,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-catalog
     title: askCatalog
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145706,8 +145691,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer
-    title: commandAnswerer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: type-shape
     granularity_reason: module-level-behavior
@@ -145722,8 +145707,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-allocation
-    title: commandAnswerer.allocation
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.allocation
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145738,7 +145723,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-answer
     title: commandAnswerer.answer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145752,8 +145737,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-needs
-    title: commandAnswerer.needs
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.needs
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145767,8 +145752,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-performance
-    title: commandAnswerer.performance
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.performance
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145786,8 +145771,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-every-period-one-card
   - id: SYM-ui-command-answerer-show
-    title: commandAnswerer.show
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.show
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145801,8 +145786,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-sync
-    title: commandAnswerer.sync
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.sync
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145818,8 +145803,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-command-answerer-value
-    title: commandAnswerer.value
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.value
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145833,8 +145818,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-group-label
-    title: groupLabel
-    sourceFile: internal/views/ui/askanswer.go
+    title: GroupTitle
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145849,7 +145834,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-non-empty
     title: nonEmpty
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145864,7 +145849,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-or-missing
     title: orMissing
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145879,7 +145864,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-or-none
     title: orNone
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145893,8 +145878,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-plural
-    title: plural
-    sourceFile: internal/views/ui/askanswer.go
+    title: Plural
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145909,7 +145894,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-return-percent
     title: returnPercent
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/format.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145923,8 +145908,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-account-answer
-    title: server.accountAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.accountAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145938,8 +145923,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-ask-targets
-    title: server.askTargets
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.askTargets
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145953,8 +145938,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-instrument-answer
-    title: server.instrumentAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.instrumentAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145970,8 +145955,8 @@ symbols:
       - type: implements
         target: REQ-ui-instrument-links
   - id: SYM-ui-server-latest-date
-    title: server.latestDate
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.latestDate
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145985,8 +145970,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-sleeve-answer
-    title: server.sleeveAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.sleeveAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146001,7 +145986,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-sorted-accounts
     title: sortedAccounts
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146016,7 +146001,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-sync-answer
     title: syncAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146035,7 +146020,7 @@ symbols:
         target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-sync-status-row
     title: syncStatusRow
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146050,7 +146035,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-target-rows
     title: targetRows
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146064,8 +146049,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-unknown-answer
-    title: unknownAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: UnknownAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146079,8 +146064,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-help
-    title: askHelp
-    sourceFile: internal/views/ui/askmatch.go
+    title: Help
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146119,7 +146104,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-target
     title: askTarget
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146131,8 +146116,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-known-commands
-    title: knownCommands
-    sourceFile: internal/views/ui/askmatch.go
+    title: KnownCommands
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146145,7 +146130,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-match-instance
     title: matchInstance
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146158,7 +146143,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-match-target
     title: matchTarget
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -155081,7 +155066,7 @@ symbols:
         target: REQ-ingest-oki-account-form-set-at-creation
   - id: SYM-ui-setting-title
     title: settingTitle
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -164813,7 +164798,7 @@ symbols:
         target: TEST-pl-fees
   - id: SYM-ui-instrument-titles
     title: subjectTitles
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -193339,7 +193324,7 @@ symbols:
   - id: SYM-ask-model-askanswer-go-withheld-card
     title: withheldCard
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -193354,7 +193339,7 @@ symbols:
   - id: SYM-ask-model-askanswer-go-command-answerer-run
     title: commandAnswerer.run
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194235,7 +194220,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-most-sensitive
     title: mostSensitive
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194247,9 +194232,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-ask-tool
-    title: askTool
+    title: Tool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194262,9 +194247,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-ask-tools
-    title: askTools
+    title: Tools
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194278,7 +194263,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-decode-args
     title: decodeArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194292,7 +194277,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-show-query
     title: showQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194306,7 +194291,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-allocation-query
     title: allocationQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194320,7 +194305,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-parse-allocation-word
     title: parseAllocationWord
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194334,7 +194319,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-performance-query
     title: performanceQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194348,7 +194333,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-value-query
     title: valueQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194362,7 +194347,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tool-result
     title: toolResult
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194377,7 +194362,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tool-result-row
     title: toolResultRow
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194390,9 +194375,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-card-result
-    title: cardResult
+    title: CardResult
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194404,9 +194389,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-tool-failure
-    title: toolFailure
+    title: ToolFailure
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194420,7 +194405,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-ask-tools-are-the-read-only-answerers
     title: TestAskToolsAreTheReadOnlyAnswerers
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194432,7 +194417,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tools-refuse-malformed-arguments
     title: TestToolsRefuseMalformedArguments
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194444,7 +194429,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-ask-tool-arguments
     title: TestAskToolArguments
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194456,7 +194441,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tool-argument-errors-quote-nothing
     title: TestToolArgumentErrorsQuoteNothing
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194468,7 +194453,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-card-result-carries-the-data-and-nothing-to-draw-it
     title: TestCardResultCarriesTheDataAndNothingToDrawIt
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194480,7 +194465,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tool-failure-is-jsonwith-no-data
     title: TestToolFailureIsJSONWithNoData
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195700,7 +195685,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tier-words
     title: tierWords
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195714,7 +195699,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tier-order
     title: tierOrder
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195728,7 +195713,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-needs-tool
     title: needsTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195742,7 +195727,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-show-tool
     title: showTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195756,7 +195741,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-sync-tool
     title: syncTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195770,7 +195755,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-allocation-tool
     title: allocationTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195786,7 +195771,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-performance-tool
     title: performanceTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195808,7 +195793,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-value-tool
     title: valueTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195824,7 +195809,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-check-tool
     title: checkTool
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -222185,7 +222170,7 @@ symbols:
   - id: SYM-ab3-internal-views-ui-askanswer-go-neartargets
     title: nearTargets
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
@@ -222695,7 +222680,7 @@ symbols:
   - id: SYM-ab3-internal-views-ui-askstructured-test-go-testshownamestheneartargetswhennothingmatches
     title: TestShowNamesTheNearTargetsWhenNothingMatches
     status: active
-    sourceFile: internal/views/ui/askstructured_test.go
+    sourceFile: internal/views/app/answer/cards_test.go
     origin:
       kind: agent
       ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
@@ -225071,7 +225056,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
     title: errorClassLabel
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225085,7 +225070,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-failuresummary
     title: failureSummary
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225099,7 +225084,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-days
     title: days
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225113,7 +225098,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-ask-test-go-testsyncanswersayswhysyncfails
     title: TestSyncAnswerSaysWhySyncFails
     status: active
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -230813,7 +230798,7 @@ symbols:
       kind: agent
       ref: 'Design session decision: bench parallel 3 (D-208) and the performance tool''s description (D-203), 2026-11-15'
       recorded_at: 2026-11-15T10:08:50.178Z
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     relationships:
       - type: executable_for
         target: TEST-ui-ask-tools
@@ -232032,7 +232017,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-named
     title: monthNamed
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232046,7 +232031,7 @@ symbols:
   - id: SYM-views-ui-askperiod-parse-bounded
     title: parseBounded
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232060,7 +232045,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-of
     title: monthOf
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232074,7 +232059,7 @@ symbols:
   - id: SYM-views-ui-askperiod-parse-change
     title: parseChange
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232088,7 +232073,7 @@ symbols:
   - id: SYM-views-ui-askperiod-bounded-span
     title: boundedSpan
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232102,7 +232087,7 @@ symbols:
   - id: SYM-views-ui-askperiod-first-of-month
     title: firstOfMonth
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232116,7 +232101,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-end
     title: monthEnd
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232130,7 +232115,7 @@ symbols:
   - id: SYM-views-ui-askperiod-period-problem
     title: periodProblem
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232144,7 +232129,7 @@ symbols:
   - id: SYM-views-ui-askperiod-problem-card
     title: problemCard
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232156,9 +232141,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-refused-not-guessed
   - id: SYM-views-ui-askperiod-command-answerer-period-change
-    title: commandAnswerer.periodChange
+    title: Commands.periodChange
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232170,9 +232155,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-refused-not-guessed
   - id: SYM-views-ui-askperiod-command-answerer-period-performance
-    title: commandAnswerer.periodPerformance
+    title: Commands.periodPerformance
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232186,9 +232171,9 @@ symbols:
       - type: implements
         target: REQ-ui-period-opens-chart-on-opening-close
   - id: SYM-views-ui-askperiod-command-answerer-period-value
-    title: commandAnswerer.periodValue
+    title: Commands.periodValue
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232202,7 +232187,7 @@ symbols:
   - id: SYM-views-ui-askperiod-change-row
     title: changeRow
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232216,7 +232201,7 @@ symbols:
   - id: SYM-views-ui-askperiod-moved
     title: moved
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232230,7 +232215,7 @@ symbols:
   - id: SYM-views-ui-askperiod-pending-text
     title: pendingText
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232244,7 +232229,7 @@ symbols:
   - id: SYM-views-ui-askperiod-percent-text
     title: percentText
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232258,7 +232243,7 @@ symbols:
   - id: SYM-views-ui-ask-parse-value
     title: parseValue
     status: active
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232270,9 +232255,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-commands
   - id: SYM-views-ui-askanswer-command-answerer-value-answer
-    title: commandAnswerer.valueAnswer
+    title: Commands.valueAnswer
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232286,7 +232271,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args
     title: performanceArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232301,7 +232286,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args-period
     title: performanceArgs.period
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232315,7 +232300,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args-word
     title: performanceArgs.word
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232329,7 +232314,7 @@ symbols:
   - id: SYM-views-ui-asktools-bounded-args
     title: boundedArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232357,7 +232342,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-parse-bounded
     title: TestParseBounded
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232368,7 +232353,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-parse-change
     title: TestParseChange
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232379,7 +232364,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-bounded-span
     title: TestBoundedSpan
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232390,7 +232375,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-period-problem
     title: TestPeriodProblem
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232401,7 +232386,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-percent-text
     title: TestPercentText
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232412,7 +232397,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-moved
     title: TestMoved
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232423,7 +232408,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-change-row
     title: TestChangeRow
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232478,7 +232463,7 @@ symbols:
   - id: SYM-views-ui-askperiod-core-refusal
     title: coreRefusal
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -233303,9 +233288,9 @@ symbols:
       - type: implements
         target: REQ-askbench-rescores-offline
   - id: SYM-views-ui-askanswer-command-answerer-tracking-start
-    title: commandAnswerer.trackingStart
+    title: Commands.trackingStart
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -233361,9 +233346,9 @@ symbols:
       - type: executable_for
         target: TEST-ui-ask-period
   - id: SYM-ui-period-opening
-    title: periodOpening
+    title: PeriodOpening
     status: active
-    sourceFile: internal/views/ui/home.go
+    sourceFile: internal/views/app/answer/period.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -233473,7 +233458,7 @@ symbols:
   - id: SYM-ui-test-period-opening
     title: TestPeriodOpening
     status: active
-    sourceFile: internal/views/ui/home_unit_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
@@ -235354,9 +235339,9 @@ symbols:
       - type: implements
         target: REQ-views-mcp-door
   - id: SYM-ui-toolbox-go
-    title: ui toolbox
+    title: answer toolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     symbol_role: behavioral
     granularity_reason: module-level-behavior
     origin:
@@ -235481,19 +235466,6 @@ symbols:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
       recorded_at: 2026-11-18T15:51:55.449Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-mcp
-      - type: implements
-        target: REQ-views-mcp-door
-  - id: SYM-mcp-mcp-ui-toolbox
-    title: uiToolbox
-    status: active
-    sourceFile: cmd/core/mcp.go
-    origin:
-      kind: agent
-      ref: D-213 MCP server, 2026-11-18
-      recorded_at: 2026-11-18T15:52:01.789Z
     relationships:
       - type: covered_by
         target: TEST-core-mcp
@@ -236745,7 +236717,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-info
     title: ToolInfo
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236758,7 +236730,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-outcome
     title: ToolOutcome
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236771,7 +236743,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-result
     title: ToolResult
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236784,7 +236756,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-config
     title: ToolboxConfig
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236797,7 +236769,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox
     title: Toolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236812,7 +236784,7 @@ symbols:
   - id: SYM-mcp-toolbox-new-toolbox
     title: NewToolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236825,7 +236797,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-tools
     title: Toolbox.Tools
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236838,7 +236810,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-call
     title: Toolbox.Call
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236849,9 +236821,9 @@ symbols:
       - type: implements
         target: REQ-views-mcp-tools-are-ask-box-tools
   - id: SYM-mcp-toolbox-toolbox-request
-    title: Toolbox.request
+    title: Toolbox.caller
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236864,7 +236836,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-new-toolbox
     title: newToolbox
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236875,7 +236847,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-offers-the-ask-boxs-tools
     title: TestToolboxOffersTheAskBoxsTools
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236886,7 +236858,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-calls-read-with-the-callers-own-token
     title: TestToolboxCallsReadWithTheCallersOwnToken
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236897,7 +236869,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-call-outcomes
     title: TestToolboxCallOutcomes
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236908,7 +236880,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-needs-aread
     title: TestToolboxNeedsARead
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -237774,3 +237746,1009 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-client-events
+  - id: SYM-tools-imports-core-no-ui
+    title: CoreNoUI
+    status: active
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:06:26.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-core-no-ui
+  - id: SYM-mcp-answertoolbox
+    title: answerToolbox
+    status: active
+    sourceFile: cmd/core/mcp.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:03.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-answer-attention-kindlabel
+    title: KindLabel
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:13.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-audit-log-banner
+      - type: implements
+        target: REQ-attention-audit-log-behind
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemtitle
+    title: ItemTitle
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:21.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-tone
+    title: Tone
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:29.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemstatus
+    title: ItemStatus
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:38.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemword
+    title: itemWord
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:46.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-groupindex
+    title: GroupIndex
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:54.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-grouptitles
+    title: GroupTitles
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:03.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-boundary-test-testreadsonlythroughpublicapi
+    title: TestReadsOnlyThroughPublicAPI
+    status: active
+    sourceFile: internal/views/app/answer/boundary_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:10.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-answer-boundary-test-openfiefimports
+    title: openfiefImports
+    status: active
+    sourceFile: internal/views/app/answer/boundary_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:20.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-answer-cards-reader
+    title: Reader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:29.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-statusreader
+    title: StatusReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:38.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-catalogreader
+    title: CatalogReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:45.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-valuationreader
+    title: ValuationReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:54.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-caller
+    title: Caller
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:02.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-bearer
+    title: bearer
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:11.111Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-answer-cards-newcommands
+    title: NewCommands
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:19.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-today
+    title: Commands.Today
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:28.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-answer
+    title: Commands.Answer
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:37.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-run
+    title: Commands.Run
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:45.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-command-test-mustday
+    title: mustDay
+    status: active
+    sourceFile: internal/views/app/answer/command_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:53.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-answer-format-numberformat
+    title: NumberFormat
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:00.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-plainformat
+    title: PlainFormat
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:08.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-formatof
+    title: FormatOf
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:16.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-separators
+    title: Separators
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:24.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-amount
+    title: NumberFormat.Amount
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:32.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-money
+    title: NumberFormat.Money
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:40.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-signed
+    title: NumberFormat.Signed
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:48.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-answer-format-share
+    title: Share
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:56.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-summoney
+    title: SumMoney
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:04.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-answer-format-instrumentlabel
+    title: InstrumentLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:12.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-enumlabel
+    title: EnumLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:20.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-wrapperlabel
+    title: WrapperLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:27.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-answer-format-latestvalued
+    title: LatestValued
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:36.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-utctoday
+    title: UTCToday
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:44.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-optionalstring
+    title: OptionalString
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:52.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-answer-format-dimension
+    title: Dimension
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:59.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-dimensions
+    title: Dimensions
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:07.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-parsedimension
+    title: ParseDimension
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:15.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-links-links
+    title: Links
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:22.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks
+    title: NoLinks
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:29.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-inbox
+    title: NoLinks.Inbox
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:37.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-inboxitem
+    title: NoLinks.InboxItem
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:45.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-plugins
+    title: NoLinks.Plugins
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:54.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-account
+    title: NoLinks.Account
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:02.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-sleeve
+    title: NoLinks.Sleeve
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:09.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-instrument
+    title: NoLinks.Instrument
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:17.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-allocation
+    title: NoLinks.Allocation
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:25.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-overview
+    title: NoLinks.Overview
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:36.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-performancechart
+    title: NoLinks.PerformanceChart
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:46.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-toolbox-test-fakeread
+    title: fakeRead
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:00.249Z
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-getsettings
+    title: fakeRead.GetSettings
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:12.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-listvaluationstatuses
+    title: fakeRead.ListValuationStatuses
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:24.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-getallocation
+    title: fakeRead.GetAllocation
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:34.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-check
+    title: fakeRead.check
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:44.619Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-tools-tool-query
+    title: Tool.Query
+    status: active
+    sourceFile: internal/views/app/answer/tools.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:55.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-decision-d203-1-ask-box-model
+  - id: SYM-answer-tools-cardid
+    title: CardID
+    status: active
+    sourceFile: internal/views/app/answer/tools.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:05.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ui-askcards-answercard
+    title: answerCard
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:14.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-cardof
+    title: cardOf
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:24.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-commandanswerer
+    title: commandAnswerer
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:34.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-commandanswerer-commands
+    title: commandAnswerer.commands
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:43.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-callerof
+    title: callerOf
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:52.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks
+    title: pageLinks
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:59.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-inbox
+    title: pageLinks.Inbox
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:10.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-inboxitem
+    title: pageLinks.InboxItem
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:19.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-plugins
+    title: pageLinks.Plugins
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:28.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-account
+    title: pageLinks.Account
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:37.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-sleeve
+    title: pageLinks.Sleeve
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:46.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-instrument
+    title: pageLinks.Instrument
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:55.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-allocation
+    title: pageLinks.Allocation
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:03.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-overview
+    title: pageLinks.Overview
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:11.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-performancechart
+    title: pageLinks.PerformanceChart
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:20.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-unknownanswer
+    title: unknownAnswer
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:30.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-cardresult
+    title: cardResult
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:39.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-decision-d203-1-ask-box-model

@@ -1529,5 +1529,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-a7618aa17ebf
+      },
+    {
+        type: implements,
+        from: SYM-answer-format-numberformat,
+        to: REQ-ui-formatting-number-format,
+        created_at: 2026-11-19T11:10:04.388Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-06f30bc542a4
+      },
+    {
+        type: implements,
+        from: SYM-answer-format-numberformat,
+        to: REQ-ui-number-format-separators-only,
+        created_at: 2026-11-19T11:10:04.452Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-f843cc6a61cf
+      },
+    {
+        type: covered_by,
+        from: SYM-answer-format-numberformat,
+        to: TEST-ui-values,
+        created_at: 2026-11-19T11:10:04.503Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4c287c7ee175
       }
   ]

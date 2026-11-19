@@ -359,6 +359,32 @@ func TestX(t *testing.T) { _ = goeval.Use }
 			"tools/askbench -> github.com/datar-psa/goeval/gemini",
 			"tools/askbench/main_test.go -> github.com/datar-psa/goeval",
 		}},
+		{"core without the UI: the core and its tests import none, another binary may", archtest.CoreNoUI, `
+-- internal/views/ui/ui.go --
+package ui
+var Use = 1
+-- cmd/core/main.go --
+package main
+import "example.com/fix/internal/views/ui"
+func main() { _ = ui.Use }
+-- cmd/core/main_test.go --
+package main
+import "testing"
+import "example.com/fix/internal/views/ui"
+func TestX(t *testing.T) { _ = ui.Use }
+-- cmd/core/sub/s.go --
+package sub
+import "example.com/fix/internal/views/ui"
+var _ = ui.Use
+-- cmd/other/main.go --
+package main
+import "example.com/fix/internal/views/ui"
+func main() { _ = ui.Use }
+`, []string{
+			"cmd/core -> internal/views/ui",
+			"cmd/core/main_test.go -> internal/views/ui",
+			"cmd/core/sub -> internal/views/ui",
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

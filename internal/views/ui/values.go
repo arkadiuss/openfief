@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -89,16 +90,7 @@ func missingLabel(reason string) string {
 
 // wrapperLabel names a tax wrapper key of the jurisdiction pack (D-76): the
 // Polish ones by their usual names, any other as its key.
-func wrapperLabel(key string) string {
-	labels := map[string]string{"taxable": "taxable account", "ike": "IKE", "ikze": "IKZE", "oki": "OKI"}
-	if l, ok := labels[key]; ok {
-		return l
-	}
-	if key == "" {
-		return "no tax wrapper"
-	}
-	return key
-}
+func wrapperLabel(key string) string { return answer.WrapperLabel(key) }
 
 // formLabel names an account form key of the jurisdiction pack (D-147): the
 // Polish pack's OKI forms by their usual names, any other as its key.

@@ -1483,3 +1483,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f15ff4c54e5
+  - type: implements
+    from: SYM-answer-format-numberformat-signed
+    to: REQ-ui-overview-places
+    created_at: 2026-11-19T11:10:52.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-938132fe3985
+  - type: covered_by
+    from: SYM-answer-format-numberformat-signed
+    to: TEST-ui-home
+    created_at: 2026-11-19T11:10:52.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729194f5b10c

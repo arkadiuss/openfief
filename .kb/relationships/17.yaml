@@ -1007,3 +1007,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5cb479b63a7
+  - type: implements
+    from: SYM-ui-askcards-pagelinks-inbox
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:16:14.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-014df7f66e37
+  - type: covered_by
+    from: SYM-ui-askcards-pagelinks-inbox
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:16:14.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b890868fb7e

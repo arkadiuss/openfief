@@ -8,6 +8,7 @@ import (
 	"net/url"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -159,17 +160,7 @@ func asOfDate(query string, statuses []*viewsv1.ValuationStatus, today kernel.Da
 		}
 		return d, nil
 	}
-	var latest kernel.Date
-	for _, s := range statuses {
-		d, err := kernel.ParseDate(s.GetValuedThrough())
-		if err == nil && d.After(latest) {
-			latest = d
-		}
-	}
-	if latest.IsZero() {
-		return today, nil
-	}
-	return latest, nil
+	return answer.LatestValued(statuses, today), nil
 }
 
 // buildAllocation turns GetAllocation's answer into the chart and table,
@@ -337,7 +328,7 @@ func (s *server) hero(r *http.Request, sess session, date kernel.Date, over *ove
 		h.Gross, h.Net, h.Liquidation = t.GetValueReporting(), t.GetNetReporting(), t.GetLiquidationReporting()
 	}
 	month, err := s.read.ListValuationTotals(r.Context(), bearer(&viewsv1.ListValuationTotalsRequest{
-		From: monthStart(date).AddDays(-monthLookback).String(), To: date.String(),
+		From: answer.MonthStart(date).AddDays(-monthLookback).String(), To: date.String(),
 	}, sess))
 	if err != nil {
 		return heroView{}, fmt.Errorf("ListValuationTotals: %w", err)
@@ -345,7 +336,7 @@ func (s *server) hero(r *http.Request, sess session, date kernel.Date, over *ove
 	change := monthChange(month.Msg.GetTotals(), date, f)
 	h.MonthChange, h.MonthPercent = change.Money, change.Percent
 	perf, err := s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{
-		From: yearStart(date.Year()).AddDays(-monthLookback).String(), To: date.String(),
+		From: answer.YearStart(date.Year()).AddDays(-monthLookback).String(), To: date.String(),
 	}, sess))
 	if err != nil {
 		return heroView{}, fmt.Errorf("GetPerformance: %w", err)
@@ -378,7 +369,7 @@ func (s *server) accountRows(r *http.Request, sess session, date kernel.Date, ac
 	rows := make([]accountRow, 0, len(accounts))
 	for _, a := range accounts {
 		vals, err := s.read.ListAccountValuations(r.Context(), bearer(&viewsv1.ListAccountValuationsRequest{
-			AccountId: a.GetId(), From: monthStart(date).AddDays(-monthLookback).String(), To: date.String(),
+			AccountId: a.GetId(), From: answer.MonthStart(date).AddDays(-monthLookback).String(), To: date.String(),
 		}, sess))
 		if err != nil {
 			return nil, fmt.Errorf("ListAccountValuations: %w", err)

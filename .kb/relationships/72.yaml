@@ -965,3 +965,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31a08f0a0f79
+  - type: implements
+    from: SYM-ui-askcards-commandanswerer
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-19T11:15:38.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a5a2d266f3b
+  - type: implements
+    from: SYM-ui-askcards-commandanswerer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:15:39.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4de53d9ba865
+  - type: covered_by
+    from: SYM-ui-askcards-commandanswerer
+    to: TEST-ui-home
+    created_at: 2026-11-19T11:15:39.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29453e5da676
+  - type: implements
+    from: SYM-ui-askcards-pagelinks-instrument
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:16:59.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6820b7b16534
+  - type: covered_by
+    from: SYM-ui-askcards-pagelinks-instrument
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:16:59.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b65c8fa7b15

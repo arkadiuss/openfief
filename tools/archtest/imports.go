@@ -206,6 +206,42 @@ func Bench(r *Repo) []Violation {
 	return dedupe(out)
 }
 
+// uiPackage is the built-in UI, the view plugin's pages and design system.
+const uiPackage = "internal/views/ui"
+
+// CoreNoUI checks that the core, cmd/core and the packages below it, tests
+// included, never imports the UI: the core serves the read API and MCP and
+// carries none of the page's templates, assets or design system, so its image
+// holds only what it runs. What the core shares with the page, the Ask box's
+// answerers behind the MCP tools, lives in internal/views/app/answer, which
+// both import.
+func CoreNoUI(r *Repo) []Violation {
+	var out []Violation
+	check := func(key, from string, imports []string) {
+		if !under(from, "cmd/core") {
+			return
+		}
+		for _, imp := range imports {
+			if under(imp, uiPackage) {
+				out = append(out, Violation{RuleCoreNoUI, key + " -> " + imp, "the core imports no UI package: share what both need through internal/views/app/answer"})
+			}
+		}
+	}
+	for _, p := range r.Packages {
+		check(p.Path, p.Path, p.Imports)
+	}
+	for _, f := range r.Tests {
+		var imports []string
+		for _, spec := range f.Syntax.Imports {
+			if imp, err := strconv.Unquote(spec.Path.Value); err == nil {
+				imports = append(imports, strings.TrimPrefix(imp, r.Module+"/"))
+			}
+		}
+		check(f.Path, path.Dir(f.Path), imports)
+	}
+	return dedupe(out)
+}
+
 // Banned checks that no package, test-only ones included, is named util,
 // common, helpers, models or types.
 func Banned(r *Repo) []Violation {

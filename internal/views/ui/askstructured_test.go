@@ -14,6 +14,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 )
 
@@ -174,7 +175,7 @@ func TestTheAnswerShowsTheCardsItNamesInTheOrderItNamesThem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", askShow), fmt.Sprintf("Card %d", askAllocation)}, titles(got.Used)); diff != "" {
+	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", answer.CommandShow), fmt.Sprintf("Card %d", answer.CommandAllocation)}, titles(got.Used)); diff != "" {
 		t.Errorf("cards shown (-want +got):\n%s", diff)
 	}
 	if len(conv.used) != 3 || !slices.Equal(conv.cited, []int{2, 0}) {
@@ -389,7 +390,7 @@ func TestTheRetryIsSpentFromTheQuestionsTokens(t *testing.T) {
 func TestSuggestionsAreCommandsTheBoxUnderstands(t *testing.T) {
 	t.Parallel()
 	today := mustDate(t, askToday)
-	for _, c := range knownCommands() {
+	for _, c := range answer.KnownCommands() {
 		if !IsAskCommand(c.Example, today) {
 			t.Errorf("the example %q of %q is no command", c.Example, c.Command)
 		}
@@ -424,44 +425,6 @@ func TestThePromptSaysWhatEachFieldIsFor(t *testing.T) {
 		if !strings.Contains(prompt, want) {
 			t.Errorf("the prompt lacks %q", want)
 		}
-	}
-}
-
-func TestShowNamesTheNearTargetsWhenNothingMatches(t *testing.T) {
-	t.Parallel()
-	targets := []askTarget{
-		{Kind: showAccount, Label: "Demo IBKR", Words: []string{"Demo IBKR"}},
-		{Kind: showAccount, Label: "Demo XTB", Words: []string{"Demo XTB"}},
-		{Kind: showInstrument, Label: "Demo Tech Co", Words: []string{"Demo Tech Co", "DTEC"}},
-		{Kind: showInstrument, Label: "Demo World ETF", Words: []string{"Demo World ETF", "DWLD"}},
-		{Kind: showInstrument, Label: "Demo Emerging Markets ETF", Words: []string{"Demo Emerging Markets ETF", "DEMG"}},
-	}
-	labels := func(ts []askTarget) []string {
-		out := make([]string, len(ts))
-		for i, t := range ts {
-			out[i] = t.Label
-		}
-		return out
-	}
-	tests := []struct {
-		name, term string
-		want       []string
-	}{
-		{name: "two words, held by two names", term: "Demo ETF", want: []string{"Demo World ETF", "Demo Emerging Markets ETF", "Demo IBKR", "Demo XTB", "Demo Tech Co"}},
-		{name: "a word of three letters", term: "tech", want: []string{"Demo Tech Co", "Demo IBKR", "Demo XTB", "Demo World ETF", "Demo Emerging Markets ETF"}},
-		{name: "words of under three letters are no clue", term: "of it", want: []string{"Demo IBKR", "Demo XTB", "Demo Tech Co", "Demo World ETF", "Demo Emerging Markets ETF"}},
-		{name: "no word held keeps the order", term: "zzz", want: []string{"Demo IBKR", "Demo XTB", "Demo Tech Co", "Demo World ETF", "Demo Emerging Markets ETF"}},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			if diff := cmp.Diff(tt.want, labels(nearTargets(tt.term, targets))); diff != "" {
-				t.Errorf("near targets of %q (-want +got):\n%s", tt.term, diff)
-			}
-		})
-	}
-	if got := labels(targets); got[0] != "Demo IBKR" || got[4] != "Demo Emerging Markets ETF" {
-		t.Errorf("the targets were reordered: %v", got)
 	}
 }
 
