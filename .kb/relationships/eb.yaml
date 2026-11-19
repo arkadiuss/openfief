@@ -1231,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3a3bf02ab2d
+  - type: verified_by
+    from: SCEN-demo-grafana-secret-over-ssh
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-19T16:20:43.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c4d20ff2ae7

@@ -66,7 +66,7 @@ sed -i 's#"routes": {#"routes": {\n    "maintainer": ["openrouter/openai/gpt-oss
 expect "a route for the maintainer" fail "route something other than the Ask box"
 
 fresh
-sed -i '/^components:/,/^  - ..\/model/d' "$work/repo/deploy/demo/openfief/kustomization.yaml"
+sed -i '/^components:/,/^  - ..\/..\/tracing/d' "$work/repo/deploy/demo/openfief/kustomization.yaml"
 expect "the model layer left out of the live demo" fail "the core's flags lack --ask-questions-per-hour=10"
 
 fresh
@@ -121,6 +121,112 @@ expect "the placeholder site key in the live demo" fail "has the placeholder Tur
 fresh
 sed -i 's/turnstileSiteKey: .*/turnstileSiteKey: 0x4AAAAAAAxxxxxxxxxxxxxx/' "$work/repo/deploy/demo/model/kustomization.yaml"
 expect "a model layer with a site key" pass "every image is pinned by digest"
+
+# The telemetry layer (deploy/demo/telemetry, TEST-demo-telemetry-scrub): the collector ships the demo's logs, traces and metrics
+# to Grafana Cloud, so each way its scrub, its one exporter, its credentials or its network could let personal data out,
+# or send it somewhere else, fails naming the problem.
+tel="$work/repo/deploy/demo/telemetry"
+
+fresh
+sed -i '/name: demo-telemetry/,/^---/d' "$work/repo/deploy/demo/stack.yaml"
+expect "the telemetry layer left out of the Flux stack" fail "does not apply ./deploy/demo/telemetry"
+
+fresh
+sed -i '/^    metrics:$/,/^      exporters/ s/processors: \[memory_limiter, transform\/scrub, transform\/service, batch\]/processors: [memory_limiter, transform\/service, batch]/' "$tel/collector.yaml"
+expect "the scrub missing from the metrics pipeline" fail "the pipeline metrics does not run the processor transform/scrub"
+
+fresh
+sed -i '/^    logs:$/,/^      exporters/ s/processors: \[memory_limiter, transform\/scrub, transform\/service, batch\]/processors: [batch, transform\/scrub, transform\/service]/' "$tel/collector.yaml"
+expect "a processor before the scrub in the logs pipeline" fail "the pipeline logs runs a processor other than the memory limiter before transform/scrub"
+
+fresh
+sed -i '/^    traces:$/,/^      exporters/ s/exporters: \[otlphttp\/grafana\]/exporters: [otlphttp\/grafana, debug]/' "$tel/collector.yaml"
+expect "a second exporter in the traces pipeline" fail "the pipeline traces exports somewhere other than the one exporter"
+
+fresh
+sed -i 's/^    error_mode: propagate/    error_mode: ignore/' "$tel/collector.yaml"
+expect "a scrub that fails open" fail "transform/scrub is not fail-closed"
+
+fresh
+sed -i '/delete_matching_keys(span.attributes/d' "$tel/collector.yaml"
+expect "no key scrub of span attributes" fail "no delete_matching_keys of span.attributes in its trace_statements"
+
+fresh
+sed -i '/replace_all_patterns(datapoint.attributes/d' "$tel/collector.yaml"
+expect "no value scrub of metric data points" fail "no replace_all_patterns of datapoint.attributes values in its metric_statements"
+
+fresh
+sed -i '/replace_pattern(log.body/d' "$tel/collector.yaml"
+expect "the log body left unscrubbed" fail "does not rewrite the log body"
+
+fresh
+sed -i '/replace_pattern(span.status.message/d' "$tel/collector.yaml"
+expect "a span's status message left unscrubbed" fail "does not rewrite span.status.message"
+
+fresh
+sed -i 's/authorization|//' "$tel/collector.yaml"
+expect "Authorization not among the keys dropped" fail "the keys transform/scrub drops do not name authorization"
+
+fresh
+sed -i 's/question|questions|q|prompt|prompts|query|answer|completion/query|answer/' "$tel/collector.yaml"
+expect "question and prompt not among the keys dropped" fail "the keys transform/scrub drops do not name question"
+
+fresh
+sed -i 's/(ofs|ofsess|ofenroll)_\[A-Za-z0-9_-\]+|//' "$tel/collector.yaml"
+expect "the token prefixes not among the values rewritten" fail "the values transform/scrub rewrites do not name ofsess"
+
+fresh
+sed -i 's/^    endpoint: ${env:GRAFANA_OTLP_ENDPOINT}/    endpoint: https:\/\/otlp.example.com\/otlp/' "$tel/collector.yaml"
+expect "a literal endpoint" fail "does not take its endpoint from"
+
+fresh
+sed -i 's/password: ${env:GRAFANA_OTLP_TOKEN}/password: glc_literal/' "$tel/collector.yaml"
+expect "a literal token" fail "basicauth/grafana does not take its username and password from"
+
+fresh
+sed -i 's|^  # The Grafana Cloud OTLP gateway,|  # The gateway https://otlp-gateway-prod-eu-west-0.grafana.net/otlp,|' "$tel/collector.yaml"
+expect "a Grafana address in git" fail "names a Grafana address"
+
+fresh
+printf 'apiVersion: v1\nkind: Secret\nmetadata:\n  name: grafana-otlp\nstringData:\n  token: x\n' >"$tel/secret.yaml"
+sed -i 's/^  - daemonset.yaml/  - daemonset.yaml\n  - secret.yaml/' "$tel/kustomization.yaml"
+expect "a Secret in git" fail "the telemetry layer holds a Secret"
+
+fresh
+sed -i '0,/          port: 443/ s//          port: 8080/' "$tel/networkpolicy.yaml"
+expect "egress to a port that is not HTTPS" fail "the telemetry layer: the collector's egress has a rule that is not DNS or HTTPS"
+
+fresh
+sed -i '/^              - 10.0.0.0\/8$/d' "$tel/networkpolicy.yaml"
+expect "egress to the internet that leaves a private range in" fail "does not leave out the private, shared, link-local and loopback ranges"
+
+fresh
+sed -i '0,/          port: 4318/ s//          port: 4317/' "$tel/networkpolicy.yaml"
+expect "an ingress port that is not OTLP/HTTP" fail "ingress is not the OTLP port 4318 from namespace openfief alone"
+
+fresh
+sed -i '/mountPath: \/var\/log\/pods/{n;d}' "$tel/daemonset.yaml"
+expect "the node's pod logs mounted writable" fail "mounts the node's /var/log/pods writable"
+
+fresh
+sed -i 's#^            path: /var/lib/openfief-otel#            path: /var/lib#' "$tel/daemonset.yaml"
+expect "a hostPath that is not the collector's own" fail "mounts hostPaths other than /var/log/pods"
+
+fresh
+sed -i '0,/optional: false/ s//optional: true/' "$tel/daemonset.yaml"
+expect "a credential the pod does not wait for" fail "does not take endpoint, instance-id and token, all required, from the Secret grafana-otlp"
+
+fresh
+sed -i 's/drop: \[ALL\]/drop: []/' "$tel/daemonset.yaml"
+expect "a collector that keeps its capabilities" fail "may escalate, write its root filesystem or hold a capability"
+
+fresh
+sed -i 's#:0.164.0@sha256:[0-9a-f]*#:0.164.0@sha256:0000#' "$tel/daemonset.yaml"
+expect "a collector image without a full digest" fail "the collector image is not pinned by tag and digest"
+
+fresh
+sed -i 's#http://otel-collector.observability:4318#http://otel-collector.observability:4317#' "$work/repo/deploy/demo/openfief/kustomization.yaml"
+expect "the core sending somewhere other than the collector" fail "the demo: the core and the operator do not send OTLP to the collector's Service"
 
 if [ "$failures" -ne 0 ]; then
   echo "demo-validate: $failures of $cases cases failed" >&2

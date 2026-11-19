@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f2ee2a67feb
+  - type: executable_for
+    from: SYM-demo-scrub-test-object
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:14.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01bf02ca48dc

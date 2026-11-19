@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d92a5663f96d
+  - type: specified_by
+    from: REQ-demo-telemetry-egress
+    to: SCEN-demo-telemetry-egress
+    created_at: 2026-11-19T16:20:42.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1555b6e21a66

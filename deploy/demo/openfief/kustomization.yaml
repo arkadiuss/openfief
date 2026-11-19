@@ -37,9 +37,39 @@ resources:
   - core-from-traefik.yaml
 components:
   - ../model
+  - ../../tracing
 configurations:
   - image-fields.yaml
 patches:
+  # Telemetry (docs/dev/demo.md#telemetry): the tracing component makes the core and the operator send OTLP/HTTP to a
+  # collector, and the demo's is ../telemetry's, in namespace observability, which ships to Grafana Cloud. The collector
+  # scrubs every record before it leaves; the core's own allow-list (D-172) comes first. The core's policy admits that
+  # collector's port 4318 and nothing else. Until the collector runs (it waits for the Secret grafana-otlp), the core
+  # logs each failed export and carries on.
+  - target:
+      kind: ConfigMap
+      name: openfief-tracing
+    patch: |-
+      - op: replace
+        path: /data/OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector.observability:4318
+  - target:
+      kind: NetworkPolicy
+      name: openfief-core-to-collector
+    patch: |-
+      - op: replace
+        path: /spec/egress/0
+        value:
+          to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: observability
+              podSelector:
+                matchLabels:
+                  app.kubernetes.io/name: otel-collector
+          ports:
+            - protocol: TCP
+              port: 4318
   - target:
       kind: Deployment
       name: openfief-core

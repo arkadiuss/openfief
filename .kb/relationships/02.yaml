@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5c337b2c4e9
+  - type: verified_by
+    from: SCEN-demo-telemetry-scrub
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:20:41.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d42cd54d326
+  - type: verified_by
+    from: SCEN-demo-telemetry-scrub
+    to: TEST-tooling-demo-validate
+    created_at: 2026-11-19T16:20:41.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78eb946afd5c

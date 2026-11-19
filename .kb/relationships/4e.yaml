@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9e779fb7cbe
+  - type: covered_by
+    from: SYM-tooling-demo-validate-telemetry-failures
+    to: TEST-tooling-demo-validate
+    created_at: 2026-11-19T16:23:30.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7143381e64
+  - type: implements
+    from: SYM-tooling-demo-validate-telemetry-failures
+    to: REQ-demo-telemetry-scrub
+    created_at: 2026-11-19T16:23:30.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc0d0a57af9d
+  - type: implements
+    from: SYM-tooling-demo-validate-telemetry-failures
+    to: REQ-demo-telemetry-egress
+    created_at: 2026-11-19T16:23:30.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808ada684707

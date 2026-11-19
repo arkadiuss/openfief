@@ -1238,3 +1238,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd31d900e79d
+  - type: covered_by
+    from: SYM-demo-grafana-values
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-19T16:23:16.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c532b7e4b1
+  - type: implements
+    from: SYM-demo-grafana-values
+    to: REQ-demo-grafana-secret-over-ssh
+    created_at: 2026-11-19T16:23:16.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9828d182a981

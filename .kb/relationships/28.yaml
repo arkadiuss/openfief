@@ -1329,3 +1329,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0111c24333fc
+  - type: executable_for
+    from: SYM-demo-scrub-test-scrub-context
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:55.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92237d777c94

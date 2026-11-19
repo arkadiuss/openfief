@@ -787,12 +787,21 @@ tasks:
       - task: demo:secret
         vars: {WHICH: turnstile}
 
+  demo:grafana-secret:
+    desc: 'Create or replace the demo''s Grafana Cloud credentials, the Secret grafana-otlp in namespace observability (OTLP endpoint, instance ID and token), over SSH: read locally, the token with read -rs, never printed or stored; the telemetry layer''s collector waits for it; needs DEMO_SSH=keys, e.g. task demo:grafana-secret ENV=demo DEMO_SSH=keys'
+    requires:
+      vars: [ENV]
+    cmds:
+      - task: demo:secret
+        vars: {WHICH: grafana}
+
   demo:secret:
     internal: true
     deps: [tool:hcloud]
     interactive: true
-    # OPENROUTER_API_KEY, TURNSTILE_SECRET_KEY and HCLOUD_TOKEN are inherited from the environment, or typed when asked
-    # (read -rs), and never templated here, so Task never prints them.
+    # OPENROUTER_API_KEY, TURNSTILE_SECRET_KEY, GRAFANA_OTLP_ENDPOINT, GRAFANA_INSTANCE_ID, GRAFANA_OTLP_TOKEN and
+    # HCLOUD_TOKEN are inherited from the environment, or typed when asked (read -rs, but for the endpoint and the
+    # instance ID, which are no secrets), and never templated here, so Task never prints them.
     env:
       ENV: '{{.ENV}}'
       DEMO_SSH: '{{.DEMO_SSH}}'

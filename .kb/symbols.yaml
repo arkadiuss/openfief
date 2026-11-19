@@ -238763,3 +238763,305 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-turnstile
+  - id: SYM-demo-scrub-test-rule
+    title: rule
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:43.897Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-load-config
+    title: loadConfig
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:50.487Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-lookup
+    title: lookup
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:57.072Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-list
+    title: list
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:03.872Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-object
+    title: object
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:10.278Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-string-list
+    title: stringList
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:17.078Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-parse-statement
+    title: parseStatement
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:24.477Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-rules-of
+    title: rulesOf
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:31.546Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-attributes
+    title: scrubAttributes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:38.521Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-field
+    title: scrubField
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:45.251Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-context
+    title: scrubContext
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:51.767Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-attribute-contexts
+    title: attributeContexts
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:58.099Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-drops-personal-keys
+    title: TestScrubDropsPersonalKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:04.444Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-assert-keys
+    title: assertKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:10.750Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-value-cases
+    title: valueCases
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:17.213Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-rewrites-personal-values
+    title: TestScrubRewritesPersonalValues
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:23.753Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-rewrites-the-log-body-and-the-span-text
+    title: TestScrubRewritesTheLogBodyAndTheSpanText
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:30.592Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-knows-openfief-token-prefixes
+    title: TestScrubKnowsOpenfiefTokenPrefixes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:37.039Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-patterns
+    title: patterns
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:43.818Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-statements-agree
+    title: TestScrubStatementsAgree
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:50.989Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-collector-pipelines-scrub-before-the-exporter
+    title: TestCollectorPipelinesScrubBeforeTheExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:58.600Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-secret-connect
+    title: demo_secret_connect
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:05.620Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-demo-grafana-values
+    title: demo_grafana_values
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:12.522Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+  - id: SYM-demo-grafana-main
+    title: demo_grafana_main
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:18.857Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+  - id: SYM-tooling-demo-validate-telemetry-failures
+    title: telemetry_failures
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:25.575Z
+    sourceFile: scripts/demo/validate.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-demo-telemetry-egress
+      - type: implements
+        target: REQ-demo-telemetry-scrub
+  - id: SYM-demo-secret-test-helper-refuse-grafana
+    title: refuse_grafana
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:32.629Z
+    sourceFile: scripts/tests/demo-secret.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret

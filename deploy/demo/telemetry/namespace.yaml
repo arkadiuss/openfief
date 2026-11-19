@@ -1,0 +1,12 @@
+# The collector's namespace. It is not openfief: that namespace enforces the restricted Pod Security Standard, which
+# forbids hostPath volumes and running as root, and the collector needs both to read the node's pod logs. The
+# privileged level applies to this namespace alone, which holds the collector and nothing else; the collector's own
+# limits are in daemonset.yaml (no capabilities, no privilege escalation, a read-only root filesystem, read-only log
+# mounts and a pinned image).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    app.kubernetes.io/part-of: openfief

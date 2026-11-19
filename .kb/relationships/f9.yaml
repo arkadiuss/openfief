@@ -1294,3 +1294,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04168e78978a
+  - type: executable_for
+    from: SYM-demo-scrub-test-parse-statement
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:29.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b8d4dd123e

@@ -1063,3 +1063,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d7410b6ba4d
+  - type: executable_for
+    from: SYM-demo-scrub-test-test-scrub-knows-openfief-token-prefixes
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:22:41.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-967ff374dd0f

@@ -1196,3 +1196,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a993ae9a599
+  - type: covered_by
+    from: SYM-demo-secret-connect
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-19T16:23:10.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dafd5857663
+  - type: implements
+    from: SYM-demo-secret-connect
+    to: REQ-tooling-demo-secret-over-ssh
+    created_at: 2026-11-19T16:23:10.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ec958f6907e
+  - type: implements
+    from: SYM-demo-secret-connect
+    to: REQ-demo-grafana-secret-over-ssh
+    created_at: 2026-11-19T16:23:10.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2eb47e3025ca
+  - type: executable_for
+    from: SYM-demo-secret-test-helper-refuse-grafana
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-19T16:23:37.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e54cf3bc0692

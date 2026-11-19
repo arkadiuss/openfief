@@ -1371,3 +1371,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae356d79c371
+  - type: executable_for
+    from: SYM-demo-scrub-test-string-list
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:21.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97e18152bf3

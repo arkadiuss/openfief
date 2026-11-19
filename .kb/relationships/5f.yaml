@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ba2670e57ea
+  - type: executable_for
+    from: SYM-demo-scrub-test-value-cases
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:22:21.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33dd66185910

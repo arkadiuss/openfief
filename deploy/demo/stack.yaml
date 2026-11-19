@@ -5,6 +5,8 @@
 #   demo-cert-manager ./deploy/demo/cert-manager  cert-manager from a pinned Helm chart
 #   demo-ingress   ./deploy/demo/ingress   the Let's Encrypt ClusterIssuer (HTTP-01 through k3s's Traefik)
 #   demo-routes    the signed artifact     ./routes: https://<ENV>.<DEMO_DOMAIN> (or <ipv4-with-dashes>.sslip.io) to the core
+#   demo-telemetry ./deploy/demo/telemetry an OpenTelemetry Collector that ships logs, traces and metrics to Grafana Cloud,
+#                                          scrubbing visitors' personal data first; it waits for the Secret grafana-otlp
 #   demo-openfief  the signed artifact     ./app: operator, egress proxy, core, demo data; images pinned by digest (D-17)
 #   demo-egress-audit the signed artifact  ./audit: after each deploy, a Job checks the egress proxy's log against the
 #                                          PluginGrants (D-200 criterion 16, deploy/demo/audit); a failed audit fails it
@@ -94,6 +96,22 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: demo-settings
+---
+# The telemetry layer (docs/dev/demo.md#telemetry). It follows git: its image is pinned by digest in the repository, not
+# by CI. No wait: without the Secret grafana-otlp its pod stays in CreateContainerConfigError by design, and that must
+# not show as this layer failing.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: demo-telemetry
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deploy/demo/telemetry
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: openfief
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

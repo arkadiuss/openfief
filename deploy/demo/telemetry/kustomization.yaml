@@ -1,0 +1,24 @@
+# The demo's telemetry layer (docs/dev/demo.md#telemetry): an OpenTelemetry Collector (contrib) that ships the demo's logs,
+# traces and metrics to Grafana Cloud, so the orchestrator can read them there. Flux applies it from git as the layer
+# demo-telemetry (../stack.yaml); the image is pinned by tag and digest like SpiceDB's, and Renovate moves both.
+#   namespace.yaml       the namespace observability, privileged because the collector reads the node's pod logs
+#   collector.yaml       the configuration: receivers, the scrub that keeps visitors' personal data in the demo, and the
+#                        one exporter to Grafana Cloud, whose address and credentials come from the Secret grafana-otlp
+#   daemonset.yaml       the collector, with read-only hostPath mounts of /var/log/pods
+#   service.yaml         otel-collector:4318, which the core and the operator send OTLP/HTTP to
+#   networkpolicy.yaml   ingress from the core and the operator, egress to DNS and HTTPS only
+# The Secret grafana-otlp is created out of band, never in git: task demo:grafana-secret. Without it the pod waits.
+# The core and the operator send to this layer through deploy/tracing, which ../openfief includes.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: observability
+resources:
+  - namespace.yaml
+  - serviceaccount.yaml
+  - service.yaml
+  - networkpolicy.yaml
+  - daemonset.yaml
+configMapGenerator:
+  - name: otel-collector-config
+    files:
+      - config.yaml=collector.yaml
