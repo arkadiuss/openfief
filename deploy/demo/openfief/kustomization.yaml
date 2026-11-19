@@ -46,6 +46,41 @@ patches:
   # scrubs every record before it leaves; the core's own allow-list (D-172) comes first. The core's policy admits that
   # collector's port 4318 and nothing else. Until the collector runs (it waits for the Secret grafana-otlp), the core
   # logs each failed export and carries on.
+  # The collector is in the cluster and takes no header, so the demo drops the tracing component's optional
+  # OTEL_EXPORTER_OTLP_HEADERS from the Secret openfief-tracing: no pod names a Secret that never exists, which the
+  # e2e Secrets audit (test/e2e/secrets_test.go) refuses.
+  - target:
+      kind: Deployment
+      name: openfief-core
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: openfief-core
+      spec:
+        template:
+          spec:
+            containers:
+              - name: core
+                env:
+                  - name: OTEL_EXPORTER_OTLP_HEADERS
+                    $patch: delete
+  - target:
+      kind: Deployment
+      name: openfief-operator
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: openfief-operator
+      spec:
+        template:
+          spec:
+            containers:
+              - name: operator
+                env:
+                  - name: OTEL_EXPORTER_OTLP_HEADERS
+                    $patch: delete
   - target:
       kind: ConfigMap
       name: openfief-tracing
