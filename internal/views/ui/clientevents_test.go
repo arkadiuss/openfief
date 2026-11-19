@@ -42,6 +42,18 @@ func TestValidClientEvent(t *testing.T) {
 			clientEvent{Kind: "turnstile-error", Ms: 5, Code: "110200", Line: -1, Status: -1},
 			true,
 		},
+		{
+			"the check starting on demand",
+			rawClientEvent{Kind: "turnstile-execute", Ms: num(0)},
+			clientEvent{Kind: "turnstile-execute", Ms: 0, Line: -1, Status: -1},
+			true,
+		},
+		{
+			"a timeout reported as an error with a fixed word",
+			rawClientEvent{Kind: "turnstile-error", Code: "timeout", Ms: num(15000), Path: "visible-fallback"},
+			clientEvent{Kind: "turnstile-error", Ms: 15000, Code: "timeout", Path: "visible-fallback", Line: -1, Status: -1},
+			true,
+		},
 		{"unknown kind", rawClientEvent{Kind: "keystroke"}, clientEvent{}, false},
 		{"empty kind", rawClientEvent{}, clientEvent{}, false},
 		{"negative time", rawClientEvent{Kind: "turnstile-success", Ms: num(-2)}, clientEvent{}, false},

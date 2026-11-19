@@ -66,6 +66,10 @@ type answerCard struct {
 	// Used are the cards the model read and named in its answer, shown under
 	// its text: each one its tool calls produced and it was sent.
 	Used []answerCard
+	// CheckNeeded is set on the card of a model question that came with no
+	// Turnstile token: the response then tells the page to run the check and
+	// ask again (checkNeededTrigger).
+	CheckNeeded bool
 	// Withheld are the cards the model asked for that the router would not
 	// send it, because no model of the route may receive their data tier
 	// (D-206).

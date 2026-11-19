@@ -31,6 +31,7 @@ const (
 const (
 	hxRequest  = "Hx-Request"
 	hxRedirect = "Hx-Redirect"
+	hxTrigger  = "Hx-Trigger"
 )
 
 // session is the owner's session as one request sees it: the token from

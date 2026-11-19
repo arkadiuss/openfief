@@ -313,9 +313,9 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
 .ask .status { font-family: var(--font-display); font-size: clamp(1.3rem, 3.5vw, 1.75rem); font-weight: 700; margin: 0 0 var(--space-2); }
 .ask .status-links { margin-bottom: var(--space-3); }
 .ask-form { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0; }
-.ask-check { flex: 1 1 100%; }
-.ask-status { flex: 1 1 100%; margin: 0; }
-.ask-status:empty { display: none; }
+/* Turnstile's widget (D-208) stands under the field and is empty unless Cloudflare asks for a click or the check stalled. */
+.ask-check { margin: 0 0 var(--space-3); max-width: 100%; overflow: hidden; }
+.ask-check:empty { display: none; }
 .ask-field {
   flex: 1 1 18rem; display: flex; align-items: center; gap: var(--space-2); min-height: 52px; min-width: 0;
   padding: 0 var(--space-3); border: 1.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--muted);
@@ -332,6 +332,31 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
   color: var(--link); text-decoration: none; font-size: 0.92rem; overflow-wrap: anywhere;
 }
 .chip:hover { background: var(--accent-soft); }
+/* On a phone the suggestions are one row that scrolls on its own, so they never take the screen and the page never scrolls sideways. */
+@media (max-width: 640px) {
+  .chips-row { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: var(--space-1); }
+  .chips-row::-webkit-scrollbar { display: none; }
+  .chips-row .chip { flex: 0 0 auto; white-space: nowrap; scroll-snap-align: start; }
+}
+/* The pending answer: the question and a quiet indicator, in the answer's place while a request goes (htmx puts htmx-request on it,
+   its hx-indicator) and while the box runs the person check between two requests (ask.js adds is-checking). The old answer steps
+   aside meanwhile. */
+.ask-pending { display: none; border-top: 1px solid var(--border); padding-top: var(--space-4); margin-bottom: var(--space-3); }
+.ask-pending.htmx-request, .ask-pending.is-checking { display: flex; flex-direction: column; gap: var(--space-3); }
+.ask-box:has(.ask-pending.htmx-request) #answer, .ask-box:has(.ask-pending.is-checking) #answer { display: none; }
+.ask-pending .bubble:empty { display: none; }
+.pending-line { display: flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--muted); }
+.dots { display: inline-flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
+@media (prefers-reduced-motion: no-preference) {
+  .dots i { animation: ask-dot 1.2s ease-in-out infinite; }
+  .dots i:nth-child(2) { animation-delay: 0.2s; }
+  .dots i:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes ask-dot { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.1); } }
+}
+.ask-howto { margin: 0 0 var(--space-3); }
+.ask-howto summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; color: var(--muted); font-size: 0.92rem; }
+.ask-howto p { margin: 0 0 var(--space-2); }
 .conversation { display: flex; flex-direction: column; gap: var(--space-3); border-top: 1px solid var(--border); padding-top: var(--space-4); margin-bottom: var(--space-3); }
 .bubble { align-self: flex-end; max-width: 85%; margin: 0; padding: var(--space-2) var(--space-4); background: var(--accent-soft); border-radius: var(--radius); overflow-wrap: anywhere; }
 .answer { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); min-width: 0; }

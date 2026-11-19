@@ -51,7 +51,7 @@ func TestAskBoxAnswersBeyondItsCommandsWithAModel(t *testing.T) {
 			wantStatus(t, rec, http.StatusOK)
 			wantBody(t, rec,
 				`class="bubble"`, "how diversified am I?", "Two thirds of it is listed.",
-				"Answered by p/m · it read only the cards below", `class="used-cards"`, `class="used-card"`,
+				"Answered by m (not evaluated by OpenFief) · used 1 card. AI can be wrong", `class="used-cards"`, `class="used-card"`,
 				"By currency, gross, on 2026-03-31", "66.7%", `href="/?by=currency`,
 			)
 			wantNoBody(t, rec, "no AI model", "withheld", "<html")
@@ -135,7 +135,7 @@ func TestAskBoxWithholdsACardAboveWhatTheRouteAllows(t *testing.T) {
 	rec := h.asks(t, ownerSession, "how diversified am I?")
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
-		"I am not allowed to see your allocation.", "Answered by p/m · it read nothing from your data",
+		"I am not allowed to see your allocation.", "Answered by m (not evaluated by OpenFief) · used none of your data",
 		`class="withheld"`, "Withheld from the model: the Allocation card", "(T0)",
 	)
 	wantNoBody(t, rec, `class="used-card"`, "By asset class", "66.7%", "1 000,00")
@@ -233,7 +233,7 @@ func TestAskBoxSaysWhereAQuestionGoes(t *testing.T) {
 	wantBody(t, on, "Any other question goes to the model the owner set up", "never logs the question or the answer", `maxlength="300"`)
 	wantNoBody(t, on, "holds no AI model")
 	page := h.serve(t, withSession(request(http.MethodGet, "/?q=anything+else", ""), ownerSession))
-	wantBody(t, page, `value="anything else"`, `class="bubble"`, "Answered by p/m")
+	wantBody(t, page, `value="anything else"`, `class="bubble"`, "Answered by m")
 }
 
 // TestAskBoxNeverLogsTheQuestionOrAnswerWithAModel checks that a question

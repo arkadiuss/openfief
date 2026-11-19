@@ -16,9 +16,15 @@
 // session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
 // granted nothing sees "Nothing has been shared with you yet" on every page (D-210); Settings' Audit log filters by its form and, while
 // changes' entries wait to enter the log, shows the audit-log-behind item's words in a banner (D-211).
-// With Cloudflare Turnstile in front of the Ask box's model (D-208), on a second UI over the fakes whose Cloudflare is a fake too: the policy
-// allows Cloudflare's script and frame and nothing else outside, a question goes with the widget's one-time token and is answered, the token is
-// renewed, one without a token is stopped with the box's commands, a command needs none and the console holds no policy violation; the first UI has no widget.
+// The Ask box's progress and layout (D-194, D-203): a question in flight shows itself under the field with a quiet indicator (still under
+// reduced motion), the Ask button off and "Thinking…" or "Looking it up…"; the answer sits directly under the field and in view with one
+// attribution line, the help is folded behind "How this works", and the suggestions are one row that scrolls on its own at 360 px.
+// With Cloudflare Turnstile in front of the Ask box's model (D-208), on a second UI over the fakes whose Cloudflare is a fake too: the check
+// runs on demand. The policy allows Cloudflare's script and frame and nothing else outside; a command is answered with no check; a model
+// question goes without a token, is told a check is needed, runs the widget (explicit render, execute, interaction-only) and goes again with
+// its one-time token, the same question, and is answered; nothing is checked again afterwards; an interaction-needed widget gets time;
+// an error, a timeout, a blocked script and an unsupported browser each give one message with the code; a stalled widget becomes a visible
+// one; the page reports each state and the console holds no policy violation; the first UI has no widget.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -258,7 +264,7 @@ async function askModelBox(browser) {
     check((await page.textContent('#answer .used-card')).includes('By asset class'), `phone ${scheme}: the card the model read is not shown`);
     // D-222: a model's answer says who answered, that it can be wrong, and links to the eval's results.
     const note = await page.textContent('#answer .ask-note');
-    check(note.includes('Answered by') && note.includes('AI can be wrong; check the cards. Not investment advice.') && note.includes('How models did in our evaluation'),
+    check(note.includes('Answered by') && note.includes('used 1 card') && ((await page.textContent('#answer')).match(/Answered by/g) || []).length === 1 && note.includes('AI can be wrong; check the cards. Not investment advice.') && note.includes('How models did in our evaluation'),
       `phone ${scheme}: a model's answer does not show its name, the disclaimer and the link to the evaluation`);
     const evalHref = await page.getAttribute('#answer .ask-note a.ask-eval-link', 'href');
     check(evalHref === 'https://openfief.dev/docs/reference/ask-eval/', `phone ${scheme}: the evaluation link is ${evalHref}`);
@@ -270,7 +276,7 @@ async function askModelBox(browser) {
     // A refusal: the model's words, and the box's own four commands as chips (D-194).
     await ask('sell everything', '#answer .ask-suggestions .chip');
     const refusal = await page.textContent('#answer');
-    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 4
+    check(refusal.includes("I can only read, so I can't sell anything.") && refusal.includes('From ') && !refusal.includes("it can't do that") && (await page.locator('#answer .ask-suggestions .chip').count()) === 4
       && (await page.locator('#answer .ask-choices').count()) === 0 && (await page.locator('#answer .used-card').count()) === 0,
       `phone ${scheme}: a refusal does not show the model's words and the box's four command chips`);
     check((await page.locator('#answer .ask-suggestions .chip').first().boundingBox()).height >= 44, `phone ${scheme}: a command chip is under 44 px tall`);
@@ -281,7 +287,7 @@ async function askModelBox(browser) {
     // A clarifying answer: the model's question, and its candidates as choices that ask the box's own show command.
     await ask('i mean the fund', '#answer .ask-choices .chip');
     const clarify = await page.textContent('#answer');
-    check(clarify.includes('Which one do you mean?') && clarify.includes('it asks which you mean') && (await page.locator('#answer .ask-choices .chip').count()) === 2
+    check(clarify.includes('Which one do you mean?') && !clarify.includes('it asks which you mean') && (await page.locator('#answer .ask-choices .chip').count()) === 2
       && (await page.locator('#answer .ask-suggestions').count()) === 0,
       `phone ${scheme}: a clarifying answer does not show its question and two choices`);
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-clarify.png`), fullPage: true });
@@ -301,286 +307,361 @@ async function askModelBox(browser) {
   }
 }
 
-// sideways returns how many pixels the page scrolls sideways.
-// The widget's script, as Cloudflare would serve it, for the page to load where the check's script is allowed: it puts a one-time
-// token ("ok-browser-N", which the fake Cloudflare accepts once) in the Ask form's field, calls the widget's data-callback with it,
-// and makes a new one on reset. Like the real widget it calls the callbacks the div names (data-callback, data-error-callback,
-// data-expired-callback, data-before-interactive-callback) by their global names. With window.__fakeTurnstileManual set before the
-// page's scripts run it makes no token by itself; the test drives it through window.__fakeTurnstile instead: succeed(), fail(code),
-// expire() and interactive(), the last three returning what the page's callback returned.
+// The widget's script, as Cloudflare would serve it, for the page to load where the check's script is allowed. It models the part of
+// Turnstile's explicit API the page uses: render(container, options) returns a widget id and runs nothing (the page renders with
+// execution "execute"), execute(id) starts the challenge, reset(id) and remove(id) clear or drop the widget. A token is "ok-browser-N",
+// which the fake Cloudflare accepts once, put in a hidden field inside the container as the real widget does and passed to the
+// options' callback. window.__fakeTurnstileMode, set before the page's scripts run, says what execute() does: "auto" makes a
+// token at once, "manual" does nothing until the test calls succeed(), and "click" first calls the before-interactive callback,
+// as Cloudflare does when it needs a click. The test reads what the page did through window.__fakeTurnstile (renders, executes,
+// resets, removes) and plays Cloudflare through succeed(), fail(code), expire() and unsupported(), the last three returning what
+// the page's callback returned.
 const fakeTurnstileScript = `(function () {
-  var n = window.__fakeTurnstileManual ? 100 : 0; // a token is good once, so the manual run's differ from the automatic run's
-  var manual = !!window.__fakeTurnstileManual;
+  var mode = window.__fakeTurnstileMode || 'auto';
+  var n = window.__fakeTurnstileSeed || 0; // a token is good once, so each page's tokens start where no other page's did
+  var widgets = [];
   var renders = []; // what turnstile.render was called with, for the test to read
-  var removes = 0;
-  function call(div, attribute, argument) {
-    // A widget rendered explicitly calls the callbacks it was given; one rendered implicitly calls the globals its div names.
-    if (div.__fakeOptions) {
-      var given = div.__fakeOptions[attribute.replace(/^data-/, '')];
-      return typeof given === 'function' ? given(argument) : undefined;
-    }
-    var name = div.getAttribute(attribute);
-    return name && typeof window[name] === 'function' ? window[name](argument) : undefined;
+  var executes = 0, resets = 0, removes = 0;
+  function current() { return widgets[widgets.length - 1]; }
+  function call(name, argument) {
+    var w = current();
+    var given = w && w.options[name];
+    return typeof given === 'function' ? given(argument) : undefined;
   }
-  function field(div) {
-    var form = div.closest('form');
-    var input = form && form.querySelector('input[name="cf-turnstile-response"]');
-    if (form && !input) {
+  function succeed() {
+    var w = current();
+    if (!w) { return; }
+    var input = w.div.querySelector('input[name="cf-turnstile-response"]');
+    if (!input) {
       input = document.createElement('input');
       input.type = 'hidden';
       input.name = 'cf-turnstile-response';
-      div.appendChild(input);
+      w.div.appendChild(input);
     }
-    return input;
-  }
-  function succeed() {
-    document.querySelectorAll('.cf-turnstile').forEach(function (div) {
-      var input = field(div);
-      if (input) {
-        n += 1;
-        input.value = 'ok-browser-' + n;
-        call(div, 'data-callback', input.value);
-      }
-    });
-  }
-  function each(attribute, argument) {
-    var result;
-    document.querySelectorAll('.cf-turnstile').forEach(function (div) { result = call(div, attribute, argument); });
-    return result;
+    n += 1;
+    input.value = 'ok-browser-' + n;
+    call('callback', input.value);
   }
   window.turnstile = {
-    // render and remove model what the page's fallback needs: a widget rendered again in a container, with its own callbacks. In the
-    // manual run (the stall) it makes no token by itself; otherwise it does, as the real widget does once it is shown.
-    remove: function (div) {
-      removes += 1;
-      div.__fakeOptions = null;
-      var input = div.querySelector('input[name="cf-turnstile-response"]');
-      if (input) { input.remove(); }
-    },
     render: function (div, options) {
-      renders.push({ sitekey: options.sitekey, appearance: options.appearance, callbacks: Object.keys(options).filter(function (k) { return typeof options[k] === 'function'; }).sort() });
-      div.__fakeOptions = options;
-      if (!manual) { succeed(); }
+      renders.push({ sitekey: options.sitekey, appearance: options.appearance, execution: options.execution, retry: options.retry,
+        callbacks: Object.keys(options).filter(function (k) { return typeof options[k] === 'function'; }).sort() });
+      widgets.push({ div: div, options: options });
       return 'fake-widget-' + renders.length;
     },
+    execute: function () {
+      executes += 1;
+      if (mode === 'auto') { Promise.resolve().then(succeed); }
+      if (mode === 'click') { call('before-interactive-callback'); }
+    },
     reset: function () {
-      document.querySelectorAll('.cf-turnstile').forEach(function (div) { var input = field(div); if (input) { input.value = ''; } });
-      if (!manual) { succeed(); }
+      resets += 1;
+      var w = current();
+      var input = w && w.div.querySelector('input[name="cf-turnstile-response"]');
+      if (input) { input.value = ''; }
+    },
+    remove: function () {
+      removes += 1;
+      var w = widgets.pop();
+      var input = w && w.div.querySelector('input[name="cf-turnstile-response"]');
+      if (input) { input.remove(); }
     }
   };
   window.__fakeTurnstile = {
     renders: function () { return renders; },
+    executes: function () { return executes; },
+    resets: function () { return resets; },
     removes: function () { return removes; },
     succeed: succeed,
-    fail: function (code) { return each('data-error-callback', code); },
-    expire: function () { return each('data-expired-callback'); },
-    interactive: function () { return each('data-before-interactive-callback'); },
-    unsupported: function () { return each('data-unsupported-callback'); }
+    fail: function (code) { return call('error-callback', code); },
+    expire: function () { return call('expired-callback'); },
+    unsupported: function () { return call('unsupported-callback'); }
   };
-  function start() { if (!manual) { succeed(); } }
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
 })();`;
 
-// turnstileBox checks the Ask box with Turnstile in front of its model (D-208) at phone width: the page's policy allows
-// Cloudflare's script and frame and no other outside host and the widget loads (a fake of Cloudflare's script answers where the page asks
-// for it, so the script is loaded only if the policy lets it); a question to the model goes with the widget's token and is
-// answered; the token is renewed for the next question; a question with no token is stopped with the box's words and nothing
-// sent; a command needs no token; and the console holds no policy violation. The status line is turnstileStatus's.
-async function turnstileBox(browser) {
-  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
-  await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
+let nextSeed = 0; // the fake Cloudflare takes each token once, so every page after the first makes its own range
+const checkingText = 'Checking you\'re a person…';
+
+// turnstileContext opens a signed-in page on the Turnstile UI with the fake widget in the given mode (and a fake clock when asked), counting
+// the requests the Ask box makes and noting whether the no-token card was ever drawn.
+async function turnstileContext(browser, mode, options = {}) {
+  const ctx = await browser.newContext({ viewport: { width: options.width || 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
+  const seed = mode === 'auto' ? 0 : (nextSeed += 100);
+  await ctx.addInitScript(([m, sd]) => {
+    window.__fakeTurnstileMode = m;
+    window.__fakeTurnstileSeed = sd;
+    new MutationObserver(() => {
+      const a = document.getElementById('answer');
+      if (a && a.textContent.includes('A check comes before the model answers')) { window.__sawNoTokenCard = true; }
+    }).observe(document, { childList: true, subtree: true, characterData: true });
+  }, [mode, seed]);
+  if (options.block) {
+    await ctx.route('https://challenges.cloudflare.com/**', (route) => route.abort());
+  } else {
+    await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
+  }
+  if (options.clock) {
+    await ctx.clock.install();
+  }
   const page = await ctx.newPage();
-  const violations = [];
-  page.on('console', (message) => {
-    if (message.text().includes('Content Security Policy')) {
-      violations.push(message.text());
-    }
+  const asks = []; // the query strings of the box's requests, in order
+  const posts = []; // the bodies of the page's reports about itself (D-227)
+  page.on('request', (r) => {
+    if (r.url().includes('/ask?')) { asks.push(new URL(r.url()).searchParams); }
+    if (r.method() === 'POST' && r.url().endsWith('/client-events')) { posts.push(r.postData() || ''); }
   });
   await page.goto(turnstileBase + '/test/sign-in');
+  await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+  const fake = (what) => page.evaluate((w) => (w === 'renders' ? window.__fakeTurnstile.renders() : window.__fakeTurnstile[w]()), what);
+  const submit = async (q) => {
+    await page.fill('#ask-q', q);
+    await page.click('.ask-form button[type="submit"]');
+  };
+  return { ctx, page, asks, posts, fake, submit };
+}
+
+// turnstileBox checks the Ask box with Turnstile in front of its model (D-208), checked on demand: the page's policy allows Cloudflare's
+// script and frame and no other outside host; the widget is not rendered, let alone executed, while the person only reads, types or asks
+// a command; a question to the model goes without a token first, is told a check is needed (and the no-token card is never drawn), runs
+// the check, and goes again with the token, the same question, and is answered; the token is not kept (the form never holds one) and
+// nothing is checked again after the answer, only when the next model question needs it; and the console holds no policy violation.
+async function turnstileBox(browser) {
+  const { ctx, page, asks, fake, submit } = await turnstileContext(browser, 'auto');
+  const violations = [];
+  page.on('console', (message) => {
+    if (message.text().includes('Content Security Policy')) { violations.push(message.text()); }
+  });
   const response = await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
   const policy = response.headers()['content-security-policy'] || '';
   check(policy.includes('script-src \'self\' https://challenges.cloudflare.com') && policy.includes('frame-src https://challenges.cloudflare.com')
     && (policy.match(/https:\/\//g) || []).length === 2 && !policy.includes('unsafe'), `turnstile: the page's policy is ${policy}`);
-  check((await page.locator('.ask-form .cf-turnstile[data-sitekey]').count()) === 1, 'turnstile: the Ask form shows no widget');
-  const token = () => page.inputValue('input[name="cf-turnstile-response"]');
-  check((await token()) === 'ok-browser-1', `turnstile: the widget made no token (${await token()})`);
-  const status = () => page.textContent('#ask-check-status');
-  await page.waitForFunction(() => document.querySelector('#ask-check-status').textContent === 'Ready', null, { timeout: 5000 });
-  check((await status()) === 'Ready', `turnstile: with a token the status line says ${await status()}`);
-  const [request] = await Promise.all([
-    page.waitForRequest((r) => r.url().includes('/ask?') && r.url().includes('cf-turnstile-response=ok-browser-1')),
-    page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
-  ]);
-  check(new URL(request.url()).searchParams.get('q') === 'how diversified am I', 'turnstile: the question did not go with its token');
-  check(new URL(request.url()).searchParams.get('ask-check-path') === 'invisible', 'turnstile: a check that finished by itself did not say it was the invisible path');
-  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
-  check((await page.textContent('#answer')).includes('Answered by'), 'turnstile: a question with a good token was not answered by the model');
-  await page.waitForFunction(() => document.querySelector('input[name="cf-turnstile-response"]').value === 'ok-browser-2', null, { timeout: 5000 });
-  const [second] = await Promise.all([
-    page.waitForResponse((r) => r.url().includes('/ask?') && r.url().includes('cf-turnstile-response=ok-browser-2')),
-    page.fill('#ask-q', 'how diversified am I').then(() => page.click('.ask-form button[type="submit"]')),
-  ]);
-  check((await second.text()).includes('Answered by'), 'turnstile: the second question did not go with a renewed token and get an answer');
-  // No token: the box says a check comes first, and keeps its commands.
-  await page.evaluate(() => { document.querySelector('input[name="cf-turnstile-response"]').value = ''; });
-  await page.fill('#ask-q', 'how diversified am I really');
-  await page.click('.ask-form button[type="submit"]');
-  await page.waitForSelector('#answer:has-text("A check comes before the model answers")', { timeout: 5000 });
-  check((await page.locator('#answer .ask-help li').count()) > 0 && !(await page.textContent('#answer')).includes('Answered by'),
-    'turnstile: a question with no token was not stopped with the box\'s commands');
-  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile.png'), fullPage: true });
-  // A command needs no token.
-  await page.fill('#ask-q', 'what needs me');
-  await page.click('.ask-form button[type="submit"]');
+  check((await page.locator('.ask-box .ask-check[data-sitekey]').count()) === 1 && (await page.locator('.cf-turnstile').count()) === 0,
+    'turnstile: the page has no container for an explicit widget, or it renders one by itself');
+  check((await page.locator('#ask-check-status').count()) === 0, 'turnstile: the page still has a status line for the check');
+  check((await page.locator('.ask-form input[name="cf-turnstile-response"]').count()) === 0, 'turnstile: the form holds a token field before any check');
+  check((await page.getAttribute('script[src*="challenges.cloudflare.com"]', 'src')).endsWith('?render=explicit'), 'turnstile: the widget script is not loaded for explicit render');
+  await page.waitForTimeout(1000);
+  check((await fake('renders')).length === 0 && (await fake('executes')) === 0, 'turnstile: the widget was rendered or run before any question needed it');
+  // A command is answered at once, with no check.
+  await submit('what needs me');
   await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
+  check(asks.length === 1 && !asks[0].has('cf-turnstile-response') && (await fake('executes')) === 0, `turnstile: a command asked ${asks.length} times or ran the check`);
+  // A model question: no token first, then the check, then the same question with its token.
+  const question = 'how diversified am I';
+  await submit(question);
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  check(asks.length === 3 && !asks[1].has('cf-turnstile-response') && asks[1].get('q') === question, `turnstile: the question did not go first without a token (${asks.length} requests)`);
+  check(asks[2].get('q') === question && asks[2].get('cf-turnstile-response') === 'ok-browser-1' && asks[2].get('ask-check-path') === 'invisible',
+    `turnstile: the question did not go again with its token: ${asks[2]}`);
+  const rendered = await fake('renders');
+  check(rendered.length === 1 && rendered[0].appearance === 'interaction-only' && rendered[0].execution === 'execute' && rendered[0].sitekey.length > 0
+    && rendered[0].callbacks.join() === 'before-interactive-callback,callback,error-callback,expired-callback,unsupported-callback',
+  `turnstile: the widget was rendered as ${JSON.stringify(rendered)}`);
+  check((await fake('executes')) === 1, 'turnstile: the check did not run exactly once for the question');
+  check(!(await page.evaluate(() => window.__sawNoTokenCard === true)), 'turnstile: the no-token card was drawn on the way');
+  const text = await page.textContent('#answer');
+  check((text.match(/Answered by/g) || []).length === 1 && text.includes('AI can be wrong; check the cards. Not investment advice.'),
+    'turnstile: the answer does not say who answered exactly once');
+  check((await page.locator('.ask-form input[name="cf-turnstile-response"]').count()) === 0, 'turnstile: the form holds a token after the check');
+  check(await page.isHidden('#ask-pending') && await page.isEnabled('.ask-form button[type="submit"]'), 'turnstile: after the answer the progress shows or the button is disabled');
+  // Nothing is checked again by itself: no reset, no second execute, however long the person reads.
+  await page.waitForTimeout(2000);
+  check((await fake('executes')) === 1 && (await fake('resets')) === 0 && (await fake('renders')).length === 1, 'turnstile: the check ran again after the answer');
+  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile.png'), fullPage: true });
+  // The next model question needs a new check: the widget is reset and run again, once.
+  await submit('how diversified am I really');
+  await page.waitForSelector('#answer .bubble:has-text("how diversified am I really")', { timeout: 5000 });
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  check(asks.length === 5 && asks[4].get('cf-turnstile-response') === 'ok-browser-2' && (await fake('executes')) === 2 && (await fake('resets')) === 1,
+    `turnstile: the second question did not make one new check (${asks.length} requests, ${await fake('executes')} runs)`);
+  const overflow = await sideways(page);
+  check(overflow <= 0, `turnstile: the answer scrolls ${overflow} px sideways at 360 px`);
   check(violations.length === 0, `turnstile: the console holds policy violations: ${violations.join('; ')}`);
   await ctx.close();
 }
 
-// turnstileStatus checks the Ask box's status line (D-208) against a fake widget that makes no token until the test says so: it is a
-// polite live region under the field, "Checking you're a person…" while the check runs and when a token expires, a note that a click
-// may be needed before the widget shows itself, Cloudflare's error code in words that say what to do when the widget fails (and the
-// callback tells Turnstile the error is handled), and "Ready" once a token arrives. Cloudflare's widget is interaction-only, so
-// without this line a pending or failed check is invisible.
-async function turnstileStatus(browser) {
-  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
-  await ctx.addInitScript(() => { window.__fakeTurnstileManual = true; });
-  await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
-  const page = await ctx.newPage();
-  await page.goto(turnstileBase + '/test/sign-in');
-  await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
-  const line = page.locator('#ask-check-status');
-  const text = () => line.textContent();
-  const checking = 'Checking you\'re a person\u2026';
-  check((await line.getAttribute('role')) === 'status' && (await line.getAttribute('aria-live')) === 'polite',
-    'turnstile status: the line is not a polite live region');
-  check((await text()) === checking, `turnstile status: while the check runs the line says ${await text()}`);
-  check((await line.isVisible()) && (await line.evaluate((el) => getComputedStyle(el).color)) === (await page.locator('#ask-help').evaluate((el) => getComputedStyle(el).color)),
-    'turnstile status: the line is hidden or not in the muted color');
-  await page.evaluate(() => window.__fakeTurnstile.interactive());
-  check((await text()).startsWith(checking) && (await text()).includes('Complete the check'), `turnstile status: before the widget shows itself the line says ${await text()}`);
-  const handled = await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
-  check(handled === true, `turnstile status: the error callback returned ${handled}, not true`);
-  check((await text()) === 'The person check failed (Cloudflare error 110200). Reload the page; if it keeps failing, this browser or a blocker may be stopping challenges.cloudflare.com.',
-    `turnstile status: after an error the line says ${await text()}`);
-  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-error.png'), fullPage: true });
-  await page.evaluate(() => window.__fakeTurnstile.succeed());
-  check((await text()) === 'Ready', `turnstile status: with a token the line says ${await text()}`);
-  await page.evaluate(() => window.__fakeTurnstile.expire());
-  check((await text()) === checking, `turnstile status: after the token expired the line says ${await text()}`);
-  await page.evaluate(() => window.__fakeTurnstile.succeed());
-  check((await text()) === 'Ready', `turnstile status: with a new token the line says ${await text()}`);
-  // After a question the widget makes a new token, and the line follows it.
-  await page.fill('#ask-q', 'how diversified am I');
-  await page.click('.ask-form button[type="submit"]');
-  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
-  check((await text()) === checking, `turnstile status: after a question the line says ${await text()}`);
-  // With no new token the next question is stopped with the card that says none reached OpenFief.
-  await page.fill('#ask-q', 'and by currency');
-  await page.click('.ask-form button[type="submit"]');
-  await page.waitForSelector('#answer:has-text("No result of the check reached OpenFief")', { timeout: 5000 });
-  await ctx.close();
-  // Where Cloudflare's script is blocked (an extension, a filter): no widget ever calls back, and the line says so.
-  const blocked = await browser.newContext({ viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
-  await blocked.route('https://challenges.cloudflare.com/**', (route) => route.abort());
-  await blocked.clock.install();
-  const gone = await blocked.newPage();
-  await gone.goto(turnstileBase + '/test/sign-in');
-  await gone.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
-  await blocked.clock.fastForward(9000);
-  const said = await gone.textContent('#ask-check-status');
-  check(said === 'Your browser blocked the check; allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.', `turnstile status: with the script blocked the line says ${said}`);
-  await blocked.close();
+// turnstileOnDemand checks the states of the check against a widget the test drives (the fake's "manual" mode, a fake clock for the
+// waits): while it runs the box shows the question and "Checking you're a person…" with the Ask button off; the question that goes
+// again is the one asked, not what the field says by then; an error, a timeout, a blocked script and an unsupported browser each give ONE
+// message in the answer with the code (and Brave's hint where it helps), after which the box asks again with a new check; a widget that
+// asks for a click gets time; a check that stalls is swapped for a visible one that later checks start with; and the page reports each
+// state (D-227) without a word typed or a token.
+async function turnstileOnDemand(browser) {
+  // The check waits for Cloudflare; the question that goes again is the one that was asked.
+  {
+    const { ctx, page, asks, fake, submit } = await turnstileContext(browser, 'manual');
+    await submit('how diversified am I');
+    await page.waitForSelector('#ask-pending.is-checking', { timeout: 5000 });
+    check((await page.textContent('#ask-pending-label')) === checkingText && (await page.textContent('#ask-pending-q')) === 'how diversified am I',
+      `turnstile on demand: while the check runs the box says ${await page.textContent('#ask-pending-label')}`);
+    check(await page.isDisabled('.ask-form button[type="submit"]') && await page.isHidden('#answer'), 'turnstile on demand: the button is on, or the old answer shows, during the check');
+    check((await page.locator('#ask-check-status').count()) === 0 && (await fake('executes')) === 1, 'turnstile on demand: a status line exists or the check did not start once');
+    await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-checking.png'), fullPage: true });
+    await page.fill('#ask-q', 'something else entirely');
+    await fake('succeed');
+    await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+    check(asks.length === 2 && asks[1].get('q') === 'how diversified am I' && asks[1].get('cf-turnstile-response') === 'ok-browser-101',
+      `turnstile on demand: the question that went again was ${asks[asks.length - 1]}`);
+    check(await page.isEnabled('.ask-form button[type="submit"]') && await page.isHidden('#ask-pending'), 'turnstile on demand: the box is still busy after the answer');
+    // An error: one message with the code and the hint; the box is free; the next question makes a new check.
+    await page.fill('#ask-q', 'and by currency');
+    await page.click('.ask-form button[type="submit"]');
+    await page.waitForSelector('#ask-pending.is-checking', { timeout: 5000 });
+    const handled = await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
+    check(handled === true, `turnstile on demand: the error callback returned ${handled}, not true`);
+    await page.waitForSelector('#answer .answer-title:has-text("Couldn\'t confirm you\'re a person")', { timeout: 5000 });
+    const message = await page.textContent('#answer');
+    check(message.includes('Cloudflare error 110200') && message.includes('Brave') && (await page.locator('#answer .answer').count()) === 1 && message.includes('and by currency'),
+      `turnstile on demand: the error says ${message}`);
+    check(await page.isEnabled('.ask-form button[type="submit"]') && await page.isHidden('#ask-pending') && !(await page.evaluate(() => window.__sawNoTokenCard === true)),
+      'turnstile on demand: after an error the box is busy or the no-token card was drawn');
+    await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-error.png'), fullPage: true });
+    await submit('and by currency');
+    await page.waitForSelector('#ask-pending.is-checking', { timeout: 5000 });
+    check((await fake('executes')) === 3 && (await fake('resets')) === 2, `turnstile on demand: asking again after an error ran the check ${await fake('executes')} times in all`);
+    await page.evaluate(() => window.__fakeTurnstile.unsupported());
+    await page.waitForSelector('#answer:has-text("unsupported")', { timeout: 5000 });
+    check((await page.textContent('#answer')).includes('This browser can\'t run the check'), 'turnstile on demand: an unsupported browser is not told so');
+    await ctx.close();
+  }
+  // Cloudflare asks for a click: the person gets time, and the widget is not swapped for another.
+  {
+    const { ctx, page, asks, fake, submit } = await turnstileContext(browser, 'click', { clock: true });
+    await submit('how diversified am I');
+    await present(page, '#ask-pending-label:has-text("Complete the check if it asks.")');
+    await ctx.clock.fastForward(30000);
+    check((await page.locator('#answer .answer-title:has-text("Couldn")').count()) === 0 && (await fake('renders')).length === 1 && (await fake('removes')) === 0,
+      'turnstile on demand: a widget that asked for a click timed out, or was swapped, within 30 seconds');
+    await page.evaluate(() => window.__fakeTurnstile.succeed());
+    await settle(ctx);
+    await present(page, '#answer .used-card');
+    await ctx.close();
+  }
+  // A check that does not finish in 15 seconds is called timed out; before that, the stalled invisible one is swapped for a visible one.
+  {
+    const { ctx, page, asks, posts, fake, submit } = await turnstileContext(browser, 'manual', { clock: true });
+    await submit('how diversified am I');
+    await present(page, '#ask-pending.is-checking');
+    await ctx.clock.fastForward(7000);
+    check((await fake('renders')).length === 1 && (await page.textContent('#ask-pending-label')) === checkingText, 'turnstile on demand: the widget was swapped before it had waited');
+    check((await page.inputValue('#ask-check-path')) === 'invisible', 'turnstile on demand: the path was not invisible before the fallback');
+    await ctx.clock.fastForward(1500);
+    const rendered = await fake('renders');
+    check(rendered.length === 2 && rendered[1].appearance === 'always' && rendered[1].execution === 'execute' && (await fake('removes')) === 1 && (await fake('executes')) === 2,
+      `turnstile on demand: the stalled widget became ${JSON.stringify(rendered)}`);
+    check((await page.textContent('#ask-pending-label')) === checkingText + ' Complete the check below.' && (await page.inputValue('#ask-check-path')) === 'visible-fallback',
+      `turnstile on demand: after the swap the box says ${await page.textContent('#ask-pending-label')}`);
+    await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-fallback.png'), fullPage: true });
+    await ctx.clock.fastForward(16000);
+    await present(page, '#answer:has-text("The check timed out (timeout)")');
+    check((await page.textContent('#answer')).includes('Brave') && await page.isEnabled('.ask-form button[type="submit"]'), 'turnstile on demand: the timeout message lacks the hint, or the box stays busy');
+    // The next question starts with the visible widget, which the person ticks: the question goes with its path.
+    await submit('how diversified am I');
+    await present(page, '#ask-pending.is-checking');
+    check((await fake('renders')).length === 2 && (await fake('removes')) === 1 && (await fake('executes')) === 3 && (await fake('resets')) === 1,
+      'turnstile on demand: the next check did not start with the visible widget');
+    await page.evaluate(() => window.__fakeTurnstile.succeed());
+    await settle(ctx);
+    await present(page, '#answer .used-card');
+    const last = asks[asks.length - 1];
+    check(last.get('ask-check-path') === 'visible-fallback' && last.get('cf-turnstile-response').startsWith('ok-browser-'), `turnstile on demand: the question went as ${last}`);
+    // What the page reported (D-227), with no word typed and no token.
+    await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
+    await ctx.clock.fastForward(3000);
+    await new Promise((resolve) => setTimeout(resolve, 500)); // the beacons leave the page after the clock moves
+    const sentEvents = posts.flatMap((p) => JSON.parse(p).events);
+    const kinds = sentEvents.map((e) => e.k);
+    check(['turnstile-execute', 'turnstile-script-loaded', 'turnstile-timeout', 'turnstile-fallback-shown', 'turnstile-error', 'turnstile-success'].every((k) => kinds.includes(k)),
+      `client events: the page reported ${kinds.join(', ')}`);
+    check(kinds.indexOf('turnstile-execute') < kinds.indexOf('turnstile-timeout') && kinds.indexOf('turnstile-timeout') < kinds.indexOf('turnstile-fallback-shown'),
+      `client events: the states came in the order ${kinds.join(', ')}`);
+    const success = sentEvents.find((e) => e.k === 'turnstile-success');
+    check(success && success.path === 'visible-fallback' && Number.isInteger(success.ms), `client events: the success was ${JSON.stringify(success)}`);
+    const timeout = sentEvents.find((e) => e.k === 'turnstile-error' && e.code === 'timeout') || sentEvents.find((e) => e.k === 'turnstile-error');
+    check(timeout !== undefined, 'client events: the failure was not reported');
+    const everything = posts.join('\n');
+    check(!everything.includes('how diversified') && !/ok-browser-/.test(everything), 'client events: the payload holds what was typed or a token');
+    const allowed = new Set(['k', 'ms', 'code', 'path', 'msg', 'src', 'line', 'status', 'brave']);
+    check(sentEvents.every((e) => Object.keys(e).every((key) => allowed.has(key))), 'client events: an event carries a field outside the vocabulary');
+    await ctx.close();
+  }
+  // Cloudflare's script is blocked (an extension, Brave's Shields): one message that says to allow it.
+  {
+    const { ctx, page, submit } = await turnstileContext(browser, 'manual', { clock: true, block: true });
+    await submit('how diversified am I');
+    await present(page, '#ask-pending.is-checking');
+    await ctx.clock.fastForward(9000);
+    await present(page, '#answer:has-text("Your browser blocked the check (blocked)")');
+    const said = await page.textContent('#answer');
+    check(said.includes('Allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload.'), `turnstile on demand: with the script blocked the answer says ${said}`);
+    await ctx.close();
+  }
 }
 
-// turnstileFallback checks what the Ask box does when the invisible check stalls, as on Brave for Android, where the widget's script
-// loads but no token, no before-interactive callback and no error ever arrive (D-208): about ten seconds after the page (a fake
-// clock) the widget is removed and rendered again as the visible one, the line says to complete the check below, and once a token
-// comes the line says "Ready" and the next question carries the token and the path "visible-fallback". A check that completes by
-// itself never gets a second widget, and a widget that asked for a click (before-interactive) is left alone.
-async function turnstileFallback(browser) {
-  const phone = { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true };
-  const fresh = async (stall) => {
-    const ctx = await browser.newContext(phone);
-    await ctx.addInitScript((manual) => { window.__fakeTurnstileManual = manual; }, stall);
-    await ctx.route('https://challenges.cloudflare.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: fakeTurnstileScript }));
-    await ctx.clock.install();
+// askProgress checks, with no Turnstile and a model, what a person sees while a question is in flight (the response is held back): the
+// question echoed under the field with a quiet animated indicator (a still one under prefers-reduced-motion), "Thinking…" for a model
+// and "Looking it up…" for a chip, the Ask button off and the old answer out of the way; then the answer directly under the field and
+// in view, one attribution line, the help folded away behind "How this works", the suggestions in one row that scrolls on its own and
+// no sideways page scroll at 360 px.
+async function askProgress(browser) {
+  for (const reduced of [false, true]) {
+    const ctx = await context(browser, { viewport: { width: 360, height: 780 }, isMobile: true, hasTouch: true, reducedMotion: reduced ? 'reduce' : 'no-preference' }, true);
     const page = await ctx.newPage();
-    // What the page reports about itself (D-227): the bodies of its posts to /client-events.
-    const posts = [];
-    page.on('request', (r) => { if (r.method() === 'POST' && r.url().endsWith('/client-events')) { posts.push(r.postData() || ''); } });
-    await page.goto(turnstileBase + '/test/sign-in');
-    await page.goto(turnstileBase + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
-    return { ctx, page, posts };
-  };
-  const checking = 'Checking you\'re a person…';
-  // The stall: nothing ever calls back.
-  const { ctx, page, posts } = await fresh(true);
-  const text = () => page.textContent('#ask-check-status');
-  const renders = () => page.evaluate(() => window.__fakeTurnstile.renders());
-  await ctx.clock.fastForward(9000);
-  check((await text()) === checking && (await renders()).length === 0, `turnstile fallback: before ten seconds the line says ${await text()} with ${(await renders()).length} renders`);
-  check((await page.inputValue('#ask-check-path')) === 'invisible', 'turnstile fallback: the path was not invisible before the fallback');
-  await ctx.clock.fastForward(1500);
-  const rendered = await renders();
-  check(rendered.length === 1 && rendered[0].appearance === 'always' && rendered[0].sitekey.length > 0
-    && rendered[0].callbacks.join() === 'before-interactive-callback,callback,error-callback,expired-callback,unsupported-callback',
-  `turnstile fallback: the widget was rendered as ${JSON.stringify(rendered)}, not once, visible, with its five callbacks`);
-  check((await page.evaluate(() => window.__fakeTurnstile.removes())) === 1, 'turnstile fallback: the invisible widget was not removed first');
-  check((await text()) === 'The check didn\'t finish by itself. Complete the check below.', `turnstile fallback: after the fallback the line says ${await text()}`);
-  check((await page.inputValue('#ask-check-path')) === 'visible-fallback', 'turnstile fallback: the path field does not say visible-fallback');
-  await ctx.clock.fastForward(11000);
-  check((await text()) === 'The person check is still waiting. Complete the check below. Or reload the page.', `turnstile fallback: after twenty seconds the line says ${await text()}`);
-  await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile-fallback.png'), fullPage: true });
-  // The person ticks the box: a token arrives.
-  await page.evaluate(() => window.__fakeTurnstile.succeed());
-  check((await text()) === 'Ready', `turnstile fallback: with a token the line says ${await text()}`);
-  const token = await page.inputValue('input[name="cf-turnstile-response"]');
-  await page.fill('#ask-q', 'how diversified am I');
-  const [request] = await Promise.all([
-    page.waitForRequest((r) => r.url().includes('/ask?')),
-    page.click('.ask-form button[type="submit"]'),
-  ]);
-  const sent = new URL(request.url()).searchParams;
-  check(token.startsWith('ok-browser-') && sent.get('cf-turnstile-response') === token && sent.get('ask-check-path') === 'visible-fallback',
-    `turnstile fallback: the next question carried ${request.url()}, not the token ${token} and the path visible-fallback`);
-  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
-  // The page reported each state change (D-227): the script loading, the timeout, the fallback, the token and its path, and a
-  // payload that holds no word the person typed and no token.
-  await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
-  await page.evaluate(() => window.__fakeTurnstile.unsupported());
-  await ctx.clock.fastForward(3000);
-  await new Promise((resolve) => setTimeout(resolve, 500)); // the beacons leave the page after the clock moves
-  const sentEvents = posts.flatMap((p) => JSON.parse(p).events);
-  const kinds = sentEvents.map((e) => e.k);
-  check(['turnstile-script-loaded', 'turnstile-timeout', 'turnstile-fallback-shown', 'turnstile-success', 'turnstile-error', 'turnstile-unsupported']
-    .every((k) => kinds.includes(k)), `client events: the page reported ${kinds.join(', ')}`);
-  check(kinds.indexOf('turnstile-timeout') < kinds.indexOf('turnstile-fallback-shown') && kinds.indexOf('turnstile-fallback-shown') < kinds.indexOf('turnstile-success'),
-    `client events: the states came in the order ${kinds.join(', ')}`);
-  const success = sentEvents.find((e) => e.k === 'turnstile-success');
-  check(success && success.path === 'visible-fallback' && Number.isInteger(success.ms) && success.ms >= 10000, `client events: the success was ${JSON.stringify(success)}`);
-  const failure = sentEvents.find((e) => e.k === 'turnstile-error');
-  check(failure && failure.code === '110200', `client events: the error was ${JSON.stringify(failure)}`);
-  const everything = posts.join('\n');
-  check(!everything.includes('how diversified') && !everything.includes(token) && !/ok-browser-/.test(everything),
-    'client events: the payload holds what was typed or a token');
-  const allowed = new Set(['k', 'ms', 'code', 'path', 'msg', 'src', 'line', 'status', 'brave']);
-  check(sentEvents.every((e) => Object.keys(e).every((key) => allowed.has(key))), 'client events: an event carries a field outside the vocabulary');
-  await ctx.close();
-  // A widget that asked for a click is already visible: no second widget.
-  const asked = await fresh(true);
-  await asked.page.evaluate(() => window.__fakeTurnstile.interactive());
-  await asked.ctx.clock.fastForward(15000);
-  check((await asked.page.evaluate(() => window.__fakeTurnstile.renders())).length === 0, 'turnstile fallback: a widget that asked for a click was rendered again');
-  check((await asked.page.inputValue('#ask-check-path')) === 'invisible', 'turnstile fallback: a widget that asked for a click changed the path');
-  await asked.ctx.close();
-  // A check that completes by itself is left alone.
-  const quick = await fresh(false);
-  await quick.ctx.clock.fastForward(15000);
-  check((await quick.page.evaluate(() => window.__fakeTurnstile.renders())).length === 0 && (await quick.page.textContent('#ask-check-status')) === 'Ready',
-    'turnstile fallback: a check that finished by itself was rendered again or is not Ready');
-  await quick.ctx.close();
+    await page.goto(base + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+    const tag = reduced ? 'reduced motion' : 'motion';
+    check((await page.locator('details.ask-howto:not([open])').count()) === 1 && await page.isHidden('#ask-help'), `ask ux (${tag}): the help is not folded behind "How this works"`);
+    check((await page.textContent('details.ask-howto summary')) === 'How this works' && (await page.locator('#ask-check-status').count()) === 0, `ask ux (${tag}): the summary or a status line is wrong`);
+    check((await page.locator('.chips-row').count()) === 1 && (await page.locator('.chips-row .chip').count()) > 1, `ask ux (${tag}): the suggestions are not in one group`);
+    const tops = await page.locator('.chips-row .chip').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+    const heights = await page.locator('.chips-row .chip').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height));
+    check(new Set(tops).size === 1 && heights.every((h) => h >= 44), `ask ux (${tag}): the chips are not one row of tall targets: ${tops} ${heights}`);
+    check((await page.locator('.chips-row').evaluate((el) => el.scrollWidth > el.clientWidth)) && (await sideways(page)) <= 0, `ask ux (${tag}): the chips row does not scroll on its own, or the page does`);
+    await page.screenshot({ path: path.join(out, `phone360-light-ask-home-${reduced ? 'reduced' : 'motion'}.png`) });
+    // The response is held back so the in-flight state can be seen.
+    let release;
+    const held = new Promise((resolve) => { release = resolve; });
+    await page.route('**/ask?*', async (route) => { await held; await route.continue(); });
+    await page.fill('#ask-q', 'how diversified am I');
+    await page.click('.ask-form button[type="submit"]');
+    await page.waitForSelector('#ask-pending.htmx-request', { state: 'visible', timeout: 5000 });
+    check((await page.textContent('#ask-pending-q')) === 'how diversified am I' && (await page.textContent('#ask-pending-label')) === 'Thinking…',
+      `ask ux (${tag}): the pending answer says ${await page.textContent('#ask-pending-q')} / ${await page.textContent('#ask-pending-label')}`);
+    check(await page.isDisabled('.ask-form button[type="submit"]'), `ask ux (${tag}): the Ask button is on while a question is in flight`);
+    const animation = await page.locator('.dots i').first().evaluate((el) => getComputedStyle(el).animationName);
+    check(reduced ? animation === 'none' : animation !== 'none', `ask ux (${tag}): the indicator's animation is ${animation}`);
+    const pendingBox = await page.locator('#ask-pending').boundingBox();
+    const fieldBox = await page.locator('.ask-field').boundingBox();
+    check(pendingBox.y > fieldBox.y && pendingBox.y - (fieldBox.y + fieldBox.height) < 120, `ask ux (${tag}): the pending answer is not directly under the field`);
+    await page.screenshot({ path: path.join(out, `phone360-light-ask-pending-${reduced ? 'reduced' : 'motion'}.png`) });
+    release();
+    await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+    await page.unroute('**/ask?*');
+    check(await page.isHidden('#ask-pending') && await page.isEnabled('.ask-form button[type="submit"]'), `ask ux (${tag}): the progress stays after the answer`);
+    // The answer is directly under the field (the suggestions come after it), in view, with ONE attribution line.
+    const answerBox = await page.locator('#answer .conversation').boundingBox();
+    const fieldNow = await page.locator('.ask-field').boundingBox();
+    const chipsBox = await page.locator('.chips-row').boundingBox();
+    const viewport = page.viewportSize();
+    check(answerBox.y > fieldNow.y && answerBox.y < chipsBox.y && answerBox.y >= 0 && answerBox.y < viewport.height, `ask ux (${tag}): the answer is not directly under the field and in view (${answerBox.y} vs chips ${chipsBox.y})`);
+    const text = await page.textContent('#answer');
+    check((text.match(/Answered by/g) || []).length === 1 && !text.includes('it read only the cards below') && (await page.locator('#answer .answer-head').count()) === 0,
+      `ask ux (${tag}): the answer carries more than one attribution line`);
+    const note = await page.textContent('#answer .ask-note');
+    check(note.includes('used 1 card') && note.includes('AI can be wrong; check the cards. Not investment advice.') && note.includes('How models did in our evaluation'), `ask ux (${tag}): the note says ${note}`);
+    check((await sideways(page)) <= 0, `ask ux (${tag}): the answer scrolls sideways at 360 px`);
+    await page.screenshot({ path: path.join(out, `phone360-light-ask-answered-${reduced ? 'reduced' : 'motion'}.png`), fullPage: true });
+    // A chip is answered with "Looking it up…" and a command's answer says it needs no model.
+    await page.route('**/ask?*', async (route) => { await new Promise((r) => setTimeout(r, 400)); await route.continue(); });
+    await page.click('.chips-row .chip >> nth=0');
+    await page.waitForSelector('#ask-pending.htmx-request', { state: 'visible', timeout: 5000 });
+    check((await page.textContent('#ask-pending-label')) === 'Looking it up…', `ask ux (${tag}): a chip's pending answer says ${await page.textContent('#ask-pending-label')}`);
+    await page.waitForSelector('#answer .answer', { timeout: 5000 });
+    await page.click('details.ask-howto summary');
+    check(await page.isVisible('#ask-help'), `ask ux (${tag}): "How this works" does not open`);
+    await ctx.close();
+  }
 }
+
 
 // withoutTurnstile checks that the first UI, which has no Turnstile, has no widget and loads nothing from Cloudflare.
 async function withoutTurnstile(browser) {
@@ -598,6 +679,27 @@ async function withoutTurnstile(browser) {
   await ctx.close();
 }
 
+// present waits, in real time, for a selector to match: Playwright's own wait polls on the page's timers, which a fake clock holds.
+async function present(page, selector) {
+  for (let i = 0; i < 100; i++) {
+    if ((await page.locator(selector).count()) > 0) {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  throw new Error(`${selector} did not appear`);
+}
+
+// settle lets htmx finish a request under a fake clock: its response is handled on timers the clock holds, so the clock runs a little,
+// and the network gets real time, a few times over.
+async function settle(ctx) {
+  for (let i = 0; i < 4; i++) {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    await ctx.clock.runFor(250);
+  }
+}
+
+// sideways returns how many pixels the page scrolls sideways.
 async function sideways(page) {
   return page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 }
@@ -935,8 +1037,8 @@ try {
   await askModelBox(browser);
   await withoutTurnstile(browser);
   await turnstileBox(browser);
-  await turnstileStatus(browser);
-  await turnstileFallback(browser);
+  await turnstileOnDemand(browser);
+  await askProgress(browser);
   await recordPages(browser);
   await passkeyCheck(browser);
   await people(browser);

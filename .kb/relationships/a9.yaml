@@ -1133,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcece7b16a41
+  - type: executable_for
+    from: SYM-ui-turnstile-test-check-needed-signal
+    to: TEST-ui-turnstile
+    created_at: 2026-11-19T16:50:00.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80af3b1414c8

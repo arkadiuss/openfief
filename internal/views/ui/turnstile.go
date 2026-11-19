@@ -31,9 +31,14 @@ const (
 	turnstileTimeout = 5 * time.Second
 	// maxTurnstileReply bounds what is read of Cloudflare's answer.
 	maxTurnstileReply = 16 << 10
+	// checkNeededTrigger is the HX-Trigger event a response names when the
+	// question needs the check and came without a token: htmx fires it on the
+	// form, and ask.js runs the check and asks again. It is a fixed word, and
+	// only the no-token verdict sends it.
+	checkNeededTrigger = "openfief-check-needed"
 	// turnstileScript and turnstileOrigin are where the widget's script comes from
 	// and the one origin the page's policy then allows beyond its own.
-	turnstileScript = "https://challenges.cloudflare.com/turnstile/v0/api.js"
+	turnstileScript = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
 	turnstileOrigin = "https://challenges.cloudflare.com"
 )
 
@@ -298,13 +303,21 @@ func hostOnly(host string) string {
 // checkNeededAnswer is the answer to a question that came with no token: the
 // widget had not finished or did not load. The check runs in the browser, so
 // nothing was sent to Cloudflare.
+//
+// The page's script answers it before the person sees it: the card carries
+// CheckNeeded, which makes the response say so (checkNeededTrigger), and the
+// script runs the check and asks the same question again with its token. The
+// card itself is what a browser without that script, or a link without htmx,
+// shows.
 func checkNeededAnswer(question string) answerCard {
-	return modelCard(question, "A check comes before the model answers",
-		"No result of the check reached OpenFief with your question: it hadn't finished, or it didn't load. "+
-			"Wait until the line under the Ask field says it is ready, then ask again, or reload the page. "+
+	card := modelCard(question, "A check comes before the model answers",
+		"No result of the check reached OpenFief with your question: it didn't run, or it didn't load. "+
+			"Ask again, or reload the page. "+
 			"The check needs JavaScript and a connection to challenges.cloudflare.com, which some browsers or blockers stop. "+
 			"If your browser blocked it, allow challenges.cloudflare.com for this site (in Brave: turn Shields off for it), then reload. "+
 			"The commands answer without it.")
+	card.CheckNeeded = true
+	return card
 }
 
 // checkRefusedAnswer is the answer to a question whose token Cloudflare refused,
@@ -316,7 +329,7 @@ func checkRefusedAnswer(question string, codes []string) answerCard {
 	}
 	return modelCard(question, "Cloudflare refused the check",
 		"Cloudflare didn't accept the result of the check ("+shown+"). "+
-			"A new check is being made; ask again in a moment. "+
+			"Ask again to run a new check. "+
 			"The commands answer without it.")
 }
 

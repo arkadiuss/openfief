@@ -439,7 +439,7 @@ func TestTheClientAsksTheSchemaOnlyForTheAnswer(t *testing.T) {
 	)
 	rec := h.asks(t, ownerSession, "how am I doing?")
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "It is 10.", "Answered by p/m")
+	wantBody(t, rec, "It is 10.", "Answered by m")
 	h.askModel.mu.Lock()
 	defer h.askModel.mu.Unlock()
 	if diff := cmp.Diff([]string{"", "", askAnswerSchemaJSON}, h.askModel.schemas); diff != "" {
@@ -466,7 +466,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		rec := h.asks(t, ownerSession, "I mean the fund")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
-			"Which fund do you mean?", "From p/m · it asks which you mean", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
+			"Which fund do you mean?", "From m", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
 			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-get="/ask?q=Show&#43;Synthetic&#43;Fund"`, `>Synthetic Fund</a>`, `>Synthetic brokerage</a>`,
 		)
 		// A name no card the model read holds is dropped, and never drawn.
@@ -480,7 +480,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		rec := h.asks(t, ownerSession, "sell everything")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
-			"I can only read, so I can&#39;t sell anything.", "From p/m · it can't do that", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
+			"I can only read, so I can&#39;t sell anything.", "From m", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
 			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-get="/ask?q=Allocation&#43;by&#43;currency"`, `>Allocation by currency</a>`, `>Performance this year</a>`,
 		)
 		wantNoBody(t, rec, `class="chips ask-choices"`, "Answered by", `class="used-card"`, "Write me a poem")

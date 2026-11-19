@@ -63,6 +63,7 @@ const (
 // check began; the others carry what the browser says of an error or a failed
 // request.
 const (
+	evExecute           = "turnstile-execute"
 	evScriptLoaded      = "turnstile-script-loaded"
 	evBeforeInteractive = "turnstile-before-interactive"
 	evSuccess           = "turnstile-success"
@@ -81,7 +82,7 @@ const (
 // is dropped.
 func knownClientKind(kind string) bool {
 	switch kind {
-	case evScriptLoaded, evBeforeInteractive, evSuccess, evError, evExpired, evTimeout,
+	case evExecute, evScriptLoaded, evBeforeInteractive, evSuccess, evError, evExpired, evTimeout,
 		evUnsupported, evFallbackShown, evBlockedScript, evSlow, evScriptError, evRequestFailed:
 		return true
 	}

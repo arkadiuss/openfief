@@ -1,5 +1,5 @@
 ---
-title: A failed Turnstile check says why on the card and in a status line
+title: A failed Turnstile check says why, on the card or in one message in the answer
 status: active
 origin:
   kind: agent
@@ -8,4 +8,4 @@ origin:
 id: SCEN-ui-turnstile-failures-visible
 type: scenario
 ---
-Given a UI with Turnstile configured and a model on the Ask box, when a question comes with no token, with a token Cloudflare refuses, with one made for another host, or when the check can't be made, then each gets its own card (the refusal listing Cloudflare's error codes, the other host naming both hosts) and nothing is sent or counted; and in the browser the status line under the field is a polite live region that says the check is running, is ready once a token arrives, and shows the widget's error code with what to do when it fails or when Cloudflare's script is blocked.
+Given a UI with Turnstile configured and a model on the Ask box, when a question comes with no token, with a token Cloudflare refuses, with one made for another host, or when the check can't be made, then each gets its own card (the refusal listing Cloudflare's error codes, the other host naming both hosts) and nothing is sent or counted; and in the browser, when the check cannot finish because Cloudflare reports an error, no token comes in 15 seconds, the script is blocked or the browser is unsupported, the answer area shows one message with the code or a fixed word and what to do, and the box is free to ask again.

@@ -1238,3 +1238,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91d2fbb0f6c5
+  - type: verified_by
+    from: SCEN-ui-ask-turnstile-on-demand
+    to: TEST-ui-turnstile
+    created_at: 2026-11-19T16:26:10.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-859bc2b26512
+  - type: verified_by
+    from: SCEN-ui-ask-turnstile-on-demand
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-19T16:26:10.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26b83605ae0f

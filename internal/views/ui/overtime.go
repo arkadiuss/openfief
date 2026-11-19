@@ -167,6 +167,9 @@ func (s *server) askFragment(w http.ResponseWriter, r *http.Request, sess sessio
 		s.coreFailed(w, r, "ask", err)
 		return
 	}
+	if card.CheckNeeded {
+		w.Header().Set(hxTrigger, checkNeededTrigger)
+	}
 	s.showTemplate(w, r, http.StatusOK, "overview", "ask-answer", card)
 }
 

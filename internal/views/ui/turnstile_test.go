@@ -288,15 +288,16 @@ func TestAskBoxShowsTheWidgetOnlyWhereTurnstileIsOnAndAModelAnswers(t *testing.T
 	h, _, _ := turnstileHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `class="ask-check cf-turnstile"`, `data-sitekey="`+siteKeyForTests+`"`, `data-appearance="interaction-only"`, script,
-		`data-callback="openfiefCheckDone"`, `data-error-callback="openfiefCheckError"`, `data-expired-callback="openfiefCheckExpired"`,
-		`data-before-interactive-callback="openfiefCheckInteractive"`, `id="ask-check-status"`, `role="status"`, `aria-live="polite"`)
+	wantBody(t, rec, `class="ask-check"`, `id="ask-check"`, `data-sitekey="`+siteKeyForTests+`"`, script, `data-check="1"`, `id="ask-pending"`, `role="status"`)
+	// The widget is rendered on demand by ask.js, outside the form, in the explicit form: nothing renders it by itself, and the page
+	// has no status line for it.
+	wantNoBody(t, rec, "cf-turnstile\"", "data-appearance", "data-callback", "ask-check-status")
 	// Without Turnstile there is no widget and no script.
 	plain := newHarness(t)
 	plain.askModel.turnOn("T0", "T2")
 	rec = plain.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantNoBody(t, rec, "cf-turnstile", "challenges.cloudflare.com", "data-sitekey", "ask-check-status")
+	wantNoBody(t, rec, "cf-turnstile", "challenges.cloudflare.com", "data-sitekey", "ask-check")
 }
 
 func TestAskBoxShowsNoWidgetWhenNoModelAnswers(t *testing.T) {
@@ -338,7 +339,7 @@ func TestAskBoxPassesAQuestionWithAGoodToken(t *testing.T) {
 	req.Header.Set(openfief.ClientIPHeader, "198.51.100.7")
 	rec := h.serve(t, req)
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Answered by p/m")
+	wantBody(t, rec, "Answered by m")
 	if h.askModel.generated() == 0 {
 		t.Error("the model was not asked after the check passed")
 	}
@@ -367,7 +368,7 @@ func TestAskBoxStopsAQuestionTheCheckRefusesBeforeAnythingIsSentOrCounted(t *tes
 		},
 		{
 			name: "a forged token", token: "forged",
-			want:   []string{"Cloudflare refused the check", "error codes: invalid-input-response", "A new check is being made; ask again"},
+			want:   []string{"Cloudflare refused the check", "error codes: invalid-input-response", "Ask again to run a new check"},
 			wantNo: []string{"A check comes before the model answers", "forged"},
 		},
 		{
@@ -488,7 +489,7 @@ func TestTurnstileAnswerByVerdict(t *testing.T) {
 		},
 		{
 			name: "refused with codes", outcome: turnstileOutcome{verdict: turnstileRejected, codes: []string{"timeout-or-duplicate"}}, stopped: true, title: "Cloudflare refused the check",
-			text: []string{"error codes: timeout-or-duplicate", "A new check is being made"},
+			text: []string{"error codes: timeout-or-duplicate", "Ask again to run a new check"},
 		},
 		{
 			name: "refused with none", outcome: turnstileOutcome{verdict: turnstileRejected}, stopped: true, title: "Cloudflare refused the check",
@@ -539,7 +540,7 @@ func TestAskBoxASingleUseTokenCannotAskTwice(t *testing.T) {
 	t.Parallel()
 	h, _, _ := turnstileHarness(t)
 	first := h.asksWithToken(t, ownerSession, "how diversified am I?", "ok-1")
-	wantBody(t, first, "Answered by p/m")
+	wantBody(t, first, "Answered by m")
 	again := h.asksWithToken(t, ownerSession, "and by currency?", "ok-1")
 	wantBody(t, again, "Cloudflare refused the check", "timeout-or-duplicate")
 	wantNoBody(t, again, "Answered by")
@@ -599,5 +600,48 @@ func TestNewRefusesTurnstileWithoutAModelToGuard(t *testing.T) {
 	}
 	if s.turnstile != nil {
 		t.Error("a refused config left a check behind")
+	}
+}
+
+// TestOnlyAModelQuestionWithNoTokenIsToldAChecksNeeded checks the signal the Ask box's script runs the check on (D-208): a response
+// carries the HX-Trigger event "openfief-check-needed" only when a question that goes to the model came with no token. A command, a
+// question with a token Cloudflare accepts, one it refuses, a plain request without htmx and an install with no Turnstile never get
+// it, so the page never runs a check the server does not ask for, and the server still stops the no-token question itself.
+func TestOnlyAModelQuestionWithNoTokenIsToldAChecksNeeded(t *testing.T) {
+	t.Parallel()
+	h, _, _ := turnstileHarness(t)
+	trigger := func(rec *httptest.ResponseRecorder) string { return rec.Header().Get(hxTrigger) }
+
+	rec := h.asksWithToken(t, ownerSession, "how diversified am I?", "")
+	wantStatus(t, rec, http.StatusOK)
+	if got := trigger(rec); got != checkNeededTrigger || checkNeededTrigger != "openfief-check-needed" {
+		t.Errorf("a model question with no token: HX-Trigger = %q, want %q", got, "openfief-check-needed")
+	}
+	// The card is still the no-token card, and nothing reached the model: a page that cannot run the check shows it.
+	wantBody(t, rec, "A check comes before the model answers")
+	wantNoBody(t, rec, "Answered by")
+	wantNothingSentOrCounted(t, h)
+
+	for name, rec := range map[string]*httptest.ResponseRecorder{
+		"a command":           h.asksWithToken(t, ownerSession, "what needs me", ""),
+		"a good token":        h.asksWithToken(t, ownerSession, "how diversified am I?", "ok-1"),
+		"a forged token":      h.asksWithToken(t, ownerSession, "how diversified am I?", "forged"),
+		"a reused token":      h.asksWithToken(t, ownerSession, "how diversified am I?", "ok-1"),
+		"a question too long": h.asksWithToken(t, ownerSession, strings.Repeat("x", maxModelQuestionRunes+1), ""),
+	} {
+		if got := trigger(rec); got != "" {
+			t.Errorf("%s: HX-Trigger = %q, want none", name, got)
+		}
+	}
+
+	// Without htmx the box redirects and tells nothing; without Turnstile a model question is not stopped.
+	plain := h.serve(t, withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"how diversified am I?"}}.Encode(), ""), ownerSession))
+	if got := trigger(plain); got != "" {
+		t.Errorf("a request without htmx: HX-Trigger = %q, want none", got)
+	}
+	open := newHarness(t)
+	open.askModel.turnOn("T0", "T2")
+	if got := trigger(open.asks(t, ownerSession, "how diversified am I?")); got != "" {
+		t.Errorf("an install with no Turnstile: HX-Trigger = %q, want none", got)
 	}
 }

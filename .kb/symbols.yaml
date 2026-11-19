@@ -238752,3 +238752,14 @@ symbols:
         target: TEST-ui-ask-tools
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
+  - id: SYM-ui-turnstile-test-check-needed-signal
+    title: TestOnlyAModelQuestionWithNoTokenIsToldAChecksNeeded
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      ref: Ask box on-demand check, D-208, 2026-11-19
+      recorded_at: 2026-11-19T00:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile

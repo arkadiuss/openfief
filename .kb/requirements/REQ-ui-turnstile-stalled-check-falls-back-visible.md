@@ -1,37 +1,36 @@
 ---
-title: When the Ask box's invisible Turnstile check gives no token, no click request and no error for about ten seconds, the page renders the widget again as a visible checkbox and says to complete the check below; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
+title: When the Ask box's invisible Turnstile check, run because a model question needs it, gives no token, no click request and no error for about eight seconds, the page renders the widget again as a visible checkbox and says to complete the check below, the checks that follow on that page start with the visible widget, and a check with no token 15 seconds after that is called timed out in one message with the code timeout; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
 status: open
 firmness: default
 origin:
   kind: agent
-  ref: 'Design session: Turnstile never completes on Brave for Android, D-208 (pure UX), 2026-11-18'
-  recorded_at: '2026-11-18T21:25:31.967Z'
+  ref: 'Author feedback on demo.openfief.dev from Brave for Android (2026-11-19): a token reported ready but never sent, the check re-running, no progress, too much text; the design session approved the on-demand check and the single attribution note, D-208 and D-222 unchanged'
+  recorded_at: '2026-11-19'
 id: REQ-ui-turnstile-stalled-check-falls-back-visible
 type: req
-semantic_text: When the Ask box's invisible Turnstile check gives no token, no click request and no error for about ten seconds, the page renders the widget again as a visible checkbox and says to complete the check below; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
+semantic_text: When the Ask box's invisible Turnstile check, run because a model question needs it, gives no token, no click request and no error for about eight seconds, the page renders the widget again as a visible checkbox and says to complete the check below, the checks that follow on that page start with the visible widget, and a check with no token 15 seconds after that is called timed out in one message with the code timeout; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: d2d36c46370d495b9a2e1fcaf08ba270cc0329672c4c4ec44d2ba4c7adc177d8
+semantic_source_hash: 2ee590316fbb81df901c8398841a2dddd3b9adc1a4e57074c9ff1b4c4f5bb05e
 semantic_inventory:
-  - claim_key: CLAIM-353EC195CB14E705
-    claim_text: When the Ask box's invisible Turnstile check gives no token, no click request and no error for about ten seconds, the page renders the widget again as a visible checkbox and says to complete the check below
-    role: condition
-    status: ontology_gap
+  - claim_key: CLAIM-F99B99F99FA067D0
+    claim_text: When the Ask box's invisible Turnstile check, run because a model question needs it, gives no token, no click request and no error for about eight seconds, the page renders the widget again as a visible checkbox and says to complete the check below, the checks that follow on that page start with the visible widget, and a check with no token 15 seconds after that is called timed out in one message with the code timeout
+    role: rationale
+    status: nonlogical
     span:
       start: 0
-      end: 206
+      end: 421
   - claim_key: CLAIM-AAE9714B4F103E02
     claim_text: which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown
     role: descriptive
     status: missing
     span:
-      start: 208
-      end: 357
+      start: 423
+      end: 572
 logic_claims:
-  - CLAIM-353EC195CB14E705
   - CLAIM-AAE9714B4F103E02
 ---
-When the Ask box's invisible Turnstile check gives no token, no click request and no error for about ten seconds, the page renders the widget again as a visible checkbox and says to complete the check below; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
+When the Ask box's invisible Turnstile check, run because a model question needs it, gives no token, no click request and no error for about eight seconds, the page renders the widget again as a visible checkbox and says to complete the check below, the checks that follow on that page start with the visible widget, and a check with no token 15 seconds after that is called timed out in one message with the code timeout; which path completed, invisible or visible fallback, is logged beside the verdict as one of two fixed words and nothing typed is ever logged or shown.
 
 ## Context
 
