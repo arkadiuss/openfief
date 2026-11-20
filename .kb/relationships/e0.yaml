@@ -1336,3 +1336,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f6dfdcc51cf
+  - type: specified_by
+    from: REQ-demo-grafana-notifications
+    to: SCEN-demo-grafana-notifications
+    created_at: 2026-11-20T22:31:04.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e07fc563bd84

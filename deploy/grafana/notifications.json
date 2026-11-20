@@ -1,0 +1,10 @@
+{
+  "integration": {
+    "name": "OpenFief demo",
+    "slackChannelId": "C0CKVMNDTK6"
+  },
+  "contactPoint": {
+    "uid": "openfief-demo-irm",
+    "name": "OpenFief demo (IRM → Slack)"
+  }
+}

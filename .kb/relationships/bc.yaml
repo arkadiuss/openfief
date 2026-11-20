@@ -1364,3 +1364,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c8d6621b0a3
+  - type: covered_by
+    from: SYM-grafana-apply-grafana-contact-point
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T22:29:43.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3b539d3413
+  - type: implements
+    from: SYM-grafana-apply-grafana-contact-point
+    to: REQ-demo-grafana-notifications
+    created_at: 2026-11-20T22:29:44.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2851452da1de

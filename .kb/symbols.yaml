@@ -240645,3 +240645,98 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-telemetry-scrub
+  - id: SYM-grafana-apply-grafana-oncall-base
+    title: grafana_oncall_base
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:16.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-apply-grafana-integration
+    title: grafana_integration
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:21.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-apply-grafana-contact-point
+    title: grafana_contact_point
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:26.659Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-apply-grafana-policy
+    title: grafana_policy
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:32.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-apply-grafana-notifications
+    title: grafana_notifications
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:38.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-check-check-notifications
+    title: check_notifications
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:44.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-notifications
+  - id: SYM-grafana-apply-grafana-mem
+    title: grafana_mem
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: route the demo''s Grafana alerts to Slack #openfief-demo through Grafana IRM, provisioned by task grafana:apply (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T22:30:50.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
