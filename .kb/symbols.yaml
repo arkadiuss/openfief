@@ -240623,3 +240623,25 @@ symbols:
         target: TEST-tooling-grafana-apply
       - type: implements
         target: REQ-demo-grafana-as-code
+  - id: SYM-demo-scrub-test-flattened
+    title: flattened
+    status: active
+    sourceFile: internal/demo/scrub_test.go
+    origin:
+      kind: agent
+      ref: 'Orchestrator check of the live demo telemetry: Postgres nested record attributes passed the scrub, 2026-11-20'
+      recorded_at: 2026-11-20T13:35:54.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-reaches-nested-log-attributes
+    title: TestScrubReachesNestedLogAttributes
+    status: active
+    sourceFile: internal/demo/scrub_test.go
+    origin:
+      kind: agent
+      ref: 'Orchestrator check of the live demo telemetry: Postgres nested record attributes passed the scrub, 2026-11-20'
+      recorded_at: 2026-11-20T13:36:00.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub

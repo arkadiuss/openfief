@@ -37,12 +37,13 @@ const redacted = "[redacted]"
 
 // rule is one statement of transform/scrub, understood.
 type rule struct {
-	// fn is delete_matching_keys, replace_all_patterns or replace_pattern.
+	// fn is flatten, delete_matching_keys, replace_all_patterns or
+	// replace_pattern.
 	fn string
 	// path is what it works on: <context>.attributes, log.body, span.name or
 	// span.status.message.
 	path string
-	// re is its regular expression.
+	// re is its regular expression; flatten has none.
 	re *regexp.Regexp
 }
 
@@ -52,6 +53,7 @@ var errUnknownForm = errors.New("a form of statement the test does not understan
 var (
 	deleteStatement  = regexp.MustCompile(`^delete_matching_keys\(([a-z]+\.attributes), "(.*)"\)$`)
 	replaceAllStmt   = regexp.MustCompile(`^replace_all_patterns\(([a-z]+\.attributes), "value", "(.*)", "\[redacted\]"\)$`)
+	flattenStatement = regexp.MustCompile(`^flatten\(([a-z]+\.attributes)\)$`)
 	replaceStatement = regexp.MustCompile(`^replace_pattern\(([a-z.]+), "(.*)", "\[redacted\]"\)( where IsString\(log\.body\))?$`)
 )
 
@@ -110,6 +112,9 @@ func stringList(v any) []string {
 
 // parseStatement understands one statement, or says why not.
 func parseStatement(s string) (rule, error) {
+	if m := flattenStatement.FindStringSubmatch(s); m != nil {
+		return rule{fn: "flatten", path: m[1]}, nil
+	}
 	for _, form := range []struct {
 		fn string
 		re *regexp.Regexp
@@ -153,12 +158,17 @@ func rulesOf(t *testing.T, cfg map[string]any, kind, context string) []rule {
 }
 
 // scrubAttributes applies a context's rules to attributes the way the
-// collector does: delete_matching_keys removes each key that matches, and
-// replace_all_patterns rewrites each match in each string value; other values
-// are left as they are.
+// collector does: flatten turns nested maps into dotted keys,
+// delete_matching_keys removes each top-level key that matches, and
+// replace_all_patterns rewrites each match in each top-level string value;
+// other values, nested maps among them, are left as they are.
 func scrubAttributes(rules []rule, attrs map[string]any) map[string]any {
 	out := maps.Clone(attrs)
 	for _, r := range rules {
+		if r.fn == "flatten" {
+			out = flattened(out)
+			continue
+		}
 		for k, v := range out {
 			switch s, isString := v.(string); {
 			case r.fn == "delete_matching_keys" && strings.HasSuffix(r.path, ".attributes") && r.re.MatchString(k):
@@ -167,6 +177,22 @@ func scrubAttributes(rules []rule, attrs map[string]any) map[string]any {
 				out[k] = r.re.ReplaceAllString(s, redacted)
 			}
 		}
+	}
+	return out
+}
+
+// flattened returns attrs with each nested map's keys joined to its own with
+// a dot, at every depth, as OTTL's flatten does.
+func flattened(attrs map[string]any) map[string]any {
+	out := map[string]any{}
+	for k, v := range attrs {
+		if m, isMap := v.(map[string]any); isMap {
+			for nk, nv := range flattened(m) {
+				out[k+"."+nk] = nv
+			}
+			continue
+		}
+		out[k] = v
 	}
 	return out
 }
@@ -429,5 +455,31 @@ func TestCollectorPipelinesScrubBeforeTheExporter(t *testing.T) {
 	}
 	if exporters := object(lookup(cfg, "exporters")); len(exporters) != 1 {
 		t.Errorf("the configuration has %d exporters; want only otlphttp/grafana", len(exporters))
+	}
+}
+
+// TestScrubReachesNestedLogAttributes checks that a JSON log's nested object,
+// such as Postgres's record, is scrubbed at every level: the log context
+// flattens its attributes before the key and value rules, which read only the
+// top level, so a nested session ID or user agent is dropped and a nested
+// address rewritten
+// (TEST-demo-telemetry-scrub).
+func TestScrubReachesNestedLogAttributes(t *testing.T) {
+	t.Parallel()
+	rules := rulesOf(t, loadConfig(t), "log_statements", "log")
+	if len(rules) == 0 || rules[0].fn != "flatten" {
+		t.Fatalf("the log context's first statement is not flatten(log.attributes): %v", rules)
+	}
+	in := map[string]any{"record": map[string]any{
+		"session_id": "6afa8001.1b", "remote_host": "10.42.0.17", "message": "connection from 10.42.0.18",
+		"detail": map[string]any{"user_agent": "x", "sql_state_code": "00000"},
+	}}
+	got := scrubAttributes(rules, in)
+	want := map[string]any{
+		"record.message": "connection from " + redacted, "record.remote_host": redacted,
+		"record.detail.sql_state_code": "00000",
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("nested attributes after the scrub (-want +got):\n%s", diff)
 	}
 }

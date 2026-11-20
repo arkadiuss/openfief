@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ce4d2d72bc0
+  - type: executable_for
+    from: SYM-demo-scrub-test-reaches-nested-log-attributes
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-20T13:36:04.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60e1b28c91ea
