@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3A8BE8CFCF97CC06
 type: fact
 ---
+
+Definition not stated: the subject identity.audit_log is named by requirements REQ-identity-audit-append-only, REQ-identity-audit-every-change, REQ-identity-audit-owner-view, which link to the subject fact FACT-SUBJECT-3A8BE8CFCF97CC06 through constrains. The people who own that source can say what it is in the product and what it is not.

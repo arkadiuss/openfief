@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-F3582B3F185BE0BB
 type: fact
 ---
+
+Definition not stated: the subject portfolio.max_drawdown is named by requirements REQ-portfolio-drawdown-depth, REQ-portfolio-max-drawdown, REQ-portfolio-target-drawdown-span, which link to the subject fact FACT-SUBJECT-F3582B3F185BE0BB through constrains. The people who own that source can say what it is in the product and what it is not.

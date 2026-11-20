@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-94D6037497EA704E
 type: fact
 ---
+
+Definition not stated: the subject views.holdings_lots_mark is named by requirement REQ-views-holdings-lots-mark, which links to the subject fact FACT-SUBJECT-94D6037497EA704E through constrains. The people who own that source can say what it is in the product and what it is not.

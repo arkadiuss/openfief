@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5FCF5B63A486FB72
 type: fact
 ---
+
+Definition not stated: the subject views.valuation_totals is named by requirements REQ-valuation-totals-include-cash, REQ-views-totals-with-cash, REQ-views-valuation-totals, which link to the subject fact FACT-SUBJECT-5FCF5B63A486FB72 through constrains. The people who own that source can say what it is in the product and what it is not.

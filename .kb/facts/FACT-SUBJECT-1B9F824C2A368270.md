@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1B9F824C2A368270
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_bundle is named by requirement REQ-tooling-release-bundle-database, which links to the subject fact FACT-SUBJECT-1B9F824C2A368270 through constrains. The people who own that source can say what it is in the product and what it is not.

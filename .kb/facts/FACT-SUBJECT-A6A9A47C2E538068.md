@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A6A9A47C2E538068
 type: fact
 ---
+
+Definition not stated: the subject ingest.bond_lot_contract is named by requirement REQ-ingest-bond-lot-messages, which links to the subject fact FACT-SUBJECT-A6A9A47C2E538068 through constrains. The people who own that source can say what it is in the product and what it is not.

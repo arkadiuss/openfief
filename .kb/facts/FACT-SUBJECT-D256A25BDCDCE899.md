@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D256A25BDCDCE899
 type: fact
 ---
+
+Definition not stated: the subject pl.oki_yearly_tax is named by requirements REQ-pl-oki-account-held-from-first-transaction, REQ-pl-oki-act-in-force-2027, REQ-pl-oki-average-value-exact, REQ-pl-oki-base-and-tax-whole-zloty, REQ-pl-oki-current-year-estimate, REQ-pl-oki-exemptions-cpi-indexed, REQ-pl-oki-form-decides-cash-class, REQ-pl-oki-tax-base-average-value, REQ-pl-oki-tax-base-valuation, REQ-pl-oki-tax-exemptions, REQ-pl-oki-tax-rate, REQ-pl-oki-yearly-tax, REQ-pl-oki-yearly-tax-exact, which link to the subject fact FACT-SUBJECT-D256A25BDCDCE899 through constrains. The people who own that source can say what it is in the product and what it is not.

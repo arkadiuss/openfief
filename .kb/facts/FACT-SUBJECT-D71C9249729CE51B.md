@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-D71C9249729CE51B
 type: fact
 ---
+
+Definition not stated: the subject ingest.trading_currency is named by requirements REQ-ingest-ambiguous-currency-positions-wait, REQ-ingest-ambiguous-trading-currency-not-assumed, REQ-ingest-minor-unit-price-to-major, REQ-ingest-owner-picks-ambiguous-trading-currency, REQ-ingest-trading-currency-listing-or-exchange, which link to the subject fact FACT-SUBJECT-D71C9249729CE51B through constrains. The people who own that source can say what it is in the product and what it is not.

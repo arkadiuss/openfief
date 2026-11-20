@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-3998867A180E842F
 type: fact
 ---
+
+Definition not stated: the subject valuation.price_check_acknowledgement is named by requirement REQ-valuation-price-check-acknowledgement-lapses, which links to the subject fact FACT-SUBJECT-3998867A180E842F through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CF36AD8B532474E9
 type: fact
 ---
+
+Definition not stated: the subject valuation.realized_gains is named by requirements REQ-valuation-realized-gains, REQ-valuation-realized-gains-buy-fees, which link to the subject fact FACT-SUBJECT-CF36AD8B532474E9 through constrains. The people who own that source can say what it is in the product and what it is not.

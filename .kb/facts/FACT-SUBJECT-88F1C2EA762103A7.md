@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-88F1C2EA762103A7
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_transaction_keys is named by requirement REQ-ingest-instance-scoped-keys, which links to the subject fact FACT-SUBJECT-88F1C2EA762103A7 through constrains. The people who own that source can say what it is in the product and what it is not.

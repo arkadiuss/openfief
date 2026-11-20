@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-201BF18D8A3B745A
 type: fact
 ---
+
+Definition not stated: the subject valuation.revaluation is named by requirements REQ-decision-d36-10-fixed-revaluation-triggers, REQ-decision-d36-3-revaluation-same-transaction, REQ-decision-d36-4-river-job-queue, REQ-decision-d36-5-revaluation-coalescing, REQ-decision-d36-8-concurrency-and-schedule, REQ-decision-d36-8-revaluation-settings, REQ-valuation-revaluation-rows, which link to the subject fact FACT-SUBJECT-201BF18D8A3B745A through constrains. The people who own that source can say what it is in the product and what it is not.

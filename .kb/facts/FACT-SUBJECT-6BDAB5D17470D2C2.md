@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6BDAB5D17470D2C2
 type: fact
 ---
+
+Definition not stated: the subject identity.owner is named by requirements REQ-identity-owner-holds-every-account, REQ-identity-single-owner, which link to the subject fact FACT-SUBJECT-6BDAB5D17470D2C2 through constrains. The people who own that source can say what it is in the product and what it is not.

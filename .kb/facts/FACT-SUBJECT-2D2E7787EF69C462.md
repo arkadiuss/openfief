@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2D2E7787EF69C462
 type: fact
 ---
+
+Definition not stated: the subject ui.account_forms is named by requirement REQ-ui-bond-payout-setting, which links to the subject fact FACT-SUBJECT-2D2E7787EF69C462 through constrains. The people who own that source can say what it is in the product and what it is not.

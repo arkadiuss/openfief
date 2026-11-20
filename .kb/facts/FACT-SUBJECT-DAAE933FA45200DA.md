@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DAAE933FA45200DA
 type: fact
 ---
+
+Definition not stated: the subject ui.attention_page is named by requirement REQ-ui-attention-page, which links to the subject fact FACT-SUBJECT-DAAE933FA45200DA through constrains. The people who own that source can say what it is in the product and what it is not.

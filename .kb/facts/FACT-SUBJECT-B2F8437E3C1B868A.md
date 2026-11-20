@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B2F8437E3C1B868A
 type: fact
 ---
+
+Definition not stated: the subject deploy.database_cluster is named by requirement REQ-deploy-database-own-resources, which links to the subject fact FACT-SUBJECT-B2F8437E3C1B868A through constrains. The people who own that source can say what it is in the product and what it is not.

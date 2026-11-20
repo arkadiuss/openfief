@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-71CF9B7EC72DD12C
 type: fact
 ---
+
+Definition not stated: the subject plugins.manifest_declarations is named by requirement REQ-plugins-manifest-declarations, which links to the subject fact FACT-SUBJECT-71CF9B7EC72DD12C through constrains. The people who own that source can say what it is in the product and what it is not.

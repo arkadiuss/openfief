@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5F672FBFA74DFF0D
 type: fact
 ---
+
+Definition not stated: the subject identity.token_review is named by requirement REQ-plugins-token-review-not-amplified, which links to the subject fact FACT-SUBJECT-5F672FBFA74DFF0D through constrains. The people who own that source can say what it is in the product and what it is not.

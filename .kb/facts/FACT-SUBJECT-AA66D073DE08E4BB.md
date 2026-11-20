@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AA66D073DE08E4BB
 type: fact
 ---
+
+Definition not stated: the subject valuation.conversion is named by requirement REQ-valuation-conversion-named-currency, which links to the subject fact FACT-SUBJECT-AA66D073DE08E4BB through constrains. The people who own that source can say what it is in the product and what it is not.

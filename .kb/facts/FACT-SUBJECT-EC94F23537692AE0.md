@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EC94F23537692AE0
 type: fact
 ---
+
+Definition not stated: the subject attention.items is named by requirements REQ-attention-bond-series-incomplete, REQ-attention-bond-series-incomplete-after-week, REQ-attention-owner-actions, REQ-attention-reconcile, REQ-attention-sweep, which link to the subject fact FACT-SUBJECT-EC94F23537692AE0 through constrains. The people who own that source can say what it is in the product and what it is not.

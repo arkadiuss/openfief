@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A04B0A835D156E7B
 type: fact
 ---
+
+Definition not stated: the subject plugins.first_party is named by requirement REQ-plugins-first-party-verified, which links to the subject fact FACT-SUBJECT-A04B0A835D156E7B through constrains. The people who own that source can say what it is in the product and what it is not.

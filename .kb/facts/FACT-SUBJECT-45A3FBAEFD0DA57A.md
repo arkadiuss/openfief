@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-45A3FBAEFD0DA57A
 type: fact
 ---
+
+Definition not stated: the subject tooling.ci_images is named by requirements REQ-tooling-ci-affected-images, REQ-tooling-ci-carry-signed-digest, REQ-tooling-ci-images, which link to the subject fact FACT-SUBJECT-45A3FBAEFD0DA57A through constrains. The people who own that source can say what it is in the product and what it is not.

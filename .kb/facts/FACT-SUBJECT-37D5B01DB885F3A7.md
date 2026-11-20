@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-37D5B01DB885F3A7
 type: fact
 ---
+
+Definition not stated: the subject plugins.grant_institutions is named by requirement REQ-plugins-grant-without-institutions-approves-none, which links to the subject fact FACT-SUBJECT-37D5B01DB885F3A7 through constrains. The people who own that source can say what it is in the product and what it is not.

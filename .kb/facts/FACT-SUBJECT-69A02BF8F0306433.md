@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-69A02BF8F0306433
 type: fact
 ---
+
+Definition not stated: the subject ingest.connector_contract_messages is named by requirement REQ-ingest-connector-contract-translation, which links to the subject fact FACT-SUBJECT-69A02BF8F0306433 through constrains. The people who own that source can say what it is in the product and what it is not.

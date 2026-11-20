@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-99A195D7176EF798
 type: fact
 ---
+
+Definition not stated: the subject release.notes is named by requirement REQ-tooling-release-notes-known-limits, which links to the subject fact FACT-SUBJECT-99A195D7176EF798 through constrains. The people who own that source can say what it is in the product and what it is not.

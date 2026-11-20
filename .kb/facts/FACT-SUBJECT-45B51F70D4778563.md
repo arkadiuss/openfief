@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-45B51F70D4778563
 type: fact
 ---
+
+Definition not stated: the subject views.valuation_queries is named by requirements REQ-views-valuation-queries, REQ-views-valuation-queries-named-currency, which link to the subject fact FACT-SUBJECT-45B51F70D4778563 through constrains. The people who own that source can say what it is in the product and what it is not.

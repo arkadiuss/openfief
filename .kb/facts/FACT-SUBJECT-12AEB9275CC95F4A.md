@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-12AEB9275CC95F4A
 type: fact
 ---
+
+Definition not stated: the subject e2e.fixture is named by requirement REQ-e2e-fixture-serves-bond-data, which links to the subject fact FACT-SUBJECT-12AEB9275CC95F4A through constrains. The people who own that source can say what it is in the product and what it is not.

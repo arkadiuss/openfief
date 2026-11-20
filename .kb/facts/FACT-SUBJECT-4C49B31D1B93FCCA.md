@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4C49B31D1B93FCCA
 type: fact
 ---
+
+Definition not stated: the subject ledger.derivation is named by requirements REQ-ledger-app-queries, REQ-ledger-current-versions, which link to the subject fact FACT-SUBJECT-4C49B31D1B93FCCA through constrains. The people who own that source can say what it is in the product and what it is not.

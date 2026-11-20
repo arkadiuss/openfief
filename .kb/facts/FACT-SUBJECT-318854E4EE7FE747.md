@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-318854E4EE7FE747
 type: fact
 ---
+
+Definition not stated: the subject plugins.uncataloged_plugin is named by requirement REQ-plugins-direct-install-unverified, which links to the subject fact FACT-SUBJECT-318854E4EE7FE747 through constrains. The people who own that source can say what it is in the product and what it is not.

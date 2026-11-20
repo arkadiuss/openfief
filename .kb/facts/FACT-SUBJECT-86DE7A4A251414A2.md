@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-86DE7A4A251414A2
 type: fact
 ---
+
+Definition not stated: the subject ledger.rekey is named by requirement REQ-ledger-rekey-new-versions, which links to the subject fact FACT-SUBJECT-86DE7A4A251414A2 through constrains. The people who own that source can say what it is in the product and what it is not.

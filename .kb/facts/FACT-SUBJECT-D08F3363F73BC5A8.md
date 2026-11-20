@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D08F3363F73BC5A8
 type: fact
 ---
+
+Definition not stated: the subject views.yearly_tax_estimate is named by requirement REQ-views-yearly-tax-estimate-and-terms, which links to the subject fact FACT-SUBJECT-D08F3363F73BC5A8 through constrains. The people who own that source can say what it is in the product and what it is not.

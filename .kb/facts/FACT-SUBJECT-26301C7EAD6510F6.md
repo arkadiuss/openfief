@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-26301C7EAD6510F6
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.poland is named by requirement REQ-AUTO-10626FD13FE60646, which links to the subject fact FACT-SUBJECT-26301C7EAD6510F6 through constrains. The people who own that source can say what it is in the product and what it is not.

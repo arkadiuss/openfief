@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B8AF2A954C333973
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_container is named by requirement REQ-operator-plugin-resources, which links to the subject fact FACT-SUBJECT-B8AF2A954C333973 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5EDF36412545D9BB
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_cli is named by requirement REQ-tooling-release-cli-signed, which links to the subject fact FACT-SUBJECT-5EDF36412545D9BB through constrains. The people who own that source can say what it is in the product and what it is not.

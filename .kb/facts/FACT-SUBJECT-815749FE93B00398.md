@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-815749FE93B00398
 type: fact
 ---
+
+Definition not stated: the subject ingest.mapping is named by requirement REQ-ingest-problems-not-errors, which links to the subject fact FACT-SUBJECT-815749FE93B00398 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ claim_key: CLAIM-C5056510FDD4C018
 id: FACT-SUBJECT-AA3F8D49370A1850
 type: fact
 ---
+
+Definition not stated: the subject views.number_format is named by requirement REQ-ui-number-format-separators-only, which links to the subject fact FACT-SUBJECT-AA3F8D49370A1850 through constrains. The people who own that source can say what it is in the product and what it is not.

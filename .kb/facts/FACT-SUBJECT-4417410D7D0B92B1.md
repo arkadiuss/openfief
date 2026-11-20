@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4417410D7D0B92B1
 type: fact
 ---
+
+Definition not stated: the subject ingest.ibkr_flex is named by requirements REQ-ibkrflex-assertions, REQ-ibkrflex-hostile-input, REQ-ibkrflex-opening, REQ-ibkrflex-transactions, REQ-ibkrflex-web-service-pull, REQ-ibkrflex-withholding-pairing, REQ-ingest-ibkrflex-by-broker-account, which link to the subject fact FACT-SUBJECT-4417410D7D0B92B1 through constrains. The people who own that source can say what it is in the product and what it is not.

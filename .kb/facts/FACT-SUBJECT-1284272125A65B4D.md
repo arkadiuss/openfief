@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1284272125A65B4D
 type: fact
 ---
+
+Definition not stated: the subject views.performance_chart is named by requirements REQ-ui-performance-chart-twr-index, REQ-ui-performance-chart-twr-index-from-charts-start, REQ-views-model-line-from-charts-start, REQ-views-model-line-on-performance-chart, which link to the subject fact FACT-SUBJECT-1284272125A65B4D through constrains. The people who own that source can say what it is in the product and what it is not.

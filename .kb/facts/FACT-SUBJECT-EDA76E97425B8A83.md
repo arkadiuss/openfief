@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EDA76E97425B8A83
 type: fact
 ---
+
+Definition not stated: the subject plugins.ca_bundle_cli is named by requirements REQ-plugins-cli-ca-bundle-set, REQ-plugins-cli-ca-bundle-unset, which link to the subject fact FACT-SUBJECT-EDA76E97425B8A83 through constrains. The people who own that source can say what it is in the product and what it is not.

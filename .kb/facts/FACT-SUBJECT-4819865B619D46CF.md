@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-4819865B619D46CF
 type: fact
 ---
+
+Definition not stated: the subject ledger.transaction_log is named by requirement REQ-AUTO-CACBF41A8E14837D, which links to the subject fact FACT-SUBJECT-4819865B619D46CF through constrains. The people who own that source can say what it is in the product and what it is not.

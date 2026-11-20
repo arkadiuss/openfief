@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BF6BE57113490A1C
 type: fact
 ---
+
+Definition not stated: the subject tooling.downloads is named by requirement REQ-tooling-download-retry, which links to the subject fact FACT-SUBJECT-BF6BE57113490A1C through constrains. The people who own that source can say what it is in the product and what it is not.

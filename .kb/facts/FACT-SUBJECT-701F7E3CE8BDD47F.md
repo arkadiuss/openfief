@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-701F7E3CE8BDD47F
 type: fact
 ---
+
+Definition not stated: the subject tooling.ci_jobs is named by requirement REQ-tooling-ci-docs-only-pr, which links to the subject fact FACT-SUBJECT-701F7E3CE8BDD47F through constrains. The people who own that source can say what it is in the product and what it is not.

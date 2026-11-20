@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6E456E81146115C7
 type: fact
 ---
+
+Definition not stated: the subject ingest.statement_upload is named by requirements REQ-ingest-opening-upload-seeds-syncs, REQ-ingest-start-from-whole-history, REQ-ingest-statement-mode-chosen-by-core, REQ-ingest-statement-multi-account, REQ-ingest-statement-upload-bound-instance, REQ-ingest-statement-upload-checks, REQ-ingest-statement-upload-handoff, REQ-ingest-statement-upload-limits, REQ-ingest-statement-upload-size-limit, which link to the subject fact FACT-SUBJECT-6E456E81146115C7 through constrains. The people who own that source can say what it is in the product and what it is not.

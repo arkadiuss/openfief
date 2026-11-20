@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0A0B3C08E47FD8CE
 type: fact
 ---
+
+Definition not stated: the subject release.version is named by requirements REQ-tooling-release-channel-version, REQ-tooling-release-version-resume, which link to the subject fact FACT-SUBJECT-0A0B3C08E47FD8CE through constrains. The people who own that source can say what it is in the product and what it is not.

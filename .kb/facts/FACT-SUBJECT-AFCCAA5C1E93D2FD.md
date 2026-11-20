@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-AFCCAA5C1E93D2FD
 type: fact
 ---
+
+Definition not stated: the subject plugins.trust_policy is named by requirement REQ-plugins-trust-decision, which links to the subject fact FACT-SUBJECT-AFCCAA5C1E93D2FD through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F68DEFF0C7AFE491
 type: fact
 ---
+
+Definition not stated: the subject plugins.signer_identity is named by requirements REQ-plugins-github-signers-pinned, REQ-plugins-signer-identity-match, REQ-plugins-signer-source-pinned, which link to the subject fact FACT-SUBJECT-F68DEFF0C7AFE491 through constrains. The people who own that source can say what it is in the product and what it is not.

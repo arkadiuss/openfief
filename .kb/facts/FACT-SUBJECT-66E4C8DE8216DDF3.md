@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-66E4C8DE8216DDF3
 type: fact
 ---
+
+Definition not stated: the subject platform.credentials is named by requirement REQ-AUTO-0455DAAE4C01C965, which links to the subject fact FACT-SUBJECT-66E4C8DE8216DDF3 through constrains. The people who own that source can say what it is in the product and what it is not.

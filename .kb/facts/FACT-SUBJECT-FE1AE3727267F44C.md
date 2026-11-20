@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FE1AE3727267F44C
 type: fact
 ---
+
+Definition not stated: the subject valuation.revaluation_jobs is named by requirement REQ-valuation-job-errors-carry-no-values, which links to the subject fact FACT-SUBJECT-FE1AE3727267F44C through constrains. The people who own that source can say what it is in the product and what it is not.

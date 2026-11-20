@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-613E0FF63F1B013E
 type: fact
 ---
+
+Definition not stated: the subject valuation.settings is named by requirement REQ-valuation-owner-sets-bond-fee, which links to the subject fact FACT-SUBJECT-613E0FF63F1B013E through constrains. The people who own that source can say what it is in the product and what it is not.

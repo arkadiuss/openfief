@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B731EB40202C1399
 type: fact
 ---
+
+Definition not stated: the subject docs.install_guide is named by requirement REQ-docs-install-guide-identities, which links to the subject fact FACT-SUBJECT-B731EB40202C1399 through constrains. The people who own that source can say what it is in the product and what it is not.

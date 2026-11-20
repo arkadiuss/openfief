@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-99B9E9917AC194AE
 type: fact
 ---
+
+Definition not stated: the subject operator.ca_bundle_refresh is named by requirement REQ-operator-ca-bundle-rolls-pod, which links to the subject fact FACT-SUBJECT-99B9E9917AC194AE through constrains. The people who own that source can say what it is in the product and what it is not.

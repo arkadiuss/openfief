@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-B4872D883DCCB3F1
 type: fact
 ---
+
+Definition not stated: the subject ingest.multi_account_upload is named by requirements REQ-ingest-multi-account-opening-seeds-unseeded-only, REQ-ingest-multi-account-transactions-books-every-mapped, REQ-ingest-multi-account-upload-changes-every-bound, REQ-ingest-multi-account-upload-mode-of-uploaded-account, REQ-ingest-statement-multi-account-reports-unmapped, which link to the subject fact FACT-SUBJECT-B4872D883DCCB3F1 through constrains. The people who own that source can say what it is in the product and what it is not.

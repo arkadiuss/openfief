@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-041953629B6CAD53
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_s_requested_permissions is named by requirement REQ-AUTO-4E891679754B3360, which links to the subject fact FACT-SUBJECT-041953629B6CAD53 through constrains. The people who own that source can say what it is in the product and what it is not.

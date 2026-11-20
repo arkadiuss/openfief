@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-09561DB01CFD7F7F
 type: fact
 ---
+
+Definition not stated: the subject ingest.ticker_contract is named by requirement REQ-ingest-ticker-assertion-contract, which links to the subject fact FACT-SUBJECT-09561DB01CFD7F7F through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-429F29A98E5702B1
 type: fact
 ---
+
+Definition not stated: the subject ingest.xtb_reader is named by requirements REQ-ingest-xtb-reader-bounded, REQ-ingest-xtb-reader-bounded-by-pod-memory, which link to the subject fact FACT-SUBJECT-429F29A98E5702B1 through constrains. The people who own that source can say what it is in the product and what it is not.

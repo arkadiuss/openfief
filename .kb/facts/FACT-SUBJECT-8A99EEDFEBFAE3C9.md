@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8A99EEDFEBFAE3C9
 type: fact
 ---
+
+Definition not stated: the subject views.balance_check is named by requirements REQ-views-balance-check-owner-only, REQ-views-balance-check-tolerance, REQ-views-balance-check-unsupported, REQ-views-cli-check-balances, which link to the subject fact FACT-SUBJECT-8A99EEDFEBFAE3C9 through constrains. The people who own that source can say what it is in the product and what it is not.

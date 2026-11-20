@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-825F5042E5E6F174
 type: fact
 ---
+
+Definition not stated: the subject identity.session is named by requirements REQ-identity-opaque-session-token, REQ-identity-session-opaque, REQ-identity-session-scope-read-owner, REQ-identity-session-scopes, which link to the subject fact FACT-SUBJECT-825F5042E5E6F174 through constrains. The people who own that source can say what it is in the product and what it is not.

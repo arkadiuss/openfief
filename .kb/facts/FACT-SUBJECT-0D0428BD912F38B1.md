@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0D0428BD912F38B1
 type: fact
 ---
+
+Definition not stated: the subject tooling.reusable_signing_workflows is named by requirement REQ-tooling-reusable-signing-workflows-guarded, which links to the subject fact FACT-SUBJECT-0D0428BD912F38B1 through constrains. The people who own that source can say what it is in the product and what it is not.

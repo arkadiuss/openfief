@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9AB58EABFF93421D
 type: fact
 ---
+
+Definition not stated: the subject plugins.uninstall_cli is named by requirements REQ-plugins-cli-uninstall, REQ-plugins-cli-uninstall-secrets, which link to the subject fact FACT-SUBJECT-9AB58EABFF93421D through constrains. The people who own that source can say what it is in the product and what it is not.

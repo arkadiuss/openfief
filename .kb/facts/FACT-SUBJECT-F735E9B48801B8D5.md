@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F735E9B48801B8D5
 type: fact
 ---
+
+Definition not stated: the subject pl.bond_value is named by requirements REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, REQ-pl-bond-accrual, REQ-pl-cpi-indexation, REQ-pl-exchange-discount-taxed, REQ-pl-exchange-discount-taxed-at-99-90, which link to the subject fact FACT-SUBJECT-F735E9B48801B8D5 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6FCF2133B87D3E53
 type: fact
 ---
+
+Definition not stated: the subject core.owner_services is named by requirement REQ-core-authz-change-refused, which links to the subject fact FACT-SUBJECT-6FCF2133B87D3E53 through constrains. The people who own that source can say what it is in the product and what it is not.

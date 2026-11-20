@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C9C67D3EB8F4BC3F
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_data_sources is named by requirements REQ-valuation-cross-check-prices-never-rank, REQ-valuation-cross-check-prices-never-source, REQ-valuation-market-data-all-sources-stored, REQ-valuation-market-data-default-ranking, REQ-valuation-market-data-gap-attention-item, REQ-valuation-market-data-highest-rank-wins, REQ-valuation-market-data-missing-day-carries-forward, REQ-valuation-market-data-never-other-source, REQ-valuation-market-data-one-source, REQ-valuation-market-data-other-sources-cross-checks, REQ-valuation-market-data-rank-by-institution, REQ-valuation-market-data-source-chosen-on-first-need, REQ-valuation-market-data-source-instance, REQ-valuation-market-data-source-owner-switch, REQ-valuation-market-data-source-ranking, which link to the subject fact FACT-SUBJECT-C9C67D3EB8F4BC3F through constrains. The people who own that source can say what it is in the product and what it is not.

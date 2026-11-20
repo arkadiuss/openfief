@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BAE0D6129986CC49
 type: fact
 ---
+
+Definition not stated: the subject e2e.operator_plugin is named by requirement REQ-e2e-operator-deploys-signed-plugin, which links to the subject fact FACT-SUBJECT-BAE0D6129986CC49 through constrains. The people who own that source can say what it is in the product and what it is not.

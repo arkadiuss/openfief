@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B6BDD975F76E8B0B
 type: fact
 ---
+
+Definition not stated: the subject plugins.manifest_secret is named by requirement REQ-plugins-optional-secret-mount, which links to the subject fact FACT-SUBJECT-B6BDD975F76E8B0B through constrains. The people who own that source can say what it is in the product and what it is not.

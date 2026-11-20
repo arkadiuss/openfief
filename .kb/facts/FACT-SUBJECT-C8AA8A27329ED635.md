@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C8AA8A27329ED635
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.polish_jurisdiction_pack is named by requirements REQ-AUTO-C17116F5350E97D6, REQ-jurisdiction-pl-number-format, which link to the subject fact FACT-SUBJECT-C8AA8A27329ED635 through constrains. The people who own that source can say what it is in the product and what it is not.

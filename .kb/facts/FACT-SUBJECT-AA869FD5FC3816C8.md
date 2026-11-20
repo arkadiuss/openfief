@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AA869FD5FC3816C8
 type: fact
 ---
+
+Definition not stated: the subject tooling.kibi_gate is named by requirements REQ-tooling-kibi-check-compile-defect, REQ-tooling-kibi-coverage-cache, REQ-tooling-kibi-duplicates-reported, REQ-tooling-kibi-slow-query-warning, REQ-tooling-kibi-staged-store-unsaved, which link to the subject fact FACT-SUBJECT-AA869FD5FC3816C8 through constrains. The people who own that source can say what it is in the product and what it is not.

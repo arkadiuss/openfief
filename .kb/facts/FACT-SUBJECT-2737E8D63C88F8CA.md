@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2737E8D63C88F8CA
 type: fact
 ---
+
+Definition not stated: the subject openfief.cluster_permissions is named by requirement REQ-core-cluster-wide-permissions, which links to the subject fact FACT-SUBJECT-2737E8D63C88F8CA through constrains. The people who own that source can say what it is in the product and what it is not.

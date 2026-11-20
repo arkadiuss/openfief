@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C8A82F9ACFF225C1
 type: fact
 ---
+
+Definition not stated: the subject ledger.cash_income is named by requirement REQ-ledger-cash-income-tax-withheld, which links to the subject fact FACT-SUBJECT-C8A82F9ACFF225C1 through constrains. The people who own that source can say what it is in the product and what it is not.

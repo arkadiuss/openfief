@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EE454ADE4B449D43
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.number_format is named by requirement REQ-jurisdiction-number-format-choices, which links to the subject fact FACT-SUBJECT-EE454ADE4B449D43 through constrains. The people who own that source can say what it is in the product and what it is not.

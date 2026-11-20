@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C2D78C1C4660711A
 type: fact
 ---
+
+Definition not stated: the subject attention.group_of_kind is named by requirement REQ-attention-group-of-kind, which links to the subject fact FACT-SUBJECT-C2D78C1C4660711A through constrains. The people who own that source can say what it is in the product and what it is not.

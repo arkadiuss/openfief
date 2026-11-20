@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D6A091F8C6B86AD8
 type: fact
 ---
+
+Definition not stated: the subject core.service is named by requirements REQ-core-config, REQ-core-graceful-shutdown, REQ-core-health-endpoints, REQ-core-serves-read-api, which link to the subject fact FACT-SUBJECT-D6A091F8C6B86AD8 through constrains. The people who own that source can say what it is in the product and what it is not.

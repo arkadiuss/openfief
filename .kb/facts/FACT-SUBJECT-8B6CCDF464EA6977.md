@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8B6CCDF464EA6977
 type: fact
 ---
+
+Definition not stated: the subject ledger.posting is named by requirements REQ-decision-d34-3-fees-not-in-lot-cost, REQ-ledger-posting-ledger-account, which link to the subject fact FACT-SUBJECT-8B6CCDF464EA6977 through constrains. The people who own that source can say what it is in the product and what it is not.

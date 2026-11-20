@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6932AB91C305199B
 type: fact
 ---
+
+Definition not stated: the subject views.queries is named by requirement REQ-views-app-queries, which links to the subject fact FACT-SUBJECT-6932AB91C305199B through constrains. The people who own that source can say what it is in the product and what it is not.

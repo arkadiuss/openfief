@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1E18CEDFA498F8FA
 type: fact
 ---
+
+Definition not stated: the subject plugins.instance_secrets is named by requirement REQ-plugins-instances-never-share-secrets, which links to the subject fact FACT-SUBJECT-1E18CEDFA498F8FA through constrains. The people who own that source can say what it is in the product and what it is not.

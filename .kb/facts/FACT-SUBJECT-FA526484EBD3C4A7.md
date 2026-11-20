@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FA526484EBD3C4A7
 type: fact
 ---
+
+Definition not stated: the subject views.valuation_status is named by requirement REQ-views-valuation-status, which links to the subject fact FACT-SUBJECT-FA526484EBD3C4A7 through constrains. The people who own that source can say what it is in the product and what it is not.

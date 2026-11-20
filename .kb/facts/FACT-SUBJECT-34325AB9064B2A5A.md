@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-34325AB9064B2A5A
 type: fact
 ---
+
+Definition not stated: the subject tooling.ci is named by requirements REQ-tooling-ci-ui-browser-checks, REQ-tooling-tool-cache, which link to the subject fact FACT-SUBJECT-34325AB9064B2A5A through constrains. The people who own that source can say what it is in the product and what it is not.

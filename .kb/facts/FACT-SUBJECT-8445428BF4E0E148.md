@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8445428BF4E0E148
 type: fact
 ---
+
+Definition not stated: the subject demo.loader is named by requirements REQ-demo-fx-rates, REQ-demo-fx-rates-cover-lot-tax-dates, REQ-demo-fx-rates-one-source, REQ-demo-guard-refuses-real-data, REQ-demo-idempotent-per-day, REQ-demo-real-pipelines, REQ-demo-reseed-on-new-loader, REQ-demo-reseeded-before-first-release, REQ-demo-top-up-loaded-inputs, which link to the subject fact FACT-SUBJECT-8445428BF4E0E148 through constrains. The people who own that source can say what it is in the product and what it is not.

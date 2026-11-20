@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D734DABDB121A70A
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.pl.coupons is named by requirement REQ-pl-coupon-payments, which links to the subject fact FACT-SUBJECT-D734DABDB121A70A through constrains. The people who own that source can say what it is in the product and what it is not.

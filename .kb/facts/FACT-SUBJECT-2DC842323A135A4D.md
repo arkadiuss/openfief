@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2DC842323A135A4D
 type: fact
 ---
+
+Definition not stated: the subject plugins.secrets is named by requirements REQ-plugins-secret-names-never-shared, REQ-plugins-secrets-never-platform, which link to the subject fact FACT-SUBJECT-2DC842323A135A4D through constrains. The people who own that source can say what it is in the product and what it is not.

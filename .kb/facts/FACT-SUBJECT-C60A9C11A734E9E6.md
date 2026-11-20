@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C60A9C11A734E9E6
 type: fact
 ---
+
+Definition not stated: the subject identity.origin is named by requirements REQ-identity-origins-one-setting, REQ-identity-origins-per-host, which link to the subject fact FACT-SUBJECT-C60A9C11A734E9E6 through constrains. The people who own that source can say what it is in the product and what it is not.

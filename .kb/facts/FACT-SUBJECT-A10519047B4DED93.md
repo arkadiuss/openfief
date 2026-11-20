@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-A10519047B4DED93
 type: fact
 ---
+
+Definition not stated: the subject ledger.openfief_core is named by requirement REQ-AUTO-6DEFC82AA5A3C618, which links to the subject fact FACT-SUBJECT-A10519047B4DED93 through constrains. The people who own that source can say what it is in the product and what it is not.

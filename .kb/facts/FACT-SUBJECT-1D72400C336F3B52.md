@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1D72400C336F3B52
 type: fact
 ---
+
+Definition not stated: the subject ui.htmx_history is named by requirement REQ-ui-htmx-keeps-no-history, which links to the subject fact FACT-SUBJECT-1D72400C336F3B52 through constrains. The people who own that source can say what it is in the product and what it is not.

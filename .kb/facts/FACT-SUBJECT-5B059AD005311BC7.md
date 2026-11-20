@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5B059AD005311BC7
 type: fact
 ---
+
+Definition not stated: the subject kernel.decimal is named by requirements REQ-kernel-decimal-exact, REQ-kernel-decimal-parse-bounded, REQ-kernel-decimal-quotient, which link to the subject fact FACT-SUBJECT-5B059AD005311BC7 through constrains. The people who own that source can say what it is in the product and what it is not.

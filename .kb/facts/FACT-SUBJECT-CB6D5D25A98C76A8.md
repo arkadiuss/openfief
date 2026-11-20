@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CB6D5D25A98C76A8
 type: fact
 ---
+
+Definition not stated: the subject plugins.signing_keys is named by requirement REQ-plugins-signing-keys-published, which links to the subject fact FACT-SUBJECT-CB6D5D25A98C76A8 through constrains. The people who own that source can say what it is in the product and what it is not.

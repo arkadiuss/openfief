@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A569CA092DC19A95
 type: fact
 ---
+
+Definition not stated: the subject pl.tax_fx_rate is named by requirement REQ-pl-tax-fx-rate-date, which links to the subject fact FACT-SUBJECT-A569CA092DC19A95 through constrains. The people who own that source can say what it is in the product and what it is not.

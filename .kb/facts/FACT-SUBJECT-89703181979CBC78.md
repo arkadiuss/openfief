@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-89703181979CBC78
 type: fact
 ---
+
+Definition not stated: the subject ingest.payout_sync is named by requirement REQ-ingest-payout-change-rebooks-after-date, which links to the subject fact FACT-SUBJECT-89703181979CBC78 through constrains. The people who own that source can say what it is in the product and what it is not.

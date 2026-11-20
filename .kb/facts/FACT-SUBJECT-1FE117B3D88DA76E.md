@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1FE117B3D88DA76E
 type: fact
 ---
+
+Definition not stated: the subject valuation.exemption_class is named by requirements REQ-valuation-owner-classification-stays, REQ-valuation-unclassifiable-instrument-attention-item, REQ-valuation-unclassifiable-instrument-counts-as-neither, which link to the subject fact FACT-SUBJECT-1FE117B3D88DA76E through constrains. The people who own that source can say what it is in the product and what it is not.

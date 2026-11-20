@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-49BF36EFB130CCC2
 type: fact
 ---
+
+Definition not stated: the subject ingest.payout_settings_store is named by requirement REQ-ingest-pg-payout-settings, which links to the subject fact FACT-SUBJECT-49BF36EFB130CCC2 through constrains. The people who own that source can say what it is in the product and what it is not.

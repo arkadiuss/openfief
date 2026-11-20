@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-170F46396880C6D5
 type: fact
 ---
+
+Definition not stated: the subject ui.allocation is named by requirement REQ-ui-allocation-bars-to-holdings, which links to the subject fact FACT-SUBJECT-170F46396880C6D5 through constrains. The people who own that source can say what it is in the product and what it is not.

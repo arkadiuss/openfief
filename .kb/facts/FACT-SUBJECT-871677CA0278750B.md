@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-871677CA0278750B
 type: fact
 ---
+
+Definition not stated: the subject ingest.batch_history is named by requirements REQ-ingest-batch-accounts, REQ-ingest-completed-batches-pages, REQ-ingest-recorded-batches, which link to the subject fact FACT-SUBJECT-871677CA0278750B through constrains. The people who own that source can say what it is in the product and what it is not.

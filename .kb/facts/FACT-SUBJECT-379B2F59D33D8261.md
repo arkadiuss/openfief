@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-379B2F59D33D8261
 type: fact
 ---
+
+Definition not stated: the subject valuation.enqueue is named by requirement REQ-valuation-enqueue-same-transaction, which links to the subject fact FACT-SUBJECT-379B2F59D33D8261 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2640A0FC4AE84DC0
 type: fact
 ---
+
+Definition not stated: the subject ingest.core_project is named by requirement REQ-AUTO-86642D0E48892D5C, which links to the subject fact FACT-SUBJECT-2640A0FC4AE84DC0 through constrains. The people who own that source can say what it is in the product and what it is not.

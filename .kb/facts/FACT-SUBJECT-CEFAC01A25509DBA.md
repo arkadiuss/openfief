@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CEFAC01A25509DBA
 type: fact
 ---
+
+Definition not stated: the subject core.logging is named by requirement REQ-core-logs-carry-no-values, which links to the subject fact FACT-SUBJECT-CEFAC01A25509DBA through constrains. The people who own that source can say what it is in the product and what it is not.

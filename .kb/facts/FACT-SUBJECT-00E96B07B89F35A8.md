@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-00E96B07B89F35A8
 type: fact
 ---
+
+Definition not stated: the subject views.value_over_time_chart is named by requirements REQ-ui-value-chart-money-with-cash, REQ-ui-value-chart-value-switch, REQ-views-model-line-from-go-live, which link to the subject fact FACT-SUBJECT-00E96B07B89F35A8 through constrains. The people who own that source can say what it is in the product and what it is not.

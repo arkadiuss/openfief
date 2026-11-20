@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-28DFEEA67D39A622
 type: fact
 ---
+
+Definition not stated: the subject ledger.assertions is named by requirement REQ-ledger-withdraw-holding-assertions, which links to the subject fact FACT-SUBJECT-28DFEEA67D39A622 through constrains. The people who own that source can say what it is in the product and what it is not.

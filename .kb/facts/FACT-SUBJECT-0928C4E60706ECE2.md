@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0928C4E60706ECE2
 type: fact
 ---
+
+Definition not stated: the subject ui.figures is named by requirement REQ-decision-d195-3-holding-and-bar-link-down, which links to the subject fact FACT-SUBJECT-0928C4E60706ECE2 through constrains. The people who own that source can say what it is in the product and what it is not.

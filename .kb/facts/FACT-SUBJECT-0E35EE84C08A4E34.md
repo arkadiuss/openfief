@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-0E35EE84C08A4E34
 type: fact
 ---
+
+Definition not stated: the subject identity.scripts is named by requirement REQ-AUTO-2D0C3CC0151C3C5C, which links to the subject fact FACT-SUBJECT-0E35EE84C08A4E34 through constrains. The people who own that source can say what it is in the product and what it is not.

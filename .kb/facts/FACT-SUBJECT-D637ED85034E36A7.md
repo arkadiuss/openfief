@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D637ED85034E36A7
 type: fact
 ---
+
+Definition not stated: the subject plugins.in_cluster_service is named by requirements REQ-operator-in-cluster-service-route, REQ-plugins-cli-in-cluster-ingress-rule, REQ-plugins-in-cluster-service-grant, REQ-plugins-in-cluster-service-no-proxy, REQ-plugins-in-cluster-service-plain-http-warning, REQ-plugins-in-cluster-service-read-role, REQ-plugins-in-cluster-service-role-removed, which link to the subject fact FACT-SUBJECT-D637ED85034E36A7 through constrains. The people who own that source can say what it is in the product and what it is not.

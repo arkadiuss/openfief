@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0C03AEA6BEBA8413
 type: fact
 ---
+
+Definition not stated: the subject views.installed_plugins is named by requirements REQ-views-installed-plugins, REQ-views-installed-plugins-any-caller, REQ-views-plugin-institutions, which link to the subject fact FACT-SUBJECT-0C03AEA6BEBA8413 through constrains. The people who own that source can say what it is in the product and what it is not.

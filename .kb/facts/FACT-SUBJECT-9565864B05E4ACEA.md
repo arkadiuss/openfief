@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9565864B05E4ACEA
 type: fact
 ---
+
+Definition not stated: the subject identity.passkey_enrollment is named by requirements REQ-identity-core-refuses-enroll-origin, REQ-identity-enroll-localhost-forward, REQ-identity-enroll-origin, REQ-identity-first-passkey-command, REQ-identity-first-passkey-link, REQ-identity-first-passkey-own-host-or-localhost, REQ-identity-first-run-wizard-follows, REQ-identity-install-without-hostname, REQ-identity-passkey-new-hostname, which link to the subject fact FACT-SUBJECT-9565864B05E4ACEA through constrains. The people who own that source can say what it is in the product and what it is not.

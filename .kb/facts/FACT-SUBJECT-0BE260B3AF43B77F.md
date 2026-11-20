@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0BE260B3AF43B77F
 type: fact
 ---
+
+Definition not stated: the subject identity.script_token_store is named by requirement REQ-identity-script-token-store, which links to the subject fact FACT-SUBJECT-0BE260B3AF43B77F through constrains. The people who own that source can say what it is in the product and what it is not.

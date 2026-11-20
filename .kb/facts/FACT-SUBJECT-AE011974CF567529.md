@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AE011974CF567529
 type: fact
 ---
+
+Definition not stated: the subject plugins.cli is named by requirement REQ-plugins-cli-shows-vendor-text-escaped, which links to the subject fact FACT-SUBJECT-AE011974CF567529 through constrains. The people who own that source can say what it is in the product and what it is not.

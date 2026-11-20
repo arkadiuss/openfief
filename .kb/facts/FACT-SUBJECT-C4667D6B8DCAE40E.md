@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C4667D6B8DCAE40E
 type: fact
 ---
+
+Definition not stated: the subject valuation.bond_basis is named by requirement REQ-valuation-bond-basis, which links to the subject fact FACT-SUBJECT-C4667D6B8DCAE40E through constrains. The people who own that source can say what it is in the product and what it is not.

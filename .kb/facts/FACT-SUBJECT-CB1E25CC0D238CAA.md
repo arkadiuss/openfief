@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-CB1E25CC0D238CAA
 type: fact
 ---
+
+Definition not stated: the subject attention.owner_service is named by requirement REQ-attention-owner-service, which links to the subject fact FACT-SUBJECT-CB1E25CC0D238CAA through constrains. The people who own that source can say what it is in the product and what it is not.

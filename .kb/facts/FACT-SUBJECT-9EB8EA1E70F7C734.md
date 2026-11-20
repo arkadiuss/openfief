@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-9EB8EA1E70F7C734
 type: fact
 ---
+
+Definition not stated: the subject valuation.pln_conversion is named by requirement REQ-AUTO-5769411DB9663682, which links to the subject fact FACT-SUBJECT-9EB8EA1E70F7C734 through constrains. The people who own that source can say what it is in the product and what it is not.

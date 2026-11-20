@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1F1960A35C9FB983
 type: fact
 ---
+
+Definition not stated: the subject valuation.fx_rate is named by requirements REQ-valuation-fx-rate-lookup, REQ-valuation-pln-conversion, which link to the subject fact FACT-SUBJECT-1F1960A35C9FB983 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5A4E6481189FE5A3
 type: fact
 ---
+
+Definition not stated: the subject identity.authentication is named by requirement REQ-identity-no-auth-bypass, which links to the subject fact FACT-SUBJECT-5A4E6481189FE5A3 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-9B7B06271034D1BA
 type: fact
 ---
+
+Definition not stated: the subject access.grant_holders is named by requirement REQ-identity-grants-viewers-tokens-plugins, which links to the subject fact FACT-SUBJECT-9B7B06271034D1BA through constrains. The people who own that source can say what it is in the product and what it is not.

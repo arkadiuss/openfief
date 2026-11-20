@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7921D23F5EC1B3F5
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_workflow is named by requirements REQ-tooling-release-catalogs-first-party, REQ-tooling-release-started-by-author, which link to the subject fact FACT-SUBJECT-7921D23F5EC1B3F5 through constrains. The people who own that source can say what it is in the product and what it is not.

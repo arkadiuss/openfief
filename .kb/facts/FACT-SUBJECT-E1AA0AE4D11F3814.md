@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E1AA0AE4D11F3814
 type: fact
 ---
+
+Definition not stated: the subject ingest.opening_cash is named by requirement REQ-ingest-opening-cash-entered-once, which links to the subject fact FACT-SUBJECT-E1AA0AE4D11F3814 through constrains. The people who own that source can say what it is in the product and what it is not.

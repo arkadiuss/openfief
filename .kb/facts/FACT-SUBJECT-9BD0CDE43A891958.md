@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9BD0CDE43A891958
 type: fact
 ---
+
+Definition not stated: the subject views.three_values is named by requirement REQ-views-three-values, which links to the subject fact FACT-SUBJECT-9BD0CDE43A891958 through constrains. The people who own that source can say what it is in the product and what it is not.

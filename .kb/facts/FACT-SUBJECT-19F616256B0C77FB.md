@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-19F616256B0C77FB
 type: fact
 ---
+
+Definition not stated: the subject ui.first_run_wizard is named by requirements REQ-ui-demo-no-wizard, REQ-ui-first-run-wizard-outside-demo, which link to the subject fact FACT-SUBJECT-19F616256B0C77FB through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2DBF2310DB3A7412
 type: fact
 ---
+
+Definition not stated: the subject tooling.stored_data_migrations is named by requirements REQ-tooling-migration-from-first-release, REQ-tooling-no-migration-before-first-release, which link to the subject fact FACT-SUBJECT-2DBF2310DB3A7412 through constrains. The people who own that source can say what it is in the product and what it is not.

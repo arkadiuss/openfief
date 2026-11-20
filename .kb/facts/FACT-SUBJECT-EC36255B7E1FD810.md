@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EC36255B7E1FD810
 type: fact
 ---
+
+Definition not stated: the subject valuation.eodhd_adapter is named by requirements REQ-valuation-eodhd-closes-exact, REQ-valuation-eodhd-listing, REQ-valuation-eodhd-request, which link to the subject fact FACT-SUBJECT-EC36255B7E1FD810 through constrains. The people who own that source can say what it is in the product and what it is not.

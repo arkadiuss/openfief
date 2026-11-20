@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-134DCCCDF96783CB
 type: fact
 ---
+
+Definition not stated: the subject views.performance is named by requirements REQ-portfolio-twr-cash-flows-end-of-day, REQ-portfolio-twr-confirmed-transfers-only, REQ-portfolio-twr-opening-lots-inflows, REQ-portfolio-twr-rounding, REQ-views-paid-out-payout-counts-as-return, REQ-views-performance-confirmed-transfers, REQ-views-performance-gaps, REQ-views-performance-query, REQ-views-performance-transfers, REQ-views-performance-twr, REQ-views-performance-value, which link to the subject fact FACT-SUBJECT-134DCCCDF96783CB through constrains. The people who own that source can say what it is in the product and what it is not.

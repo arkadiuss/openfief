@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C75CAB1ED3CD4D1D
 type: fact
 ---
+
+Definition not stated: the subject attention.failing_sync is named by requirement REQ-attention-sync-keeps-failing-item, which links to the subject fact FACT-SUBJECT-C75CAB1ED3CD4D1D through constrains. The people who own that source can say what it is in the product and what it is not.

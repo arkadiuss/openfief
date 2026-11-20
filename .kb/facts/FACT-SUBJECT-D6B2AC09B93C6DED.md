@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-D6B2AC09B93C6DED
 type: fact
 ---
+
+Definition not stated: the subject ledger.every_transaction is named by requirement REQ-AUTO-8C3982CF80A9A4DF, which links to the subject fact FACT-SUBJECT-D6B2AC09B93C6DED through constrains. The people who own that source can say what it is in the product and what it is not.

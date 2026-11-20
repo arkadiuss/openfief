@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CF8D9FC9DA6498B7
 type: fact
 ---
+
+Definition not stated: the subject plugins.effective_permissions is named by requirement REQ-plugins-effective-intersection, which links to the subject fact FACT-SUBJECT-CF8D9FC9DA6498B7 through constrains. The people who own that source can say what it is in the product and what it is not.

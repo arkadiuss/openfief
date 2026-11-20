@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4B0BE286D22CA552
 type: fact
 ---
+
+Definition not stated: the subject docs.dns is named by requirement REQ-tooling-demo-dns-docs, which links to the subject fact FACT-SUBJECT-4B0BE286D22CA552 through constrains. The people who own that source can say what it is in the product and what it is not.

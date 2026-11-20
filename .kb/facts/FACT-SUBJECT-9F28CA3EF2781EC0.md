@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9F28CA3EF2781EC0
 type: fact
 ---
+
+Definition not stated: the subject ledger.transfer_links is named by requirement REQ-ledger-transfer-broken-reject, which links to the subject fact FACT-SUBJECT-9F28CA3EF2781EC0 through constrains. The people who own that source can say what it is in the product and what it is not.

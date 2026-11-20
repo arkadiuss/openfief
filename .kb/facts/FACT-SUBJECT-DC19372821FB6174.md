@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DC19372821FB6174
 type: fact
 ---
+
+Definition not stated: the subject ledger.account is named by requirements REQ-decision-d33-1-equity-per-currency, REQ-decision-d33-2-equity-counterpart, REQ-ingest-owner-creates-accounts, REQ-ledger-account-fields, REQ-ledger-account-sleeve, REQ-ledger-account-tax-wrapper, REQ-ledger-app-registry, which link to the subject fact FACT-SUBJECT-DC19372821FB6174 through constrains. The people who own that source can say what it is in the product and what it is not.

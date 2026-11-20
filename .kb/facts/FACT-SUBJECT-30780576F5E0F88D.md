@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-30780576F5E0F88D
 type: fact
 ---
+
+Definition not stated: the subject telemetry.export is named by requirements REQ-telemetry-bad-variable-refused, REQ-telemetry-flush-on-shutdown, REQ-telemetry-off-by-default, REQ-telemetry-standard-variables, which link to the subject fact FACT-SUBJECT-30780576F5E0F88D through constrains. The people who own that source can say what it is in the product and what it is not.

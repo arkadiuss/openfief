@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0AB97E1B615D4205
 type: fact
 ---
+
+Definition not stated: the subject pl.totals_tax is named by requirements REQ-pl-dividends-outside-netting, REQ-pl-totals-earlier-losses-not-counted, REQ-pl-totals-losses-offset-line, REQ-pl-totals-tax-pit38, which link to the subject fact FACT-SUBJECT-0AB97E1B615D4205 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-50ABCC5968A1366A
 type: fact
 ---
+
+Definition not stated: the subject ui.value_display is named by requirements REQ-ui-money-charts-value-switch, REQ-ui-three-values-tables, REQ-ui-value-switch, which link to the subject fact FACT-SUBJECT-50ABCC5968A1366A through constrains. The people who own that source can say what it is in the product and what it is not.

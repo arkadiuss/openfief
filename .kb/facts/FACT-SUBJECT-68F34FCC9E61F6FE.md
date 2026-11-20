@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-68F34FCC9E61F6FE
 type: fact
 ---
+
+Definition not stated: the subject ui.instrument_label is named by requirement REQ-ui-isin-pending-pill, which links to the subject fact FACT-SUBJECT-68F34FCC9E61F6FE through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A85C56C130699560
 type: fact
 ---
+
+Definition not stated: the subject ledger.bond_coupon is named by requirement REQ-ledger-coupons-as-interest, which links to the subject fact FACT-SUBJECT-A85C56C130699560 through constrains. The people who own that source can say what it is in the product and what it is not.

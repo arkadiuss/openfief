@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B2A255EBC62E11E7
 type: fact
 ---
+
+Definition not stated: the subject portfolio.names is named by requirement REQ-portfolio-key-from-name, which links to the subject fact FACT-SUBJECT-B2A255EBC62E11E7 through constrains. The people who own that source can say what it is in the product and what it is not.

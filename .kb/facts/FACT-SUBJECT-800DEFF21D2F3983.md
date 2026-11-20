@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-800DEFF21D2F3983
 type: fact
 ---
+
+Definition not stated: the subject ui.ask_box is named by requirements REQ-decision-d194-1-ask-box, REQ-ui-ask-commands, REQ-ui-ask-never-logged, which link to the subject fact FACT-SUBJECT-800DEFF21D2F3983 through constrains. The people who own that source can say what it is in the product and what it is not.

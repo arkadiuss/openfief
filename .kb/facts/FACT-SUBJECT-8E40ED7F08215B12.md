@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-8E40ED7F08215B12
 type: fact
 ---
+
+Definition not stated: the subject identity.people is named by requirement REQ-AUTO-585F02DB972C1660, which links to the subject fact FACT-SUBJECT-8E40ED7F08215B12 through constrains. The people who own that source can say what it is in the product and what it is not.

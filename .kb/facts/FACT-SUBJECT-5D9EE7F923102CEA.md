@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-5D9EE7F923102CEA
 type: fact
 ---
+
+Definition not stated: the subject plugins.network_policy is named by requirement REQ-plugins-network-policy-core-and-proxy, which links to the subject fact FACT-SUBJECT-5D9EE7F923102CEA through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7674F14A65896C4F
 type: fact
 ---
+
+Definition not stated: the subject ledger.opening_lot is named by requirements REQ-ledger-manual-opening-lots-one-at-a-time, REQ-ledger-opening-lot-entry, which link to the subject fact FACT-SUBJECT-7674F14A65896C4F through constrains. The people who own that source can say what it is in the product and what it is not.

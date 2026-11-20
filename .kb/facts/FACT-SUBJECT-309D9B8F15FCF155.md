@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-309D9B8F15FCF155
 type: fact
 ---
+
+Definition not stated: the subject ledger.redemption is named by requirement REQ-ledger-redemption-kind, which links to the subject fact FACT-SUBJECT-309D9B8F15FCF155 through constrains. The people who own that source can say what it is in the product and what it is not.

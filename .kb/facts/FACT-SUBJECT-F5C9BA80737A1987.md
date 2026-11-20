@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-F5C9BA80737A1987
 type: fact
 ---
+
+Definition not stated: the subject valuation.openfief is named by requirement REQ-AUTO-30FD669113CEFE3B, which links to the subject fact FACT-SUBJECT-F5C9BA80737A1987 through constrains. The people who own that source can say what it is in the product and what it is not.

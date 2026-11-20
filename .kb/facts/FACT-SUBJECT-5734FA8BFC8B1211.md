@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-5734FA8BFC8B1211
 type: fact
 ---
+
+Definition not stated: the subject views.attention_items is named by requirement REQ-views-attention-items, which links to the subject fact FACT-SUBJECT-5734FA8BFC8B1211 through constrains. The people who own that source can say what it is in the product and what it is not.

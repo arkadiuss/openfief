@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-558DD26E88908F51
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.maturities is named by requirement REQ-treasurybonds-maturity-redemption, which links to the subject fact FACT-SUBJECT-558DD26E88908F51 through constrains. The people who own that source can say what it is in the product and what it is not.

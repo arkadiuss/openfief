@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-982FBA8DE51552F9
 type: fact
 ---
+
+Definition not stated: the subject identity.enrollment_code is named by requirement REQ-identity-enrollment-code, which links to the subject fact FACT-SUBJECT-982FBA8DE51552F9 through constrains. The people who own that source can say what it is in the product and what it is not.

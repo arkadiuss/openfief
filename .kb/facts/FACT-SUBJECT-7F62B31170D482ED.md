@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7F62B31170D482ED
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.coupons is named by requirements REQ-treasurybonds-coupons-as-interest, REQ-treasurybonds-coupons-booked-every-sync, REQ-treasurybonds-cpi-years-kept, REQ-treasurybonds-payouts-from-purchase, which link to the subject fact FACT-SUBJECT-7F62B31170D482ED through constrains. The people who own that source can say what it is in the product and what it is not.

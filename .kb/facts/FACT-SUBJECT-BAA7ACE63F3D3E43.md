@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BAA7ACE63F3D3E43
 type: fact
 ---
+
+Definition not stated: the subject valuation.mfbonds is named by requirement REQ-valuation-mfbonds-published-rates, which links to the subject fact FACT-SUBJECT-BAA7ACE63F3D3E43 through constrains. The people who own that source can say what it is in the product and what it is not.

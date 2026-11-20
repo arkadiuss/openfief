@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A4B2F5A459913604
 type: fact
 ---
+
+Definition not stated: the subject identity.auth_service is named by requirements REQ-identity-auth-callers, REQ-identity-auth-contract, REQ-identity-auth-not-public, which link to the subject fact FACT-SUBJECT-A4B2F5A459913604 through constrains. The people who own that source can say what it is in the product and what it is not.

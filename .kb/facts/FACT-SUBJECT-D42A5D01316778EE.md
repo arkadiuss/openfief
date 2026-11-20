@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D42A5D01316778EE
 type: fact
 ---
+
+Definition not stated: the subject valuation.net_value is named by requirement REQ-valuation-net-value, which links to the subject fact FACT-SUBJECT-D42A5D01316778EE through constrains. The people who own that source can say what it is in the product and what it is not.

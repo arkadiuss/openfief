@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-017BD07A11139A56
 type: fact
 ---
+
+Definition not stated: the subject sdk_go.telemetry is named by requirement REQ-telemetry-plugins-sdk, which links to the subject fact FACT-SUBJECT-017BD07A11139A56 through constrains. The people who own that source can say what it is in the product and what it is not.

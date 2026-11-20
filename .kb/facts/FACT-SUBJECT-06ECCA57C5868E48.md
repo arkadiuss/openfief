@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-06ECCA57C5868E48
 type: fact
 ---
+
+Definition not stated: the subject plugins.plugin_network_access is named by requirements REQ-AUTO-3C8B1ED0D820F0C9, REQ-plugins-network-access-core-proxy-service, which link to the subject fact FACT-SUBJECT-06ECCA57C5868E48 through constrains. The people who own that source can say what it is in the product and what it is not.

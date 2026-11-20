@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-904195FD87D65C80
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_holding is named by requirements REQ-valuation-market-holding, REQ-valuation-market-holding-pack-currency, which link to the subject fact FACT-SUBJECT-904195FD87D65C80 through constrains. The people who own that source can say what it is in the product and what it is not.

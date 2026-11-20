@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D9FABE88488D17CE
 type: fact
 ---
+
+Definition not stated: the subject ingest.xtb_mapper is named by requirements REQ-ingest-xtb-cfd-closed-cash-income, REQ-ingest-xtb-free-funds-interest, REQ-ingest-xtb-holdings-mapping, which link to the subject fact FACT-SUBJECT-D9FABE88488D17CE through constrains. The people who own that source can say what it is in the product and what it is not.

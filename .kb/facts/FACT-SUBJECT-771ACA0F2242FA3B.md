@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-771ACA0F2242FA3B
 type: fact
 ---
+
+Definition not stated: the subject plugins.browser_path_prefix is named by requirements REQ-plugins-one-browser-view, REQ-plugins-view-browser-path-grant, which link to the subject fact FACT-SUBJECT-771ACA0F2242FA3B through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-9AFA7913446842D1
 type: fact
 ---
+
+Definition not stated: the subject plugins.signature_trust is named by requirement REQ-plugins-untrusted-signer-named, which links to the subject fact FACT-SUBJECT-9AFA7913446842D1 through constrains. The people who own that source can say what it is in the product and what it is not.

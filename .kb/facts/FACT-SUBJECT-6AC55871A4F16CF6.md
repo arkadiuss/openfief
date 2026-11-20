@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6AC55871A4F16CF6
 type: fact
 ---
+
+Definition not stated: the subject ui.offline_overview is named by requirements REQ-ui-offline-keeps-last-overview-only, REQ-ui-offline-never-keeps-records, REQ-ui-offline-overview-contents, REQ-ui-offline-overview-unexportable-key, REQ-ui-offline-overview-wipe-triggers, REQ-ui-offline-overview-wiped-on-session-end, which link to the subject fact FACT-SUBJECT-6AC55871A4F16CF6 through constrains. The people who own that source can say what it is in the product and what it is not.

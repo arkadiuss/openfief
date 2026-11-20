@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-06319F2FC4DF9E64
 type: fact
 ---
+
+Definition not stated: the subject ingest.account_service is named by requirements REQ-ingest-account-service, REQ-ingest-broker-accounts-owner-only, REQ-ingest-delete-unused-account, REQ-ingest-remap-unused-broker-account, which link to the subject fact FACT-SUBJECT-06319F2FC4DF9E64 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D0667D02C81FABFB
 type: fact
 ---
+
+Definition not stated: the subject valuation.gross_value is named by requirement REQ-valuation-gross-value, which links to the subject fact FACT-SUBJECT-D0667D02C81FABFB through constrains. The people who own that source can say what it is in the product and what it is not.

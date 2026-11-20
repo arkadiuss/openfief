@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-ED9EF256B6D41395
 type: fact
 ---
+
+Definition not stated: the subject plugins.verified_catalog_entry is named by requirement REQ-plugins-verified-entry-pins, which links to the subject fact FACT-SUBJECT-ED9EF256B6D41395 through constrains. The people who own that source can say what it is in the product and what it is not.

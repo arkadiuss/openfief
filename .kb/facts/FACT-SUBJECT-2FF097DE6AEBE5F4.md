@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2FF097DE6AEBE5F4
 type: fact
 ---
+
+Definition not stated: the subject ingest.xtb_holding_assertions is named by requirements REQ-ingest-xtb-open-positions-assert-holdings, REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm, which link to the subject fact FACT-SUBJECT-2FF097DE6AEBE5F4 through constrains. The people who own that source can say what it is in the product and what it is not.

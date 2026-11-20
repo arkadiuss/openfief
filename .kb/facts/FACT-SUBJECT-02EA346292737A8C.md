@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-02EA346292737A8C
 type: fact
 ---
+
+Definition not stated: the subject views.ui_design is named by requirement REQ-ui-design-system, which links to the subject fact FACT-SUBJECT-02EA346292737A8C through constrains. The people who own that source can say what it is in the product and what it is not.

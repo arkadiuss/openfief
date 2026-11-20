@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E0600C8A951C6985
 type: fact
 ---
+
+Definition not stated: the subject plugins.eodhd is named by requirement REQ-plugins-eodhd-requested-instruments, which links to the subject fact FACT-SUBJECT-E0600C8A951C6985 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-C9C7F3BE6B6C8D05
 type: fact
 ---
+
+Definition not stated: the subject operator.in_cluster_service is named by requirement REQ-operator-in-cluster-service-reads-service, which links to the subject fact FACT-SUBJECT-C9C7F3BE6B6C8D05 through constrains. The people who own that source can say what it is in the product and what it is not.

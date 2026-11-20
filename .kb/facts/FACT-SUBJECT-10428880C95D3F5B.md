@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-10428880C95D3F5B
 type: fact
 ---
+
+Definition not stated: the subject views.yearly_tax_days is named by requirement REQ-views-oki-tax-days, which links to the subject fact FACT-SUBJECT-10428880C95D3F5B through constrains. The people who own that source can say what it is in the product and what it is not.

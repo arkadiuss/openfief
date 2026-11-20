@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3539E4EDEC067C24
 type: fact
 ---
+
+Definition not stated: the subject identity.read_api_auth is named by requirements REQ-identity-read-api-plugins, REQ-identity-read-api-refuses-connector-tokens, REQ-identity-read-api-sessions, REQ-identity-read-api-view-plugin-tokens, which link to the subject fact FACT-SUBJECT-3539E4EDEC067C24 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-8EA06C629A63C4D2
 type: fact
 ---
+
+Definition not stated: the subject valuation.reporting_currency is named by requirement REQ-valuation-reporting-currency, which links to the subject fact FACT-SUBJECT-8EA06C629A63C4D2 through constrains. The people who own that source can say what it is in the product and what it is not.

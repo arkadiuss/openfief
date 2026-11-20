@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4D3D2171065D9025
 type: fact
 ---
+
+Definition not stated: the subject demo.server is named by requirements REQ-tooling-demo-access, REQ-tooling-demo-ssh-throwaway, which link to the subject fact FACT-SUBJECT-4D3D2171065D9025 through constrains. The people who own that source can say what it is in the product and what it is not.

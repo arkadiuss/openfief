@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D9990F90A0163DCF
 type: fact
 ---
+
+Definition not stated: the subject sdk.serve_connector is named by requirement REQ-sdk-go-serve-connector, which links to the subject fact FACT-SUBJECT-D9990F90A0163DCF through constrains. The people who own that source can say what it is in the product and what it is not.

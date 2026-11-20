@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-61962DA1DF2ED2EA
 type: fact
 ---
+
+Definition not stated: the subject valuation.index_levels is named by requirements REQ-valuation-index-level-last-delivered, REQ-valuation-index-levels, REQ-valuation-index-levels-not-ranked, which link to the subject fact FACT-SUBJECT-61962DA1DF2ED2EA through constrains. The people who own that source can say what it is in the product and what it is not.

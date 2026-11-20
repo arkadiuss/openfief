@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7FC90ECEBA7CC833
 type: fact
 ---
+
+Definition not stated: the subject tooling.archtest is named by requirements REQ-tooling-archtest-baseline, REQ-tooling-archtest-catalog-tests, REQ-tooling-archtest-imports, REQ-tooling-archtest-money-purity, REQ-tooling-archtest-privacy, REQ-tooling-archtest-schemas, REQ-tooling-archtest-stable-tests, which link to the subject fact FACT-SUBJECT-7FC90ECEBA7CC833 through constrains. The people who own that source can say what it is in the product and what it is not.

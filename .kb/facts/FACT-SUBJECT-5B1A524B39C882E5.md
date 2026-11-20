@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-5B1A524B39C882E5
 type: fact
 ---
+
+Definition not stated: the subject sdk.go.egress_client is named by requirement REQ-sdk-go-egress-proxy-url, which links to the subject fact FACT-SUBJECT-5B1A524B39C882E5 through constrains. The people who own that source can say what it is in the product and what it is not.

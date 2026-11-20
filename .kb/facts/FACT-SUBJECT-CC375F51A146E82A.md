@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-CC375F51A146E82A
 type: fact
 ---
+
+Definition not stated: the subject portfolio.backtest is named by requirements REQ-portfolio-backtest-history, REQ-portfolio-backtest-index, REQ-portfolio-backtest-yearly-rebalance, REQ-portfolio-model-rebalance-year-end, REQ-portfolio-rebase, which link to the subject fact FACT-SUBJECT-CC375F51A146E82A through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-32B0B9A6BCAD5E63
 type: fact
 ---
+
+Definition not stated: the subject ingest.discovery is named by requirement REQ-ingest-discovery, which links to the subject fact FACT-SUBJECT-32B0B9A6BCAD5E63 through constrains. The people who own that source can say what it is in the product and what it is not.

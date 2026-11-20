@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-2603F6858EDB8666
 type: fact
 ---
+
+Definition not stated: the subject platform.cryptography_in_m0 is named by requirement REQ-AUTO-F311FB1545F33607, which links to the subject fact FACT-SUBJECT-2603F6858EDB8666 through constrains. The people who own that source can say what it is in the product and what it is not.

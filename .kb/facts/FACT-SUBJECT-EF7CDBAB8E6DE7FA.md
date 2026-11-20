@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-EF7CDBAB8E6DE7FA
 type: fact
 ---
+
+Definition not stated: the subject install.platform_credentials is named by requirement REQ-identity-credentials-generated-by-install, which links to the subject fact FACT-SUBJECT-EF7CDBAB8E6DE7FA through constrains. The people who own that source can say what it is in the product and what it is not.

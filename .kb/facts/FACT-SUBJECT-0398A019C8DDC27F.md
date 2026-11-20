@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0398A019C8DDC27F
 type: fact
 ---
+
+Definition not stated: the subject demo.dataset is named by requirements REQ-demo-consistent-history, REQ-demo-deterministic, REQ-demo-synthetic-only, which link to the subject fact FACT-SUBJECT-0398A019C8DDC27F through constrains. The people who own that source can say what it is in the product and what it is not.

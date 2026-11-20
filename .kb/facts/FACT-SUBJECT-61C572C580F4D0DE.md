@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-61C572C580F4D0DE
 type: fact
 ---
+
+Definition not stated: the subject sdk.endpoint is named by requirements REQ-sdk-endpoint-base-url-https, REQ-sdk-endpoint-cluster-service, REQ-sdk-endpoint-extra-ca-bundle, which link to the subject fact FACT-SUBJECT-61C572C580F4D0DE through constrains. The people who own that source can say what it is in the product and what it is not.

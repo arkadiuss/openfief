@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6E404DDE35453186
 type: fact
 ---
+
+Definition not stated: the subject release.bundle is named by requirement REQ-tooling-release-bundle-pinned, which links to the subject fact FACT-SUBJECT-6E404DDE35453186 through constrains. The people who own that source can say what it is in the product and what it is not.

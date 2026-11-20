@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D49D172B3563395A
 type: fact
 ---
+
+Definition not stated: the subject plugins.cli_upgrade is named by requirements REQ-plugins-upgrade-applies-on-confirmation, REQ-plugins-upgrade-plan-keeps-instance, REQ-plugins-upgrade-version-resolution, which link to the subject fact FACT-SUBJECT-D49D172B3563395A through constrains. The people who own that source can say what it is in the product and what it is not.

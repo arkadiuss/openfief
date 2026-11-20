@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BD620DF5A5C4BB1F
 type: fact
 ---
+
+Definition not stated: the subject e2e.fixture_server is named by requirement REQ-e2e-institution-fixture-server, which links to the subject fact FACT-SUBJECT-BD620DF5A5C4BB1F through constrains. The people who own that source can say what it is in the product and what it is not.

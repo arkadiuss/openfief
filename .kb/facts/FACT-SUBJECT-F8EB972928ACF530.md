@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F8EB972928ACF530
 type: fact
 ---
+
+Definition not stated: the subject pl.tax_wrapper is named by requirements REQ-pl-tax-wrapper-exempt, REQ-pl-tax-wrappers, which link to the subject fact FACT-SUBJECT-F8EB972928ACF530 through constrains. The people who own that source can say what it is in the product and what it is not.

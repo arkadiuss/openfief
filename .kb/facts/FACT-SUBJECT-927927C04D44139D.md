@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-927927C04D44139D
 type: fact
 ---
+
+Definition not stated: the subject plugins.egress_route is named by requirement REQ-plugins-proxy-env-and-allow-list, which links to the subject fact FACT-SUBJECT-927927C04D44139D through constrains. The people who own that source can say what it is in the product and what it is not.

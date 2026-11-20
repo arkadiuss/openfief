@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-DE9DF6057FCDB217
 type: fact
 ---
+
+Definition not stated: the subject plugins.rollout is named by requirements REQ-plugins-rollout-no-grant, REQ-plugins-rollout-upgrade-waits, which link to the subject fact FACT-SUBJECT-DE9DF6057FCDB217 through constrains. The people who own that source can say what it is in the product and what it is not.

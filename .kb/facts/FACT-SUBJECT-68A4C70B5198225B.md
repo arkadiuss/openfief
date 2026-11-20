@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-68A4C70B5198225B
 type: fact
 ---
+
+Definition not stated: the subject ingest.ticker_confirmation is named by requirement REQ-ingest-ticker-currency-pick-required, which links to the subject fact FACT-SUBJECT-68A4C70B5198225B through constrains. The people who own that source can say what it is in the product and what it is not.

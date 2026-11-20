@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-8DD5632AB3F365E8
 type: fact
 ---
+
+Definition not stated: the subject views.view_plugins is named by requirement REQ-AUTO-A04740EC43D6F6BA, which links to the subject fact FACT-SUBJECT-8DD5632AB3F365E8 through constrains. The people who own that source can say what it is in the product and what it is not.

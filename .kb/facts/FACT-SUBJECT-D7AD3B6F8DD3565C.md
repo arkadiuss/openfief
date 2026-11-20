@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-D7AD3B6F8DD3565C
 type: fact
 ---
+
+Definition not stated: the subject valuation.settings_service is named by requirement REQ-valuation-settings-service, which links to the subject fact FACT-SUBJECT-D7AD3B6F8DD3565C through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FD8AACF94378B2E4
 type: fact
 ---
+
+Definition not stated: the subject tooling.release_smoke is named by requirement REQ-tooling-release-smoke, which links to the subject fact FACT-SUBJECT-FD8AACF94378B2E4 through constrains. The people who own that source can say what it is in the product and what it is not.

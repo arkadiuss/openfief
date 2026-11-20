@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2CE30383CCA6EAC3
 type: fact
 ---
+
+Definition not stated: the subject operator.workload_objects is named by requirement REQ-operator-workload-objects, which links to the subject fact FACT-SUBJECT-2CE30383CCA6EAC3 through constrains. The people who own that source can say what it is in the product and what it is not.

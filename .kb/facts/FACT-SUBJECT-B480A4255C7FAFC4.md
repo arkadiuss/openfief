@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-B480A4255C7FAFC4
 type: fact
 ---
+
+Definition not stated: the subject valuation.bond_terms is named by requirements REQ-valuation-bond-fee-source-stored, REQ-valuation-bond-terms-attribution-stored, REQ-valuation-bond-terms-polish-isin, which link to the subject fact FACT-SUBJECT-B480A4255C7FAFC4 through constrains. The people who own that source can say what it is in the product and what it is not.

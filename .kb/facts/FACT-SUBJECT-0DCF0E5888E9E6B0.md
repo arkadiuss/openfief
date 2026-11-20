@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0DCF0E5888E9E6B0
 type: fact
 ---
+
+Definition not stated: the subject pl.early_redemption_fee is named by requirements REQ-pl-early-redemption-fee-by-wrapper, REQ-pl-early-redemption-fee-cap, which link to the subject fact FACT-SUBJECT-0DCF0E5888E9E6B0 through constrains. The people who own that source can say what it is in the product and what it is not.

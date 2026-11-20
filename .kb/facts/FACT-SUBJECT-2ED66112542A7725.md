@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2ED66112542A7725
 type: fact
 ---
+
+Definition not stated: the subject ledger.transfer is named by requirements REQ-ledger-transfer-broken-attention-item, REQ-ledger-transfer-broken-stops-counting, REQ-ledger-transfer-correction, REQ-ledger-transfer-leg-once, REQ-ledger-transfer-legs, REQ-ledger-transfer-link-append-only, REQ-ledger-transfer-suggestion, REQ-ui-transfer-confirmation, which link to the subject fact FACT-SUBJECT-2ED66112542A7725 through constrains. The people who own that source can say what it is in the product and what it is not.

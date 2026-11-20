@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8A31F337F2AAFE7E
 type: fact
 ---
+
+Definition not stated: the subject ingest.connectors is named by requirements REQ-ingest-market-data-sources-recorded, REQ-ingest-sync-keeps-from-go-live, which link to the subject fact FACT-SUBJECT-8A31F337F2AAFE7E through constrains. The people who own that source can say what it is in the product and what it is not.

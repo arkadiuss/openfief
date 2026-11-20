@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-395F81AF430C74E7
 type: fact
 ---
+
+Definition not stated: the subject sdk.go.connector_server is named by requirement REQ-sdk-go-core-only, which links to the subject fact FACT-SUBJECT-395F81AF430C74E7 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C87F01A26ABBB0C2
 type: fact
 ---
+
+Definition not stated: the subject tooling.breaking_change_exceptions is named by requirements REQ-tooling-breaking-before-first-beta, REQ-tooling-breaking-exception-commit-marked, which link to the subject fact FACT-SUBJECT-C87F01A26ABBB0C2 through constrains. The people who own that source can say what it is in the product and what it is not.

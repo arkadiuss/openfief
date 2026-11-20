@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-179806A108A5CBD0
 type: fact
 ---
+
+Definition not stated: the subject ingest.bond_terms is named by requirement REQ-ingest-bond-terms-attribution-contract, which links to the subject fact FACT-SUBJECT-179806A108A5CBD0 through constrains. The people who own that source can say what it is in the product and what it is not.

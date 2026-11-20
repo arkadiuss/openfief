@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FE4A9F4E007DAFCA
 type: fact
 ---
+
+Definition not stated: the subject pl.business_day_calendar is named by requirements REQ-pl-business-day-calendar, REQ-pl-calendar-from-1991, REQ-pl-calendar-no-epidemic-days, which link to the subject fact FACT-SUBJECT-FE4A9F4E007DAFCA through constrains. The people who own that source can say what it is in the product and what it is not.

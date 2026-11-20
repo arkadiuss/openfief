@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3E29EC8DB2813A76
 type: fact
 ---
+
+Definition not stated: the subject valuation.status is named by requirement REQ-valuation-status, which links to the subject fact FACT-SUBJECT-3E29EC8DB2813A76 through constrains. The people who own that source can say what it is in the product and what it is not.

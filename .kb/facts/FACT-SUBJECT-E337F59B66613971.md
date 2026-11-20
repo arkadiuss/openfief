@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E337F59B66613971
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.terms is named by requirements REQ-treasurybonds-sync-fills-missing-terms, REQ-treasurybonds-terms-from-published-data, which link to the subject fact FACT-SUBJECT-E337F59B66613971 through constrains. The people who own that source can say what it is in the product and what it is not.

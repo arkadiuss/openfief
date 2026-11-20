@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E4D322C8278B6635
 type: fact
 ---
+
+Definition not stated: the subject ingest.sync_retry is named by requirements REQ-ingest-owner-retries-sync, REQ-ingest-retry-rate-limited, which link to the subject fact FACT-SUBJECT-E4D322C8278B6635 through constrains. The people who own that source can say what it is in the product and what it is not.

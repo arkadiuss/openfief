@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-FCD7D220C4CF3153
 type: fact
 ---
+
+Definition not stated: the subject pl.fee_table is named by requirements REQ-pl-assumed-fee-confirmed-by-owner, REQ-pl-early-redemption-fee-table, REQ-pl-fee-carried-forward-assumed, which link to the subject fact FACT-SUBJECT-FCD7D220C4CF3153 through constrains. The people who own that source can say what it is in the product and what it is not.

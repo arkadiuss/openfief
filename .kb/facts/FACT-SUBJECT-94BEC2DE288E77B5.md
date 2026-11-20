@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-94BEC2DE288E77B5
 type: fact
 ---
+
+Definition not stated: the subject valuation.ibkr_flex_prices is named by requirement REQ-AUTO-7374F67D85269872, which links to the subject fact FACT-SUBJECT-94BEC2DE288E77B5 through constrains. The people who own that source can say what it is in the product and what it is not.

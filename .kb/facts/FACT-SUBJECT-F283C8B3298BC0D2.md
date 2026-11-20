@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-F283C8B3298BC0D2
 type: fact
 ---
+
+Definition not stated: the subject valuation.values is named by requirement REQ-valuation-three-values, which links to the subject fact FACT-SUBJECT-F283C8B3298BC0D2 through constrains. The people who own that source can say what it is in the product and what it is not.

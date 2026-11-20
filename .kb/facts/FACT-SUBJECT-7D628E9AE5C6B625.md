@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7D628E9AE5C6B625
 type: fact
 ---
+
+Definition not stated: the subject portfolio.sleeve_service is named by requirements REQ-portfolio-delete-unused-sleeves-and-kinds, REQ-portfolio-sleeve-service, which link to the subject fact FACT-SUBJECT-7D628E9AE5C6B625 through constrains. The people who own that source can say what it is in the product and what it is not.

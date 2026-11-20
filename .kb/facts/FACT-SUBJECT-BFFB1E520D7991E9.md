@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-BFFB1E520D7991E9
 type: fact
 ---
+
+Definition not stated: the subject pl.oki_act is named by requirement REQ-pl-oki-act-as-data, which links to the subject fact FACT-SUBJECT-BFFB1E520D7991E9 through constrains. The people who own that source can say what it is in the product and what it is not.

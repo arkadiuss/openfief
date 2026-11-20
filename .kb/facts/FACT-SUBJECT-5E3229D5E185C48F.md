@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-5E3229D5E185C48F
 type: fact
 ---
+
+Definition not stated: the subject ui.charts_start is named by requirement REQ-ui-chart-start-view-parameter, which links to the subject fact FACT-SUBJECT-5E3229D5E185C48F through constrains. The people who own that source can say what it is in the product and what it is not.

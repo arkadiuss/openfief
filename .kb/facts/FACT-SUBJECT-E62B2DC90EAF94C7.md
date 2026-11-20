@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-E62B2DC90EAF94C7
 type: fact
 ---
+
+Definition not stated: the subject ui.cash_checkpoints is named by requirement REQ-ui-cash-checkpoints, which links to the subject fact FACT-SUBJECT-E62B2DC90EAF94C7 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AC29AA1365C0438F
 type: fact
 ---
+
+Definition not stated: the subject views.transfers is named by requirement REQ-views-transfer-suggestions, which links to the subject fact FACT-SUBJECT-AC29AA1365C0438F through constrains. The people who own that source can say what it is in the product and what it is not.

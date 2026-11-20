@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0E9DAE0A73DBE3AC
 type: fact
 ---
+
+Definition not stated: the subject attention.failing_sync_check is named by requirement REQ-attention-sync-failing-check, which links to the subject fact FACT-SUBJECT-0E9DAE0A73DBE3AC through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-1FFB20E6DF879F3F
 type: fact
 ---
+
+Definition not stated: the subject identity.script_token is named by requirements REQ-identity-no-preinstalled-token, REQ-identity-script-token-from-session, REQ-identity-script-token-issue, REQ-identity-script-token-revoke, REQ-identity-script-token-verify, which link to the subject fact FACT-SUBJECT-1FFB20E6DF879F3F through constrains. The people who own that source can say what it is in the product and what it is not.

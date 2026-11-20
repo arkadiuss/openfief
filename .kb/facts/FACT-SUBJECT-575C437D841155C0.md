@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-575C437D841155C0
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_data_connector is named by requirements REQ-ingest-xtb-isin-proposed, REQ-valuation-eodhd-connector, which link to the subject fact FACT-SUBJECT-575C437D841155C0 through constrains. The people who own that source can say what it is in the product and what it is not.

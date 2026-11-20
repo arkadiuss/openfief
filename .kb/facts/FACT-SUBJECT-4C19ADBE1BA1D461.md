@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4C19ADBE1BA1D461
 type: fact
 ---
+
+Definition not stated: the subject ingest.broker_account is named by requirements REQ-ingest-broker-account-choice, REQ-ingest-broker-account-numbers-owner-only, REQ-ingest-broker-account-remap, REQ-ingest-broker-account-remap-per-instance, REQ-ingest-remap-check-ignores-assertions, REQ-ingest-remap-check-never-unsafe, REQ-ingest-unmapped-broker-account, which link to the subject fact FACT-SUBJECT-4C19ADBE1BA1D461 through constrains. The people who own that source can say what it is in the product and what it is not.

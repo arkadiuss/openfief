@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-63376BAD9B47037A
 type: fact
 ---
+
+Definition not stated: the subject plugins.trust_documents is named by requirement REQ-plugins-catalog-format, which links to the subject fact FACT-SUBJECT-63376BAD9B47037A through constrains. The people who own that source can say what it is in the product and what it is not.

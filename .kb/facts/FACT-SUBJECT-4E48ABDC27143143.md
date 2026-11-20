@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4E48ABDC27143143
 type: fact
 ---
+
+Definition not stated: the subject valuation.river_migrations is named by requirement REQ-valuation-river-migrations-serialized, which links to the subject fact FACT-SUBJECT-4E48ABDC27143143 through constrains. The people who own that source can say what it is in the product and what it is not.

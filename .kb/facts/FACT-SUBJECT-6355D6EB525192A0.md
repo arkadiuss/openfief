@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-6355D6EB525192A0
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_inputs is named by requirement REQ-valuation-terms-levels-record-instance, which links to the subject fact FACT-SUBJECT-6355D6EB525192A0 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-03A283693BC1A392
 type: fact
 ---
+
+Definition not stated: the subject identity.passkey_removal is named by requirement REQ-identity-remove-passkey-revokes-sessions, which links to the subject fact FACT-SUBJECT-03A283693BC1A392 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8719479B656BD2E4
 type: fact
 ---
+
+Definition not stated: the subject views.activity is named by requirements REQ-views-activity, REQ-views-activity-batch-accounts, REQ-views-batch-counts-per-viewable-account, which link to the subject fact FACT-SUBJECT-8719479B656BD2E4 through constrains. The people who own that source can say what it is in the product and what it is not.

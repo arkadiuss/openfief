@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-9E1AFC3BC2FA1036
 type: fact
 ---
+
+Definition not stated: the subject plugins.config_field_host is named by requirements REQ-plugins-config-field-host-grant, REQ-plugins-config-field-host-https, REQ-plugins-config-field-host-via-proxy, which link to the subject fact FACT-SUBJECT-9E1AFC3BC2FA1036 through constrains. The people who own that source can say what it is in the product and what it is not.

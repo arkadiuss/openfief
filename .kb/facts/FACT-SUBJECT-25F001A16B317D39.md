@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-25F001A16B317D39
 type: fact
 ---
+
+Definition not stated: the subject docs.references is named by requirement REQ-docs-refs-exist, which links to the subject fact FACT-SUBJECT-25F001A16B317D39 through constrains. The people who own that source can say what it is in the product and what it is not.

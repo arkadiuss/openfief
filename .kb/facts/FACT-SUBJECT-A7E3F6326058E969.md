@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-A7E3F6326058E969
 type: fact
 ---
+
+Definition not stated: the subject ingest.xtb_positions is named by requirement REQ-ingest-xtb-open-price-trading-currency, which links to the subject fact FACT-SUBJECT-A7E3F6326058E969 through constrains. The people who own that source can say what it is in the product and what it is not.

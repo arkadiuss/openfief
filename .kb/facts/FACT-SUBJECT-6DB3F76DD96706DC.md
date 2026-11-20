@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6DB3F76DD96706DC
 type: fact
 ---
+
+Definition not stated: the subject jurisdiction.pl.totals is named by requirement REQ-pl-totals-per-wrapper, which links to the subject fact FACT-SUBJECT-6DB3F76DD96706DC through constrains. The people who own that source can say what it is in the product and what it is not.

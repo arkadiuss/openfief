@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-B6F60403287A6AAA
 type: fact
 ---
+
+Definition not stated: the subject tooling.cli_version is named by requirement REQ-tooling-cli-version, which links to the subject fact FACT-SUBJECT-B6F60403287A6AAA through constrains. The people who own that source can say what it is in the product and what it is not.

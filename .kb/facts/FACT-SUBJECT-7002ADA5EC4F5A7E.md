@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-7002ADA5EC4F5A7E
 type: fact
 ---
+
+Definition not stated: the subject treasurybonds.payout is named by requirements REQ-treasurybonds-account-payout-setting, REQ-treasurybonds-books-maturities, REQ-treasurybonds-payout-booked-then-withdrawn, which link to the subject fact FACT-SUBJECT-7002ADA5EC4F5A7E through constrains. The people who own that source can say what it is in the product and what it is not.

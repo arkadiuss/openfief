@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-39E6C7397E8CD407
 type: fact
 ---
+
+Definition not stated: the subject valuation.market_data_service is named by requirements REQ-valuation-market-data-series-service, REQ-valuation-market-data-service, which link to the subject fact FACT-SUBJECT-39E6C7397E8CD407 through constrains. The people who own that source can say what it is in the product and what it is not.

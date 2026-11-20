@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8853DD7448E131BB
 type: fact
 ---
+
+Definition not stated: the subject views.ike_paid_in is named by requirement REQ-views-ike-paid-in-earlier-payments, which links to the subject fact FACT-SUBJECT-8853DD7448E131BB through constrains. The people who own that source can say what it is in the product and what it is not.

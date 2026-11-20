@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-6166007EBA87AC71
 type: fact
 ---
+
+Definition not stated: the subject core.bond_lot_service is named by requirement REQ-core-bond-lot-service, which links to the subject fact FACT-SUBJECT-6166007EBA87AC71 through constrains. The people who own that source can say what it is in the product and what it is not.

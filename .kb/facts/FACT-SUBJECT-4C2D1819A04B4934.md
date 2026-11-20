@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4C2D1819A04B4934
 type: fact
 ---
+
+Definition not stated: the subject valuation.price_check_service is named by requirement REQ-valuation-price-check-service, which links to the subject fact FACT-SUBJECT-4C2D1819A04B4934 through constrains. The people who own that source can say what it is in the product and what it is not.

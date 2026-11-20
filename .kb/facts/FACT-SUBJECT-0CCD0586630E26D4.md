@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-0CCD0586630E26D4
 type: fact
 ---
+
+Definition not stated: the subject identity.viewers is named by requirement REQ-identity-owner-enrolls-viewers, which links to the subject fact FACT-SUBJECT-0CCD0586630E26D4 through constrains. The people who own that source can say what it is in the product and what it is not.

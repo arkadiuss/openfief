@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-4A5978EAC2EECC62
 type: fact
 ---
+
+Definition not stated: the subject operator.plugin_config is named by requirement REQ-operator-config-schema, which links to the subject fact FACT-SUBJECT-4A5978EAC2EECC62 through constrains. The people who own that source can say what it is in the product and what it is not.

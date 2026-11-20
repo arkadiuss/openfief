@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-BE822F0D998AC03B
 type: fact
 ---
+
+Definition not stated: the subject platform.default_access_to_openfief is named by requirement REQ-AUTO-0D5A3B94C46E88DF, which links to the subject fact FACT-SUBJECT-BE822F0D998AC03B through constrains. The people who own that source can say what it is in the product and what it is not.

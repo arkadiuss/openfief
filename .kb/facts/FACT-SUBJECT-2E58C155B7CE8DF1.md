@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-2E58C155B7CE8DF1
 type: fact
 ---
+
+Definition not stated: the subject views.attention is named by requirement REQ-views-transfer-broken-accounts, which links to the subject fact FACT-SUBJECT-2E58C155B7CE8DF1 through constrains. The people who own that source can say what it is in the product and what it is not.

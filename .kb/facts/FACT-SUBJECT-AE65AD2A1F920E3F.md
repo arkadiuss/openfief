@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AE65AD2A1F920E3F
 type: fact
 ---
+
+Definition not stated: the subject ui.service_worker is named by requirement REQ-ui-service-worker-static-files, which links to the subject fact FACT-SUBJECT-AE65AD2A1F920E3F through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-3372881DDFB29A8D
 type: fact
 ---
+
+Definition not stated: the subject kernel.money is named by requirement REQ-kernel-money-currency-mismatch, which links to the subject fact FACT-SUBJECT-3372881DDFB29A8D through constrains. The people who own that source can say what it is in the product and what it is not.

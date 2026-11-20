@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-30D618C3C5B4C80D
 type: fact
 ---
+
+Definition not stated: the subject views.ghostfolio is named by requirement REQ-views-ghostfolio-rekey-resync, which links to the subject fact FACT-SUBJECT-30D618C3C5B4C80D through constrains. The people who own that source can say what it is in the product and what it is not.

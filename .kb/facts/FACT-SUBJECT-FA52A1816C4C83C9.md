@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-FA52A1816C4C83C9
 type: fact
 ---
+
+Definition not stated: the subject valuation.input is named by requirement REQ-valuation-input-validation, which links to the subject fact FACT-SUBJECT-FA52A1816C4C83C9 through constrains. The people who own that source can say what it is in the product and what it is not.

@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-AF6C21C8C468E0C9
 type: fact
 ---
+
+Definition not stated: the subject views.allocation is named by requirements REQ-views-allocation, REQ-views-allocation-inputs, which link to the subject fact FACT-SUBJECT-AF6C21C8C468E0C9 through constrains. The people who own that source can say what it is in the product and what it is not.

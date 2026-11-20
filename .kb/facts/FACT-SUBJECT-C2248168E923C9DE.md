@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-C2248168E923C9DE
 type: fact
 ---
+
+Definition not stated: the subject deploy.tracing is named by requirement REQ-telemetry-deploy-component, which links to the subject fact FACT-SUBJECT-C2248168E923C9DE through constrains. The people who own that source can say what it is in the product and what it is not.

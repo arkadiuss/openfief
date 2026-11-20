@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-CD65E2B80F60E34C
 type: fact
 ---
+
+Definition not stated: the subject views.totals is named by requirement REQ-views-totals-losses-offset, which links to the subject fact FACT-SUBJECT-CD65E2B80F60E34C through constrains. The people who own that source can say what it is in the product and what it is not.

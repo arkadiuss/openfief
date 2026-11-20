@@ -21,3 +21,5 @@ origin:
 id: FACT-SUBJECT-8B14E386D265CA2E
 type: fact
 ---
+
+Definition not stated: the subject plugins.treasury_bonds_manifest is named by requirement REQ-plugins-treasury-bonds-ministry-egress, which links to the subject fact FACT-SUBJECT-8B14E386D265CA2E through constrains. The people who own that source can say what it is in the product and what it is not.
