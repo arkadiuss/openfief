@@ -1476,3 +1476,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd4399c5625b
+  - type: implements
+    from: SYM-answer-cards-commands-today
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:09:32.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd29a7c584a
+  - type: covered_by
+    from: SYM-answer-cards-commands-today
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:09:32.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19de53568b3e
+  - type: verified_by
+    from: SCEN-ui-ask-shows-progress
+    to: TEST-ui-turnstile
+    created_at: 2026-11-19T16:26:12.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35123f4a34ba
+  - type: verified_by
+    from: SCEN-ui-ask-shows-progress
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-19T16:26:12.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4fa68411d12

@@ -1266,3 +1266,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9aaa37d25b3
+  - type: implements
+    from: SYM-answer-format-separators
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-11-19T11:10:28.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7876f9d54e41
+  - type: implements
+    from: SYM-answer-format-separators
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-11-19T11:10:28.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9d3b7ccd85b
+  - type: covered_by
+    from: SYM-answer-format-separators
+    to: TEST-ui-values
+    created_at: 2026-11-19T11:10:28.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e9e470b17b9

@@ -111,6 +111,133 @@ model_layer_failures() {
   grant_failures "$out"
 }
 
+# telemetry_failures prints one line for each way the demo's telemetry layer (deploy/demo/telemetry, docs/dev/demo.md#telemetry)
+# is wrong, and nothing when it is right. The layer ships the demo's logs, traces and metrics to Grafana Cloud, so visitors'
+# personal data must not leave (GR-12), and it must send nowhere else. $1 is the deploy/demo directory, $2 the build of
+# the layer and $3 the build of the live demo (deploy/demo/openfief). It checks that:
+#   - Flux applies the layer, and the build holds no Secret (the credentials are the Secret grafana-otlp, made out of band);
+#   - every pipeline of the collector's configuration, and there is one for logs, traces and metrics, runs the processor
+#     transform/scrub (with nothing but the memory limiter before it) and exports to the one exporter otlphttp/grafana;
+#   - transform/scrub fails closed (error_mode propagate) and drops keys and rewrites values in every context a signal's
+#     attributes live in, the log body and the span's name and status message included, with the keys and patterns of
+#     the personal data it exists for;
+#   - the exporter's endpoint and the basic auth's instance ID and token come from the environment, so no account's address
+#     or credential is in git, and the ConfigMap the DaemonSet mounts is the file;
+#   - the DaemonSet's mounts are read-only but for its own directory of positions, it holds no capability, and it takes
+#     the credentials from the Secret's three keys without optional, so it waits for the Secret instead of running without;
+#   - the NetworkPolicy lets only the core and the operator reach the OTLP port, and lets the collector reach only DNS and
+#     HTTPS to the public internet, with the private ranges left out;
+#   - the live demo points the core and the operator at the collector's Service, and the core's policy at that port alone.
+telemetry_failures() {
+  local dir="$1" built="$2" live="$3" config="$1/telemetry/collector.yaml"
+  if ! gojq -e --yaml-input 'select(.kind == "Kustomization" and .spec.sourceRef.kind == "GitRepository" and .spec.path == "./deploy/demo/telemetry")' "$dir/stack.yaml" >/dev/null 2>&1; then
+    echo "the demo's Flux stack does not apply ./deploy/demo/telemetry (docs/dev/demo.md#telemetry)"
+  fi
+  if grep -q 'grafana\.net' "$config"; then
+    echo "the collector's configuration names a Grafana address: the endpoint comes from the Secret grafana-otlp, so no account's address is in git"
+  fi
+  gojq -r --yaml-input '
+    def stmts($ctx; $prefix): [.[] | select(.context == $ctx) | (.statements // [])[] | select(startswith($prefix))];
+    . as $c
+    | ($c.processors["transform/scrub"] // {}) as $s
+    | (
+        ($c.service.pipelines // {} | to_entries[]
+          | .key as $k | .value as $p
+          | (if (($p.processors // []) | index("transform/scrub")) == null
+              then "the pipeline \($k) does not run the processor transform/scrub: personal data would reach Grafana (GR-12)" else empty end),
+            (if (($p.processors // []) | index("transform/scrub")) as $i | $i != null and ($p.processors[:$i] | map(select(. != "memory_limiter")) | length) > 0
+              then "the pipeline \($k) runs a processor other than the memory limiter before transform/scrub" else empty end),
+            (if ($p.exporters // []) != ["otlphttp/grafana"]
+              then "the pipeline \($k) exports somewhere other than the one exporter otlphttp/grafana" else empty end)),
+        (["logs", "traces", "metrics"][] as $sig
+          | if ([$c.service.pipelines // {} | keys[] | select(split("/")[0] == $sig)] | length) == 0
+              then "the collector has no \($sig) pipeline" else empty end),
+        (if ($c.exporters // {} | keys) != ["otlphttp/grafana"] then "the collector has an exporter other than otlphttp/grafana" else empty end),
+        (if ($c.exporters["otlphttp/grafana"].endpoint // "") != "${env:GRAFANA_OTLP_ENDPOINT}"
+          then "the exporter otlphttp/grafana does not take its endpoint from ${env:GRAFANA_OTLP_ENDPOINT}" else empty end),
+        (if ($c.exporters["otlphttp/grafana"].auth.authenticator // "") != "basicauth/grafana"
+          then "the exporter otlphttp/grafana does not authenticate with basicauth/grafana" else empty end),
+        (if ($c.extensions["basicauth/grafana"].client_auth.username // "") != "${env:GRAFANA_INSTANCE_ID}"
+            or ($c.extensions["basicauth/grafana"].client_auth.password // "") != "${env:GRAFANA_OTLP_TOKEN}"
+          then "basicauth/grafana does not take its username and password from ${env:GRAFANA_INSTANCE_ID} and ${env:GRAFANA_OTLP_TOKEN}" else empty end),
+        (if ($s.error_mode // "") != "propagate" then "transform/scrub is not fail-closed: its error_mode is not propagate" else empty end),
+        ({log_statements: ["resource", "scope", "log"], trace_statements: ["resource", "scope", "span", "spanevent"], metric_statements: ["resource", "scope", "datapoint"]}
+          | to_entries[] | .key as $kind | .value[] as $ctx
+          | ($s[$kind] // []) as $blocks
+          | (if ($blocks | stmts($ctx; "delete_matching_keys(\($ctx).attributes, ") | length) == 0
+              then "transform/scrub has no delete_matching_keys of \($ctx).attributes in its \($kind)" else empty end),
+            (if ($blocks | stmts($ctx; "replace_all_patterns(\($ctx).attributes, \"value\", ") | length) == 0
+              then "transform/scrub has no replace_all_patterns of \($ctx).attributes values in its \($kind)" else empty end)),
+        (if (($s.log_statements // []) | stmts("log"; "replace_pattern(log.body, ") | length) == 0
+          then "transform/scrub does not rewrite the log body" else empty end),
+        (["span.name", "span.status.message"][] as $f
+          | if (($s.trace_statements // []) | stmts("span"; "replace_pattern(\($f), ") | length) == 0
+              then "transform/scrub does not rewrite \($f)" else empty end),
+        ([($s | .. | strings | select(startswith("delete_matching_keys(")) | capture("^delete_matching_keys\\([a-z.]+, \"(?<re>.*)\"\\)$").re)] | unique) as $keys
+          | (["authorization", "cookie", "session", "token", "header", "client", "forwarded", "question", "prompt", "user"][] as $w
+              | if ($keys | length) == 0 or ($keys | map(contains($w)) | all | not)
+                  then "the keys transform/scrub drops do not name \($w)" else empty end),
+        ([($s | .. | strings | select(startswith("replace_all_patterns(")) | capture("^replace_all_patterns\\([a-z.]+, \"value\", \"(?<re>.*)\", \"\\[redacted\\]\"\\)$").re)] | unique) as $vals
+          | (["[0-9]{1,3}", "ofsess", "ofenroll", "ofs", "bearer", "eyJ", "{40,}"][] as $w
+              | if ($vals | length) == 0 or ($vals | map(contains($w)) | all | not)
+                  then "the values transform/scrub rewrites do not name \($w)" else empty end)
+      )' "$config" || echo "the collector configuration $config can not be read"
+  gojq -r --yaml-input -s '
+    (map(select(.kind == "ConfigMap" and (.metadata.name | startswith("otel-collector-config")))) | .[0]) as $cm
+    | (map(select(.kind == "DaemonSet" and .metadata.name == "otel-collector")) | .[0]) as $ds
+    | (map(select(.kind == "NetworkPolicy" and .metadata.name == "otel-collector")) | .[0]) as $np
+    | ($ds.spec.template.spec // {}) as $pod
+    | ($pod.containers[0] // {}) as $ct
+    | (
+        (if map(select(.kind == "Secret")) | length > 0 then "the telemetry layer holds a Secret: grafana-otlp is made out of band, never in git" else empty end),
+        (if $ds == null then "the telemetry layer has no DaemonSet otel-collector" else empty end),
+        (if $np == null then "the telemetry layer has no NetworkPolicy otel-collector" else empty end),
+        (if ($ct.image // "") | test(":[A-Za-z0-9_][A-Za-z0-9_.-]*@sha256:[0-9a-f]{64}$") | not
+          then "the collector image is not pinned by tag and digest, which Renovate moves together" else empty end),
+        (if ($ct.securityContext.allowPrivilegeEscalation != false or $ct.securityContext.readOnlyRootFilesystem != true or ($ct.securityContext.capabilities.drop // []) != ["ALL"])
+          then "the collector may escalate, write its root filesystem or hold a capability" else empty end),
+        (if $pod.automountServiceAccountToken != false then "the collector pod mounts a Kubernetes API token" else empty end),
+        ([$pod.volumes[]? | select(.hostPath != null) | .hostPath.path] | sort) as $hostPaths
+          | (if $hostPaths != ["/var/lib/openfief-otel", "/var/log/pods"]
+              then "the collector mounts hostPaths other than /var/log/pods and its own /var/lib/openfief-otel: \($hostPaths | join(" "))" else empty end),
+        ([$pod.volumes[]? | select(.hostPath.path == "/var/log/pods") | .name][0]) as $logs
+          | (if ([$ct.volumeMounts[]? | select(.name == $logs and .readOnly == true)] | length) == 0
+              then "the collector mounts the node'"'"'s /var/log/pods writable" else empty end),
+        ([$ct.env[]? | select(.valueFrom.secretKeyRef.name == "grafana-otlp" and .valueFrom.secretKeyRef.optional != true) | .valueFrom.secretKeyRef.key] | sort) as $keys
+          | (if $keys != ["endpoint", "instance-id", "token"]
+              then "the collector does not take endpoint, instance-id and token, all required, from the Secret grafana-otlp" else empty end),
+        (if $cm == null or ($pod.volumes | map(select(.configMap.name == $cm.metadata.name)) | length) == 0
+          then "the collector does not mount its ConfigMap" else empty end),
+        ($np.spec // {}) as $sp
+          | (if (($sp.policyTypes // []) | sort) != ["Egress", "Ingress"] then "the collector'"'"'s NetworkPolicy does not restrict both ingress and egress" else empty end),
+            (if ($sp.ingress // []) | length == 0 or any(.[]; ([.ports[]?.port] | unique) != [4318] or (.from // [] | length) == 0 or any(.from[]; .namespaceSelector.matchLabels["kubernetes.io/metadata.name"] != "openfief"))
+              then "the collector'"'"'s ingress is not the OTLP port 4318 from namespace openfief alone" else empty end),
+            ($sp.egress // [] | .[]
+              | (if (.ports // [] | length) == 0 or any(.ports[]; (.port != 53 and .port != 443))
+                  then "the collector'"'"'s egress has a rule that is not DNS or HTTPS" else empty end),
+                (if any(.ports[]?; .port == 443) and (.to // [] | any(.[]; .ipBlock == null))
+                  then "the collector'"'"'s HTTPS egress goes to something other than an IP block" else empty end),
+                (if any(.ports[]?; .port == 443) and (.to // [] | any(.[]; (.ipBlock.cidr == "0.0.0.0/0") and ((["10.0.0.0/8", "100.64.0.0/10", "127.0.0.0/8", "169.254.0.0/16", "172.16.0.0/12", "192.168.0.0/16"] - (.ipBlock.except // [])) | length > 0)))
+                  then "the collector'"'"'s HTTPS egress to the internet does not leave out the private, shared, link-local and loopback ranges" else empty end),
+                (if any(.ports[]?; .port == 53) and (.to // [] | any(.[]; .podSelector.matchLabels["k8s-app"] != "kube-dns"))
+                  then "the collector'"'"'s DNS egress is not to kube-dns" else empty end)),
+            (if ($sp.egress // [] | map(.ports[]?.port) | unique) != [53, 443] then "the collector'"'"'s egress is not DNS and HTTPS" else empty end)
+      )' "$2" | sed 's/^/the telemetry layer: /' || echo "the telemetry layer build can not be read"
+  gojq -r --yaml-input -s '
+    (map(select(.kind == "ConfigMap" and .metadata.name == "openfief-tracing")) | .[0]) as $cm
+    | (map(select(.kind == "NetworkPolicy" and .metadata.name == "openfief-core-to-collector")) | .[0]) as $np
+    | (
+        (if ($cm.data.OTEL_EXPORTER_OTLP_ENDPOINT // "") != "http://otel-collector.observability:4318"
+          then "the core and the operator do not send OTLP to the collector'"'"'s Service http://otel-collector.observability:4318" else empty end),
+        (if $np == null or ($np.spec.egress | map(.ports[]?.port) | unique) != [4318]
+            or ($np.spec.egress | map(.to[]?) | any(.namespaceSelector.matchLabels["kubernetes.io/metadata.name"] != "observability" or .podSelector.matchLabels["app.kubernetes.io/name"] != "otel-collector"))
+          then "the core'"'"'s policy does not reach the collector'"'"'s pods in observability on port 4318 alone" else empty end)
+      )' "$3" | sed 's/^/the demo: /' || echo "the live demo build can not be read"
+  if ! cmp -s <(gojq -j --yaml-input 'select(.kind == "ConfigMap" and (.metadata.name | startswith("otel-collector-config"))) | .data["config.yaml"]' "$2") "$config"; then
+    echo "the ConfigMap the collector mounts is not $config"
+  fi
+}
+
 # validate_demo builds every layer and applies the checks; it reports every failure, then fails once.
 validate_demo() {
   local dir="${1:-deploy/demo}" path substitutes out failures=0 unverified unknown line
@@ -145,7 +272,19 @@ validate_demo() {
     echo "demo: $line" >&2
     failures=$((failures + 1))
   done < <(model_layer_failures "$dir" "$out")
-  rm -f "$out"
+  # The telemetry layer is checked on its own build and on the live demo's (the core's endpoint and policy).
+  live="$(mktemp)"
+  if kustomize build "$dir/telemetry" >"$out" 2>/dev/null && kustomize build "$dir/openfief" >"$live" 2>/dev/null; then
+    while IFS= read -r line; do
+      [ -n "$line" ] || continue
+      echo "demo: $line" >&2
+      failures=$((failures + 1))
+    done < <(telemetry_failures "$dir" "$out" "$live")
+  else
+    echo "demo: the telemetry layer ($dir/telemetry) or the live demo does not build" >&2
+    failures=$((failures + 1))
+  fi
+  rm -f "$out" "$live"
   unverified="$(gojq -r --yaml-input 'select(.kind == "OCIRepository" and .spec.verify.provider != "cosign") | .metadata.name' "$dir/stack.yaml")"
   if [ -n "$unverified" ]; then
     echo "demo: OCI sources without cosign verification: $unverified" >&2

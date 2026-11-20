@@ -5,7 +5,7 @@ origin:
   kind: agent
   ref: 'Design session, on the author''s behalf: D-223, a period''s return runs from the close of the day before its first day and the chart opens there, 2026-11-15'
   recorded_at: '2026-11-15T18:11:58.364Z'
-sourceFile: internal/views/ui/home_unit_test.go
+sourceFile: internal/views/app/answer/period_test.go
 verification_scope: unit
 id: TEST-ui-period-opening
 type: test

@@ -1077,3 +1077,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa22bd742fee
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-forwarder-from-env
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:40.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a577a7bb78a

@@ -1413,3 +1413,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7751f4a0aaa
+  - type: executable_for
+    from: SYM-answer-toolbox-test-fakeread-getallocation
+    to: TEST-ui-toolbox
+    created_at: 2026-11-19T11:14:38.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2157c6a52388
+  - type: executable_for
+    from: SYM-demo-scrub-test-rule
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:20:47.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad4618b7689f

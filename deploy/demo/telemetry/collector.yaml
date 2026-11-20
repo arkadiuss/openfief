@@ -1,0 +1,211 @@
+# The demo's OpenTelemetry Collector (contrib) configuration (docs/dev/demo.md#telemetry). The DaemonSet mounts it at
+# /etc/otelcol-contrib/config.yaml, from the ConfigMap kustomize makes of this file.
+#
+# What goes in: the core's and the operator's OTLP over HTTP (traces and metrics, D-172),
+# and the standard output of every pod in the namespace openfief, which the filelog receiver reads from the node's
+# /var/log/pods. What comes out: one OTLP/HTTP exporter to the Grafana Cloud OTLP gateway. Nothing else leaves.
+#
+# The hard condition (GR-12): no visitor's personal data leaves the demo. The processor transform/scrub is in every
+# pipeline, right after the memory limiter, so everything the exporter sends has passed it. It drops the keys that
+# carry personal data and rewrites the values that look like it, wherever they are: resource, scope, span, span event,
+# log record and metric data point attributes, and the log body, the span name and the span status message. It is
+# defence in depth: the core's own allow-list (D-172) and the rule that nothing logs an address or a token (GR-12) come
+# first, and this is what is left if one of them fails.
+#
+# What is scrubbed:
+#   keys     client addresses, forwarded-for and real-ip headers, session and token IDs and secrets, credentials,
+#            Authorization, Cookie and Set-Cookie and every other HTTP header, the user agent, and anything named like
+#            question, q, prompt, query, answer or completion (D-203: a question's text is never logged or sent).
+#   values   any IPv4 or IPv6 address, the openfief token prefixes (ofs_, ofsess_ and ofenroll_), Bearer and Basic
+#            credentials, JSON web tokens, and any run of 40 or more characters of a token alphabet. Each becomes
+#            [redacted]. A hex digest is such a run, so an image digest in a log line is scrubbed too, and a dotted
+#            version of four numbers reads as an address: over-scrubbing is the safe side.
+# The patterns avoid backslashes, which OTTL's string literals treat as escapes; a character class says the same.
+# internal/demo/scrub_test.go runs every statement below on sample records and checks that every pipeline lists the
+# processor before its exporter; scripts/demo/validate.sh checks the same on what kustomize builds.
+#
+# The credentials never appear in git: the endpoint, the instance ID and the token come from the environment, which
+# the DaemonSet fills from the Secret grafana-otlp (docs/dev/demo.md#telemetry). Without the Secret the pod waits.
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+  # Where the filelog receiver keeps how far it has read each file, so a restart neither repeats nor skips lines. The
+  # directory is a hostPath of the node.
+  file_storage/logs:
+    directory: /var/lib/openfief-otel
+  basicauth/grafana:
+    client_auth:
+      username: ${env:GRAFANA_INSTANCE_ID}
+      password: ${env:GRAFANA_OTLP_TOKEN}
+
+receivers:
+  # The core's and the operator's OTLP/HTTP, the standard port 4318. The NetworkPolicy admits only them.
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+  # The standard output and error of every container in the namespace openfief. The collector's own pod is in another
+  # namespace, so it never reads its own logs.
+  file_log:
+    include:
+      - /var/log/pods/openfief_*/*/*.log
+    include_file_path: true
+    start_at: beginning
+    storage: file_storage/logs
+    operators:
+      # containerd's CRI format; it also sets k8s.namespace.name, k8s.pod.name, k8s.pod.uid and k8s.container.name from
+      # the file's path.
+      - type: container
+        id: container-parser
+      # OpenFief logs JSON (log/slog): the fields become attributes, the message the body, the time and level the
+      # record's own. A line that isn't JSON stays as it is, as the body.
+      - type: json_parser
+        id: json
+        if: body matches "^[{]"
+        parse_from: body
+        parse_to: attributes
+        timestamp:
+          parse_from: attributes.time
+          layout_type: gotime
+          layout: 2006-01-02T15:04:05.999999999Z07:00
+        severity:
+          parse_from: attributes.level
+      - type: move
+        id: message
+        if: attributes.msg != nil
+        from: attributes.msg
+        to: body
+      - type: remove
+        if: attributes.time != nil
+        field: attributes.time
+      - type: remove
+        if: attributes.level != nil
+        field: attributes.level
+      - type: remove
+        field: attributes["log.file.path"]
+
+processors:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 160
+    spike_limit_mib: 40
+  # What the records are called in Grafana: a log has no service.name until the container's name is it.
+  transform/service:
+    error_mode: ignore
+    log_statements:
+      - context: resource
+        statements:
+          - set(resource.attributes["service.name"], resource.attributes["k8s.container.name"]) where resource.attributes["service.name"] == nil and resource.attributes["k8s.container.name"] != nil
+          - set(resource.attributes["deployment.environment.name"], "demo") where resource.attributes["deployment.environment.name"] == nil
+    trace_statements:
+      - context: resource
+        statements:
+          - set(resource.attributes["deployment.environment.name"], "demo") where resource.attributes["deployment.environment.name"] == nil
+    metric_statements:
+      - context: resource
+        statements:
+          - set(resource.attributes["deployment.environment.name"], "demo") where resource.attributes["deployment.environment.name"] == nil
+  # The scrub (see above): one statement drops the keys, one rewrites the values, in each context a signal's
+  # attributes live in. error_mode propagate: a statement that fails drops the batch rather than let it through
+  # unscrubbed; the statements guard their inputs, so a record of any shape passes through them.
+  transform/scrub:
+    error_mode: propagate
+    log_statements:
+      - context: resource
+        statements:
+          - delete_matching_keys(resource.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(resource.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: scope
+        statements:
+          - delete_matching_keys(scope.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(scope.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: log
+        statements:
+          # A JSON log's nested objects (Postgres's record, for one) become dotted keys first, so the key and value
+          # rules below see every level: delete_matching_keys and replace_all_patterns read only the top level.
+          - flatten(log.attributes)
+          - delete_matching_keys(log.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(log.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: log
+        statements:
+          - replace_pattern(log.body, "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]") where IsString(log.body)
+    trace_statements:
+      - context: resource
+        statements:
+          - delete_matching_keys(resource.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(resource.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: scope
+        statements:
+          - delete_matching_keys(scope.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(scope.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: span
+        statements:
+          - delete_matching_keys(span.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(span.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: spanevent
+        statements:
+          - delete_matching_keys(spanevent.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(spanevent.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: span
+        statements:
+          - replace_pattern(span.name, "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+          - replace_pattern(span.status.message, "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+    metric_statements:
+      - context: resource
+        statements:
+          - delete_matching_keys(resource.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(resource.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: scope
+        statements:
+          - delete_matching_keys(scope.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(scope.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+      - context: datapoint
+        statements:
+          - delete_matching_keys(datapoint.attributes, "(?i)(^|[._-])((client|remote|peer|source)([._-]?|[._-][A-Za-z0-9]+[._-])(ip|addr|address)|real[._-]?ip|forwarded[._-]?for|forwarded|cf[._-]?connecting[._-]?ip|ip|ips|ip[._-]?addr|ip[._-]?address|host[._-]?ip|session|sess|sid|session[._-]?(id|token|key|cookie)|token|tokens|token[._-]?id|tokenid|secret|secrets|password|passwd|credential|credentials|api[._-]?key|apikey|bearer|authorization|cookie|cookies|set[._-]?cookie|csrf|xsrf|jwt|headers?|user[._-]?agent|useragent|question|questions|q|prompt|prompts|query|answer|completion)($|[._-])")
+          - replace_all_patterns(datapoint.attributes, "value", "([0-9A-Fa-f]{0,4}:){2,7}[0-9]{1,3}([.][0-9]{1,3}){3}|[0-9]{1,3}([.][0-9]{1,3}){3}|([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{0,4}:){1,7}:([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,6})?|(ofs|ofsess|ofenroll)_[A-Za-z0-9_-]+|(?i:(bearer|basic)[ ]+[A-Za-z0-9._~+/=-]+)|eyJ[A-Za-z0-9_-]+[.][A-Za-z0-9_-]+[.][A-Za-z0-9_-]*|[A-Za-z0-9_-]{40,}", "[redacted]")
+  batch:
+    send_batch_size: 512
+    timeout: 5s
+
+exporters:
+  # The Grafana Cloud OTLP gateway, such as the one Grafana shows for the stack: the endpoint is the
+  # Secret's, so no account's address is in git. HTTPS with basic auth, instance ID and token. A short queue and a
+  # bounded retry: when Grafana is down the collector drops what it can't hold rather than grow.
+  otlphttp/grafana:
+    endpoint: ${env:GRAFANA_OTLP_ENDPOINT}
+    auth:
+      authenticator: basicauth/grafana
+    compression: gzip
+    timeout: 20s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 60s
+      max_elapsed_time: 5m
+    sending_queue:
+      enabled: true
+      queue_size: 256
+
+service:
+  extensions: [health_check, file_storage/logs, basicauth/grafana]
+  telemetry:
+    # The collector's own logs go to its standard output, at warning level, and its own metrics are off: nothing of the
+    # collector is exported, and nothing listens on 8888.
+    logs:
+      level: warn
+      encoding: json
+    metrics:
+      level: none
+  pipelines:
+    logs:
+      receivers: [file_log, otlp]
+      processors: [memory_limiter, transform/scrub, transform/service, batch]
+      exporters: [otlphttp/grafana]
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, transform/scrub, transform/service, batch]
+      exporters: [otlphttp/grafana]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, transform/scrub, transform/service, batch]
+      exporters: [otlphttp/grafana]

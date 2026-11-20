@@ -1,0 +1,16 @@
+# Where the core and the operator send OTLP/HTTP: http://otel-collector.observability:4318 (the tracing component's
+# endpoint, set in ../openfief). The NetworkPolicy admits only those two.
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  labels:
+    app.kubernetes.io/name: otel-collector
+    app.kubernetes.io/part-of: openfief
+spec:
+  selector:
+    app.kubernetes.io/name: otel-collector
+  ports:
+    - name: otlp-http
+      port: 4318
+      targetPort: otlp-http

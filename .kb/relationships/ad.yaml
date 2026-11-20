@@ -1567,3 +1567,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efc544541783
+  - type: executable_for
+    from: SYM-answer-command-test-mustday
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:09:57.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17b85eea6e17
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-redact-metrics
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:19:02.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62c9c6888359
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-redact-metrics
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:19:02.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99ebcfb0f934

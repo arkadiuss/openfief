@@ -1217,3 +1217,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be0f771a45aa
+  - type: implements
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict-string
+    to: REQ-ui-turnstile-stalled-check-falls-back-visible
+    created_at: 2026-11-18T21:37:34.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-356d4e8730c4
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict-string
+    to: TEST-ui-turnstile
+    created_at: 2026-11-18T21:37:34.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b17a8834f1a
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-knownclientkind
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T22:11:02.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3e0f48eb4b
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-knownclientkind
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T22:11:02.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e20c873e7d4c
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-plugin-report
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:15:18.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c71e3d92806

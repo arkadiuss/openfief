@@ -10,6 +10,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 )
 
 // The Ask box's model ends a question with a structured answer: a JSON object
@@ -149,7 +150,7 @@ func cardRead(id string, n int) bool {
 
 // cardID is the id a model reads on the n-th card (counting from one) its tools
 // returned in this question, and names in its answer.
-func cardID(n int) string { return "c" + strconv.Itoa(n) }
+func cardID(n int) string { return answer.CardID(n) }
 
 // cardNumber returns the number a card id names, ok false for an id that is not
 // c1, c2 and so on.
@@ -166,7 +167,7 @@ func cardNumber(id string) (int, bool) {
 // understands on today (D-194): the box answers it itself, at once, without a
 // model.
 func IsAskCommand(text string, today kernel.Date) bool {
-	_, ok := parseAsk(text, today)
+	_, ok := answer.Parse(text, today)
 	return ok
 }
 
@@ -208,8 +209,8 @@ const finalAnswerText = "Answer the user's question in this schema, using only t
 // a Polish chip would only be answered with the commands.
 func refusalSuggestions(today kernel.Date) []string {
 	var out []string
-	for _, k := range knownCommands() {
-		if q, ok := parseAsk(k.Example, today); ok && q.Command != askShow && q.Command != askSync {
+	for _, k := range answer.KnownCommands() {
+		if q, ok := answer.Parse(k.Example, today); ok && q.Command != answer.CommandShow && q.Command != answer.CommandSync {
 			out = append(out, k.Example)
 		}
 	}

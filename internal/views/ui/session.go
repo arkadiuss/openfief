@@ -11,6 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -30,6 +31,7 @@ const (
 const (
 	hxRequest  = "Hx-Request"
 	hxRedirect = "Hx-Redirect"
+	hxTrigger  = "Hx-Trigger"
 )
 
 // session is the owner's session as one request sees it: the token from
@@ -283,11 +285,4 @@ func bearer[T any](msg *T, sess session) *connect.Request[T] {
 }
 
 // utcToday is the clock's date in UTC.
-func utcToday() kernel.Date {
-	y, m, d := time.Now().UTC().Date()
-	t, err := kernel.NewDate(y, m, d)
-	if err != nil { // a calendar date of the clock is always valid
-		return kernel.Date{}
-	}
-	return t
-}
+func utcToday() kernel.Date { return answer.UTCToday() }

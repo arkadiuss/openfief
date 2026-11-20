@@ -102,6 +102,52 @@ check "the Turnstile key is printed nowhere" "$(yes_if nowhere "$fake_turnstile"
 check "the model's variable is not what the Turnstile command reads" \
   "$(if run_secret OPENROUTER_API_KEY="$fake_key"; then echo no; else echo yes; fi)"
 
+# The Grafana Cloud credentials: one Secret, three keys, in namespace observability, sent as an env file on stdin.
+WHICH=grafana
+fake_endpoint='https://otlp-gateway-prod-eu-west-0.grafana.net/otlp'
+fake_instance='1234567'
+fake_gtoken='glc_FAKE0123456789abcdef-for-tests-only='
+if run_secret GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"; then r=yes; else r=no; fi
+check "the Grafana credentials are sent" "$r"
+printf 'endpoint=%s\ninstance-id=%s\ntoken=%s\n' "$fake_endpoint" "$fake_instance" "$fake_gtoken" >"$work/want-env"
+check "they reach ssh on standard input as an env file, exactly" "$(yes_if cmp -s "$work/want-env" "$work/state/stdin")"
+for v in "$fake_gtoken" "$fake_endpoint" "$fake_instance"; do
+  check "a Grafana value is in no ssh argument, log or output" "$(yes_if nowhere "$v")"
+done
+want="[k3s kubectl -n observability create secret generic grafana-otlp --from-env-file=/dev/stdin --dry-run=client -o yaml | k3s kubectl apply -f - && { k3s kubectl -n observability rollout restart daemonset/otel-collector || true; }]"
+check "the remote command creates or replaces grafana-otlp in observability and restarts the collector" "$(yes_if grep -qF -- "$want" "$work/log")"
+check "the result names the Secret and no value" "$(yes_if grep -q 'Secret grafana-otlp is created or replaced in the namespace observability' "$work/out")"
+if run_secret GRAFANA_OTLP_ENDPOINT="$fake_endpoint/" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"; then r=yes; else r=no; fi
+check "a trailing slash on the endpoint is dropped" "$(yes_if cmp -s "$work/want-env" "$work/state/stdin")"
+# A pipe: the three values, one per line, endpoint first.
+printf '%s\n%s\n%s\n' "$fake_endpoint" "$fake_instance" "$fake_gtoken" >"$work/stdin.txt"
+if STDIN_FILE="$work/stdin.txt" run_secret; then r=yes; else r=no; fi
+check "three values piped in are sent" "$r"
+check "the piped values reach ssh as the same env file" "$(yes_if cmp -s "$work/want-env" "$work/state/stdin")"
+# What the endpoint, the instance ID and the token must look like; each refusal sends nothing and prints no value.
+refuse_grafana() {
+  local name="$1"
+  shift
+  if run_secret "$@"; then r=no; else r=yes; fi
+  check "$name is refused" "$r"
+  check "$name sends nothing" "$(yes_if test ! -e "$work/state/stdin")"
+  check "$name prints no value" "$(yes_if nowhere "$fake_gtoken")"
+}
+refuse_grafana "an http endpoint" GRAFANA_OTLP_ENDPOINT="http://otlp-gateway-prod-eu-west-0.grafana.net/otlp" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+refuse_grafana "an endpoint on another host" GRAFANA_OTLP_ENDPOINT="https://otlp.example.com/otlp" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+refuse_grafana "an endpoint that only starts like Grafana's" GRAFANA_OTLP_ENDPOINT="https://otlp.grafana.net.example.com/otlp" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+refuse_grafana "an endpoint with credentials in it" GRAFANA_OTLP_ENDPOINT="https://user:pw@otlp-gateway-prod-eu-west-0.grafana.net/otlp" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+refuse_grafana "an instance ID that is no number" GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="abc" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+refuse_grafana "a token with white space" GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN=$'two words'
+refuse_grafana "a token that is too short" GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="abc"
+refuse_grafana "no token" GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance"
+check "no token is refused naming the variable" "$(yes_if grep -q 'GRAFANA_OTLP_TOKEN' "$work/out")"
+refuse_grafana "no SSH" DEMO_SSH=off GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken"
+check "the refusal for no SSH says what to run" "$(yes_if grep -q 'DEMO_SSH=keys' "$work/out")"
+if run_secret GRAFANA_OTLP_ENDPOINT="$fake_endpoint" GRAFANA_INSTANCE_ID="$fake_instance" GRAFANA_OTLP_TOKEN="$fake_gtoken" FAKE_SSH_FAIL=1; then r=no; else r=yes; fi
+check "a failing ssh fails the Grafana task" "$r"
+check "and prints no value and does not claim success" "$(yes_if bash -c "! grep -q 'created or replaced' '$work/out' && ! grep -qF -- '$fake_gtoken' '$work/out'")"
+
 # Refusals send nothing and call nothing.
 WHICH=model
 if run_secret OPENROUTER_API_KEY="$fake_key" DEMO_SSH=off; then r=no; else r=yes; fi

@@ -1287,3 +1287,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d02b9ca08c6
+  - type: executable_for
+    from: SYM-grafana-grafana-nowhere
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:34:26.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-812378293e9d

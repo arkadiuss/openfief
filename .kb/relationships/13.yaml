@@ -1091,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8b4168e2f3c
+  - type: covered_by
+    from: SYM-m6-cmd-core-pluginmetrics-refusal-text
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:58.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f52a3829b955
+  - type: implements
+    from: SYM-m6-cmd-core-pluginmetrics-refusal-text
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:58.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7edb6de3673

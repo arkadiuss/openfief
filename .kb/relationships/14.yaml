@@ -1168,3 +1168,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5314f249294
+  - type: implements
+    from: SYM-ui-askcards-pagelinks-account
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:16:42.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74234f1ecf85
+  - type: covered_by
+    from: SYM-ui-askcards-pagelinks-account
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:16:42.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33dfe7f85085
+  - type: executable_for
+    from: SYM-demo-scrub-test-test-scrub-rewrites-the-log-body-and-the-span-text
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:22:34.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29b70d27973e
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:23:06.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b621fed8ffb

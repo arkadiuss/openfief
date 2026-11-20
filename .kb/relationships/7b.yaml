@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7f7d9d8ee33
+  - type: relates_to
+    from: REQ-ui-turnstile-stalled-check-falls-back-visible
+    to: REQ-ui-turnstile-failures-visible
+    created_at: 2026-11-18T21:25:31.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d253587a3e0
+  - type: specified_by
+    from: REQ-ui-turnstile-stalled-check-falls-back-visible
+    to: SCEN-ui-turnstile-stalled-check-falls-back-visible
+    created_at: 2026-11-18T21:25:43.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fd3f4297b0c

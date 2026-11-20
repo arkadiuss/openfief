@@ -1322,3 +1322,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16b5f4884b04
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T21:57:47.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91697df252b0
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:57:47.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee945b177912
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-attention-audit-log-behind
+    created_at: 2026-11-19T11:07:17.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e41f006adf10
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-11-19T11:07:17.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14c9153b0bb7
+  - type: implements
+    from: SYM-answer-attention-kindlabel
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-19T11:07:18.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b7be161e399
+  - type: covered_by
+    from: SYM-answer-attention-kindlabel
+    to: TEST-ui-attention
+    created_at: 2026-11-19T11:07:18.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc25b1ad826b
+  - type: covered_by
+    from: SYM-answer-attention-kindlabel
+    to: TEST-ui-audit-log-banner
+    created_at: 2026-11-19T11:07:18.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae356d79c371
+  - type: executable_for
+    from: SYM-demo-scrub-test-string-list
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:21.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97e18152bf3

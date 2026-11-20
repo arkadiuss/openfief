@@ -9,6 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -20,8 +21,8 @@ const modelPath = "/model"
 // D-204): a proposal of target changes for the owner to apply or dismiss, and
 // a weekly run that keeps failing.
 const (
-	kindTargetProposal    = "model-target-proposal"
-	kindMaintainerFailing = "maintainer-failing"
+	kindTargetProposal    = answer.KindTargetProposal
+	kindMaintainerFailing = answer.KindMaintainerFailing
 )
 
 // proposalIDChars is how many hex digits a proposal's ID has: its run's.

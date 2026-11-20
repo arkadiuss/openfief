@@ -23,8 +23,8 @@ import (
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
 	modelsdomain "github.com/arkadiuss/openfief/internal/modelrouter"
 	"github.com/arkadiuss/openfief/internal/plugins"
+	viewsanswer "github.com/arkadiuss/openfief/internal/views/app/answer"
 	"github.com/arkadiuss/openfief/internal/views/mcpserver"
-	"github.com/arkadiuss/openfief/internal/views/ui"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
@@ -250,7 +250,7 @@ func (f *mcpFixture) checkTools(t *testing.T) {
 	for _, tool := range listed {
 		got = append(got, tool.Name)
 	}
-	box, err := ui.NewToolbox(&ui.ToolboxConfig{Read: viewsv1connect.NewReadServiceClient(http.DefaultClient, "http://core.invalid")})
+	box, err := viewsanswer.NewToolbox(&viewsanswer.ToolboxConfig{Read: viewsv1connect.NewReadServiceClient(http.DefaultClient, "http://core.invalid")})
 	if err != nil {
 		t.Fatalf("NewToolbox: %v", err)
 	}

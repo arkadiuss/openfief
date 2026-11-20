@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be266c1e79bc
+  - type: specified_by
+    from: REQ-demo-grafana-secret-over-ssh
+    to: SCEN-demo-grafana-secret-over-ssh
+    created_at: 2026-11-19T16:20:42.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62c92ec7f7d8

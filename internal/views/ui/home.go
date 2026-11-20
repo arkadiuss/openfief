@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -97,7 +98,7 @@ func (st statusLine) Sentence() string {
 	case 0:
 		b.WriteString(" Nothing needs you.")
 	default:
-		b.WriteString(" " + plural(st.Open, "thing needs you.", "things need you."))
+		b.WriteString(" " + answer.Plural(st.Open, "thing needs you.", "things need you."))
 	}
 	for _, inst := range st.Failing {
 		b.WriteString(" The " + inst + " sync keeps failing.")
@@ -107,20 +108,7 @@ func (st statusLine) Sentence() string {
 
 // sumMoney returns the sum of ms, every one in the same currency; nil for
 // none, a sum that isn't a decimal, or mixed currencies.
-func sumMoney(ms []*viewsv1.Money) *viewsv1.Money {
-	if len(ms) == 0 {
-		return nil
-	}
-	var sum kernel.Decimal
-	for _, m := range ms {
-		d, err := kernel.ParseDecimal(m.GetAmount())
-		if err != nil || m.GetCurrency() != ms[0].GetCurrency() {
-			return nil
-		}
-		sum = sum.Add(d)
-	}
-	return &viewsv1.Money{Amount: sum.String(), Currency: ms[0].GetCurrency()}
-}
+func sumMoney(ms []*viewsv1.Money) *viewsv1.Money { return answer.SumMoney(ms) }
 
 // moneyChange is a change of money and the same in percent, written in a
 // number format; the zero change is none.
@@ -148,7 +136,7 @@ func diffMoney(from, to *viewsv1.Money, f numberFormat) moneyChange {
 // totals dated before date's month to the one on date, both in the
 // reporting currency, and in percent; none without both.
 func monthChange(totals []*viewsv1.DateTotal, date kernel.Date, f numberFormat) moneyChange {
-	start := monthStart(date).String()
+	start := answer.MonthStart(date).String()
 	var base, last *viewsv1.DateTotal
 	for _, t := range totals {
 		if t.GetDate() < start && t.GetValueReporting() != nil {
@@ -164,30 +152,15 @@ func monthChange(totals []*viewsv1.DateTotal, date kernel.Date, f numberFormat) 
 	return diffMoney(base.GetValueReporting(), last.GetValueReporting(), f)
 }
 
-// periodOpening returns the day a period's return opens on, the close of
-// the day before its first day (D-223), so the first day counts in full: the
-// date the charts' start is set to wherever the period opens on the
-// performance chart, from the overview's link or an Ask box card. It is the
-// zero date for a period with no first day (everything: the charts' default
-// start). It resolves p through periodRange, the one place a period's days
-// are decided.
-func periodOpening(p askPeriod, to kernel.Date) kernel.Date {
-	from := periodRange(p, to).From
-	if from.IsZero() {
-		return from
-	}
-	return from.AddDays(-1)
-}
-
 // yearOpeningDay returns the day of days, a performance series, this
 // year's return opens on: the last of them dated on or before the year's
-// opening close (periodOpening), or its first day when none is. It is nil
+// opening close (answer.PeriodOpening), or its first day when none is. It is nil
 // without days.
 func yearOpeningDay(days []*viewsv1.PerformanceDay, date kernel.Date) *viewsv1.PerformanceDay {
 	if len(days) == 0 {
 		return nil
 	}
-	opening := periodOpening(askPeriod{Kind: periodYear}, date).String()
+	opening := answer.PeriodOpening(answer.Period{Kind: answer.PeriodYear}, date).String()
 	base := days[0]
 	for _, d := range days {
 		if d.GetDate() <= opening {
@@ -274,7 +247,7 @@ func activityLine(a *viewsv1.Activity, names map[string]string, f numberFormat) 
 		if a.GetKind() == viewsv1.ActivityKind_ACTIVITY_KIND_IMPORT {
 			what = "Imported"
 		}
-		e.Text = what + " · " + inst + " · " + plural(int(b.GetNewTransactions()), "new transaction", "new transactions")
+		e.Text = what + " · " + inst + " · " + answer.Plural(int(b.GetNewTransactions()), "new transaction", "new transactions")
 		if b.GetUnsupported() > 0 {
 			e.Text += ", " + strconv.Itoa(int(b.GetUnsupported())) + " left out"
 		}

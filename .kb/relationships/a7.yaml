@@ -1063,3 +1063,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a26ac3e567f6
+  - type: covered_by
+    from: SYM-demo-grafana-main
+    to: TEST-tooling-demo-secret
+    created_at: 2026-11-19T16:23:23.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d77315ce937
+  - type: implements
+    from: SYM-demo-grafana-main
+    to: REQ-demo-grafana-secret-over-ssh
+    created_at: 2026-11-19T16:23:23.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d30b6a5add2
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-telemetry-test-collector-metrics-requests
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:23:43.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0409fb1b18ac

@@ -14,6 +14,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 )
 
@@ -174,7 +175,7 @@ func TestTheAnswerShowsTheCardsItNamesInTheOrderItNamesThem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", askShow), fmt.Sprintf("Card %d", askAllocation)}, titles(got.Used)); diff != "" {
+	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", answer.CommandShow), fmt.Sprintf("Card %d", answer.CommandAllocation)}, titles(got.Used)); diff != "" {
 		t.Errorf("cards shown (-want +got):\n%s", diff)
 	}
 	if len(conv.used) != 3 || !slices.Equal(conv.cited, []int{2, 0}) {
@@ -389,7 +390,7 @@ func TestTheRetryIsSpentFromTheQuestionsTokens(t *testing.T) {
 func TestSuggestionsAreCommandsTheBoxUnderstands(t *testing.T) {
 	t.Parallel()
 	today := mustDate(t, askToday)
-	for _, c := range knownCommands() {
+	for _, c := range answer.KnownCommands() {
 		if !IsAskCommand(c.Example, today) {
 			t.Errorf("the example %q of %q is no command", c.Example, c.Command)
 		}
@@ -427,44 +428,6 @@ func TestThePromptSaysWhatEachFieldIsFor(t *testing.T) {
 	}
 }
 
-func TestShowNamesTheNearTargetsWhenNothingMatches(t *testing.T) {
-	t.Parallel()
-	targets := []askTarget{
-		{Kind: showAccount, Label: "Demo IBKR", Words: []string{"Demo IBKR"}},
-		{Kind: showAccount, Label: "Demo XTB", Words: []string{"Demo XTB"}},
-		{Kind: showInstrument, Label: "Demo Tech Co", Words: []string{"Demo Tech Co", "DTEC"}},
-		{Kind: showInstrument, Label: "Demo World ETF", Words: []string{"Demo World ETF", "DWLD"}},
-		{Kind: showInstrument, Label: "Demo Emerging Markets ETF", Words: []string{"Demo Emerging Markets ETF", "DEMG"}},
-	}
-	labels := func(ts []askTarget) []string {
-		out := make([]string, len(ts))
-		for i, t := range ts {
-			out[i] = t.Label
-		}
-		return out
-	}
-	tests := []struct {
-		name, term string
-		want       []string
-	}{
-		{name: "two words, held by two names", term: "Demo ETF", want: []string{"Demo World ETF", "Demo Emerging Markets ETF", "Demo IBKR", "Demo XTB", "Demo Tech Co"}},
-		{name: "a word of three letters", term: "tech", want: []string{"Demo Tech Co", "Demo IBKR", "Demo XTB", "Demo World ETF", "Demo Emerging Markets ETF"}},
-		{name: "words of under three letters are no clue", term: "of it", want: []string{"Demo IBKR", "Demo XTB", "Demo Tech Co", "Demo World ETF", "Demo Emerging Markets ETF"}},
-		{name: "no word held keeps the order", term: "zzz", want: []string{"Demo IBKR", "Demo XTB", "Demo Tech Co", "Demo World ETF", "Demo Emerging Markets ETF"}},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			if diff := cmp.Diff(tt.want, labels(nearTargets(tt.term, targets))); diff != "" {
-				t.Errorf("near targets of %q (-want +got):\n%s", tt.term, diff)
-			}
-		})
-	}
-	if got := labels(targets); got[0] != "Demo IBKR" || got[4] != "Demo Emerging Markets ETF" {
-		t.Errorf("the targets were reordered: %v", got)
-	}
-}
-
 func TestTheClientAsksTheSchemaOnlyForTheAnswer(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -476,7 +439,7 @@ func TestTheClientAsksTheSchemaOnlyForTheAnswer(t *testing.T) {
 	)
 	rec := h.asks(t, ownerSession, "how am I doing?")
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "It is 10.", "Answered by p/m")
+	wantBody(t, rec, "It is 10.", "Answered by m")
 	h.askModel.mu.Lock()
 	defer h.askModel.mu.Unlock()
 	if diff := cmp.Diff([]string{"", "", askAnswerSchemaJSON}, h.askModel.schemas); diff != "" {
@@ -503,7 +466,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		rec := h.asks(t, ownerSession, "I mean the fund")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
-			"Which fund do you mean?", "From p/m · it asks which you mean", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
+			"Which fund do you mean?", "From m", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
 			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-get="/ask?q=Show&#43;Synthetic&#43;Fund"`, `>Synthetic Fund</a>`, `>Synthetic brokerage</a>`,
 		)
 		// A name no card the model read holds is dropped, and never drawn.
@@ -517,7 +480,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		rec := h.asks(t, ownerSession, "sell everything")
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
-			"I can only read, so I can&#39;t sell anything.", "From p/m · it can't do that", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
+			"I can only read, so I can&#39;t sell anything.", "From m", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
 			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-get="/ask?q=Allocation&#43;by&#43;currency"`, `>Allocation by currency</a>`, `>Performance this year</a>`,
 		)
 		wantNoBody(t, rec, `class="chips ask-choices"`, "Answered by", `class="used-card"`, "Write me a poem")

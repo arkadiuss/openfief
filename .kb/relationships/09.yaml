@@ -1168,3 +1168,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25d9fb5fec4e
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-telemetry-test-metric-counter
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:23:55.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3ad1c5c8e7b
+  - type: executable_for
+    from: SYM-grafana-grafana-faulty
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:34:47.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5a1e8381f9

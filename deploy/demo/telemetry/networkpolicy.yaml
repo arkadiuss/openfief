@@ -1,0 +1,70 @@
+# The collector's NetworkPolicy (docs/dev/demo.md#telemetry).
+#
+# Ingress: the core and the operator, in namespace openfief, on the OTLP/HTTP port 4318, and nothing else. The
+# kubelet's health probes come from the node and need no rule; the pod logs are read from the node's disk, not over
+# the network.
+#
+# Egress: DNS, and HTTPS (443/tcp) to the public internet, with every private, shared, link-local and loopback range
+# left out, so the collector can't reach another pod, a Service or the node. That is as narrow as a NetworkPolicy
+# gets: it can't select by hostname (docs/concepts/egress.md says why), and the Grafana Cloud gateway's addresses
+# change and are shared. Which host the collector sends to is the exporter's one endpoint, taken from the Secret
+# grafana-otlp, which task demo:grafana-secret accepts only as an https://*.grafana.net address; the collector's
+# configuration has no other exporter. The egress proxy is not used: it serves plugin pods, authenticated by the
+# operator's projected token and checked against a PluginGrant, and the collector is neither.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: otel-collector
+  labels:
+    app.kubernetes.io/name: otel-collector
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: otel-collector
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openfief
+          podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [openfief-core, openfief-operator]
+      ports:
+        - protocol: TCP
+          port: 4318
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 100.64.0.0/10
+              - 127.0.0.0/8
+              - 169.254.0.0/16
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+        - ipBlock:
+            cidr: ::/0
+            except:
+              - ::1/128
+              - fc00::/7
+              - fe80::/10
+      ports:
+        - protocol: TCP
+          port: 443
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

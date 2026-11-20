@@ -9,6 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
@@ -24,7 +25,7 @@ const inboxPath = "/inbox"
 const syncTimelineSize = 10
 
 // labelDone names the done view and a done item's pill.
-const labelDone = "Done"
+const labelDone = answer.LabelDone
 
 // The Inbox's views (D-196), as the view parameter names them.
 const (
@@ -312,32 +313,24 @@ func (s *server) renderInbox(w http.ResponseWriter, r *http.Request, sess sessio
 
 // Indexes of the Inbox's groups, in the order it shows them.
 const (
-	groupDataComingIn = iota
-	groupNumbersToCheck
-	groupDecisions
+	groupDataComingIn   = answer.GroupDataComingIn
+	groupNumbersToCheck = answer.GroupNumbersToCheck
+	groupDecisions      = answer.GroupDecisions
 )
 
 // newInboxGroups returns the Inbox's three groups, empty (D-196).
 func newInboxGroups() []*inboxGroup {
+	titles := answer.GroupTitles()
 	return []*inboxGroup{
-		{ID: "data-coming-in", Title: "Data coming in", Empty: "Every ticker is confirmed, every broker account mapped, and every sync and import went through."},
-		{ID: "numbers-to-check", Title: "Numbers to check", Empty: "Every balance matches and no price differs beyond its threshold."},
-		{ID: "decisions", Title: "Decisions", Empty: "No transfers to confirm and no settings missing."},
+		{ID: "data-coming-in", Title: titles[groupDataComingIn], Empty: "Every ticker is confirmed, every broker account mapped, and every sync and import went through."},
+		{ID: "numbers-to-check", Title: titles[groupNumbersToCheck], Empty: "Every balance matches and no price differs beyond its threshold."},
+		{ID: "decisions", Title: titles[groupDecisions], Empty: "No transfers to confirm and no settings missing."},
 	}
 }
 
 // groupIndex returns the index of the group items of g are shown in; an
 // item without a group is a decision, as a kind the core doesn't know is.
-func groupIndex(g viewsv1.AttentionItemGroup) int {
-	switch g {
-	case viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DATA_COMING_IN:
-		return groupDataComingIn
-	case viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_NUMBERS_TO_CHECK:
-		return groupNumbersToCheck
-	case viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DECISIONS, viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_UNSPECIFIED:
-	}
-	return groupDecisions
-}
+func groupIndex(g viewsv1.AttentionItemGroup) int { return answer.GroupIndex(g) }
 
 // inboxEvidence is what the Inbox read besides the items, to show their
 // evidence and settle them in place.
@@ -666,67 +659,6 @@ func brokersOf(brokers []*ingestv1.BrokerAccount, instance string) []*ingestv1.B
 	return out
 }
 
-// fixedTitles are the titles of the kinds whose title names nothing of
-// their item.
-func fixedTitles() map[string]string {
-	return map[string]string{
-		kindImportProblems:    "An import left rows out",
-		kindTransferBroken:    "A confirmed transfer no longer matches",
-		kindTransferSuggested: "Confirm a transfer between your accounts",
-		kindTargetProposal:    "The maintainer proposes new target weights",
-		kindMaintainerFailing: "The maintainer's weekly run keeps failing",
-	}
-}
-
-// subjectTitles are the titles of the kinds whose subject says what they are
-// about, an instrument's ISIN or a view plugin's instance, as formats of it.
-func subjectTitles() map[string]string {
-	return map[string]string{
-		kindUnclassified:        "Classify %s for the yearly tax",
-		kindBondFeeAssumed:      "Confirm the early-redemption fee of %s",
-		kindViewPluginUngranted: "Grant %s access to your accounts",
-	}
-}
-
-// itemTitle says in a few words what an item asks of the owner.
-func itemTitle(it *viewsv1.AttentionItem) string {
-	if title, ok := fixedTitles()[it.GetKind()]; ok {
-		return title
-	}
-	subject := it.GetSubject()
-	if format, ok := subjectTitles()[it.GetKind()]; ok {
-		return fmt.Sprintf(format, subject)
-	}
-	switch it.GetKind() {
-	case kindTicker:
-		_, symbol, _ := strings.Cut(subject, "/")
-		return "Confirm the ISIN of " + symbol
-	case kindBrokerUnmapped:
-		return "Map a broker account " + it.GetConnectorInstance() + " reported"
-	case kindSyncFailing:
-		return "The " + it.GetConnectorInstance() + " sync keeps failing"
-	case kindPriceCheck:
-		return "The price of " + subject + " differs"
-	case kindAssertion:
-		return "A balance in " + it.GetAccountId() + " doesn't match"
-	case kindCashCheckpoint:
-		return "The cash balance you entered for " + it.GetAccountId() + " differs"
-	case kindSettingMissing:
-		return settingTitle(subject)
-	}
-	return attentionKindOf(it.GetKind()).Label
-}
-
-// settingTitle titles a missing setting's item by its subject: an IKE's
-// missing earlier payments, "earlier-payments/<account>", by its account
-// (D-149), any other by the setting.
-func settingTitle(subject string) string {
-	if account, ok := strings.CutPrefix(subject, "earlier-payments/"); ok {
-		return "Enter the earlier payments into " + account
-	}
-	return "Set " + subject
-}
-
 // itemLinks returns the pages an item links to: its accounts, and the page
 // where a kind not settled in place is settled (attentionItemKind, so an
 // IKE's missing earlier payments link the accounts page, D-149); a
@@ -756,24 +688,22 @@ func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
 	return out
 }
 
+// itemTitle says in a few words what an item asks of the owner.
+func itemTitle(it *viewsv1.AttentionItem) string { return answer.ItemTitle(it) }
+
 // statusPill is a status pill: its word and its class.
 type statusPill struct {
 	Word, Class string
 }
 
-// itemPill returns an item's status pill.
+// itemPill returns an item's status pill: the word and tone the Ask box's
+// answer names it by, drawn in the page's classes.
 func itemPill(it *viewsv1.AttentionItem) statusPill {
-	switch it.GetState() {
-	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_ACKNOWLEDGED:
-		return statusPill{"Acknowledged", "pill-neutral"}
-	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_RESOLVED:
-		return statusPill{labelDone, pillOK}
-	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_UNSPECIFIED:
+	word, tone := answer.ItemStatus(it)
+	classes := map[answer.Tone]string{
+		answer.ToneNeutral: "pill-neutral", answer.ToneOK: pillOK, answer.ToneWarn: "pill-warn", answer.ToneDanger: pillDanger,
 	}
-	if it.GetKind() == kindSyncFailing {
-		return statusPill{"Failing", pillDanger}
-	}
-	return statusPill{"Needs you", "pill-warn"}
+	return statusPill{word, classes[tone]}
 }
 
 // retrySync hands the owner's "Retry now" on a failing sync to the core

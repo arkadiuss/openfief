@@ -1140,3 +1140,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35e5ce9be4ae
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-keep-attributes
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:16.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-791c11cd16dd
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-keep-attributes
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:16.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eff23db22d77
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-keep-attributes
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:16.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96d30b0b950f

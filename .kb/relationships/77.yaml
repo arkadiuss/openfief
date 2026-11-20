@@ -1063,3 +1063,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56ed07a32ca1
+  - type: verified_by
+    from: SCEN-plugin-metrics-through-core
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:03.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b2e256ea8e7
+  - type: verified_by
+    from: SCEN-plugin-metrics-through-core
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:14:03.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c314f5c9a9

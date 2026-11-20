@@ -29,12 +29,12 @@ func TestModelAnswersShowWhoAnsweredWithADisclaimerAndTheEvalLink(t *testing.T) 
 	}{
 		{
 			name: "an evaluated model", model: "openrouter/openai/gpt-oss-120b", reply: answerText("It is 10."),
-			want:     []string{"Answered by openai/gpt-oss-120b.", noteDisclaimer, noteLinkText, noteDefaultURL, `class="muted ask-note"`},
+			want:     []string{"Answered by openai/gpt-oss-120b · used none of your data.", noteDisclaimer, noteLinkText, noteDefaultURL, `class="muted ask-note"`},
 			wantNone: []string{"not evaluated"},
 		},
 		{
 			name: "a model the eval has not covered", model: "p/m", reply: answerText("It is 10."),
-			want: []string{"Answered by m (not evaluated by OpenFief).", noteDisclaimer, noteLinkText, noteDefaultURL},
+			want: []string{"Answered by m (not evaluated by OpenFief) · used none of your data.", noteDisclaimer, noteLinkText, noteDefaultURL},
 		},
 		{
 			name: "a refusal the model wrote is from it, as the header says", model: "p/m", reply: answerJSON(answerKindRefuse, "I can only read.", nil, nil, nil),

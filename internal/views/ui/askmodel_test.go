@@ -18,6 +18,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 )
 
 // secretAsk is in every question, answer and tool result of these tests; it
@@ -74,12 +75,12 @@ func (p *scriptedPort) permits(_ context.Context, _ session, tiers []string) (bo
 	return true, nil
 }
 
-func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
+func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	p.requests = append(p.requests, slices.Clone(msgs))
 	p.offered = append(p.offered, len(tools))
-	p.answers = append(p.answers, answer)
+	p.answers = append(p.answers, structured)
 	p.maxTokens = append(p.maxTokens, maxTokens)
 	for i := range msgs {
 		// The router refuses a conversation with a tier no model of the
@@ -151,17 +152,17 @@ type loopFixture struct {
 	a    *modelAnswerer
 	logs *strings.Builder
 	mu   sync.Mutex
-	ran  []askCommand
-	fail map[askCommand]error
+	ran  []answer.Command
+	fail map[answer.Command]error
 }
 
 func newLoopFixture(t *testing.T, allowed ...string) *loopFixture {
 	t.Helper()
-	f := &loopFixture{port: &scriptedPort{allowed: map[string]bool{}}, logs: &strings.Builder{}, fail: map[askCommand]error{}}
+	f := &loopFixture{port: &scriptedPort{allowed: map[string]bool{}}, logs: &strings.Builder{}, fail: map[answer.Command]error{}}
 	for _, tier := range allowed {
 		f.port.allowed[tier] = true
 	}
-	tools := askTools()
+	tools := answer.Tools()
 	for i := range tools {
 		if tools[i].Name == "sync_status" {
 			tools[i].Tier = tierTF
@@ -230,11 +231,11 @@ func TestModelLoopShowsExactlyTheCardsUsed(t *testing.T) {
 	if diff := cmp.Diff([]string{"Mostly PLN.", "p/m", "how am I doing?", ""}, []string{got.Text, got.Model, got.Question, got.Title}); diff != "" {
 		t.Errorf("answer's text, model, question and title, want the model's trimmed text under its name (-want +got):\n%s", diff)
 	}
-	wantCmds := []askCommand{askAllocation, askValue, askShow}
+	wantCmds := []answer.Command{answer.CommandAllocation, answer.CommandValue, answer.CommandShow}
 	if diff := cmp.Diff(wantCmds, f.ran); diff != "" {
 		t.Errorf("commands run (-want +got):\n%s", diff)
 	}
-	wantTitles := []string{fmt.Sprintf("Card %d", askAllocation), fmt.Sprintf("Card %d", askValue), fmt.Sprintf("Card %d", askShow)}
+	wantTitles := []string{fmt.Sprintf("Card %d", answer.CommandAllocation), fmt.Sprintf("Card %d", answer.CommandValue), fmt.Sprintf("Card %d", answer.CommandShow)}
 	if diff := cmp.Diff(wantTitles, titles(got.Used)); diff != "" {
 		t.Errorf("cards shown (-want +got):\n%s", diff)
 	}
@@ -307,7 +308,7 @@ func TestModelLoopRefusesEachToolResultAboveWhatTheRouteAllows(t *testing.T) {
 	if diff := cmp.Diff([]withheldCard{{Label: "Sync status", Tier: tierTF, Data: tierWords(tierTF)}}, got.Withheld); diff != "" {
 		t.Errorf("withheld (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", askNeeds)}, titles(got.Used)); diff != "" {
+	if diff := cmp.Diff([]string{fmt.Sprintf("Card %d", answer.CommandNeeds)}, titles(got.Used)); diff != "" {
 		t.Errorf("cards shown (-want +got):\n%s", diff)
 	}
 	tools := toolMessages(f.port.requests[1])
@@ -488,7 +489,7 @@ func TestModelLoopToolReadFailures(t *testing.T) {
 	t.Run("a failed read is a failure the model reads, with none of the error", func(t *testing.T) {
 		t.Parallel()
 		f := newLoopFixture(t, tierT0, tierT2)
-		f.fail[askValue] = fmt.Errorf("GetThing: %w", connect.NewError(connect.CodeNotFound, errSecret))
+		f.fail[answer.CommandValue] = fmt.Errorf("GetThing: %w", connect.NewError(connect.CodeNotFound, errSecret))
 		f.port.replies = []askReply{calling(askCall{ID: "1", Name: "value", Args: `{}`}), say("no")}
 		got, err := f.ask("value?")
 		if err != nil {
@@ -502,7 +503,7 @@ func TestModelLoopToolReadFailures(t *testing.T) {
 	t.Run("a session that ended ends the question", func(t *testing.T) {
 		t.Parallel()
 		f := newLoopFixture(t, tierT0, tierT2)
-		f.fail[askValue] = connect.NewError(connect.CodeUnauthenticated, nil)
+		f.fail[answer.CommandValue] = connect.NewError(connect.CodeUnauthenticated, nil)
 		f.port.replies = []askReply{calling(askCall{ID: "1", Name: "value", Args: `{}`})}
 		if _, err := f.ask("value?"); connect.CodeOf(err) != connect.CodeUnauthenticated {
 			t.Errorf("error = %v, want Unauthenticated up to the page", err)
@@ -618,7 +619,7 @@ func TestModelEndedSessionEndsTheQuestion(t *testing.T) {
 func TestModelAnswerNeverLogsTheQuestionOrTheAnswer(t *testing.T) {
 	t.Parallel()
 	f := newLoopFixture(t, tierT0, tierT2)
-	f.fail[askShow] = errSecret
+	f.fail[answer.CommandShow] = errSecret
 	f.port.replies = []askReply{
 		calling(askCall{ID: "1", Name: "value", Args: `{}`}, askCall{ID: "2", Name: "show", Args: `{"name":"` + secretAsk + `"}`}),
 		say("the answer is "+secretAsk, "c1"),

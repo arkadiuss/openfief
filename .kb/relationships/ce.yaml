@@ -1266,3 +1266,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a25810b87f79
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-telemetry-start-traces
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:23:37.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9392d108508
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-telemetry-start-traces
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-19T17:23:37.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24257223d5cf

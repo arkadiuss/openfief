@@ -1322,3 +1322,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac8645640157
+  - type: implements
+    from: SYM-answer-links-nolinks
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:12:33.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f310f57583b0
+  - type: covered_by
+    from: SYM-answer-links-nolinks
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:12:33.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b615867efa1b

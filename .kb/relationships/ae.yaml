@@ -1189,3 +1189,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb1fef081bff
+  - type: implements
+    from: SYM-answer-format-utctoday
+    to: REQ-ui-overview-values
+    created_at: 2026-11-19T11:11:48.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f04143cfc508
+  - type: covered_by
+    from: SYM-answer-format-utctoday
+    to: TEST-ui-format
+    created_at: 2026-11-19T11:11:48.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-070cddb0df11
+  - type: executable_for
+    from: SYM-m6-sdk-go-openfief-metrics-test-fake-core
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:17:09.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3fe7d25bcae
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics-refuses
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:21:36.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe739d41d83a

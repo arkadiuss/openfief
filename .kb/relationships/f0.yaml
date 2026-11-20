@@ -1091,3 +1091,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc0ce6eb8c5a
+  - type: specified_by
+    from: REQ-tooling-archtest-plugin-otlp
+    to: SCEN-tooling-archtest-plugin-otlp
+    created_at: 2026-11-19T17:14:04.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0790552bd216
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-scopes
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:02.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a092a7ff0fdc
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-scopes
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:02.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed782f51c008
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-scopes
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:02.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6e16961c728

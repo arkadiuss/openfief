@@ -1,4 +1,4 @@
-package ui
+package answer
 
 import (
 	"regexp"
@@ -12,94 +12,94 @@ import (
 // not one of its commands.
 const maxQuestionRunes = 200
 
-// askCommand is one of the commands the Ask box understands in M0 (D-194).
+// Command is one of the commands the Ask box understands in M0 (D-194).
 // The box holds no AI model: it matches a question against these, and
 // answers from the read API alone.
-type askCommand int
+type Command int
 
 // The commands. The zero command is a question the box doesn't understand.
 const (
-	askUnknown askCommand = iota
-	// askNeeds: what needs the owner, the top of the Inbox.
-	askNeeds
-	// askShow: an account, a sleeve or an instrument, by name.
-	askShow
-	// askSync: why a connector instance's sync fails.
-	askSync
-	// askAllocation: the allocation by a dimension.
-	askAllocation
-	// askPerformance: the time-weighted return over a period.
-	askPerformance
-	// askValue: the portfolio's value on a date.
-	askValue
+	CommandUnknown Command = iota
+	// CommandNeeds: what needs the owner, the top of the Inbox.
+	CommandNeeds
+	// CommandShow: an account, a sleeve or an instrument, by name.
+	CommandShow
+	// CommandSync: why a connector instance's sync fails.
+	CommandSync
+	// CommandAllocation: the allocation by a dimension.
+	CommandAllocation
+	// CommandPerformance: the time-weighted return over a period.
+	CommandPerformance
+	// CommandValue: the portfolio's value on a date.
+	CommandValue
 )
 
-// showKind narrows what a show command names: anything, or an account, a
+// ShowKind narrows what a show command names: anything, or an account, a
 // sleeve or an instrument.
-type showKind int
+type ShowKind int
 
 // The kinds a show command can name.
 const (
-	showAny showKind = iota
-	showAccount
-	showSleeve
-	showInstrument
+	ShowAny ShowKind = iota
+	ShowAccount
+	ShowSleeve
+	ShowInstrument
 )
 
-// askQuery is a question the Ask box understood: its command and what the
+// Query is a question the Ask box understood: its command and what the
 // command names.
-type askQuery struct {
-	Command askCommand
+type Query struct {
+	Command Command
 	// Term is what a show or sync command names, as typed.
 	Term string
 	// Show narrows what a show command names.
-	Show showKind
+	Show ShowKind
 	// Dimension is an allocation command's dimension key (dimensions).
 	Dimension string
 	// Period is a performance command's period.
-	Period askPeriod
+	Period Period
 	// Date is a value command's date; zero for the latest valued day.
 	Date kernel.Date
 	// Change is the period a value command asks the change over, instead of
 	// the value on a day; nil for the value on Date.
-	Change *askPeriod
+	Change *Period
 }
 
-// periodKind is the kind of span a performance command asks about.
-type periodKind int
+// PeriodKind is the kind of span a performance command asks about.
+type PeriodKind int
 
 // The periods. The zero period is this year.
 const (
-	periodYear periodKind = iota
-	periodMonth
-	periodTwelveMonths
-	periodLastYear
-	periodAll
-	periodSince
-	periodCalendarYear
-	// periodMonthOf is a calendar month, such as November 2025.
-	periodMonthOf
-	// periodBetween is two days, both inclusive.
-	periodBetween
+	PeriodYear PeriodKind = iota
+	PeriodMonth
+	PeriodTwelveMonths
+	PeriodLastYear
+	PeriodAll
+	PeriodSince
+	PeriodCalendarYear
+	// PeriodMonthOf is a calendar month, such as November 2025.
+	PeriodMonthOf
+	// PeriodBetween is two days, both inclusive.
+	PeriodBetween
 )
 
-// askPeriod is a performance command's period: a kind, and the date or
+// Period is a performance command's period: a kind, and the date or
 // year it names, if any.
-type askPeriod struct {
-	Kind periodKind
-	// Since is a periodSince's first day, and a periodBetween's.
+type Period struct {
+	Kind PeriodKind
+	// Since is a PeriodSince's first day, and a PeriodBetween's.
 	Since kernel.Date
-	// Year is a periodCalendarYear's or a periodMonthOf's year.
+	// Year is a PeriodCalendarYear's or a PeriodMonthOf's year.
 	Year int
-	// Month is a periodMonthOf's month.
+	// Month is a PeriodMonthOf's month.
 	Month time.Month
-	// To is a periodBetween's last day. Its days are as asked: they may be
+	// To is a PeriodBetween's last day. Its days are as asked: they may be
 	// out of order or not valued, which the answer says.
 	To kernel.Date
 }
 
 // The questions' patterns, matched against the normalized question
-// (normalizeQuestion). Each names its parts.
+// (NormalizeQuestion). Each names its parts.
 var (
 	needsPattern = regexp.MustCompile(`^(what )?(needs (me|you|my attention)|is open|(do i|i) need to (do|check)|should i (do|check))$|^(inbox|todo|to do|open items|what needs me|needs)$`)
 	syncPattern  = regexp.MustCompile(`^why (is|does|do|did|are) (the )?(?P<x>.+?)( syncs?)? (fail|failing|keep failing|keeps failing|not syncing|broken)$|^why (?P<y>.+?) (fails|failed|failing)$|^(sync|syncs|sync status) (of |for )?(?P<z>.+)$`)
@@ -114,56 +114,56 @@ var (
 	yearPattern  = regexp.MustCompile(`^(in |for )?(?P<y>\d{4})$`)
 )
 
-// normalizeQuestion returns q in lower case with its surrounding space and
+// NormalizeQuestion returns q in lower case with its surrounding space and
 // closing punctuation trimmed and every run of white space one space.
-func normalizeQuestion(q string) string {
+func NormalizeQuestion(q string) string {
 	q = strings.ToLower(strings.Join(strings.Fields(q), " "))
 	return strings.TrimRight(q, "?!. ")
 }
 
-// parseAsk returns the command question asks for and what it names, today
+// Parse returns the command question asks for and what it names, today
 // being today; ok is false for a question none of the commands matches.
-func parseAsk(question string, today kernel.Date) (askQuery, bool) {
-	q := normalizeQuestion(question)
+func Parse(question string, today kernel.Date) (Query, bool) {
+	q := NormalizeQuestion(question)
 	if q == "" || len([]rune(q)) > maxQuestionRunes {
-		return askQuery{}, false
+		return Query{}, false
 	}
 	switch {
 	case needsPattern.MatchString(q):
-		return askQuery{Command: askNeeds}, true
+		return Query{Command: CommandNeeds}, true
 	case syncPattern.MatchString(q):
-		return askQuery{Command: askSync, Term: firstGroup(syncPattern, q, "x", "y", "z")}, true
+		return Query{Command: CommandSync, Term: firstGroup(syncPattern, q, "x", "y", "z")}, true
 	case allocPattern.MatchString(q):
 		return parseAllocation(firstGroup(allocPattern, q, "d", "e"))
 	case perfPattern.MatchString(q):
 		p, ok := parsePeriod(firstGroup(perfPattern, q, "p"), today)
-		return askQuery{Command: askPerformance, Period: p}, ok
+		return Query{Command: CommandPerformance, Period: p}, ok
 	case valuePattern.MatchString(q):
 		return parseValue(q, today)
 	case showPattern.MatchString(q):
 		kind := showKindOf(firstGroup(showPattern, q, "k", "l"))
-		return askQuery{Command: askShow, Term: firstGroup(showPattern, q, "x", "y"), Show: kind}, true
+		return Query{Command: CommandShow, Term: firstGroup(showPattern, q, "x", "y"), Show: kind}, true
 	}
-	return askQuery{}, false
+	return Query{}, false
 }
 
 // parseValue returns the value command q is: the value on a day, or its change
 // over a month, a year or two days, as "value change in November 2025", "value
 // from 2025-11-01 to 2025-11-30" or "value in 2025"; ok is false for a day or a
 // period that is none, and for a change without a period.
-func parseValue(q string, today kernel.Date) (askQuery, bool) {
+func parseValue(q string, today kernel.Date) (Query, bool) {
 	if firstGroup(valuePattern, q, "c") != "" {
 		p, ok := parseChange(firstGroup(valuePattern, q, "r"), today)
-		return askQuery{Command: askValue, Change: &p}, ok
+		return Query{Command: CommandValue, Change: &p}, ok
 	}
 	w, words := firstGroup(valuePattern, q, "w"), firstGroup(valuePattern, q, "d", "e")
 	switch w {
 	case "", "on", "at", "as of":
 		d, ok := parseAskDate(words, today)
-		return askQuery{Command: askValue, Date: d}, ok
+		return Query{Command: CommandValue, Date: d}, ok
 	case "for":
 		if d, ok := parseAskDate(words, today); ok {
-			return askQuery{Command: askValue, Date: d}, true
+			return Query{Command: CommandValue, Date: d}, true
 		}
 	}
 	if w == "from" || w == "between" {
@@ -171,9 +171,9 @@ func parseValue(q string, today kernel.Date) (askQuery, bool) {
 	}
 	p, ok := parseChange(words, today)
 	if !ok {
-		return askQuery{Command: askValue}, false
+		return Query{Command: CommandValue}, false
 	}
-	return askQuery{Command: askValue, Change: &p}, true
+	return Query{Command: CommandValue, Change: &p}, true
 }
 
 // firstGroup returns the first of the named groups of p that matched in s,
@@ -192,57 +192,57 @@ func firstGroup(p *regexp.Regexp, s string, names ...string) string {
 }
 
 // showKindOf returns what a show command's word names.
-func showKindOf(word string) showKind {
+func showKindOf(word string) ShowKind {
 	switch word {
-	case accountParam:
-		return showAccount
-	case dimSleeve:
-		return showSleeve
-	case kindInstrument:
-		return showInstrument
+	case wordAccount:
+		return ShowAccount
+	case DimSleeve:
+		return ShowSleeve
+	case wordInstrument:
+		return ShowInstrument
 	}
-	return showAny
+	return ShowAny
 }
 
 // parseAllocation returns the allocation command by the dimension word
 // names, asset class when it names none; ok is false for a word that
 // names no dimension.
-func parseAllocation(word string) (askQuery, bool) {
+func parseAllocation(word string) (Query, bool) {
 	dims := map[string]string{
-		"": dimAssetClass, "asset class": dimAssetClass, "asset classes": dimAssetClass, "asset": dimAssetClass,
-		"class": dimAssetClass, dimCurrency: dimCurrency, "currencies": dimCurrency, dimInstitution: dimInstitution,
-		"institutions": dimInstitution, "broker": dimInstitution, "brokers": dimInstitution, dimSleeve: dimSleeve,
-		"sleeves": dimSleeve,
+		"": DimAssetClass, "asset class": DimAssetClass, "asset classes": DimAssetClass, "asset": DimAssetClass,
+		"class": DimAssetClass, DimCurrency: DimCurrency, "currencies": DimCurrency, DimInstitution: DimInstitution,
+		"institutions": DimInstitution, "broker": DimInstitution, "brokers": DimInstitution, DimSleeve: DimSleeve,
+		"sleeves": DimSleeve,
 	}
 	key, ok := dims[strings.TrimPrefix(word, "the ")]
-	return askQuery{Command: askAllocation, Dimension: key}, ok
+	return Query{Command: CommandAllocation, Dimension: key}, ok
 }
 
 // parsePeriod returns the period words name, this year when they name
 // none, today being today; ok is false for words that name no period.
-func parsePeriod(words string, today kernel.Date) (askPeriod, bool) {
-	fixed := map[string]periodKind{
-		"": periodYear, labelThisYear: periodYear, "ytd": periodYear, "year to date": periodYear, "year": periodYear,
-		labelThisMonth: periodMonth, "month": periodMonth, "mtd": periodMonth,
-		"last 12 months": periodTwelveMonths, "12 months": periodTwelveMonths, "1y": periodTwelveMonths,
-		labelLastYear: periodLastYear, tabAll: periodAll, "all time": periodAll, "since tracking began": periodAll,
-		"since the start": periodAll,
+func parsePeriod(words string, today kernel.Date) (Period, bool) {
+	fixed := map[string]PeriodKind{
+		"": PeriodYear, labelThisYear: PeriodYear, "ytd": PeriodYear, "year to date": PeriodYear, "year": PeriodYear,
+		labelThisMonth: PeriodMonth, "month": PeriodMonth, "mtd": PeriodMonth,
+		"last 12 months": PeriodTwelveMonths, "12 months": PeriodTwelveMonths, "1y": PeriodTwelveMonths,
+		labelLastYear: PeriodLastYear, wordAll: PeriodAll, "all time": PeriodAll, "since tracking began": PeriodAll,
+		"since the start": PeriodAll,
 	}
 	if k, ok := fixed[words]; ok {
-		return askPeriod{Kind: k}, true
+		return Period{Kind: k}, true
 	}
 	if p, ok := parseBounded(words, today); ok {
 		return p, true
 	}
 	if y := firstGroup(yearPattern, words, "y"); y != "" {
 		d, err := kernel.ParseDate(y + "-01-01")
-		return askPeriod{Kind: periodCalendarYear, Year: d.Year()}, err == nil && !d.After(today)
+		return Period{Kind: PeriodCalendarYear, Year: d.Year()}, err == nil && !d.After(today)
 	}
 	if s := firstGroup(sincePattern, words, "d"); s != "" {
 		d, ok := parseAskDate(s, today)
-		return askPeriod{Kind: periodSince, Since: d}, ok && !d.IsZero() && !d.After(today)
+		return Period{Kind: PeriodSince, Since: d}, ok && !d.IsZero() && !d.After(today)
 	}
-	return askPeriod{}, false
+	return Period{}, false
 }
 
 // parseAskDate returns the date words name, today being today: an ISO
@@ -258,9 +258,9 @@ func parseAskDate(words string, today kernel.Date) (kernel.Date, bool) {
 	case "yesterday":
 		return today.AddDays(-1), true
 	case "end of last month":
-		return monthStart(today).AddDays(-1), true
+		return MonthStart(today).AddDays(-1), true
 	case "end of last year":
-		return yearStart(today.Year()).AddDays(-1), true
+		return YearStart(today.Year()).AddDays(-1), true
 	}
 	if isoDate.MatchString(words) {
 		d, err := kernel.ParseDate(words)
@@ -273,12 +273,12 @@ func parseAskDate(words string, today kernel.Date) (kernel.Date, bool) {
 	return kernel.Date{}, false
 }
 
-// monthStart returns the first day of d's month.
-func monthStart(d kernel.Date) kernel.Date { return d.AddDays(1 - d.Day()) }
+// MonthStart returns the first day of d's month.
+func MonthStart(d kernel.Date) kernel.Date { return d.AddDays(1 - d.Day()) }
 
-// yearStart returns 1 January of year; the zero date for a year a date
+// YearStart returns 1 January of year; the zero date for a year a date
 // can't have.
-func yearStart(year int) kernel.Date {
+func YearStart(year int) kernel.Date {
 	d, err := kernel.NewDate(year, time.January, 1)
 	if err != nil {
 		return kernel.Date{}
@@ -321,32 +321,42 @@ type span struct {
 // back in a common year, as the card used to start its index. Everything has no
 // first day here, the zero date: it starts where tracking began, which the
 // read API names, so the caller fills it in. It is pure: no I/O, no clock.
-func periodRange(p askPeriod, to kernel.Date) span {
+func periodRange(p Period, to kernel.Date) span {
 	switch p.Kind {
-	case periodYear:
-		return span{yearStart(to.Year()), to, labelThisYear}
-	case periodMonth:
-		return span{monthStart(to), to, labelThisMonth}
-	case periodTwelveMonths:
+	case PeriodYear:
+		return span{YearStart(to.Year()), to, labelThisYear}
+	case PeriodMonth:
+		return span{MonthStart(to), to, labelThisMonth}
+	case PeriodTwelveMonths:
 		return span{to.AddDays(1 - daysInYear), to, "over the last 12 months"}
-	case periodLastYear:
-		return span{yearStart(to.Year() - 1), yearStart(to.Year()).AddDays(-1), labelLastYear}
-	case periodAll:
+	case PeriodLastYear:
+		return span{YearStart(to.Year() - 1), YearStart(to.Year()).AddDays(-1), labelLastYear}
+	case PeriodAll:
 		return span{kernel.Date{}, to, "since tracking began"}
-	case periodSince:
+	case PeriodSince:
 		return span{p.Since, to, "since " + p.Since.String()}
-	case periodCalendarYear:
-		end := yearStart(p.Year + 1).AddDays(-1)
+	case PeriodCalendarYear:
+		end := YearStart(p.Year + 1).AddDays(-1)
 		if end.After(to) {
 			end = to
 		}
-		return span{yearStart(p.Year), end, "in " + yearStart(p.Year).String()[:4]}
-	case periodMonthOf, periodBetween:
+		return span{YearStart(p.Year), end, "in " + YearStart(p.Year).String()[:4]}
+	case PeriodMonthOf, PeriodBetween:
 		return boundedSpan(p)
 	}
-	return span{yearStart(to.Year()), to, labelThisYear}
+	return span{YearStart(to.Year()), to, labelThisYear}
 }
 
 // daysInYear is how many days the last 12 months' opening day lies before its
 // last day.
 const daysInYear = 365
+
+// The words of a command that name what it shows, in a question and in a
+// tool's argument.
+const (
+	wordAccount    = "account"
+	wordInstrument = "instrument"
+	wordAll        = "all"
+	// reasonMissing is what a basis the core leaves out shows.
+	reasonMissing = "missing"
+)

@@ -7,6 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	attentionv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -23,62 +24,54 @@ type attentionKind struct {
 // The core's kinds of attention items the UI tells apart (D-130, D-131,
 // D-132, D-94, D-105, D-158, D-179, D-196).
 const (
-	kindAssertion         = "balance-assertion-flagged"
-	kindPriceCheck        = "price-check-flagged"
-	kindImportProblems    = "import-problems"
-	kindBrokerUnmapped    = "broker-account-unmapped"
-	kindTicker            = "ticker-unconfirmed"
-	kindSettingMissing    = "setting-missing"
-	kindTransferBroken    = "transfer-broken"
-	kindTransferSuggested = "transfer-suggested"
-	kindUnclassified      = "instrument-unclassified"
-	kindSyncFailing       = "connector-sync-failing"
-	kindCashCheckpoint    = "cash-checkpoint-mismatch"
-	kindBondFeeAssumed    = "bond-fee-assumed"
-	kindBondSeries        = "bond-series-incomplete"
+	kindAssertion         = answer.KindAssertion
+	kindPriceCheck        = answer.KindPriceCheck
+	kindImportProblems    = answer.KindImportProblems
+	kindBrokerUnmapped    = answer.KindBrokerUnmapped
+	kindTicker            = answer.KindTicker
+	kindSettingMissing    = answer.KindSettingMissing
+	kindTransferBroken    = answer.KindTransferBroken
+	kindTransferSuggested = answer.KindTransferSuggested
+	kindUnclassified      = answer.KindUnclassified
+	kindSyncFailing       = answer.KindSyncFailing
+	kindCashCheckpoint    = answer.KindCashCheckpoint
+	kindBondFeeAssumed    = answer.KindBondFeeAssumed
+	kindBondSeries        = answer.KindBondSeries
 	// kindViewPluginUngranted is a view plugin that can't read anything until
 	// the owner grants it accounts (D-196, D-209).
-	kindViewPluginUngranted = "view-plugin-ungranted"
+	kindViewPluginUngranted = answer.KindViewPluginUngranted
 	// kindAuditLogBehind is the audit entries waiting in the outbox through
 	// several failed attempts to enter the log (D-196, D-211).
-	kindAuditLogBehind = "audit-log-behind"
+	kindAuditLogBehind = answer.KindAuditLogBehind
 )
 
 // openAccounts is the words of an item's link to the accounts page.
 const openAccounts = "Open the accounts"
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132, D-94, D-141, D-179, D-196); a kind it doesn't know shows
-// its own name and no page. Kinds the Inbox settles in place name no page:
-// their item links its account instead.
+// (D-130, D-131, D-132, D-94, D-141, D-179, D-196): its label is the words the
+// Ask box names it by too (answer.KindLabel, which for a kind it doesn't know
+// is its own name), and the page where it is settled, none for a kind the Inbox
+// settles in place: its item links its account instead.
 func attentionKindOf(kind string) attentionKind {
-	kinds := map[string]attentionKind{
-		kindAssertion:                           {Label: "Flagged balance assertion"},
-		kindPriceCheck:                          {Label: "Flagged price check"},
-		kindImportProblems:                      {Label: "Rows an import left out", Page: accountsPath, Action: openAccounts},
-		kindBrokerUnmapped:                      {Label: "Unmapped broker account", Page: accountsPath, Action: openAccounts},
-		kindTicker:                              {Label: "Ticker to confirm"},
-		kindSettingMissing:                      {Label: "Missing setting", Page: "/settings", Action: "Open the settings"},
-		kindTransferBroken:                      {Label: "Transfer broken by a correction"},
-		kindTransferSuggested:                   {Label: "Transfer to confirm"},
-		kindUnclassified:                        {Label: "Instrument to classify", Page: "/settings", Action: "Classify it in the settings"},
-		"market-data-gap":                       {Label: "Market data stopped arriving", Page: "/settings#series-sources-title", Action: "Open the sources"},
-		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: pluginsPath, Action: openPlugins},
-		kindSyncFailing:                         {Label: "Sync keeps failing", Page: pluginsPath, Action: openPlugins},
-		kindCashCheckpoint:                      {Label: "Cash balance differs"},
-		kindBondFeeAssumed:                      {Label: "Bond fee to confirm"},
-		kindBondSeries:                          {Label: "Bond series still without its ISIN or terms"},
-		"model-route-broken":                    {Label: "Model route names a missing provider instance", Page: modelsPath + "#routes-title", Action: "Fix the route"},
-		kindTargetProposal:                      {Label: "Target weights proposed by the maintainer", Page: modelPath, Action: "Open the model portfolio"},
-		kindMaintainerFailing:                   {Label: "Maintainer's weekly run failing", Page: modelPath, Action: "Open the model portfolio"},
-		kindViewPluginUngranted:                 {Label: "View plugin without access to any account", Page: accessPath + viewPluginsAnchor, Action: "Open Access"},
-		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
-		kindAuditLogBehind:                      {Label: "Audit log is behind", Page: auditPath, Action: "Open the audit log"},
+	pages := map[string]attentionKind{
+		kindImportProblems:                      {Page: accountsPath, Action: openAccounts},
+		kindBrokerUnmapped:                      {Page: accountsPath, Action: openAccounts},
+		kindSettingMissing:                      {Page: "/settings", Action: "Open the settings"},
+		kindUnclassified:                        {Page: "/settings", Action: "Classify it in the settings"},
+		"market-data-gap":                       {Page: "/settings#series-sources-title", Action: "Open the sources"},
+		"bond-terms-or-index-levels-undeclared": {Page: pluginsPath, Action: openPlugins},
+		kindSyncFailing:                         {Page: pluginsPath, Action: openPlugins},
+		"model-route-broken":                    {Page: modelsPath + "#routes-title", Action: "Fix the route"},
+		kindTargetProposal:                      {Page: modelPath, Action: "Open the model portfolio"},
+		kindMaintainerFailing:                   {Page: modelPath, Action: "Open the model portfolio"},
+		kindViewPluginUngranted:                 {Page: accessPath + viewPluginsAnchor, Action: "Open Access"},
+		"cross-check-prices-undeclared":         {Page: pluginsPath, Action: openPlugins},
+		kindAuditLogBehind:                      {Page: auditPath, Action: "Open the audit log"},
 	}
-	if k, ok := kinds[kind]; ok {
-		return k
-	}
-	return attentionKind{Label: kind}
+	k := pages[kind]
+	k.Label = answer.KindLabel(kind)
+	return k
 }
 
 // attentionItemKind names an item of kind about subject: as its kind does

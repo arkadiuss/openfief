@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef5a2a4ee80b
+  - type: covered_by
+    from: SYM-grafana-apply-grafana-main
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:33:23.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8ea8e905e76
+  - type: implements
+    from: SYM-grafana-apply-grafana-main
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:33:24.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5968717ebd5b

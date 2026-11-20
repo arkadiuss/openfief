@@ -8,9 +8,14 @@ import (
 	"net/http"
 	"slices"
 	"strings"
+	"time"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/metric"
 
 	"github.com/arkadiuss/openfief/design"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -121,6 +126,13 @@ type Config struct {
 	// the plugin's own token, the owner's session in each request. It is
 	// optional: without it the Models page answers 404.
 	ModelSettings modelsv1connect.ModelSettingsServiceClient
+	// DisableClientEvents turns off the reports the pages make about themselves
+	// (D-227): the page then loads no reporting script and the endpoint discards
+	// what it is sent. The zero value is on, as D-227 decides.
+	DisableClientEvents bool
+	// Meter counts the client events; nil is the process's own meter, which
+	// exports only where OpenTelemetry is set (D-172).
+	Meter metric.Meter
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -182,6 +194,10 @@ type server struct {
 	// modelSettings is the core's agents-and-models settings (D-212); nil
 	// without Config.ModelSettings.
 	modelSettings modelsv1connect.ModelSettingsServiceClient
+	// clientEvents takes the pages' reports about themselves (D-227), and
+	// reportClientEvents is whether it keeps them.
+	clientEvents       *clientEvents
+	reportClientEvents bool
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -210,11 +226,10 @@ func New(cfg *Config) (http.Handler, error) {
 		instruments: cfg.Instruments, checkpoints: cfg.CashCheckpoints,
 		pages: p, pwa: app, today: cfg.Today, log: cfg.Log, maintainer: cfg.Maintainer, modelSettings: cfg.ModelSettings,
 	}
-	if s.today == nil {
-		s.today = utcToday
-	}
-	if s.log == nil {
-		s.log = slog.New(slog.DiscardHandler)
+	s.fillDefaults()
+	err = s.setUpClientEvents(cfg, p)
+	if err != nil {
+		return nil, err
 	}
 	s.ask = commandAnswerer{s: s}
 	csp, err := s.withTurnstile(cfg)
@@ -226,13 +241,41 @@ func New(cfg *Config) (http.Handler, error) {
 		commands := commandAnswerer{s: s}
 		s.ask = routedAnswerer{
 			commands: commands, today: s.today, log: s.log, turnstile: s.turnstile,
-			model: &modelAnswerer{model: s.askModel, tools: askTools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
+			model: &modelAnswerer{model: s.askModel, tools: answer.Tools(), run: commands.run, today: s.today, log: s.log, limits: cfg.AskLimits.withDefaults()},
 		}
 	}
 	if err := s.noteModelAnswers(cfg.AskEvalURL); err != nil {
 		return nil, err
 	}
 	return securityHeaders(csp, sameOrigin(s.routes(static))), nil
+}
+
+// fillDefaults gives the server today's UTC date and a log that discards, where
+// the config named none.
+func (s *server) fillDefaults() {
+	if s.today == nil {
+		s.today = utcToday
+	}
+	if s.log == nil {
+		s.log = slog.New(slog.DiscardHandler)
+	}
+}
+
+// setUpClientEvents sets up the receiver of the pages' reports about themselves
+// (D-227) and whether the pages send them.
+func (s *server) setUpClientEvents(cfg *Config, p *pages) error {
+	meter := cfg.Meter
+	if meter == nil {
+		meter = otel.Meter("openfief-ui")
+	}
+	events, err := newClientEvents(s.log, meter, time.Now)
+	if err != nil {
+		return err
+	}
+	s.clientEvents = events
+	s.reportClientEvents = !cfg.DisableClientEvents
+	p.clientEvents = s.reportClientEvents
+	return nil
 }
 
 // withTurnstile sets up the check in front of the Ask box's model when cfg asks
@@ -272,6 +315,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.Handle("GET /static/", staticFiles("/static/", static))
 	mux.Handle("GET /static/design/", staticFiles("/static/design/", design.Files))
 	mux.HandleFunc("GET /healthz", healthz)
+	mux.HandleFunc("POST "+clientEventsPath, s.clientEvents.handler(s.reportClientEvents))
 	s.pwa.routes(mux)
 	mux.HandleFunc("GET /login", s.loginPage)
 	mux.HandleFunc("POST /login/passkey/begin", s.loginBegin)

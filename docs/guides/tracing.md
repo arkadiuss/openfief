@@ -7,12 +7,14 @@ covers:
   - deploy/tracing/**
   - scripts/tests/tracing.test.sh
   - cmd/core/tracing.go
+  - cmd/core/pluginmetrics.go
+  - sdk/go/openfief/telemetry.go
   - internal/plugins/operator/tracing.go
 ---
 
 OpenFief can send [OpenTelemetry](https://opentelemetry.io/) traces of what it does, a sync from the core through a connector into the ledger and the revaluation queue, to a collector you run, such as the OpenTelemetry Collector, Grafana Tempo or Jaeger. Tracing is off until you name a collector: without one, OpenFief records nothing and opens no connection for it. You turn it on with the standard OpenTelemetry environment variables, so any collector that speaks OTLP works.
 
-Tracing is off until the owner sets an OTLP endpoint, and every exporter passes an allow-list of span attributes, so no amount, identifier or token leaves (D-172). A database span carries the operation's name, never the statement or its arguments (D-173). What D-172 and D-173 add beyond that is [not built yet](#not-built-yet).
+Tracing is off until the owner sets an OTLP endpoint, and every exporter passes an allow-list of span attributes, so no amount, identifier or token leaves (D-172). Metrics go out through the same endpoint and the same kind of allow-list, [below](#metrics). A database span carries the operation's name, never the statement or its arguments (D-173). What D-172 and D-173 add beyond that is [not built yet](#not-built-yet).
 
 ## What a trace shows
 
@@ -65,11 +67,12 @@ The core and the operator read the standard variables. Set them in their contain
 | `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` | none | The full URL for spans, used as it is; wins over the one above |
 | `OTEL_EXPORTER_OTLP_PROTOCOL` | `http/protobuf` | `http/protobuf` (port 4318 by convention) or `grpc` (4317) |
 | `OTEL_EXPORTER_OTLP_HEADERS` | none | Headers sent with every export, such as an API key, as `key=value` pairs separated by commas |
+| `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` | none | The full URL for metrics, used as it is; wins over the base endpoint, which gets `/v1/metrics` |
 | `OTEL_TRACES_SAMPLER` | `parentbased_always_on` | `always_on`, `always_off`, `traceidratio`, or `parentbased_` with any of these |
 | `OTEL_TRACES_SAMPLER_ARG` | `1` | The ratio samplers' share of traces kept, from 0 to 1 |
 | `OTEL_SERVICE_NAME` | `openfief-core`, `openfief-operator` | The service's name in each span |
 | `OTEL_RESOURCE_ATTRIBUTES` | none | More resource attributes, such as `deployment.environment.name=home` |
-| `OTEL_SDK_DISABLED`, `OTEL_TRACES_EXPORTER` | | `true`, or `none`, turn export off whatever else is set |
+| `OTEL_SDK_DISABLED`, `OTEL_TRACES_EXPORTER`, `OTEL_METRICS_EXPORTER` | | `true`, or `none`, turn export off whatever else is set: everything, spans, or metrics |
 
 A value OpenFief can't use stops it at start with an error naming the variable, never its value, since an endpoint or a header may hold a credential: a typo never silently turns tracing off or sends spans somewhere else. The exporters also honor the standard timeout, compression and certificate variables. Spans go straight to the collector, never through a proxy, in batches; on shutdown the core and the operator send what is still buffered, for up to five seconds.
 
@@ -132,11 +135,32 @@ kubectl -n openfief create secret generic openfief-tracing --from-literal=header
 
 The core and the operator read their environment at start, so restart them after a change: `kubectl -n openfief rollout restart deploy/openfief-core deploy/openfief-operator`.
 
+## Metrics
+
+The core exports metrics through the same endpoint as its spans: over OTLP/HTTP, `http/protobuf`, every minute, to `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` or, for a base endpoint, its `/v1/metrics`. With `OTEL_EXPORTER_OTLP_PROTOCOL=grpc` and no metrics endpoint, spans go over gRPC and metrics are not exported. [`telemetry.RedactMetrics`](../../sdk/go/telemetry/metrics.go) is the allow-list every exported metric passes (D-172, GR-12): only the instruments named below survive, each data point keeps only the attributes named below, and the scope keeps its name and the resource its `service.name`; exemplars, which can hold a trace and attributes of their own, are always dropped. A process with nothing left to send makes no call.
+
+| Metric | Says | Attributes |
+|---|---|---|
+| `openfief.ui.client_events` | The events the built-in UI's pages reported about themselves (D-227) | `kind`, `browser`, `code` |
+| `openfief.ui.turnstile.token_seconds` | A histogram of the time from a Turnstile check starting to its token | `browser`, `path` |
+| `openfief.mcp.unauthenticated` | Requests to the MCP endpoint refused with 401 | none |
+| `openfief.authz.availability.changes` | How often the authorization model became available or unavailable | `to` |
+| `openfief.authz.available` | 1 while the authorization model answers, 0 while it can't | none |
+
+Every attribute is a word of a fixed vocabulary, never typed text: a string value over 64 characters is dropped with its attribute, and a new metric or attribute needs a reviewed change to the allow-list, with its test.
+
 ## Plugins
 
-A plugin built on the Go SDK traces its connector calls and its calls to the core with no work of its own: `ServeConnector` starts its tracing, and a view that serves its own port, such as the built-in UI, calls `openfief.StartTelemetry`. The operator doesn't give plugins the variables above, so a plugin exports nothing: its NetworkPolicy and the egress proxy keep it from any collector. D-172 has plugins send their spans to the core, which applies the same allow-list and exports them; that is [not built yet](#not-built-yet). The trace still passes through it, so the core's spans before and after a plugin call stay one trace.
+A plugin built on the Go SDK traces its connector calls and its calls to the core with no work of its own: `ServeConnector` starts its tracing, and a view that serves its own port, such as the built-in UI, calls `openfief.StartTelemetry`. The operator doesn't give plugins the variables above, so a plugin's spans go nowhere: its NetworkPolicy and the egress proxy keep it from any collector, and an architecture test keeps every plugin's code from importing an OpenTelemetry exporter or provider ([No OTLP exporter in a plugin](../dev/code-organization.md#architecture-tests)). The trace still passes through it, so the core's spans before and after a plugin call stay one trace.
+
+A plugin's metrics do reach the core. A view plugin calls `openfief.StartMetrics` with its projected token, and the SDK sends the metrics of OpenTelemetry's global meter, every minute, as OTLP/HTTP to the core's plugin port at `POST /otlp/v1/metrics`, redacted once on the way out; the built-in UI does, for the two meters of its client events. The core takes the report only from a view plugin whose token a TokenReview proves, as for the AuthService, so a connector or a pod that is no plugin gets 403. It then applies the allow-list a second time to what it received ([`telemetry.FilterOTLPMetrics`](../../sdk/go/telemetry/metrics.go)): the resource becomes the `service.name` of the plugin the token proved, never the plugin's own claim, metrics and attributes off the list and exemplars go, and a report of nothing allowed is not forwarded. What is left goes to the core's own metrics endpoint, or is dropped, with the answer 200, when the core exports no metrics. The plugin never reaches a collector: its only address for metrics is the core's, which its NetworkPolicy already allows.
 
 ## Verification
+
+- `TestParseConfigMetrics`, `TestRedactMetrics`, `TestFilterOTLPMetrics` and `TestMetricsForwarder` (`TEST-telemetry-metrics`): the metrics endpoint from the standard variables and what turns it off; only allowed metrics and attributes, no exemplar and a bare resource reach an exporter, and none is called when nothing is left; a received report is filtered the same way with the verified service name; forwarding sends the filtered report with the configured headers, names no endpoint in its error and drops on a nil forwarder.
+- `TestStart` also checks a counter with an address, a session and a question in its attributes: the collector gets the allowed counter with the vocabulary's attributes alone, and a plugin's `StartMetricsTo` sends to the core's address with the plugin's token.
+- `TestPluginMetrics*` in `cmd/core` (`TEST-core-plugin-metrics`): the report is refused without a token (401), from a caller that is no view plugin (403) and when the caller can't be checked (500), and for a body that is not protobuf (415), over the cap (413) or no report (400); a good one reaches the collector filtered, with the verified service name; a report of nothing allowed isn't forwarded; a failing collector doesn't fail the plugin and its log line names no endpoint; every other path stays the plugin port's.
+- `No OTLP exporter in a plugin` in [tools/archtest](../../tools/archtest/doc.go) (`TEST-tooling-archtest-rules`).
 
 - `TEST-telemetry-config`: the configuration is off by default, takes the endpoint, protocol, headers and sampler from the standard variables, and refuses each bad value without quoting it.
 - `TEST-telemetry-redact`: the exporter's filter keeps only allowed attributes, drops error messages and keeps span names.
@@ -146,6 +170,6 @@ A plugin built on the Go SDK traces its connector calls and its calls to the cor
 
 ## Not built yet
 
-- Plugins sending their spans to the core, which exports them through the same allow-list (D-172); today plugins export nothing.
-- Metrics over OTLP through the same allow-list (D-172); today only traces are exported, and logs stay on standard output, as D-172 keeps them.
+- Plugins sending their spans to the core, which exports them through the same allow-list (D-172); today plugins' spans go nowhere. Their metrics reach the core ([Plugins](#plugins)).
+- Metrics over gRPC, and metrics from connector plugins; today metrics go over OTLP/HTTP, and only view plugins report them. Logs stay on standard output, as D-172 keeps them.
 - Spans of calls through the egress proxy with their host, status and duration only, never the path or query (D-173); today those calls aren't traced.

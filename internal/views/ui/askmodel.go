@@ -14,6 +14,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 )
 
 // Fixed limits of the Ask box's model calls: each call to the core and each
@@ -138,10 +139,10 @@ type askModelPort interface {
 	// browser's, or "" when the core could not tell.
 	admit(ctx context.Context, sess session, address string) (askAdmission, error)
 	// generate asks the route's models for the next message, of at most
-	// maxTokens output tokens. With answer set the message is the structured
+	// maxTokens output tokens. With structured set the message is the structured
 	// answer (askAnswerSchemaJSON): strict structured output for a model
 	// whose entry has it, a JSON object (JSON mode) for one that has not.
-	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error)
+	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error)
 }
 
 // toolRunner runs a command as a tool: the commands' own answerer, reading
@@ -282,12 +283,12 @@ type askTrace struct {
 
 // generate asks the router for the next message, offering tools and no more
 // output tokens than the question has left, and counts the call and its tokens.
-// With answer set the message is asked as the structured answer.
-func (c *askConversation) generate(ctx context.Context, tools []askTool, answer bool) (askReply, error) {
+// With structured set the message is asked as the structured answer.
+func (c *askConversation) generate(ctx context.Context, tools []askTool, structured bool) (askReply, error) {
 	ctx, cancel := context.WithTimeout(ctx, askCallTimeout)
 	defer cancel()
 	c.rounds++
-	reply, err := c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens, answer)
+	reply, err := c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens, structured)
 	if err == nil {
 		c.tokens += reply.OutputTokens
 	}
@@ -303,16 +304,16 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	c.calls++
 	tool, ok := c.a.tool(call.Name)
 	if !ok {
-		c.addResult(&call, callUnknownTool, toolFailure("there is no tool called %s", call.Name), tierT2)
+		c.addResult(&call, callUnknownTool, answer.ToolFailure("there is no tool called %s", call.Name), tierT2)
 		return nil
 	}
 	if c.calls > c.a.limits.ToolCalls {
-		c.addResult(&call, callOverLimit, toolFailure("too many tool calls for one question; answer with what you have"), tierT2)
+		c.addResult(&call, callOverLimit, answer.ToolFailure("too many tool calls for one question; answer with what you have"), tierT2)
 		return nil
 	}
-	q, err := tool.query(call.Args, c.a.today())
+	q, err := tool.Query(call.Args, c.a.today())
 	if err != nil {
-		c.addResult(&call, callBadArgs, toolFailure("%s", err.Error()), tierT2)
+		c.addResult(&call, callBadArgs, answer.ToolFailure("%s", err.Error()), tierT2)
 		return nil
 	}
 	toolCtx, cancel := context.WithTimeout(ctx, askToolTimeout)
@@ -324,7 +325,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		}
 		// What failed is not the model's to see: its result says only that
 		// the read did not work.
-		c.addResult(&call, callReadFailed, toolFailure("the data could not be read"), tierT2)
+		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierT2)
 		return nil
 	}
 	tiers := c.tiers
@@ -338,7 +339,7 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	}
 	if !allowed {
 		c.withheld = append(c.withheld, withheldCard{Label: tool.Label, Tier: tool.Tier, Data: tierWords(tool.Tier)})
-		c.addResult(&call, callWithheld, toolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
+		c.addResult(&call, callWithheld, answer.ToolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
 		return nil
 	}
 	c.tiers = next
@@ -572,7 +573,7 @@ func unfinishedAnswer(question string) answerCard {
 // modelCard is a card about the model that lists the commands the box
 // understands.
 func modelCard(question, title, text string) answerCard {
-	return answerCard{Question: question, Title: title, Text: text, Help: knownCommands(), Source: "The model gave no answer"}
+	return answerCard{Question: question, Title: title, Text: text, Help: answer.KnownCommands(), Source: "The model gave no answer"}
 }
 
 // routedAnswerer is the Ask box's answerer (D-203): the fixed commands
@@ -593,10 +594,10 @@ type routedAnswerer struct {
 // model (D-203): it is one of the fixed commands, or it is empty or longer than
 // a model is asked, so it gets the commands the box understands.
 func boxAnswersItself(question string, today kernel.Date) bool {
-	if _, isCommand := parseAsk(question, today); isCommand {
+	if _, isCommand := answer.Parse(question, today); isCommand {
 		return true
 	}
-	q := normalizeQuestion(question)
+	q := answer.NormalizeQuestion(question)
 	return q == "" || utf8.RuneCountInString(q) > maxModelQuestionRunes
 }
 
@@ -635,6 +636,9 @@ func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, b
 		return answerCard{}, false
 	}
 	outcome := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	// The verdict and the path that made the token, both fixed words: nothing the browser typed is logged.
+	a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question",
+		"verdict", outcome.verdict.String(), "path", checkPath(r.URL.Query().Get(checkPathField)))
 	return turnstileAnswer(question, outcome)
 }
 

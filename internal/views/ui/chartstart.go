@@ -9,6 +9,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	valuationv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -79,12 +80,7 @@ func parseStart(q string) (kernel.Date, error) {
 }
 
 // optionalString returns d as YYYY-MM-DD, or "" for the zero date.
-func optionalString(d kernel.Date) string {
-	if d.IsZero() {
-		return ""
-	}
-	return d.String()
-}
+func optionalString(d kernel.Date) string { return answer.OptionalString(d) }
 
 // setChartStart saves the posted start as where the portfolio's charts, or
 // the posted account's, start (SetChartStart, D-167), or clears it when

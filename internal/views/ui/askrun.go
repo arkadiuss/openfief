@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
@@ -71,7 +72,7 @@ func NewAsker(cfg *AskerConfig) (*Asker, error) {
 	commands := commandAnswerer{s: s}
 	return &Asker{
 		answerer: &modelAnswerer{
-			model: askModelFunc{m: cfg.Model}, tools: askTools(), run: commands.run, today: s.today,
+			model: askModelFunc{m: cfg.Model}, tools: answer.Tools(), run: commands.run, today: s.today,
 			log: slog.New(slog.DiscardHandler), limits: cfg.Limits.withDefaults(),
 		},
 		format: separators(cfg.Group, cfg.Decimal),
@@ -96,9 +97,9 @@ func (askModelFunc) admit(context.Context, session, string) (askAdmission, error
 	return askAdmission{Kind: admitAllowed}, nil
 }
 
-func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, answer bool) (askReply, error) {
+func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
 	schema := ""
-	if answer {
+	if structured {
 		schema = askAnswerSchemaJSON
 	}
 	reply, err := f.m.Generate(ctx, msgs, tools, maxTokens, schema)
@@ -207,7 +208,7 @@ func runCard(card *answerCard) AskRunCard {
 
 // AskTools returns the tools the Ask box offers its model, in the order the
 // model is told them.
-func AskTools() []AskTool { return askTools() }
+func AskTools() []AskTool { return answer.Tools() }
 
 // AskArgDefaults returns the value each argument of the named tool has when the
 // model leaves it out, latest being the latest valued day: what the tool's
@@ -215,7 +216,7 @@ func AskTools() []AskTool { return askTools() }
 // when no date is given"). A call that gives an argument its default is the call
 // without it. It is nil for a tool with no defaults and for an unknown tool.
 func AskArgDefaults(tool string, latest kernel.Date) map[string]any {
-	for _, t := range askTools() {
+	for _, t := range answer.Tools() {
 		if t.Name == tool && t.Defaults != nil {
 			return t.Defaults(latest)
 		}
@@ -229,7 +230,7 @@ func AskArgDefaults(tool string, latest kernel.Date) map[string]any {
 // (a value asked over a period has no date). It is nil for a tool with none
 // and for an unknown tool.
 func AskArgReplacedBy(tool string) map[string][]string {
-	for _, t := range askTools() {
+	for _, t := range answer.Tools() {
 		if t.Name == tool {
 			return t.ReplacedBy
 		}
@@ -265,7 +266,7 @@ type AskCommand struct {
 
 // AskCommands returns the commands the Ask box understands.
 func AskCommands() []AskCommand {
-	known := knownCommands()
+	known := answer.KnownCommands()
 	out := make([]AskCommand, len(known))
 	for i, k := range known {
 		out[i] = AskCommand(k)

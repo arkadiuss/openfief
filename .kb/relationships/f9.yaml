@@ -1280,3 +1280,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40ca5ad34957
+  - type: implements
+    from: SYM-answer-links-nolinks-performancechart
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:13:51.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37d4e45bbf04
+  - type: covered_by
+    from: SYM-answer-links-nolinks-performancechart
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:13:51.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04168e78978a
+  - type: executable_for
+    from: SYM-demo-scrub-test-parse-statement
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:29.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b8d4dd123e
+  - type: covered_by
+    from: SYM-m6-cmd-core-pluginmetrics-caller-check
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:45.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aec05b1e35e
+  - type: implements
+    from: SYM-m6-cmd-core-pluginmetrics-caller-check
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:45.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b01027a0ac35
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:30.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c6814a1b99
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:30.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3300d96bf4f2
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:30.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b33efc9caf6
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-service-only
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:21:10.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd955fe8a5d9
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-service-only
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:21:10.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbc7d472e94e

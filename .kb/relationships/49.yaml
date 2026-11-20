@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efd5ac3ddef8
+  - type: verified_by
+    from: SCEN-tooling-archtest-core-no-ui
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-18T22:06:23.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de7e3ef4bf1

@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72ab02332053
+  - type: implements
+    from: SYM-answer-format-dimensions
+    to: REQ-AUTO-68636F42D98D4CF7
+    created_at: 2026-11-19T11:12:11.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e31e8db91213
+  - type: implements
+    from: SYM-answer-format-dimensions
+    to: REQ-ui-overview-values
+    created_at: 2026-11-19T11:12:11.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88ad1fae85b5
+  - type: covered_by
+    from: SYM-answer-format-dimensions
+    to: TEST-ui-pages
+    created_at: 2026-11-19T11:12:11.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01db855dfd77

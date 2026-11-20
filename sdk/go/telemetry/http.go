@@ -60,7 +60,10 @@ func procedure(path string) (string, bool) {
 }
 
 // traced reports whether a request gets a span: every one but the health
-// probes'.
+// probes' and a plugin's metrics report.
 func traced(r *http.Request) bool {
+	if r.Method == http.MethodPost && r.URL.Path == MetricsPath {
+		return false
+	}
 	return r.Method != http.MethodGet || (r.URL.Path != "/healthz" && r.URL.Path != "/readyz")
 }

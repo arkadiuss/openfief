@@ -1322,3 +1322,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8a15a3accf0
+  - type: executable_for
+    from: SYM-m5-internal-views-ui-clientevents-test-go-clienteventsharness
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:59:19.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71aa1cf83f64
+  - type: specified_by
+    from: REQ-ui-ask-shows-progress
+    to: SCEN-ui-ask-shows-progress
+    created_at: 2026-11-19T16:26:19.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6b0dbeedb28
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-forward
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:50.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0610266b22ab
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-forward
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:50.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d028a0093b85
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-forward
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:50.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2d1e7ce2387
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering-serve-http
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:23:12.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c8d6621b0a3

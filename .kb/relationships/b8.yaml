@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02905d25be0
+  - type: covered_by
+    from: SYM-grafana-check-check-metrics
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:33:48.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78edd82c067b
+  - type: implements
+    from: SYM-grafana-check-check-metrics
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:33:48.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e2d3d357458

@@ -82,7 +82,11 @@ func serve() int {
 // run serves the UI until ctx is done, with the plugin's tracing
 // (openfief.StartTelemetry): each request in a span that continues the
 // core's trace, and each call to the core in one that propagates it. It
-// sends the spans still buffered before it returns.
+// also sends the plugin's metrics, the two meters of the client events
+// (D-227), to the core (openfief.StartMetrics), which exports them through
+// its allow-list where its OTLP endpoint is set (D-172); the UI never reaches
+// a collector itself. It sends the spans and metrics still buffered before it
+// returns.
 func run(ctx context.Context, log *slog.Logger) error {
 	addr, err := openfief.ListenAddress()
 	if err != nil {
@@ -96,12 +100,16 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return fmt.Errorf("tracing: %w", err)
 	}
+	flushMetrics, err := openfief.StartMetrics(ctx, openfief.TokenFile{})
+	if err != nil {
+		return errors.Join(fmt.Errorf("metrics: %w", err), flush(ctx))
+	}
 	srv := &http.Server{Addr: addr, Handler: telemetry.ServerHandler(handler), ReadHeaderTimeout: readHeaderTimeout, IdleTimeout: idleTimeout}
 	log.Info("ui serving", "address", addr)
 	serveErr := serveUntilDone(ctx, srv)
 	stopCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), shutdownTimeout)
 	defer cancel()
-	return errors.Join(serveErr, flush(stopCtx))
+	return errors.Join(serveErr, flush(stopCtx), flushMetrics(stopCtx))
 }
 
 // newHandler builds the UI's handler from the plugin's environment: the
@@ -148,6 +156,8 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Attention:       attentionv1connect.NewAttentionServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Instruments:     ledgerv1connect.NewInstrumentServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		CashCheckpoints: ledgerv1connect.NewCashCheckpointServiceClient(authClient(openfief.TokenFile{}), coreURL),
+
+		DisableClientEvents: raw.clientEventsOff(),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)

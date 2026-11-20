@@ -1196,20 +1196,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7172b4cd5ca6
-  - type: implements
-    from: SYM-mcp-mcp-ui-toolbox
-    to: REQ-views-mcp-door
-    created_at: 2026-11-18T15:52:04.722Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a5e9cfd92c76
-  - type: covered_by
-    from: SYM-mcp-mcp-ui-toolbox
-    to: TEST-core-mcp
-    created_at: 2026-11-18T15:52:04.779Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fbb07eb5987e
   - type: executable_for
     from: SYM-mcp-mcp-test-mcp-post
     to: TEST-core-mcp
@@ -1217,3 +1203,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-115503780f38
+  - type: implements
+    from: SYM-answer-links-nolinks-sleeve
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:13:13.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d70948a016b7
+  - type: covered_by
+    from: SYM-answer-links-nolinks-sleeve
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:13:13.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d57ee1e267c3
+  - type: executable_for
+    from: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-answered-and-forwarded
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:16:06.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-201604579032
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:37.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e48c18effa1
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:37.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d08d276366d1
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:37.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041803980470

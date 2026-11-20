@@ -1,4 +1,4 @@
-package ui
+package answer
 
 import (
 	"bytes"
@@ -13,50 +13,19 @@ import (
 
 // The data tiers of D-206, as the core's contract spells them. The Ask box
 // tags every message it sends a model with one; the core's router decides
-// which models may receive it.
+// which models may receive it. A tool's Tier is the tier of its card.
 const (
-	tierT0 = "T0"
-	tierTF = "TF"
-	tierT1 = "T1"
-	tierT2 = "T2"
+	TierT0 = "T0"
+	TierTF = "TF"
+	TierT1 = "T1"
+	TierT2 = "T2"
 )
 
-// tierWords describes a data tier in words, for the notice of a card the
-// model was not allowed to see.
-func tierWords(tier string) string {
-	switch tier {
-	case tierT0:
-		return "whole-portfolio holdings, amounts, transactions or tax data"
-	case tierTF:
-		return "one fief's own lease, cash, positions or orders"
-	case tierT1:
-		return "a thesis"
-	case tierT2:
-		return "public data"
-	}
-	return ""
-}
-
-// tierOrder returns the data tiers, most sensitive first, to pick the tier a
-// message that holds data of several carries.
-func tierOrder() []string { return []string{tierT0, tierTF, tierT1, tierT2} }
-
-// mostSensitive returns the first of tierOrder among tiers, or T2 when it
-// holds none.
-func mostSensitive(tiers map[string]bool) string {
-	for _, t := range tierOrder() {
-		if tiers[t] {
-			return t
-		}
-	}
-	return tierT2
-}
-
-// askTool is one tool the Ask box's model may call (D-203): one of the fixed
+// Tool is one tool the Ask box's model may call (D-203): one of the fixed
 // commands' answerers, read-only like them. A tool never changes anything,
 // and no tool that does exists: this table is the whole of what a model can
 // do.
-type askTool struct {
+type Tool struct {
 	// Name and Description are what the model is told.
 	Name, Description string
 	// Schema is a JSON Schema of the tool's arguments.
@@ -80,7 +49,13 @@ type askTool struct {
 	ReplacedBy map[string][]string
 	// query turns the model's arguments, a JSON object text, into the
 	// command the answerer runs, today being today.
-	query func(args string, today kernel.Date) (askQuery, error)
+	query func(args string, today kernel.Date) (Query, error)
+}
+
+// Query turns the model's arguments, a JSON object text, into the command the
+// answerer runs, today being today.
+func (t *Tool) Query(args string, today kernel.Date) (Query, error) {
+	return t.query(args, today)
 }
 
 // The names of the arguments more than one tool or table spells.
@@ -89,79 +64,79 @@ const (
 	argFrom   = "from"
 )
 
-// askTools returns the tools, in the order the model is told them. Every
+// Tools returns the tools, in the order the model is told them. Every
 // tool's card is T0: it holds whole-portfolio holdings, amounts or tax data,
 // or names the owner's accounts and instruments (D-206). A tool whose card
 // holds only public data would take T2; none does yet.
-func askTools() []askTool {
-	return []askTool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool()}
+func Tools() []Tool {
+	return []Tool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool()}
 }
 
-func needsTool() askTool {
-	return askTool{
+func needsTool() Tool {
+	return Tool{
 		Name:        "what_needs_me",
 		Description: "The open attention items: what needs the owner's attention, the top of the Inbox, with how many are open.",
 		Schema:      `{"type":"object","properties":{},"additionalProperties":false}`,
-		Label:       "What needs you", Tier: tierT0,
-		query: func(args string, _ kernel.Date) (askQuery, error) {
+		Label:       "What needs you", Tier: TierT0,
+		query: func(args string, _ kernel.Date) (Query, error) {
 			var a struct{}
 			if err := decodeArgs(args, &a); err != nil {
-				return askQuery{}, err
+				return Query{}, err
 			}
-			return askQuery{Command: askNeeds}, nil
+			return Query{Command: CommandNeeds}, nil
 		},
 	}
 }
 
-func showTool() askTool {
-	return askTool{
+func showTool() Tool {
+	return Tool{
 		Name: "show",
 		Description: "Shows one account, sleeve or instrument by its name, ticker or ISIN: its value and largest holdings, its accounts, " +
 			"or who holds it and its last price.",
 		Schema: `{"type":"object","properties":{"name":{"type":"string","description":"The account's, sleeve's or instrument's name, ticker or ISIN."},` +
 			`"kind":{"type":"string","enum":["any","account","sleeve","instrument"],"description":"What the name is; any when unsure."}},` +
 			`"required":["name"],"additionalProperties":false}`,
-		Label: "Account, sleeve or instrument", Tier: tierT0,
+		Label: "Account, sleeve or instrument", Tier: TierT0,
 		query: showQuery,
 	}
 }
 
-func syncTool() askTool {
-	return askTool{
+func syncTool() Tool {
+	return Tool{
 		Name:        "sync_status",
 		Description: "Why a connector's sync fails: its status and latest attempts, each with its error class.",
 		Schema: `{"type":"object","properties":{"connector":{"type":"string","description":"The connector instance's name, such as xtb-main."}},` +
 			`"required":["connector"],"additionalProperties":false}`,
-		Label: "Sync status", Tier: tierT0,
-		query: func(args string, _ kernel.Date) (askQuery, error) {
+		Label: "Sync status", Tier: TierT0,
+		query: func(args string, _ kernel.Date) (Query, error) {
 			var a struct {
 				Connector string `json:"connector"`
 			}
 			if err := decodeArgs(args, &a); err != nil {
-				return askQuery{}, err
+				return Query{}, err
 			}
 			if strings.TrimSpace(a.Connector) == "" {
-				return askQuery{}, errNoName
+				return Query{}, errNoName
 			}
-			return askQuery{Command: askSync, Term: strings.TrimSpace(a.Connector)}, nil
+			return Query{Command: CommandSync, Term: strings.TrimSpace(a.Connector)}, nil
 		},
 	}
 }
 
-func allocationTool() askTool {
-	return askTool{
+func allocationTool() Tool {
+	return Tool{
 		Name:        "allocation",
 		Description: "The portfolio's allocation, gross, on the latest valued day, grouped by asset class, currency, institution or sleeve.",
 		Schema: `{"type":"object","properties":{"by":{"type":"string","enum":["asset_class","currency","institution","sleeve"],` +
 			`"description":"The grouping; asset_class when omitted."}},"additionalProperties":false}`,
-		Label: "Allocation", Tier: tierT0,
+		Label: "Allocation", Tier: TierT0,
 		Defaults: func(kernel.Date) map[string]any { return map[string]any{"by": "asset_class"} },
 		query:    allocationQuery,
 	}
 }
 
-func performanceTool() askTool {
-	return askTool{
+func performanceTool() Tool {
+	return Tool{
 		Name: "performance",
 		Description: "Answers questions about return and performance over a period (in Polish, \"stopa zwrotu\" and \"wynik\"): the time-weighted " +
 			"return, with the portfolio's value at its start and end and the deposits and withdrawals in it. A period counts its first day " +
@@ -174,15 +149,15 @@ func performanceTool() askTool {
 			`"month":{"type":"string","description":"A calendar month, as YYYY-MM."},` +
 			`"year":{"type":"integer","description":"A calendar year, such as 2025."},` +
 			`"since":{"type":"string","description":"A first day, as YYYY-MM-DD."}},"additionalProperties":false}`,
-		Label: "Performance", Tier: tierT0,
+		Label: "Performance", Tier: TierT0,
 		Defaults:   func(kernel.Date) map[string]any { return map[string]any{argPeriod: "this_year"} },
 		ReplacedBy: map[string][]string{argPeriod: {argFrom, "to", "month", "year", "since"}},
 		query:      performanceQuery,
 	}
 }
 
-func valueTool() askTool {
-	return askTool{
+func valueTool() Tool {
+	return Tool{
 		Name: "value",
 		Description: "The portfolio's gross, net and liquidation value on a day, in the reporting currency; the latest valued day when " +
 			"no date is given. With a period instead, the three values at its start and end, their change in money and in percent, and " +
@@ -191,7 +166,7 @@ func valueTool() askTool {
 			`"period":{"type":"object","description":"A period of days, both inclusive, instead of a day.","properties":` +
 			`{"from":{"type":"string","description":"The first day, as YYYY-MM-DD."},"to":{"type":"string","description":"The last day, as YYYY-MM-DD."}},` +
 			`"required":["from","to"],"additionalProperties":false}},"additionalProperties":false}`,
-		Label: "Value", Tier: tierT0,
+		Label: "Value", Tier: TierT0,
 		Defaults: func(latest kernel.Date) map[string]any {
 			if latest.IsZero() {
 				return nil
@@ -235,46 +210,46 @@ func decodeArgs(args string, dst any) error {
 }
 
 // showQuery maps the show tool's arguments to its command.
-func showQuery(args string, _ kernel.Date) (askQuery, error) {
+func showQuery(args string, _ kernel.Date) (Query, error) {
 	var a struct {
 		Name string `json:"name"`
 		Kind string `json:"kind"`
 	}
 	if err := decodeArgs(args, &a); err != nil {
-		return askQuery{}, err
+		return Query{}, err
 	}
 	if strings.TrimSpace(a.Name) == "" {
-		return askQuery{}, errNoName
+		return Query{}, errNoName
 	}
-	kinds := map[string]showKind{"": showAny, "any": showAny, accountParam: showAccount, "sleeve": showSleeve, "instrument": showInstrument}
+	kinds := map[string]ShowKind{"": ShowAny, "any": ShowAny, wordAccount: ShowAccount, "sleeve": ShowSleeve, "instrument": ShowInstrument}
 	kind, ok := kinds[a.Kind]
 	if !ok {
-		return askQuery{}, errBadEnum
+		return Query{}, errBadEnum
 	}
-	return askQuery{Command: askShow, Term: strings.TrimSpace(a.Name), Show: kind}, nil
+	return Query{Command: CommandShow, Term: strings.TrimSpace(a.Name), Show: kind}, nil
 }
 
 // allocationQuery maps the allocation tool's arguments to its command.
-func allocationQuery(args string, _ kernel.Date) (askQuery, error) {
+func allocationQuery(args string, _ kernel.Date) (Query, error) {
 	var a struct {
 		By string `json:"by"`
 	}
 	if err := decodeArgs(args, &a); err != nil {
-		return askQuery{}, err
+		return Query{}, err
 	}
-	words := map[string]string{"": "", "asset_class": "asset class", "currency": dimCurrency, "institution": dimInstitution, "sleeve": dimSleeve}
+	words := map[string]string{"": "", "asset_class": "asset class", "currency": DimCurrency, "institution": DimInstitution, "sleeve": DimSleeve}
 	word, ok := words[a.By]
 	if !ok {
-		return askQuery{}, errBadEnum
+		return Query{}, errBadEnum
 	}
 	return parseAllocationWord(word)
 }
 
 // parseAllocationWord is parseAllocation as an error.
-func parseAllocationWord(word string) (askQuery, error) {
+func parseAllocationWord(word string) (Query, error) {
 	q, ok := parseAllocation(word)
 	if !ok {
-		return askQuery{}, errBadEnum
+		return Query{}, errBadEnum
 	}
 	return q, nil
 }
@@ -292,37 +267,37 @@ type performanceArgs struct {
 // performanceQuery maps the performance tool's arguments to its command. Two
 // days, a month, a year or a first day name the period, in that order; else
 // the period's own word.
-func performanceQuery(args string, today kernel.Date) (askQuery, error) {
+func performanceQuery(args string, today kernel.Date) (Query, error) {
 	var a performanceArgs
 	if err := decodeArgs(args, &a); err != nil {
-		return askQuery{}, err
+		return Query{}, err
 	}
 	p, err := a.period(today)
 	if err != nil {
-		return askQuery{}, err
+		return Query{}, err
 	}
-	return askQuery{Command: askPerformance, Period: p}, nil
+	return Query{Command: CommandPerformance, Period: p}, nil
 }
 
 // period returns the period the arguments name, today being today.
-func (a *performanceArgs) period(today kernel.Date) (askPeriod, error) {
+func (a *performanceArgs) period(today kernel.Date) (Period, error) {
 	switch {
 	case a.From != "" || a.To != "":
 		return boundedArgs(a.From, a.To, today)
 	case a.Month != "":
 		p, ok := parseBounded(strings.ToLower(strings.TrimSpace(a.Month)), today)
-		if !ok || p.Kind != periodMonthOf {
-			return askPeriod{}, errToolDate
+		if !ok || p.Kind != PeriodMonthOf {
+			return Period{}, errToolDate
 		}
 		return p, nil
 	}
 	word, err := a.word()
 	if err != nil {
-		return askPeriod{}, err
+		return Period{}, err
 	}
 	p, valid := parsePeriod(word, today)
 	if !valid {
-		return askPeriod{}, errToolDate
+		return Period{}, errToolDate
 	}
 	return p, nil
 }
@@ -337,7 +312,7 @@ func (a *performanceArgs) word() (string, error) {
 		return "since " + a.Since, nil
 	}
 	words := map[string]string{
-		"": "", "this_year": labelThisYear, "this_month": labelThisMonth, "last_12_months": "last 12 months", "last_year": labelLastYear, tabAll: tabAll,
+		"": "", "this_year": labelThisYear, "this_month": labelThisMonth, "last_12_months": "last 12 months", "last_year": labelLastYear, wordAll: wordAll,
 	}
 	word, ok := words[a.Period]
 	if !ok {
@@ -349,21 +324,21 @@ func (a *performanceArgs) word() (string, error) {
 // boundedArgs returns the period of two days a tool's arguments give, today
 // being today. The days are not put in order or checked against the valued
 // days here: the answer says when they can't be answered.
-func boundedArgs(from, to string, today kernel.Date) (askPeriod, error) {
+func boundedArgs(from, to string, today kernel.Date) (Period, error) {
 	if from == "" || to == "" {
-		return askPeriod{}, errPeriodBounds
+		return Period{}, errPeriodBounds
 	}
 	first, okFrom := parseAskDate(from, today)
 	last, okTo := parseAskDate(to, today)
 	if !okFrom || !okTo || first.IsZero() || last.IsZero() {
-		return askPeriod{}, errToolDate
+		return Period{}, errToolDate
 	}
-	return askPeriod{Kind: periodBetween, Since: first, To: last}, nil
+	return Period{Kind: PeriodBetween, Since: first, To: last}, nil
 }
 
 // valueQuery maps the value tool's arguments to its command: the value on a
 // day, or its change over a period of two days.
-func valueQuery(args string, today kernel.Date) (askQuery, error) {
+func valueQuery(args string, today kernel.Date) (Query, error) {
 	var a struct {
 		Date   string `json:"date"`
 		Period *struct {
@@ -372,23 +347,23 @@ func valueQuery(args string, today kernel.Date) (askQuery, error) {
 		} `json:"period"`
 	}
 	if err := decodeArgs(args, &a); err != nil {
-		return askQuery{}, err
+		return Query{}, err
 	}
 	if a.Period != nil {
 		if a.Date != "" {
-			return askQuery{}, errDateAndPeriod
+			return Query{}, errDateAndPeriod
 		}
 		p, err := boundedArgs(a.Period.From, a.Period.To, today)
 		if err != nil {
-			return askQuery{}, err
+			return Query{}, err
 		}
-		return askQuery{Command: askValue, Change: &p}, nil
+		return Query{Command: CommandValue, Change: &p}, nil
 	}
 	d, ok := parseAskDate(a.Date, today)
 	if !ok || d.After(today) {
-		return askQuery{}, errToolDate
+		return Query{}, errToolDate
 	}
-	return askQuery{Command: askValue, Date: d}, nil
+	return Query{Command: CommandValue, Date: d}, nil
 }
 
 // toolResult is a card as the model receives it: the card's data, with
@@ -408,9 +383,9 @@ type toolResultRow struct {
 	Figure string `json:"figure,omitempty"`
 }
 
-// cardResult returns card as the JSON text of the tool's result, with the id
+// CardResult returns card as the JSON text of the tool's result, with the id
 // the model names it by.
-func cardResult(card *answerCard, id string) string {
+func CardResult(card *Card, id string) string {
 	res := toolResult{ID: id, Title: card.Title, Text: card.Text}
 	for _, r := range card.Rows {
 		res.Rows = append(res.Rows, toolResultRow{Label: r.Label, Detail: r.Detail, Figure: r.Figure})
@@ -424,12 +399,16 @@ func cardResult(card *answerCard, id string) string {
 	return strings.TrimSpace(buf.String())
 }
 
-// toolFailure is the text of a tool's result that holds no data: a refusal or
+// ToolFailure is the text of a tool's result that holds no data: a refusal or
 // a failure, which the model reads and the person never needs to.
-func toolFailure(format string, args ...any) string {
+func ToolFailure(format string, args ...any) string {
 	out, err := json.Marshal(map[string]string{"error": fmt.Sprintf(format, args...)})
 	if err != nil { // a map of strings always encodes
 		return `{"error":"failed"}`
 	}
 	return string(out)
 }
+
+// CardID is the id a model reads on the n-th card (counting from one) its
+// tools produced.
+func CardID(n int) string { return "c" + strconv.Itoa(n) }

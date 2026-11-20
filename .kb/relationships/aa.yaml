@@ -1161,3 +1161,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e8eed755a70
+  - type: specified_by
+    from: REQ-demo-telemetry-scrub
+    to: SCEN-demo-telemetry-scrub
+    created_at: 2026-11-19T16:20:41.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-662858ed9104
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-test-no-metrics-forwarder-drops-the-report
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:23:25.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a5f765f7242

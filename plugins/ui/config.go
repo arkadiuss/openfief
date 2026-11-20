@@ -42,6 +42,14 @@ type rawConfig struct {
 	// key is the instance's Secret ui--turnstile-secret, never config.
 	TurnstileSiteKey   string `json:"turnstileSiteKey"`
 	TurnstileVerifyURL string `json:"turnstileVerifyUrl"`
+	// ClientEvents turns the pages' reports about themselves off when it is false
+	// (D-227); unset is on.
+	ClientEvents *bool `json:"clientEvents"`
+}
+
+// clientEventsOff reports whether the config turns the pages' reports off.
+func (r *rawConfig) clientEventsOff() bool {
+	return r.ClientEvents != nil && !*r.ClientEvents
 }
 
 // siteKeyPattern is what Cloudflare's site keys look like: a digit and an x, then

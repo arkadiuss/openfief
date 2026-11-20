@@ -52311,21 +52311,6 @@ symbols:
         target: REQ-ui-formatting-number-format
       - type: implements
         target: REQ-ui-overview-values
-  - id: SYM-ui-dimension
-    title: dimension
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:53:10.432Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-AUTO-68636F42D98D4CF7
-      - type: implements
-        target: REQ-ui-overview-values
   - id: SYM-ui-dimensions
     title: dimensions
     sourceFile: internal/views/ui/format.go
@@ -143732,7 +143717,7 @@ symbols:
         target: REQ-views-syncs-for-viewers
   - id: SYM-ui-fixed-titles
     title: fixedTitles
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145296,8 +145281,8 @@ symbols:
       - type: executable_for
         target: TEST-browserproxy-logs
   - id: SYM-ui-ask-command
-    title: askCommand
-    sourceFile: internal/views/ui/ask.go
+    title: Command
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145311,8 +145296,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-period
-    title: askPeriod
-    sourceFile: internal/views/ui/ask.go
+    title: Period
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145326,8 +145311,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-query
-    title: askQuery
-    sourceFile: internal/views/ui/ask.go
+    title: Query
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145342,7 +145327,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-first-group
     title: firstGroup
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145356,8 +145341,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-month-start
-    title: monthStart
-    sourceFile: internal/views/ui/ask.go
+    title: MonthStart
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145371,8 +145356,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-normalize-question
-    title: normalizeQuestion
-    sourceFile: internal/views/ui/ask.go
+    title: NormalizeQuestion
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145387,7 +145372,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-pad2
     title: pad2
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145402,7 +145387,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-allocation
     title: parseAllocation
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145416,8 +145401,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-ask
-    title: parseAsk
-    sourceFile: internal/views/ui/ask.go
+    title: Parse
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145432,7 +145417,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-ask-date
     title: parseAskDate
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145447,7 +145432,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-parse-period
     title: parsePeriod
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145461,8 +145446,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-period-kind
-    title: periodKind
-    sourceFile: internal/views/ui/ask.go
+    title: PeriodKind
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145477,7 +145462,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-period-range
     title: periodRange
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145501,8 +145486,8 @@ symbols:
       - type: implements
         target: REQ-views-period-return-from-opening-close
   - id: SYM-ui-show-kind
-    title: showKind
-    sourceFile: internal/views/ui/ask.go
+    title: ShowKind
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145517,7 +145502,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-show-kind-of
     title: showKindOf
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145532,7 +145517,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-span
     title: span
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145546,8 +145531,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-year-start
-    title: yearStart
-    sourceFile: internal/views/ui/ask.go
+    title: YearStart
+    sourceFile: internal/views/app/answer/command.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145572,7 +145557,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-known-commands-are-understood
     title: TestKnownCommandsAreUnderstood
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145582,7 +145567,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-match-instance
     title: TestMatchInstance
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145592,7 +145577,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-match-target
     title: TestMatchTarget
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145602,7 +145587,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-parse-ask
     title: TestParseAsk
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145612,7 +145597,7 @@ symbols:
         target: TEST-ui-ask
   - id: SYM-ui-test-period-range
     title: TestPeriodRange
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     status: active
     origin:
       kind: agent
@@ -145631,8 +145616,8 @@ symbols:
       - type: executable_for
         target: TEST-ui-ask
   - id: SYM-ui-answer-card
-    title: answerCard
-    sourceFile: internal/views/ui/askanswer.go
+    title: Card
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145646,8 +145631,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-answer-link
-    title: answerLink
-    sourceFile: internal/views/ui/askanswer.go
+    title: Link
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145661,8 +145646,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-answer-row
-    title: answerRow
-    sourceFile: internal/views/ui/askanswer.go
+    title: Row
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145677,7 +145662,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-answerer
     title: answerer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145692,7 +145677,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-catalog
     title: askCatalog
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145706,8 +145691,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer
-    title: commandAnswerer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: type-shape
     granularity_reason: module-level-behavior
@@ -145722,8 +145707,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-allocation
-    title: commandAnswerer.allocation
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.allocation
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145738,7 +145723,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-answer
     title: commandAnswerer.answer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145752,8 +145737,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-needs
-    title: commandAnswerer.needs
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.needs
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145767,8 +145752,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-performance
-    title: commandAnswerer.performance
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.performance
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145786,8 +145771,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-every-period-one-card
   - id: SYM-ui-command-answerer-show
-    title: commandAnswerer.show
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.show
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145801,8 +145786,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-command-answerer-sync
-    title: commandAnswerer.sync
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.sync
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145818,8 +145803,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-command-answerer-value
-    title: commandAnswerer.value
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.value
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145833,8 +145818,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-group-label
-    title: groupLabel
-    sourceFile: internal/views/ui/askanswer.go
+    title: GroupTitle
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145849,7 +145834,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-non-empty
     title: nonEmpty
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145864,7 +145849,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-or-missing
     title: orMissing
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145879,7 +145864,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-or-none
     title: orNone
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145893,8 +145878,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-plural
-    title: plural
-    sourceFile: internal/views/ui/askanswer.go
+    title: Plural
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145909,7 +145894,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-return-percent
     title: returnPercent
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/format.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145923,8 +145908,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-account-answer
-    title: server.accountAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.accountAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145938,8 +145923,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-ask-targets
-    title: server.askTargets
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.askTargets
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145953,8 +145938,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-instrument-answer
-    title: server.instrumentAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.instrumentAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145970,8 +145955,8 @@ symbols:
       - type: implements
         target: REQ-ui-instrument-links
   - id: SYM-ui-server-latest-date
-    title: server.latestDate
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.latestDate
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -145985,8 +145970,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-server-sleeve-answer
-    title: server.sleeveAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: Commands.sleeveAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146001,7 +145986,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-sorted-accounts
     title: sortedAccounts
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146016,7 +146001,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-sync-answer
     title: syncAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146035,7 +146020,7 @@ symbols:
         target: REQ-ui-ask-sync-answer-error-class
   - id: SYM-ui-sync-status-row
     title: syncStatusRow
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146050,7 +146035,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-target-rows
     title: targetRows
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146064,8 +146049,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-unknown-answer
-    title: unknownAnswer
-    sourceFile: internal/views/ui/askanswer.go
+    title: UnknownAnswer
+    sourceFile: internal/views/app/answer/cards.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146079,8 +146064,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-help
-    title: askHelp
-    sourceFile: internal/views/ui/askmatch.go
+    title: Help
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146119,7 +146104,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-ask-target
     title: askTarget
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146131,8 +146116,8 @@ symbols:
       - type: implements
         target: REQ-ui-ask-commands
   - id: SYM-ui-known-commands
-    title: knownCommands
-    sourceFile: internal/views/ui/askmatch.go
+    title: KnownCommands
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146145,7 +146130,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-match-instance
     title: matchInstance
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -146158,7 +146143,7 @@ symbols:
         target: REQ-ui-ask-commands
   - id: SYM-ui-match-target
     title: matchTarget
-    sourceFile: internal/views/ui/askmatch.go
+    sourceFile: internal/views/app/answer/match.go
     status: active
     symbol_role: behavioral
     origin:
@@ -155081,7 +155066,7 @@ symbols:
         target: REQ-ingest-oki-account-form-set-at-creation
   - id: SYM-ui-setting-title
     title: settingTitle
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -164813,7 +164798,7 @@ symbols:
         target: TEST-pl-fees
   - id: SYM-ui-instrument-titles
     title: subjectTitles
-    sourceFile: internal/views/ui/inbox.go
+    sourceFile: internal/views/app/answer/attention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -193339,7 +193324,7 @@ symbols:
   - id: SYM-ask-model-askanswer-go-withheld-card
     title: withheldCard
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -193354,7 +193339,7 @@ symbols:
   - id: SYM-ask-model-askanswer-go-command-answerer-run
     title: commandAnswerer.run
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/ui/askcards.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194235,7 +194220,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-most-sensitive
     title: mostSensitive
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194247,9 +194232,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-ask-tool
-    title: askTool
+    title: Tool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194262,9 +194247,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-ask-tools
-    title: askTools
+    title: Tools
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194278,7 +194263,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-decode-args
     title: decodeArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194292,7 +194277,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-show-query
     title: showQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194306,7 +194291,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-allocation-query
     title: allocationQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194320,7 +194305,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-parse-allocation-word
     title: parseAllocationWord
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194334,7 +194319,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-performance-query
     title: performanceQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194348,7 +194333,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-value-query
     title: valueQuery
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194362,7 +194347,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tool-result
     title: toolResult
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194377,7 +194362,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tool-result-row
     title: toolResultRow
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: type-shape
     origin:
       kind: agent
@@ -194390,9 +194375,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-card-result
-    title: cardResult
+    title: CardResult
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194404,9 +194389,9 @@ symbols:
       - type: implements
         target: REQ-decision-d203-1-ask-box-model
   - id: SYM-ask-model-asktools-go-tool-failure
-    title: toolFailure
+    title: ToolFailure
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194420,7 +194405,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-ask-tools-are-the-read-only-answerers
     title: TestAskToolsAreTheReadOnlyAnswerers
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194432,7 +194417,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tools-refuse-malformed-arguments
     title: TestToolsRefuseMalformedArguments
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194444,7 +194429,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-ask-tool-arguments
     title: TestAskToolArguments
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194456,7 +194441,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tool-argument-errors-quote-nothing
     title: TestToolArgumentErrorsQuoteNothing
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194468,7 +194453,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-card-result-carries-the-data-and-nothing-to-draw-it
     title: TestCardResultCarriesTheDataAndNothingToDrawIt
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -194480,7 +194465,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-test-tool-failure-is-jsonwith-no-data
     title: TestToolFailureIsJSONWithNoData
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195700,7 +195685,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tier-words
     title: tierWords
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195714,7 +195699,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-tier-order
     title: tierOrder
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/ui/asktiers.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195728,7 +195713,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-needs-tool
     title: needsTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195742,7 +195727,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-show-tool
     title: showTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195756,7 +195741,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-sync-tool
     title: syncTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195770,7 +195755,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-allocation-tool
     title: allocationTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195786,7 +195771,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-performance-tool
     title: performanceTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195808,7 +195793,7 @@ symbols:
   - id: SYM-ask-model-asktools-go-value-tool
     title: valueTool
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -195824,7 +195809,7 @@ symbols:
   - id: SYM-ask-model-asktools-test-go-check-tool
     title: checkTool
     status: active
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -222185,7 +222170,7 @@ symbols:
   - id: SYM-ab3-internal-views-ui-askanswer-go-neartargets
     title: nearTargets
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
@@ -222695,7 +222680,7 @@ symbols:
   - id: SYM-ab3-internal-views-ui-askstructured-test-go-testshownamestheneartargetswhennothingmatches
     title: TestShowNamesTheNearTargetsWhenNothingMatches
     status: active
-    sourceFile: internal/views/ui/askstructured_test.go
+    sourceFile: internal/views/app/answer/cards_test.go
     origin:
       kind: agent
       ref: 'AB3 brief from the design session: exact Ask box scorers, a structured final answer, host pinning in the bench, 2026-11-14'
@@ -225071,7 +225056,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-errorclasslabel
     title: errorClassLabel
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225085,7 +225070,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-failuresummary
     title: failureSummary
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225099,7 +225084,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-askanswer-go-days
     title: days
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -225113,7 +225098,7 @@ symbols:
   - id: SYM-ab5-internal-views-ui-ask-test-go-testsyncanswersayswhysyncfails
     title: TestSyncAnswerSaysWhySyncFails
     status: active
-    sourceFile: internal/views/ui/ask_test.go
+    sourceFile: internal/views/app/answer/command_test.go
     origin:
       kind: agent
       ref: 'AB5 brief from the design session: bench fixes before the next run and the sync card''s error class (D-194, D-198, D-203, D-217), 2026-11-14'
@@ -229369,6 +229354,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-turnstile
       - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+      - type: implements
         target: REQ-ui-turnstile-verification
   - id: SYM-m5-internal-views-ui-fakes-test-go-newharnesswith
     title: newHarnessWith
@@ -229428,6 +229415,7 @@ symbols:
       kind: agent
       recorded_at: 2026-11-14T22:49:34.080Z
     symbol_role: type-shape
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ui-turnstile
@@ -230810,7 +230798,7 @@ symbols:
       kind: agent
       ref: 'Design session decision: bench parallel 3 (D-208) and the performance tool''s description (D-203), 2026-11-15'
       recorded_at: 2026-11-15T10:08:50.178Z
-    sourceFile: internal/views/ui/asktools_test.go
+    sourceFile: internal/views/app/answer/tools_test.go
     relationships:
       - type: executable_for
         target: TEST-ui-ask-tools
@@ -232029,7 +232017,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-named
     title: monthNamed
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232043,7 +232031,7 @@ symbols:
   - id: SYM-views-ui-askperiod-parse-bounded
     title: parseBounded
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232057,7 +232045,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-of
     title: monthOf
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232071,7 +232059,7 @@ symbols:
   - id: SYM-views-ui-askperiod-parse-change
     title: parseChange
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232085,7 +232073,7 @@ symbols:
   - id: SYM-views-ui-askperiod-bounded-span
     title: boundedSpan
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232099,7 +232087,7 @@ symbols:
   - id: SYM-views-ui-askperiod-first-of-month
     title: firstOfMonth
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232113,7 +232101,7 @@ symbols:
   - id: SYM-views-ui-askperiod-month-end
     title: monthEnd
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232127,7 +232115,7 @@ symbols:
   - id: SYM-views-ui-askperiod-period-problem
     title: periodProblem
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232141,7 +232129,7 @@ symbols:
   - id: SYM-views-ui-askperiod-problem-card
     title: problemCard
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232153,9 +232141,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-refused-not-guessed
   - id: SYM-views-ui-askperiod-command-answerer-period-change
-    title: commandAnswerer.periodChange
+    title: Commands.periodChange
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232167,9 +232155,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-refused-not-guessed
   - id: SYM-views-ui-askperiod-command-answerer-period-performance
-    title: commandAnswerer.periodPerformance
+    title: Commands.periodPerformance
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232183,9 +232171,9 @@ symbols:
       - type: implements
         target: REQ-ui-period-opens-chart-on-opening-close
   - id: SYM-views-ui-askperiod-command-answerer-period-value
-    title: commandAnswerer.periodValue
+    title: Commands.periodValue
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232199,7 +232187,7 @@ symbols:
   - id: SYM-views-ui-askperiod-change-row
     title: changeRow
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232213,7 +232201,7 @@ symbols:
   - id: SYM-views-ui-askperiod-moved
     title: moved
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232227,7 +232215,7 @@ symbols:
   - id: SYM-views-ui-askperiod-pending-text
     title: pendingText
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232241,7 +232229,7 @@ symbols:
   - id: SYM-views-ui-askperiod-percent-text
     title: percentText
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232255,7 +232243,7 @@ symbols:
   - id: SYM-views-ui-ask-parse-value
     title: parseValue
     status: active
-    sourceFile: internal/views/ui/ask.go
+    sourceFile: internal/views/app/answer/command.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232267,9 +232255,9 @@ symbols:
       - type: implements
         target: REQ-ui-ask-period-commands
   - id: SYM-views-ui-askanswer-command-answerer-value-answer
-    title: commandAnswerer.valueAnswer
+    title: Commands.valueAnswer
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232283,7 +232271,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args
     title: performanceArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232298,7 +232286,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args-period
     title: performanceArgs.period
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232312,7 +232300,7 @@ symbols:
   - id: SYM-views-ui-asktools-performance-args-word
     title: performanceArgs.word
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232326,7 +232314,7 @@ symbols:
   - id: SYM-views-ui-asktools-bounded-args
     title: boundedArgs
     status: active
-    sourceFile: internal/views/ui/asktools.go
+    sourceFile: internal/views/app/answer/tools.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232354,7 +232342,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-parse-bounded
     title: TestParseBounded
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232365,7 +232353,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-parse-change
     title: TestParseChange
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232376,7 +232364,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-bounded-span
     title: TestBoundedSpan
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232387,7 +232375,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-period-problem
     title: TestPeriodProblem
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232398,7 +232386,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-percent-text
     title: TestPercentText
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232409,7 +232397,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-moved
     title: TestMoved
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232420,7 +232408,7 @@ symbols:
   - id: SYM-views-ui-askperiod-test-test-change-row
     title: TestChangeRow
     status: active
-    sourceFile: internal/views/ui/askperiod_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -232475,7 +232463,7 @@ symbols:
   - id: SYM-views-ui-askperiod-core-refusal
     title: coreRefusal
     status: active
-    sourceFile: internal/views/ui/askperiod.go
+    sourceFile: internal/views/app/answer/period.go
     origin:
       kind: agent
       ref: 'Design session decision, on behalf of the author: the Ask box performance and value tools and commands answer for a bounded period, a gap against D-194 and D-203, 2026-11-15'
@@ -233300,9 +233288,9 @@ symbols:
       - type: implements
         target: REQ-askbench-rescores-offline
   - id: SYM-views-ui-askanswer-command-answerer-tracking-start
-    title: commandAnswerer.trackingStart
+    title: Commands.trackingStart
     status: active
-    sourceFile: internal/views/ui/askanswer.go
+    sourceFile: internal/views/app/answer/cards.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -233358,9 +233346,9 @@ symbols:
       - type: executable_for
         target: TEST-ui-ask-period
   - id: SYM-ui-period-opening
-    title: periodOpening
+    title: PeriodOpening
     status: active
-    sourceFile: internal/views/ui/home.go
+    sourceFile: internal/views/app/answer/period.go
     symbol_role: behavioral
     origin:
       kind: agent
@@ -233470,7 +233458,7 @@ symbols:
   - id: SYM-ui-test-period-opening
     title: TestPeriodOpening
     status: active
-    sourceFile: internal/views/ui/home_unit_test.go
+    sourceFile: internal/views/app/answer/period_test.go
     origin:
       kind: agent
       ref: 'Design session, on the author''s behalf: D-223, 2026-11-15'
@@ -235351,9 +235339,9 @@ symbols:
       - type: implements
         target: REQ-views-mcp-door
   - id: SYM-ui-toolbox-go
-    title: ui toolbox
+    title: answer toolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     symbol_role: behavioral
     granularity_reason: module-level-behavior
     origin:
@@ -235478,19 +235466,6 @@ symbols:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
       recorded_at: 2026-11-18T15:51:55.449Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-mcp
-      - type: implements
-        target: REQ-views-mcp-door
-  - id: SYM-mcp-mcp-ui-toolbox
-    title: uiToolbox
-    status: active
-    sourceFile: cmd/core/mcp.go
-    origin:
-      kind: agent
-      ref: D-213 MCP server, 2026-11-18
-      recorded_at: 2026-11-18T15:52:01.789Z
     relationships:
       - type: covered_by
         target: TEST-core-mcp
@@ -236742,7 +236717,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-info
     title: ToolInfo
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236755,7 +236730,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-outcome
     title: ToolOutcome
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236768,7 +236743,7 @@ symbols:
   - id: SYM-mcp-toolbox-tool-result
     title: ToolResult
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236781,7 +236756,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-config
     title: ToolboxConfig
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236794,7 +236769,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox
     title: Toolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236809,7 +236784,7 @@ symbols:
   - id: SYM-mcp-toolbox-new-toolbox
     title: NewToolbox
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236822,7 +236797,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-tools
     title: Toolbox.Tools
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236835,7 +236810,7 @@ symbols:
   - id: SYM-mcp-toolbox-toolbox-call
     title: Toolbox.Call
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236846,9 +236821,9 @@ symbols:
       - type: implements
         target: REQ-views-mcp-tools-are-ask-box-tools
   - id: SYM-mcp-toolbox-toolbox-request
-    title: Toolbox.request
+    title: Toolbox.caller
     status: active
-    sourceFile: internal/views/ui/toolbox.go
+    sourceFile: internal/views/app/answer/toolbox.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236861,7 +236836,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-new-toolbox
     title: newToolbox
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236872,7 +236847,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-offers-the-ask-boxs-tools
     title: TestToolboxOffersTheAskBoxsTools
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236883,7 +236858,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-calls-read-with-the-callers-own-token
     title: TestToolboxCallsReadWithTheCallersOwnToken
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236894,7 +236869,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-call-outcomes
     title: TestToolboxCallOutcomes
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -236905,7 +236880,7 @@ symbols:
   - id: SYM-mcp-toolbox-test-test-toolbox-needs-aread
     title: TestToolboxNeedsARead
     status: active
-    sourceFile: internal/views/ui/toolbox_test.go
+    sourceFile: internal/views/app/answer/toolbox_test.go
     origin:
       kind: agent
       ref: D-213 MCP server, 2026-11-18
@@ -237250,3 +237225,3423 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-policy-grants
+  - id: SYM-m5-internal-views-ui-turnstile-go-turnstileverdict-string
+    title: turnstileVerdict.String
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:31.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+  - id: SYM-m5-internal-views-ui-turnstile-go-checkpath
+    title: checkPath
+    status: active
+    sourceFile: internal/views/ui/turnstile.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:37.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile
+      - type: implements
+        target: REQ-ui-turnstile-stalled-check-falls-back-visible
+  - id: SYM-m5-internal-views-ui-turnstile-path-test-go-testcheckpathkeepsonlythetwofixedwords
+    title: TestCheckPathKeepsOnlyTheTwoFixedWords
+    status: active
+    sourceFile: internal/views/ui/turnstile_path_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:44.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-turnstile-path-test-go-testaskboxlogswhichpathmadethetokenandneverechoesit
+    title: TestAskBoxLogsWhichPathMadeTheTokenAndNeverEchoesIt
+    status: active
+    sourceFile: internal/views/ui/turnstile_path_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:37:50.263Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-m5-internal-views-ui-clientevents-go-validclientevent
+    title: validClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:19.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-scriptandmessage
+    title: scriptAndMessage
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:25.846Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-browserof
+    title: browserOf
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:32.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-majorafter
+    title: majorAfter
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:38.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-addresslimit-allow
+    title: addressLimit.allow
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:44.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-newclientevents
+    title: newClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:50.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents-handler
+    title: clientEvents.handler
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:57:57.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents-record
+    title: clientEvents.record
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:03.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-rawclientevent
+    title: rawClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:10.734Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevent
+    title: clientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:17.656Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-browser
+    title: browser
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:24.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-addresslimit
+    title: addressLimit
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:30.377Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientwindow
+    title: clientWindow
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:36.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevents
+    title: clientEvents
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:42.394Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testvalidclientevent
+    title: TestValidClientEvent
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:53.898Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testbrowserof
+    title: TestBrowserOf
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:58:59.377Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testaddresslimit
+    title: TestAddressLimit
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:04.892Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testaddresslimitforgetsoldaddressesandrefusesnewoneswhenfull
+    title: TestAddressLimitForgetsOldAddressesAndRefusesNewOnesWhenFull
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:10.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-clienteventsharness
+    title: clientEventsHarness
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:16.234Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-report
+    title: report
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:21.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsareloggedwithouttheaddressandcounted
+    title: TestClientEventsAreLoggedWithoutTheAddressAndCounted
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:27.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsrefusals
+    title: TestClientEventsRefusals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:32.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsratelimitperaddress
+    title: TestClientEventsRateLimitPerAddress
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:38.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventscapthenumberofeventsinonereport
+    title: TestClientEventsCapTheNumberOfEventsInOneReport
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:44.362Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventstoggle
+    title: TestClientEventsToggle
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:50.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-testclienteventsneednosessionandkeepthesameoriginrule
+    title: TestClientEventsNeedNoSessionAndKeepTheSameOriginRule
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T21:59:55.900Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-plugins-ui-clientevents-config-test-go-testclienteventsareonunlesstheconfigturnsthemoff
+    title: TestClientEventsAreOnUnlessTheConfigTurnsThemOff
+    status: active
+    sourceFile: plugins/ui/clientevents_config_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:00:01.849Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-plugins-ui-config-go-rawconfig-clienteventsoff
+    title: rawConfig.clientEventsOff
+    status: active
+    sourceFile: plugins/ui/config.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:00:07.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-inrange
+    title: inRange
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:45.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-clientevent-setnumbers
+    title: clientEvent.setNumbers
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:52.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-knownclientkind
+    title: knownClientKind
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:10:59.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-tokenbuckets
+    title: tokenBuckets
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:05.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-readreport
+    title: readReport
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:12.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-logattrs
+    title: logAttrs
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:18.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-go-scriptreport
+    title: scriptReport
+    status: active
+    sourceFile: internal/views/ui/clientevents.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:25.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-metrictotals
+    title: metricTotals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:32.351Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-totals
+    title: totals
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:39.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-m5-internal-views-ui-server-go-server-filldefaults
+    title: server.fillDefaults
+    status: active
+    sourceFile: internal/views/ui/server.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:45.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-server-go-server-setupclientevents
+    title: server.setUpClientEvents
+    status: active
+    sourceFile: internal/views/ui/server.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:11:52.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events
+      - type: implements
+        target: REQ-ui-client-events
+  - id: SYM-m5-internal-views-ui-clientevents-test-go-num
+    title: num
+    status: active
+    sourceFile: internal/views/ui/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:13:43.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events
+  - id: SYM-tools-imports-core-no-ui
+    title: CoreNoUI
+    status: active
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-18T22:06:26.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-core-no-ui
+  - id: SYM-mcp-answertoolbox
+    title: answerToolbox
+    status: active
+    sourceFile: cmd/core/mcp.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:03.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-mcp
+      - type: implements
+        target: REQ-views-mcp-door
+  - id: SYM-answer-attention-kindlabel
+    title: KindLabel
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:13.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-audit-log-banner
+      - type: implements
+        target: REQ-attention-audit-log-behind
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemtitle
+    title: ItemTitle
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:21.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-grant-ungranted-view-plugin
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-tone
+    title: Tone
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:29.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemstatus
+    title: ItemStatus
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:38.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-itemword
+    title: itemWord
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:46.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-groupindex
+    title: GroupIndex
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:07:54.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-attention-grouptitles
+    title: GroupTitles
+    status: active
+    sourceFile: internal/views/app/answer/attention.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:03.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-answer-boundary-test-testreadsonlythroughpublicapi
+    title: TestReadsOnlyThroughPublicAPI
+    status: active
+    sourceFile: internal/views/app/answer/boundary_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:10.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-answer-boundary-test-openfiefimports
+    title: openfiefImports
+    status: active
+    sourceFile: internal/views/app/answer/boundary_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:20.228Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-boundary
+  - id: SYM-answer-cards-reader
+    title: Reader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:29.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-statusreader
+    title: StatusReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:38.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-catalogreader
+    title: CatalogReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:45.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-valuationreader
+    title: ValuationReader
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:08:54.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-caller
+    title: Caller
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:02.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-bearer
+    title: bearer
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:11.111Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-core-credentials
+  - id: SYM-answer-cards-newcommands
+    title: NewCommands
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:19.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-today
+    title: Commands.Today
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:28.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-answer
+    title: Commands.Answer
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:37.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-cards-commands-run
+    title: Commands.Run
+    status: active
+    sourceFile: internal/views/app/answer/cards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:45.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-command-test-mustday
+    title: mustDay
+    status: active
+    sourceFile: internal/views/app/answer/command_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:09:53.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-answer-format-numberformat
+    title: NumberFormat
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:00.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-plainformat
+    title: PlainFormat
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:08.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-formatof
+    title: FormatOf
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:16.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-separators
+    title: Separators
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:24.404Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-amount
+    title: NumberFormat.Amount
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:32.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-money
+    title: NumberFormat.Money
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:40.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-answer-format-numberformat-signed
+    title: NumberFormat.Signed
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:48.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-answer-format-share
+    title: Share
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:10:56.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-summoney
+    title: SumMoney
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:04.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-answer-format-instrumentlabel
+    title: InstrumentLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:12.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-enumlabel
+    title: EnumLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:20.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-answer-format-wrapperlabel
+    title: WrapperLabel
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:27.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-answer-format-latestvalued
+    title: LatestValued
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:36.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-utctoday
+    title: UTCToday
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:44.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-format
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-optionalstring
+    title: OptionalString
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:52.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-answer-format-dimension
+    title: Dimension
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:11:59.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-dimensions
+    title: Dimensions
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:07.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-format-parsedimension
+    title: ParseDimension
+    status: active
+    sourceFile: internal/views/app/answer/format.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:15.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-AUTO-68636F42D98D4CF7
+      - type: implements
+        target: REQ-ui-overview-values
+  - id: SYM-answer-links-links
+    title: Links
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:22.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks
+    title: NoLinks
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:29.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-inbox
+    title: NoLinks.Inbox
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:37.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-inboxitem
+    title: NoLinks.InboxItem
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:45.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-plugins
+    title: NoLinks.Plugins
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:12:54.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-account
+    title: NoLinks.Account
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:02.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-sleeve
+    title: NoLinks.Sleeve
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:09.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-instrument
+    title: NoLinks.Instrument
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:17.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-allocation
+    title: NoLinks.Allocation
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:25.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-overview
+    title: NoLinks.Overview
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:36.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-links-nolinks-performancechart
+    title: NoLinks.PerformanceChart
+    status: active
+    sourceFile: internal/views/app/answer/links.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:13:46.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-answer-toolbox-test-fakeread
+    title: fakeRead
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:00.249Z
+    symbol_role: type-shape
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-getsettings
+    title: fakeRead.GetSettings
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:12.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-listvaluationstatuses
+    title: fakeRead.ListValuationStatuses
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:24.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-getallocation
+    title: fakeRead.GetAllocation
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:34.114Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-toolbox-test-fakeread-check
+    title: fakeRead.check
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:44.619Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-toolbox
+  - id: SYM-answer-tools-tool-query
+    title: Tool.Query
+    status: active
+    sourceFile: internal/views/app/answer/tools.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:14:55.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-decision-d203-1-ask-box-model
+  - id: SYM-answer-tools-cardid
+    title: CardID
+    status: active
+    sourceFile: internal/views/app/answer/tools.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:05.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-structured
+      - type: implements
+        target: REQ-ui-ask-model-structured-answer
+  - id: SYM-ui-askcards-answercard
+    title: answerCard
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:14.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-cardof
+    title: cardOf
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:24.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-commandanswerer
+    title: commandAnswerer
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:34.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-commandanswerer-commands
+    title: commandAnswerer.commands
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:43.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-callerof
+    title: callerOf
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:52.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks
+    title: pageLinks
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:15:59.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-inbox
+    title: pageLinks.Inbox
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:10.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-inboxitem
+    title: pageLinks.InboxItem
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:19.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-plugins
+    title: pageLinks.Plugins
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:28.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-account
+    title: pageLinks.Account
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:37.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-sleeve
+    title: pageLinks.Sleeve
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:46.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-instrument
+    title: pageLinks.Instrument
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:16:55.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-allocation
+    title: pageLinks.Allocation
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:03.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-overview
+    title: pageLinks.Overview
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:11.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-pagelinks-performancechart
+    title: pageLinks.PerformanceChart
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:20.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-unknownanswer
+    title: unknownAnswer
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:30.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-askcards-cardresult
+    title: cardResult
+    status: active
+    sourceFile: internal/views/ui/askcards.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-19T11:17:39.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-tools
+      - type: implements
+        target: REQ-decision-d203-1-ask-box-model
+  - id: SYM-ui-turnstile-test-check-needed-signal
+    title: TestOnlyAModelQuestionWithNoTokenIsToldAChecksNeeded
+    status: active
+    sourceFile: internal/views/ui/turnstile_test.go
+    origin:
+      kind: agent
+      ref: Ask box on-demand check, D-208, 2026-11-19
+      recorded_at: 2026-11-19T00:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile
+  - id: SYM-demo-scrub-test-rule
+    title: rule
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:43.897Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-load-config
+    title: loadConfig
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:50.487Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-lookup
+    title: lookup
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:20:57.072Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-list
+    title: list
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:03.872Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-object
+    title: object
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:10.278Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-string-list
+    title: stringList
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:17.078Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-parse-statement
+    title: parseStatement
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:24.477Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-rules-of
+    title: rulesOf
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:31.546Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-attributes
+    title: scrubAttributes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:38.521Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-field
+    title: scrubField
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:45.251Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-scrub-context
+    title: scrubContext
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:51.767Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-attribute-contexts
+    title: attributeContexts
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:21:58.099Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-drops-personal-keys
+    title: TestScrubDropsPersonalKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:04.444Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-assert-keys
+    title: assertKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:10.750Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-value-cases
+    title: valueCases
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:17.213Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-rewrites-personal-values
+    title: TestScrubRewritesPersonalValues
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:23.753Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-rewrites-the-log-body-and-the-span-text
+    title: TestScrubRewritesTheLogBodyAndTheSpanText
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:30.592Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-knows-openfief-token-prefixes
+    title: TestScrubKnowsOpenfiefTokenPrefixes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:37.039Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-patterns
+    title: patterns
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:43.818Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-scrub-statements-agree
+    title: TestScrubStatementsAgree
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:50.989Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-test-collector-pipelines-scrub-before-the-exporter
+    title: TestCollectorPipelinesScrubBeforeTheExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:22:58.600Z
+    sourceFile: internal/demo/scrub_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-secret-connect
+    title: demo_secret_connect
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:05.620Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+      - type: implements
+        target: REQ-tooling-demo-secret-over-ssh
+  - id: SYM-demo-grafana-values
+    title: demo_grafana_values
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:12.522Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+  - id: SYM-demo-grafana-main
+    title: demo_grafana_main
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:18.857Z
+    sourceFile: scripts/demo/secret.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-secret
+      - type: implements
+        target: REQ-demo-grafana-secret-over-ssh
+  - id: SYM-tooling-demo-validate-telemetry-failures
+    title: telemetry_failures
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:25.575Z
+    sourceFile: scripts/demo/validate.sh
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-demo-validate
+      - type: implements
+        target: REQ-demo-telemetry-egress
+      - type: implements
+        target: REQ-demo-telemetry-scrub
+  - id: SYM-demo-secret-test-helper-refuse-grafana
+    title: refuse_grafana
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: ship the demo''s telemetry to Grafana Cloud with no visitor personal data (GR-12, D-172, D-203, D-227), 2026-11-19'
+      recorded_at: 2026-11-19T16:23:32.629Z
+    sourceFile: scripts/tests/demo-secret.test.sh
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-demo-secret
+  - id: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics
+    title: withPluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:06.074Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-with-plugin-metrics-from-env
+    title: withPluginMetricsFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:13.244Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-forwarder
+    title: pluginMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:20.207Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics
+    title: pluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:26.844Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-serve-http
+    title: pluginMetrics.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:33.725Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-caller-check
+    title: callerCheck
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:40.810Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-verify
+    title: pluginMetrics.verify
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:47.476Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-refusal-text
+    title: refusalText
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:14:53.743Z
+    sourceFile: cmd/core/pluginmetrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-plugin-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-cmd-core-pluginmetrics-test-metrics-callers
+    title: metricsCallers
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:00.668Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-metrics-callers-verify-caller
+    title: metricsCallers.VerifyCaller
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:07.531Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-plugin-report
+    title: pluginReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:14.433Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream
+    title: upstream
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:21.027Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream-serve-http
+    title: upstream.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:27.546Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-upstream-take
+    title: upstream.take
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:34.358Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-report-server
+    title: reportServer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:40.977Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-new-report-server
+    title: newReportServer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:47.903Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-report-server-post
+    title: reportServer.post
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:15:54.801Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-answered-and-forwarded
+    title: TestPluginMetricsAreAnsweredAndForwarded
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:01.696Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-are-forwarded-filtered-and-named-by-the-verified-plugin
+    title: TestPluginMetricsAreForwardedFilteredAndNamedByTheVerifiedPlugin
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:08.406Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-an-upstream-that-is-down-does-not-fail-the-plugin
+    title: TestAnUpstreamThatIsDownDoesNotFailThePlugin
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:14.768Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-without-an-otlpendpoint-are-dropped
+    title: TestPluginMetricsWithoutAnOTLPEndpointAreDropped
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:21.271Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-path-leaves-every-other-call-to-the-plugin-port
+    title: TestPluginMetricsPathLeavesEveryOtherCallToThePluginPort
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:27.964Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-cmd-core-pluginmetrics-test-test-plugin-metrics-forwarder-from-env
+    title: TestPluginMetricsForwarderFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:35.549Z
+    sourceFile: cmd/core/pluginmetrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-core-plugin-metrics
+  - id: SYM-m6-sdk-go-openfief-core-core-client
+    title: coreClient
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:43.176Z
+    sourceFile: sdk/go/openfief/core.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-start-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-openfief-metrics-test-static-token
+    title: staticToken
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:50.761Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-static-token-token
+    title: staticToken.Token
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:16:57.949Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core
+    title: fakeCore
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:04.710Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core-serve-http
+    title: fakeCore.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:11.238Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-fake-core-got
+    title: fakeCore.got
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:17.758Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-count-once
+    title: countOnce
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:24.358Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-test-start-metrics
+    title: TestStartMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:30.932Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-metrics-test-test-start-metrics-is-off-when-asked-and-refuses-without-acore
+    title: TestStartMetricsIsOffWhenAskedAndRefusesWithoutACore
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:37.785Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-m6-sdk-go-openfief-telemetry-start-metrics
+    title: StartMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:46.130Z
+    sourceFile: sdk/go/openfief/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-start-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-telemetry-config-config-metrics-enabled
+    title: Config.MetricsEnabled
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:17:55.412Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-parse-transport
+    title: Config.parseTransport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:04.217Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-parse-endpoints
+    title: Config.parseEndpoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:11.693Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-off-switches
+    title: offSwitches
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:18.426Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-export-switches
+    title: exportSwitches
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:24.678Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-metrics-off
+    title: MetricsOff
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:31.173Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-config-config-metrics-endpoint
+    title: Config.metricsEndpoint
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:38.052Z
+    sourceFile: sdk/go/telemetry/config.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-exportable-metric
+    title: exportableMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:44.843Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-exportable-metric-key
+    title: exportableMetricKey
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:51.424Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-metrics
+    title: RedactMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:18:57.869Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter
+    title: RedactingMetricExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:04.301Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    title: RedactingMetricExporter.Export
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:10.859Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-resource-metrics
+    title: redactResourceMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:17.638Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-into
+    title: redactInto
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:24.069Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-points
+    title: redactPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:30.817Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-redact-histogram-points
+    title: redactHistogramPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:37.738Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-keep-labels
+    title: keepLabels
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:44.317Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-otlpmetrics
+    title: FilterOTLPMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:51.003Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-scopes
+    title: filterScopes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:19:57.858Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-filter-metric
+    title: filterMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:04.678Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-keep-attributes
+    title: keepAttributes
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:11.875Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-truncated
+    title: truncated
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:18.952Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder
+    title: MetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:25.776Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-from-env
+    title: MetricsForwarderFromEnv
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:32.820Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-metrics-forwarder
+    title: NewMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:39.796Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-metrics-forwarder-forward
+    title: MetricsForwarder.Forward
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:46.321Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-meter-provider
+    title: newMeterProvider
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:53.027Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-new-metrics-exporter
+    title: newMetricsExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:20:59.729Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-service-only
+    title: serviceOnly
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:06.477Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-service-resource
+    title: serviceResource
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:12.896Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-scope-named
+    title: scopeNamed
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:19.472Z
+    sourceFile: sdk/go/telemetry/metrics.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-metrics
+      - type: implements
+        target: REQ-telemetry-private-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics
+    title: TestParseConfigMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:25.787Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-parse-config-metrics-refuses
+    title: TestParseConfigMetricsRefuses
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:32.080Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-fake-exporter
+    title: fakeExporter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:38.372Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-fake-exporter-export
+    title: fakeExporter.Export
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:44.728Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-leaky
+    title: leaky
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:51.088Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-leaky-metrics
+    title: leakyMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:21:57.195Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics
+    title: TestRedactMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:03.355Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-redacted-points
+    title: checkRedactedPoints
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:09.723Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics-exports-nothing-when-nothing-is-left
+    title: TestRedactMetricsExportsNothingWhenNothingIsLeft
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:15.955Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-redact-metrics-returns-the-exporters-error
+    title: TestRedactMetricsReturnsTheExportersError
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:22.496Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-received-request
+    title: receivedRequest
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:29.147Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-filter-otlpmetrics
+    title: TestFilterOTLPMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:35.615Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-filtered-scope
+    title: checkFilteredScope
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:42.209Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-filter-otlpmetrics-of-nothing
+    title: TestFilterOTLPMetricsOfNothing
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:48.868Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-check-filtered-metric
+    title: checkFilteredMetric
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:22:55.392Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering
+    title: collectorAnswering
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:01.771Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-collector-answering-serve-http
+    title: collectorAnswering.ServeHTTP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:08.200Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-metrics-forwarder
+    title: TestMetricsForwarder
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:14.857Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-metrics-test-test-no-metrics-forwarder-drops-the-report
+    title: TestNoMetricsForwarderDropsTheReport
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:21.188Z
+    sourceFile: sdk/go/telemetry/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-metrics
+  - id: SYM-m6-sdk-go-telemetry-telemetry-start-metrics-to
+    title: StartMetricsTo
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:27.478Z
+    sourceFile: sdk/go/telemetry/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-plugin-metrics-through-core
+  - id: SYM-m6-sdk-go-telemetry-telemetry-start-traces
+    title: startTraces
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:33.455Z
+    sourceFile: sdk/go/telemetry/telemetry.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-collector-metrics-requests
+    title: collector.metricsRequests
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:39.748Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-collector-last-auth
+    title: collector.lastAuth
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:45.731Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-metric-counter
+    title: metricCounter
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:51.687Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-count-leaky-events
+    title: countLeakyEvents
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:23:58.094Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-bearer
+    title: bearer
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:04.494Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-bearer-round-trip
+    title: bearer.RoundTrip
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:10.508Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-check-plugin-metrics
+    title: checkPluginMetrics
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:17.017Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-check-metrics-exported
+    title: checkMetricsExported
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:23.581Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-sdk-go-telemetry-telemetry-test-attribute-keys
+    title: attributeKeys
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:29.740Z
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-m6-tools-archtest-imports-plugin-code
+    title: pluginCode
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:35.954Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-plugin-otlp
+    title: PluginOTLP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:42.077Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-configures-otlp
+    title: configuresOTLP
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:48.281Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-tools-archtest-imports-import-paths
+    title: importPaths
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:24:54.400Z
+    sourceFile: tools/archtest/imports.go
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-plugin-otlp
+  - id: SYM-m6-sdk-go-openfief-metrics-test-received
+    title: received
+    status: active
+    origin:
+      kind: agent
+      ref: 'Demo operations brief from the design session: metrics reach Grafana through the core''s allow-list, plugins send them to the core and never to a collector (D-172, D-227, GR-12), 2026-11-19'
+      recorded_at: 2026-11-19T17:35:36.864Z
+    sourceFile: sdk/go/openfief/metrics_test.go
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-start-metrics
+  - id: SYM-grafana-apply-grafana-url
+    title: grafana_url
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:35.556Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-api
+    title: grafana_api
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:43.561Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-report
+    title: grafana_report
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:51.208Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-folder
+    title: grafana_folder
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:58.416Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-dashboards
+    title: grafana_dashboards
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:05.589Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-rules
+    title: grafana_rules
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:12.916Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-main
+    title: grafana_main
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:19.760Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-json
+    title: check_json
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:26.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-folder
+    title: check_folder
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:33.134Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-dashboards
+    title: check_dashboards
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:39.488Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-metrics
+    title: check_metrics
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:45.242Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-rules
+    title: check_rules
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:51.341Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-secrets
+    title: check_secrets
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:57.543Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-grafana-run-apply
+    title: run_apply
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:03.946Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:10.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-yes-if
+    title: yes_if
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:16.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-nowhere
+    title: nowhere
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:23.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-refuses
+    title: refuses
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:30.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-run-check
+    title: run_check
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:36.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-faulty
+    title: faulty
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:43.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-apply-grafana-fail
+    title: grafana_fail
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:19.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-ok
+    title: grafana_ok
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:27.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-fail
+    title: check_fail
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:34.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-demo-scrub-test-flattened
+    title: flattened
+    status: active
+    sourceFile: internal/demo/scrub_test.go
+    origin:
+      kind: agent
+      ref: 'Orchestrator check of the live demo telemetry: Postgres nested record attributes passed the scrub, 2026-11-20'
+      recorded_at: 2026-11-20T13:35:54.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub
+  - id: SYM-demo-scrub-test-reaches-nested-log-attributes
+    title: TestScrubReachesNestedLogAttributes
+    status: active
+    sourceFile: internal/demo/scrub_test.go
+    origin:
+      kind: agent
+      ref: 'Orchestrator check of the live demo telemetry: Postgres nested record attributes passed the scrub, 2026-11-20'
+      recorded_at: 2026-11-20T13:36:00.930Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-telemetry-scrub

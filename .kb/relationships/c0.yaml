@@ -1182,3 +1182,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be258cb8c3f0
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-telemetry-start-metrics-to
+    to: TEST-telemetry-export
+    created_at: 2026-11-19T17:23:31.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14d004f85ea5
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-telemetry-start-metrics-to
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:23:31.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbd3778ce72b
+  - type: covered_by
+    from: SYM-grafana-check-check-fail
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:58:37.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-554e3b8d2223
+  - type: implements
+    from: SYM-grafana-check-check-fail
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:58:37.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30a0975b7c31

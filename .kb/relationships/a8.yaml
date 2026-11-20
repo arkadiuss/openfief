@@ -1413,3 +1413,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7a0fa3ae711
+  - type: executable_for
+    from: SYM-m6-sdk-go-openfief-metrics-test-count-once
+    to: TEST-sdk-start-metrics
+    created_at: 2026-11-19T17:17:28.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb3f55418e14
+  - type: executable_for
+    from: SYM-m6-sdk-go-telemetry-metrics-test-check-filtered-metric
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:22:59.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00a175ab3f33

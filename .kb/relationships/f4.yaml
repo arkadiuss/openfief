@@ -986,3 +986,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a56faa446341
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-metric
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:20:09.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a229127416d3
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-metric
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:20:09.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22b05839303
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-filter-metric
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:20:09.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-414b075141c6

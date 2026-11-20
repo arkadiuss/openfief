@@ -1105,3 +1105,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e63f2b9efe2e
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-validclientevent
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T21:57:22.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7b9eeedb51e
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-validclientevent
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:57:22.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe77c43c999
+  - type: implements
+    from: SYM-m5-internal-views-ui-clientevents-go-clientevents-record
+    to: REQ-ui-client-events
+    created_at: 2026-11-18T21:58:07.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-739fc1a24bd4
+  - type: covered_by
+    from: SYM-m5-internal-views-ui-clientevents-go-clientevents-record
+    to: TEST-ui-client-events
+    created_at: 2026-11-18T21:58:07.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3a341873702

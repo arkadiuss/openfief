@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52602c9ee618
+  - type: covered_by
+    from: SYM-m6-tools-archtest-imports-import-paths
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-19T17:24:58.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-166803e4955c
+  - type: implements
+    from: SYM-m6-tools-archtest-imports-import-paths
+    to: REQ-tooling-archtest-plugin-otlp
+    created_at: 2026-11-19T17:24:58.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79b3347680a

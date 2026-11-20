@@ -1028,3 +1028,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f088425c060b
+  - type: covered_by
+    from: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-verify
+    to: TEST-core-plugin-metrics
+    created_at: 2026-11-19T17:14:51.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e790f932dbe0
+  - type: implements
+    from: SYM-m6-cmd-core-pluginmetrics-plugin-metrics-verify
+    to: REQ-plugin-metrics-through-core
+    created_at: 2026-11-19T17:14:51.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f26bbb8f2eed
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:19:08.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9c519ca0b4a
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:19:08.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad888986eb64

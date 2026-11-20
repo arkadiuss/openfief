@@ -1,7 +1,7 @@
 ---
 title: The toolbox offers the Ask box's tools and runs each with the caller's own token
 status: active
-sourceFile: internal/views/ui/toolbox_test.go
+sourceFile: internal/views/app/answer/toolbox_test.go
 verification_scope: integration
 origin:
   kind: agent

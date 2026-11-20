@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59fd85d92982
+  - type: implements
+    from: SYM-answer-cards-statusreader
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:08:41.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c4821af3684
+  - type: covered_by
+    from: SYM-answer-cards-statusreader
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:08:42.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69c149bf4289
+  - type: executable_for
+    from: SYM-demo-scrub-test-rules-of
+    to: TEST-demo-telemetry-scrub
+    created_at: 2026-11-19T16:21:36.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4ffa2f6dbe5

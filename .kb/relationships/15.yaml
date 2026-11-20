@@ -1224,3 +1224,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18d590f89f7e
+  - type: implements
+    from: SYM-answer-cards-commands-answer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-19T11:09:41.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cfbf00865f6
+  - type: covered_by
+    from: SYM-answer-cards-commands-answer
+    to: TEST-ui-ask
+    created_at: 2026-11-19T11:09:41.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1ac33f82e1
+  - type: covered_by
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    to: TEST-telemetry-metrics
+    created_at: 2026-11-19T17:19:15.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-843ee62afe6d
+  - type: implements
+    from: SYM-m6-sdk-go-telemetry-metrics-redacting-metric-exporter-export
+    to: REQ-telemetry-private-metrics
+    created_at: 2026-11-19T17:19:15.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1c24c37363b

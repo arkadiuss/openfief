@@ -15,7 +15,9 @@
       "turnstileSiteKey": {"type": "string", "pattern": "^[0-3]x[A-Za-z0-9_-]{8,64}$",
         "description": "The public key of the Cloudflare Turnstile widget made for the host of the Ask box; set together with turnstileVerifyUrl to put the check in front of the model of the Ask box (D-208), unset for none"},
       "turnstileVerifyUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
-        "description": "The siteverify URL of Cloudflare, https://challenges.cloudflare.com/turnstile/v0/siteverify; the install shows its host and the grant approves it"}
+        "description": "The siteverify URL of Cloudflare, https://challenges.cloudflare.com/turnstile/v0/siteverify; the install shows its host and the grant approves it"},
+      "clientEvents": {"type": "boolean",
+        "description": "Whether the pages report a fixed set of events about themselves (the person check states and error codes, script errors, failed requests, the browser family and version) to the UI log and metrics, never anything typed (D-227); unset is true"}
     },
     "additionalProperties": false
   },
