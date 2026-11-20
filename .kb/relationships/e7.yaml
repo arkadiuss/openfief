@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb3fefb7ab39
-  - type: constrains
-    from: REQ-plugins-cli-install-secret-in-use
-    to: FACT-SUBJECT-D7D075E2C9A42556
-    created_at: 2026-10-29T15:10:44.137Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6ce1f400e3e0
   - type: requires_property
     from: REQ-plugins-cli-install-secret-in-use
     to: FACT-PROP-AAC42C08AEA29DBB
@@ -1469,3 +1462,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-914ff9798120
+  - type: constrains
+    from: REQ-plugins-cli-install-secret-in-use
+    to: FACT-SUBJECT-BDF67386A1A22E37
+    created_at: 2026-11-20T22:38:29.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-085f262ef414

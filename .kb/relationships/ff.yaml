@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0970a7b8c09
-  - type: constrains
-    from: REQ-valuation-cross-check-prices
-    to: FACT-SUBJECT-E5DC341E1B9CAE01
-    created_at: 2026-10-29T05:37:29.216Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-21f44ddf5635
   - type: requires_property
     from: REQ-valuation-cross-check-prices
     to: FACT-PROP-20DB0B11D299F55F
@@ -1350,3 +1343,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-691fa397bd8f
+  - type: constrains
+    from: REQ-valuation-cross-check-prices
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-11-20T22:40:02.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0336cad84597

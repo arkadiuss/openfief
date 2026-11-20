@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: valuation.cross_check_prices
+subject_key: valuation.price_check
 property_key: kept_apart_from_valuation_prices
-canonical_key: mcp-kibi-model-requirement:valuation.cross_check_prices:kept_apart_from_valuation_prices:eq:true
+canonical_key: mcp-kibi-model-requirement:valuation.price_check:kept_apart_from_valuation_prices:eq:true
 operator: eq
 value_type: bool
 value_bool: true

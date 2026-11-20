@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: treasurybonds.payouts
+subject_key: treasurybonds.payout
 property_key: withdraws_paid_out_payouts
-canonical_key: mcp-kibi-model-requirement:treasurybonds.payouts:withdraws_paid_out_payouts:eq:true
+canonical_key: mcp-kibi-model-requirement:treasurybonds.payout:withdraws_paid_out_payouts:eq:true
 operator: eq
 value_type: bool
 value_bool: true

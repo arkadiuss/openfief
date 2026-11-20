@@ -1,6 +1,6 @@
 ---
 title: Ingest Deliveries
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-182
 tags:
   - strict-modeling

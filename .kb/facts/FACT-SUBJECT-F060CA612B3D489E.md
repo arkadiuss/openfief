@@ -10,4 +10,4 @@ origin:
 id: FACT-SUBJECT-F060CA612B3D489E
 type: fact
 ---
-The single note at the foot of a model's answer in the Ask box: the model's name, how many cards it used or that it used none of the person's data, the line that AI can be wrong, and a link. It does not cover the body of the answer.
+The single note at the foot of a model's answer in the Ask box (D-222): the model's display name from its settings entry, how many cards it used or that it used none of the person's data, the line "AI can be wrong; check the cards. Not investment advice.", and a link to the docs page that reports how models did in the Ask box's eval. A model the eval has not covered is named as not evaluated, and the box's own commands show none of it. It does not cover the body of the answer.

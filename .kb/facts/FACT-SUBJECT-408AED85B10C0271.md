@@ -1,6 +1,6 @@
 ---
 title: Plugins Config Hosts
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-75
 tags:
   - strict-modeling

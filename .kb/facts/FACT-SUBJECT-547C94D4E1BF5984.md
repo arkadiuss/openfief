@@ -21,6 +21,6 @@ origin:
 id: FACT-SUBJECT-547C94D4E1BF5984
 type: fact
 part_of:
-  - valuation.bond_valuation_basis
+  - valuation.bond_basis
 ---
-Applying the configured bond basis, which revalues every account from its first transaction when it differs from the recorded one and nothing when it is the same. It is a part of valuation.bond_valuation_basis, which covers that the basis is configurable.
+Applying the configured bond basis, which revalues every account from its first transaction when it differs from the recorded one and nothing when it is the same. It is a part of valuation.bond_basis, which covers the basis values themselves and their default.

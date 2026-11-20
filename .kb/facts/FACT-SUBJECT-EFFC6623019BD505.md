@@ -1,6 +1,6 @@
 ---
 title: Treasurybonds Payouts
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-135
 tags:
   - strict-modeling

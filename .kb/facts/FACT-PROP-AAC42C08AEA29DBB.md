@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: plugins.cli_install
+subject_key: plugins.install_cli
 property_key: refuses_secret_in_use
-canonical_key: mcp-kibi-model-requirement:plugins.cli_install:refuses_secret_in_use:eq:true
+canonical_key: mcp-kibi-model-requirement:plugins.install_cli:refuses_secret_in_use:eq:true
 operator: eq
 value_type: bool
 value_bool: true

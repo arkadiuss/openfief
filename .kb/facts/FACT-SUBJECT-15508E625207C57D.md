@@ -1,6 +1,6 @@
 ---
 title: E2e Egress Proxy Log
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-200
 tags:
   - strict-modeling

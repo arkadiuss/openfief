@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-CAC9841F468582C6
 type: fact
 ---
-
-Definition not stated: the subject plugins.upgrade is named by requirement REQ-plugins-upgrade-approval-diff, which links to the subject fact FACT-SUBJECT-CAC9841F468582C6 through constrains. The people who own that source can say what it is in the product and what it is not.
+A plugin upgrade: OpenFief reports exactly the requested permissions the grant does not approve, the version counts as needing approval whenever that report is not empty, and an upgrade that requests more permissions does not deploy until they are approved.

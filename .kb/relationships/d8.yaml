@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13e9d6a9bbcf
-  - type: constrains
-    from: REQ-AUTO-0C90AD924924F4F6
-    to: FACT-SUBJECT-F8619923C8041B16
-    created_at: 2026-10-27T20:12:41.793Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8513f518e3da
   - type: requires_property
     from: REQ-AUTO-0C90AD924924F4F6
     to: FACT-PROP-2621A798A47F3296
@@ -1035,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62db79371660
+  - type: constrains
+    from: REQ-AUTO-0C90AD924924F4F6
+    to: FACT-SUBJECT-C4667D6B8DCAE40E
+    created_at: 2026-11-20T22:39:41.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e36feeae7016

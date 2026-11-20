@@ -20,5 +20,4 @@ origin:
 id: FACT-SUBJECT-C4667D6B8DCAE40E
 type: fact
 ---
-
-Definition not stated: the subject valuation.bond_basis is named by requirement REQ-valuation-bond-basis, which links to the subject fact FACT-SUBJECT-C4667D6B8DCAE40E through constrains. The people who own that source can say what it is in the product and what it is not.
+The basis at which a bond lot counts in totals: configurable, gross_accrued or net_if_redeemed with net_if_redeemed when nothing is configured, the market basis rejected for retail treasury bonds. It does not cover applying a changed basis, which valuation.bond_basis_setting covers.

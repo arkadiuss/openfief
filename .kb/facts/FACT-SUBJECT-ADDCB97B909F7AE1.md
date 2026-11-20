@@ -1,6 +1,6 @@
 ---
 title: Ingest Broker Accounts
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-72
 tags:
   - strict-modeling

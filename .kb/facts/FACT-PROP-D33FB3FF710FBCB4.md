@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.accounts
+subject_key: ledger.account
 property_key: refuses_reseeding
-canonical_key: mcp-kibi-model-requirement:ledger.accounts:refuses_reseeding:eq:true
+canonical_key: mcp-kibi-model-requirement:ledger.account:refuses_reseeding:eq:true
 operator: eq
 value_type: bool
 value_bool: true

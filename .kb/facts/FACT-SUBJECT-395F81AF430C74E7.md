@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-395F81AF430C74E7
 type: fact
 ---
-
-Definition not stated: the subject sdk.go.connector_server is named by requirement REQ-sdk-go-core-only, which links to the subject fact FACT-SUBJECT-395F81AF430C74E7 through constrains. The people who own that source can say what it is in the product and what it is not.
+The Go SDK's connector server: it refuses as unauthenticated, before the connector sees it, every call without a bearer token its core verifier accepts, and bounds a message at 4 MiB unless the plugin says otherwise, a body at 65 MiB, and how long a request may take to arrive and a connection may idle.

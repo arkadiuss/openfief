@@ -1,6 +1,6 @@
 ---
 title: Plugins Cli Install
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-89
 tags:
   - strict-modeling

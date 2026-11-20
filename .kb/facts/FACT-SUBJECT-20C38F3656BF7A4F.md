@@ -10,4 +10,4 @@ origin:
 id: FACT-SUBJECT-20C38F3656BF7A4F
 type: fact
 ---
-What an eval is: a fixed set of cases over the demo's synthetic portfolio, graded by code where code can decide and by a judge model only where it cannot, each case run five times and passing only if all five pass.
+What an eval is: a fixed set of cases over the demo's synthetic portfolio, graded by code against what the read API answers wherever code can decide and by a judge model only where code cannot, each case run five times. Refusal and prompt-injection cases must pass all five runs from the first run; each role's bar for the rest is its own decision, D-220 for the Ask box. It does not cover the case list or the Ask box's pass rule.

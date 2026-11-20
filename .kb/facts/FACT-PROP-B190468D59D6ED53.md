@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: plugins.cluster_service
+subject_key: plugins.in_cluster_service
 property_key: outside_openfief_and_requested
-canonical_key: mcp-kibi-model-requirement:plugins.cluster_service:outside_openfief_and_requested:eq:true
+canonical_key: mcp-kibi-model-requirement:plugins.in_cluster_service:outside_openfief_and_requested:eq:true
 operator: eq
 value_type: bool
 value_bool: true

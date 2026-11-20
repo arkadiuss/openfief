@@ -1,6 +1,6 @@
 ---
 title: Ledger Opening Lots
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-98
 tags:
   - strict-modeling

@@ -19,7 +19,6 @@ origin:
   recorded_at: '2026-11-02T23:54:10.078Z'
 id: FACT-SUBJECT-D153F903E058415A
 type: fact
-part_of:
-  - valuation.stored_valuations
+part_of: []
 ---
-The currency a stored valuation names, taken from the jurisdiction pack. It is a part of valuation.stored_valuations, which covers how valuations are stored and rebuilt.
+A stored valuation: a stored row derived from the transaction log, prices, FX rates and index readings, rebuildable, holding the three values, and naming its currency taken from the jurisdiction pack. It does not cover how the inputs are fetched.

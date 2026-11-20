@@ -1,6 +1,6 @@
 ---
 title: Plugins Cluster Service
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-74
 tags:
   - strict-modeling

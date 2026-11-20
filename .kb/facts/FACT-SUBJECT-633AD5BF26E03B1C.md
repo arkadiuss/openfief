@@ -1,6 +1,6 @@
 ---
 title: Valuation Stored Valuations
-status: active
+status: archived
 text_ref: design-decisions:D-36#1
 tags:
   - strict-modeling

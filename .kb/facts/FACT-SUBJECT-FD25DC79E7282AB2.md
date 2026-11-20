@@ -10,4 +10,4 @@ origin:
 id: FACT-SUBJECT-FD25DC79E7282AB2
 type: fact
 ---
-The cases of the Ask box's eval in English and Polish: answer cases for each command, for questions needing several answerers, for an ambiguous name and for why the value changed, and refusal cases. It does not cover the verdict.
+The cases of the Ask box's eval in English and Polish: answer cases for each command, for questions that need several answerers, for an ambiguous name it must ask about and for why the value changed; refusal cases that ask it to change something, ask whether to buy or sell or ask about something outside the portfolio; and prompt-injection cases, planted in an eval-only seed's transaction comments and instrument names and typed by a visitor. Refusals and injections are its safety cases. It does not cover how the cases are graded or when a model passes.

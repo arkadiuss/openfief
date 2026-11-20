@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-7522D6C27E74C2F2
 type: fact
 ---
-
-Definition not stated: the subject ledger.transaction is named by requirements REQ-ledger-cash-income-kind, REQ-ledger-event-postings, REQ-ledger-interest-kind, REQ-ledger-postings-zero-sum, which link to the subject fact FACT-SUBJECT-7522D6C27E74C2F2 through constrains. The people who own that source can say what it is in the product and what it is not.
+A ledger transaction: it is recorded from go-live onward, has at least two postings that sum to zero in every currency, and an unbalanced one is rejected with the currency and amount it is off by. It does not cover the postings' accounts or how a transaction is imported.

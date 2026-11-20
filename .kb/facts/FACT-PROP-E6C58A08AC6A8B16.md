@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.accounts
+subject_key: ledger.account
 property_key: seeds_atomically
-canonical_key: mcp-kibi-model-requirement:ledger.accounts:seeds_atomically:eq:true
+canonical_key: mcp-kibi-model-requirement:ledger.account:seeds_atomically:eq:true
 operator: eq
 value_type: bool
 value_bool: true

@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afb848fd5976
-  - type: constrains
-    from: REQ-decision-d36-9-three-values-stored
-    to: FACT-SUBJECT-633AD5BF26E03B1C
-    created_at: 2026-10-29T08:06:09.533Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-478c597e20f9
   - type: requires_property
     from: REQ-decision-d36-9-three-values-stored
     to: FACT-PROP-CF22BDF57C5EE088
@@ -1140,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34ed4b7f9f24
+  - type: constrains
+    from: REQ-decision-d36-9-three-values-stored
+    to: FACT-SUBJECT-D153F903E058415A
+    created_at: 2026-11-20T22:37:41.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-503ad6f027b9

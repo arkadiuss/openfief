@@ -1,6 +1,6 @@
 ---
 title: Ledger Accounts
-status: active
+status: archived
 text_ref: design-decisions:D-23#1
 tags:
   - strict-modeling

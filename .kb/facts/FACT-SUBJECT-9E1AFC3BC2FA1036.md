@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-9E1AFC3BC2FA1036
 type: fact
 ---
-
-Definition not stated: the subject plugins.config_field_host is named by requirements REQ-plugins-config-field-host-grant, REQ-plugins-config-field-host-https, REQ-plugins-config-field-host-via-proxy, which link to the subject fact FACT-SUBJECT-9E1AFC3BC2FA1036 through constrains. The people who own that source can say what it is in the product and what it is not.
+The host a manifest requests from a named config field instead of a fixed host: the host and port of the https URL the field holds, lower-cased, nothing when absent or empty and an invalid Plugin when it is not a valid https URL; the CLI reads and shows it and the grant approves exactly that host.

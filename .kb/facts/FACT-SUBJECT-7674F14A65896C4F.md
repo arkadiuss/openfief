@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-7674F14A65896C4F
 type: fact
 ---
-
-Definition not stated: the subject ledger.opening_lot is named by requirements REQ-ledger-manual-opening-lots-one-at-a-time, REQ-ledger-opening-lot-entry, which link to the subject fact FACT-SUBJECT-7674F14A65896C4F through constrains. The people who own that source can say what it is in the product and what it is not.
+An opening lot: recorded on the go-live date with the date the lot was first acquired and its cost basis in the original currency, an open date after go-live being rejected. Lots added one at a time are all dated on the go-live date when the account is seeded, on one date when not, and refused for an account with a current transaction.

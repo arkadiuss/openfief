@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: e2e.egress_proxy_log
+subject_key: e2e.egress_log
 property_key: shows_only_configured_destinations
-canonical_key: mcp-kibi-model-requirement:e2e.egress_proxy_log:shows_only_configured_destinations:eq:true
+canonical_key: mcp-kibi-model-requirement:e2e.egress_log:shows_only_configured_destinations:eq:true
 operator: eq
 value_type: bool
 value_bool: true

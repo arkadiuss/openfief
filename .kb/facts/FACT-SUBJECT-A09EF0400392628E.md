@@ -1,6 +1,6 @@
 ---
 title: Identity Sessions
-status: active
+status: archived
 text_ref: design-decisions:D-183#2
 tags:
   - strict-modeling

@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-7002ADA5EC4F5A7E
 type: fact
 ---
-
-Definition not stated: the subject treasurybonds.payout is named by requirements REQ-treasurybonds-account-payout-setting, REQ-treasurybonds-books-maturities, REQ-treasurybonds-payout-booked-then-withdrawn, which link to the subject fact FACT-SUBJECT-7002ADA5EC4F5A7E through constrains. The people who own that source can say what it is in the product and what it is not.
+The payout of a hand-entered bond account: its setting matches the option the bond registry offers, coupons and maturities staying as the account's cash or paid out, and when paid out the treasury-bonds connector follows each coupon or redemption with a withdrawal of the cash it brought on the same day.

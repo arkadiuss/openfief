@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-825F5042E5E6F174
 type: fact
 ---
-
-Definition not stated: the subject identity.session is named by requirements REQ-identity-opaque-session-token, REQ-identity-session-opaque, REQ-identity-session-scope-read-owner, REQ-identity-session-scopes, which link to the subject fact FACT-SUBJECT-825F5042E5E6F174 through constrains. The people who own that source can say what it is in the product and what it is not.
+A session of the owner: an opaque, revocable token stored only as the SHA-256 hash of its random key, with an idle expiry and an absolute one and a scope, issued after an authenticator proves the owner, and the owner can sign out every session at once. It does not cover the authenticator.

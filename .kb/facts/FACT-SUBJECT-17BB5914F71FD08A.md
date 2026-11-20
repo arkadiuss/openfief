@@ -1,6 +1,6 @@
 ---
 title: Ledger Transactions
-status: active
+status: archived
 text_ref: design-decisions:D-23#2
 tags:
   - strict-modeling

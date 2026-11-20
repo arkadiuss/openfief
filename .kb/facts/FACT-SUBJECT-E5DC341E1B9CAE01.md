@@ -1,6 +1,6 @@
 ---
 title: Valuation Cross Check Prices
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-22
 tags:
   - strict-modeling

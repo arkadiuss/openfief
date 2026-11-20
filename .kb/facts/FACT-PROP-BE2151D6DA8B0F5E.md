@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.transactions
+subject_key: ledger.transaction
 property_key: be_recorded_from_go_live_onward
-canonical_key: knowledge-source-design-decisions:ledger.transactions:be_recorded_from_go_live_onward:polarity:require
+canonical_key: knowledge-source-design-decisions:ledger.transaction:be_recorded_from_go_live_onward:polarity:require
 operator: eq
 value_type: bool
 value_bool: true

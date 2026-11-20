@@ -1,6 +1,6 @@
 ---
 title: Valuation Bond Valuation Basis
-status: active
+status: archived
 text_ref: design-decisions:D-25#1
 tags:
   - strict-modeling

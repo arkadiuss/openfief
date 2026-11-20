@@ -1,6 +1,6 @@
 ---
 title: Sdk Go Connector Server
-status: active
+status: archived
 text_ref: docs/DESIGN.md#D-184
 tags:
   - strict-modeling

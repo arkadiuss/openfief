@@ -21,5 +21,4 @@ origin:
 id: FACT-SUBJECT-BDF67386A1A22E37
 type: fact
 ---
-
-Definition not stated: the subject plugins.install_cli is named by requirements REQ-plugins-cli-ambiguous-catalog-name, REQ-plugins-cli-confirmation, REQ-plugins-cli-install, REQ-plugins-cli-install-plan, REQ-plugins-cli-install-points-to-wizard, REQ-plugins-cli-install-source, REQ-plugins-cli-install-verifies, REQ-plugins-cli-list, REQ-plugins-cli-no-install-over-instance, REQ-plugins-cli-owner-signers, REQ-plugins-cli-permission-summary, REQ-plugins-cli-print-resources, REQ-plugins-cli-refuses-second-browser-view, REQ-plugins-cli-upgrade, which link to the subject fact FACT-SUBJECT-BDF67386A1A22E37 through constrains. The people who own that source can say what it is in the product and what it is not.
+The openfief plugin install command: it verifies a plugin's signature and shows its requested permissions before applying the Plugin and PluginGrant with the owner's kubeconfig, and refuses an instance whose grant names a Secret another installed instance already names.

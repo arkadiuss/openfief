@@ -10,4 +10,4 @@ origin:
 id: FACT-SUBJECT-7D964AE037C72056
 type: fact
 ---
-The model router's daily budget in US dollars, counting every call's cost priced from the model entries' prices per million tokens and refusing a call before sending it once the cap is reached.
+The daily budget of model spend that the core enforces before each call: every call's cost counted in US dollars, priced from the model entries' prices per million tokens, a call refused before it is sent once the day's total has reached the configured cap, and after it the Ask box says the day's demo budget is used up. Priced tokens are dollars, so the demo's daily token budget and the router's cap are one limit.

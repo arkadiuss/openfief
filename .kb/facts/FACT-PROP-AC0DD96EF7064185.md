@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.accounts
+subject_key: ledger.account
 property_key: be_seeded_with_opening_lots_from_each_broker_s_current_lot_level_positions
-canonical_key: knowledge-source-design-decisions:ledger.accounts:be_seeded_with_opening_lots_from_each_broker_s_current_lot_level_positions:polarity:require
+canonical_key: knowledge-source-design-decisions:ledger.account:be_seeded_with_opening_lots_from_each_broker_s_current_lot_level_positions:polarity:require
 operator: eq
 value_type: bool
 value_bool: true

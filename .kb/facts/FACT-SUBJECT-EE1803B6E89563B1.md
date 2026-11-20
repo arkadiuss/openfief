@@ -20,5 +20,4 @@ origin:
 id: FACT-SUBJECT-EE1803B6E89563B1
 type: fact
 ---
-
-Definition not stated: the subject e2e.egress_log is named by requirement REQ-e2e-egress-log-holds-no-request-contents, which links to the subject fact FACT-SUBJECT-EE1803B6E89563B1 through constrains. The people who own that source can say what it is in the product and what it is not.
+The egress proxy's log as the end-to-end suite reads it on kind and k3d: each plugin request shows its host, its decision and the plugin instance and nothing of its path, query, headers, body or token, and every request of the configured destinations is shown.

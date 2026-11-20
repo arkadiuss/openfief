@@ -10,9 +10,9 @@ tags:
   - lane:strict
   - fact:property_value
 fact_kind: property_value
-subject_key: ledger.accounts
+subject_key: ledger.account
 property_key: owner_marks_opened_on_seeding_day
-canonical_key: mcp-kibi-model-requirement:ledger.accounts:owner_marks_opened_on_seeding_day:eq:true
+canonical_key: mcp-kibi-model-requirement:ledger.account:owner_marks_opened_on_seeding_day:eq:true
 operator: eq
 value_type: bool
 value_bool: true

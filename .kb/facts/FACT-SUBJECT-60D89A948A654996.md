@@ -1,6 +1,6 @@
 ---
 title: Plugins Plugin Upgrade
-status: active
+status: archived
 text_ref: design-decisions:D-16#3
 tags:
   - strict-modeling
