@@ -29,6 +29,8 @@ semantic_inventory:
     span:
       start: 0
       end: 135
+    subjects:
+      - period_return.opening_close_rule
 id: REQ-views-period-return-from-opening-close
 type: req
 ---

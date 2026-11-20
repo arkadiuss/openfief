@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-29T08:08:01.720Z'
 id: FACT-SUBJECT-46C807261A7CAC5A
 type: fact
+kind_of:
+  - core.owner_services
 ---
+The services through which what the owner enters by hand reaches the core, one per kind of entry: bond lots, the model portfolio, accounts, statement uploads and any later kind. They are a kind of core.owner_services, which covers every service the owner uses.

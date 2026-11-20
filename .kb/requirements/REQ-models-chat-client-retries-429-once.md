@@ -24,6 +24,8 @@ semantic_inventory:
     span:
       start: 0
       end: 213
+    subjects:
+      - models.chat_client_429_retry
   - claim_key: CLAIM-0BB12921B8C36CE9
     claim_text: a second 429 is an unavailable provider that carries status 429, and no other status is retried by the client
     role: descriptive

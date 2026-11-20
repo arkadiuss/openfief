@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 176
+    subjects:
+      - demo.model_token_budget
 logic_claims:
   - CLAIM-D1FFFC907E0B40C5
 id: REQ-decision-d208-2-daily-token-budget

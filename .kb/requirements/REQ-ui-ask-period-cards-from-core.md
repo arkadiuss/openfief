@@ -25,6 +25,8 @@ semantic_inventory:
     span:
       start: 0
       end: 411
+    subjects:
+      - ask_box.period_card_figures
 logic_claims:
   - CLAIM-67E763A1E60DA30C
 id: REQ-ui-ask-period-cards-from-core

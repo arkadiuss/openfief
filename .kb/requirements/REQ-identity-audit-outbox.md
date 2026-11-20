@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 455
+    subjects:
+      - audit.entry_outbox
 logic_claims:
   - CLAIM-361BFCB1544273C7
 id: REQ-identity-audit-outbox

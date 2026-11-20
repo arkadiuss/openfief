@@ -26,6 +26,8 @@ semantic_inventory:
     span:
       start: 0
       end: 553
+    subjects:
+      - ask_box.period_cards
 logic_claims:
   - CLAIM-0595AD7776DFFC2D
 id: REQ-ui-ask-every-period-one-card

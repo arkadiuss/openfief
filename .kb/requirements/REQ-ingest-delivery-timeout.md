@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 136
+    subjects:
+      - sync.delivery_transaction_timeout
   - claim_key: CLAIM-F6973A47969BE390
     claim_text: a delivery that runs past it must fail whole, write nothing and be recorded as a failed sync attempt of the class delivery-timeout, never split
     role: normative
@@ -26,6 +28,8 @@ semantic_inventory:
     span:
       start: 142
       end: 285
+    subjects:
+      - sync.delivery_transaction_timeout
 logic_claims:
   - CLAIM-A2413563801B5B42
   - CLAIM-F6973A47969BE390

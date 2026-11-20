@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 466
+    subjects:
+      - ask_bench.offline_rescoring
 logic_claims:
   - CLAIM-790ABDE35596EFE2
 id: REQ-askbench-rescores-offline

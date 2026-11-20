@@ -23,6 +23,8 @@ semantic_inventory:
     span:
       start: 0
       end: 380
+    subjects:
+      - ask_bench.false_premise_case
 logic_claims:
   - CLAIM-EB5B67ADB4C418DD
 ---

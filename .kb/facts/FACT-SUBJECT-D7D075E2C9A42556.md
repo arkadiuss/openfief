@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-29T15:10:36.982Z'
 id: FACT-SUBJECT-D7D075E2C9A42556
 type: fact
+part_of:
+  - plugins.install_cli
 ---
+The refusal of openfief plugin install for an instance whose grant names a Secret that another installed instance already names. It is a part of plugins.install_cli, which covers the whole install command.

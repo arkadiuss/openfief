@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 200
+    subjects:
+      - ask_bench.transport_retries
   - claim_key: CLAIM-E611530DDF87C828
     claim_text: it counts the retry as a call and marks it in the run detail, counts reliability per question and not per call (a question is failed only when, after its retry, it still has no usable answer because of a host fault, however many calls it took), reports each model@host's failed-question rate beside its failed-call counts and fails a host whose rate is over five percent of its questions for the run whatever its verdict
     role: rationale

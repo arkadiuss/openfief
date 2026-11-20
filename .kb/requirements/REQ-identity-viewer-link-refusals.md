@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 222
+    subjects:
+      - invitations.link_refusals
 logic_claims:
   - CLAIM-8D90F6E294E4CAEA
 id: REQ-identity-viewer-link-refusals

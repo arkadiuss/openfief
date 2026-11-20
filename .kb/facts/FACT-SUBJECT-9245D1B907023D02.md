@@ -1,6 +1,6 @@
 ---
 title: Plugins Manifest
-status: active
+status: archived
 text_ref: design-decisions:D-42#1
 tags:
   - strict-modeling
@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-9245D1B907023D02
 type: fact
 ---
+
+Definition not stated: the subject plugins.manifest is named by requirements REQ-plugins-manifest-in-image, REQ-plugins-statement-files-capability-not-permission, REQ-plugins-statement-files-declared-in-manifest, which link to the subject fact FACT-SUBJECT-9245D1B907023D02 through constrains. The people who own that source can say what it is in the product and what it is not.

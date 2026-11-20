@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 120
+    subjects:
+      - models.call_audit_entries
   - claim_key: CLAIM-9429547524C35B95
     claim_text: model_call_result after it with ok, failed with an error class, or refused
     role: normative
@@ -25,6 +27,8 @@ semantic_inventory:
     span:
       start: 126
       end: 200
+    subjects:
+      - models.call_audit_entries
   - claim_key: CLAIM-5FDF3660B4651869
     claim_text: a call the router refuses before choosing a model has only the result entry
     role: normative
@@ -32,6 +36,8 @@ semantic_inventory:
     span:
       start: 202
       end: 277
+    subjects:
+      - models.call_audit_entries
   - claim_key: CLAIM-F05F654C2F819F0D
     claim_text: both name the role, the provider instance and model by name and never a question, an answer or a token
     role: descriptive

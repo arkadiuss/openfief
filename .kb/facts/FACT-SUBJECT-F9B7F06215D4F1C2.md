@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-11-02T23:54:17.632Z'
 id: FACT-SUBJECT-F9B7F06215D4F1C2
 type: fact
+kind_of:
+  - valuation.fx_rate
 ---
+A stored exchange rate, which names its base currency taken from the jurisdiction pack. It is a kind of valuation.fx_rate, which covers choosing the rate for a currency and a date.

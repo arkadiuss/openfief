@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 162
+    subjects:
+      - ask_bench.budget_and_exit
 logic_claims:
   - CLAIM-E8B357462A2D8AB8
 id: REQ-askbench-budget-and-exit-codes

@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 365
+    subjects:
+      - ask_eval.cases
 logic_claims:
   - CLAIM-798356475A444DF3
 id: REQ-decision-d219-1-ask-eval-cases

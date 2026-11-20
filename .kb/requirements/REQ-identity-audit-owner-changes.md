@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 336
+    subjects:
+      - audit.owner_change_entries
 logic_claims:
   - CLAIM-03884D298DACB13C
 id: REQ-identity-audit-owner-changes

@@ -20,6 +20,8 @@ semantic_inventory:
     span:
       start: 0
       end: 553
+    subjects:
+      - telemetry.private_metrics_allow_list
 id: REQ-telemetry-private-metrics
 type: req
 ---

@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 162
+    subjects:
+      - model_portfolio_page.maintainer_note
 logic_claims:
   - CLAIM-4218806ACE1F4CFC
 semantic_clauses:

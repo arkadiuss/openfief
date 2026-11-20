@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-29T15:10:59.556Z'
 id: FACT-SUBJECT-457059D043CC4DB6
 type: fact
+part_of:
+  - plugins.in_cluster_service
 ---
+The form of an in-cluster service a Plugin may name, namespace/service:port with DNS-label names and a namespace other than openfief. It is a part of plugins.in_cluster_service, which covers how the owner picks and approves it.

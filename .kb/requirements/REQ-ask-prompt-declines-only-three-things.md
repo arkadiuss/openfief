@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 388
+    subjects:
+      - ask_box.system_prompt
 logic_claims:
   - CLAIM-7151EB2DF1C0454A
 id: REQ-ask-prompt-declines-only-three-things

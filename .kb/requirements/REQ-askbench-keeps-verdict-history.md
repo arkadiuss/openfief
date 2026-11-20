@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 280
+    subjects:
+      - ask_bench.verdict_history
 logic_claims:
   - CLAIM-CAE4D83C2CAC082E
 id: REQ-askbench-keeps-verdict-history

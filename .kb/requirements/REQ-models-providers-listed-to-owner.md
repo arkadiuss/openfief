@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 134
+    subjects:
+      - models.provider_listing
   - claim_key: CLAIM-6594515D6B56A580
     claim_text: its models, to the owner alone, an instance that does not answer as unavailable, and must name the entries of every route that name a missing provider instance or a plugin that is no model provider
     role: normative
@@ -26,6 +28,8 @@ semantic_inventory:
     span:
       start: 139
       end: 336
+    subjects:
+      - models.provider_listing
 logic_claims:
   - CLAIM-9350F7209D7250D2
   - CLAIM-6594515D6B56A580

@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 379
+    subjects:
+      - ask_bench.cost_measurement
 logic_claims:
   - CLAIM-842A1C4CB56C4E79
 id: REQ-askbench-measures-cost-exactly

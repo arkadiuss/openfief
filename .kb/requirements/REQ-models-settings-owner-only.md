@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 161
+    subjects:
+      - models.settings_owner_only
 logic_claims:
   - CLAIM-59DD33430381DF04
 semantic_clauses:

@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 192
+    subjects:
+      - audit.entry_actor
   - claim_key: CLAIM-4649CE504DA3292B
     claim_text: the maintainer's weekly runs are the system's
     role: descriptive

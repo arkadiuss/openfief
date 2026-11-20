@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 289
+    subjects:
+      - attention.audit_log_behind_item
 logic_claims:
   - CLAIM-254F78C838661365
 id: REQ-attention-audit-log-behind

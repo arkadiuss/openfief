@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 247
+    subjects:
+      - core.database_session_timeouts
 logic_claims:
   - CLAIM-DD741692E0F86106
 id: REQ-core-db-session-timeouts

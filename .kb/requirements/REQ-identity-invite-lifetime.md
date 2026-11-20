@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 135
+    subjects:
+      - invitations.link_lifetime
   - claim_key: CLAIM-851FAFF4968A0040
     claim_text: issuing it still needs the passkey check D-183 asks for
     role: descriptive

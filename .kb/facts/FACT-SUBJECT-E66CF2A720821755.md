@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-27T20:12:38.841Z'
 id: FACT-SUBJECT-E66CF2A720821755
 type: fact
+part_of:
+  - ledger.account
 ---
+Seeding accounts with opening lots from each broker's current lot-level positions, atomically and refusing a reseed. It is a part of ledger.account, which covers what an account is and must have.

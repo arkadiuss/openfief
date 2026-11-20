@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 158
+    subjects:
+      - people.owner_migration
 logic_claims:
   - CLAIM-8CD1268730F1127D
 id: REQ-identity-people-migration-owner

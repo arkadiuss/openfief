@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-11-02T23:54:10.078Z'
 id: FACT-SUBJECT-D153F903E058415A
 type: fact
+part_of:
+  - valuation.stored_valuations
 ---
+The currency a stored valuation names, taken from the jurisdiction pack. It is a part of valuation.stored_valuations, which covers how valuations are stored and rebuilt.

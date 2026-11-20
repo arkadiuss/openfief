@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 241
+    subjects:
+      - plugin_cli.view_grant_hint
 logic_claims:
   - CLAIM-D059509CB531BE28
 id: REQ-plugins-cli-install-view-grant-hint

@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 248
+    subjects:
+      - audit.mcp_call_entries
 logic_claims:
   - CLAIM-1F61AC753CBFF8B0
 semantic_clauses:

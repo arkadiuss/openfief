@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 394
+    subjects:
+      - ask_eval.grading_and_runs
 logic_claims:
   - CLAIM-5B3D41C8323606A2
 text_ref: design-decisions:D-217#2

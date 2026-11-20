@@ -29,6 +29,8 @@ semantic_inventory:
     span:
       start: 0
       end: 242
+    subjects:
+      - charts.period_opening_close
 id: REQ-ui-period-opens-chart-on-opening-close
 type: req
 ---

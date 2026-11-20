@@ -19,4 +19,7 @@ origin:
   recorded_at: '2026-10-27T20:12:39.483Z'
 id: FACT-SUBJECT-17BB5914F71FD08A
 type: fact
+part_of:
+  - ledger.transaction
 ---
+The rule that transactions are recorded from go-live onward, a part of ledger.transaction, which also covers the postings of a transaction and their balance.

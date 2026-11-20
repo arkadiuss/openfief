@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 548
+    subjects:
+      - ask_bench.rejection_blame
   - claim_key: CLAIM-BB9AB4D21FFC6485
     claim_text: a 404 is the host's fault, counted against it and flagged in summary.md and stdout as a stale pin
     role: descriptive

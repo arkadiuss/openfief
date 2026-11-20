@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 115
+    subjects:
+      - read_api.viewer_sleeve_listing
 logic_claims:
   - CLAIM-1633DB9E7F692909
 id: REQ-views-viewer-sleeves-and-kinds-of-granted-accounts

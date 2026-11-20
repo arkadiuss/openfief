@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 197
+    subjects:
+      - models.tool_result_tiers
   - claim_key: CLAIM-7F3FAB8DE627495B
     claim_text: otherwise the model gets a refusal with none of its data and the page names the withheld card
     role: descriptive

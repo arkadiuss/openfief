@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 368
+    subjects:
+      - ask_box.answer_foot_note
 logic_claims:
   - CLAIM-07955DF152B6858B
 id: REQ-ui-ask-shows-model-and-disclaimer

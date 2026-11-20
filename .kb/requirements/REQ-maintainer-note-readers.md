@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 121
+    subjects:
+      - maintainer.note_readers
 logic_claims:
   - CLAIM-ED553637EC83E675
 semantic_clauses:

@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 123
+    subjects:
+      - models_page.tier_lists
   - claim_key: CLAIM-99819D69DA29D7DF
     claim_text: tier with nothing ticked until the owner ticks it, and must save only the tiers that changed
     role: normative
@@ -26,6 +28,8 @@ semantic_inventory:
     span:
       start: 128
       end: 220
+    subjects:
+      - models_page.tier_lists
 logic_claims:
   - CLAIM-EBBFB8F6996BFC04
   - CLAIM-99819D69DA29D7DF

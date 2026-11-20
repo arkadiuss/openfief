@@ -21,6 +21,8 @@ semantic_inventory:
     span:
       start: 0
       end: 129
+    subjects:
+      - ask_box.answer_attribution
   - claim_key: CLAIM-94D67B578313D72A
     claim_text: check the cards
     role: descriptive

@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-10-31T18:34:36.034Z'
 id: FACT-SUBJECT-078270D8F81FFF3F
 type: fact
+part_of:
+  - valuation.exemption_class
 ---
+The owner's choice of an instrument's exemption class through the SettingsService, stored with the instrument and replacing an earlier choice without revaluing. It is one part of valuation.exemption_class, which also covers how the jurisdiction pack classifies an instrument by itself.

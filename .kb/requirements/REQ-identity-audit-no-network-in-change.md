@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 273
+    subjects:
+      - audit.change_transaction_isolation
 logic_claims:
   - CLAIM-AADDAABB9ACED103
 id: REQ-identity-audit-no-network-in-change

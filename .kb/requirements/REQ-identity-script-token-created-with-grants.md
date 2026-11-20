@@ -26,6 +26,8 @@ semantic_inventory:
     span:
       start: 211
       end: 286
+    subjects:
+      - script_tokens.creation_with_grants
 logic_claims:
   - CLAIM-41AFF53F2F6513F1
   - CLAIM-386770C2C5C4337E

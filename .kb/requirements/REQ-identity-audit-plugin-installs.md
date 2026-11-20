@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 205
+    subjects:
+      - audit.plugin_install_entries
 logic_claims:
   - CLAIM-AD6505C66793FB3E
 id: REQ-identity-audit-plugin-installs

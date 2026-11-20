@@ -1,6 +1,6 @@
 ---
 title: Egress Proxy Refused Range Exemption
-status: active
+status: archived
 tags:
   - strict-modeling
   - confidence:0.80
@@ -20,3 +20,5 @@ origin:
 id: FACT-SUBJECT-DA9ECC4C33E41EA4
 type: fact
 ---
+
+Definition not stated: the subject egress_proxy.refused_range_exemption is named by requirement REQ-plugins-egress-test-exemption-one-host, which links to the subject fact FACT-SUBJECT-DA9ECC4C33E41EA4 through constrains. The people who own that source can say what it is in the product and what it is not.

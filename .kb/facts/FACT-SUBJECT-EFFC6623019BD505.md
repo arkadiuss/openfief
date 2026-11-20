@@ -20,4 +20,7 @@ origin:
   recorded_at: '2026-11-01T07:45:28.094Z'
 id: FACT-SUBJECT-EFFC6623019BD505
 type: fact
+part_of:
+  - treasurybonds.payout
 ---
+The withdrawal the treasury-bonds connector follows a coupon's or redemption's payout with, of the cash it brought on the same day. It is a part of treasurybonds.payout, which covers the account's payout setting.

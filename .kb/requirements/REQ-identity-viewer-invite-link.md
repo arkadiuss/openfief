@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 211
+    subjects:
+      - invitations.viewer_link
 logic_claims:
   - CLAIM-906E27B9D242D976
 id: REQ-identity-viewer-invite-link

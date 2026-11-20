@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 492
+    subjects:
+      - ask_box.turnstile_widget
 logic_claims:
   - CLAIM-E269FAF131F75C5E
 id: REQ-ui-ask-turnstile

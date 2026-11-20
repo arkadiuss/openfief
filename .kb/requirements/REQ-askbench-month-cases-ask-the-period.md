@@ -23,6 +23,8 @@ semantic_inventory:
     span:
       start: 0
       end: 309
+    subjects:
+      - ask_bench.month_cases
 logic_claims:
   - CLAIM-F8C17EA7D0721504
 id: REQ-askbench-month-cases-ask-the-period

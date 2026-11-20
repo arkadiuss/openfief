@@ -26,6 +26,8 @@ semantic_inventory:
     span:
       start: 0
       end: 325
+    subjects:
+      - period_change.rpc
 logic_claims:
   - CLAIM-21BB6E0DCE5248F9
 id: REQ-views-period-change

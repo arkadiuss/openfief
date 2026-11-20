@@ -15,6 +15,8 @@ semantic_inventory:
     span:
       start: 0
       end: 244
+    subjects:
+      - ask_box.structured_answer
 logic_claims:
   - CLAIM-B728BE45A04178A7
 origin:

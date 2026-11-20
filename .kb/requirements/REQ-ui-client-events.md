@@ -16,17 +16,19 @@ semantic_inventory:
   - claim_key: CLAIM-DDE087F0E34353DE
     claim_text: 'The built-in UI''s pages report a fixed set of client events to the UI: Turnstile''s states and error codes with their timings, uncaught script errors as script, line and a short message from its own scripts only, failed requests by status, and the browser''s family and version'
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 0
       end: 275
+    reason: It lists the client events the pages report; no predicate of the ontology states a set of report fields yet.
   - claim_key: CLAIM-97451A713DF3BAA7
     claim_text: every field is validated against a fixed vocabulary and what does not fit is dropped, nothing typed, no amount, identifier, token or page content is ever reported, reports are size-capped and rate-limited per address, become log records without the address and OpenTelemetry metrics, it is on by default and can be turned off, and then the page sends nothing and the endpoint discards (D-227)
     role: descriptive
-    status: missing
+    status: ontology_gap
     span:
       start: 277
       end: 669
+    reason: It limits what a report may carry; no predicate of the ontology states a privacy limit on a payload yet.
 logic_claims:
   - CLAIM-DDE087F0E34353DE
   - CLAIM-97451A713DF3BAA7

@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 219
+    subjects:
+      - ask_eval.verdict
 logic_claims:
   - CLAIM-64FE18BB2BFE1318
 text_ref: design-decisions:D-220#1

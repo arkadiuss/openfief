@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 88
+    subjects:
+      - invitations.pending_cancel
   - claim_key: CLAIM-678B3F8F36581C25
     claim_text: a cancelled link is refused like an expired one, the cancellation is an audit entry, and it needs no passkey check
     role: descriptive

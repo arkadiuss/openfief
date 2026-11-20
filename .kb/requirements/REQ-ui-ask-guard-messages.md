@@ -18,6 +18,8 @@ semantic_inventory:
     span:
       start: 0
       end: 411
+    subjects:
+      - ask_box.guard_messages
 logic_claims:
   - CLAIM-875D67B92DC2C525
 id: REQ-ui-ask-guard-messages

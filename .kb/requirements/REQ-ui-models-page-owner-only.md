@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 259
+    subjects:
+      - models_page.owner_access
 logic_claims:
   - CLAIM-AE399C52F3F57F11
 semantic_clauses:

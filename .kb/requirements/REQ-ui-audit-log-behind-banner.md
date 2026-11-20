@@ -19,6 +19,8 @@ semantic_inventory:
     span:
       start: 0
       end: 146
+    subjects:
+      - settings_audit_page.behind_banner
 logic_claims:
   - CLAIM-178C3FC0060E7B67
 id: REQ-ui-audit-log-behind-banner
