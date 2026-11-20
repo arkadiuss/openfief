@@ -26,7 +26,7 @@
     {
       "id": 1,
       "type": "stat",
-      "title": "Core log lines, last 5 minutes",
+      "title": "Log lines, last 30 minutes",
       "description": "Zero means the core's logs are not arriving: the collector is not running, has no Secret, or Grafana refuses it. The alert 'Demo telemetry is silent' fires on 30 minutes of it.",
       "datasource": {
         "type": "loki",
@@ -45,7 +45,7 @@
             "uid": "grafanacloud-logs"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({service_name=\"core\"}[5m]))",
+          "expr": "sum(count_over_time({k8s_namespace_name=\"openfief\"}[30m])) or vector(0)",
           "legendFormat": "",
           "refId": "A",
           "queryType": "instant"
@@ -108,7 +108,7 @@
             "uid": "grafanacloud-logs"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({service_name=\"core\"} | detected_level=~\"(?i)error|fatal|critical\" [1h]))",
+          "expr": "sum(count_over_time({service_name=\"core\"} | detected_level=~\"(?i)error|fatal|critical\" [1h])) or vector(0)",
           "legendFormat": "",
           "refId": "A",
           "queryType": "instant"

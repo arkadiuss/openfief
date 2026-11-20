@@ -10,8 +10,8 @@
   "for": "0s",
   "isPaused": false,
   "annotations": {
-    "summary": "No core logs reached Grafana for 30 minutes",
-    "description": "No log record of service_name core in 30 minutes: the collector is down or has no Secret, Grafana refuses its token, or the core is not running. No data counts as firing here (docs/dev/demo.md#telemetry)."
+    "summary": "No demo logs reached Grafana for 30 minutes",
+    "description": "No log record from any pod of the namespace openfief in 30 minutes (Postgres and SpiceDB log every few minutes even when the demo is idle, the core does not): the collector is down or has no Secret, Grafana refuses its token, or the demo is down. No data counts as firing here (docs/dev/demo.md#telemetry)."
   },
   "labels": {
     "app": "openfief",
@@ -32,7 +32,7 @@
           "type": "loki",
           "uid": "grafanacloud-logs"
         },
-        "expr": "sum(count_over_time({service_name=\"core\"}[30m]))",
+        "expr": "sum(count_over_time({k8s_namespace_name=\"openfief\"}[30m])) or vector(0)",
         "editorMode": "code",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
