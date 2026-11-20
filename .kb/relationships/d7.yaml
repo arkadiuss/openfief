@@ -1000,3 +1000,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-584e8e074a58
+  - type: specified_by
+    from: REQ-demo-grafana-as-code
+    to: SCEN-demo-grafana-as-code
+    created_at: 2026-11-20T12:34:50.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-858aaae19157

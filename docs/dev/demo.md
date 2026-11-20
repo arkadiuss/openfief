@@ -8,6 +8,9 @@ covers:
   - scripts/tests/demo.test.sh
   - scripts/tests/demo-secret.test.sh
   - deploy/demo/**
+  - deploy/grafana/**
+  - scripts/grafana/**
+  - scripts/tests/grafana.test.sh
 ---
 
 **(P)** This page is a Claude Code proposal, written for the author's request for committed automation that makes it easy to create and recreate demo machines within about €10 a month. The rules it serves are in [sdlc.md](sdlc.md#ci-and-environments): a Hetzner machine running k3s, deployed from `main` and from alpha and beta releases, holding synthetic data only (GR-12). Commands live in `Taskfile.yml`.
@@ -371,6 +374,28 @@ The Secret `grafana-otlp` in namespace `observability` holds three keys, `endpoi
 
    A new machine (`task demo:recreate`) has no Secret: create it again. Check `kubectl -n observability get pods` shows the collector running, and that Grafana's *Explore* shows logs of `service.name="core"` within a minute or two.
 4. **Make the reading token, for the orchestrator.** In the stack's Grafana, *Administration* > *Users and access* > *Service accounts*: add one with the Viewer role and a token. Give the orchestrator the token as the environment secret `GRAFANA_READ_TOKEN` and the stack's Grafana address (`https://<stack>.grafana.net`) as `GRAFANA_URL`. It reads logs, metrics and traces through the Grafana API; it can't write, and it is never in git.
+
+### Grafana
+
+What the stack shows and alerts on is code too, in [deploy/grafana](../../deploy/grafana), and `task grafana:apply` puts it into the stack. Nothing else holds the stack's settings: a dashboard or rule changed in Grafana's UI is replaced by the next apply, so change the JSON.
+
+| File | What it is |
+|---|---|
+| `folder.json` | The folder `openfief-demo` (uid `openfief-demo`), where everything below lives. |
+| `dashboards/demo.json` | The dashboard **OpenFief demo** (uid `openfief-demo`): stats for the core's log lines in 5 minutes (zero means the telemetry is silent), its errors in an hour, whether the authorization model answers and the MCP 401s; the Ask box's client events per second by kind and by browser; Turnstile's time to token at p50 and p95 and its errors by code; the MCP endpoint's refused requests; the authorization model's availability and its changes; the log volume of the core and the operator; and their error logs. |
+| `alerts/*.json` | Three alert rules in the rule group `openfief-demo`, each with a fixed uid: **Turnstile errors spike** (more than 10 `turnstile-error` events in 10 minutes), **Core error logs above threshold** (more than 10 error records of the core in 15 minutes) and **Demo telemetry is silent** (no core log record in 30 minutes, where no data counts as firing). |
+
+The queries use the stack's own datasources by uid (`grafanacloud-prom`, `grafanacloud-logs`, `grafanacloud-traces`) and the five metrics the core exports ([Metrics](../guides/tracing.md#metrics)) under the names Grafana Cloud gives OTLP metrics: dots become underscores, a counter gets `_total` and a histogram `_bucket`, `_sum` and `_count`. Logs are `service_name` `core` or `operator`, the container's name the collector gives each record, and a record's level is Loki's `detected_level`. The core exports no metric for an authorization decision's denial, so the dashboard shows the model's availability and its changes instead, which are what the allow-list holds. The collector's own metrics are off, so there is no collector `up` metric: the *Core log lines* stat is its sign of life. The alert rules use the stack's default notification policy and create no contact point: where a firing rule goes is the stack's choice, and until the author sets a contact point, it only shows in Grafana's alerting page. The rules are applied with `X-Disable-Provenance`, so Grafana's UI doesn't lock them (a provisioned rule is otherwise read-only there); the next apply replaces any edit, as it does a dashboard.
+
+```bash
+export GRAFANA_URL=https://<stack>.grafana.net          # the stack's address: no default, and only https on grafana.net is accepted
+read -rs GRAFANA_CLOUD_TOKEN && export GRAFANA_CLOUD_TOKEN   # a service account token of the stack, Admin role
+task grafana:apply
+```
+
+`task grafana:apply` runs the offline check, then upserts by uid: the folder (created, or updated), each dashboard (`POST /api/dashboards/db`, overwriting) and each rule (`PUT` by uid, `POST` when the stack answers 404), and prints one line each with its name and HTTP status, and nothing of a response. A second run changes nothing. It refuses a missing `GRAFANA_URL` or token and any address that isn't `https://<name>.grafana.net` with no path, port or credentials, before it calls anything, because the token must go nowhere else. The token reaches curl in a header read from a pipe, never in an argument or a file. `task grafana:check` is the offline half, and part of `task check`: valid JSON, a fixed `openfief-` uid for each dashboard and rule (a file is named for its uid without the prefix), no database id, only the stack's datasources, only the five metrics a query may name, and nothing that looks like a token, an address or the stack's own name. [grafana.test.sh](../../scripts/tests/grafana.test.sh) runs both against a fake curl.
+
+Two tokens, two jobs. The **apply token** above writes the stack's dashboards and rules, so it is an Admin service account's; make it for the apply and keep it in the shell that runs it. The **reading token** of [What the author must do](#what-the-author-must-do), step 4, is a Viewer's, and is the one the orchestrator holds: it reads logs, metrics and traces and can't write, so it never applies this folder. Neither is in git, and neither is the collector's write token.
 
 ### Turning it off
 

@@ -240322,3 +240322,304 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-sdk-start-metrics
+  - id: SYM-grafana-apply-grafana-url
+    title: grafana_url
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:35.556Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-api
+    title: grafana_api
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:43.561Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-report
+    title: grafana_report
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:51.208Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-folder
+    title: grafana_folder
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:32:58.416Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-dashboards
+    title: grafana_dashboards
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:05.589Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-rules
+    title: grafana_rules
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:12.916Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-main
+    title: grafana_main
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:19.760Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-json
+    title: check_json
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:26.937Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-folder
+    title: check_folder
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:33.134Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-dashboards
+    title: check_dashboards
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:39.488Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-metrics
+    title: check_metrics
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:45.242Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-rules
+    title: check_rules
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:51.341Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-secrets
+    title: check_secrets
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:33:57.543Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-grafana-run-apply
+    title: run_apply
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:03.946Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:10.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-yes-if
+    title: yes_if
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:16.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-nowhere
+    title: nowhere
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:23.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-refuses
+    title: refuses
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:30.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-run-check
+    title: run_check
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:36.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-grafana-faulty
+    title: faulty
+    status: active
+    sourceFile: scripts/tests/grafana.test.sh
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:34:43.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-grafana-apply
+  - id: SYM-grafana-apply-grafana-fail
+    title: grafana_fail
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:19.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-apply-grafana-ok
+    title: grafana_ok
+    status: active
+    sourceFile: scripts/grafana/apply.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:27.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code
+  - id: SYM-grafana-check-check-fail
+    title: check_fail
+    status: active
+    sourceFile: scripts/grafana/check.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Author request: the demo''s Grafana Cloud stack as code, git-tracked JSON plus an idempotent apply script (docs/dev/demo.md#grafana), 2026-11-20'
+      recorded_at: 2026-11-20T12:58:34.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-grafana-apply
+      - type: implements
+        target: REQ-demo-grafana-as-code

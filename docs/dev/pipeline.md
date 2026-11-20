@@ -94,6 +94,7 @@ Two targets drive a browser and are in no check, since a check must not need Chr
 | `docs:build` | [docgen](../../tools/docgen/main.go) writes the reference pages, then Hugo and [docs-diagrams.mjs](../../scripts/docs-diagrams.mjs) build the site ([docs.md](docs.md)) | a broken link, a diagram that doesn't render, or a docs page naming a kibi ID or task that doesn't exist |
 | `docs:fresh` (CI only) | `git log` over the range from `DOCS_BASE`, piped into `docgen fresh` | covered code changed without a page covering it and without a `Docs-Unchanged:` trailer, or a Go package no page covers |
 | `demo:validate` | [validate.sh](../../scripts/demo/validate.sh): `kustomize build` of `deploy/demo`, of every git path its Flux Kustomizations apply, and of `deploy/demo/openfief`, which includes the demo's model layer (`deploy/demo/model`, [Demo environment](demo.md#the-demo-model)) | a layer doesn't build, an image isn't pinned by digest, an OCI source doesn't require a cosign signature, a substituting layer uses a variable cloud-init doesn't define, the layer's settings route anything but the Ask box or name a model its provider instance doesn't list, or the layer's D-208 spend guards are wrong (a core flag missing or changed, a budget that is no positive amount, a UI grant without the Turnstile host or Secret) or the live demo holds the placeholder Turnstile site key, or a PluginGrant doesn't approve a Secret (`<instance>--<role>`) its Plugin's manifest asks for, optional ones included, which would keep that Plugin AwaitingApproval, or the telemetry layer (`deploy/demo/telemetry`, [Telemetry](demo.md#telemetry)) is wrong: Flux doesn't apply it, it holds a Secret, a collector pipeline lacks the `transform/scrub` processor (or runs something but the memory limiter before it, or exports anywhere but the one `otlphttp/grafana`), the scrub isn't fail-closed or lacks a statement for a context or the keys and patterns of the personal data it exists for (client addresses, session and token IDs, Authorization and Cookie, questions, token prefixes), the config holds a Grafana address or a literal credential, the pod mounts the node's logs writable, any other host path, or an optional credential, or keeps a capability, the image isn't pinned by tag and digest, the NetworkPolicy lets in anything but the core and the operator on 4318 or lets out anything but DNS and HTTPS to the public internet, or the live demo doesn't send OTLP to the collector's Service |
+| `grafana:check` | [check.sh](../../scripts/grafana/check.sh), offline: `deploy/grafana` ([Demo environment](demo.md#grafana)) is valid JSON, every dashboard and alert rule has a fixed `openfief-` uid, queries use only the stack's datasources and the metrics the core exports, and no file holds a secret | a missing or duplicate uid, a foreign datasource or metric, a secret-looking string |
 | `authz:validate` | `zed validate authz/validation.yaml`, offline: the authorization model's SpiceDB schema ([authz/schema.zed](../../authz/schema.zed), D-164) against its relationships and assertions | the schema doesn't parse, or an assertion fails |
 
 `task test:authz` is outside `task check`: it runs the authorization contract test ([test-authz.sh](../../scripts/test-authz.sh), build tag `spicedb`) against a real SpiceDB in testing mode, which must answer every holder and action as `identity.MayAct` does. SpiceDB is pinned as `SPICEDB_VERSION` and built from its module into `.bin/` on first use (`tool:spicedb`, through retry.sh), which takes minutes, so `task tools` doesn't install it.
@@ -137,7 +138,7 @@ The tool sorts each changed path by the first rule that matches it, in [classify
 | `docs/`, `site/`, root `*.md` and `LICENSE` | `docs:build` |
 | `.kb/` | `docs:build` (its status pages read kibi) |
 | `.github/` | `lint:ci` |
-| `deploy/` | `demo:validate`; `gen:check` for `deploy/crds` and `deploy/operator` |
+| `deploy/` | `demo:validate`; `gen:check` for `deploy/crds` and `deploy/operator`; `deploy/grafana` through its script test, which runs `grafana:check` |
 | A plugin's `manifest.json` or `Dockerfile`, or `deploy/demo/` | `plugins:labels:check` |
 | `.claude/`, `.mcp.json`, `renovate.json` | nothing more: no check reads them |
 | Operator code, through its imports | `gen:check` |
@@ -191,7 +192,7 @@ flowchart TD
   subgraph cc["task check:commit:full (in order, stops at the first failure)"]
     direction TB
     gen["gen:check"] --> labels["plugins:labels:check"] --> fmt["fmt:check"] --> lint["lint"] --> lintci["lint:ci"] --> proto["proto"]
-    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> az["authz:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
+    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> gc["grafana:check"] --> az["authz:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
   end
   part -->|"all green"| msg
   cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit, task proto:breaking:commit"]
@@ -445,6 +446,7 @@ task lint:ci                   # actionlint over the workflows
 task gen:check                 # regenerate, then fail on drift
 task proto                     # buf lint, breaking and generated-code checks
 task demo:validate             # build every demo layer offline; digests and signatures
+task grafana:check             # deploy/grafana offline: JSON, fixed uids, datasources, metrics, no secret
 task authz:validate            # the authorization schema's assertions (zed validate)
 task demo:plan ENV=demo        # read-only Hetzner (and Cloudflare) API calls; needs HCLOUD_TOKEN
 task ci:images PREFIX=ghcr.io/arkadiuss/openfief

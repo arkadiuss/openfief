@@ -1455,3 +1455,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d74b4a48e94
+  - type: covered_by
+    from: SYM-grafana-apply-grafana-report
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:32:54.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed090666d4f4
+  - type: implements
+    from: SYM-grafana-apply-grafana-report
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:32:54.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914ff9798120

@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f3bbd1ee2bf
+  - type: covered_by
+    from: SYM-grafana-check-check-rules
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:33:54.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfea4361755b
+  - type: implements
+    from: SYM-grafana-check-check-rules
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:33:54.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-961ad5646155

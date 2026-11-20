@@ -325,6 +325,7 @@ tasks:
       - task: docs:build
       - task: docs:fresh
       - task: demo:validate
+      - task: grafana:check
       - task: authz:validate
       - task: kibi:check
 
@@ -352,6 +353,7 @@ tasks:
       - task: docs:check
       - task: docs:build
       - task: demo:validate
+      - task: grafana:check
       - task: authz:validate
       - task: kibi:staged
 
@@ -866,6 +868,21 @@ tasks:
     deps: [tool:kustomize, tool:gojq]
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
+
+  grafana:check:
+    desc: 'Check deploy/grafana offline (docs/dev/demo.md#grafana): valid JSON, fixed uids, only the stack''s datasources, only the metrics the core exports, no secret'
+    deps: [tool:gojq]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/grafana/check.sh
+
+  grafana:apply:
+    desc: 'Upsert deploy/grafana (folder, dashboards, alert rules) into the demo''s Grafana Cloud stack by uid, so a second run changes nothing; needs GRAFANA_URL (https://<stack>.grafana.net, no default) and GRAFANA_CLOUD_TOKEN (a stack service account token, Admin) in the environment, e.g. task grafana:apply GRAFANA_URL=https://<stack>.grafana.net'
+    deps: [tool:gojq]
+    # GRAFANA_CLOUD_TOKEN is inherited from the environment and never templated here, so Task never prints it.
+    env:
+      GRAFANA_URL: '{{.GRAFANA_URL}}'
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/grafana/apply.sh
 
   release:check:
     desc: 'Validate a release version for its channel (alpha, beta or stable) and that its tag doesn''t exist yet; with COMMIT, a tag already at that commit passes too (release:publish resuming), e.g. task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1'

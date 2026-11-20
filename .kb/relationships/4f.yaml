@@ -1175,3 +1175,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f585eda1db6
+  - type: covered_by
+    from: SYM-grafana-apply-grafana-fail
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:58:23.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c8bf7999ad9
+  - type: implements
+    from: SYM-grafana-apply-grafana-fail
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:58:23.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55b04f24faf1

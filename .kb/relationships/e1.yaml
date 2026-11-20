@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e62a211e5d51
+  - type: executable_for
+    from: SYM-grafana-grafana-refuses
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:34:33.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a977f25fa7

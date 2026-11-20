@@ -1259,3 +1259,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e09dbdc8c8d0
+  - type: covered_by
+    from: SYM-grafana-apply-grafana-folder
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T12:33:01.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12e6b29b52ae
+  - type: implements
+    from: SYM-grafana-apply-grafana-folder
+    to: REQ-demo-grafana-as-code
+    created_at: 2026-11-20T12:33:01.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-170ef8425c15

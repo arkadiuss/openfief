@@ -1,0 +1,98 @@
+{
+  "uid": "openfief-turnstile-errors",
+  "title": "Turnstile errors spike",
+  "orgID": 1,
+  "folderUID": "openfief-demo",
+  "ruleGroup": "openfief-demo",
+  "condition": "C",
+  "noDataState": "OK",
+  "execErrState": "KeepLast",
+  "for": "5m",
+  "isPaused": false,
+  "annotations": {
+    "summary": "More than 10 Turnstile errors in 10 minutes on the demo's Ask box",
+    "description": "openfief.ui.client_events with kind turnstile-error, summed over 10 minutes. See the Turnstile errors by code panel of the OpenFief demo dashboard: one code points at a browser or site-key problem, many at Cloudflare."
+  },
+  "labels": {
+    "app": "openfief",
+    "env": "demo",
+    "severity": "warning"
+  },
+  "data": [
+    {
+      "refId": "A",
+      "relativeTimeRange": {
+        "from": 900,
+        "to": 0
+      },
+      "datasourceUid": "grafanacloud-prom",
+      "model": {
+        "refId": "A",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-prom"
+        },
+        "expr": "sum(increase(openfief_ui_client_events_total{kind=\"turnstile-error\"}[10m]))",
+        "editorMode": "code",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "instant": true,
+        "range": false
+      }
+    },
+    {
+      "refId": "B",
+      "datasourceUid": "__expr__",
+      "model": {
+        "refId": "B",
+        "type": "reduce",
+        "expression": "A",
+        "reducer": "last",
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "intervalMs": 1000,
+        "maxDataPoints": 43200
+      }
+    },
+    {
+      "refId": "C",
+      "datasourceUid": "__expr__",
+      "model": {
+        "refId": "C",
+        "type": "threshold",
+        "expression": "B",
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "conditions": [
+          {
+            "evaluator": {
+              "type": "gt",
+              "params": [
+                10
+              ]
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C"
+              ]
+            },
+            "reducer": {
+              "type": "last",
+              "params": []
+            },
+            "type": "query"
+          }
+        ]
+      }
+    }
+  ]
+}
