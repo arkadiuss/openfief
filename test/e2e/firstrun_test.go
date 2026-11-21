@@ -9,12 +9,15 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"os/exec"
 	"slices"
 	"strings"
 	"testing"
 	"time"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 )
@@ -40,6 +43,8 @@ const (
 	installedUI = "Installed " + uiPlugin + "."
 	// filePerm is the mode of the files buildCLI writes.
 	filePerm = 0o600
+	// freshInstallEventMs is the time of the client event the first run reports, which is found in the UI's log.
+	freshInstallEventMs = 4545
 )
 
 // errNoCLI reports a run without the CLI built from this checkout.
@@ -119,6 +124,67 @@ func TestBundleFirstRun(t *testing.T) {
 	}
 
 	enrollWithCLI(t)
+
+	// The rest of the fresh install's defaults, now that the UI runs and the owner has a passkey.
+	checkOnlyTheUIInstalled(t, k)
+	checkNoOTLPExport(t, k)
+	checkClientEventsOnAndLocal(t, k)
+}
+
+// checkOnlyTheUIInstalled checks that the UI the owner installed is the install's only plugin: no model provider
+// and no connector comes with the bundle (D-212, D-205).
+func checkOnlyTheUIInstalled(t *testing.T, k *kube) {
+	t.Helper()
+	list, err := k.dynamic.Resource(pluginResource()).Namespace(namespace).List(t.Context(), metav1.ListOptions{})
+	if err != nil {
+		t.Fatalf("listing plugins: %v", err)
+	}
+	installed := make([]string, 0, len(list.Items))
+	for i := range list.Items {
+		installed = append(installed, list.Items[i].GetName())
+	}
+	if !slices.Equal(installed, []string{uiPlugin}) {
+		t.Errorf("a fresh install has plugins %v, want only %s: no model provider, no connector", installed, uiPlugin)
+	}
+}
+
+// checkNoOTLPExport checks D-172 on the running install: no Deployment, the UI's that the operator started
+// included, sets an OpenTelemetry variable or takes its environment from a ConfigMap, where the tracing component
+// puts them, so nothing is exported.
+func checkNoOTLPExport(t *testing.T, k *kube) {
+	t.Helper()
+	deployments, err := k.clients.AppsV1().Deployments(namespace).List(t.Context(), metav1.ListOptions{})
+	if err != nil {
+		t.Fatalf("listing Deployments: %v", err)
+	}
+	for i := range deployments.Items {
+		d := &deployments.Items[i]
+		spec, err := json.Marshal(d.Spec.Template.Spec)
+		if err != nil {
+			t.Fatalf("encoding the pod spec of Deployment %s: %v", d.Name, err)
+		}
+		for _, setting := range []string{"OTEL_", `"configMapRef"`} {
+			if bytes.Contains(spec, []byte(setting)) {
+				t.Errorf("the pod spec of Deployment %s holds %s: want no OTLP export on a fresh install", d.Name, setting)
+			}
+		}
+	}
+}
+
+// checkClientEventsOnAndLocal checks D-227's default on a fresh install: the owner never turned the client events
+// off, the login page loads the reporting script, and a report is taken and becomes a log record of the UI, which
+// stays local since nothing exports it (checkNoOTLPExport).
+func checkClientEventsOnAndLocal(t *testing.T, k *kube) {
+	t.Helper()
+	if got := queryOne(t, k, `SELECT count(*) FROM valuation.settings WHERE key = 'client_events'`); got != "0" {
+		t.Errorf("the client events setting is stored (%s rows), but it exists only while they are off", got)
+	}
+	base := forwardCore(t, k)
+	waitLoginLoadsEvents(t, base, true)
+	if r := postClientEvent(t, base, freshInstallEventMs); r.status != http.StatusNoContent {
+		t.Fatalf("POST /client-events on a fresh install = %d %s, want 204", r.status, r.body)
+	}
+	waitClientEventLogged(t, k, freshInstallEventMs)
 }
 
 // installUIWithCLI runs `openfief plugin install ui` with the CLI built from

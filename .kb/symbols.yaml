@@ -248521,3 +248521,36 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-ask-model-question-needs-post
+  - id: SYM-e2e-firstrun-check-only-the-ui-installed
+    title: checkOnlyTheUIInstalled
+    status: active
+    sourceFile: test/e2e/firstrun_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (d) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-check-no-otlp-export
+    title: checkNoOTLPExport
+    status: active
+    sourceFile: test/e2e/firstrun_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (d) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-check-client-events-on-and-local
+    title: checkClientEventsOnAndLocal
+    status: active
+    sourceFile: test/e2e/firstrun_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (d) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T14:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run

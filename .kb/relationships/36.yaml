@@ -1056,3 +1056,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d5a0fc8f882
+  - type: executable_for
+    from: SYM-e2e-firstrun-check-client-events-on-and-local
+    to: TEST-e2e-bundle-first-run
+    created_at: 2026-11-21T20:21:11.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98d9258601cf

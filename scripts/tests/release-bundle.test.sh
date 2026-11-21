@@ -213,6 +213,22 @@ sed -i "s|image: quay.io/example/x:1.0.0$|image: quay.io/example/x:1.0.0@$da|" f
 if grep -qiE 'refused-range-exempt-host|REFUSED_RANGE_EXEMPT_HOST' "a/openfief-install-$version.yaml"; then
   fail_case "the real install sets the egress proxy's test-only exemption"
 fi
+# The real install's defaults on a fresh install, read off what an owner applies unchanged: no OTLP export (D-172),
+# agents and models off (D-212), and client events on but local (D-227).
+# No OpenTelemetry variable, no environment from a ConfigMap or Secret, and no egress to a collector's OTLP ports.
+otel="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Deployment" or .kind == "Job") | .spec.template.spec | (.containers + (.initContainers // []))[] | ((.env // [])[] | select(.name | startswith("OTEL_")) | .name), ((.envFrom // [])[] | "envFrom")] | join(",")' "a/openfief-install-$version.yaml")"
+[ -z "$otel" ] || fail_case "the real install sets tracing (D-172): $otel"
+collector="$(gojq -r --yaml-input -s '[.[] | select(.kind == "NetworkPolicy") | .spec.egress[]?.ports[]?.port | select(. == 4317 or . == 4318)] | join(",")' "a/openfief-install-$version.yaml")"
+[ -z "$collector" ] || fail_case "the real install lets a pod reach an OTLP collector's ports (D-172): $collector"
+# No plugin comes in the bundle: no model provider, no connector, not even the UI, which the owner installs with the CLI.
+plugins="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Plugin" or .kind == "PluginGrant") | "\(.kind)/\(.metadata.name)"] | join(",")' \
+  "a/openfief-install-$version.yaml" "a/openfief-crds-$version.yaml" "a/openfief-db-$version.yaml")"
+[ -z "$plugins" ] || fail_case "the real bundle installs plugins (D-212, D-205): $plugins"
+# Nothing of the agentic features, the Ask box's Turnstile or the client events is set by an argument or a
+# variable of the install: the switch and its toggles are stored settings that start off (D-212), and the client
+# events are on until the owner stores otherwise (D-227).
+switches="$(gojq -r --yaml-input -s '[.[] | select(.kind == "Deployment" or .kind == "Job") | .spec.template.spec | .containers[] | ((.args // [])[], ((.env // [])[] | .name))] | map(select(test("model|mcp|ask|agent|turnstile|client.?event"; "i"))) | join(",")' "a/openfief-install-$version.yaml")"
+[ -z "$switches" ] || fail_case "the real install sets an argument or a variable of the agentic features or the client events (D-212, D-227): $switches"
 printf '          args: ["-listen=:4750", "-refused-range-exempt-host=fixture.example.test=10.0.0.1"]\n' >>fake/egress-proxy/deployment.yaml
 deploy="$work/fake" expect_fail "an exemption set by a flag" "test-only exemption from its refused ranges (D-215)" \
   "$version" d "${refs[@]}"
