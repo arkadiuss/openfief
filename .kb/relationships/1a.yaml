@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5091ca8450b8
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-settler-observe
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:53:43.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63df2ff4c3a

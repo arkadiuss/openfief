@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dc65e497d49
+  - type: specified_by
+    from: REQ-e2e-upgrade-keeps-stored-data
+    to: SCEN-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:40:28.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab7a070e337a

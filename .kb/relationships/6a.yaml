@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a13e7175fb36
+  - type: implements
+    from: SYM-release-fetch-say
+    to: REQ-tooling-release-fetch
+    created_at: 2026-11-21T09:44:23.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd42f5422e34
+  - type: covered_by
+    from: SYM-release-fetch-say
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:44:23.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91e1660ee342
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-cli-run
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:56:02.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f979c620542a

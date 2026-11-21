@@ -5,6 +5,8 @@ description: Install an OpenFief alpha on your own Kubernetes cluster from its r
 covers:
   - scripts/release-verify.sh
   - scripts/tests/release-verify.test.sh
+  - scripts/release-fetch.sh
+  - scripts/tests/release-fetch.test.sh
 ---
 
 Every OpenFief release, an alpha included, ships everything an install needs as assets of its GitHub release, its database included, and the first release is an alpha. This guide installs one on a cluster of your own, with synthetic or real data, and checks every file and image it runs against the identity of OpenFief's release pipeline, or against a pinned checksum, before anything reaches the cluster.
@@ -174,6 +176,50 @@ It lists every balance your institutions reported, each position and each cash b
 
 The command exits with status 1 when any balance fails, so a script can act on it. It runs the check in the core's pod with your kubeconfig, as `openfief enroll` does, so only you get the report, and the values appear only in your terminal: the core logs only that the check ran, with counts. A failed balance usually means a transaction OpenFief couldn't book yet, a row an import left out, which the attention items list, or cash to enter as a checkpoint ([Read API](../concepts/read-api.md#the-owners-balance-check)).
 
+## Upgrade
+
+An upgrade puts a newer release over the one you run, with the same files, the same commands and the same order as the install. Your data stays in the database: from the first release on, every change to what is stored ships with a migration of what is already stored (D-161), which the core applies when it starts, each context under its own lock, so a core that starts twice applies each migration once. A migration only moves forward, so the way back is your backup.
+
+1. **Read the release notes** for the version you are moving to. Until the first beta the read API and the plugin contracts may break between releases, and a breaking change is listed there.
+2. **Back up the database.** CloudNativePG's backups, or a dump you keep outside the cluster, for example `kubectl -n openfief exec openfief-db-1 -c postgres -- pg_dump -Fc openfief >openfief.dump`.
+3. **Download and verify the new release**, steps 1 to 3 above with its version: the CLI and its checksums with `cosign verify-blob`, then every image the install file runs with `cosign verify`. Put its `openfief` CLI on your `PATH`, over the old one. If the release ships another CloudNativePG manifest than the one you run (its file name says the version), check its checksum as in step 4 and apply it first.
+4. **Apply the CRDs**, with the new release's file:
+
+   ```bash
+   kubectl apply --server-side -f "openfief-crds-$VERSION.yaml"
+   ```
+
+5. **Bring your database file up to date.** `openfief-db-$VERSION.yaml` is the one file you edited, so don't apply the new one over it: compare it with the file you applied, `diff openfief-db-<old version>.yaml openfief-db-$VERSION.yaml`, copy what changed into your edited copy and apply that. A release can add objects to it: the first release after `2026.11.0-alpha.1` adds SpiceDB's `Database` and its `managed` role (step 5 above). Then wait for the cluster:
+
+   ```bash
+   kubectl apply --server-side -f openfief-db.yaml   # your copy, with the new release's changes in it
+   kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db --for=condition=Ready --timeout=10m
+   ```
+
+6. **Apply the install** and wait for every rollout, as in step 5. The core of the new release migrates the database before it serves, so its rollout takes a little longer than usual:
+
+   ```bash
+   kubectl apply --server-side -f "openfief-install-$VERSION.yaml"
+   for d in openfief-operator egress-proxy openfief-core openfief-spicedb; do
+     kubectl -n openfief rollout status "deployment/$d" --timeout=5m
+   done
+   ```
+
+   A release that adds a Deployment to the install, such as SpiceDB, rolls it out too; add its name to the loop. The credentials Job of this release makes SpiceDB's two Secrets only if they are missing and rotates nothing, so credentials you made yourself stay (D-216); the commands under step 5 clear the Jobs of earlier releases.
+
+7. **Upgrade the plugins you installed.** An upgrade never changes a plugin's image by itself (D-47): `openfief plugin list` lists your instances, and `openfief plugin upgrade ui <version>` verifies the release's new image, shows how its permissions differ from the installed one and applies it only when you confirm. Do it for each instance, the built-in UI first:
+
+   ```bash
+   openfief plugin upgrade ui "$VERSION"
+   kubectl -n openfief wait plugin.openfief.io/ui --for=condition=Ready --timeout=5m
+   ```
+
+8. **Check.** `kubectl -n openfief get pods` lists everything running and `openfief check balances` agrees with your institutions as before. Two things happen on their own, and neither needs you:
+   - The **first start of the first core that has grants**, the first release after `2026.11.0-alpha.1`, gives the household grant to every script token that may still be used and to every installed view plugin, once, each with its audit entry, so none loses access (D-209). A token you create afterwards has no grant until you give it one on the Access page. A restart, or the next upgrade, changes no grant.
+   - **Agents and models stay off.** The one switch in Settings is off unless you turned it on, and an upgrade doesn't turn it on (D-212).
+
+OpenFief's end-to-end tests run this upgrade, on k3s and on kind, from the published `2026.11.0-alpha.1`: they install it as steps 1 to 7 do, seed it with the synthetic demo dataset, upgrade it to the release candidate with the commands above, and check that every stored record is unchanged, that the cutover ran once, that SpiceDB's Secrets exist, that the agentic switch is off, and that the core is ready and the UI serves ([Delivery pipeline](../dev/pipeline.md#ci-on-pull-requests-and-main)).
+
 ## What next
 
 - [Expose OpenFief](expose.md): reach the install from your browser and scripts without a port-forward.
@@ -182,4 +228,4 @@ The command exits with status 1 when any balance fails, so a script can act on i
 
 OpenFief's release pipeline runs these same steps, 1 to 7, against every release it publishes, on a fresh kind cluster with the release's own assets ([Delivery pipeline](../dev/pipeline.md#releases)).
 
-From the first release on, every change to stored data ships with a migration of what is already stored (D-161), so a later release keeps the record this one starts. Verify each release's assets the same way before you apply them.
+From the first release on, every change to stored data ships with a migration of what is already stored (D-161), so a later release keeps the record this one starts: [Upgrade](#upgrade) says how to move to it. Verify each release's assets the same way before you apply them.

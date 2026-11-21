@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-540ed6856268
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-upgrade-as-guided
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:56:35.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e03ff0f3ee45

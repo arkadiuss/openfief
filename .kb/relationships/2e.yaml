@@ -1287,3 +1287,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a85087175beb
+  - type: executable_for
+    from: SYM-release-fetch-test-fails-with
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:50:51.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9abd1c315466

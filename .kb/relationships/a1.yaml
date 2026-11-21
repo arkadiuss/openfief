@@ -1119,3 +1119,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-093c0a940b68
+  - type: verified_by
+    from: SCEN-tooling-release-fetch
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:44:08.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada77155efda

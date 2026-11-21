@@ -1091,3 +1091,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f99c2240692
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-snapshot-count
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:52:42.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b89ccc7d1e7
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-attention
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:53:26.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b066f3f14561

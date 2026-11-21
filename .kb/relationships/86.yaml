@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a844bde9b74
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-list-tables-query
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:54:16.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-561d1de0b403

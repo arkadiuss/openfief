@@ -34,6 +34,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - `task e2e` refuses any kubeconfig context that isn't local **(P)**.
 - Each end-to-end test verifies a kibi scenario.
 - An end-to-end test follows the owner's first run: the `openfief` CLI built from the commit installs the UI plugin and enrolls the first passkey. Only downloading the CLI from a release stays outside the suite.
+- An end-to-end test upgrades the first published release in place to the checkout's bundle: the real release, downloaded and verified with cosign as the install guide says, installed with its commands, seeded with the synthetic demo dataset by its own loader, upgraded with the guide's "Upgrade" section, and checked row by row by content hash, so it needs `gh`, `cosign` and `kubectl` and the network (`task e2e`).
 - End-to-end tests log in with a real passkey ceremony: they drive the browser at `http://localhost` through a port-forward and use the browser's virtual authenticator. No flag weakens the product's origin check for tests.
 - Plugin images reach the operator from a throwaway registry on the cluster's Docker network, read over plain HTTP: go-containerregistry allows HTTP to a private address, and the nodes pull with `ctr --plain-http`. The image's digest and its signature (D-56), from a key made for the run and trusted through `openfief-trusted-signers` (D-45), are what make it trustworthy, not TLS. No operator flag or setting exists for the tests.
 
