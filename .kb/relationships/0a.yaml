@@ -1378,3 +1378,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28474d3aca09
+  - type: implements
+    from: SYM-pass-clientevents-go-store-saveclienteventsoff
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:21:09.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d1478740f85
+  - type: covered_by
+    from: SYM-pass-clientevents-go-store-saveclienteventsoff
+    to: TEST-valuation-pg-client-events
+    created_at: 2026-11-21T12:21:09.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bc9cf2de595
+  - type: covered_by
+    from: SYM-pass-clientevents-go-store-saveclienteventsoff
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:21:09.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74bddc7c71f2
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassneverreachesthelog
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:45.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f5f83d11799

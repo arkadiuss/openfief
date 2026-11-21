@@ -28,6 +28,8 @@ type fakeSettings struct {
 	read *fakeRead
 	mu   sync.Mutex
 	rate string
+	// events is the switch for the UI's client events (D-227).
+	events fakeClientEvents
 	// classes are the owner's exemption classes by ISIN (D-132).
 	classes map[string]string
 	// fees are the owner's early-redemption fees by ISIN, "confirmed" for

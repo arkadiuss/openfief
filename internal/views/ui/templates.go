@@ -28,9 +28,6 @@ var errNoPage = errors.New("no such page template")
 // page's own content and the shared fragments.
 type pages struct {
 	sets map[string]*template.Template
-	// clientEvents is whether the layout loads the script that reports the
-	// page's events (D-227).
-	clientEvents bool
 }
 
 // page is what every page template gets: its title, the session (nil on
@@ -109,8 +106,8 @@ func parsePages() (*pages, error) {
 // tmpl is "layout.html" for the whole page or a fragment's name for an
 // htmx swap. Each render executes a clone of the parsed set with f's
 // helpers, so the parsed set is never executed and stays clonable.
-func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, data any, f numberFormat) error {
-	body, err := p.execute(name, tmpl, data, f)
+func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, data any, f numberFormat, events bool) error {
+	body, err := p.execute(name, tmpl, data, f, events)
 	if err != nil {
 		return err
 	}
@@ -123,8 +120,10 @@ func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, dat
 }
 
 // execute runs a template of a page on a clone of its parsed set, with
-// amounts in the number format f, and returns what it wrote.
-func (p *pages) execute(name, tmpl string, data any, f numberFormat) ([]byte, error) {
+// amounts in the number format f, and the layout loading the script that
+// reports the page's events (D-227) when events is true, and returns what it
+// wrote.
+func (p *pages) execute(name, tmpl string, data any, f numberFormat, events bool) ([]byte, error) {
 	parsed, ok := p.sets[name]
 	if !ok {
 		return nil, fmt.Errorf("%w: %s", errNoPage, name)
@@ -135,7 +134,7 @@ func (p *pages) execute(name, tmpl string, data any, f numberFormat) ([]byte, er
 	}
 	var buf bytes.Buffer
 	funcs := templateFuncs(f)
-	funcs["clientEvents"] = func() bool { return p.clientEvents }
+	funcs["clientEvents"] = func() bool { return events }
 	if err := set.Funcs(funcs).ExecuteTemplate(&buf, tmpl, data); err != nil {
 		return nil, fmt.Errorf("render %s: %w", name, err)
 	}
@@ -151,7 +150,9 @@ func (s *server) show(w http.ResponseWriter, r *http.Request, status int, name s
 // format the request's session read (plainFormat() without one), or a plain
 // 500 when it fails.
 func (s *server) showTemplate(w http.ResponseWriter, r *http.Request, status int, name, tmpl string, data any) {
-	if err := s.pages.render(w, status, name, tmpl, data, requestFormat(r)); err != nil {
+	// Only the whole page has a layout, so only it asks whether the pages report.
+	events := tmpl == "layout.html" && s.events.enabled(r.Context())
+	if err := s.pages.render(w, status, name, tmpl, data, requestFormat(r), events); err != nil {
 		s.log.ErrorContext(r.Context(), "render page", "page", name, "error", kernel.LogSafe(err))
 		http.Error(w, "the page could not be rendered", http.StatusInternalServerError)
 	}

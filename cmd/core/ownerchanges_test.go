@@ -147,6 +147,9 @@ func settingChanges() []ownerChange {
 				Origin: origin, SessionToken: e.session, AccountId: string(demo.BondsAccount), Start: "2026-02-01",
 			})))
 		}, true},
+		{valuationv1connect.SettingsServiceSetClientEventsProcedure, identity.ActionSettingsChanged, func(e *changeEnv) error {
+			return outcome(e.settings.SetClientEvents(e.t.Context(), connect.NewRequest(&valuationv1.SetClientEventsRequest{Origin: origin, SessionToken: e.session, Enabled: false})))
+		}, true},
 		{valuationv1connect.PriceCheckServiceAcknowledgePriceCheckProcedure, identity.ActionPriceCheckAcknowledged, func(e *changeEnv) error {
 			return outcome(e.checks.AcknowledgePriceCheck(e.t.Context(), connect.NewRequest(&valuationv1.AcknowledgePriceCheckRequest{
 				Origin: origin, SessionToken: e.session, Isin: checkISIN, Symbol: checkSymbol, Date: "2026-03-08", Source: "ibkr-main",
@@ -410,7 +413,7 @@ func readOnlyProcedures() []string {
 		identityv1connect.AuthServiceListAuditEntriesProcedure, identityv1connect.AuthServiceListGrantsProcedure,
 		identityv1connect.AuthServiceListViewPluginsProcedure, identityv1connect.AuthServiceListInvitesProcedure,
 		identityv1connect.AuthServiceListPeopleProcedure,
-		valuationv1connect.SettingsServiceGetOwnerSettingsProcedure,
+		valuationv1connect.SettingsServiceGetOwnerSettingsProcedure, valuationv1connect.SettingsServiceGetClientEventsProcedure,
 		valuationv1connect.MarketDataServiceListSourceRankingsProcedure, valuationv1connect.MarketDataServiceListSeriesSourcesProcedure,
 		portfoliov1connect.ModelPortfolioServiceGetModelPortfolioProcedure,
 		portfoliov1connect.MaintainerServiceGetMaintainerProcedure, portfoliov1connect.MaintainerServiceGetProposalProcedure,

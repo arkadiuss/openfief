@@ -1301,3 +1301,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75b8e2d06112
+  - type: implements
+    from: SYM-pass-turnstilepass-go-turnstileconfig-passwindows
+    to: REQ-ui-turnstile-pass-window
+    created_at: 2026-11-21T12:19:07.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76269373b01f
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-turnstileconfig-passwindows
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:07.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a86fc010a3f5

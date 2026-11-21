@@ -335,10 +335,13 @@ func tokenBuckets() []float64 {
 // handler answers a page's report: 204 when it was taken or discarded, 400 for a
 // body that is no report, 413 for one over the cap and 429 past the address's
 // limit. The cap and the limit come before anything is read or kept. With
-// reporting off, every report is discarded unread.
-func (c *clientEvents) handler(on bool) http.HandlerFunc {
+// reporting off (on says so, asked of each report), every report is answered 204
+// and discarded unread: the pages that were open when the owner turned it off, or
+// that a service worker kept, go on posting to a door that takes nothing and
+// shows no error, and the answer does not tell a prober whether it is on.
+func (c *clientEvents) handler(on func(context.Context) bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if !on {
+		if !on(r.Context()) {
 			w.WriteHeader(http.StatusNoContent)
 			return
 		}

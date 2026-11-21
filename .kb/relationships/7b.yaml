@@ -1133,3 +1133,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac305e7b6bc2
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testturnstileconfigrefusesnegativepasswindows
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:36:01.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-695a4c5f78aa

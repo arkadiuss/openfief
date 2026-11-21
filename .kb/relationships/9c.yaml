@@ -1210,3 +1210,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c593210cb15b
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassslideswitheachmodelquestionuptotwohoursfromthecheck
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:53.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5acb45a5a4f5

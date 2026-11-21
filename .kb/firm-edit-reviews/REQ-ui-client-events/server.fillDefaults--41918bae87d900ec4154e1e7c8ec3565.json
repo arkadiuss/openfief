@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-client-events",
+  "sourceFile": "internal/views/ui/server.go",
+  "symbol": "server.fillDefaults",
+  "verdict": "keeps",
+  "note": "fillDefaults only gives the server a clock when the config names none; it touches no report, field or limit of the client events.",
+  "statementHash": "sha256:d740a60637eb7e854306e024a4139014d6322732a2c926b0c5a2a0164fb46f6d",
+  "codeHash": "sha256:747437a0338380ead67ca0311c92de3da1a8ea3e0a5d05d81343d0d6a67ffe4e",
+  "startLine": 262,
+  "endLine": 272,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
+}

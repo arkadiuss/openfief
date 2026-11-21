@@ -1077,3 +1077,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b637a14ee3e
+  - type: implements
+    from: SYM-pass-turnstilepass-go-turnstilecheck-usepass
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:19:44.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8499ccfdbc4
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-turnstilecheck-usepass
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:44.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d543be951853
