@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ledger-account-tax-wrapper",
+  "sourceFile": "cmd/core/settings.go",
+  "symbol": "newSettings",
+  "verdict": "keeps",
+  "note": "newSettings only chains WithClientEvents onto the settings use cases it already built; accounts, their tax wrappers and where the owner sets them are not touched.",
+  "statementHash": "sha256:37c2d37f15f2305e8c93c36981f263c9dc0659f48d7efa46cc76ee219935ae10",
+  "codeHash": "sha256:51bd1b673ac461f0b15a493de054ffb6314c8290ce0622db3b522e513c894236",
+  "startLine": 28,
+  "endLine": 30,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
+}

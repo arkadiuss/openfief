@@ -621,47 +621,71 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	if !ok {
 		return a.commands.answer(r, sess, question)
 	}
-	if card, stopped, err := a.guard(r, sess, question); stopped || err != nil {
+	card, stopped, pass, err := a.guard(r, sess, question)
+	if stopped || err != nil {
 		return card, err
 	}
-	return a.model.ask(r, sess, question)
+	card, err = a.model.ask(r, sess, question)
+	if err == nil {
+		card.pass = pass
+	}
+	return card, err
 }
 
-// checked runs the Turnstile check, when the installation has one, on the token
-// the widget put in the question's request: the card that says why the question
-// stops, and true, or false for one that goes on. It comes before the core
-// counts the question, so a bot that passes no check spends no one's allowance.
-func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, bool) {
+// checked runs the Turnstile check, when the installation has one: the card that
+// says why the question stops, and true, or false for one that goes on, with the
+// pass cookie the response sets for one that does (D-208). A question from a
+// session with a valid pass (usePass) goes on with no token and no call to
+// Cloudflare, and its pass is renewed; any other is checked on the token the
+// widget put in its request, and a pass is issued when it passes. A pass that
+// fails to verify is no error: the question is checked as if it had none, and the
+// no-token card sends the page to run the check. It comes before the core counts
+// the question, so a bot that passes no check spends no one's allowance.
+func (a routedAnswerer) checked(r *http.Request, sess session, question string) (answerCard, bool, *http.Cookie) {
 	if a.turnstile == nil {
-		return answerCard{}, false
+		return answerCard{}, false, nil
+	}
+	id := sess.Described.GetId()
+	if checkedAt, ok := a.turnstile.usePass(r, id); ok {
+		a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question", "verdict", verdictPass, "path", labelNone)
+		return answerCard{}, false, a.turnstile.issue(id, checkedAt)
 	}
 	outcome := a.turnstile.verify(r.Context(), askValue(r, turnstileField), clientAddress(r), r.Host)
 	// The verdict and the path that made the token, both fixed words: nothing the browser typed is logged.
 	a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question",
 		"verdict", outcome.verdict.String(), "path", checkPath(askValue(r, checkPathField)))
-	return turnstileAnswer(question, outcome)
+	if card, stopped := turnstileAnswer(question, outcome); stopped {
+		return card, true, nil
+	}
+	return answerCard{}, false, a.turnstile.issue(id, a.turnstile.now())
 }
 
 // guard runs what stands before a question that goes to the model (D-208): the
 // check that a person is asking, then the core counts it, once, before the first call of its loop, against its budget
 // for the day and its limits per session and per address. It returns the card
 // that says why the question stops, and true, or false for one that goes on;
-// an error ends the request, as a session that is no longer valid does.
-func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, error) {
-	if card, stopped := a.checked(r, question); stopped {
-		return card, true, nil
+// an error ends the request, as a session that is no longer valid does. For a
+// question that goes on it also returns the pass cookie to set, which the core's
+// refusal withholds: the pass is renewed by a question that reaches the model.
+func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, *http.Cookie, error) {
+	card, stopped, pass := a.checked(r, sess, question)
+	if stopped {
+		return card, true, nil, nil
 	}
 	adm, err := a.model.model.admit(r.Context(), sess, clientAddress(r))
 	if err != nil {
 		if connect.CodeOf(err) == connect.CodeUnauthenticated {
-			return answerCard{}, true, fmt.Errorf("admitting a question to the model: %w", err)
+			return answerCard{}, true, nil, fmt.Errorf("admitting a question to the model: %w", err)
 		}
 		a.log.WarnContext(r.Context(), "ask admission failed", "code", connect.CodeOf(err).String())
 		return modelCard(question, "The model couldn't be checked",
-			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil
+			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil, nil
 	}
 	card, refused := admissionAnswer(question, adm, a.model.clock())
-	return card, refused, nil
+	if refused {
+		return card, true, nil, nil
+	}
+	return card, false, pass, nil
 }
 
 // askHasModel reports whether the Ask box has a model for sess, so the box

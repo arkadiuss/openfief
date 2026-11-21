@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a680b2974aff
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-unitcheck
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:51:51.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aba06ec9b40f

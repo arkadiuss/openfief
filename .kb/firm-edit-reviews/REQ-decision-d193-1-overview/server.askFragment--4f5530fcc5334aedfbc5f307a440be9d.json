@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/ui/overtime.go",
   "symbol": "server.askFragment",
   "verdict": "keeps",
-  "note": "It still answers one question as a card read from the read API; it now also accepts a POST and the conversation's earlier turns (D-224), and the overview's places are unchanged.",
+  "note": "askFragment still answers the Ask box's question in place; the only change is that it sets the Turnstile pass cookie a model question earned, so the overview still opens with the status sentence and the Ask box and its other parts are untouched.",
   "statementHash": "sha256:602b9e577444e65400a609e94feb617b33a15456c5590fcf07ad6e68abaaad8e",
-  "codeHash": "sha256:b2845a27362efd1cf89085e4274712322e9953f021f39b8ee6c9bdbf91fc76ff",
+  "codeHash": "sha256:9929f24f98aa52855191a0e44a31418508c1f59a329f4eb4e325e7d5e7955aba",
   "startLine": 168,
-  "endLine": 194,
-  "recordedAt": "2026-11-21T10:03:48.690Z"
+  "endLine": 197,
+  "recordedAt": "2026-11-21T12:50:07.626Z"
 }

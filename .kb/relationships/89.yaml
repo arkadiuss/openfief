@@ -1161,3 +1161,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96d30b0b950f
+  - type: implements
+    from: SYM-pass-settings-pb-go-getclienteventsresponse-protoreflect
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:37:23.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86c75fb668f6
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-getclienteventsresponse-protoreflect
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:37:23.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbf89b276c89
+  - type: implements
+    from: SYM-pass-settings-pb-go-setclienteventsresponse
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:38:54.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb5eecf8f8ee
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-setclienteventsresponse
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:38:54.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7623d0f4d7a

@@ -47,6 +47,9 @@ type Settings struct {
 	// fees are the bonds' stored fees the owner confirms or overrides
 	// (WithBondFees); nil until set.
 	fees BondFees
+	// events keeps the switch for the UI's client events (WithClientEvents);
+	// nil until set.
+	events ClientEventsStore
 	// audit keeps each change with its audit entry (WithAudit); nil enters
 	// none.
 	audit ChangeAuditor

@@ -146833,10 +146833,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-home
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
       - type: implements
         target: REQ-decision-d193-1-overview
       - type: implements
         target: REQ-ui-overview-places
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
   - id: SYM-ui-server-over-time
     title: server.overTime
     sourceFile: internal/views/ui/overtime.go
@@ -193594,10 +193598,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-model-loop
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
       - type: implements
         target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-ui-ask-model-fixed-commands-first
+      - type: implements
+        target: REQ-ui-turnstile-pass-skips-the-check
   - id: SYM-ask-model-askmodel-go-server-ask-has-model
     title: server.askHasModel
     status: active
@@ -229288,8 +229296,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-ask-guards
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
       - type: implements
         target: REQ-ui-ask-guard-messages
+      - type: implements
+        target: REQ-ui-turnstile-pass-skips-the-check
   - id: SYM-m5-plugins-ui-config-go-rawconfig-deadline
     title: rawConfig.deadline
     status: active
@@ -229339,6 +229351,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-turnstile
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-skips-the-check
       - type: implements
         target: REQ-ui-turnstile-stalled-check-falls-back-visible
       - type: implements
@@ -246170,3 +246186,1385 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
+  - id: SYM-pass-turnstilepass-go-turnstileconfig-passwindows
+    title: TurnstileConfig.passWindows
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-window
+  - id: SYM-pass-turnstilepass-go-turnstilecheck-issue
+    title: turnstileCheck.issue
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-window
+  - id: SYM-pass-turnstilepass-go-turnstilecheck-passkey
+    title: turnstileCheck.passKey
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
+  - id: SYM-pass-turnstilepass-go-passmac
+    title: passMAC
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
+  - id: SYM-pass-turnstilepass-go-turnstilecheck-usepass
+    title: turnstileCheck.usePass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
+  - id: SYM-pass-clientevents-go-settings-withclientevents
+    title: Settings.WithClientEvents
+    status: active
+    sourceFile: internal/valuation/app/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-client-events-switch
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-go-settings-clienteventsenabled
+    title: Settings.ClientEventsEnabled
+    status: active
+    sourceFile: internal/valuation/app/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: covered_by
+        target: TEST-valuation-client-events-switch
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-go-settings-setclienteventsenabled
+    title: Settings.SetClientEventsEnabled
+    status: active
+    sourceFile: internal/valuation/app/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: covered_by
+        target: TEST-valuation-client-events-switch
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-go-store-clienteventsoff
+    title: Store.ClientEventsOff
+    status: active
+    sourceFile: internal/valuation/postgres/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: covered_by
+        target: TEST-valuation-pg-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-go-store-saveclienteventsoff
+    title: Store.SaveClientEventsOff
+    status: active
+    sourceFile: internal/valuation/postgres/clientevents.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: covered_by
+        target: TEST-valuation-pg-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-go-settingsservice-getclientevents
+    title: settingsService.GetClientEvents
+    status: active
+    sourceFile: internal/valuation/connectapi/settings.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-go-settingsservice-setclientevents
+    title: settingsService.SetClientEvents
+    status: active
+    sourceFile: internal/valuation/connectapi/settings.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientswitch-go-clienteventsswitch
+    title: clientEventsSwitch
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-clienteventssetting
+    title: clientEventsSetting
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-clienteventsswitch-enabled
+    title: clientEventsSwitch.enabled
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-clienteventsswitch-refresh
+    title: clientEventsSwitch.refresh
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-clienteventsswitch-set
+    title: clientEventsSwitch.set
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-server-loadclientevents
+    title: server.loadClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientswitch-go-server-setclientevents
+    title: server.setClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-client-events-switch
+      - type: implements
+        target: REQ-ui-client-events-owner-switch
+  - id: SYM-pass-clientevents-test-go-clientevents
+    title: clientEvents
+    status: active
+    sourceFile: cmd/core/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-client-events
+  - id: SYM-pass-clientevents-test-go-testclienteventssettingonarealcore
+    title: TestClientEventsSettingOnARealCore
+    status: active
+    sourceFile: cmd/core/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-client-events
+  - id: SYM-pass-clientevents-test-go-fakeclientevents
+    title: fakeClientEvents
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-fakeclientevents-clienteventsoff
+    title: fakeClientEvents.ClientEventsOff
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-fakeclientevents-saveclienteventsoff
+    title: fakeClientEvents.SaveClientEventsOff
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-recordingauditor
+    title: recordingAuditor
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-recordingauditor-audited
+    title: recordingAuditor.Audited
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-testclienteventsareonuntiltheownerturnsthemoff
+    title: TestClientEventsAreOnUntilTheOwnerTurnsThemOff
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-testclienteventscanbechangedbytheowneralone
+    title: TestClientEventsCanBeChangedByTheOwnerAlone
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-testclienteventserrors
+    title: TestClientEventsErrors
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-clientevents-test-go-testclienteventsswitchroundtrip
+    title: TestClientEventsSwitchRoundTrip
+    status: active
+    sourceFile: internal/valuation/postgres/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pg-client-events
+  - id: SYM-pass-browser-test-go-browserclock
+    title: browserClock
+    status: active
+    sourceFile: internal/views/ui/browser_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-browser-checks
+  - id: SYM-pass-browser-test-go-browserclock-now
+    title: browserClock.now
+    status: active
+    sourceFile: internal/views/ui/browser_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-browser-checks
+  - id: SYM-pass-browser-test-go-browserclock-advance
+    title: browserClock.advance
+    status: active
+    sourceFile: internal/views/ui/browser_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-browser-checks
+  - id: SYM-pass-clientswitch-fakes-test-go-fakeclientevents
+    title: fakeClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch_fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-fakes-test-go-fakesettings-getclientevents
+    title: fakeSettings.GetClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch_fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-fakes-test-go-fakesettings-setclientevents
+    title: fakeSettings.SetClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch_fakes_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclock
+    title: testClock
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-newtestclock
+    title: newTestClock
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclock-now
+    title: testClock.now
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclock-advance
+    title: testClock.advance
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-harness-postclientevents
+    title: harness.postClientEvents
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclienteventsfollowtheownerssettinginthecore
+    title: TestClientEventsFollowTheOwnersSettingInTheCore
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclienteventssettingistheownersalone
+    title: TestClientEventsSettingIsTheOwnersAlone
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclienteventssettingshowsinsettingswithwhatiscollected
+    title: TestClientEventsSettingShowsInSettingsWithWhatIsCollected
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclienteventssettingisreadfromthecoreonceeveryinterval
+    title: TestClientEventsSettingIsReadFromTheCoreOnceEveryInterval
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-clientswitch-test-go-testclienteventssettingwhenthecorecantbeasked
+    title: TestClientEventsSettingWhenTheCoreCantBeAsked
+    status: active
+    sourceFile: internal/views/ui/clientswitch_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-client-events-switch
+  - id: SYM-pass-turnstilepass-test-go-passharness
+    title: passHarness
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-passharnesswith
+    title: passHarnessWith
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-harness-askswithpass
+    title: harness.asksWithPass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-passof
+    title: passOf
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-wantanswered
+    title: wantAnswered
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-wantchecked
+    title: wantChecked
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-passtimes
+    title: passTimes
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassisissuedwiththecheckandholdsnothingelse
+    title: TestPassIsIssuedWithTheCheckAndHoldsNothingElse
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testavalidpassskipssiteverifyandthenextquestionisstillcounted
+    title: TestAValidPassSkipsSiteverifyAndTheNextQuestionIsStillCounted
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testlimitsandthebudgetstillstopaquestionwithapass
+    title: TestLimitsAndTheBudgetStillStopAQuestionWithAPass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassslideswitheachmodelquestionuptotwohoursfromthecheck
+    title: TestPassSlidesWithEachModelQuestionUpToTwoHoursFromTheCheck
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testanexpiredpassisrefusedandthequestionischecked
+    title: TestAnExpiredPassIsRefusedAndTheQuestionIsChecked
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testapassfromanothersessionisrefused
+    title: TestAPassFromAnotherSessionIsRefused
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testatamperedormalformedpassisrefusedwithoutanerror
+    title: TestATamperedOrMalformedPassIsRefusedWithoutAnError
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testapassmadeunderanothersecretisrefused
+    title: TestAPassMadeUnderAnotherSecretIsRefused
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testacommandneverneedsapass
+    title: TestACommandNeverNeedsAPass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassisnotrenewedbyaquestionthecheckstops
+    title: TestPassIsNotRenewedByAQuestionTheCheckStops
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassneverreachesthelog
+    title: TestPassNeverReachesTheLog
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassissueandusebyunits
+    title: TestPassIssueAndUseByUnits
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testturnstileconfigrefusesnegativepasswindows
+    title: TestTurnstileConfigRefusesNegativePassWindows
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest
+    title: GetClientEventsRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest-reset
+    title: GetClientEventsRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest-string
+    title: GetClientEventsRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest-protomessage
+    title: GetClientEventsRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest-protoreflect
+    title: GetClientEventsRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsrequest-descriptor
+    title: GetClientEventsRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse
+    title: GetClientEventsResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-reset
+    title: GetClientEventsResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-string
+    title: GetClientEventsResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-protomessage
+    title: GetClientEventsResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-protoreflect
+    title: GetClientEventsResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-descriptor
+    title: GetClientEventsResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-getclienteventsresponse-getenabled
+    title: GetClientEventsResponse.GetEnabled
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest
+    title: SetClientEventsRequest
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-reset
+    title: SetClientEventsRequest.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-string
+    title: SetClientEventsRequest.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-protomessage
+    title: SetClientEventsRequest.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-protoreflect
+    title: SetClientEventsRequest.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-descriptor
+    title: SetClientEventsRequest.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-getorigin
+    title: SetClientEventsRequest.GetOrigin
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-getsessiontoken
+    title: SetClientEventsRequest.GetSessionToken
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsrequest-getenabled
+    title: SetClientEventsRequest.GetEnabled
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse
+    title: SetClientEventsResponse
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse-reset
+    title: SetClientEventsResponse.Reset
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse-string
+    title: SetClientEventsResponse.String
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse-protomessage
+    title: SetClientEventsResponse.ProtoMessage
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse-protoreflect
+    title: SetClientEventsResponse.ProtoReflect
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-pb-go-setclienteventsresponse-descriptor
+    title: SetClientEventsResponse.Descriptor
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-connect-go-settingsserviceclient-getclientevents
+    title: settingsServiceClient.GetClientEvents
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-connect-go-settingsserviceclient-setclientevents
+    title: settingsServiceClient.SetClientEvents
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-connect-go-unimplementedsettingsservicehandler-getclientevents
+    title: UnimplementedSettingsServiceHandler.GetClientEvents
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-settings-connect-go-unimplementedsettingsservicehandler-setclientevents
+    title: UnimplementedSettingsServiceHandler.SetClientEvents
+    status: active
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-core-client-events
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-test-go-testclienteventsthroughthefrontdoor
+    title: TestClientEventsThroughTheFrontDoor
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-test-go-setclientevents
+    title: setClientEvents
+    status: active
+    sourceFile: cmd/core/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-client-events
+  - id: SYM-pass-clientevents-test-go-postclientevent
+    title: postClientEvent
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-test-go-waitloginloadsevents
+    title: waitLoginLoadsEvents
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-test-go-uilog
+    title: uiLog
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-test-go-clienteventlogged
+    title: clientEventLogged
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-test-go-waitclienteventlogged
+    title: waitClientEventLogged
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events
+  - id: SYM-pass-clientevents-go-clienteventsstore
+    title: ClientEventsStore
+    status: active
+    sourceFile: internal/valuation/app/clientevents.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-client-events-switch
+      - type: implements
+        target: REQ-settings-client-events-switch
+  - id: SYM-pass-clientevents-test-go-wantevents
+    title: wantEvents
+    status: active
+    sourceFile: cmd/core/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-client-events
+  - id: SYM-pass-clientevents-test-go-wantclientevents
+    title: wantClientEvents
+    status: active
+    sourceFile: internal/valuation/app/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-client-events-switch
+  - id: SYM-pass-turnstilepass-test-go-passspan
+    title: passSpan
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-askcookie
+    title: askCookie
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-checkpassflags
+    title: checkPassFlags
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-askevery20minutes
+    title: askEvery20Minutes
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-testpassneedsthewidgetssecrettoissueandtouse
+    title: TestPassNeedsTheWidgetsSecretToIssueAndToUse
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-unitcheck
+    title: unitCheck
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-test-go-usepassof
+    title: usePassOf
+    status: active
+    sourceFile: internal/views/ui/turnstilepass_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-turnstile-pass
+  - id: SYM-pass-turnstilepass-go-windows
+    title: windows
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-window
+  - id: SYM-pass-turnstilepass-go-parsedpass
+    title: parsedPass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
+  - id: SYM-pass-turnstilepass-go-parsepass
+    title: parsePass
+    status: active
+    sourceFile: internal/views/ui/turnstilepass.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-turnstile-pass
+      - type: implements
+        target: REQ-ui-turnstile-pass-cookie
+  - id: SYM-pass-e2e-clientevents-test-go-setclientevents
+    title: setClientEvents
+    status: active
+    sourceFile: test/e2e/clientevents_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T12:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-client-events

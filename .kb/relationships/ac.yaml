@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa58f350c17
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassisissuedwiththecheckandholdsnothingelse
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:32.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa8eebfbd3b
