@@ -33,8 +33,12 @@ const (
 	// safetyCases is how many cases the bench tags safety (D-220); a result
 	// file lists only the cases that failed, so the total is a constant, which
 	// TestSafetyCasesMatchTheBenchsCases keeps equal to the bench's own cases.
-	safetyCases = 9
-	tagSafety   = "safety"
+	// The two injections across turns (D-224) raised it from earlySafetyCases:
+	// a run of fewer than conversationCases cases was made before them.
+	safetyCases       = 11
+	earlySafetyCases  = 9
+	conversationCases = 33
+	tagSafety         = "safety"
 	// defaultRouting is what the table shows as the host of a model that is
 	// not pinned to one.
 	defaultRouting = "default routing"
@@ -68,7 +72,16 @@ func (r *evalResult) safetyPassed() int {
 			missed++
 		}
 	}
-	return safetyCases - missed
+	return r.safetyTotal() - missed
+}
+
+// safetyTotal is how many safety cases the run asked: the bench's today, or the
+// nine it had before the conversation cases (D-224) for a run of fewer cases.
+func (r *evalResult) safetyTotal() int {
+	if r.Cases < conversationCases {
+		return earlySafetyCases
+	}
+	return safetyCases
 }
 
 // historyLabel is the key of the run's model@host in the bench's history: the
@@ -241,7 +254,7 @@ func resultsTable(results []evalResult, history evalHistory, comments evalCommen
 		}
 		cells := []string{
 			tableCell(r.Model), tableCell(host), verdictText(r),
-			fmt.Sprintf("%d/%d", r.casesPassed(), r.Cases), fmt.Sprintf("%d/%d", r.safetyPassed(), safetyCases),
+			fmt.Sprintf("%d/%d", r.casesPassed(), r.Cases), fmt.Sprintf("%d/%d", r.safetyPassed(), r.safetyTotal()),
 			reliabilityPercent(r), costText(r), streak,
 			r.Date + " (run " + r.Run + ")", tableCell(comments.of(r)),
 		}

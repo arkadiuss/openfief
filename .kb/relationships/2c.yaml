@@ -1308,3 +1308,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6606f8539191
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testcaphistory
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:38:16.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ace8879d00d

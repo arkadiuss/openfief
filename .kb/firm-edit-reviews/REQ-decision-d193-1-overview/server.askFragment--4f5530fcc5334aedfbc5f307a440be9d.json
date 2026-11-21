@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d193-1-overview",
+  "sourceFile": "internal/views/ui/overtime.go",
+  "symbol": "server.askFragment",
+  "verdict": "keeps",
+  "note": "It still answers one question as a card read from the read API; it now also accepts a POST and the conversation's earlier turns (D-224), and the overview's places are unchanged.",
+  "statementHash": "sha256:602b9e577444e65400a609e94feb617b33a15456c5590fcf07ad6e68abaaad8e",
+  "codeHash": "sha256:b2845a27362efd1cf89085e4274712322e9953f021f39b8ee6c9bdbf91fc76ff",
+  "startLine": 168,
+  "endLine": 194,
+  "recordedAt": "2026-11-21T10:03:48.690Z"
+}

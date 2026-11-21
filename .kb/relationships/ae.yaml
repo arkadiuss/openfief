@@ -1217,3 +1217,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b62c259a187
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testacardthetranscriptnamedisnocardofthenewanswer
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:39:55.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d192d7bff429

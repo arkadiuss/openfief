@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -144,16 +145,35 @@ func (s *server) overTimeFragment(w http.ResponseWriter, r *http.Request, sess s
 	s.showTemplate(w, r, http.StatusOK, "overview", "over-time", view)
 }
 
-// askParam is the query parameter that carries a question to the Ask box
-// (D-194). It is never logged: the UI logs a failed call by its method and
-// code, and the core's front door logs the path alone.
+// askParam is the field that carries a question to the Ask box (D-194). It is
+// never logged: the UI logs a failed call by its method and code, and the
+// core's front door logs the path alone.
 const askParam = "q"
 
+// askValue returns the field key of an Ask box request: from the body of a
+// POST, which is how the page asks, so that neither the question nor the
+// conversation (D-224) is ever in a URL, or from the query of a GET.
+func askValue(r *http.Request, key string) string {
+	if v, ok := r.PostForm[key]; ok && len(v) > 0 {
+		return v[0]
+	}
+	return r.URL.Query().Get(key)
+}
+
 // askFragment answers a question asked in the Ask box (D-194): htmx swaps
-// in its answer card; a browser without htmx gets the overview with the
-// answer. It reads the read API only and changes nothing.
+// in its answer card, to be added to the thread of the conversation (D-224);
+// a browser without htmx gets the overview with the answer. It reads the read
+// API only and changes nothing. The earlier turns of the conversation come
+// with a POST in the history field, as JSON, and are capped again here.
 func (s *server) askFragment(w http.ResponseWriter, r *http.Request, sess session) {
-	question := r.URL.Query().Get(askParam)
+	if r.Method == http.MethodPost {
+		r.Body = http.MaxBytesReader(w, r.Body, maxAskBody)
+		if err := r.ParseForm(); err != nil {
+			s.errorPage(w, r, http.StatusRequestEntityTooLarge, "That question was too long to read.")
+			return
+		}
+	}
+	question := askValue(r, askParam)
 	if !isHTMX(r) {
 		http.Redirect(w, r, "/?"+url.Values{askParam: {question}}.Encode()+"#ask", http.StatusSeeOther)
 		return
@@ -162,7 +182,7 @@ func (s *server) askFragment(w http.ResponseWriter, r *http.Request, sess sessio
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
-	card, err := s.ask.answer(r, sess, question)
+	card, err := s.askCard(withHistory(r, parseHistory(askValue(r, historyField))), sess, question)
 	if err != nil {
 		s.coreFailed(w, r, "ask", err)
 		return
@@ -173,14 +193,32 @@ func (s *server) askFragment(w http.ResponseWriter, r *http.Request, sess sessio
 	s.showTemplate(w, r, http.StatusOK, "overview", "ask-answer", card)
 }
 
+// askCard answers question as the page shows it: the answerer's card, with
+// the turn it adds to the conversation.
+func (s *server) askCard(r *http.Request, sess session, question string) (answerCard, error) {
+	card, err := s.ask.answer(r, sess, question)
+	if err != nil {
+		return card, err
+	}
+	card.Turn = turnData(&card)
+	return card, nil
+}
+
 // askHref is the query string that asks q.
 func askHref(q string) string { return url.Values{askParam: {q}}.Encode() }
 
 // askLink is the overview answering q, for a link without htmx.
 func askLink(q string) string { return "/?" + askHref(q) + "#ask" }
 
-// askGet is the Ask box's fragment answering q, for htmx.
-func askGet(q string) string { return "/ask?" + askHref(q) }
+// askVals is the field a chip adds to its POST to /ask: the question q, as the
+// JSON htmx's hx-vals reads. The question is in no URL.
+func askVals(q string) string {
+	out, err := json.Marshal(map[string]string{askParam: q})
+	if err != nil {
+		return "{}" // a map of two strings always encodes
+	}
+	return string(out)
+}
 
 // needsAction is the action Needs you offers for item it (D-193): a
 // failing sync asks why, every other kind opens the item in the Inbox,

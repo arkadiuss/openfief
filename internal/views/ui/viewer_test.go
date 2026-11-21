@@ -55,6 +55,12 @@ func ownerFreePosts() []string {
 	}
 }
 
+// readingPosts returns the POST routes that change nothing: the Ask box's
+// question, which is a POST only so that the question and the conversation
+// that goes with it (D-224) are in a body and never in a URL. A viewer asks
+// like anyone, and answers read as the viewer's own session.
+func readingPosts() []string { return []string{"/ask"} }
+
 // ownerPostRoutes returns the paths of the UI's POST routes guarded by
 // withOwner, read from the source, and fails the test for a POST route that
 // is neither guarded nor a sign-in or sign-out step.
@@ -76,7 +82,7 @@ func ownerPostRoutes(t *testing.T) []string {
 		for _, m := range postRoute.FindAllStringSubmatch(string(src), -1) {
 			path, guard := m[1], m[2]
 			switch {
-			case slices.Contains(ownerFreePosts(), path):
+			case slices.Contains(ownerFreePosts(), path), slices.Contains(readingPosts(), path):
 			case strings.Contains(guard, "withOwner("):
 				routes = append(routes, path)
 			default:

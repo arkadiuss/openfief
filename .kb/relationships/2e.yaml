@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abc4dab28936
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testcaphistorylinebreaksandcontrolcharacterscannotstartamessage
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:38:43.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-818c96b9b659
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testturnofkeepsananswerascompactsummariesneverhtml
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:39:08.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a85087175beb

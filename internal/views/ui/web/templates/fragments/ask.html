@@ -1,42 +1,45 @@
 {{/* The Ask box (D-194, D-203, D-208): a fixed set of commands, answered from the read API alone and at once. With a model
      configured, any other question goes to the model, which may only call the same read-only answerers and whose answer
-     shows the cards it read. The question is never logged. Each answer is a card (answerCard). */}}
+     shows the cards it read. The question is never logged. Each answer is a card (answerCard).
+     The box holds a conversation (D-224): each answer is added to the thread under the field, and ask.js sends the earlier turns,
+     kept with each answer in data-turn, with the next question. Nothing of it is stored. */}}
 {{define "ask-box"}}
-<div class="ask-box" hx-indicator="#ask-pending">
-<form class="ask-form" method="get" action="/" hx-get="/ask" hx-target="#answer" hx-swap="innerHTML" role="search" aria-label="Ask"{{if .Model}} data-model="1"{{end}}{{if .TurnstileSiteKey}} data-check="1"{{end}}>
+<div class="ask-box" hx-indicator="#ask-pending" hx-target="#answer" hx-swap="beforeend">
+<form class="ask-form" method="get" action="/" hx-post="/ask" role="search" aria-label="Ask"{{if .Model}} data-model="1"{{end}}{{if .TurnstileSiteKey}} data-check="1"{{end}}>
   <label for="ask-q" class="sr-only">Ask about your portfolio</label>
   <div class="ask-field">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
     <input id="ask-q" name="q" type="search" value="{{.Question}}" maxlength="{{if .Model}}300{{else}}200{{end}}" autocomplete="off" spellcheck="false" enterkeyhint="search"
       placeholder="Ask: what needs me, show bonds, why is xtb failing" aria-describedby="ask-help">
     <kbd class="key" title="Press / to ask">/</kbd>
+    <button type="submit" class="primary ask-send" aria-label="Ask" title="Ask"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button>
   </div>
   {{if .TurnstileSiteKey}}<input type="hidden" name="ask-check-path" id="ask-check-path" value="invisible">{{end}}
-  <button type="submit" class="primary">Ask</button>
 </form>
 {{if .TurnstileSiteKey}}{{/* Turnstile's widget (D-208), rendered by ask.js only when a model question needs the check, outside the form so that no token is ever sent with a later question. */}}
 <div class="ask-check" id="ask-check" data-sitekey="{{.TurnstileSiteKey}}"></div>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>{{end}}
+<div class="ask-thread-bar"><button type="button" class="quiet ask-new" id="ask-new"{{if not .Answer}} hidden{{end}}>New conversation</button></div>
+<div id="answer" class="thread" aria-live="polite">{{with .Answer}}{{template "ask-answer" .}}{{end}}</div>
 <div class="ask-pending" id="ask-pending" role="status" aria-live="polite">
   <p class="bubble" id="ask-pending-q"></p>
   <p class="pending-line"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="ask-pending-label">Working on it&hellip;</span></p>
 </div>
-<div id="answer" aria-live="polite">{{with .Answer}}{{template "ask-answer" .}}{{end}}</div>
-{{with .Suggestions}}<div class="chips chips-row" role="group" aria-label="Suggestions">{{range .}}<a class="chip" href="{{askLink .}}" hx-get="{{askGet .}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
+{{with .Suggestions}}<div class="chips chips-row" role="group" aria-label="Suggestions">{{range .}}<a class="chip" href="{{askLink .}}" hx-post="/ask" hx-vals="{{askVals .}}">{{.}}</a>{{end}}</div>{{end}}
 {{if .Model}}<details class="ask-howto"><summary>How this works</summary><p class="muted" id="ask-help">Commands answer at once from your own record and never leave it. Any other question goes to the model the owner set up, with the cards it reads from your record to answer it. It can only read through the same commands and changes nothing; OpenFief never logs the question or the answer.</p></details>
 {{else}}<details class="ask-howto"><summary>How this works</summary><p class="muted" id="ask-help">Commands for now: OpenFief answers from your own record and the question never leaves it. The box holds no AI model.</p></details>{{end}}
 </div>
 {{end}}
 
 {{define "ask-answer"}}
-<div class="conversation">
+<div class="conversation"{{with .Turn}} data-turn="{{.}}"{{end}}>
   <p class="bubble"><span class="sr-only">You asked: </span>{{.Question}}</p>
   <div class="answer">
     {{if or .Title (not .Model)}}<div class="answer-head">{{with .Title}}<p class="answer-title">{{.}}</p>{{end}}{{if not .Model}}<span class="muted">{{if .Source}}{{.Source}}{{else}}Answered from your data · no AI model{{end}}</span>{{end}}</div>{{end}}
     {{if .Model}}{{with .Text}}<p class="model-text">{{.}}</p>{{end}}{{else}}{{with .Text}}<p>{{.}}</p>{{end}}{{end}}
     {{template "ask-card-body" .}}
-    {{with .Candidates}}<div class="chips ask-choices" role="group" aria-label="Which one do you mean">{{range .}}<a class="chip" href="{{askLink (printf "Show %s" .)}}" hx-get="{{askGet (printf "Show %s" .)}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
-    {{with .Suggestions}}<div class="chips ask-suggestions" role="group" aria-label="Commands you can ask instead">{{range .}}<a class="chip" href="{{askLink .}}" hx-get="{{askGet .}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
+    {{with .Candidates}}<div class="chips ask-choices" role="group" aria-label="Which one do you mean">{{range .}}<a class="chip" href="{{askLink (printf "Show %s" .)}}" hx-post="/ask" hx-vals="{{askVals (printf "Show %s" .)}}">{{.}}</a>{{end}}</div>{{end}}
+    {{with .Suggestions}}<div class="chips ask-suggestions" role="group" aria-label="Commands you can ask instead">{{range .}}<a class="chip" href="{{askLink .}}" hx-post="/ask" hx-vals="{{askVals .}}">{{.}}</a>{{end}}</div>{{end}}
     {{with .Used}}<div class="used-cards" role="group" aria-label="Cards the model read">{{range .}}
       <section class="used-card"><p class="answer-title">{{.Title}}</p>{{with .Text}}<p>{{.}}</p>{{end}}{{template "ask-card-body" .}}</section>{{end}}
     </div>{{end}}
@@ -51,7 +54,7 @@
     {{if .Rows}}<table class="answer-table"><tbody>
       {{range .Rows}}<tr><td>{{if .Href}}<a href="{{.Href}}">{{.Label}}</a>{{else}}{{.Label}}{{end}}</td><td class="muted">{{.Detail}}</td><td class="num">{{.Figure}}</td></tr>{{end}}
     </tbody></table>{{end}}
-    {{with .Help}}<ul class="ask-help">{{range .}}<li>{{.Command}}: <a href="{{askLink .Example}}" hx-get="{{askGet .Example}}" hx-target="#answer" hx-swap="innerHTML">{{.Example}}</a></li>{{end}}</ul>{{end}}
+    {{with .Help}}<ul class="ask-help">{{range .}}<li>{{.Command}}: <a href="{{askLink .Example}}" hx-post="/ask" hx-vals="{{askVals .Example}}">{{.Example}}</a></li>{{end}}</ul>{{end}}
     {{with .Link}}<a class="open" href="{{.Href}}">{{.Text}}</a>{{end}}
 {{end}}
 

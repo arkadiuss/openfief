@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-1-ask-eval-cases",
+  "sourceFile": "tools/askbench/cases.go",
+  "symbol": "Case",
+  "verdict": "keeps",
+  "note": "A case may now hold the earlier turns of its conversation; the English and Polish answer, several-answerer, ambiguous, why, refusal and injection cases are unchanged, and four are added (two follow-ups, two injections across turns).",
+  "statementHash": "sha256:1a2705a6b490ef371dbcbfc8539e699518f7f45d248fcbdce37a3fb04ea51bc3",
+  "codeHash": "sha256:14937fef7e840bb3ff00688024879ee7f217ec403563c89180bb55330e192051",
+  "startLine": 47,
+  "endLine": 65,
+  "recordedAt": "2026-11-21T10:03:58.126Z"
+}

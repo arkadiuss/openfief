@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d193-1-overview",
+  "sourceFile": "internal/views/ui/overview.go",
+  "symbol": "server.home",
+  "verdict": "keeps",
+  "note": "It now asks s.askCard, which is the answerer's card plus the turn it adds to the conversation; the overview's order and places are unchanged.",
+  "statementHash": "sha256:602b9e577444e65400a609e94feb617b33a15456c5590fcf07ad6e68abaaad8e",
+  "codeHash": "sha256:d8fdee52f9106c5d57039706eb32cc470006b4e2a86b0b4bcd0ada56a5e28e8b",
+  "startLine": 243,
+  "endLine": 270,
+  "recordedAt": "2026-11-21T10:03:48.690Z"
+}

@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96ef5809c538
+  - type: implements
+    from: SYM-ui-ask-turn-of
+    to: REQ-ui-ask-conversation
+    created_at: 2026-11-21T09:20:23.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ba8e615c384
+  - type: covered_by
+    from: SYM-ui-ask-turn-of
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T09:20:30.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8694afcfc36

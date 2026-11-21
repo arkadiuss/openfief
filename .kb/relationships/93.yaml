@@ -1455,3 +1455,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70bf5703e921
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-testneitherthequestionnortheconversationislogged
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:37:17.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46c8c2fa0816

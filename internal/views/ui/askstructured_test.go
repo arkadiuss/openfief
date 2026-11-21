@@ -467,7 +467,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
 			"Which fund do you mean?", "From m", `class="chips ask-choices"`, `aria-label="Which one do you mean"`,
-			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-get="/ask?q=Show&#43;Synthetic&#43;Fund"`, `>Synthetic Fund</a>`, `>Synthetic brokerage</a>`,
+			`href="/?q=Show&#43;Synthetic&#43;Fund#ask"`, `hx-post="/ask" hx-vals="{&#34;q&#34;:&#34;Show Synthetic Fund&#34;}"`, `>Synthetic Fund</a>`, `>Synthetic brokerage</a>`,
 		)
 		// A name no card the model read holds is dropped, and never drawn.
 		wantNoBody(t, rec, `class="chips ask-suggestions"`, "Answered by", "Demo <b>Fund</b>", "Demo &lt;b&gt;Fund")
@@ -481,7 +481,7 @@ func TestAskBoxDrawsEachKindOfAnswer(t *testing.T) {
 		wantStatus(t, rec, http.StatusOK)
 		wantBody(t, rec,
 			"I can only read, so I can&#39;t sell anything.", "From m", `class="chips ask-suggestions"`, `aria-label="Commands you can ask instead"`,
-			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-get="/ask?q=Allocation&#43;by&#43;currency"`, `>Allocation by currency</a>`, `>Performance this year</a>`,
+			`href="/?q=What&#43;needs&#43;me%3F#ask"`, `hx-post="/ask" hx-vals="{&#34;q&#34;:&#34;Allocation by currency&#34;}"`, `>Allocation by currency</a>`, `>Performance this year</a>`,
 		)
 		wantNoBody(t, rec, `class="chips ask-choices"`, "Answered by", `class="used-card"`, "Write me a poem")
 	})

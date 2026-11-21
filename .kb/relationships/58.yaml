@@ -1161,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8af6df32d51b
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-testtheboxstoolsarethemcpserverstoolbox
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:37:25.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d67d9433563

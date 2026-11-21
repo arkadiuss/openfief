@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a2dcf519334
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testthehistoryofarequestiscappedwhereveritcamefrom
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:40:03.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7c9c0864e39

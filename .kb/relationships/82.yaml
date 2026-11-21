@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62c92ec7f7d8
+  - type: executable_for
+    from: SYM-d224-conversation-test-go-testtheinjectionsacrossturnsaresafetycaseswiththeirpayloads
+    to: TEST-askbench-conversation
+    created_at: 2026-11-21T10:42:02.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4419d04374a

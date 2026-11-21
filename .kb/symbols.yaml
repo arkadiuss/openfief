@@ -146670,7 +146670,7 @@ symbols:
       - type: executable_for
         target: TEST-ui-home-unit
   - id: SYM-ui-ask-get
-    title: askGet
+    title: askVals
     sourceFile: internal/views/ui/overtime.go
     status: active
     symbol_role: behavioral
@@ -240740,3 +240740,647 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-grafana-apply
+  - id: SYM-ui-ask-cap-history
+    title: capHistory
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-ui-ask-parse-history
+    title: parseHistory
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-ui-ask-turn-of
+    title: turnOf
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-conversation
+  - id: SYM-ui-ask-turn-data
+    title: turnData
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-conversation
+  - id: SYM-ui-ask-history-message
+    title: historyMessage
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-ui-ask-value
+    title: askValue
+    status: active
+    sourceFile: internal/views/ui/overtime.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history-page
+      - type: implements
+        target: REQ-ui-ask-conversation
+  - id: SYM-ui-ask-card
+    title: server.askCard
+    status: active
+    sourceFile: internal/views/ui/overtime.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21); the author''s feedback that the Ask button must sit inline with the field'
+      recorded_at: 2026-11-21T09:22:39.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history-page
+      - type: implements
+        target: REQ-ui-ask-conversation
+  - id: SYM-d224-askhistory-page-test-go-harness-asksafter
+    title: harness.asksAfter
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testafollowupreachesthemodelwiththeearlierturnsandaddsitsown
+    title: TestAFollowUpReachesTheModelWithTheEarlierTurnsAndAddsItsOwn
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testacommandinsideaconversationanswersatonceandjoinsthethread
+    title: TestACommandInsideAConversationAnswersAtOnceAndJoinsTheThread
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testtheservercapsanddistrustswhatthebrowsersent
+    title: TestTheServerCapsAndDistrustsWhatTheBrowserSent
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testneitherthequestionnortheconversationislogged
+    title: TestNeitherTheQuestionNorTheConversationIsLogged
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testtheboxstoolsarethemcpserverstoolbox
+    title: TestTheBoxsToolsAreTheMCPServersToolbox
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testaviewerasksbypostlikeanyone
+    title: TestAViewerAsksByPostLikeAnyone
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testapostedquestionneedsthesameoriginaseverypost
+    title: TestAPostedQuestionNeedsTheSameOriginAsEveryPost
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-page-test-go-testthecheckforafollowupisthesameasforafirstquestion
+    title: TestTheCheckForAFollowUpIsTheSameAsForAFirstQuestion
+    status: active
+    sourceFile: internal/views/ui/askhistory_page_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history-page
+  - id: SYM-d224-askhistory-test-go-repeated
+    title: repeated
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-heavy
+    title: heavy
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testcaphistory
+    title: TestCapHistory
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testcaphistorydropstheoldestturnsfirstoverthecharactercap
+    title: TestCapHistoryDropsTheOldestTurnsFirstOverTheCharacterCap
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testcaphistorytrimsoneturntoitsfieldcaps
+    title: TestCapHistoryTrimsOneTurnToItsFieldCaps
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testcaphistorylinebreaksandcontrolcharacterscannotstartamessage
+    title: TestCapHistoryLineBreaksAndControlCharactersCannotStartAMessage
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testcaphistorytwicechangesnothing
+    title: TestCapHistoryTwiceChangesNothing
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testparsehistory
+    title: TestParseHistory
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testturnofkeepsananswerascompactsummariesneverhtml
+    title: TestTurnOfKeepsAnAnswerAsCompactSummariesNeverHTML
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-historyof3
+    title: historyOf3
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testhistorymessageframesthetranscriptasuntrusted
+    title: TestHistoryMessageFramesTheTranscriptAsUntrusted
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-checktranscriptline
+    title: checkTranscriptLine
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testafollowupsendsthehistoryinthequestionsownmessage
+    title: TestAFollowUpSendsTheHistoryInTheQuestionsOwnMessage
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-checknotranscriptrole
+    title: checkNoTranscriptRole
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testacardthetranscriptnamedisnocardofthenewanswer
+    title: TestACardTheTranscriptNamedIsNoCardOfTheNewAnswer
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-test-go-testthehistoryofarequestiscappedwhereveritcamefrom
+    title: TestTheHistoryOfARequestIsCappedWhereverItCameFrom
+    status: active
+    sourceFile: internal/views/ui/askhistory_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-history
+  - id: SYM-d224-askhistory-go-askturn
+    title: askTurn
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-askturn-runes
+    title: askTurn.runes
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-tidy
+    title: tidy
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-capturn
+    title: capTurn
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-historykey
+    title: historyKey
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-withhistory
+    title: withHistory
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-historyof
+    title: historyOf
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-cardsummary
+    title: cardSummary
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askhistory-go-historyturn
+    title: historyTurn
+    status: active
+    sourceFile: internal/views/ui/askhistory.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-history
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-askrun-go-asker-askafter
+    title: Asker.AskAfter
+    status: active
+    sourceFile: internal/views/ui/askrun.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-conversation
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-viewer-test-go-readingposts
+    title: readingPosts
+    status: active
+    sourceFile: internal/views/ui/viewer_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-viewer
+  - id: SYM-d224-cases-go-historyturn
+    title: HistoryTurn
+    status: active
+    sourceFile: tools/askbench/cases.go
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-conversation
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-cases-go-case-earlier
+    title: Case.earlier
+    status: active
+    sourceFile: tools/askbench/cases.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-conversation
+      - type: implements
+        target: REQ-ui-ask-history-untrusted
+  - id: SYM-d224-conversation-test-go-testtheconversationcasesholdtheirearlierturns
+    title: TestTheConversationCasesHoldTheirEarlierTurns
+    status: active
+    sourceFile: tools/askbench/conversation_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-conversation
+  - id: SYM-d224-conversation-test-go-testtheinjectionsacrossturnsaresafetycaseswiththeirpayloads
+    title: TestTheInjectionsAcrossTurnsAreSafetyCasesWithTheirPayloads
+    status: active
+    sourceFile: tools/askbench/conversation_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-conversation
+  - id: SYM-d224-conversation-test-go-testthebenchsendstheearlierturnsasanuntrustedtranscript
+    title: TestTheBenchSendsTheEarlierTurnsAsAnUntrustedTranscript
+    status: active
+    sourceFile: tools/askbench/conversation_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-conversation
+  - id: SYM-d224-conversation-test-go-firstusermessage
+    title: firstUserMessage
+    status: active
+    sourceFile: tools/askbench/conversation_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-conversation
+  - id: SYM-d224-askevaltable-go-evalresult-safetytotal
+    title: evalResult.safetyTotal
+    status: active
+    sourceFile: tools/docgen/askevaltable.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: 'Implement D-224: the Ask box holds a conversation (design session brief, 2026-11-21)'
+      recorded_at: 2026-11-21T10:36:37.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-docgen-askeval-table
+      - type: implements
+        target: REQ-askeval-guide-leads-with-generated-table

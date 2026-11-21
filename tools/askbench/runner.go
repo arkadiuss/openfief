@@ -194,7 +194,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 		return RunReport{Run: t.run, Error: errorText(err)}
 	}
 	started := b.opts.Now()
-	run, err := asker.Ask(ctx, t.c.Question)
+	run, err := asker.AskAfter(ctx, t.c.Question, t.c.earlier())
 	d := &RunData{
 		Case: t.c, Run: run, Calls: mr.calls, Limits: b.opts.Limits, Duration: b.opts.Now().Sub(started),
 		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today,

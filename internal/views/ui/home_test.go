@@ -87,7 +87,7 @@ func TestOverviewHome(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
 		"Everything is valued through 2026-03-31. 2 things need you. The xtb-main sync keeps failing.",
-		`id="ask-q" name="q"`, `<kbd class="key"`, "holds no AI model", `hx-get="/ask?q=What&#43;needs&#43;me%3F"`,
+		`id="ask-q" name="q"`, `<kbd class="key"`, "holds no AI model", `hx-post="/ask" hx-vals="{&#34;q&#34;:&#34;What needs me?&#34;}"`,
 		`href="/?q=Why&#43;is&#43;xtb-main&#43;failing%3F#ask"`,
 		`class="card hero"`, `<a class="figure" href="#accounts"`, "1 500,00 PLN",
 		`id="over-title">Over time`, `aria-current="page">Value</a>`, `hx-get="/over-time?date=2026-03-31&amp;over=performance"`,

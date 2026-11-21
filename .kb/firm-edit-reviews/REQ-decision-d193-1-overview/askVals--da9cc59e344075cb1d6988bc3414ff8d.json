@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d193-1-overview",
+  "sourceFile": "internal/views/ui/overtime.go",
+  "symbol": "askVals",
+  "verdict": "keeps",
+  "note": "A new helper that carries a chip's question to POST /ask as JSON for htmx; it adds no place or card to the overview.",
+  "statementHash": "sha256:602b9e577444e65400a609e94feb617b33a15456c5590fcf07ad6e68abaaad8e",
+  "codeHash": "sha256:fc0464b3c4a6fc0f731930d6380e5c690d3d767d6423467c7cc1e750a669ab43",
+  "startLine": 215,
+  "endLine": 221,
+  "recordedAt": "2026-11-21T10:03:48.690Z"
+}

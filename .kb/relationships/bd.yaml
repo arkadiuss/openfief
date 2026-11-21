@@ -1175,3 +1175,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-618d86c7445f
+  - type: implements
+    from: SYM-d224-askhistory-go-askturn
+    to: REQ-ui-ask-history-untrusted
+    created_at: 2026-11-21T10:40:11.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85942176a1f1
+  - type: covered_by
+    from: SYM-d224-askhistory-go-askturn
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:40:11.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-306c55abff94

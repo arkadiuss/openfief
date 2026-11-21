@@ -1,6 +1,13 @@
 // The overview's Ask box (D-194): "/" focuses it from anywhere on the page but a field, as on many sites. Nothing here
 // sends the question anywhere but the UI itself, which answers from the read API.
 //
+// The box holds a conversation (D-224). Each answer is added to the thread under the field, and the server marks it with the turn
+// it adds (data-turn: the question, the answer's text and compact summaries of its cards). The next question carries the last
+// turns of the thread as its "history" field, read from the thread itself when the request is made: the conversation exists only as
+// what the page shows, in this tab's memory. Nothing of it is written to localStorage, sessionStorage or a cookie, and the server
+// keeps and logs none of it. "New conversation" clears the thread. Questions go as POSTs, so that neither a question nor the
+// conversation is ever in a URL.
+//
 // With Turnstile on the box (D-208) the check runs on demand. Every question goes without a token first; a command is
 // answered at once. A question for the model that comes without one is answered with the HX-Trigger event
 // "openfief-check-needed" (and the no-token card, which this script keeps from being drawn): the page then shows its
@@ -9,6 +16,7 @@
 // while the person only reads or types, and a token is never kept: the widget stands outside the form.
 (function () {
   "use strict";
+  var MAX_TURNS = 6; // the most earlier turns a question carries; the server caps again (D-224)
   var CHECKING = "Checking you're a person…";
   var THINKING = "Thinking…";
   var WORKING = "Working on it…";
@@ -26,6 +34,30 @@
   var pending = null; // the check in progress: {question, sent, timers, interactive, visible}
   var question = ""; // the question of the request that is going, for the check to ask again
   var checkNeeded = false; // the response that is being handled said a check is needed
+
+  // The earlier turns of the conversation, as JSON, read from the thread: the last MAX_TURNS answers that carry a turn.
+  function historyJSON() {
+    var turns = [];
+    document.querySelectorAll("#answer [data-turn]").forEach(function (el) {
+      try {
+        turns.push(JSON.parse(el.getAttribute("data-turn")));
+      } catch (err) {
+        // A turn that is not JSON is left out.
+      }
+    });
+    return turns.length ? JSON.stringify(turns.slice(-MAX_TURNS)) : "";
+  }
+  function isAsk(path) {
+    return !!path && path.indexOf("/ask") === 0;
+  }
+  // The thread has answers: the New conversation control shows.
+  function syncThread() {
+    var thread = byId("answer");
+    var control = byId("ask-new");
+    if (thread && control) {
+      control.hidden = thread.children.length === 0;
+    }
+  }
 
   // Client events (D-227): every state of the check is reported, with the milliseconds since this round of the check began,
   // to events.js, which is on the page only while the owner has reporting on. Only fixed words and numbers are reported: the
@@ -57,20 +89,29 @@
       label.textContent = text;
     }
   }
+  // controls turns the Ask button and New conversation off while a question is being answered.
+  function controls(off) {
+    var button = document.querySelector(".ask-form button[type=submit]");
+    if (button) {
+      button.disabled = off;
+    }
+    var fresh = byId("ask-new");
+    if (fresh) {
+      fresh.disabled = off;
+    }
+  }
   function setBusy(on) {
     var box = byId("ask-pending");
     if (box) {
       box.classList.toggle("is-checking", on);
     }
-    var button = document.querySelector(".ask-form button[type=submit]");
-    if (button) {
-      button.disabled = on;
-    }
+    controls(on);
   }
   function scrollToAnswer() {
     var el = byId("ask-pending");
     if (!el || el.getBoundingClientRect().height === 0) {
-      el = byId("answer");
+      var turns = document.querySelectorAll("#answer .conversation");
+      el = turns.length ? turns[turns.length - 1] : byId("answer");
     }
     if (el && el.scrollIntoView) {
       el.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
@@ -118,7 +159,8 @@
     card.appendChild(text);
     conversation.appendChild(bubble);
     conversation.appendChild(card);
-    answer.replaceChildren(conversation);
+    answer.appendChild(conversation);
+    syncThread();
     scrollToAnswer();
   }
 
@@ -249,7 +291,7 @@
     pending.sent = true;
     var form = document.querySelector(".ask-form");
     var values = { q: pending.question, "cf-turnstile-response": token, "ask-check-path": pathNow() };
-    window.htmx.ajax("GET", "/ask", { source: form, target: "#answer", swap: "innerHTML", values: values });
+    window.htmx.ajax("POST", "/ask", { source: form, target: "#answer", swap: "beforeend", values: values });
   }
   // The widget failed. Returning true tells Turnstile the error is handled, so it doesn't log it to the console.
   function onError(code) {
@@ -281,18 +323,29 @@
     later(CLICK_TIMEOUT, timedOut);
   }
 
+  // Every request of the box carries the conversation so far.
+  document.addEventListener("htmx:configRequest", function (e) {
+    if (!e.detail || !isAsk(e.detail.path)) {
+      return;
+    }
+    var history = historyJSON();
+    if (history !== "") {
+      e.detail.parameters.history = history;
+    }
+  });
+
   // Each request of the box: show what is being asked, and what the box is doing about it.
   document.addEventListener("htmx:beforeRequest", function (e) {
     var path = e.detail && e.detail.pathInfo && e.detail.pathInfo.finalRequestPath;
-    if (!path || path.indexOf("/ask") !== 0) {
+    if (!isAsk(path)) {
       return;
     }
-    var params = new URL(path, window.location.href).searchParams;
-    var withToken = params.has("cf-turnstile-response");
+    var params = (e.detail.requestConfig && e.detail.requestConfig.parameters) || {};
+    var withToken = params["cf-turnstile-response"] !== undefined;
     if (pending && !withToken) {
       finish(); // a new question while a check waits: the new one wins
     }
-    question = params.get("q") || "";
+    question = params.q ? String(params.q) : "";
     var echo = byId("ask-pending-q");
     if (echo) {
       echo.textContent = question;
@@ -308,10 +361,7 @@
     } else {
       setLabel(LOOKING);
     }
-    var button = document.querySelector(".ask-form button[type=submit]");
-    if (button) {
-      button.disabled = true;
-    }
+    controls(true);
   });
   // The response named the check (HX-Trigger, which htmx handles before the swap): run it, and keep the no-token card from
   // being drawn. A question that already carried a token and is still told it needs one gets the card, which is the end of it.
@@ -330,7 +380,7 @@
   });
   document.addEventListener("htmx:afterRequest", function (e) {
     var path = e.detail && e.detail.pathInfo && e.detail.pathInfo.finalRequestPath;
-    if (!path || path.indexOf("/ask") !== 0) {
+    if (!isAsk(path)) {
       return;
     }
     if (pending && !pending.sent) {
@@ -340,7 +390,30 @@
   });
   document.addEventListener("htmx:afterSwap", function (e) {
     if (e.target && e.target.id === "answer") {
+      syncThread();
       scrollToAnswer();
+    }
+  });
+
+  // New conversation: the thread is cleared, and with it everything the next question would carry.
+  document.addEventListener("click", function (e) {
+    var target = e.target && e.target.closest ? e.target.closest("#ask-new") : null;
+    if (!target) {
+      return;
+    }
+    var thread = byId("answer");
+    if (thread) {
+      thread.replaceChildren();
+    }
+    var echo = byId("ask-pending-q");
+    if (echo) {
+      echo.textContent = "";
+    }
+    syncThread();
+    var box = byId("ask-q");
+    if (box) {
+      box.value = "";
+      box.focus();
     }
   });
 

@@ -16,6 +16,8 @@
 // session ends (D-151); the Access page's People section invites a viewer (one-time link) and asks to confirm a revoke, and a viewer
 // granted nothing sees "Nothing has been shared with you yet" on every page (D-210); Settings' Audit log filters by its form and, while
 // changes' entries wait to enter the log, shows the audit-log-behind item's words in a banner (D-211).
+// The Ask box's conversation (D-224): at 360 and 390 px the Ask button sits on the field's row, answers form a thread, a follow-up sends
+// the earlier turns in a POST body, New conversation clears them, and nothing is written to storage or cookies.
 // The Ask box's progress and layout (D-194, D-203): a question in flight shows itself under the field with a quiet indicator (still under
 // reduced motion), the Ask button off and "Thinking…" or "Looking it up…"; the answer sits directly under the field and in view with one
 // attribution line, the help is folded behind "How this works", and the suggestions are one row that scrolls on its own at 360 px.
@@ -250,6 +252,8 @@ async function askModelBox(browser) {
     const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: scheme, isMobile: true, hasTouch: true }, true);
     const page = await ctx.newPage();
     const ask = async (question, selector) => {
+      // Each of these checks reads one answer on its own: a new conversation first (the conversation itself is askConversation's).
+      if (await page.isVisible('#ask-new')) { await page.click('#ask-new'); }
       await page.fill('#ask-q', question);
       await page.click('.ask-form button[type="submit"]');
       await page.waitForSelector(selector, { timeout: 5000 });
@@ -293,7 +297,7 @@ async function askModelBox(browser) {
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-clarify.png`), fullPage: true });
     await page.click('#answer .ask-choices .chip:has-text("Synthetic Fund")');
     await page.waitForSelector('#answer:has-text("no AI model")', { timeout: 5000 });
-    check((await page.textContent('#answer')).includes('Synthetic Fund') && (await page.locator('#answer .ask-choices').count()) === 0,
+    check((await page.textContent('#answer .conversation:last-child')).includes('Synthetic Fund') && (await page.locator('#answer .conversation:last-child .ask-choices').count()) === 0,
       `phone ${scheme}: a choice of a clarifying answer is not answered by the box itself`);
     await page.goto(base + '/test/ask-model?tiers=T2', { waitUntil: 'networkidle' });
     await ask('how diversified am I', '#answer .answer-title');
@@ -303,6 +307,87 @@ async function askModelBox(browser) {
     await page.screenshot({ path: path.join(out, `phone360-${scheme}-ask-model-refused.png`), fullPage: true });
     await page.goto(base + '/test/ask-model?tiers=off', { waitUntil: 'networkidle' });
     check((await page.textContent('#ask-help')).includes('no AI model'), `phone ${scheme}: the Ask box does not go back to no model`);
+    await ctx.close();
+  }
+}
+
+// askConversation checks the Ask box as a conversation (D-224) at 360 and 390 px: the Ask button sits on the field's row (inside it, on
+// the right) and the page never scrolls sideways; an answer is added to a thread instead of replacing the last; a follow-up sends the
+// earlier turns with the question, in the body of a POST (never in the URL), and a command inside the conversation still answers
+// itself and joins it; "New conversation" clears the thread and the next question sends no history; and nothing is written to
+// localStorage, sessionStorage or cookies by any of it. The fakes' model is the same as askModelBox's.
+async function askConversation(browser) {
+  for (const width of [360, 390]) {
+    const ctx = await context(browser, { viewport: { width, height: 800 }, isMobile: true, hasTouch: true }, true);
+    const page = await ctx.newPage();
+    const asks = []; // the form fields of the box's requests, in order
+    const urls = [];
+    page.on('request', (r) => {
+      if (new URL(r.url()).pathname === '/ask') { urls.push(r.url()); asks.push(new URLSearchParams(r.postData() || '')); }
+    });
+    await page.goto(base + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
+    // Storage is watched from here on, with every write counted (the page's own scripts run in this document).
+    await page.evaluate(() => {
+      window.__writes = 0;
+      for (const name of ['setItem', 'removeItem', 'clear']) {
+        const original = Storage.prototype[name];
+        Storage.prototype[name] = function (...args) { window.__writes++; return original.apply(this, args); };
+      }
+      const cookie = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie');
+      Object.defineProperty(document, 'cookie', { get() { return cookie.get.call(this); }, set(v) { window.__writes++; cookie.set.call(this, v); } });
+    });
+    const before = await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length, cookie: document.cookie }));
+    const ask = async (q) => {
+      await page.fill('#ask-q', q);
+      const turns = await page.locator('#answer .conversation').count();
+      await page.click('.ask-form button[type="submit"]');
+      await page.waitForFunction((n) => document.querySelectorAll('#answer .conversation').length > n, turns, { timeout: 5000 });
+    };
+    // The Ask button is on the field's row, inside it, at every width, and the page does not scroll sideways.
+    const geometry = async (label) => {
+      const { f, i, b } = await page.evaluate(() => ({
+        f: document.querySelector('.ask-field').getBoundingClientRect().toJSON(),
+        i: document.querySelector('#ask-q').getBoundingClientRect().toJSON(),
+        b: document.querySelector('.ask-form button[type="submit"]').getBoundingClientRect().toJSON(),
+      }));
+      const sameRow = Math.abs((b.top + b.height / 2) - (i.top + i.height / 2)) < 4 && b.top >= f.top - 1 && b.bottom <= f.bottom + 1;
+      check(sameRow && b.left >= i.right - 1 && b.right <= f.right + 1, `conversation ${width}px ${label}: the Ask button is not on the field's row, inside it on the right`);
+      check(b.width >= 44 && b.height >= 44 && i.width >= 120, `conversation ${width}px ${label}: the button is under 44 px or the field under 120 px (${b.width}x${b.height}, ${i.width})`);
+      check((await sideways(page)) <= 0, `conversation ${width}px ${label}: the page scrolls sideways`);
+    };
+    check((await page.getAttribute('.ask-form button[type="submit"]', 'aria-label')) === 'Ask', `conversation ${width}px: the Ask button has no accessible label`);
+    check(await page.isHidden('#ask-new'), `conversation ${width}px: New conversation shows with nothing to clear`);
+    await geometry('at rest');
+    await ask('how diversified am I');
+    check(asks.length === 1 && !asks[0].has('history'), `conversation ${width}px: the first question sent a history: ${asks[0]}`);
+    check(await page.isVisible('#ask-new') && (await page.textContent('#ask-new')) === 'New conversation', `conversation ${width}px: New conversation does not show after an answer`);
+    await geometry('after an answer');
+    // A follow-up: the earlier question and answer go with it, in the body.
+    await ask('and by currency');
+    const history = JSON.parse(asks[1].get('history') || 'null');
+    check(Array.isArray(history) && history.length === 1 && history[0].q === 'how diversified am I' && history[0].a.includes('Most of it is listed.') && history[0].c.length === 1,
+      `conversation ${width}px: the follow-up's history is ${asks[1].get('history')}`);
+    check(urls.every((u) => !u.includes('?') && !u.includes('diversified')), `conversation ${width}px: a question or history was in a URL: ${urls}`);
+    check((await page.locator('#answer .conversation').count()) === 2 && (await page.locator('#answer .bubble').count()) === 2, `conversation ${width}px: the thread does not hold both turns`);
+    check((await page.locator('#answer .ask-note').count()) === 2, `conversation ${width}px: each answer does not carry its own foot note`);
+    // A command inside the conversation answers itself, and joins the thread and the history.
+    await ask('allocation by currency');
+    check((await page.textContent('#answer .conversation:last-child')).includes('no AI model') && asks[2].has('history'), `conversation ${width}px: a command inside the conversation is not answered by the box itself`);
+    await ask('and one more');
+    const third = JSON.parse(asks[3].get('history'));
+    check(third.length === 3 && third[2].q === 'allocation by currency', `conversation ${width}px: the command's turn is not in the next history: ${asks[3].get('history')}`);
+    await geometry('in a conversation');
+    await page.screenshot({ path: path.join(out, `phone${width}-light-ask-conversation.png`), fullPage: true });
+    // New conversation clears the thread and what the next question carries.
+    await page.click('#ask-new');
+    check((await page.locator('#answer .conversation').count()) === 0 && await page.isHidden('#ask-new'), `conversation ${width}px: New conversation did not clear the thread`);
+    await ask('how diversified am I');
+    check(!asks[asks.length - 1].has('history'), `conversation ${width}px: a question after New conversation still sent a history`);
+    // Nothing was stored.
+    const after = await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length, cookie: document.cookie, writes: window.__writes }));
+    check(after.local === before.local && after.session === before.session && after.cookie === before.cookie && after.writes === 0,
+      `conversation ${width}px: the conversation wrote to storage: ${JSON.stringify({ before, after })}`);
+    check((await sideways(page)) <= 0, `conversation ${width}px: the page scrolls sideways`);
     await ctx.close();
   }
 }
@@ -404,10 +489,10 @@ async function turnstileContext(browser, mode, options = {}) {
     await ctx.clock.install();
   }
   const page = await ctx.newPage();
-  const asks = []; // the query strings of the box's requests, in order
+  const asks = []; // the form fields of the box's requests (POSTs to /ask, D-224), in order
   const posts = []; // the bodies of the page's reports about itself (D-227)
   page.on('request', (r) => {
-    if (r.url().includes('/ask?')) { asks.push(new URL(r.url()).searchParams); }
+    if (r.method() === 'POST' && new URL(r.url()).pathname === '/ask') { asks.push(new URLSearchParams(r.postData() || '')); }
     if (r.method() === 'POST' && r.url().endsWith('/client-events')) { posts.push(r.postData() || ''); }
   });
   await page.goto(turnstileBase + '/test/sign-in');
@@ -510,8 +595,9 @@ async function turnstileOnDemand(browser) {
     const handled = await page.evaluate(() => window.__fakeTurnstile.fail('110200'));
     check(handled === true, `turnstile on demand: the error callback returned ${handled}, not true`);
     await page.waitForSelector('#answer .answer-title:has-text("Couldn\'t confirm you\'re a person")', { timeout: 5000 });
-    const message = await page.textContent('#answer');
-    check(message.includes('Cloudflare error 110200') && message.includes('Brave') && (await page.locator('#answer .answer').count()) === 1 && message.includes('and by currency'),
+    // The failure is one message at the end of the thread (the earlier answer stays above it).
+    const message = await page.textContent('#answer .conversation:last-child');
+    check(message.includes('Cloudflare error 110200') && message.includes('Brave') && (await page.locator('#answer .conversation:last-child .answer').count()) === 1 && message.includes('and by currency'),
       `turnstile on demand: the error says ${message}`);
     check(await page.isEnabled('.ask-form button[type="submit"]') && await page.isHidden('#ask-pending') && !(await page.evaluate(() => window.__sawNoTokenCard === true)),
       'turnstile on demand: after an error the box is busy or the no-token card was drawn');
@@ -620,7 +706,7 @@ async function askProgress(browser) {
     // The response is held back so the in-flight state can be seen.
     let release;
     const held = new Promise((resolve) => { release = resolve; });
-    await page.route('**/ask?*', async (route) => { await held; await route.continue(); });
+    await page.route('**/ask', async (route) => { await held; await route.continue(); });
     await page.fill('#ask-q', 'how diversified am I');
     await page.click('.ask-form button[type="submit"]');
     await page.waitForSelector('#ask-pending.htmx-request', { state: 'visible', timeout: 5000 });
@@ -635,7 +721,7 @@ async function askProgress(browser) {
     await page.screenshot({ path: path.join(out, `phone360-light-ask-pending-${reduced ? 'reduced' : 'motion'}.png`) });
     release();
     await page.waitForSelector('#answer .used-card', { timeout: 5000 });
-    await page.unroute('**/ask?*');
+    await page.unroute('**/ask');
     check(await page.isHidden('#ask-pending') && await page.isEnabled('.ask-form button[type="submit"]'), `ask ux (${tag}): the progress stays after the answer`);
     // The answer is directly under the field (the suggestions come after it), in view, with ONE attribution line.
     const answerBox = await page.locator('#answer .conversation').boundingBox();
@@ -651,7 +737,7 @@ async function askProgress(browser) {
     check((await sideways(page)) <= 0, `ask ux (${tag}): the answer scrolls sideways at 360 px`);
     await page.screenshot({ path: path.join(out, `phone360-light-ask-answered-${reduced ? 'reduced' : 'motion'}.png`), fullPage: true });
     // A chip is answered with "Looking it up…" and a command's answer says it needs no model.
-    await page.route('**/ask?*', async (route) => { await new Promise((r) => setTimeout(r, 400)); await route.continue(); });
+    await page.route('**/ask', async (route) => { await new Promise((r) => setTimeout(r, 400)); await route.continue(); });
     await page.click('.chips-row .chip >> nth=0');
     await page.waitForSelector('#ask-pending.htmx-request', { state: 'visible', timeout: 5000 });
     check((await page.textContent('#ask-pending-label')) === 'Looking it up…', `ask ux (${tag}): a chip's pending answer says ${await page.textContent('#ask-pending-label')}`);
@@ -1035,6 +1121,7 @@ try {
   await removedRedirect(browser);
   await askBox(browser);
   await askModelBox(browser);
+  await askConversation(browser);
   await withoutTurnstile(browser);
   await turnstileBox(browser);
   await turnstileOnDemand(browser);

@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7fbfacaee2a
+  - type: executable_for
+    from: SYM-d224-conversation-test-go-testtheconversationcasesholdtheirearlierturns
+    to: TEST-askbench-conversation
+    created_at: 2026-11-21T10:41:53.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c3f3edfe6ec

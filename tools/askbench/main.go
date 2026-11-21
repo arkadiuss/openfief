@@ -66,7 +66,7 @@ const (
 	exitCredentials = 5
 	httpTimeout     = time.Minute
 	// defaultBudget is the most the run may spend, in US dollars: far above
-	// what the two candidates cost for the 28 cases five times each.
+	// what the two candidates cost for the 33 cases five times each.
 	defaultBudget   = "1.00"
 	defaultMaxCalls = 2000
 	defaultParallel = 3 // D-208 caps the box at 3 model calls at once, and one question makes one call at a time

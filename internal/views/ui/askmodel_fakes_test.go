@@ -53,6 +53,9 @@ type fakeAskModel struct {
 	// response schema each carried ("" for none).
 	toolsSeen [][]string
 	schemas   []string
+	// toolDefs are the tools each request offered, with their descriptions and
+	// argument schemas.
+	toolDefs [][]*modelsv1.Tool
 	// sessions are the session tokens each call carried.
 	sessions []string
 	bearers  []string
@@ -143,6 +146,7 @@ func (f *fakeAskModel) GenerateAsk(_ context.Context, r *connect.Request[modelsv
 		names = append(names, t.GetName())
 	}
 	f.toolsSeen = append(f.toolsSeen, names)
+	f.toolDefs = append(f.toolDefs, r.Msg.GetTools())
 	f.schemas = append(f.schemas, r.Msg.GetResponseSchemaJson())
 	next := scriptedReply{text: answerText("done")}
 	switch {
