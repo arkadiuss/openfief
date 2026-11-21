@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d193-1-overview",
+  "sourceFile": "internal/views/ui/overtime.go",
+  "symbol": "askGet",
+  "verdict": "keeps",
+  "note": "askGet is gone: its chips now ask through askVals as a POST, and the overview's layout, order and places are unchanged; the Ask box still answers in place and without htmx.",
+  "statementHash": "sha256:602b9e577444e65400a609e94feb617b33a15456c5590fcf07ad6e68abaaad8e",
+  "codeHash": "removed",
+  "startLine": 0,
+  "endLine": 0,
+  "recordedAt": "2026-11-21T10:03:48.690Z"
+}

@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9a69c43dc79
+  - type: verified_by
+    from: SCEN-ui-ask-history-untrusted
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T09:19:42.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e0f372f3c6
+  - type: verified_by
+    from: SCEN-ui-ask-history-untrusted
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T09:19:43.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd15c1a98043
+  - type: verified_by
+    from: SCEN-ui-ask-history-untrusted
+    to: TEST-askbench-conversation
+    created_at: 2026-11-21T09:19:44.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b70269cc6038

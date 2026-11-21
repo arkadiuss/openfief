@@ -23,6 +23,10 @@ type (
 	// AskTool is a tool the model may call: its name, description and the
 	// JSON Schema of its arguments.
 	AskTool = askTool
+	// AskTurn is an earlier turn of a conversation, as the browser sends it
+	// with a follow-up (D-224): the question, the answer's text and the compact
+	// summaries of its cards. It is untrusted, as the box treats it.
+	AskTurn = askTurn
 )
 
 // AskModel is the model side of the Ask box's loop for a harness that has no
@@ -165,11 +169,18 @@ type AskRunCall struct {
 // Ask asks question, in a conversation of its own, and returns what it did.
 // It fails only for a question that can't be started.
 func (a *Asker) Ask(ctx context.Context, question string) (AskRun, error) {
+	return a.AskAfter(ctx, question, nil)
+}
+
+// AskAfter asks question as a follow-up of the earlier turns, as the page's
+// browser would send them (D-224): they are capped and shown to the model as an
+// untrusted transcript, the way the page does.
+func (a *Asker) AskAfter(ctx context.Context, question string, earlier []AskTurn) (AskRun, error) {
 	r, err := http.NewRequestWithContext(ctx, http.MethodGet, "/ask", http.NoBody)
 	if err != nil {
 		return AskRun{}, fmt.Errorf("starting the question: %w", err)
 	}
-	r = withFormat(r, a.format)
+	r = withHistory(withFormat(r, a.format), earlier)
 	card, conv, err := a.answerer.converse(r, session{Token: "ask-bench", Origin: "ask-bench"}, question)
 	if err != nil {
 		return AskRun{}, fmt.Errorf("asking: %w", err)

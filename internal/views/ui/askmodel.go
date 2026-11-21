@@ -183,7 +183,10 @@ func (a *modelAnswerer) clock() time.Time {
 //
 // The question is the owner's own words, which may carry amounts or holdings,
 // so it is T0 like a tool's result (D-206): a route whose models may not
-// receive T0 is refused by the router before anything is sent.
+// receive T0 is refused by the router before anything is sent. The same goes
+// for the earlier turns of a conversation (D-224) that r carries (withHistory),
+// which go in the question's message as a transcript the browser sent, never
+// as the model's own turns.
 func (a *modelAnswerer) ask(r *http.Request, sess session, question string) (answerCard, error) {
 	card, _, err := a.converse(r, sess, question)
 	return card, err
@@ -207,7 +210,7 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
 		msgs: []askMessage{
 			{Role: roleSystem, Content: askSystemPrompt(a.today()), Tier: tierT2},
-			{Role: roleUser, Content: question, Tier: tierT0},
+			{Role: roleUser, Content: historyMessage(historyOf(r), question), Tier: tierT0},
 		},
 	}
 	for round := 1; round <= a.limits.ToolRounds+1; round++ {
@@ -635,10 +638,10 @@ func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, b
 	if a.turnstile == nil {
 		return answerCard{}, false
 	}
-	outcome := a.turnstile.verify(r.Context(), r.URL.Query().Get(turnstileField), clientAddress(r), r.Host)
+	outcome := a.turnstile.verify(r.Context(), askValue(r, turnstileField), clientAddress(r), r.Host)
 	// The verdict and the path that made the token, both fixed words: nothing the browser typed is logged.
 	a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question",
-		"verdict", outcome.verdict.String(), "path", checkPath(r.URL.Query().Get(checkPathField)))
+		"verdict", outcome.verdict.String(), "path", checkPath(askValue(r, checkPathField)))
 	return turnstileAnswer(question, outcome)
 }
 

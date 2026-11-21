@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6efd80753e0
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-testafollowupreachesthemodelwiththeearlierturnsandaddsitsown
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:36:51.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5215003bd9e

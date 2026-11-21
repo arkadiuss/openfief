@@ -373,7 +373,7 @@ func (b *Bench) replayCards(ctx context.Context, k *runKey, run *RunReport) repl
 	if err != nil {
 		return replayed{why: "replay: " + err.Error()}
 	}
-	out, err := asker.Ask(ctx, k.c.Question)
+	out, err := asker.AskAfter(ctx, k.c.Question, k.c.earlier())
 	if err != nil {
 		return replayed{why: "replay: " + err.Error()}
 	}

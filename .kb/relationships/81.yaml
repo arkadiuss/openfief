@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75111cf252a1
+  - type: implements
+    from: SYM-d224-askhistory-go-askturn-runes
+    to: REQ-ui-ask-history-untrusted
+    created_at: 2026-11-21T10:40:18.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd540e6c825b
+  - type: covered_by
+    from: SYM-d224-askhistory-go-askturn-runes
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:40:19.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168815d65b91

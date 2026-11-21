@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2a00ebeda55
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-harness-asksafter
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:36:43.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4881471a715

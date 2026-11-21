@@ -1077,3 +1077,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f1209bd676aa
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-testapostedquestionneedsthesameoriginaseverypost
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:37:42.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1395424681c0

@@ -1336,3 +1336,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92237d777c94
+  - type: implements
+    from: SYM-d224-askhistory-go-tidy
+    to: REQ-ui-ask-history-untrusted
+    created_at: 2026-11-21T10:40:26.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca066549d8b6
+  - type: covered_by
+    from: SYM-d224-askhistory-go-tidy
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:40:26.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e5f83717bdd

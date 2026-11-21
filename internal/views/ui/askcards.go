@@ -70,6 +70,10 @@ type answerCard struct {
 	// Turnstile token: the response then tells the page to run the check and
 	// ask again (checkNeededTrigger).
 	CheckNeeded bool
+	// Turn is what the answer adds to the conversation, as the JSON the page
+	// keeps with it and sends back with the next question (D-224); empty for
+	// a card that adds nothing.
+	Turn string
 	// Withheld are the cards the model asked for that the router would not
 	// send it, because no model of the route may receive their data tier
 	// (D-206).

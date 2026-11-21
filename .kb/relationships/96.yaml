@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1242f92d821
+  - type: implements
+    from: SYM-ui-ask-cap-history
+    to: REQ-ui-ask-history-untrusted
+    created_at: 2026-11-21T09:19:56.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5248a6393f
+  - type: covered_by
+    from: SYM-ui-ask-cap-history
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T09:20:02.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50708fd9a5c4

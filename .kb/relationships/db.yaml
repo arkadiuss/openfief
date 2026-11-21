@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1cf019139c5e
+  - type: verified_by
+    from: SCEN-ui-ask-send-inline
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-21T09:19:46.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40f94465b42b

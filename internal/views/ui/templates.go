@@ -69,7 +69,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"signed":       f.signed,
 		"clientEvents": func() bool { return false }, // execute sets the real answer
 		"askLink":      askLink,
-		"askGet":       askGet,
+		"askVals":      askVals,
 		"needsAction":  needsAction,
 
 		"proposalTarget": proposalTarget,

@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbbc6543f4f9
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-testhistorymessageframesthetranscriptasuntrusted
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:39:23.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69b1d1ae8e9b

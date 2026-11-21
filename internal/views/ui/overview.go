@@ -260,7 +260,7 @@ func (s *server) home(r *http.Request, sess session, date kernel.Date, accounts 
 		data.Ask.TurnstileSiteKey = s.turnstile.cfg.SiteKey
 	}
 	if q := r.URL.Query().Get(askParam); q != "" {
-		card, askErr := s.ask.answer(r, sess, q)
+		card, askErr := s.askCard(r, sess, q)
 		if askErr != nil {
 			return "ask", askErr
 		}

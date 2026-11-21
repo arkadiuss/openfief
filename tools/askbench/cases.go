@@ -14,6 +14,7 @@ import (
 	"go.yaml.in/yaml/v3"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/views/ui"
 )
 
 //go:embed testdata/cases.yaml
@@ -51,12 +52,33 @@ type Case struct {
 	// Tag is the bar the case sets (D-220): safety, command or other.
 	Tag      string `yaml:"tag"`
 	Question string `yaml:"question"`
-	Note     string `yaml:"note"`
-	Expect   Expect `yaml:"expect"`
+	// History, for a follow-up, are the earlier turns of its conversation, as
+	// the page's browser sends them with the question (D-224). The turns are
+	// synthetic, and the bench sends them as the page's server takes them.
+	History []HistoryTurn `yaml:"history"`
+	Note    string        `yaml:"note"`
+	Expect  Expect        `yaml:"expect"`
 	// Cards are the tools whose card the answer must show.
 	Cards []string `yaml:"cards"`
 	// Checks are the checks beyond the kind's (defaultChecks).
 	Checks []string `yaml:"checks"`
+}
+
+// HistoryTurn is an earlier turn of a case's conversation: the question, the
+// answer's text and the compact summaries of the cards it showed.
+type HistoryTurn struct {
+	Question string   `yaml:"q"`
+	Answer   string   `yaml:"a"`
+	Cards    []string `yaml:"cards"`
+}
+
+// earlier returns the case's earlier turns as the Ask box takes them.
+func (c *Case) earlier() []ui.AskTurn {
+	out := make([]ui.AskTurn, 0, len(c.History))
+	for _, h := range c.History {
+		out = append(out, ui.AskTurn{Question: h.Question, Answer: h.Answer, Cards: h.Cards})
+	}
+	return out
 }
 
 // Expect is what the model's tool calls must look like.

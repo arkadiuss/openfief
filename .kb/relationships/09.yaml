@@ -1182,3 +1182,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e5a1e8381f9
+  - type: executable_for
+    from: SYM-d224-askhistory-page-test-go-testthecheckforafollowupisthesameasforafirstquestion
+    to: TEST-ui-ask-history-page
+    created_at: 2026-11-21T10:37:51.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6f0e59ad50c

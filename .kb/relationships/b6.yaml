@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da77c48e20ca
+  - type: executable_for
+    from: SYM-d224-conversation-test-go-firstusermessage
+    to: TEST-askbench-conversation
+    created_at: 2026-11-21T10:42:18.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e900d28d5c

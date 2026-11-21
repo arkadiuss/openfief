@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a5f765f7242
+  - type: executable_for
+    from: SYM-d224-askhistory-test-go-checknotranscriptrole
+    to: TEST-ui-ask-history
+    created_at: 2026-11-21T10:39:47.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffd0c75a6a6e

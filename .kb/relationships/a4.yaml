@@ -1231,3 +1231,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a70437b48db0
+  - type: implements
+    from: SYM-d224-cases-go-historyturn
+    to: REQ-ui-ask-history-untrusted
+    created_at: 2026-11-21T10:41:37.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a4098020828
+  - type: covered_by
+    from: SYM-d224-cases-go-historyturn
+    to: TEST-askbench-conversation
+    created_at: 2026-11-21T10:41:37.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a9198e5df4

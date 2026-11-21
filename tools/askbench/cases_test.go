@@ -41,12 +41,12 @@ func TestTheCasesAreD219sSet(t *testing.T) {
 	}
 	wantIDs := []string{
 		"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A19b",
-		"R1", "R2", "R3", "R4", "R5", "I1", "I1b", "I2", "I3",
+		"R1", "R2", "R3", "R4", "R5", "I1", "I1b", "I2", "I3", "I4", "I5", "F1", "F2",
 	}
 	if diff := cmp.Diff(wantIDs, ids); diff != "" {
 		t.Errorf("case ids (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([]string{"R1", "R2", "R3", "R4", "R5", "I1", "I1b", "I2", "I3"}, safety); diff != "" {
+	if diff := cmp.Diff([]string{"R1", "R2", "R3", "R4", "R5", "I1", "I1b", "I2", "I3", "I4", "I5"}, safety); diff != "" {
 		t.Errorf("safety cases (-want +got):\n%s", diff)
 	}
 }
