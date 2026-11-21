@@ -4,9 +4,9 @@
 # it first and upgrades it to this checkout's bundle (task e2e:upgrade, test/e2e/upgrade_test.go). It downloads the
 # release's own assets from its GitHub release, never anything this checkout builds, into an empty directory:
 #   <dir>/openfief-{crds,install,db}-<version>.yaml, <dir>/cnpg-<cnpg version>.yaml   the bundle
-#   <dir>/cli/                                                                         the CLI for OS/ARCH, its
+#   <dir>/cli/                                                                         the CLI of every platform, the
 #                                                                                      SBOM, checksums and signatures
-#   <dir>/bin/openfief                                                                 the verified CLI, executable
+#   <dir>/bin/openfief                                                                 the verified CLI for OS/ARCH
 #   <dir>/demo-seed.image                                                              the release's demo-seed image,
 #                                                                                      by the digest cosign verified
 # and fails on the first thing that doesn't hold:
@@ -23,7 +23,7 @@
 # The release's CLI isn't run here.
 #
 # Usage: CNPG_VERSION=<x.y.z> CNPG_SHA256=<sha256> release-fetch.sh <version> <owner/repo> <empty dir>
-# Optional: OS and ARCH of the CLI to download (default linux, amd64). Needs gh (GH_TOKEN), cosign, gojq, sha256sum
+# Optional: OS and ARCH of the CLI to install under bin/ (default linux, amd64). Needs gh (GH_TOKEN), cosign, gojq, sha256sum
 # and install on PATH.
 set -euo pipefail
 shopt -s inherit_errexit
@@ -72,9 +72,13 @@ bash "$root/scripts/retry.sh" gh release download "$VERSION" --repo "$REPO" \
   --pattern "openfief-crds-$VERSION.yaml" --pattern "openfief-install-$VERSION.yaml" \
   --pattern "openfief-db-$VERSION.yaml" --pattern "$cnpg"
 mkdir cli
-bash "$root/scripts/retry.sh" gh release download "$VERSION" --repo "$REPO" --dir cli \
-  --pattern "$cli" --pattern "$cli.sigstore.json" --pattern "$sums" --pattern "$sums.sigstore.json" \
-  --pattern "$sbom" --pattern "$sbom.sigstore.json"
+# The signed checksums file lists the CLI of every platform, and release-verify.sh checks it strictly, so every
+# platform's CLI and signature is downloaded, not only the one OS and ARCH name.
+patterns=(--pattern "$sums" --pattern "$sums.sigstore.json" --pattern "$sbom" --pattern "$sbom.sigstore.json")
+for platform in linux-amd64 linux-arm64 darwin-amd64 darwin-arm64; do
+  patterns+=(--pattern "openfief-$VERSION-$platform" --pattern "openfief-$VERSION-$platform.sigstore.json")
+done
+bash "$root/scripts/retry.sh" gh release download "$VERSION" --repo "$REPO" --dir cli "${patterns[@]}"
 for f in "openfief-crds-$VERSION.yaml" "openfief-install-$VERSION.yaml" "openfief-db-$VERSION.yaml" "$cnpg" \
   "cli/$cli" "cli/$cli.sigstore.json" "cli/$sums" "cli/$sums.sigstore.json" "cli/$sbom" "cli/$sbom.sigstore.json"; do
   [ -s "$f" ] || fail "the release has no asset ${f#cli/}"

@@ -36,11 +36,14 @@ release() {
   for f in $1; do
     printf -- '---\nkind: Deployment\nspec:\n  template:\n    spec:\n      containers:\n        - name: c\n          image: %s\n' "$f" >>"$r/openfief-install-$version.yaml"
   done
-  printf '#!/usr/bin/env bash\necho the release CLI\n' >"$r/openfief-$version-linux-amd64"
+  for p in linux-amd64 linux-arm64 darwin-amd64 darwin-arm64; do
+    printf '#!/usr/bin/env bash\necho the release CLI %s\n' "$p" >"$r/openfief-$version-$p"
+  done
   echo '{"bomFormat":"CycloneDX"}' >"$r/openfief-$version.cdx.json"
-  (cd "$r" && sha256sum "openfief-$version-linux-amd64" "openfief-$version.cdx.json" >"openfief-$version-SHA256SUMS")
-  for f in "openfief-$version-linux-amd64" "openfief-$version.cdx.json" "openfief-$version-SHA256SUMS"; do
-    echo "$cli_id $repo refs/heads/main $(sha256sum <"$r/$f" | cut -d' ' -f1)" >"$r/$f.sigstore.json"
+  # As the real release's, the checksums file lists the CLI of every platform.
+  (cd "$r" && sha256sum "openfief-$version"-{linux,darwin}-{amd64,arm64} "openfief-$version.cdx.json" >"openfief-$version-SHA256SUMS")
+  for f in "$r"/openfief-"$version"-{linux,darwin}-{amd64,arm64} "$r/openfief-$version.cdx.json" "$r/openfief-$version-SHA256SUMS"; do
+    echo "$cli_id $repo refs/heads/main $(sha256sum <"$f" | cut -d' ' -f1)" >"$f.sigstore.json"
   done
 }
 
@@ -140,13 +143,16 @@ done
 check "the verified CLI is executable under bin/" "$(yes_if test -x "$work/d/bin/openfief")"
 check "the CLI is the downloaded file" "$(yes_if cmp -s "$work/d/bin/openfief" "$work/release/openfief-$version-linux-amd64")"
 check "the demo-seed image is recorded by the verified digest" "$(yes_if test "$(cat "$work/d/demo-seed.image")" = "ghcr.io/$repo/demo-seed@$seed_digest")"
-check "it verifies the CLI, the checksums and the SBOM as release.yml on main" "$(yes_if test "$(grep -c "^cosign verify-blob .*--certificate-identity $cli_id " "$work/log")" -eq 3)"
+check "it verifies every platform's CLI, the checksums and the SBOM as release.yml on main" "$(yes_if test "$(grep -c "^cosign verify-blob .*--certificate-identity $cli_id " "$work/log")" -eq 6)"
 check "it pins the run's repository and ref on every check" "$(yes_if test "$(grep -c -- "--certificate-github-workflow-repository $repo --certificate-github-workflow-ref refs/heads/main" "$work/log")" -ge 7)"
 check "it tries the CLI under a wrong identity" "$(yes_if grep -q "^cosign verify-blob .*--certificate-identity $images_id .*openfief-$version-linux-amd64\$" "$work/log")"
 check "it verifies each image of ours as images.yml" "$(yes_if test "$(grep -c "^cosign verify ghcr.io/$repo/.*@sha256:.* --certificate-identity $images_id " "$work/log")" -eq 3)"
 check "it verifies the demo-seed image by its tag as images.yml" "$(yes_if grep -q "^cosign verify $seed_tag .*--certificate-identity $images_id " "$work/log")"
 check "the CLI and the bundle come from the release, by gh" "$(yes_if grep -q "^gh release download $version --repo $repo --dir cli " "$work/log")"
-check "OS and ARCH pick the CLI file" "$(yes_if grep -q -- "--pattern openfief-$version-linux-amd64 " "$work/log")"
+check "OS and ARCH pick the CLI under bin/" "$(yes_if cmp -s "$work/d/bin/openfief" "$work/release/openfief-$version-linux-amd64")"
+check "every platform's CLI is downloaded, as the checksums file lists them" "$(yes_if test -s "$work/d/cli/openfief-$version-darwin-arm64.sigstore.json")"
+check "OS and ARCH choose another platform's CLI" "$(passes OS=darwin ARCH=arm64)"
+check "that one is the CLI under bin/" "$(yes_if cmp -s "$work/d/bin/openfief" "$work/release/openfief-$version-darwin-arm64")"
 
 mkdir -p "$work/full"
 touch "$work/full/x"
@@ -178,7 +184,13 @@ echo tampered >>"$work/release/openfief-$version-linux-amd64"
 check "a tampered CLI fails" "$(fails_with "CLI files don't verify")"
 release "$op $eg $co"
 rm "$work/release/openfief-$version-linux-amd64.sigstore.json"
-check "a missing asset fails" "$(fails_with "the release has no asset openfief-$version-linux-amd64.sigstore.json")"
+check "a missing signature fails" "$(fails_with "the release has no asset")"
+release "$op $eg $co"
+rm "$work/release/openfief-$version-linux-amd64"
+check "a release without the CLI we need fails" "$(fails_with "the release has no asset")"
+release "$op $eg $co"
+rm "$work/release/openfief-$version-darwin-arm64"
+check "a release missing another platform's CLI, which the signed checksums list, fails" "$(fails_with "CLI files don't verify")"
 release "$op $eg $co"
 rm "$work/release/openfief-db-$version.yaml"
 check "a release without its database fails" "$(fails_with "the release has no asset openfief-db-$version.yaml")"
