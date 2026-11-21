@@ -1280,3 +1280,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24257223d5cf
+  - type: verified_by
+    from: SCEN-demo-grafana-notifications
+    to: TEST-tooling-grafana-apply
+    created_at: 2026-11-20T22:31:03.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f79e5b7abf9

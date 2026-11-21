@@ -8,6 +8,8 @@
 #   - every datasource a dashboard names is one of those, and a metric a query names is one of the five the core
 #     exports (sdk/go/telemetry/metrics.go) as Prometheus names it (dots to underscores, _total on a counter, _bucket
 #     on a histogram), so a typo or an unlisted metric fails here rather than showing an empty panel;
+#   - notifications.json names the IRM integration, a Slack channel ID (C and uppercase letters and digits) and the
+#     contact point's fixed uid and name, and holds no URL: the integration's link is a credential only Grafana keeps;
 #   - nothing in the files looks like a secret: a Grafana or Cloud token, a bearer credential, a JSON web token, an
 #     address or a password.
 # Usage: check.sh [directory]   (default deploy/grafana; gojq on PATH)
@@ -116,6 +118,26 @@ check_rules() {
   [ "$n" -gt 0 ] || check_fail "no alert rule in $dir/alerts"
 }
 
+# check_notifications fails for a notifications.json that lacks what apply needs or holds a URL (the integration's
+# link is a credential, and no address belongs in git).
+check_notifications() {
+  local file="$dir/notifications.json"
+  [ -f "$file" ] || { check_fail "no notifications.json"; return; }
+  check_json "$file" || return 0
+  if ! gojq -e '(.integration.name | type == "string" and length > 0) and (.contactPoint.name | type == "string" and length > 0)' "$file" >/dev/null; then
+    check_fail "$file: needs integration.name and contactPoint.name"
+  fi
+  if ! gojq -e '(.integration.slackChannelId // "") | type == "string" and test("^C[A-Z0-9]+$")' "$file" >/dev/null; then
+    check_fail "$file: integration.slackChannelId must be a Slack channel ID: C and uppercase letters and digits"
+  fi
+  if ! gojq -e '(.contactPoint.uid // "") | type == "string" and test("^openfief-[a-z0-9-]+$") and length <= 40' "$file" >/dev/null; then
+    check_fail "$file: contactPoint.uid must be fixed, start with openfief- and be at most 40 characters"
+  fi
+  if grep -qE '[A-Za-z][A-Za-z0-9+.-]*://|https?:|www[.]' "$file"; then
+    check_fail "$file: holds a URL; the integration's link is a credential that only Grafana keeps"
+  fi
+}
+
 # check_secrets fails when a file holds what only a secret looks like.
 check_secrets() {
   local file
@@ -132,6 +154,7 @@ check_secrets() {
 check_folder
 check_dashboards
 check_rules
+check_notifications
 check_secrets
 
 if [ "$failures" -gt 0 ]; then
