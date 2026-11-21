@@ -124849,9 +124849,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-action-string
     title: Action.String
     sourceFile: internal/identity/access.go
@@ -124864,9 +124864,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-holder
     title: Holder
     sourceFile: internal/identity/access.go
@@ -124880,9 +124880,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-holder-string
     title: Holder.String
     sourceFile: internal/identity/access.go
@@ -124895,9 +124895,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-caller
     title: Caller
     sourceFile: internal/identity/access.go
@@ -124910,9 +124910,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-may-act
     title: MayAct
     sourceFile: internal/identity/access.go
@@ -124925,9 +124925,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-app-authorizer
     title: Authorizer
     sourceFile: internal/identity/app/access.go
@@ -124956,9 +124956,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-app-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
   - id: SYM-identity-app-policy-may-act
     title: Policy.MayAct
     sourceFile: internal/identity/app/access.go
@@ -124971,9 +124971,9 @@ symbols:
       - type: covered_by
         target: TEST-identity-app-access
       - type: implements
-        target: REQ-identity-authz-owner-acts-every-account
+        target: REQ-identity-authz-grants-hold-under-either-mode
       - type: implements
-        target: REQ-identity-authz-readers-view-every-account
+        target: REQ-identity-authz-owner-acts-every-account
       - type: implements
         target: REQ-identity-read-access-viewable-accounts-only
   - id: SYM-identity-app-caller-key

@@ -1,6 +1,6 @@
 ---
 title: Until SpiceDB answers the authorization interface, its only implementation must give every other holder of read access a view of every account.
-status: open
+status: closed
 text_ref: design-decisions:D-163#5
 tags:
   - strict-modeling

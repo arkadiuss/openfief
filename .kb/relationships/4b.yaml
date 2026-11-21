@@ -559,13 +559,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44b598043e45
-  - type: implements
-    from: SYM-identity-holder-string
-    to: REQ-identity-authz-readers-view-every-account
-    created_at: 2026-11-01T22:47:50.872Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-513aaed74b21
   - type: covered_by
     from: SYM-identity-holder-string
     to: TEST-identity-access
@@ -1231,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c21999143d3d
+  - type: implements
+    from: SYM-identity-holder-string
+    to: REQ-identity-authz-grants-hold-under-either-mode
+    created_at: 2026-11-21T21:49:26.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e0c854f7ce0
