@@ -1252,3 +1252,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edf1d8e0b857
+  - type: covered_by
+    from: SYM-d226-tools-askbench-quotes-go-seedclose
+    to: TEST-askbench-market-price-cases
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95f00f3fa980
+  - type: implements
+    from: SYM-d226-tools-askbench-quotes-go-seedclose
+    to: REQ-askbench-market-price-cases
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-247b60f042af

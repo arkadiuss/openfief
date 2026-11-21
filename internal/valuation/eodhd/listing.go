@@ -34,7 +34,7 @@ var (
 // Oslo (OL).
 func SupportedExchange(code string) bool {
 	switch code {
-	case "WAR", "LSE", "XETRA", "PA", "AS", "BR", "LS", "IR", "MI", "OL":
+	case venueWAR, "LSE", venueXETRA, "PA", "AS", "BR", "LS", "IR", "MI", "OL":
 		return true
 	}
 	return false
@@ -60,7 +60,7 @@ type Listing struct {
 // ticker and market, such as XTB, lists them (D-116).
 func CountryExchange(country string) string {
 	return map[string]string{
-		"PL": "WAR", "GB": "LSE", "DE": "XETRA", "FR": "PA", "NL": "AS", "BE": "BR", "PT": "LS", "IE": "IR", "IT": "MI", "NO": "OL",
+		"PL": venueWAR, "GB": "LSE", "DE": venueXETRA, "FR": "PA", "NL": "AS", "BE": "BR", "PT": "LS", "IE": "IR", "IT": "MI", "NO": "OL",
 	}[country]
 }
 

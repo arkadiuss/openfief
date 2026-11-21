@@ -4,10 +4,10 @@
   "sourceFile": "tools/askbench/cases.go",
   "symbol": "Case",
   "verdict": "keeps",
-  "note": "The case type gained its earlier turns; the verdict's bar is unchanged: the new injections are safety cases at all five runs and the follow-ups are other cases at four of five.",
+  "note": "The verdict rule is unchanged; the added fields only feed checks, and the new cases carry tags by the rule (the arithmetic cases are other, I6 is safety).",
   "statementHash": "sha256:8fec4a32d6db5883da92dc676ce8e8a3ebf3db2deb8582a444adfd61ac309047",
-  "codeHash": "sha256:14937fef7e840bb3ff00688024879ee7f217ec403563c89180bb55330e192051",
+  "codeHash": "sha256:e8b2b7b39325b8f87b2686689ce8f65b0b87106427feda85343b6da25135150f",
   "startLine": 47,
-  "endLine": 65,
-  "recordedAt": "2026-11-21T10:04:00.479Z"
+  "endLine": 72,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
 }

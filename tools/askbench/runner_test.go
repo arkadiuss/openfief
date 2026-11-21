@@ -314,7 +314,7 @@ func TestTheReportHoldsTheConfiguration(t *testing.T) {
 	t.Parallel()
 	f := newFakeModel(t)
 	m := runBench(t, f.url, "-case", "A1").report.Models[0]
-	if len(m.ConfigHash) != 64 || m.Config.Model != "test/model" || len(m.Config.Tools) != 6 {
+	if len(m.ConfigHash) != 64 || m.Config.Model != "test/model" || len(m.Config.Tools) != 8 {
 		t.Errorf("config %+v hash %q", m.Config, m.ConfigHash)
 	}
 	if m.Config.Limits.ToolCalls != 10 || m.Config.Limits.OutputTokens != 800 || m.Config.Limits.ToolRounds != 5 {

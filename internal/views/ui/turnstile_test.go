@@ -279,7 +279,7 @@ func (h *harness) asksWithToken(t *testing.T, session, question, token string) *
 	if token != "" {
 		q.Set(turnstileField, token)
 	}
-	return h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+q.Encode(), ""), session)))
+	return h.serve(t, htmx(withSession(form("/ask", q.Encode()), session)))
 }
 
 func TestAskBoxShowsTheWidgetOnlyWhereTurnstileIsOnAndAModelAnswers(t *testing.T) {
@@ -335,7 +335,7 @@ func TestUIPolicyAllowsTurnstileOnlyWhereItIsOn(t *testing.T) {
 func TestAskBoxPassesAQuestionWithAGoodToken(t *testing.T) {
 	t.Parallel()
 	h, f, _ := turnstileHarness(t)
-	req := htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"how diversified am I?"}, turnstileField: {"ok-1"}}.Encode(), ""), readSession))
+	req := htmx(withSession(form("/ask", url.Values{"q": {"how diversified am I?"}, turnstileField: {"ok-1"}}.Encode()), readSession))
 	req.Header.Set(openfief.ClientIPHeader, "198.51.100.7")
 	rec := h.serve(t, req)
 	wantStatus(t, rec, http.StatusOK)

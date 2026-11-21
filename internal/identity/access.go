@@ -93,3 +93,19 @@ func MayAct(c Caller, a Action) bool {
 	}
 	return false
 }
+
+// MayReadQuotes reports whether c may read market quotes (D-226): public data
+// fetched through the owner's market-data connector, tied to no account, so no
+// grant decides it and only who holds the token does. The owner, a script
+// token and a viewer may; a view plugin may not, since its manifest asks for
+// no quotes (Ghostfolio's does not), and a demo session never may, since the
+// demo answers from its synthetic data alone.
+func MayReadQuotes(c Caller) bool {
+	switch c.Holder {
+	case HolderOwner, HolderScriptToken, HolderViewer:
+		return true
+	case HolderViewPlugin, HolderDemoSession:
+		return false
+	}
+	return false
+}

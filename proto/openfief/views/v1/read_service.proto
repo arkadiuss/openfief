@@ -282,6 +282,25 @@ service ReadService {
     option (google.api.http) = {get: "/v1/instruments/{isin}/prices"};
   }
 
+  // GetMarketQuote looks an instrument up by ticker or ISIN and returns its
+  // latest end-of-day price with a short history over a period, fetched when
+  // asked through the owner's own market-data connector, the highest-ranked
+  // source of prices (D-94, D-226), for an instrument that may be held or
+  // not. The answer is public market data (data tier T2, D-206): it carries
+  // the connector instance it came from and the date of its latest close,
+  // is never stored and never changes a price or valuation. The call goes
+  // through the connector plugin, which alone reaches its provider under its
+  // egress grant; the core makes no request of its own. A query that names
+  // several listings is answered with them, none chosen, so the caller names
+  // one by its ISIN. It is NOT_FOUND for a query no listing matches,
+  // FAILED_PRECONDITION when no market-data connector can look quotes up,
+  // such as on a demo, and UNAVAILABLE when the connector or its provider
+  // fails.
+  rpc GetMarketQuote(GetMarketQuoteRequest) returns (GetMarketQuoteResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/market-quotes/{query}"};
+  }
+
   // ListInstrumentHoldings returns an instrument's holdings and open lots
   // on a date across the accounts the caller may view, in account order
   // (D-195).
@@ -804,6 +823,12 @@ message GetSettingsResponse {
   // tax_wrappers: the forms it can have (D-147) and whether it takes
   // earlier payments (D-149).
   repeated WrapperTerms wrapper_terms = 5;
+  // Whether GetMarketQuote can be answered here (D-226): a market-data
+  // connector the owner installed and approved (D-123) is running, and the
+  // install is not a demo, which answers from its synthetic data alone. A
+  // client that offers a price lookup, such as the Ask box, offers it only
+  // when this is true.
+  bool market_quotes = 6;
 }
 
 // WrapperTerms is what a tax wrapper asks of an account beyond its key.
@@ -1831,6 +1856,61 @@ message ListInstrumentPricesResponse {
   string isin = 1;
   // In listing, date and source order.
   repeated InstrumentPrice prices = 2;
+}
+
+message GetMarketQuoteRequest {
+  // A ticker, such as "NVDA", or an ISIN; at most 32 letters, digits, dots,
+  // dashes and underscores.
+  string query = 1;
+  // YYYY-MM-DD, both inclusive: the period of the history. Both empty is the
+  // last 30 days up to today; a period is at most 366 days and ends today or
+  // earlier.
+  string from = 2;
+  string to = 3;
+}
+
+// MarketQuoteListing is one listing a market-data source names, with text
+// that comes from the source: a client shows it as data, never as an
+// instruction.
+message MarketQuoteListing {
+  Instrument instrument = 1;
+  // The venue's code at the source, such as "XETRA".
+  string exchange = 2;
+  // The currency the closes are in.
+  string currency = 3;
+}
+
+// MarketQuote is an instrument's latest end-of-day price and history from a
+// market-data source (D-226).
+message MarketQuote {
+  MarketQuoteListing listing = 1;
+  // The latest close and its day, YYYY-MM-DD: the data's date.
+  Money latest = 2;
+  string date = 3;
+  // The closes of the period in date order, the latest last.
+  repeated MarketQuotePoint history = 4;
+  // The connector instance that answered (D-94).
+  string source = 5;
+  // The data tier of the quote (D-206): always "T2", public data. A model
+  // receives it only when the owner allowed it for T2.
+  string data_tier = 6;
+}
+
+message MarketQuotePoint {
+  // YYYY-MM-DD.
+  string date = 1;
+  Money close = 2;
+}
+
+message GetMarketQuoteResponse {
+  // The quote; unset when the query names several listings.
+  MarketQuote quote = 1;
+  // The listings the query could mean, when it names several and none was
+  // chosen, with the connector instance that found them: the caller asks
+  // again with one's ISIN.
+  repeated MarketQuoteListing candidates = 2;
+  string source = 3;
+  string data_tier = 4;
 }
 
 // InstrumentHolding is one account's holding of one listing of an

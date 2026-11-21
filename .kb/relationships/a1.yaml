@@ -1119,3 +1119,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-093c0a940b68
+  - type: verified_by
+    from: SCEN-tooling-release-fetch
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:44:08.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada77155efda
+  - type: specified_by
+    from: REQ-views-market-quote-rate-limit
+    to: SCEN-views-market-quote-rate-limit
+    created_at: 2026-11-21T11:27:00.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c9f925f7f8
+  - type: implements
+    from: SYM-pass-settings-connect-go-settingsserviceclient-setclientevents
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:39:48.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90cd14acaea3
+  - type: covered_by
+    from: SYM-pass-settings-connect-go-settingsserviceclient-setclientevents
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:39:48.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a1f3f1a919d

@@ -1063,3 +1063,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb69f082d183
+  - type: verified_by
+    from: SCEN-ingest-market-quote-answer-is-data
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:27:10.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40421e078296
+  - type: verified_by
+    from: SCEN-demo-market-quotes-off
+    to: TEST-demo-market-quotes-off
+    created_at: 2026-11-21T11:27:39.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f329722b2874
+  - type: executable_for
+    from: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricefailuresarecardsthemodelcanrelay
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69b70f385720
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getlatest
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4edb89f636c9
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquote-getlatest
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5861d9963595

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d203-1-ask-box-model",
+  "sourceFile": "internal/views/ui/askmodel.go",
+  "symbol": "modelAnswerer.tool",
+  "verdict": "keeps",
+  "note": "The lookup of a called tool by name moved to askConversation.toolOffered, which finds it only among the read-only answerers the model was offered; a model still calls only the same read-only answerers (D-203).",
+  "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
+  "codeHash": "removed",
+  "startLine": 0,
+  "endLine": 0,
+  "recordedAt": "2026-11-21T13:38:23.827Z"
+}

@@ -25,8 +25,8 @@ func inviteID(t *testing.T, code string) string {
 }
 
 // registerCancelling is register with between run after the ceremony began and
-// before it finishes.
-func (f *authFixture) registerCancelling(t *testing.T, code string, between func()) (*virtual.Authenticator, app.Registered, error) {
+// before it finishes, returning only whether it finished.
+func (f *authFixture) registerCancelling(t *testing.T, code string, between func()) error {
 	t.Helper()
 	dev, err := virtual.New(nil)
 	if err != nil {
@@ -37,11 +37,10 @@ func (f *authFixture) registerCancelling(t *testing.T, code string, between func
 	between()
 	cred, err := dev.Create(st.Options, local)
 	must(t, "Create", err)
-	r, err := f.auth.FinishRegistration(t.Context(), local, st.CeremonyID, cred, "")
-	if err != nil {
-		return nil, app.Registered{}, fmt.Errorf("FinishRegistration: %w", err)
+	if _, err := f.auth.FinishRegistration(t.Context(), local, st.CeremonyID, cred, ""); err != nil {
+		return fmt.Errorf("FinishRegistration: %w", err)
 	}
-	return dev, r, nil
+	return nil
 }
 
 // TestInviteLifetimeDefaultsToAnHour checks that a viewer's link lasts an hour
@@ -176,7 +175,7 @@ func TestCancelledInviteCannotBeUsedMidCeremony(t *testing.T) {
 	f := newGrantFixture(t, demoConfig{})
 	_, owner := f.enroll(t)
 	code := f.invite(t, &owner, "Alice", sleeve(sleeveCore))
-	_, _, err := f.registerCancelling(t, code, func() {
+	err := f.registerCancelling(t, code, func() {
 		must(t, "CancelInvite", f.auth.CancelInvite(t.Context(), local, owner.Token, inviteID(t, code)))
 	})
 	if !errors.Is(err, app.ErrForbidden) {
@@ -186,6 +185,29 @@ func TestCancelledInviteCannotBeUsedMidCeremony(t *testing.T) {
 	must(t, "People", peopleErr)
 	if len(people) != 1 {
 		t.Errorf("%d people after a cancelled invitation, want the owner alone", len(people))
+	}
+}
+
+// TestExpiredInviteCannotBeUsedMidCeremony checks that an invitation that
+// expires after the viewer began enrolling and before they finished creates no
+// viewer: its expiry is checked again when the link is spent, not only when the
+// ceremony begins.
+func TestExpiredInviteCannotBeUsedMidCeremony(t *testing.T) {
+	t.Parallel()
+	f := newGrantFixture(t, demoConfig{})
+	_, owner := f.enroll(t)
+	code := f.invite(t, &owner, "Alice", sleeve(sleeveCore))
+	f.clock.set(f.clock.now().Add(identity.DefaultInviteTTL - time.Minute))
+	err := f.registerCancelling(t, code, func() {
+		f.clock.set(f.clock.now().Add(2 * time.Minute))
+	})
+	if !errors.Is(err, app.ErrForbidden) {
+		t.Fatalf("finishing an invitation that expired mid-ceremony = %v, want %v", err, app.ErrForbidden)
+	}
+	people, peopleErr := f.auth.People(t.Context(), local, owner.Token)
+	must(t, "People", peopleErr)
+	if len(people) != 1 {
+		t.Errorf("%d people after an expired invitation, want the owner alone", len(people))
 	}
 }
 

@@ -1371,3 +1371,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09e9ef64b891
+  - type: executable_for
+    from: SYM-identity-postgres-invites-test-testuseenrollmentcoderefusesanexpiredcode
+    to: TEST-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:23.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c2480c5502e

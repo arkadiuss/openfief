@@ -1196,3 +1196,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-686ad22e2ff6
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-check-serving
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:57:16.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35f674b7df9a
+  - type: validates
+    from: TEST-askbench-market-price-cases
+    to: REQ-askbench-market-price-cases
+    created_at: 2026-11-21T11:26:40.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9cebbff2797
+  - type: executable_for
+    from: SYM-d226-internal-views-app-quotes-test-go-testmarketquoteunavailablewithoutasource
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8484fde6a7ab
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-descriptor
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983d3d1fc333
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoteresponse-descriptor
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b0ca5c2393d
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-getdate
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8669fde8de8
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-getdate
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513fc0630158
+  - type: implements
+    from: SYM-pass-settings-go-settingsservice-getclientevents
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:21:17.876Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-991d277c61a1
+  - type: covered_by
+    from: SYM-pass-settings-go-settingsservice-getclientevents
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:21:17.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a53cd0c73c1
+  - type: verified_by
+    from: SCEN-ui-turnstile-pass-skips-the-check
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:23:08.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-969cc17615d5

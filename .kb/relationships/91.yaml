@@ -1252,3 +1252,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83d764e13149
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testanexpiredpassisrefusedandthequestionischecked
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:00.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ad08af33eb

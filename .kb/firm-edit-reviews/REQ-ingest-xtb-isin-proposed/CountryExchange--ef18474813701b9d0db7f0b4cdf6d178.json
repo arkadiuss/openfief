@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ingest-xtb-isin-proposed",
+  "sourceFile": "internal/valuation/eodhd/listing.go",
+  "symbol": "CountryExchange",
+  "verdict": "keeps",
+  "note": "Only the WAR and XETRA literals became named constants of the same values; the country-to-exchange table is unchanged (D-116).",
+  "statementHash": "sha256:717937a190763f89d4d51a161ec10d6c5e82bfa9370fafa8e8f39c570b578964",
+  "codeHash": "sha256:94b850222f47aa37525d662d5716c7a7b0839d1d46880591d718669ac2924639",
+  "startLine": 61,
+  "endLine": 65,
+  "recordedAt": "2026-11-21T13:38:23.827Z"
+}

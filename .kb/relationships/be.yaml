@@ -1266,3 +1266,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8372d953978e
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-quotefailure
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:35:31.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecb95ac56aa
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-quotefailure
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:35:31.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7be6fcd08b3f
+  - type: implements
+    from: SYM-d226-tools-askbench-quotes-go-quotesof
+    to: REQ-askbench-market-price-cases
+    created_at: 2026-11-21T11:36:26.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ff5e5263b7
+  - type: covered_by
+    from: SYM-d226-tools-askbench-quotes-go-quotesof
+    to: TEST-askbench-market-price-cases
+    created_at: 2026-11-21T11:36:26.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74853e6fa88c
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-protoreflect
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f953db1598df
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-protoreflect
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e64601438821
+  - type: implements
+    from: SYM-pass-turnstilepass-go-parsedpass
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:52:16.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9aba96e4a81
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-parsedpass
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:52:16.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55fba5065936

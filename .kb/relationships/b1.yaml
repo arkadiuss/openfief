@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ead932307529
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-list-tables
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:54:08.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-745d68992af1
+  - type: executable_for
+    from: SYM-d226-internal-views-app-quotes-test-go-fakequotes-available
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b302346fc5cd

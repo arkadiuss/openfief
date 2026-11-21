@@ -15,6 +15,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -221,25 +222,34 @@ func bundleDeployments(t *testing.T) []appsv1.Deployment {
 	if err != nil {
 		t.Fatal(err)
 	}
+	deployments, err := deploymentsIn(b.install)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return deployments
+}
+
+// deploymentsIn returns the Deployments in an install file.
+func deploymentsIn(install []byte) ([]appsv1.Deployment, error) {
 	var deployments []appsv1.Deployment
-	decoder := utilyaml.NewYAMLReader(bufio.NewReader(bytes.NewReader(b.install)))
+	decoder := utilyaml.NewYAMLReader(bufio.NewReader(bytes.NewReader(install)))
 	for {
 		doc, readErr := decoder.Read()
 		if errors.Is(readErr, io.EOF) {
 			break
 		}
 		if readErr != nil {
-			t.Fatalf("reading the install file: %v", readErr)
+			return nil, fmt.Errorf("reading the install file: %w", readErr)
 		}
 		var d appsv1.Deployment
 		if err := yaml.Unmarshal(doc, &d); err != nil {
-			t.Fatalf("decoding the install file: %v", err)
+			return nil, fmt.Errorf("decoding the install file: %w", err)
 		}
 		if d.Kind == "Deployment" {
 			deployments = append(deployments, d)
 		}
 	}
-	return deployments
+	return deployments, nil
 }
 
 // TestBundlePinsImageDigests checks that every Deployment of the bundle's
@@ -363,6 +373,23 @@ func TestBundleReadAPI(t *testing.T) {
 // returns its base URL.
 func forwardCore(t *testing.T, k *kube) string {
 	t.Helper()
+	f := forwardCoreUntilStopped(t, k)
+	t.Cleanup(f.stop)
+	return f.base
+}
+
+// coreForward is a port-forward to the core: its base URL, and the call that ends it.
+type coreForward struct {
+	base string
+	stop func()
+}
+
+// forwardCoreUntilStopped forwards a free local port to the core's pod until
+// the returned stop is called, or t ends, and returns its base URL. A test
+// that restarts the core stops its forward first: a forward whose pod is gone
+// ends with an error.
+func forwardCoreUntilStopped(t *testing.T, k *kube) coreForward {
+	t.Helper()
 	l, err := (&net.ListenConfig{}).Listen(t.Context(), "tcp", "127.0.0.1:0")
 	if err != nil {
 		t.Fatalf("finding a free port: %v", err)
@@ -380,12 +407,16 @@ func forwardCore(t *testing.T, k *kube) string {
 	ready := make(chan struct{})
 	done := make(chan error, 1)
 	go func() { done <- access.Forward(ctx, port, ready) }()
-	t.Cleanup(func() {
-		cancel()
-		if err := <-done; err != nil {
-			t.Errorf("port-forward to the core: %v", err)
-		}
-	})
+	var once sync.Once
+	stop := func() {
+		once.Do(func() {
+			cancel()
+			if err := <-done; err != nil {
+				t.Errorf("port-forward to the core: %v", err)
+			}
+		})
+	}
+	t.Cleanup(stop)
 	select {
 	case <-ready:
 	case err := <-done:
@@ -393,7 +424,7 @@ func forwardCore(t *testing.T, k *kube) string {
 	case <-time.After(forwardTimeout):
 		t.Fatalf("port-forward to the core: not listening after %s", forwardTimeout)
 	}
-	return fmt.Sprintf("http://127.0.0.1:%d", port)
+	return coreForward{base: fmt.Sprintf("http://127.0.0.1:%d", port), stop: stop}
 }
 
 // bundleGet sends GET url with token as the bearer token unless it is empty,

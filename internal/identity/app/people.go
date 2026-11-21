@@ -309,7 +309,7 @@ func (a *Auth) storeViewerRegistration(ctx context.Context, c *identity.Ceremony
 // creation and the passkey's, inside the transaction ctx carries.
 func (a *Auth) enrollViewerRows(ctx context.Context, c *identity.Ceremony, actor identity.Actor, person *identity.Person, p *identity.Passkey) error {
 	useErr := a.store.UseEnrollmentCode(ctx, c.EnrollmentCode, p.CreatedAt)
-	if errors.Is(useErr, identity.ErrEnrollmentCodeUsed) {
+	if codeRefused(useErr) {
 		return fmt.Errorf("%w: %w", ErrForbidden, useErr)
 	}
 	if useErr != nil {

@@ -23,7 +23,7 @@ func TestAskToolsAreTheReadOnlyAnswerers(t *testing.T) {
 		names = append(names, tools[i].Name)
 		checkTool(t, &tools[i])
 	}
-	want := []string{"what_needs_me", "show", "sync_status", "allocation", "performance", "value"}
+	want := []string{"what_needs_me", "show", "sync_status", "allocation", "performance", "value", "market_price", "calc"}
 	if diff := cmp.Diff(want, names); diff != "" {
 		t.Errorf("tools (-want +got):\n%s", diff)
 	}
@@ -40,7 +40,7 @@ func TestAskToolsAreTheReadOnlyAnswerers(t *testing.T) {
 // object schema.
 func checkTool(t *testing.T, tool *Tool) {
 	t.Helper()
-	if tool.Description == "" || tool.Label == "" || tool.query == nil || !slices.Contains([]string{TierT0, TierTF, TierT1, TierT2}, tool.Tier) {
+	if tool.Description == "" || tool.Label == "" || tool.query == nil || !slices.Contains([]string{TierT0, TierTF, TierT1, TierT2, TierInstructions}, tool.Tier) {
 		t.Errorf("tool %s is missing its description, label or mapping, or has a tier that is none of D-206's", tool.Name)
 	}
 	var schema struct {
@@ -162,6 +162,10 @@ func TestAskToolArguments(t *testing.T) {
 		{tool: "value", args: `{"date":"2026-02-30"}`, wantErr: errToolDate},
 		{tool: "value", args: `{"date":"2027-01-01"}`, wantErr: errToolDate},
 		{tool: "value", args: `{"date":"someday"}`, wantErr: errToolDate},
+		{tool: "calc", args: `{"expression":"0.1+0.2"}`, want: Query{Command: CommandCalc, Expression: "0.1+0.2"}},
+		{tool: "calc", args: `{}`, wantErr: errNoExpression},
+		{tool: "calc", args: `{"expression":"  "}`, wantErr: errNoExpression},
+		{tool: "calc", args: `{"expression":1}`, wantErr: errBadArgs},
 	}
 	byName := map[string]Tool{}
 	for _, tool := range Tools() {

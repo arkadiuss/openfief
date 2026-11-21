@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-ui-client-events",
+  "sourceFile": "internal/views/ui/clientevents.go",
+  "symbol": "addressLimit.allow",
+  "verdict": "keeps",
+  "note": "Reports are still rate-limited per address, 30 a minute, with the same bounded table and the address never recorded; an IPv6 address is now counted as its /64, as the Ask box's limits count it (D-208), and a cap on every address together is added, so the limit is only tighter.",
+  "statementHash": "sha256:d740a60637eb7e854306e024a4139014d6322732a2c926b0c5a2a0164fb46f6d",
+  "codeHash": "sha256:987315c2a2a178a7faeeb29d65bf3d4a41256e6bace6e8de17340c8acadb6f43",
+  "startLine": 314,
+  "endLine": 345,
+  "recordedAt": "2026-11-21T18:20:15.513Z"
+}

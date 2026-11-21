@@ -6,6 +6,7 @@ import (
 	"os"
 	"slices"
 	"strconv"
+	"sync"
 	"testing"
 	"time"
 
@@ -36,7 +37,32 @@ const (
 	// take it away again ("off"), for the banner on the Audit log page
 	// (D-211).
 	browserAuditBehind = "/test/audit-behind"
+	// browserAdvanceClock is where they move the Turnstile UI's clock forward, by the
+	// minutes query parameter, so that the pass a visitor holds (D-208) can expire
+	// without the check waiting half an hour.
+	browserAdvanceClock = "/test/advance-clock"
 )
+
+// browserClock is the Turnstile UI's clock for the browser checks: the real one,
+// moved forward by what the checks ask. The browser keeps the pass cookie by its own
+// clock, which stays behind this one, so a pass the server has let expire is still
+// sent, and refused.
+type browserClock struct {
+	mu     sync.Mutex
+	offset time.Duration
+}
+
+func (c *browserClock) now() time.Time {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return time.Now().Add(c.offset)
+}
+
+func (c *browserClock) advance(d time.Duration) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.offset += d
+}
 
 // auditBehindItem is the open attention item the core raises while n changes'
 // audit entries wait in the outbox, worded as the core words it.
@@ -93,10 +119,14 @@ func TestServeForBrowser(t *testing.T) {
 	}
 	// With OPENFIEF_UI_TURNSTILE the Ask box has Turnstile in front of its model (D-208),
 	// checked by a fake Cloudflare that takes the tokens a fake widget makes ("ok-...").
+	clock := &browserClock{}
 	var withTurnstile func(*Config)
 	if os.Getenv(browserTurnstile) != "" {
 		cloudflare := newFakeSiteverify(t)
-		withTurnstile = func(c *Config) { c.Turnstile = cloudflare.config() }
+		withTurnstile = func(c *Config) {
+			c.Turnstile = cloudflare.config()
+			c.Now = clock.now
+		}
 	}
 	h := newHarnessWith(t, nil, withTurnstile)
 	h.read.locked(func() { h.read.modelOn = true })
@@ -125,6 +155,15 @@ func TestServeForBrowser(t *testing.T) {
 	mux.HandleFunc("GET "+browserAskModel, func(w http.ResponseWriter, r *http.Request) {
 		browserSetUpAskModel(h.askModel, r.URL.Query().Get("tiers"))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	mux.HandleFunc("GET "+browserAdvanceClock, func(w http.ResponseWriter, r *http.Request) {
+		minutes, err := strconv.Atoi(r.URL.Query().Get("minutes"))
+		if err != nil || minutes < 0 {
+			http.Error(w, "minutes is a whole number", http.StatusBadRequest)
+			return
+		}
+		clock.advance(time.Duration(minutes) * time.Minute)
+		w.WriteHeader(http.StatusNoContent)
 	})
 	mux.HandleFunc("GET "+browserAuditBehind, func(w http.ResponseWriter, r *http.Request) {
 		n, err := strconv.Atoi(r.URL.Query().Get("n"))

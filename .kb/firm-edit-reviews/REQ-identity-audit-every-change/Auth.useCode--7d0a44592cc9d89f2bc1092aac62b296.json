@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-audit-every-change",
+  "sourceFile": "internal/identity/app/passkeys.go",
+  "symbol": "Auth.useCode",
+  "verdict": "keeps",
+  "note": "useCode still records the link's use with the passkey on success; an expired code is now refused like a used one, and the refusal rolls back with the registration as a used code's always did, so no change of state goes unrecorded.",
+  "statementHash": "sha256:76bda3d68b663230d6c32dc1fc9044d5b5901518976a1dc3b8395be0cced9c11",
+  "codeHash": "sha256:d0917a28758e1b9ef0308d52756da07fd3699d9c7c8cd76152136b2e7306c06f",
+  "startLine": 519,
+  "endLine": 529,
+  "recordedAt": "2026-11-21T18:39:57.094Z"
+}

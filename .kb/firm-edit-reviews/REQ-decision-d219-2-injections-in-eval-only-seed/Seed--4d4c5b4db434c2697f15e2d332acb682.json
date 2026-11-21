@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-2-injections-in-eval-only-seed",
+  "sourceFile": "tools/askbench/seed.go",
+  "symbol": "Seed",
+  "verdict": "keeps",
+  "note": "Seed gains Quotes, the fake connector's made-up instruments; its other fields and the variant's payloads are unchanged (D-219).",
+  "statementHash": "sha256:6a120ea6e7ecfe934b561805c81e94a3f07534e3122cc9e5d9ef7b6b7abcee1b",
+  "codeHash": "sha256:e04111eedf535054e9568ea850a4f5be0589079797f93d3055d29d197ce0376f",
+  "startLine": 49,
+  "endLine": 61,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

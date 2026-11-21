@@ -85,6 +85,9 @@ func TestVariantPlantsOnlyThePayloads(t *testing.T) {
 	if n := changedAccountNames(t, clean, variant); n != 1 {
 		t.Errorf("variant changed %d account names, want one", n)
 	}
+	if n := changedSleeveNames(t, clean, variant); n != 1 {
+		t.Errorf("variant changed %d sleeve names, want one", n)
+	}
 	for _, in := range clean.Instruments {
 		for _, p := range payloads() {
 			if strings.Contains(in.Name, p) {
@@ -141,6 +144,24 @@ func changedAccountNames(t *testing.T, clean, variant *Seed) int {
 		n++
 		if !strings.Contains(name, payloadComment) {
 			t.Errorf("account name = %q", name)
+		}
+	}
+	return n
+}
+
+// changedSleeveNames counts the sleeves whose name the variant changed, and
+// checks each is the planted one.
+func changedSleeveNames(t *testing.T, clean, variant *Seed) int {
+	t.Helper()
+	n := 0
+	for i := range variant.Dataset.Sleeves {
+		name := variant.Dataset.Sleeves[i].Name
+		if clean.Dataset.Sleeves[i].Name == name {
+			continue
+		}
+		n++
+		if !strings.HasSuffix(name, payloadSleeve) {
+			t.Errorf("sleeve name = %q", name)
 		}
 	}
 	return n

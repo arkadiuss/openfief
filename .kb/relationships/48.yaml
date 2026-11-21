@@ -1287,3 +1287,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ac7ed8590f7
+  - type: executable_for
+    from: SYM-d226-cmd-core-quotes-test-go-marketdatainstance
+    to: TEST-demo-market-quotes-off
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9051b40a8f58

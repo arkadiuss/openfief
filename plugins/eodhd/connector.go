@@ -37,6 +37,7 @@ var errNoAPIKey = errors.New("no EODHD API key")
 type marketData interface {
 	Listings(ctx context.Context, isin ledger.ISIN) ([]eodhd.Listing, error)
 	Search(ctx context.Context, code, exchange string) ([]eodhd.Listing, error)
+	Find(ctx context.Context, query string) ([]eodhd.Listing, error)
 	Closes(ctx context.Context, ticker string, from, to kernel.Date) ([]eodhd.Close, error)
 }
 

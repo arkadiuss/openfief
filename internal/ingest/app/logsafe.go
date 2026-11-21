@@ -17,6 +17,7 @@ func loggableErrors() []error {
 	return []error{
 		context.Canceled, context.DeadlineExceeded,
 		ErrSyncRunning, ErrEntryRefused, ErrNoEntries, ErrConnectorUnavailable, ErrConnectorFailed, ErrInvalidDelivery,
+		ErrNoQuoteSource, ErrQuoteNotFound, ingest.ErrInvalidQuoteQuery, ingest.ErrInvalidQuotePeriod,
 		ErrNoConnector, ErrNoCrossCheckStore, ErrInvalidUpload, ErrFileTooLarge, ErrSeedingOutsideOpening,
 		ingest.ErrUndeclaredInstitution, ingest.ErrAccountNotBound, ingest.ErrInvalidBatch, ingest.ErrInvalidInstitution,
 		ingest.ErrInvalidInstanceName, ingest.ErrStartedFromHistory, ingest.ErrOpeningCashEntered,

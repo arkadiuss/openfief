@@ -257,14 +257,14 @@ func TestPlainTextInARoundWithToolsIsAskedForAgainAsTheAnswer(t *testing.T) {
 		t.Fatalf("answer = %+v, %v after %d calls and %d invalid; want the answer after three and none invalid", got, err, conv.rounds, conv.invalid)
 	}
 	// The third call is the final round: no tools, the structured answer asked for.
-	if diff := cmp.Diff([]int{len(f.a.tools), len(f.a.tools), 0}, f.port.offered); diff != "" {
+	if diff := cmp.Diff([]int{f.toldWithoutPrices(), f.toldWithoutPrices(), 0}, f.port.offered); diff != "" {
 		t.Errorf("tools offered per call (-want +got):\n%s", diff)
 	}
 	if diff := cmp.Diff([]bool{false, false, true}, f.port.answers); diff != "" {
 		t.Errorf("calls that asked for the answer (-want +got):\n%s", diff)
 	}
 	// It was told its plain words were not the answer, with no data in the nudge.
-	if diff := cmp.Diff([]string{"system:T2", "user:T0", "assistant:T0", "tool:T0", "assistant:T0", "user:T2"}, roleTiers(f.port.requests[2])); diff != "" {
+	if diff := cmp.Diff([]string{"system:instructions", "user:T0", "assistant:T0", "tool:T0", "assistant:T0", "user:instructions"}, roleTiers(f.port.requests[2])); diff != "" {
 		t.Errorf("messages of the final round (-want +got):\n%s", diff)
 	}
 	if last := f.port.requests[2][5]; last.Content != finalText {
@@ -291,7 +291,7 @@ func TestAnInvalidFinalAnswerGetsOneRetryWithTheReason(t *testing.T) {
 	retry := f.port.requests[2]
 	want := []askMessage{
 		{Role: roleAssistant, Content: `{"kind":"answer","text":"x","cards":["c7"],"suggestions":[],"candidates":[]}`, Tier: tierT0},
-		{Role: roleUser, Content: retryText(errAnswerUnknownCard), Tier: tierT2},
+		{Role: roleUser, Content: retryText(errAnswerUnknownCard), Tier: tierInstructions},
 	}
 	// The model's own reply, then the reason in fixed words, tagged public.
 	if diff := cmp.Diff(want, retry[len(retry)-2:]); diff != "" {
@@ -445,7 +445,7 @@ func TestTheClientAsksTheSchemaOnlyForTheAnswer(t *testing.T) {
 	if diff := cmp.Diff([]string{"", "", askAnswerSchemaJSON}, h.askModel.schemas); diff != "" {
 		t.Errorf("response schema of each call (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([][]string{{"allocation", "performance", "show", "sync_status", "value", "what_needs_me"}, {"allocation", "performance", "show", "sync_status", "value", "what_needs_me"}, nil},
+	if diff := cmp.Diff([][]string{{"allocation", "calc", "performance", "show", "sync_status", "value", "what_needs_me"}, {"allocation", "calc", "performance", "show", "sync_status", "value", "what_needs_me"}, nil},
 		[][]string{sortedCopy(h.askModel.toolsSeen[0]), sortedCopy(h.askModel.toolsSeen[1]), h.askModel.toolsSeen[2]}); diff != "" {
 		t.Errorf("tools of each call (-want +got):\n%s", diff)
 	}

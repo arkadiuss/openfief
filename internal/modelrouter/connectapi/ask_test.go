@@ -333,6 +333,40 @@ func TestCheckAskTiers(t *testing.T) {
 	}
 }
 
+// TestAskServiceKeepsAMarketPriceFromAModelNotAllowedT2 checks D-226 through the
+// Ask box's door: for a route whose one model the owner allowed for T0 and not
+// T2, the check the box makes before it offers the market price tool says no,
+// and a conversation that holds the price (T2) with the question (T0) is
+// refused, the model never called; with T2 allowed, both let it through.
+func TestAskServiceKeepsAMarketPriceFromAModelNotAllowedT2(t *testing.T) {
+	t.Parallel()
+	f := newAskFixture(t)
+	m := modelrouter.Ref{Instance: "p", Model: "m"}
+	f.store.s.Policy = modelrouter.DataTierPolicy{modelrouter.DataTierT0: {m}}
+	if got, code := f.mayReceive("T0", "T2"); got || code != 0 {
+		t.Errorf("CheckAskTiers(T0, T2) = %v, %v; want false: no model of the route may receive public data", got, code)
+	}
+	card := &modelsv1.AskMessage{
+		Message:  &modelsv1.Message{Role: modelsv1.MessageRole_MESSAGE_ROLE_TOOL, Content: secretText, ToolCallId: "1"},
+		DataTier: "T2",
+	}
+	_, err := f.generate("owner", userMessage("T0"), card)
+	if connect.CodeOf(err) != connect.CodePermissionDenied {
+		t.Fatalf("GenerateAsk with a T2 result: code = %v (%v), want PermissionDenied", connect.CodeOf(err), err)
+	}
+	if len(f.provider.requests) != 0 {
+		t.Errorf("the model was called with %d requests", len(f.provider.requests))
+	}
+	f.checkNoText(t, err)
+	f.store.s.Policy = modelrouter.DataTierPolicy{modelrouter.DataTierT0: {m}, modelrouter.DataTierT2: {m}}
+	if got, code := f.mayReceive("T0", "T2"); !got || code != 0 {
+		t.Errorf("CheckAskTiers(T0, T2) = %v, %v; want true once T2 is allowed", got, code)
+	}
+	if _, err := f.generate("owner", userMessage("T0"), card); err != nil {
+		t.Errorf("GenerateAsk with a T2 result once T2 is allowed: %v", err)
+	}
+}
+
 func TestAskServiceAsksTheStructuredAnswerWithJSONModeAsTheFallback(t *testing.T) {
 	t.Parallel()
 	for _, tt := range []struct {

@@ -56,6 +56,7 @@ type Reader interface {
 	StatusReader
 	CatalogReader
 	ValuationReader
+	QuoteReader
 }
 
 // StatusReader reads the owner's settings, what needs the owner and the
@@ -145,31 +146,41 @@ func (cm *Commands) Answer(ctx context.Context, c Caller, question string) (Card
 // the asking person's own session. A query that is no command gets the
 // commands the box understands.
 func (cm *Commands) Run(ctx context.Context, c Caller, q *Query) (Card, error) {
-	if q.Command == CommandUnknown {
+	switch q.Command {
+	case CommandUnknown:
 		return UnknownAnswer(), nil
+	case CommandQuote:
+		return cm.quote(ctx, c, q)
+	case CommandCalc: // the figures are the arguments: nothing is read
+		return calcCard(q.Expression, c.Format), nil
+	case CommandNeeds, CommandShow, CommandSync, CommandAllocation, CommandPerformance, CommandValue:
 	}
 	date, err := cm.latestDate(ctx, c)
 	if err != nil {
 		return Card{}, err
 	}
-	var card Card
+	return cm.dispatch(ctx, c, q, date)
+}
+
+// dispatch answers one of the commands that read the valued portfolio, on date,
+// the latest valued day.
+func (cm *Commands) dispatch(ctx context.Context, c Caller, q *Query, date kernel.Date) (Card, error) {
 	switch q.Command {
 	case CommandNeeds:
-		card, err = cm.needs(ctx, c)
+		return cm.needs(ctx, c)
 	case CommandShow:
-		card, err = cm.show(ctx, c, q, date)
+		return cm.show(ctx, c, q, date)
 	case CommandSync:
-		card, err = cm.sync(ctx, c, q.Term)
+		return cm.sync(ctx, c, q.Term)
 	case CommandAllocation:
-		card, err = cm.allocation(ctx, c, ParseDimension(q.Dimension), date)
+		return cm.allocation(ctx, c, ParseDimension(q.Dimension), date)
 	case CommandPerformance:
-		card, err = cm.performance(ctx, c, q.Period, date)
+		return cm.performance(ctx, c, q.Period, date)
 	case CommandValue:
-		card, err = cm.valueAnswer(ctx, c, q, date)
-	case CommandUnknown:
-		return UnknownAnswer(), nil
+		return cm.valueAnswer(ctx, c, q, date)
+	case CommandUnknown, CommandQuote, CommandCalc:
 	}
-	return card, err
+	return UnknownAnswer(), nil
 }
 
 // UnknownAnswer answers a question the box doesn't understand with the

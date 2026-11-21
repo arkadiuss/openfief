@@ -164,6 +164,9 @@ func (m *memAuthStore) UseEnrollmentCode(_ context.Context, id identity.Enrollme
 	if !ok || !c.code.UsedAt.IsZero() || !c.code.CancelledAt.IsZero() {
 		return identity.ErrEnrollmentCodeUsed
 	}
+	if !at.Before(c.code.ExpiresAt) {
+		return identity.ErrEnrollmentCodeExpired
+	}
 	c.code.UsedAt = at
 	m.codes[id] = c
 	return nil

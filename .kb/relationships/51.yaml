@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60e1b28c91ea
+  - type: implements
+    from: SYM-d226-internal-valuation-eodhd-quote-go-matchquery
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:32:54.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b24ad7b454c2
+  - type: covered_by
+    from: SYM-d226-internal-valuation-eodhd-quote-go-matchquery
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:32:54.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7495435923a
+  - type: verified_by
+    from: SCEN-ui-client-events-limit-network-and-cap
+    to: TEST-ui-client-events-limit-network-and-cap
+    created_at: 2026-11-21T18:16:36.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edcebf4009ea

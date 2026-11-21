@@ -1161,3 +1161,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f2813dd3d65
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-query-one
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:55:05.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2342de8960a
+  - type: implements
+    from: SYM-d226-plugins-eodhd-quote-go-connector-quotecloses
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:25.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9626d572245
+  - type: covered_by
+    from: SYM-d226-plugins-eodhd-quote-go-connector-quotecloses
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:33:25.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a00e01cd563
+  - type: implements
+    from: SYM-pass-turnstilepass-go-windows
+    to: REQ-ui-turnstile-pass-window
+    created_at: 2026-11-21T12:52:07.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b97fcc2950
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-windows
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:52:07.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5602382f73a5

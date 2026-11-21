@@ -1329,3 +1329,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77caa4f7c8b8
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-isinwords
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:35:49.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a17fa13388e
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-isinwords
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:35:50.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ab893ad1b02
+  - type: executable_for
+    from: SYM-d226-internal-valuation-eodhd-quote-test-go-testmatchquerycapsthecandidates
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a59fa90e744
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testrestgetmarketquote
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0354c73b0ceb
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testmarketquotewithoutasourceisafailedprecondition
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48237f6de732
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-flipport
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc122615da60
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-protoreflect
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b4eb40ab9b1
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoterequest-protoreflect
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d88e581ac2d
+  - type: implements
+    from: SYM-pass-turnstilepass-go-turnstilecheck-passkey
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:19:26.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5763adb8ea89
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-turnstilecheck-passkey
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:26.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f61d26ca0ae8
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testrestgetmarketquote
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:48:03.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da673487b0e9

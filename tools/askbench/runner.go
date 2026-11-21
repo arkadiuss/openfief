@@ -57,11 +57,13 @@ type Bench struct {
 	pf    *Portfolio
 	cases []Case
 	// total is how many cases the bench has, of which cases are the ones asked.
-	total  int
-	vocab  []string
-	names  []string
-	prompt []string
-	meter  *meter
+	total int
+	vocab []string
+	names []string
+	// classes are the gross values by asset class on the bench's day.
+	classes map[string]kernel.Decimal
+	prompt  []string
+	meter   *meter
 }
 
 // NewBench builds the portfolio and reads the cases for opts.
@@ -98,9 +100,14 @@ func NewBench(opts *Options) (*Bench, error) {
 	if o.Parallel <= 0 {
 		o.Parallel = 1
 	}
+	classes, err := classTotals(seed, pf)
+	if err != nil {
+		return nil, err
+	}
 	return &Bench{
 		opts: o, seed: seed, pf: pf, cases: cases, total: total, vocab: vocabularyOf(seed), names: realNamesOf(seed), prompt: ui.AskPromptNonPublic(seed.Today),
-		meter: newMeter(o.MaxCost, o.MaxCalls),
+		classes: classes,
+		meter:   newMeter(o.MaxCost, o.MaxCalls),
 	}, nil
 }
 
@@ -188,7 +195,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	style := t.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: mr, Today: func() kernel.Date { return b.seed.Today },
-		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal,
+		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal, MarketQuotes: true, DeniedTiers: t.c.Route.DenyTiers,
 	})
 	if err != nil {
 		return RunReport{Run: t.run, Error: errorText(err)}
@@ -197,7 +204,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	run, err := asker.AskAfter(ctx, t.c.Question, t.c.earlier())
 	d := &RunData{
 		Case: t.c, Run: run, Calls: mr.calls, Limits: b.opts.Limits, Duration: b.opts.Now().Sub(started),
-		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today,
+		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today, Classes: b.classes,
 	}
 	rep := RunReport{Run: t.run, Cost: mr.cost.String(), LatencyMs: d.Duration.Milliseconds()}
 	for i := range mr.calls {

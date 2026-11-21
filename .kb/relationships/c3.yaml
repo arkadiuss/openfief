@@ -1217,3 +1217,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3fea2f46ff9f
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getcandidates
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-818814649954
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-getcandidates
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5005c97bb5f
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-passharnesswith
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:33:47.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4348cb44ee26

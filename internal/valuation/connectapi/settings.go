@@ -130,6 +130,24 @@ func (s *settingsService) SetChartStart(ctx context.Context, req *connect.Reques
 	return connect.NewResponse(&valuationv1.SetChartStartResponse{}), nil
 }
 
+// GetClientEvents says whether the UI's pages report client events (D-227). It
+// needs no session: only the view plugin's token, checked by the interceptor.
+func (s *settingsService) GetClientEvents(ctx context.Context, _ *connect.Request[valuationv1.GetClientEventsRequest]) (*connect.Response[valuationv1.GetClientEventsResponse], error) {
+	enabled, err := s.settings.ClientEventsEnabled(ctx)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&valuationv1.GetClientEventsResponse{Enabled: enabled}), nil
+}
+
+// SetClientEvents turns the UI's client events on or off, for the owner (D-227).
+func (s *settingsService) SetClientEvents(ctx context.Context, req *connect.Request[valuationv1.SetClientEventsRequest]) (*connect.Response[valuationv1.SetClientEventsResponse], error) {
+	if err := s.settings.SetClientEventsEnabled(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetEnabled()); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&valuationv1.SetClientEventsResponse{}), nil
+}
+
 // fail maps err to its Connect error, as the MarketDataService does.
 func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 	switch {

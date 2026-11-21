@@ -80,6 +80,13 @@ func (c *Client) Search(ctx context.Context, code, exchange string) ([]Listing, 
 	return c.search(ctx, code, url.Values{"exchange": {exchange}})
 }
 
+// Find returns the listings EODHD's search finds for query, a ticker's code
+// or an ISIN, on any exchange, for a quote (D-226); MatchQuery chooses among
+// them. A search that finds nothing is empty.
+func (c *Client) Find(ctx context.Context, query string) ([]Listing, error) {
+	return c.search(ctx, query, url.Values{})
+}
+
 // Closes returns ticker's daily closes between the dates from and to, both
 // inclusive, in date order. A zero from asks for the whole history EODHD has. Days
 // without a positive close are left out. An unknown ticker is ErrNotFound.

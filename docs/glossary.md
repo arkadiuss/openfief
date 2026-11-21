@@ -261,6 +261,7 @@ Don't create code for these before their milestone.
 | Eval | A fixed set of cases a model must pass before it serves a role, graded by code against known answers wherever code can decide (D-217). The practice grew from NLP benchmarks into per-application suites, as OpenAI's open-sourced Evals framework (2023) made common. |
 | pass^k | The share of cases a model passes on all of k runs, not on any one of them (pass@k). τ-bench (Sierra, 2024) introduced it for tool-using agents, whose answers vary between runs. |
 | Turnstile | Cloudflare's challenge that tells people from bots without a puzzle; the demo puts it in front of the Ask box (D-208). |
+| Turnstile pass | The signed cookie that spares a visitor who passed Turnstile a new check for 30 minutes after their last model question, and for at most 2 hours from the check; it names no one and the limits and the budget still count every question (D-208). |
 | NATS / JetStream | NATS is an open-source messaging system; JetStream is its persistence layer (streams, KV, object store). |
 | NBP reference rate | The National Bank of Poland's main policy interest rate, which sets ROR and DOR interest. |
 | NBP table A | The National Bank of Poland's daily table of average exchange rates, used to convert foreign income for tax. |

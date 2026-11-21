@@ -860,3 +860,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86a0ae0025de
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-check-seeded
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:56:27.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1371cb99c16b
+  - type: implements
+    from: SYM-d226-cmd-core-bondlots-go-entrycaller-lookupquote
+    to: REQ-ingest-market-quote-source
+    created_at: 2026-11-21T11:30:37.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7cd3f3465b9
+  - type: covered_by
+    from: SYM-d226-cmd-core-bondlots-go-entrycaller-lookupquote
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T11:30:37.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d31884f9708
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-marketquotes-x
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b2542c9d25
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-marketquotes-x
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f8bc1e7fc5
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-string
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f8950d3806e
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getmarketquoteresponse-string
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dbc1b15cc80
+  - type: executable_for
+    from: SYM-pass-clientswitch-fakes-test-go-fakeclientevents
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:31:58.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5470e491bda2
+  - type: executable_for
+    from: SYM-pass-clientswitch-test-go-testclock-now
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:32:37.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79b18ce405e3

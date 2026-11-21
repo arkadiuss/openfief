@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50708fd9a5c4
+  - type: executable_for
+    from: SYM-d226-internal-ingest-app-quotes-test-go-quotesources
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f87119876b6b
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testavalidpassskipssiteverifyandthenextquestionisstillcounted
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:39.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf85e63a52b
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testlimitsandthebudgetstillstopaquestionwithapass
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:46.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-add01dbd04b9

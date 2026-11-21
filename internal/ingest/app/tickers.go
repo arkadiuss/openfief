@@ -162,13 +162,19 @@ func (c *Connectors) proposeISINs(ctx context.Context, instance string, tickers 
 // marketDataInstances returns the running market-data connector
 // instances, in name order (marketData).
 func (c *Connectors) marketDataInstances(ctx context.Context) ([]string, error) {
-	all, err := c.Instances.ConnectorInstances(ctx)
+	return marketDataInstances(ctx, c.Instances, c.Declarations)
+}
+
+// marketDataInstances returns the instances of lister whose declarations say
+// they are market-data connectors, in name order.
+func marketDataInstances(ctx context.Context, lister InstanceLister, decl ConnectorDeclarations) ([]string, error) {
+	all, err := lister.ConnectorInstances(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("connector instances: %w", err)
 	}
 	var out []string
 	for _, inst := range all {
-		ok, err := c.marketData(ctx, inst)
+		ok, err := marketDataDeclared(ctx, decl, inst)
 		if err != nil {
 			return nil, err
 		}
@@ -184,10 +190,15 @@ func (c *Connectors) marketDataInstances(ctx context.Context) ([]string, error) 
 // running version's manifest declares it and its grant approves that
 // (D-123). Without Declarations no instance is one.
 func (c *Connectors) marketData(ctx context.Context, instance string) (bool, error) {
-	if c.Declarations == nil {
+	return marketDataDeclared(ctx, c.Declarations, instance)
+}
+
+// marketDataDeclared is marketData over decl.
+func marketDataDeclared(ctx context.Context, decl ConnectorDeclarations, instance string) (bool, error) {
+	if decl == nil {
 		return false, nil
 	}
-	d, err := c.Declarations.Declarations(ctx, instance)
+	d, err := decl.Declarations(ctx, instance)
 	if err != nil {
 		return false, fmt.Errorf("manifest declarations: %w", err)
 	}

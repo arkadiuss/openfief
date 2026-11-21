@@ -56,3 +56,23 @@ func TestActionAndHolderNames(t *testing.T) {
 		}
 	}
 }
+
+func TestMayReadQuotes(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		holder identity.Holder
+		want   bool
+	}{
+		{identity.HolderOwner, true},
+		{identity.HolderScriptToken, true},
+		{identity.HolderViewer, true},
+		{identity.HolderViewPlugin, false},
+		{identity.HolderDemoSession, false},
+		{identity.Holder(0), false},
+		{identity.Holder(99), false},
+	} {
+		if got := identity.MayReadQuotes(identity.Caller{Holder: tt.holder, ID: "x"}); got != tt.want {
+			t.Errorf("MayReadQuotes(%v) = %v, want %v", tt.holder, got, tt.want)
+		}
+	}
+}

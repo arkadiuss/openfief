@@ -35,6 +35,12 @@ var errStore = errors.New("store unavailable")
 // cover and what is tied to an account (D-165, D-209).
 const scriptToken = "synthetic-script-token"
 
+// pluginToken and demoToken are those of a view plugin and a demo session.
+const (
+	pluginToken = "synthetic-plugin-token"
+	demoToken   = "synthetic-demo-token"
+)
+
 // fakeVerifier accepts goodToken as the owner's, scriptToken as a script token,
 // cannot check brokenToken and rejects anything else.
 type fakeVerifier struct{}
@@ -45,6 +51,10 @@ func (fakeVerifier) VerifyToken(_ context.Context, token string) (identity.Calle
 		return identity.Caller{Holder: identity.HolderOwner, ID: "test"}, nil
 	case scriptToken:
 		return identity.Caller{Holder: identity.HolderScriptToken, ID: "test"}, nil
+	case pluginToken:
+		return identity.Caller{Holder: identity.HolderViewPlugin, ID: "test"}, nil
+	case demoToken:
+		return identity.Caller{Holder: identity.HolderDemoSession, ID: "test"}, nil
 	case brokenToken:
 		return identity.Caller{}, errStore
 	}

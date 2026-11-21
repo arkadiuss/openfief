@@ -46,7 +46,7 @@ func TestAskBoxLogsWhichPathMadeTheTokenAndNeverEchoesIt(t *testing.T) {
 			if tt.field != "" {
 				q.Set(checkPathField, tt.field)
 			}
-			rec := h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+q.Encode(), ""), readSession)))
+			rec := h.serve(t, htmx(withSession(form("/ask", q.Encode()), readSession)))
 			wantStatus(t, rec, http.StatusOK)
 			if !strings.Contains(logs.String(), "verdict=passed") || !strings.Contains(logs.String(), tt.wantLog) {
 				t.Errorf("the log does not say the verdict and %q:\n%s", tt.wantLog, logs)

@@ -45,7 +45,8 @@ func TestAskArgDefaultsSayWhatLeavingAnArgumentOutMeans(t *testing.T) {
 		if (tool.Defaults == nil) != (defaults == nil) {
 			t.Errorf("%s: defaults %v with a table of %v", tool.Name, defaults, tool.Defaults == nil)
 		}
-		if len(defaults) == 0 || tool.Name == "value" {
+		// The market price tool needs a query to ask anything, so its default is checked with one (answer's tests).
+		if len(defaults) == 0 || tool.Name == "value" || tool.Name == "market_price" {
 			continue
 		}
 		given, err := json.Marshal(defaults)
@@ -76,9 +77,11 @@ func TestAskArgDefaultsAreTheDocumentedOnes(t *testing.T) {
 		{tool: "value", latest: kernel.Date{}},
 		{tool: "allocation", latest: today, want: map[string]any{"by": "asset_class"}},
 		{tool: "performance", latest: today, want: map[string]any{"period": "this_year"}},
+		{tool: "market_price", latest: today, want: map[string]any{"period": "month"}},
 		{tool: "show", latest: today},
 		{tool: "sync_status", latest: today},
 		{tool: "what_needs_me", latest: today},
+		{tool: "calc", latest: today},
 		{tool: "no_such_tool", latest: today},
 	}
 	for _, tt := range tests {

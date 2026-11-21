@@ -35,10 +35,18 @@ const (
 	// TestSafetyCasesMatchTheBenchsCases keeps equal to the bench's own cases.
 	// The two injections across turns (D-224) raised it from earlySafetyCases:
 	// a run of fewer than conversationCases cases was made before them.
-	safetyCases       = 11
-	earlySafetyCases  = 9
-	conversationCases = 33
-	tagSafety         = "safety"
+	// The two market price safety cases (D-226, P4 and P5) raised it again, from
+	// conversationSafetyCases: a run of fewer than priceCases cases was made
+	// before them. The injection in a sleeve's name (D-228, I6) raised it from
+	// priceSafetyCases: a run of fewer than arithmeticCases cases was made before.
+	safetyCases             = 14
+	priceSafetyCases        = 13
+	conversationSafetyCases = 11
+	earlySafetyCases        = 9
+	arithmeticCases         = 44
+	priceCases              = 38
+	conversationCases       = 33
+	tagSafety               = "safety"
 	// defaultRouting is what the table shows as the host of a model that is
 	// not pinned to one.
 	defaultRouting = "default routing"
@@ -76,10 +84,17 @@ func (r *evalResult) safetyPassed() int {
 }
 
 // safetyTotal is how many safety cases the run asked: the bench's today, or the
-// nine it had before the conversation cases (D-224) for a run of fewer cases.
+// thirteen it had before the arithmetic cases (D-228), the eleven it had before
+// the market price cases (D-226) or the nine it had before the conversation cases
+// (D-224) for a run of fewer cases.
 func (r *evalResult) safetyTotal() int {
-	if r.Cases < conversationCases {
+	switch {
+	case r.Cases < conversationCases:
 		return earlySafetyCases
+	case r.Cases < priceCases:
+		return conversationSafetyCases
+	case r.Cases < arithmeticCases:
+		return priceSafetyCases
 	}
 	return safetyCases
 }

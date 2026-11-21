@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-models-data-tiers-deny-by-default",
+  "sourceFile": "internal/modelrouter/tier.go",
+  "symbol": "NewDataTierSet",
+  "verdict": "keeps",
+  "note": "An instructions tag, the box's own fixed text, adds nothing to the set, so a request is still sent only to a model allowed every tier it holds and a request of nothing but instructions is still refused as untagged: deny by default is unchanged (D-206, D-226).",
+  "statementHash": "sha256:083909b510696b00af031d7f55a52f694376414caaa41ee61ddce94c2359f929",
+  "codeHash": "sha256:b95461a65a6ea3184fc8ec5e8a8dc2465482b6d1415372180f86560490eb150e",
+  "startLine": 72,
+  "endLine": 94,
+  "recordedAt": "2026-11-21T12:37:20.260Z"
+}

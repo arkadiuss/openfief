@@ -14,6 +14,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/views/app/answer"
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
@@ -145,6 +146,8 @@ func TestNeitherTheQuestionNorTheConversationIsLogged(t *testing.T) {
 func TestTheBoxsToolsAreTheMCPServersToolbox(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
+	// An install with a market-data connector (D-226): the market price tool is offered, so the model's tools are the whole toolbox.
+	h.read.quotes = &viewsv1.GetMarketQuoteResponse{}
 	h.askModel.turnOn("T0", "T2")
 	rec := h.asksAfter(t, "how diversified am I?", []askTurn{{Question: "hello", Answer: "Hello."}})
 	wantStatus(t, rec, http.StatusOK)

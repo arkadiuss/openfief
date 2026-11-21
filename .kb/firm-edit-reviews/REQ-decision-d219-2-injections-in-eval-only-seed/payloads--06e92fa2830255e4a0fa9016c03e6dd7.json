@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-2-injections-in-eval-only-seed",
+  "sourceFile": "tools/askbench/seed.go",
+  "symbol": "payloads",
+  "verdict": "keeps",
+  "note": "The list gained the sleeve-name payload; payloads still live only in the bench seed variant, never the public demo seed (a test checks the clean seed lacks them). The rule names comments and instrument names; a sleeve name extends it, which the author may want to confirm.",
+  "statementHash": "sha256:6a120ea6e7ecfe934b561805c81e94a3f07534e3122cc9e5d9ef7b6b7abcee1b",
+  "codeHash": "sha256:77bd415bf13bc91e862560887b11baf42d8406049532e0ab9e8f45db53f1ea9c",
+  "startLine": 200,
+  "endLine": 200,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
+}

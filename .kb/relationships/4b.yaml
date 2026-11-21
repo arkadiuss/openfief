@@ -1189,3 +1189,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9addf7695ada
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-loopfixture-toolstold
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf25780fdb76
+  - type: verified_by
+    from: SCEN-views-market-quote-callers
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T12:42:35.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9f34a7f3ef
+  - type: implements
+    from: SYM-pass-settings-pb-go-setclienteventsresponse-protomessage
+    to: REQ-settings-client-events-switch
+    created_at: 2026-11-21T12:39:16.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96b16ee9aa95
+  - type: covered_by
+    from: SYM-pass-settings-pb-go-setclienteventsresponse-protomessage
+    to: TEST-core-client-events
+    created_at: 2026-11-21T12:39:17.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e14bd61f4a

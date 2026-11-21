@@ -916,3 +916,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef146e76d9c3
+  - type: validates
+    from: TEST-views-market-quote-rate-limit
+    to: REQ-views-market-quote-rate-limit
+    created_at: 2026-11-21T11:26:26.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf56bc3533d1
+  - type: executable_for
+    from: SYM-d226-cmd-core-quotes-test-go-marketdatainstance-declarations
+    to: TEST-demo-market-quotes-off
+    created_at: 2026-11-21T11:51:52.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f535d7cae1c
+  - type: executable_for
+    from: SYM-d226-internal-ingest-connectrpc-quotes-test-go-testclientlookupquote
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-009ec3539998
+  - type: implements
+    from: SYM-identity-app-passkeys-coderefused
+    to: REQ-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:16.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-739af40a8336
+  - type: covered_by
+    from: SYM-identity-app-passkeys-coderefused
+    to: TEST-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:16.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ad6b042d387

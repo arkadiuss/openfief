@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b169e73a82d
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-protoreflect
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8766eb7d2a4
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotelisting-protoreflect
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b396413f674
+  - type: executable_for
+    from: SYM-sec-internal-views-ui-askmodel-page-test-go-testamodelquestionneedsapost
+    to: TEST-ui-ask-model-question-needs-post
+    created_at: 2026-11-21T19:05:10.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729dd64bc0d8

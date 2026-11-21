@@ -299,11 +299,13 @@ func validateSettingRefs(e *AuditEntry) error {
 // set: the number format, the marginal rate, an instrument's exemption class
 // and early redemption fee, an account's chart start, an instrument's price
 // check threshold, the ranking of each kind of market data and its gap
-// threshold, the source of a series, and the model portfolio.
+// threshold, the source of a series, the model portfolio, and the switch for
+// the UI's client events.
 func Settings() []string {
 	base := []string{
 		"display:number_format", "tax:marginal_rate", "tax:exemption_class", "tax:early_redemption_fee",
 		"chart:start", "chart:portfolio_start", "pricecheck:threshold", "marketdata:series_source", "model_portfolio",
+		"ui:client_events",
 	}
 	out := slices.Clone(base)
 	for _, kind := range []string{"prices", "fx_rates", "index_readings"} {

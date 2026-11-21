@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"slices"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -206,15 +205,19 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	ctx, cancel := context.WithTimeout(r.Context(), a.limits.Deadline)
 	defer cancel()
 	r = r.WithContext(ctx)
+	offered, err := a.offer(ctx, sess)
+	if err != nil {
+		return a.failure(r, question, err)
+	}
 	*conv = askConversation{
-		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true},
+		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true}, tools: offered.tools,
 		msgs: []askMessage{
-			{Role: roleSystem, Content: askSystemPrompt(a.today()), Tier: tierT2},
+			{Role: roleSystem, Content: withNotice(askSystemPrompt(a.today()), offered.notice), Tier: tierInstructions},
 			{Role: roleUser, Content: historyMessage(historyOf(r), question), Tier: tierT0},
 		},
 	}
 	for round := 1; round <= a.limits.ToolRounds+1; round++ {
-		tools := a.tools
+		tools := conv.tools
 		final := round > a.limits.ToolRounds
 		if final {
 			tools = nil
@@ -246,7 +249,10 @@ type askConversation struct {
 	a    *modelAnswerer
 	r    *http.Request
 	sess session
-	msgs []askMessage
+	// tools are the tools the model was told: a market tool is among them only
+	// where it can be asked and the route may receive its data (offer).
+	tools []askTool
+	msgs  []askMessage
 	// tiers are the data tiers the messages hold so far.
 	tiers map[string]bool
 	calls int
@@ -305,18 +311,18 @@ func (c *askConversation) generate(ctx context.Context, tools []askTool, structu
 // longer valid.
 func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	c.calls++
-	tool, ok := c.a.tool(call.Name)
+	tool, ok := c.toolOffered(call.Name)
 	if !ok {
-		c.addResult(&call, callUnknownTool, answer.ToolFailure("there is no tool called %s", call.Name), tierT2)
+		c.addResult(&call, callUnknownTool, answer.ToolFailure("there is no tool called %s", call.Name), tierInstructions)
 		return nil
 	}
 	if c.calls > c.a.limits.ToolCalls {
-		c.addResult(&call, callOverLimit, answer.ToolFailure("too many tool calls for one question; answer with what you have"), tierT2)
+		c.addResult(&call, callOverLimit, answer.ToolFailure("too many tool calls for one question; answer with what you have"), tierInstructions)
 		return nil
 	}
 	q, err := tool.Query(call.Args, c.a.today())
 	if err != nil {
-		c.addResult(&call, callBadArgs, answer.ToolFailure("%s", err.Error()), tierT2)
+		c.addResult(&call, callBadArgs, answer.ToolFailure("%s", err.Error()), tierInstructions)
 		return nil
 	}
 	toolCtx, cancel := context.WithTimeout(ctx, askToolTimeout)
@@ -328,7 +334,20 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		}
 		// What failed is not the model's to see: its result says only that
 		// the read did not work.
-		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierT2)
+		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierInstructions)
+		return nil
+	}
+	return c.admit(ctx, call, &tool, &card)
+}
+
+// admit sends the model the card tool made, unless the route's models may not
+// receive its data tier together with the tiers already in the conversation, in
+// which case it records the withheld card. A card that adds no data, the tier
+// calc has (D-228), is never withheld and adds no tier.
+func (c *askConversation) admit(ctx context.Context, call askCall, tool *askTool, card *answerCard) error {
+	if tool.Tier == tierInstructions { // adds no data, so no tier to permit (D-228)
+		c.used = append(c.used, *card)
+		c.addResult(&call, callRan, cardResult(card, cardID(len(c.used))), tool.Tier)
 		return nil
 	}
 	tiers := c.tiers
@@ -342,12 +361,12 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 	}
 	if !allowed {
 		c.withheld = append(c.withheld, withheldCard{Label: tool.Label, Tier: tool.Tier, Data: tierWords(tool.Tier)})
-		c.addResult(&call, callWithheld, answer.ToolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierT2)
+		c.addResult(&call, callWithheld, answer.ToolFailure("withheld: this model may not receive %s", tierWords(tool.Tier)), tierInstructions)
 		return nil
 	}
 	c.tiers = next
-	c.used = append(c.used, card)
-	c.addResult(&call, callRan, cardResult(&card, cardID(len(c.used))), tool.Tier)
+	c.used = append(c.used, *card)
+	c.addResult(&call, callRan, cardResult(card, cardID(len(c.used))), tool.Tier)
 	return nil
 }
 
@@ -413,7 +432,7 @@ func (c *askConversation) retry(content string, why error) {
 	if strings.TrimSpace(content) != "" {
 		c.msgs = append(c.msgs, askMessage{Role: roleAssistant, Content: content, Tier: mostSensitive(c.tiers)})
 	}
-	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierT2})
+	c.msgs = append(c.msgs, askMessage{Role: roleUser, Content: retryText(why), Tier: tierInstructions})
 }
 
 // finalInstruction is what the final round adds to the conversation after the
@@ -424,11 +443,11 @@ func (c *askConversation) retry(content string, why error) {
 // instruction asks for the answer from the cards (finalAnswerText).
 func finalInstruction(content, tier string) []askMessage {
 	if strings.TrimSpace(content) == "" {
-		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierT2}}
+		return []askMessage{{Role: roleUser, Content: finalAnswerText, Tier: tierInstructions}}
 	}
 	return []askMessage{
 		{Role: roleAssistant, Content: content, Tier: tier},
-		{Role: roleUser, Content: finalText, Tier: tierT2},
+		{Role: roleUser, Content: finalText, Tier: tierInstructions},
 	}
 }
 
@@ -501,15 +520,6 @@ func readNames(candidates []string, cards []answerCard) []string {
 	return out
 }
 
-// tool returns the tool called name.
-func (a *modelAnswerer) tool(name string) (askTool, bool) {
-	i := slices.IndexFunc(a.tools, func(t askTool) bool { return t.Name == name })
-	if i < 0 {
-		return askTool{}, false
-	}
-	return a.tools[i], true
-}
-
 // tierList returns the tiers of set in tierOrder.
 func tierList(set map[string]bool) []string {
 	var out []string
@@ -550,6 +560,16 @@ func (a *modelAnswerer) failure(r *http.Request, question string, err error) (an
 	a.log.WarnContext(r.Context(), "ask model call failed", "code", code.String())
 	return modelCard(question, "The model couldn't answer",
 		"Something went wrong asking it. The commands answer from your own record."), nil
+}
+
+// askFromTheBoxAnswer is the answer to a question for the model that came by
+// GET, a link or a form without the page's script, rather than the Ask box's
+// POST: nothing is checked, counted or sent, and the person is told to ask it
+// in the box.
+func askFromTheBoxAnswer(question string) answerCard {
+	return modelCard(question, "Ask this from the box",
+		"A question for the model is sent only from the Ask box on this page, so that a link or another page can't ask it in your name. "+
+			"Type it in the box above and press Ask. The commands answer from a link too.")
 }
 
 // askSchemaFailure is the answer of a model whose reply, after the retry, is not
@@ -624,47 +644,78 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	if !ok {
 		return a.commands.answer(r, sess, question)
 	}
-	if card, stopped, err := a.guard(r, sess, question); stopped || err != nil {
+	if r.Method != http.MethodPost {
+		// Only the box's own POST, which the same-origin check covers, may
+		// spend a question to the model: a link or a GET from another page of
+		// the same site must not (the session cookie is SameSite=Strict, which
+		// a sibling host on the same site still gets).
+		return askFromTheBoxAnswer(question), nil
+	}
+	card, stopped, pass, err := a.guard(r, sess, question)
+	if stopped || err != nil {
 		return card, err
 	}
-	return a.model.ask(r, sess, question)
+	card, err = a.model.ask(r, sess, question)
+	if err == nil {
+		card.pass = pass
+	}
+	return card, err
 }
 
-// checked runs the Turnstile check, when the installation has one, on the token
-// the widget put in the question's request: the card that says why the question
-// stops, and true, or false for one that goes on. It comes before the core
-// counts the question, so a bot that passes no check spends no one's allowance.
-func (a routedAnswerer) checked(r *http.Request, question string) (answerCard, bool) {
+// checked runs the Turnstile check, when the installation has one: the card that
+// says why the question stops, and true, or false for one that goes on, with the
+// pass cookie the response sets for one that does (D-208). A question from a
+// session with a valid pass (usePass) goes on with no token and no call to
+// Cloudflare, and its pass is renewed; any other is checked on the token the
+// widget put in its request, and a pass is issued when it passes. A pass that
+// fails to verify is no error: the question is checked as if it had none, and the
+// no-token card sends the page to run the check. It comes before the core counts
+// the question, so a bot that passes no check spends no one's allowance.
+func (a routedAnswerer) checked(r *http.Request, sess session, question string) (answerCard, bool, *http.Cookie) {
 	if a.turnstile == nil {
-		return answerCard{}, false
+		return answerCard{}, false, nil
+	}
+	id := sess.Described.GetId()
+	if checkedAt, ok := a.turnstile.usePass(r, id); ok {
+		a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question", "verdict", verdictPass, "path", labelNone)
+		return answerCard{}, false, a.turnstile.issue(id, checkedAt)
 	}
 	outcome := a.turnstile.verify(r.Context(), askValue(r, turnstileField), clientAddress(r), r.Host)
 	// The verdict and the path that made the token, both fixed words: nothing the browser typed is logged.
 	a.turnstile.log.InfoContext(r.Context(), "turnstile checked a question",
 		"verdict", outcome.verdict.String(), "path", checkPath(askValue(r, checkPathField)))
-	return turnstileAnswer(question, outcome)
+	if card, stopped := turnstileAnswer(question, outcome); stopped {
+		return card, true, nil
+	}
+	return answerCard{}, false, a.turnstile.issue(id, a.turnstile.now())
 }
 
 // guard runs what stands before a question that goes to the model (D-208): the
 // check that a person is asking, then the core counts it, once, before the first call of its loop, against its budget
 // for the day and its limits per session and per address. It returns the card
 // that says why the question stops, and true, or false for one that goes on;
-// an error ends the request, as a session that is no longer valid does.
-func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, error) {
-	if card, stopped := a.checked(r, question); stopped {
-		return card, true, nil
+// an error ends the request, as a session that is no longer valid does. For a
+// question that goes on it also returns the pass cookie to set, which the core's
+// refusal withholds: the pass is renewed by a question that reaches the model.
+func (a routedAnswerer) guard(r *http.Request, sess session, question string) (answerCard, bool, *http.Cookie, error) {
+	card, stopped, pass := a.checked(r, sess, question)
+	if stopped {
+		return card, true, nil, nil
 	}
 	adm, err := a.model.model.admit(r.Context(), sess, clientAddress(r))
 	if err != nil {
 		if connect.CodeOf(err) == connect.CodeUnauthenticated {
-			return answerCard{}, true, fmt.Errorf("admitting a question to the model: %w", err)
+			return answerCard{}, true, nil, fmt.Errorf("admitting a question to the model: %w", err)
 		}
 		a.log.WarnContext(r.Context(), "ask admission failed", "code", connect.CodeOf(err).String())
 		return modelCard(question, "The model couldn't be checked",
-			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil
+			"The box couldn't confirm that the model may answer now. Try again in a moment; the commands answer from your own record."), true, nil, nil
 	}
 	card, refused := admissionAnswer(question, adm, a.model.clock())
-	return card, refused, nil
+	if refused {
+		return card, true, nil, nil
+	}
+	return card, false, pass, nil
 }
 
 // askHasModel reports whether the Ask box has a model for sess, so the box

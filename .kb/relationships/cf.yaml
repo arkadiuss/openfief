@@ -1301,3 +1301,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa79e8b365d0
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-quotesource-quote
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-098f77d09bb5
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-checkstrictcsp
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18868aafb70d

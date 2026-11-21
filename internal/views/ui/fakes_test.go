@@ -270,6 +270,7 @@ func (f *fakeAuth) WhoAmI(_ context.Context, r *connect.Request[identityv1.WhoAm
 		return nil, err
 	}
 	out := &identityv1.WhoAmIResponse{Owner: &identityv1.Owner{}, Session: issued(scope)}
+	out.Session.Id = "s-" + r.Msg.GetSessionToken() // each session has its own, as the pass is tied to one
 	if r.Msg.GetSessionToken() == viewerSession {
 		out.Person = &identityv1.Person{Id: "0123456789abcdef", Kind: identityv1.PersonKind_PERSON_KIND_VIEWER, Name: "Alice"}
 	}
@@ -629,6 +630,10 @@ type fakeRead struct {
 	// chartStarts are the charts' starts the owner saved through the fake
 	// SettingsService (D-167), by account, the portfolio's under "".
 	chartStarts map[string]string
+	// quotes is what GetMarketQuote answers (D-226); nil leaves market quotes
+	// unavailable, as GetSettings says, and quoted holds the requests.
+	quotes *viewsv1.GetMarketQuoteResponse
+	quoted []*viewsv1.GetMarketQuoteRequest
 }
 
 func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.GetSettingsRequest]) (*connect.Response[viewsv1.GetSettingsResponse], error) {
@@ -649,7 +654,25 @@ func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.Get
 		if f.format != nil {
 			resp.NumberFormat, resp.NumberFormatDefault = f.format, false
 		}
+		resp.MarketQuotes = f.quotes != nil
 	})
+	return connect.NewResponse(resp), nil
+}
+
+// GetMarketQuote answers the fake market-data connector's quote, as the core
+// does for a caller with a token (D-226).
+func (f *fakeRead) GetMarketQuote(_ context.Context, r *connect.Request[viewsv1.GetMarketQuoteRequest]) (*connect.Response[viewsv1.GetMarketQuoteResponse], error) {
+	if err := f.check(r.Header()); err != nil {
+		return nil, err
+	}
+	var resp *viewsv1.GetMarketQuoteResponse
+	f.locked(func() {
+		f.quoted = append(f.quoted, r.Msg)
+		resp = f.quotes
+	})
+	if resp == nil {
+		return nil, fmt.Errorf("the fake core: %w", connect.NewError(connect.CodeFailedPrecondition, nil))
+	}
 	return connect.NewResponse(resp), nil
 }
 

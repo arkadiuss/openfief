@@ -32,6 +32,13 @@ const (
 	CommandPerformance
 	// CommandValue: the portfolio's value on a date.
 	CommandValue
+	// CommandQuote: an instrument's latest price and history, from the
+	// owner's market-data connector (D-226). It is no typed command: only a
+	// model's market price tool runs it.
+	CommandQuote
+	// CommandCalc: exact decimal arithmetic on figures already shown (D-228).
+	// Only a tool asks it: no typed question does.
+	CommandCalc
 )
 
 // ShowKind narrows what a show command names: anything, or an account, a
@@ -63,6 +70,11 @@ type Query struct {
 	// Change is the period a value command asks the change over, instead of
 	// the value on a day; nil for the value on Date.
 	Change *Period
+	// Quote is the days of history a quote command asks for; Term is the
+	// ticker or ISIN it looks up.
+	Quote QuoteSpan
+	// Expression is a calc command's expression, as the model wrote it.
+	Expression string
 }
 
 // PeriodKind is the kind of span a performance command asks about.

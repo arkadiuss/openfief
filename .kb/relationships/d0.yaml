@@ -986,3 +986,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c42945731ff1
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-snapshot-same
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:53:09.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace151b6dfdc
+  - type: executable_for
+    from: SYM-d226-internal-ingest-app-quotes-test-go-quotesources-connectorinstances
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T11:52:19.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-612b5c296939
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testconnectgetmarketquote
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f49ea3de2b03
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-uilog
+    to: TEST-e2e-client-events
+    created_at: 2026-11-21T12:40:44.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79fdfa502cbf

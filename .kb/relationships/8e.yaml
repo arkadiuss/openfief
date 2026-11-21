@@ -1357,3 +1357,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3735f4e358c9
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a7585d87cbb
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotelisting
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dccb56643824
+  - type: implements
+    from: SYM-ui-server-ask-fragment
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:19:53.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-249191f2ceb3
+  - type: covered_by
+    from: SYM-ui-server-ask-fragment
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:19:53.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac0736f66b7

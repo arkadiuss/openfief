@@ -1007,3 +1007,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-414b075141c6
+  - type: covered_by
+    from: SYM-d226-cmd-core-marketdata-go-heldsources-valuationsource
+    to: TEST-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57eb30ab2c31
+  - type: implements
+    from: SYM-d226-cmd-core-marketdata-go-heldsources-valuationsource
+    to: REQ-ingest-market-quote-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efb8d104f886
+  - type: covered_by
+    from: SYM-d226-cmd-core-marketdata-go-heldsources-valuationsource
+    to: TEST-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26f3f4166e01
+  - type: implements
+    from: SYM-d226-cmd-core-marketdata-go-heldsources-valuationsource
+    to: REQ-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d21e103e98d

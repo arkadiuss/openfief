@@ -1189,3 +1189,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53e1842aaed7
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-quotesource-available
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bd221eafec8
+  - type: executable_for
+    from: SYM-d226-internal-views-ui-askmarket-test-go-testmarkettoolsaretheonesthetooltablemarks
+    to: TEST-ask-market-price-offer
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c478bac90e
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testacommandneverneedsapass
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:30.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1142eb2d447

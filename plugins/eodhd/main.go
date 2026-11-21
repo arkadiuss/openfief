@@ -2,7 +2,9 @@
 // (D-22, D-51, D-49): the core calls its Sync for the end-of-day closes of
 // the instruments the owner holds and the model portfolio targets, which
 // each sync request names (D-93), and the levels of the model portfolio's
-// market indices, from EODHD on the owner's own API key. It reaches eodhd.com, or the base
+// market indices, from EODHD on the owner's own API key. It also answers LookupQuote (D-226): the latest
+// close and a short history of one instrument found by ticker or ISIN, for the Ask box's price tool and the read
+// API's market quote, fetched when asked, never stored and never part of a sync. It reaches eodhd.com, or the base
 // URL the owner configured, only through the egress proxy (D-32), and has no ImportFile. The EODHD adapter is
 // internal/valuation/eodhd; this binary only wires it to the SDK.
 //

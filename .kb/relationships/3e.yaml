@@ -979,3 +979,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94afaab7b9c1
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-test-upgrade-from-published
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:40:54.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4adab49709c6
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-fetch
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:57:32.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eb0783161b0
+  - type: implements
+    from: SYM-d226-internal-views-connectapi-quotes-go-optionaldate
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T11:29:00.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f93398ed23f
+  - type: covered_by
+    from: SYM-d226-internal-views-connectapi-quotes-go-optionaldate
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T11:29:00.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2460e785a891
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-fakeclientevents
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:30:27.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6045f583a2a
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-testclienteventsareonuntiltheownerturnsthemoff
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:31:06.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59a559a977f
+  - type: executable_for
+    from: SYM-pass-clientswitch-test-go-testclock-advance
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:32:45.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-327fc4084a53

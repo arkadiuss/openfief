@@ -78,6 +78,17 @@ vars:
   # Where task e2e renders the release bundle (task release:bundle) of the images task e2e:images pushed to the
   # suite's registry, which the suite's bundle run installs.
   E2E_BUNDLE_DIR: '{{.ROOT_DIR}}/.bin/e2e/bundle'
+  # The published release the end-to-end suite's upgrade run installs first and upgrades in place to this checkout's
+  # bundle (test/e2e/upgrade_test.go, docs/dev/pipeline.md): scripts/release-fetch.sh downloads it from its GitHub
+  # release and verifies it with cosign as the install guide says, into the gitignored directory the suite reads. Its
+  # CloudNativePG manifest is the release's own, which is not the manifest the Taskfile pins now: 2026.11.0-alpha.1
+  # ships cnpg-1.30.1.yaml with this sha256. 2026.11.0-alpha.1 is the oldest release a stored record must survive
+  # (D-161); move it to a later release only when the author says an older one no longer needs to upgrade.
+  UPGRADE_FROM: 2026.11.0-alpha.1
+  UPGRADE_FROM_REPO: arkadiuss/openfief
+  UPGRADE_FROM_CNPG_VERSION: 1.30.1
+  UPGRADE_FROM_CNPG_SHA256: 37237f145d8138256ea25ae830f87759255665ff08f8d552fdd8224a5ec032fb
+  E2E_PUBLISHED_DIR: '{{.ROOT_DIR}}/.bin/e2e/published'
   # The Gateway API implementations the end-to-end suite's exposure test reaches the core through (task e2e:gateway):
   # Envoy Gateway on kind, from its release manifest (which brings the Gateway API CRDs), and on k3d, should k3s's
   # Traefik CRD chart bring none, the Gateway API's standard CRDs. A version bump needs the manifest's new sha256.
@@ -526,7 +537,7 @@ tasks:
       - '{{.GO_GUARD}} SPICEDB="{{.BIN}}/spicedb" bash scripts/test-authz.sh {{.CLI_ARGS}}'
 
   e2e:
-    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images: first an install from the release bundle of this checkout''s images, then the demo''s stack; refuses non-local clusters'
+    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images: first an install from the release bundle of this checkout''s images, then an upgrade in place from the published 2026.11.0-alpha.1 (needs gh with GH_TOKEN, cosign and kubectl), then the demo''s stack; refuses non-local clusters'
     # kibi:install brings playwright-core, with which the passkey test drives Chromium (test/e2e/passkey.mjs).
     deps: [tool:kustomize, tool:gojq, kibi:install]
     cmds:
@@ -539,8 +550,10 @@ tasks:
       # Two runs of one suite, each with its own TestMain install: the bundle run (OPENFIEF_E2E_BUNDLE, the TestBundle
       # tests) installs the release bundle task release:bundle renders from the images in the suite's registry, pinned
       # by digest, with the CloudNativePG manifest and the openfief-db cluster it ships, runs the owner's first run with
-      # the openfief CLI it builds from this checkout (test/e2e/firstrun_test.go), and removes it again; the demo run
-      # installs the demo's stack.
+      # the openfief CLI it builds from this checkout (test/e2e/firstrun_test.go), and removes it again; the upgrade
+      # run (OPENFIEF_E2E_UPGRADE, the TestUpgrade tests) installs the published release UPGRADE_FROM, which
+      # scripts/release-fetch.sh downloaded and verified into E2E_PUBLISHED_DIR, seeds it and upgrades it in place to
+      # that same bundle (test/e2e/upgrade_test.go); the demo run installs the demo's stack.
       - |
         set -e
         if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
@@ -556,15 +569,36 @@ tasks:
         PATH='{{.BIN}}':"$PATH" CNPG='{{.CNPG_MANIFEST}}' CNPG_SHA256='{{.CNPG_MANIFEST_SHA256}}' \
           bash scripts/release-bundle.sh e2e '{{.E2E_BUNDLE_DIR}}' $OPENFIEF_E2E_BUNDLE_IMAGES
         export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.CNPG_MANIFEST}}'
-        # A failed bundle run still lets the demo run report; the task fails if either failed.
+        # A failed bundle or upgrade run still lets the demo run report; the task fails if any failed.
         bundle=0
         OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' \
           go test -tags e2e -count=1 -v -timeout 20m -run '^TestBundle' ./test/e2e/... || bundle=$?
+        # The upgrade run: the published release, fetched and verified like an owner does, then upgraded in place.
+        upgrade=0
+        for tool in gh cosign kubectl; do
+          command -v "$tool" >/dev/null || {
+            echo "e2e: the upgrade run needs $tool on PATH (gh also needs GH_TOKEN) to fetch and verify the published release" >&2
+            upgrade=1
+          }
+        done
+        if [ "$upgrade" -eq 0 ]; then
+          rm -rf '{{.E2E_PUBLISHED_DIR}}'
+          CNPG_VERSION='{{.UPGRADE_FROM_CNPG_VERSION}}' CNPG_SHA256='{{.UPGRADE_FROM_CNPG_SHA256}}' \
+            bash scripts/release-fetch.sh '{{.UPGRADE_FROM}}' '{{.UPGRADE_FROM_REPO}}' '{{.E2E_PUBLISHED_DIR}}' || upgrade=$?
+        fi
+        if [ "$upgrade" -eq 0 ]; then
+          OPENFIEF_E2E_UPGRADE=1 OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' \
+            go test -tags e2e -count=1 -v -timeout 40m -run '^TestUpgrade' ./test/e2e/... || upgrade=$?
+        fi
         # TestGhostfolio runs in its own shard (task e2e:ghostfolio).
-        go test -tags e2e -count=1 -v -timeout 20m -skip '^(TestBundle|TestGhostfolio)' ./test/e2e/...
+        go test -tags e2e -count=1 -v -timeout 20m -skip '^(TestBundle|TestUpgrade|TestGhostfolio)' ./test/e2e/...
         if [ "$bundle" -ne 0 ]; then
           echo 'e2e: the bundle run failed (see the TestBundle output above)' >&2
           exit "$bundle"
+        fi
+        if [ "$upgrade" -ne 0 ]; then
+          echo 'e2e: the upgrade run failed (see the TestUpgrade output above)' >&2
+          exit "$upgrade"
         fi
 
   e2e:prove:
@@ -1062,7 +1096,7 @@ tasks:
       - node scripts/ui-browser.mjs {{.SHOTS}}
 
   ask:bench:
-    desc: "The Ask box bench (D-217 to D-219): 33 questions in English and Polish, each asked 5 times of a model through the Ask box's own loop and tools over the demo's synthetic portfolio, graded by code; writes report.json and summary.md into OUT and exits non-zero unless every safety property (the refusals, and the injection cases' safety) passed all 5 runs, and 4 when a member of the demo route (-- -demo-route deploy/demo/model, D-221) fails its verdict or reliability; -- -history tools/askbench/history.json records the run for D-221's streaks. Calls a real model with OPENROUTER_API_KEY, spends up to BUDGET USD (default 1.00) and is never part of check, e.g. task ask:bench MODEL=qwen/qwen3.7-flash OUT=/tmp/ask-bench BUDGET=0.50; more flags after --, e.g. -- -case R1,R2 -judge"
+    desc: "The Ask box bench (D-217 to D-219): 44 questions in English and Polish, each asked 5 times of a model through the Ask box's own loop and tools over the demo's synthetic portfolio, graded by code; writes report.json and summary.md into OUT and exits non-zero unless every safety property (the refusals, and the injection cases' safety) passed all 5 runs, and 4 when a member of the demo route (-- -demo-route deploy/demo/model, D-221) fails its verdict or reliability; -- -history tools/askbench/history.json records the run for D-221's streaks. Calls a real model with OPENROUTER_API_KEY, spends up to BUDGET USD (default 1.00) and is never part of check, e.g. task ask:bench MODEL=qwen/qwen3.7-flash OUT=/tmp/ask-bench BUDGET=0.50; more flags after --, e.g. -- -case R1,R2 -judge"
     vars:
       OUT: '{{.OUT | default "ask-bench-report"}}'
     cmds:

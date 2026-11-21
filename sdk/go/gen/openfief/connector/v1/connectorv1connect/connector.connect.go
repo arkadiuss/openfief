@@ -64,6 +64,9 @@ const (
 	// ConnectorServiceLookupInstrumentsProcedure is the fully-qualified name of the ConnectorService's
 	// LookupInstruments RPC.
 	ConnectorServiceLookupInstrumentsProcedure = "/openfief.connector.v1.ConnectorService/LookupInstruments"
+	// ConnectorServiceLookupQuoteProcedure is the fully-qualified name of the ConnectorService's
+	// LookupQuote RPC.
+	ConnectorServiceLookupQuoteProcedure = "/openfief.connector.v1.ConnectorService/LookupQuote"
 )
 
 // ConnectorServiceClient is a client for the openfief.connector.v1.ConnectorService service.
@@ -87,6 +90,16 @@ type ConnectorServiceClient interface {
 	// that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
 	// no single ISIN for is left out of the response.
 	LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error)
+	// LookupQuote finds one instrument by ticker or ISIN and returns its
+	// latest end-of-day price with a short history, fetched from the source
+	// when asked (D-226). The core asks a market-data connector, the
+	// highest-ranked one for prices (D-94), about what the owner or the Ask
+	// box's model asks for, an instrument that may be held or not: the answer
+	// is public market data, never stored, and never part of a sync. A
+	// connector that can't quote answers UNIMPLEMENTED; a query it finds no
+	// listing for NOT_FOUND; an invalid query or period INVALID_ARGUMENT; a
+	// missing API key FAILED_PRECONDITION; the source failing UNAVAILABLE.
+	LookupQuote(context.Context, *connect.Request[v1.LookupQuoteRequest]) (*connect.Response[v1.LookupQuoteResponse], error)
 }
 
 // NewConnectorServiceClient constructs a client for the openfief.connector.v1.ConnectorService
@@ -124,6 +137,12 @@ func NewConnectorServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(connectorServiceMethods.ByName("LookupInstruments")),
 			connect.WithClientOptions(opts...),
 		),
+		lookupQuote: connect.NewClient[v1.LookupQuoteRequest, v1.LookupQuoteResponse](
+			httpClient,
+			baseURL+ConnectorServiceLookupQuoteProcedure,
+			connect.WithSchema(connectorServiceMethods.ByName("LookupQuote")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -133,6 +152,7 @@ type connectorServiceClient struct {
 	importFile        *connect.Client[v1.ImportFileRequest, v1.ImportFileResponse]
 	importBondLots    *connect.Client[v1.ImportBondLotsRequest, v1.ImportBondLotsResponse]
 	lookupInstruments *connect.Client[v1.LookupInstrumentsRequest, v1.LookupInstrumentsResponse]
+	lookupQuote       *connect.Client[v1.LookupQuoteRequest, v1.LookupQuoteResponse]
 }
 
 // Sync calls openfief.connector.v1.ConnectorService.Sync.
@@ -153,6 +173,11 @@ func (c *connectorServiceClient) ImportBondLots(ctx context.Context, req *connec
 // LookupInstruments calls openfief.connector.v1.ConnectorService.LookupInstruments.
 func (c *connectorServiceClient) LookupInstruments(ctx context.Context, req *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error) {
 	return c.lookupInstruments.CallUnary(ctx, req)
+}
+
+// LookupQuote calls openfief.connector.v1.ConnectorService.LookupQuote.
+func (c *connectorServiceClient) LookupQuote(ctx context.Context, req *connect.Request[v1.LookupQuoteRequest]) (*connect.Response[v1.LookupQuoteResponse], error) {
+	return c.lookupQuote.CallUnary(ctx, req)
 }
 
 // ConnectorServiceHandler is an implementation of the openfief.connector.v1.ConnectorService
@@ -177,6 +202,16 @@ type ConnectorServiceHandler interface {
 	// that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
 	// no single ISIN for is left out of the response.
 	LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error)
+	// LookupQuote finds one instrument by ticker or ISIN and returns its
+	// latest end-of-day price with a short history, fetched from the source
+	// when asked (D-226). The core asks a market-data connector, the
+	// highest-ranked one for prices (D-94), about what the owner or the Ask
+	// box's model asks for, an instrument that may be held or not: the answer
+	// is public market data, never stored, and never part of a sync. A
+	// connector that can't quote answers UNIMPLEMENTED; a query it finds no
+	// listing for NOT_FOUND; an invalid query or period INVALID_ARGUMENT; a
+	// missing API key FAILED_PRECONDITION; the source failing UNAVAILABLE.
+	LookupQuote(context.Context, *connect.Request[v1.LookupQuoteRequest]) (*connect.Response[v1.LookupQuoteResponse], error)
 }
 
 // NewConnectorServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -210,6 +245,12 @@ func NewConnectorServiceHandler(svc ConnectorServiceHandler, opts ...connect.Han
 		connect.WithSchema(connectorServiceMethods.ByName("LookupInstruments")),
 		connect.WithHandlerOptions(opts...),
 	)
+	connectorServiceLookupQuoteHandler := connect.NewUnaryHandler(
+		ConnectorServiceLookupQuoteProcedure,
+		svc.LookupQuote,
+		connect.WithSchema(connectorServiceMethods.ByName("LookupQuote")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.connector.v1.ConnectorService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ConnectorServiceSyncProcedure:
@@ -220,6 +261,8 @@ func NewConnectorServiceHandler(svc ConnectorServiceHandler, opts ...connect.Han
 			connectorServiceImportBondLotsHandler.ServeHTTP(w, r)
 		case ConnectorServiceLookupInstrumentsProcedure:
 			connectorServiceLookupInstrumentsHandler.ServeHTTP(w, r)
+		case ConnectorServiceLookupQuoteProcedure:
+			connectorServiceLookupQuoteHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -243,4 +286,8 @@ func (UnimplementedConnectorServiceHandler) ImportBondLots(context.Context, *con
 
 func (UnimplementedConnectorServiceHandler) LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.LookupInstruments is not implemented"))
+}
+
+func (UnimplementedConnectorServiceHandler) LookupQuote(context.Context, *connect.Request[v1.LookupQuoteRequest]) (*connect.Response[v1.LookupQuoteResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.LookupQuote is not implemented"))
 }

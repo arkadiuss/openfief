@@ -22,10 +22,10 @@ func TestAPlainFirstReplyIsFollowedByTheWholeConversationAndTheInstruction(t *te
 		t.Fatalf("answer = %+v, %v after %d calls; want the refusal after two", got, err, conv.rounds)
 	}
 	want := []askMessage{
-		{Role: roleSystem, Content: askSystemPrompt(mustDate(t, askToday)), Tier: tierT2},
+		{Role: roleSystem, Content: askSystemPrompt(mustDate(t, askToday)), Tier: tierInstructions},
 		{Role: roleUser, Content: question, Tier: tierT0},
 		{Role: roleAssistant, Content: plain, Tier: tierT0},
-		{Role: roleUser, Content: finalText, Tier: tierT2},
+		{Role: roleUser, Content: finalText, Tier: tierInstructions},
 	}
 	if diff := cmp.Diff(want, f.port.requests[1]); diff != "" {
 		t.Errorf("messages of the second call (-want +got):\n%s", diff)
@@ -63,7 +63,7 @@ func TestTheFinalRoundKeepsEveryToolCallAndResultAndTheModelsPlainReply(t *testi
 	}
 	wantTail := []askMessage{
 		{Role: roleAssistant, Content: "It is 10.", Tier: tierT0},
-		{Role: roleUser, Content: finalText, Tier: tierT2},
+		{Role: roleUser, Content: finalText, Tier: tierInstructions},
 	}
 	if diff := cmp.Diff(wantTail, final[len(final)-2:]); diff != "" {
 		t.Errorf("the end of the final round (-want +got):\n%s", diff)
@@ -95,7 +95,7 @@ func TestTheRetryAfterAnInvalidReplyKeepsTheWholeConversation(t *testing.T) {
 	}
 	wantTail := []askMessage{
 		{Role: roleAssistant, Content: invalid, Tier: tierT0},
-		{Role: roleUser, Content: retryText(errAnswerKind), Tier: tierT2},
+		{Role: roleUser, Content: retryText(errAnswerKind), Tier: tierInstructions},
 	}
 	if diff := cmp.Diff(wantTail, retry[len(retry)-2:]); diff != "" {
 		t.Errorf("the end of the retry (-want +got):\n%s", diff)
@@ -156,7 +156,7 @@ func TestTheFinalRoundAfterAnEmptyReplyAsksForTheAnswerFromTheCards(t *testing.T
 // instruction, holds no empty assistant message, and asks to restate nothing.
 func checkEmptyReplyInstruction(t *testing.T, final []askMessage) {
 	t.Helper()
-	want := askMessage{Role: roleUser, Content: "Answer the user's question in this schema, using only the cards above.", Tier: tierT2}
+	want := askMessage{Role: roleUser, Content: "Answer the user's question in this schema, using only the cards above.", Tier: tierInstructions}
 	if last := final[len(final)-1]; !cmp.Equal(last, want) {
 		t.Errorf("the last message = %+v, want %+v", last, want)
 	}

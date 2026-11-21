@@ -902,3 +902,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1649d752fc09
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-reset
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb61674fbed3
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest-reset
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0159bbbb98
+  - type: covered_by
+    from: SYM-d226-tools-askbench-cases-go-route
+    to: TEST-askbench-market-price-cases
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab408eca8fc5
+  - type: implements
+    from: SYM-d226-tools-askbench-cases-go-route
+    to: REQ-askbench-market-price-cases
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aff21ea6661
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-testclienteventserrors
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:31:21.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1e63a6f83bb

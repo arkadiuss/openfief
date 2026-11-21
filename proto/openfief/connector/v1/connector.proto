@@ -43,6 +43,16 @@ service ConnectorService {
   // that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
   // no single ISIN for is left out of the response.
   rpc LookupInstruments(LookupInstrumentsRequest) returns (LookupInstrumentsResponse);
+  // LookupQuote finds one instrument by ticker or ISIN and returns its
+  // latest end-of-day price with a short history, fetched from the source
+  // when asked (D-226). The core asks a market-data connector, the
+  // highest-ranked one for prices (D-94), about what the owner or the Ask
+  // box's model asks for, an instrument that may be held or not: the answer
+  // is public market data, never stored, and never part of a sync. A
+  // connector that can't quote answers UNIMPLEMENTED; a query it finds no
+  // listing for NOT_FOUND; an invalid query or period INVALID_ARGUMENT; a
+  // missing API key FAILED_PRECONDITION; the source failing UNAVAILABLE.
+  rpc LookupQuote(LookupQuoteRequest) returns (LookupQuoteResponse);
 }
 
 // Money is an exact amount in one currency.
@@ -498,6 +508,53 @@ message InstrumentProposal {
 
 message LookupInstrumentsResponse {
   repeated InstrumentProposal proposals = 1;
+}
+
+// LookupQuoteRequest asks for one instrument's latest price and history.
+message LookupQuoteRequest {
+  // A ticker, such as "NVDA", or an ISIN with a valid check digit; at most 32
+  // characters of letters, digits, dots, dashes and underscores.
+  string query = 1;
+  // The first and the last day of the history wanted, "YYYY-MM-DD", both
+  // inclusive; the core sends at most 366 days, ending today or earlier.
+  string from = 2;
+  string to = 3;
+}
+
+// QuotePoint is one end-of-day close.
+message QuotePoint {
+  // YYYY-MM-DD.
+  string date = 1;
+  // The close in the listing's currency, an exact decimal string.
+  string close = 2;
+}
+
+// QuoteListing is one listing a query could mean, as the source names it.
+// Its text comes from the source, not from the core: the core treats it as
+// data and never as instructions.
+message QuoteListing {
+  // The listing's ticker on its venue, such as "NVDA".
+  string symbol = 1;
+  // The ISIN, with a valid check digit; empty when the source gives none.
+  string isin = 2;
+  // The instrument's name at the source.
+  string name = 3;
+  // The venue's code at the source, such as "XETRA".
+  string exchange = 4;
+  // The ISO 4217 code the closes are in; a close in pence sterling is
+  // delivered in pounds, as a sync's prices are.
+  string currency = 5;
+}
+
+// LookupQuoteResponse is a quote, or the listings that stop one.
+message LookupQuoteResponse {
+  // The one listing the query names, and its closes in date order, the
+  // latest last; unset when the query names several listings.
+  QuoteListing listing = 1;
+  repeated QuotePoint history = 2;
+  // The listings the query could mean, at most 10, when it names more than
+  // one and none was chosen: the person names one by its ISIN.
+  repeated QuoteListing candidates = 3;
 }
 
 message SyncRequest {

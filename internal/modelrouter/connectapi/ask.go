@@ -155,8 +155,8 @@ func askMessageFrom(am *modelsv1.AskMessage) (modelrouter.Message, error) {
 	}
 	out := modelrouter.Message{Role: role, Content: pm.GetContent(), ToolCallID: pm.GetToolCallId()}
 	if tier := am.GetDataTier(); tier != "" {
-		if out.DataTier, err = modelrouter.ParseDataTier(tier); err != nil {
-			return modelrouter.Message{}, fmt.Errorf("%w: a data tier that is none of the four", errBadAsk)
+		if out.DataTier, err = modelrouter.ParseMessageTier(tier); err != nil {
+			return modelrouter.Message{}, fmt.Errorf("%w: a data tier that is none of the four, or instructions", errBadAsk)
 		}
 	}
 	for _, tc := range pm.GetToolCalls() {

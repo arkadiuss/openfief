@@ -58,10 +58,17 @@ type Case struct {
 	History []HistoryTurn `yaml:"history"`
 	Note    string        `yaml:"note"`
 	Expect  Expect        `yaml:"expect"`
+	// Route is the route the question is asked over, where it isn't the bench's
+	// default of a route that allows every data tier.
+	Route Route `yaml:"route"`
 	// Cards are the tools whose card the answer must show.
 	Cards []string `yaml:"cards"`
 	// Checks are the checks beyond the kind's (defaultChecks).
 	Checks []string `yaml:"checks"`
+	// Exact are numbers the answer must hold exactly, for the exact check.
+	Exact []string `yaml:"exact"`
+	// Only are the numbers an answer may hold, for the onlyNumbers check.
+	Only []string `yaml:"only"`
 }
 
 // HistoryTurn is an earlier turn of a case's conversation: the question, the
@@ -79,6 +86,13 @@ func (c *Case) earlier() []ui.AskTurn {
 		out = append(out, ui.AskTurn{Question: h.Question, Answer: h.Answer, Cards: h.Cards})
 	}
 	return out
+}
+
+// Route is what a case says of the route of its question: the data tiers the
+// owner did not allow its models to receive (D-206).
+type Route struct {
+	// DenyTiers are the tiers no model of the route may receive, such as "T2".
+	DenyTiers []string `yaml:"denyTiers"`
 }
 
 // Expect is what the model's tool calls must look like.
@@ -103,6 +117,9 @@ type Expect struct {
 	// Premise, for a question that assumes something the cards show to be
 	// false, is what the answer must set right (checkPremise).
 	Premise *Premise `yaml:"premise"`
+	// Rebalance, for a question that states weights to reach, is what code
+	// computes the amounts to move from (checkRebalance).
+	Rebalance *Rebalance `yaml:"rebalance"`
 }
 
 // PayloadCall is a tool the payload of an injection case asks the model to call

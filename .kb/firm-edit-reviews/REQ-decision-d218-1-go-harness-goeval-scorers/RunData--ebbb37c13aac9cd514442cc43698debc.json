@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d218-1-go-harness-goeval-scorers",
+  "sourceFile": "tools/askbench/scorers.go",
+  "symbol": "RunData",
+  "verdict": "keeps",
+  "note": "RunData gained only the allocation by asset class that the new rebalance check reads; scorers still read the run through it.",
+  "statementHash": "sha256:40b0233c0e519e7fb69ed061c962dc0b71e96a75e22532ce825e114e799ed480",
+  "codeHash": "sha256:2361e37e223b175480925ddd7f1974f89248795e4bb2ca4a22df3fb94ad4d626",
+  "startLine": 67,
+  "endLine": 92,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
+}

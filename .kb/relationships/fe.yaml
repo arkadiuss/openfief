@@ -818,3 +818,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0de4d5731aee
+  - type: verified_by
+    from: SCEN-views-market-quote-rate-limit
+    to: TEST-views-market-quote-rate-limit
+    created_at: 2026-11-21T11:26:55.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfecc3fdc168
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-views-marketquotesavailable
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T11:28:13.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0319828f1f5d
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-views-marketquotesavailable
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T11:28:13.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-455ae8629ecb
+  - type: covered_by
+    from: SYM-d226-internal-views-app-quotes-go-views-marketquotesavailable
+    to: TEST-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a83cc745fa12
+  - type: implements
+    from: SYM-d226-internal-views-app-quotes-go-views-marketquotesavailable
+    to: REQ-views-market-quote-callers
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-044d0f82c0a9

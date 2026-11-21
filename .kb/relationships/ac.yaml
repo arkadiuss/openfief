@@ -986,3 +986,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81c506b2dd99
+  - type: executable_for
+    from: SYM-release-fetch-test-signed
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:50:09.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9366a8d386ae
+  - type: executable_for
+    from: SYM-d226-internal-valuation-eodhd-quote-test-go-testexchangecode
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3791d89d8d43
+  - type: executable_for
+    from: SYM-d226-internal-valuation-eodhd-quote-test-go-testquoteticker
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39febd04744
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getsettingsresponse-getmarketquotes
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f4cedd7674d
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-getsettingsresponse-getmarketquotes
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa58f350c17
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassisissuedwiththecheckandholdsnothingelse
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:34:32.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa8eebfbd3b

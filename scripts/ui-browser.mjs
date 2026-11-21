@@ -24,9 +24,12 @@
 // With Cloudflare Turnstile in front of the Ask box's model (D-208), on a second UI over the fakes whose Cloudflare is a fake too: the check
 // runs on demand. The policy allows Cloudflare's script and frame and nothing else outside; a command is answered with no check; a model
 // question goes without a token, is told a check is needed, runs the widget (explicit render, execute, interaction-only) and goes again with
-// its one-time token, the same question, and is answered; nothing is checked again afterwards; an interaction-needed widget gets time;
+// its one-time token, the same question, and is answered; nothing is checked again by itself, and a second model question within the pass's
+// window (a signed cookie the page cannot read, 30 minutes after the last model question and 2 hours from the check, by the UI's test clock)
+// does not run the check, while one after it does; an interaction-needed widget gets time;
 // an error, a timeout, a blocked script and an unsupported browser each give one message with the code; a stalled widget becomes a visible
 // one; the page reports each state and the console holds no policy violation; the first UI has no widget.
+// The owner's switch for the pages' client events (D-227) is in Settings: on by default, off removes the reporting script from every page.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -465,13 +468,14 @@ const fakeTurnstileScript = `(function () {
 })();`;
 
 let nextSeed = 0; // the fake Cloudflare takes each token once, so every page after the first makes its own range
+let nextFreshSeed = 10000; // an auto page that is not the first (options.fresh) starts in a range of its own
 const checkingText = 'Checking you\'re a person…';
 
 // turnstileContext opens a signed-in page on the Turnstile UI with the fake widget in the given mode (and a fake clock when asked), counting
 // the requests the Ask box makes and noting whether the no-token card was ever drawn.
 async function turnstileContext(browser, mode, options = {}) {
   const ctx = await browser.newContext({ viewport: { width: options.width || 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true });
-  const seed = mode === 'auto' ? 0 : (nextSeed += 100);
+  const seed = options.fresh ? (nextFreshSeed += 1000) : mode === 'auto' ? 0 : (nextSeed += 100);
   await ctx.addInitScript(([m, sd]) => {
     window.__fakeTurnstileMode = m;
     window.__fakeTurnstileSeed = sd;
@@ -553,15 +557,55 @@ async function turnstileBox(browser) {
   await page.waitForTimeout(2000);
   check((await fake('executes')) === 1 && (await fake('resets')) === 0 && (await fake('renders')).length === 1, 'turnstile: the check ran again after the answer');
   await page.screenshot({ path: path.join(out, 'phone360-light-ask-turnstile.png'), fullPage: true });
-  // The next model question needs a new check: the widget is reset and run again, once.
+  // The check left a pass (D-208): a signed cookie the page cannot read, for the Ask box's own request. A second model question within
+  // the window goes once, with no token, is answered, and does not run the check: execute() is not called again.
   await submit('how diversified am I really');
   await page.waitForSelector('#answer .bubble:has-text("how diversified am I really")', { timeout: 5000 });
   await page.waitForSelector('#answer .used-card', { timeout: 5000 });
-  check(asks.length === 5 && asks[4].get('cf-turnstile-response') === 'ok-browser-2' && (await fake('executes')) === 2 && (await fake('resets')) === 1,
-    `turnstile: the second question did not make one new check (${asks.length} requests, ${await fake('executes')} runs)`);
+  check(asks.length === 4 && !asks[3].has('cf-turnstile-response') && asks[3].get('q') === 'how diversified am I really'
+    && (await fake('executes')) === 1 && (await fake('resets')) === 0 && (await fake('renders')).length === 1,
+  `turnstile: the second question within the pass's window made a check or went twice (${asks.length} requests, ${await fake('executes')} runs)`);
+  const passes = (await ctx.cookies()).filter((c) => c.name === '__Secure-openfief_ask_pass');
+  check(passes.length === 1 && passes[0].httpOnly && passes[0].secure && passes[0].sameSite === 'Strict' && passes[0].path === '/ask',
+    `turnstile: the pass cookie is ${JSON.stringify(passes.map((c) => ({ ...c, value: '…' })))}`);
+  check(passes.length === 1 && /^v1\.\d+\.\d+\.[A-Za-z0-9_-]+$/.test(passes[0].value) && !passes[0].value.includes('session'),
+    'turnstile: the pass cookie holds more than the version, two times and the MAC');
+  check(!(await page.evaluate(() => document.cookie)).includes('ask_pass'), 'turnstile: a script can read the pass cookie');
+  // After the window (half an hour from the last model question, by the UI's test clock) the pass is refused and the check runs again, once.
+  await ctx.request.get(turnstileBase + '/test/advance-clock?minutes=31');
+  await submit('how diversified am I now');
+  await page.waitForSelector('#answer .bubble:has-text("how diversified am I now")', { timeout: 5000 });
+  await page.waitForSelector('#answer .used-card', { timeout: 5000 });
+  check(asks.length === 6 && !asks[4].has('cf-turnstile-response') && asks[5].get('cf-turnstile-response') === 'ok-browser-2'
+    && (await fake('executes')) === 2 && (await fake('resets')) === 1,
+  `turnstile: after the pass expired the question did not make one new check (${asks.length} requests, ${await fake('executes')} runs)`);
   const overflow = await sideways(page);
   check(overflow <= 0, `turnstile: the answer scrolls ${overflow} px sideways at 360 px`);
   check(violations.length === 0, `turnstile: the console holds policy violations: ${violations.join('; ')}`);
+  await ctx.close();
+}
+
+// turnstilePassCap checks the pass's hard cap (D-208): a visitor who keeps asking is not checked again for 2 hours from the check, however
+// often the window is renewed (the UI's test clock moves in steps of 25 minutes, each a question that renews the half hour), and the question
+// after that, with the last one 21 minutes behind it, runs the check again.
+async function turnstilePassCap(browser) {
+  const { ctx, page, asks, fake, submit } = await turnstileContext(browser, 'auto', { fresh: true });
+  const ask = async (q) => {
+    await submit(q);
+    await page.waitForSelector(`#answer .bubble:has-text("${q}")`, { timeout: 5000 });
+  };
+  await ask('cap check zero');
+  check((await fake('executes')) === 1 && asks.length === 2, `turnstile cap: the first question made ${await fake('executes')} checks in ${asks.length} requests`);
+  for (const [i, minutes] of [1, 2, 3, 4].map((n) => [n, 25])) {
+    await ctx.request.get(turnstileBase + `/test/advance-clock?minutes=${minutes}`);
+    await ask(`cap check ${i}`);
+  }
+  check((await fake('executes')) === 1 && asks.length === 6 && asks.slice(2).every((a) => !a.has('cf-turnstile-response')),
+    `turnstile cap: within 100 minutes of the check, renewed each time, ${await fake('executes')} checks ran in ${asks.length} requests`);
+  await ctx.request.get(turnstileBase + '/test/advance-clock?minutes=21');
+  await ask('cap check last');
+  check((await fake('executes')) === 2 && asks.length === 8 && asks[7].has('cf-turnstile-response'),
+    `turnstile cap: past 2 hours from the check the question made ${await fake('executes')} checks in ${asks.length} requests, want a new check`);
   await ctx.close();
 }
 
@@ -588,7 +632,9 @@ async function turnstileOnDemand(browser) {
     check(asks.length === 2 && asks[1].get('q') === 'how diversified am I' && asks[1].get('cf-turnstile-response') === 'ok-browser-101',
       `turnstile on demand: the question that went again was ${asks[asks.length - 1]}`);
     check(await page.isEnabled('.ask-form button[type="submit"]') && await page.isHidden('#ask-pending'), 'turnstile on demand: the box is still busy after the answer');
-    // An error: one message with the code and the hint; the box is free; the next question makes a new check.
+    // An error: one message with the code and the hint; the box is free; the next question makes a new check. The check that just passed left a
+    // pass (D-208), so the UI's test clock moves past its window first: the next model question is checked again.
+    await ctx.request.get(turnstileBase + '/test/advance-clock?minutes=31');
     await page.fill('#ask-q', 'and by currency');
     await page.click('.ask-form button[type="submit"]');
     await page.waitForSelector('#ask-pending.is-checking', { timeout: 5000 });
@@ -762,6 +808,35 @@ async function withoutTurnstile(browser) {
   const response = await page.goto(base + '/test/ask-model?tiers=T0,T2', { waitUntil: 'networkidle' });
   check(!(response.headers()['content-security-policy'] || '').includes('cloudflare'), 'no turnstile: the page\'s policy names Cloudflare');
   check((await page.locator('.cf-turnstile').count()) === 0 && outside.length === 0, `no turnstile: the page shows a widget or loads ${outside.join(', ')}`);
+  await ctx.close();
+}
+
+// clientEventsSetting checks the owner's switch for the pages' client events (D-227) in Settings, at 360 px: on until turned off, with the one line
+// that says what is collected; turning it off reloads Settings with it off and every page loses the reporting script, while the endpoint still
+// answers 204; turning it on brings the script back. The switch is left on.
+async function clientEventsSetting(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, colorScheme: 'light', isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  const line = 'The pages report a fixed list of events about themselves, such as the person check\'s states, script errors and failed requests: '
+    + 'nothing you type and no amounts. They stay on this install unless OpenTelemetry export is set.';
+  const script = () => page.locator('script[src="/static/events.js"]').count();
+  await page.goto(base + '/settings', { waitUntil: 'networkidle' });
+  const card = page.locator('section[aria-labelledby="client-events-title"]');
+  check((await card.count()) === 1 && (await card.textContent()).includes(line) && (await card.locator('.pill-ok').textContent()).trim() === 'On',
+    'client events: Settings does not show the switch on, with what is collected');
+  check((await script()) === 1, 'client events: the page does not load the reporting script by default');
+  await page.screenshot({ path: path.join(out, 'phone360-light-settings-client-events.png'), fullPage: true });
+  check((await sideways(page)) <= 0, 'client events: Settings scrolls sideways at 360 px');
+  await Promise.all([page.waitForNavigation(), card.locator('button:has-text("Turn client events off")').click()]);
+  check((await card.locator('.pill-neutral').textContent()).trim() === 'Off' && (await card.locator('button:has-text("Turn client events on")').count()) === 1,
+    'client events: Settings does not show the switch off after the owner turned it off');
+  check((await script()) === 0, 'client events: the page still loads the reporting script with the events off');
+  const status = await page.evaluate(async () => (await fetch('/client-events', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events: [{ k: 'turnstile-expired' }] }),
+  })).status);
+  check(status === 204, `client events: the endpoint answered ${status} with the events off, want 204`);
+  await Promise.all([page.waitForNavigation(), card.locator('button:has-text("Turn client events on")').click()]);
+  check((await card.locator('.pill-ok').textContent()).trim() === 'On' && (await script()) === 1, 'client events: turning them on did not bring the script back');
   await ctx.close();
 }
 
@@ -1123,7 +1198,9 @@ try {
   await askModelBox(browser);
   await askConversation(browser);
   await withoutTurnstile(browser);
+  await clientEventsSetting(browser);
   await turnstileBox(browser);
+  await turnstilePassCap(browser);
   await turnstileOnDemand(browser);
   await askProgress(browser);
   await recordPages(browser);

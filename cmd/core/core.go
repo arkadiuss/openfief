@@ -234,10 +234,10 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	names := ledgerNames(pool, l, ledgerOwners(auth, cfg.Auth.Origins, authz))
+	names, entries := ledgerNames(pool, l, ledgerOwners(auth, cfg.Auth.Origins, authz)), &entryCaller{}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(joined(pool))), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
-		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(joined(pool))), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
+		viewsapp.WithPortfolio(acc.sleeves), viewsapp.WithPayoutSettings(ingestpg.New(joined(pool))), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore), marketQuoteOption(cfg, entries, vstore, now))
 	views, apis, err := newViews(l, vstore, cfg, auth, callers, log, opts)
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	deps := &connectorDeps{
 		pool: pool, outbox: changes, ledger: l, sleeves: acc.sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
-		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
+		entries: entries, syncs: &syncTrigger{}, bonds: vstore, model: models, wrappers: vstore,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(joined(pool)), names, l),
 		providers: agents.providers,

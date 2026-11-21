@@ -10,6 +10,11 @@ const (
 	tierTF = answer.TierTF
 	tierT1 = answer.TierT1
 	tierT2 = answer.TierT2
+	// tierInstructions tags the box's own fixed text, which names no data: the
+	// system prompt, the retry and final-round instructions and the failure and
+	// withheld results of tools (D-206, D-226). It adds nothing to the tiers a
+	// request holds, so a route allowed T0 only is never refused for it.
+	tierInstructions = answer.TierInstructions
 )
 
 // tierWords describes a data tier in words, for the notice of a card the

@@ -993,3 +993,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df359882426c
+  - type: validates
+    from: TEST-ask-market-price-card
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:26:36.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5fc91b72632
+  - type: validates
+    from: TEST-models-market-price-result-refused
+    to: REQ-models-data-tiers-deny-by-default
+    created_at: 2026-11-21T11:37:44.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b76da235ca7d
+  - type: validates
+    from: TEST-models-market-price-result-refused
+    to: REQ-models-ask-box-tool-results-tiered
+    created_at: 2026-11-21T11:37:45.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a7a14859ce
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-descriptor
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2b8cc5d521f
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-quotepoint-descriptor
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d2204a5373a
+  - type: covered_by
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-descriptor
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bc7d4b3fc97
+  - type: implements
+    from: SYM-d226-sdk-go-gen-openfief-views-v1-read-service-pb-go-marketquotepoint-descriptor
+    to: REQ-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6d0842943e4
+  - type: validates
+    from: TEST-models-market-price-result-refused
+    to: REQ-models-market-price-tier
+    created_at: 2026-11-21T12:42:41.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2d5a60bd2c
+  - type: executable_for
+    from: SYM-d226-internal-ingest-app-quotes-test-go-testaheldquoteisthevaluationsourceslatestprice
+    to: TEST-ingest-market-quote-held-source
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6037192c05a4
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-wantclientevents
+    to: TEST-valuation-client-events-switch
+    created_at: 2026-11-21T12:50:56.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdcd30168bbc

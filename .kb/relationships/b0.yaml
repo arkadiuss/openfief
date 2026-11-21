@@ -1203,3 +1203,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fde812f9a73
+  - type: implements
+    from: SYM-d226-internal-valuation-eodhd-quote-go-venuerank
+    to: REQ-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:32:42.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9181e32b44c
+  - type: covered_by
+    from: SYM-d226-internal-valuation-eodhd-quote-go-venuerank
+    to: TEST-valuation-eodhd-quote-lookup
+    created_at: 2026-11-21T11:32:42.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48828b761fd8
+  - type: covered_by
+    from: SYM-d226-internal-ingest-quote-go-quotelisting
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e645505c691d
+  - type: implements
+    from: SYM-d226-internal-ingest-quote-go-quotelisting
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0551d1c82799
+  - type: executable_for
+    from: SYM-pass-clientswitch-fakes-test-go-fakesettings-getclientevents
+    to: TEST-ui-client-events-switch
+    created_at: 2026-11-21T12:32:06.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ffd3da7630b

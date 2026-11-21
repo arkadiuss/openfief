@@ -1280,3 +1280,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78eb946afd5c
+  - type: implements
+    from: SYM-d226-internal-ingest-connectrpc-quotes-go-quoteerror
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:42.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b2b77057375
+  - type: covered_by
+    from: SYM-d226-internal-ingest-connectrpc-quotes-go-quoteerror
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:31:42.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d27d6445e89
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-decimalof
+    to: REQ-ask-market-price-card
+    created_at: 2026-11-21T11:35:58.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51962db43eef
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-decimalof
+    to: TEST-ask-market-price-card
+    created_at: 2026-11-21T11:35:58.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e8ad6bd95fd
+  - type: executable_for
+    from: SYM-pass-clientevents-test-go-postclientevent
+    to: TEST-e2e-client-events
+    created_at: 2026-11-21T12:40:27.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5364ce0ebe07

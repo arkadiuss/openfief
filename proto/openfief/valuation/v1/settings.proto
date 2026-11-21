@@ -32,6 +32,9 @@
 // - A charts' start of an account the owner may not change (D-163) fails
 //   with PERMISSION_DENIED, whether it is stored or not; one of an account
 //   that is not stored, with NOT_FOUND.
+// - GetClientEvents is the one call here that needs no session (see it), and
+//   SetClientEvents changes the owner's switch for the UI's client events
+//   (D-227) like every other change here.
 syntax = "proto3";
 
 package openfief.valuation.v1;
@@ -73,6 +76,20 @@ service SettingsService {
   // start clears the setting, so the charts start on their default again.
   // It revalues nothing.
   rpc SetChartStart(SetChartStartRequest) returns (SetChartStartResponse);
+
+  // GetClientEvents says whether the built-in UI's pages report client events
+  // about themselves (D-227). It needs no session, because the login page
+  // reports too and the UI asks before any person has signed in; it carries
+  // one boolean and nothing of the owner's record. The UI asks again about
+  // every ten seconds, so a change reaches every replica within that time.
+  rpc GetClientEvents(GetClientEventsRequest) returns (GetClientEventsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SetClientEvents turns the UI's client events (D-227) on or off for the
+  // owner. They are on until the owner turns them off. The change is audited
+  // like any setting's, and revalues nothing.
+  rpc SetClientEvents(SetClientEventsRequest) returns (SetClientEventsResponse);
 }
 
 // NumberFormat is how amounts are written (D-113): only the separators.
@@ -175,3 +192,18 @@ message SetEarlyRedemptionFeeRequest {
 }
 
 message SetEarlyRedemptionFeeResponse {}
+
+message GetClientEventsRequest {}
+
+message GetClientEventsResponse {
+  // False only when the owner turned the client events off (D-227).
+  bool enabled = 1;
+}
+
+message SetClientEventsRequest {
+  string origin = 1;
+  string session_token = 2;
+  bool enabled = 3;
+}
+
+message SetClientEventsResponse {}

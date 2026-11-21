@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d762c7b69a95
+  - type: specified_by
+    from: REQ-ingest-market-quote-answer-is-data
+    to: SCEN-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:27:14.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ad06d29d79b
+  - type: executable_for
+    from: SYM-d226-internal-ingest-connectrpc-quotes-test-go-quoteconnector
+    to: TEST-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6a78353582b
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassissueandusebyunits
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:53.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39044cc0d857

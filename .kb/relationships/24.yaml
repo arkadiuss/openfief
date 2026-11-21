@@ -1035,3 +1035,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a55cdac65aac
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-run-upgrade
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:55:29.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4bc35419086
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-seeded-install
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:56:10.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16cb1f3cdb3
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testapassfromanothersessionisrefused
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:35:08.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14161ca3529c
+  - type: executable_for
+    from: SYM-pass-e2e-clientevents-test-go-setclientevents
+    to: TEST-e2e-client-events
+    created_at: 2026-11-21T13:16:40.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe6a89e5ba4c

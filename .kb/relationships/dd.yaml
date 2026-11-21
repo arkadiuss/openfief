@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb351c0e770c
+  - type: validates
+    from: TEST-ingest-market-quote-answer-is-data
+    to: REQ-ingest-market-quote-answer-is-data
+    created_at: 2026-11-21T11:26:30.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd489a0732b
+  - type: implements
+    from: SYM-pass-turnstilepass-go-parsepass
+    to: REQ-ui-turnstile-pass-cookie
+    created_at: 2026-11-21T12:52:25.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ab367b6a285
+  - type: covered_by
+    from: SYM-pass-turnstilepass-go-parsepass
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:52:25.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2317ba46f096

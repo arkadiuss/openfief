@@ -1273,3 +1273,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b93872688994
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-kube-remove-cluster-scoped
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T12:21:02.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f0e7f297610
+  - type: executable_for
+    from: SYM-d226-internal-views-app-quotes-test-go-testmarketquoterefuses
+    to: TEST-views-market-quote
+    created_at: 2026-11-21T14:00:00.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a87750c967
+  - type: executable_for
+    from: SYM-pass-turnstilepass-test-go-testpassneedsthewidgetssecrettoissueandtouse
+    to: TEST-ui-turnstile-pass
+    created_at: 2026-11-21T12:51:43.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853c4302c73e

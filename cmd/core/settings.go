@@ -26,7 +26,7 @@ type accountTerms struct {
 // defaults, the bonds' early-redemption fees in vstore, which the owner
 // confirms or overrides (D-97), and the owner's sessions checked by owners.
 func newSettings(recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners *ownerSessions, cfg *serveConfig) *valuationapp.Settings {
-	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting).WithBondFees(vstore).WithAudit(owners)
+	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting).WithBondFees(vstore).WithClientEvents(vstore).WithAudit(owners)
 }
 
 // newChartStarts returns the owner's setting of the charts' start (D-167)
