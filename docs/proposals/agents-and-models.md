@@ -48,12 +48,11 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
   | Approval decided | Approval service | Agent, gateway, audit log | Intent routed or reservation released |
   | Policy denied | Policy engine | Agent, audit log | Intent rejected; the agent may revise it |
 
-- **[P-37] Agent-side entities.**
+- **[P-37] Agent-side entities.** The Thesis is decided as D-229.
 
   | Entity | Key attributes |
   |---|---|
   | Agent | Plugin (publisher, version), model per role, data tiers granted, subscribed events, guarantee level; works on one thesis and holds at most one active fief |
-  | Thesis | Statement, instruments, horizon (long-term or short-term), invalidation conditions, sources, version history |
   | ResearchNote | Typed claim from the reader, with source tags and the number of independent sources |
   | ModelPortfolio | Versioned target weights; changes proposed by the maintainer and applied by the owner |
 

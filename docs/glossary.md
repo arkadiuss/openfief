@@ -184,7 +184,7 @@ Don't create code for these before their milestone.
 | Term | Meaning |
 |---|---|
 | Fief (lease) | A revocable capital lease from the offensive sleeve to one agent for one thesis, with hard limits. In feudal Europe, a fief was land a lord granted to a vassal in return for service, revocable on breach. |
-| Thesis | An investment idea with a horizon and invalidation conditions that one or more agents work on. |
+| Thesis | An investment idea with a horizon and invalidation conditions that one or more agents work on. Until the control plane exists, a thesis is a draft the owner saves from an Ask box suggestion (D-229). |
 | Agent | One running instance of an agent plugin, spawned for one thesis. |
 | Intent | An agent's structured request to trade (instrument, side, size, limit price, thesis, invalidation conditions), sent to the gateway instead of a broker order. |
 | Order | The broker order the gateway creates from an approved intent. |
