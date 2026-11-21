@@ -68,9 +68,10 @@ const (
 	unissued = "e2e-never-issued"
 	// The gRPC codes of the google.rpc.Status bodies of the read API's
 	// declared errors over REST.
-	invalidArgument = 3
-	notFound        = 5
-	unauthenticated = 16
+	invalidArgument    = 3
+	notFound           = 5
+	failedPrecondition = 9
+	unauthenticated    = 16
 	// accountMethods and instrumentMethods are how many calls
 	// accountCalls makes per account and instrumentCalls per ISIN.
 	accountMethods    = 9
@@ -104,11 +105,15 @@ type readAPI struct {
 
 // readCall is one call of a ReadService method with its request fields
 // by JSON name; off marks the model portfolio, which answers NOT_FOUND
-// while it is off (D-52), as it is in the suite.
+// while it is off (D-52), as it is in the suite; refused is the declared
+// error a call must answer instead of data, such as a market quote on the
+// suite's core, which runs the demo's --demo-sessions and so has no quote
+// source (D-226).
 type readCall struct {
-	rpc    string
-	fields map[string]string
-	off    bool
+	rpc     string
+	fields  map[string]string
+	off     bool
+	refused *declaredError
 }
 
 // String names c in a failure.
@@ -240,7 +245,7 @@ func (p *dataPath) readCalls(t *testing.T) []readCall {
 		{rpc: "GetPerformance"},
 		{rpc: "GetPerformance", fields: week},
 		{rpc: "GetPeriodChange", fields: map[string]string{"from": goLive, "to": goLive}},
-		{rpc: "GetMarketQuote", fields: map[string]string{"query": isinG, "from": goLive, "to": weekEnd}},
+		{rpc: "GetMarketQuote", fields: map[string]string{"query": isinG, "from": goLive, "to": weekEnd}, refused: quotesUnavailable()},
 		{rpc: "ListTransfers"},
 		{rpc: "GetModelPortfolio", off: true},
 		{rpc: "ListPlugins"},
@@ -359,6 +364,8 @@ func (a *readAPI) checkConformance(t *testing.T, calls []readCall) {
 		switch {
 		case c.off:
 			a.checkError(t, c, target, r, declaredError{http.StatusNotFound, "ModelPortfolioOff", notFound})
+		case c.refused != nil:
+			a.checkError(t, c, target, r, *c.refused)
 		case r.status != http.StatusOK:
 			t.Errorf("GET %s: status %d, body %q; want 200", target, r.status, excerpt(string(r.body)))
 		default:
@@ -407,6 +414,13 @@ func (a *readAPI) checkErrors(t *testing.T) {
 		target := a.target(t, e.call)
 		a.checkError(t, e.call, target, a.rest(t, http.MethodGet, target, a.token), e.want)
 	}
+}
+
+// quotesUnavailable is how the read API answers a market quote on an install
+// with no quote source, such as the demo the suite runs (D-226): 400, which
+// the document declares as BadRequest, with FAILED_PRECONDITION.
+func quotesUnavailable() *declaredError {
+	return &declaredError{http.StatusBadRequest, "BadRequest", failedPrecondition}
 }
 
 // declaredError is an error response the OpenAPI document declares: its
@@ -688,6 +702,12 @@ func (a *readAPI) compare(t *testing.T, c readCall, invoke sdkMethod, fill func(
 	if c.off {
 		if code := connectrpc.CodeOf(err); r.status != http.StatusNotFound || code != connectrpc.CodeNotFound {
 			return fmt.Sprintf("REST status %d, Connect %s (%v); want 404 and not_found", r.status, code, err)
+		}
+		return ""
+	}
+	if c.refused != nil {
+		if code := connectrpc.CodeOf(err); r.status != c.refused.status || int64(code) != int64(c.refused.code) {
+			return fmt.Sprintf("REST status %d, Connect %s (%v); want %d and code %d", r.status, code, err, c.refused.status, c.refused.code)
 		}
 		return ""
 	}
