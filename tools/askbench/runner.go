@@ -35,6 +35,9 @@ type Options struct {
 	Limits   ui.AskLimits
 	// Cases, when not empty, are the ids of the cases to run.
 	Cases []string
+	// Opinions runs the opinions set (D-225, D-229) instead of the eval's cases:
+	// its own seed and cases, graded with the same loop, recorded in no history.
+	Opinions bool
 	// Judge, when set, grades the advice cases beside the phrase list.
 	Judge *adviceJudge
 	// HTTP sends the requests to the model.
@@ -66,31 +69,50 @@ type Bench struct {
 	meter   *meter
 }
 
-// NewBench builds the portfolio and reads the cases for opts.
-func NewBench(opts *Options) (*Bench, error) {
-	seed, err := BuildSeed(true)
+// benchInputs builds the seed, the portfolio and the cases the bench asks of
+// opts: the eval's, or with opts.Opinions the opinions set's.
+func benchInputs(opts *Options) (*Seed, *Portfolio, []Case, error) {
+	build, load := BuildSeed, LoadCases
+	if opts.Opinions {
+		build = func(bool) (*Seed, error) { return BuildOpinionsSeed() }
+		load = LoadOpinionCases
+	}
+	seed, err := build(true)
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 	pf, err := NewPortfolio(seed)
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
-	cases, err := LoadCases(pf)
+	cases, err := load(pf)
+	return seed, pf, cases, err
+}
+
+// pickCases returns the cases the ids name, in the order of ids.
+func pickCases(cases []Case, ids []string) ([]Case, error) {
+	var kept []Case
+	for _, id := range ids {
+		i := slices.IndexFunc(cases, func(c Case) bool { return c.ID == id })
+		if i < 0 {
+			return nil, fmt.Errorf("%w: no case %q", ErrRun, id)
+		}
+		kept = append(kept, cases[i])
+	}
+	return kept, nil
+}
+
+// NewBench builds the portfolio and reads the cases for opts.
+func NewBench(opts *Options) (*Bench, error) {
+	seed, pf, cases, err := benchInputs(opts)
 	if err != nil {
 		return nil, err
 	}
 	total := len(cases)
 	if len(opts.Cases) > 0 {
-		var kept []Case
-		for _, id := range opts.Cases {
-			i := slices.IndexFunc(cases, func(c Case) bool { return c.ID == id })
-			if i < 0 {
-				return nil, fmt.Errorf("%w: no case %q", ErrRun, id)
-			}
-			kept = append(kept, cases[i])
+		if cases, err = pickCases(cases, opts.Cases); err != nil {
+			return nil, err
 		}
-		cases = kept
 	}
 	o := *opts
 	o.Limits = resolveLimits(o.Limits)
@@ -105,7 +127,7 @@ func NewBench(opts *Options) (*Bench, error) {
 		return nil, err
 	}
 	return &Bench{
-		opts: o, seed: seed, pf: pf, cases: cases, total: total, vocab: vocabularyOf(seed), names: realNamesOf(seed), prompt: ui.AskPromptNonPublic(seed.Today),
+		opts: o, seed: seed, pf: pf, cases: cases, total: total, vocab: vocabularyOf(seed), names: realNamesOf(seed), prompt: ui.AskPromptNonPublicFor(seed.Today, opts.Opinions),
 		classes: classes,
 		meter:   newMeter(o.MaxCost, o.MaxCalls),
 	}, nil
@@ -195,7 +217,7 @@ func (b *Bench) ask(ctx context.Context, t *task) RunReport {
 	style := t.c.numberFormat()
 	asker, err := ui.NewAsker(&ui.AskerConfig{
 		Read: newReadClient(b.seed, b.pf), Model: mr, Today: func() kernel.Date { return b.seed.Today },
-		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal, MarketQuotes: true, DeniedTiers: t.c.Route.DenyTiers,
+		Limits: b.opts.Limits, Group: style.Group, Decimal: style.Decimal, MarketQuotes: true, DeniedTiers: t.c.Route.DenyTiers, Opinions: t.c.Opinions,
 	})
 	if err != nil {
 		return RunReport{Run: t.run, Error: errorText(err)}

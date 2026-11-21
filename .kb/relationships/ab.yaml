@@ -1189,3 +1189,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37d2d71de0ce
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testwithopinionsonthemodelgetstheopinionspromptandschemaandt1ischecked
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:25:45.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa88f926eac8
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-schemamatches
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:26:38.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e72158070899

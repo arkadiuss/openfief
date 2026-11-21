@@ -1497,3 +1497,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-433c5ec34d73
+  - type: implements
+    from: SYM-d225-internal-views-ui-askmodel-starttiers
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T16:03:03.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-682928d5e96e
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askmodel-starttiers
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T16:03:04.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ecd6394c6e2
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard-forrun
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:59.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f994c601fd04
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard-forrun
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:59.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23ba3bc4e634
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard-forrun
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:59.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9bd86d1d57
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse-protoreflect
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:48:20.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9af268d6761
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse-protoreflect
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:48:20.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-798b0d5bc957

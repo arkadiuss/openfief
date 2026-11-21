@@ -1161,3 +1161,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b931ff34329
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testaroutethatkeepsopinionsoffsayssoonarefusalonly
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:23:59.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a50c62d514a7
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse-protomessage
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:48:13.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81db2dcfed93
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse-protomessage
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:48:13.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1135a9d3bbd0

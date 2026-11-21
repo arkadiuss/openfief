@@ -832,3 +832,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-561d1de0b403
+  - type: verified_by
+    from: SCEN-models-opinions-setting
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T15:43:06.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-067c4278505d
+  - type: verified_by
+    from: SCEN-models-opinions-setting
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T15:43:06.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a2fc2939d1c
+  - type: verified_by
+    from: SCEN-models-opinions-setting
+    to: TEST-models-opinions-store
+    created_at: 2026-11-21T15:43:06.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b43420b4bdce
+  - type: verified_by
+    from: SCEN-models-opinions-setting
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T15:43:06.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-646e5693c780
+  - type: implements
+    from: SYM-d225-internal-views-ui-models-routeallows
+    to: REQ-ui-opinions-models-page
+    created_at: 2026-11-21T17:30:41.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bee2f478dd63
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-models-routeallows
+    to: TEST-ui-opinions-models
+    created_at: 2026-11-21T17:30:41.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dbba833d66f
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-getinvalidation
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:50:21.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ca260a56208
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-getinvalidation
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:50:21.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7afd7c8b0f22

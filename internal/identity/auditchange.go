@@ -93,6 +93,12 @@ const (
 	// ActionPluginRemoved is a Plugin the operator removed, seen by the core
 	// as the instance gone.
 	ActionPluginRemoved AuditAction = "plugin_removed"
+	// ActionThesisSaved is the owner saving a draft thesis the Ask box
+	// suggested (D-229): the thesis and its first version, never its text.
+	ActionThesisSaved AuditAction = "thesis_saved"
+	// ActionThesisEdited is the owner editing a draft thesis, which keeps the
+	// earlier versions (D-229): the thesis and the new version, never its text.
+	ActionThesisEdited AuditAction = "thesis_edited"
 	// ActionConnectorSynced is a sync the core started, on a schedule or with
 	// `core connector sync`, that changed state: it names the connector
 	// instance, the import batch, the accounts whose transactions it wrote
@@ -123,6 +129,12 @@ const (
 	RefSetting RefKind = "setting"
 	// RefImportBatch is an import batch, by its ID.
 	RefImportBatch RefKind = "import_batch"
+	// RefThesis is a draft thesis (D-229), by its ID.
+	RefThesis RefKind = "thesis"
+	// RefThesisVersion is the version of a draft thesis an entry is about, a
+	// decimal number from 1: with the thesis it says which text was saved,
+	// never the text.
+	RefThesisVersion RefKind = "thesis_version"
 	// RefSyncCount is how many records of one kind a sync wrote, as
 	// "<kind>:<count>" with a kind of SyncCountKinds: a number and a word of
 	// a closed set, never an amount.
@@ -147,6 +159,9 @@ const maxSyncCountDigits = 9
 
 // maxGenerationDigits is the most digits of a generation: an int64's.
 const maxGenerationDigits = 19
+
+// maxThesisVersionDigits is the most digits of a draft thesis's version.
+const maxThesisVersionDigits = 9
 
 // maxAttentionItemDigits is the most digits of an attention item's number.
 const maxAttentionItemDigits = 19
@@ -205,6 +220,8 @@ func changeRules() map[AuditAction][]refRule {
 		ActionPluginInstalled:        {one(RefPlugin), one(RefPluginGeneration)},
 		ActionPluginUpgraded:         {one(RefPlugin), one(RefPluginGeneration)},
 		ActionPluginRemoved:          {one(RefPlugin), one(RefPluginGeneration)},
+		ActionThesisSaved:            {one(RefThesis), one(RefThesisVersion)},
+		ActionThesisEdited:           {one(RefThesis), one(RefThesisVersion)},
 		ActionConnectorSynced: {
 			one(RefPlugin), one(RefImportBatch),
 			{kind: RefAccount, min: 0, max: maxSyncAccounts},
@@ -329,10 +346,10 @@ func (r Ref) validateChangeRef() error {
 		ok = isPluginInstanceName(r.ID)
 	case RefPluginGeneration:
 		ok = isPositiveDecimal(r.ID, maxGenerationDigits)
-	case RefSetting:
-		ok = slices.Contains(Settings(), r.ID)
-	case RefSyncCount:
-		ok = isSyncCount(r.ID)
+	case RefSetting, RefSyncCount:
+		ok = validSettingOrCount(r)
+	case RefThesis, RefThesisVersion:
+		ok = validThesisRef(r)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
 		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool:
 	}
@@ -340,6 +357,15 @@ func (r Ref) validateChangeRef() error {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
 	}
 	return nil
+}
+
+// validSettingOrCount reports whether r, a setting or a sync count, has the ID
+// of its kind.
+func validSettingOrCount(r Ref) bool {
+	if r.Kind == RefSetting {
+		return slices.Contains(Settings(), r.ID)
+	}
+	return isSyncCount(r.ID)
 }
 
 // isPlainRecordID reports whether s is a record's ID that doesn't look like a
@@ -383,13 +409,23 @@ func isPositiveDecimal(s string, maxDigits int) bool {
 	return err == nil && n > 0 && strconv.FormatInt(n, 10) == s
 }
 
+// validThesisRef reports whether r, of kind RefThesis or RefThesisVersion, has
+// the ID of its shape: a draft thesis's 16 hex digits, or a version number.
+func validThesisRef(r Ref) bool {
+	if r.Kind == RefThesis {
+		return isHexID(r.ID)
+	}
+	return isPositiveDecimal(r.ID, maxThesisVersionDigits)
+}
+
 // ParseRefKind parses a kind of record as its constant spells it.
 func ParseRefKind(s string) (RefKind, error) {
 	k := RefKind(s)
 	switch k {
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve,
 		RefHousehold, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount,
+		RefThesis, RefThesisVersion:
 		return k, nil
 	}
 	return "", fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)

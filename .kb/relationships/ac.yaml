@@ -1028,3 +1028,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa8eebfbd3b
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis-fieldsoutside
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T16:03:43.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8efa16143a22
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis-fieldsoutside
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T16:03:43.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-487116f0316f

@@ -511,3 +511,21 @@ ul.lots { list-style: none; margin: 0; padding: 0; }
 .route-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }
 .route-actions button { min-width: 44px; }
 .route-add .fields { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+
+/* Settings, Theses, and the Ask box's thesis card: draft theses and their versions (D-229). */
+textarea {
+  font: inherit; width: 100%; padding: var(--space-2) var(--space-3); resize: vertical; min-height: 6rem;
+  border: 1.5px solid var(--border-strong); border-radius: var(--radius-input);
+  background: var(--surface); color: var(--text);
+}
+.theses > li, .versions > li { padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
+.theses > li:last-child, .versions > li:last-child { border-bottom: 0; }
+.theses p, .versions p { margin: 0 0 var(--space-2); }
+.thesis-statement { overflow-wrap: anywhere; white-space: pre-line; }
+.thesis-facts { margin: var(--space-3) 0; }
+.thesis-facts dd { margin-bottom: var(--space-3); }
+.bullets { margin: 0; padding-left: var(--space-5); }
+.bullets li { overflow-wrap: anywhere; }
+.thesis-card { margin-top: var(--space-3); padding: var(--space-4); border: 1.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); }
+.thesis-card .actions { margin-top: var(--space-3); }
+.thesis-card .help { margin-top: var(--space-2); }

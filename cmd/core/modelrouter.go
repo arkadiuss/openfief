@@ -311,6 +311,8 @@ type agentModels struct {
 	store *modelspg.Store
 	pool  *pgxpool.Pool
 	now   func() time.Time
+	// demo is whether the core is a public demo, which never gives opinions.
+	demo bool
 	// guards are the router's limits (D-208), and limits the Ask box's questions
 	// per session and per address; the zero values limit nothing.
 	guards modelsapp.Guards
@@ -318,25 +320,27 @@ type agentModels struct {
 }
 
 // modelGuardSetup is what the guards (D-208) are made from: the flags, and the
-// time zone the day's budget is counted in, the core's own.
+// time zone the day's budget is counted in, the core's own; and whether the core
+// is a public demo, which never gives opinions (D-225, R-7).
 type modelGuardSetup struct {
 	cfg  *guardConfig
 	zone *time.Location
+	demo bool
 }
 
 // newAgentModels wires the models context over pool: the settings in the
 // models schema, owner-only (D-212), and the plugins through providers. The
 // router needs the attention items, which need the route check this returns,
 // so attend builds it.
-func newAgentModels(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, origins identity.Origins, now func() time.Time) *agentModels {
+func newAgentModels(pool *pgxpool.Pool, out *outbox, auth *identityapp.Auth, origins identity.Origins, now func() time.Time, demo bool) *agentModels {
 	store := modelspg.New(joined(pool))
 	owners := &ownerSessions{auth: auth, origins: origins, noSession: modelsapp.ErrNoSession, notOwner: modelsapp.ErrNotOwner}
 	providers := &modelProviderInstances{}
 	settings := modelsapp.NewSettings(store, owners).WithProviders(providers, providers).
-		WithAudit(settingsAudit{out: out}, now)
+		WithAudit(settingsAudit{out: out}, now).WithDemo(demo)
 	return &agentModels{
 		settings: settings, askers: askSessions{auth: auth, origins: origins},
-		providers: providers, store: store, pool: pool, now: now,
+		providers: providers, store: store, pool: pool, now: now, demo: demo,
 	}
 }
 
@@ -348,7 +352,7 @@ func newAgentsAndAttention(pool *pgxpool.Pool, out *outbox, auth *identityapp.Au
 	vstore *valuationpg.Store, checks *valuationapp.CrossChecks, now func() time.Time, log *slog.Logger, setup modelGuardSetup,
 	extra ...attentionapp.Check,
 ) (*agentModels, *attention, error) {
-	agents := newAgentModels(pool, out, auth, origins, now)
+	agents := newAgentModels(pool, out, auth, origins, now, setup.demo)
 	guards, err := setup.cfg.routerGuards(agents.store, setup.zone)
 	if err != nil {
 		return nil, nil, err
@@ -388,7 +392,7 @@ func (a *agentModels) attend(items attentionItems) {
 		Settings: a.store, Providers: a.providers, Audit: modelAudit{log: identitypg.New(a.pool)},
 		Attention: valuationAttention{items: items}, CallIDs: newCallID, Now: a.now, Guards: a.guards,
 	})
-	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router).WithQuestionLimits(a.store, a.limits)
+	a.ask = modelsapp.NewAsk(a.askers, a.store, a.router).WithQuestionLimits(a.store, a.limits).WithDemo(a.demo)
 }
 
 // withAskModelService returns h with the AskModelService mounted next to it

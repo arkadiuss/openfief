@@ -1329,3 +1329,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14700e7aea4c
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses-thesis
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:34:40.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16ca7920c601

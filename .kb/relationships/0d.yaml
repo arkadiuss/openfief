@@ -1077,3 +1077,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5f7dcbbe5f2
+  - type: verified_by
+    from: SCEN-models-opinions-effect
+    to: TEST-models-opinions-domain
+    created_at: 2026-11-21T15:43:07.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b00c57ba7662
+  - type: verified_by
+    from: SCEN-models-opinions-effect
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T15:43:07.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb0d239527b1
+  - type: verified_by
+    from: SCEN-models-opinions-effect
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T15:43:08.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca2c2e74043
+  - type: verified_by
+    from: SCEN-ui-theses-page
+    to: TEST-ui-theses
+    created_at: 2026-11-21T15:43:14.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a5003640ca5
+  - type: verified_by
+    from: SCEN-ui-theses-page
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-21T15:43:14.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23113967d477
+  - type: implements
+    from: SYM-d225-internal-thesis-postgres-store-store-get
+    to: REQ-thesis-versions-kept
+    created_at: 2026-11-21T16:00:07.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f742bd71b59
+  - type: covered_by
+    from: SYM-d225-internal-thesis-postgres-store-store-get
+    to: TEST-thesis-store
+    created_at: 2026-11-21T16:00:07.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3befabd5b5
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-thesisrow
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:47.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f10bde71b2d5
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-thesisrow
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:47.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e9d5004d6c

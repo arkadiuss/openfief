@@ -1049,3 +1049,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18ad4fa61555
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisresponse-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:43:40.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d6f800be35
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisresponse-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:43:40.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cad6b2ade9c8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:49:51.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db866aa185d1
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:49:51.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbec7cbadfed

@@ -1287,3 +1287,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22097dc7ce58
+  - type: implements
+    from: SYM-d225-internal-thesis-thesis-horizon-words
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T17:20:17.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e134dd71c8
+  - type: covered_by
+    from: SYM-d225-internal-thesis-thesis-horizon-words
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T17:20:17.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beffcb2dec5c
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-hascontrolrune
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:09.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4be7e8caf70b
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-hascontrolrune
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:09.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a62af49cffb6
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-hascontrolrune
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:09.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-015c72ca5d8b
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:47:43.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-889b1341a3af
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:47:43.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44185ea22ec7

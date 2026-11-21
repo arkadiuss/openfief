@@ -51,6 +51,16 @@ service ModelSettingsService {
   // SetFeatureEnabled turns one feature's toggle on or off.
   rpc SetFeatureEnabled(SetFeatureEnabledRequest) returns (SetFeatureEnabledResponse);
 
+  // SetOpinionsEnabled turns the Ask box's opinions on or off (D-225, D-229):
+  // with them on its model may say whether it would buy, sell or hold and why,
+  // and suggest a thesis the owner can save as a draft. They are off by
+  // default and work only while the one switch and the Ask box's toggle are on
+  // (D-212), for the owner's own session, with a model on the Ask box's route
+  // allowed for T0, T1 and T2 together. A public demo never gives one: turning
+  // them on there fails with FAILED_PRECONDITION and changes nothing (R-7).
+  // Each change enters the audit log as "opinions:on" or "opinions:off".
+  rpc SetOpinionsEnabled(SetOpinionsEnabledRequest) returns (SetOpinionsEnabledResponse);
+
   // SetRoute sets a role's primary model and ordered fallbacks (D-205); no
   // references clear the route.
   rpc SetRoute(SetRouteRequest) returns (SetRouteResponse);
@@ -107,6 +117,12 @@ message GetModelSettingsResponse {
   // provider instance that is missing or is no model provider. Empty when
   // the core can't tell yet.
   repeated BrokenEntry broken = 5;
+  // Whether the owner turned the Ask box's opinions on (D-225). It says
+  // nothing of whether they work now: that needs the switch and the Ask box's
+  // toggle, and an eligible route.
+  bool opinions_enabled = 6;
+  // True on a public demo, where opinions can't be turned on.
+  bool demo = 7;
 }
 
 message ListModelProvidersRequest {
@@ -146,6 +162,14 @@ message SetFeatureEnabledRequest {
 }
 
 message SetFeatureEnabledResponse {}
+
+message SetOpinionsEnabledRequest {
+  string origin = 1;
+  string session_token = 2;
+  bool enabled = 3;
+}
+
+message SetOpinionsEnabledResponse {}
 
 message SetRouteRequest {
   string origin = 1;

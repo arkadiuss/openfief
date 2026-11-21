@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec43f078c37b
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-thesisfieldshold
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T16:05:25.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a42e3d62669
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-thesisfieldshold
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T16:05:25.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00d9293a79f8
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-thesisfieldshold
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T16:05:25.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8280ebe21a2c

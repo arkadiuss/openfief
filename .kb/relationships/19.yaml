@@ -1049,3 +1049,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ee03ed40b22
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-audit
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:50.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52352305984d
+  - type: implements
+    from: SYM-d225-internal-thesis-thesis-sizepatterns
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T17:21:15.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1bcf4a4815e
+  - type: covered_by
+    from: SYM-d225-internal-thesis-thesis-sizepatterns
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T17:21:15.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa9b6b8de98b
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-x
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:54:17.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aae3c0510c3f
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-x
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:54:17.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66b38e0e535
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-opinionscripts
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T18:00:03.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a690ecf05244

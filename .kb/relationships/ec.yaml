@@ -1273,3 +1273,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ade3215e07e
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-postgres-store-test-testopinionsareoffuntilturnedonandrollbackwiththeirentry
+    to: TEST-models-opinions-store
+    created_at: 2026-11-21T17:13:13.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1a637b276cb
+  - type: implements
+    from: SYM-d225-internal-thesis-thesis-tidylist
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T17:21:29.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2749a63e01bd
+  - type: covered_by
+    from: SYM-d225-internal-thesis-thesis-tidylist
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T17:21:29.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1697bc576885
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-itemsoutside
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:16.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-417acc238bae
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-itemsoutside
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:16.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dabcedfbe49a
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-itemsoutside
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:16.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-351f58c54ebc
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-modelsopinions-test-testapublicdemocannotturnopinionson
+    to: TEST-ui-opinions-models
+    created_at: 2026-11-21T17:30:55.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9286ce0fc4f
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-modelsv1connect-settings-connect-unimplementedmodelsettingsservicehandler-setopinionsenabled
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:37:16.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0373b0fa2af4
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-modelsv1connect-settings-connect-unimplementedmodelsettingsservicehandler-setopinionsenabled
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:37:16.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1d0db2626f8
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-modelsv1connect-settings-connect-unimplementedmodelsettingsservicehandler-setopinionsenabled
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:37:16.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-690681b19bca
+  - type: implements
+    from: SYM-d225-tools-askbench-runner-benchinputs
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T19:50:51.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d07a4fc8a616
+  - type: covered_by
+    from: SYM-d225-tools-askbench-runner-benchinputs
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T19:50:51.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c15975040ef

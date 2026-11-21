@@ -1063,3 +1063,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-410a4e8cc370
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-connectapi-opinions-test-opinionsfixture-opinions
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:12:04.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59b8c07f5389
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-protomessage
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:52:16.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7b6562716e1
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-protomessage
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:52:16.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9797af7ad7f5
+  - type: implements
+    from: SYM-d225-tools-askbench-seed-opinionpayloads
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T18:03:07.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1c0e16cda71
+  - type: covered_by
+    from: SYM-d225-tools-askbench-seed-opinionpayloads
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:03:07.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac0c0c6e6495

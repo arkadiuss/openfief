@@ -37,6 +37,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1/thesisv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -149,6 +150,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		AskModel:        modelsv1connect.NewAskModelServiceClient(askClient(openfief.TokenFile{}), coreURL),
 		Maintainer:      portfoliov1connect.NewMaintainerServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		ModelSettings:   modelsv1connect.NewModelSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Theses:          thesisv1connect.NewThesisServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:            viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:             log,
 		Settings:        valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),

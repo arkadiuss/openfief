@@ -923,3 +923,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79b18ce405e3
+  - type: executable_for
+    from: SYM-d225-internal-thesis-postgres-store-test-testlististhelatestversionsnewestchangefirst
+    to: TEST-thesis-store
+    created_at: 2026-11-21T17:18:51.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88c586026730
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-server-thesesroutes
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:27.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-900f1dcda1c8
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-server-thesesroutes
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:27.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf773c3b8b51
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-testanunknowncaseoftheopinionssetisrefused
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T17:58:38.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af3dd511daac

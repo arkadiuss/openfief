@@ -1070,3 +1070,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ba4a22dcea8
+  - type: verified_by
+    from: SCEN-thesis-no-lease-size
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T15:43:03.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-765cccc22166
+  - type: implements
+    from: SYM-d225-internal-thesis-app-theses-validid
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:14:06.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39501f1a8932
+  - type: covered_by
+    from: SYM-d225-internal-thesis-app-theses-validid
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:06.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30b3d1e8f976
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enum
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:36:32.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af84a2de6cd8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enum
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:36:32.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-024a4fde7a1a
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enum
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:36:32.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3236dbd543df

@@ -60,6 +60,10 @@ type structuredAnswer struct {
 	// Candidates are the names a clarifying answer asks the person to choose
 	// from.
 	Candidates []string `json:"candidates"`
+	// Thesis is the thesis a "thesis" answer suggests, and nothing for any other
+	// kind. It is read only with opinions on (D-225): without them the member is
+	// ignored, like "suggestions", and never shown.
+	Thesis *structuredThesis `json:"thesis,omitempty"`
 }
 
 // Why a reply is not a structured answer. None quotes the reply: it is the
@@ -81,12 +85,22 @@ var (
 // member, whatever it holds, is ignored: the box offers the commands itself
 // (D-194), so a slip in it never fails a correct reply.
 func parseStructuredAnswer(content string, cards int) (structuredAnswer, error) {
+	return parseAnswer(content, cards, false)
+}
+
+// parseAnswer is parseStructuredAnswer with opinions on or off (D-225). With
+// them on the kind may also be "thesis" and the reply has a thesis member, which
+// is read; off, a thesis member is dropped before anything is read.
+func parseAnswer(content string, cards int, opinions bool) (structuredAnswer, error) {
 	var members map[string]json.RawMessage
 	dec := json.NewDecoder(strings.NewReader(strings.TrimSpace(content)))
 	if err := dec.Decode(&members); err != nil || dec.More() {
 		return structuredAnswer{}, errAnswerNotJSON
 	}
 	delete(members, answerSuggestionsMember)
+	if !opinions {
+		delete(members, answerThesisMember)
+	}
 	raw, err := json.Marshal(members)
 	if err != nil {
 		return structuredAnswer{}, errAnswerNotJSON
@@ -98,7 +112,7 @@ func parseStructuredAnswer(content string, cards int) (structuredAnswer, error) 
 		return structuredAnswer{}, errAnswerNotJSON
 	}
 	a.Text = strings.TrimSpace(a.Text)
-	if err := a.check(cards); err != nil {
+	if err := a.check(cards, opinions); err != nil {
 		return structuredAnswer{}, err
 	}
 	return a, nil
@@ -108,10 +122,15 @@ func parseStructuredAnswer(content string, cards int) (structuredAnswer, error) 
 // of a refusal, which the box now chooses (D-194) and the parser ignores.
 const answerSuggestionsMember = "suggestions"
 
+// answerThesisMember is the member that holds a thesis suggestion, which only
+// an answer with opinions on has.
+const answerThesisMember = "thesis"
+
 // check returns why a is not a valid answer, or nil.
-func (a *structuredAnswer) check(cards int) error {
-	switch a.Kind {
-	case answerKindAnswer, answerKindClarify, answerKindRefuse:
+func (a *structuredAnswer) check(cards int, opinions bool) error {
+	switch {
+	case a.Kind == answerKindAnswer, a.Kind == answerKindClarify, a.Kind == answerKindRefuse:
+	case a.Kind == answerKindThesis && opinions:
 	default:
 		return errAnswerKind
 	}

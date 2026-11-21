@@ -58,7 +58,7 @@ func modelTiers() []tierRow {
 	return []tierRow{
 		{"T0", "Whole portfolio", "Your holdings, amounts, transactions and tax figures."},
 		{"TF", "One fief", "One fief's own lease, cash, positions and working orders. No fief exists yet."},
-		{"T1", "A thesis", "A thesis's text and the instruments it names. No thesis exists yet."},
+		{"T1", "A thesis", "A thesis's text and the instruments it names: the drafts you save from the Ask box (D-229) and the thesis it suggests."},
 		{"T2", "Public data", "Prices, filings, news and the instructions OpenFief writes: nothing of yours."},
 	}
 }
@@ -87,12 +87,34 @@ func modelFeatures() []featureInfo {
 type modelsData struct {
 	Error, Notice string
 	Enabled       bool
-	Features      []featureRow
-	Providers     []providerRow
-	Tiers         []tierRow
-	Models        []modelRow
-	Routes        []routeRow
+	// Opinions is the Ask box's opinions setting (D-225).
+	Opinions  opinionsRow
+	Features  []featureRow
+	Providers []providerRow
+	Tiers     []tierRow
+	Models    []modelRow
+	Routes    []routeRow
 }
+
+// opinionsRow is the Ask box's opinions setting (D-225, D-229): whether the
+// owner turned it on, whether this is a public demo, which never gives one,
+// and what keeps an opinion from being given now.
+type opinionsRow struct {
+	On, Demo bool
+	Action   string
+	// Warning says why opinions have no effect now though they are on: the
+	// switch or the Ask box's toggle is off, or no model of the Ask box's route
+	// is allowed for T0, T1 and T2 together (D-206).
+	Warning string
+}
+
+// The words of the opinions section the page and its notices share.
+const (
+	opinionsOffSwitchWarning = "Opinions have no effect while the agents-and-models switch or the Ask box model's toggle is off."
+	opinionsRouteWarning     = "No model on the Ask box's route is allowed for T0, T1 and T2 together, so opinions stay off in effect and the box says why."
+	opinionsOnNotice         = "Opinions are on. The Ask box sends your question and the cards it reads (T0), prices (T2) and a suggested thesis (T1) to its " +
+		"model, so its route needs a model allowed for all three. Without one, opinions stay off and the box says why."
+)
 
 // featureRow is one feature's toggle.
 type featureRow struct {
@@ -174,6 +196,7 @@ func (s *server) modelsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+modelsPath, s.withOwner(s.modelsPage))
 	mux.HandleFunc("POST "+modelsPath+"/switch", s.withOwner(s.setModelsSwitch))
 	mux.HandleFunc("POST "+modelsPath+"/features/{feature}", s.withOwner(s.setModelsFeature))
+	mux.HandleFunc("POST "+modelsPath+"/opinions", s.withOwner(s.setModelsOpinions))
 	mux.HandleFunc("POST "+modelsPath+"/tiers", s.withOwner(s.setModelTiers))
 	mux.HandleFunc("POST "+modelsPath+"/routes/{role}", s.withOwner(s.changeModelRoute))
 }
@@ -194,6 +217,10 @@ func modelsNotice(q url.Values) string {
 		return "The models allowed for each data tier are saved."
 	case "route":
 		return "The route is saved."
+	case "opinions-on":
+		return opinionsOnNotice
+	case "opinions-off":
+		return "Opinions are off. The Ask box declines to say whether to buy, sell or hold."
 	}
 	return ""
 }
@@ -268,10 +295,46 @@ func buildModels(set *modelsv1.GetModelSettingsResponse, list *modelsv1.ListMode
 		facts.broken[b.GetRole()+" "+b.GetModel()] = b.GetReason()
 	}
 	data.Models = gridRows(facts)
+	data.Opinions = opinionsOf(set, toggles[roleAsk], facts)
 	for _, role := range modelRoles() {
 		data.Routes = append(data.Routes, routeOf(&role, set, facts, set.GetAgentsEnabled() && toggles[role.Feature]))
 	}
 	return data
+}
+
+// opinionsOf builds the opinions row from the core's settings: askOn is the Ask
+// box's toggle. The warning is the page's own reading of what the core decides
+// (modelrouter.Opinions), shown so the owner knows when an opinion is not given.
+func opinionsOf(set *modelsv1.GetModelSettingsResponse, askOn bool, facts *routeFacts) opinionsRow {
+	row := opinionsRow{On: set.GetOpinionsEnabled(), Demo: set.GetDemo(), Action: modelsPath + "/opinions"}
+	switch {
+	case !row.On || row.Demo:
+	case !set.GetAgentsEnabled() || !askOn:
+		row.Warning = opinionsOffSwitchWarning
+	case !routeAllows(set, facts, "ask", []string{"T0", "T1", "T2"}):
+		row.Warning = opinionsRouteWarning
+	}
+	return row
+}
+
+// routeAllows reports whether a model of role's route that is not broken is
+// allowed for every one of tiers.
+func routeAllows(set *modelsv1.GetModelSettingsResponse, facts *routeFacts, role string, tiers []string) bool {
+	for _, r := range set.GetRoutes() {
+		if r.GetRole() != role {
+			continue
+		}
+		for _, ref := range r.GetModels() {
+			ok := facts.broken[role+" "+ref] == ""
+			for _, t := range tiers {
+				ok = ok && facts.allowed[t][ref]
+			}
+			if ok {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // providerOf describes a provider instance in words.
@@ -476,6 +539,24 @@ func (s *server) setModelsFeature(w http.ResponseWriter, r *http.Request, sess s
 		Origin: sess.Origin, SessionToken: sess.Token, Feature: feature, Enabled: on,
 	}))
 	s.afterModelsForm(w, r, sess, "SetFeatureEnabled", "feature", err)
+}
+
+// setModelsOpinions turns the Ask box's opinions on or off (D-225). The core
+// refuses to turn them on in a public demo, and the page says so.
+func (s *server) setModelsOpinions(w http.ResponseWriter, r *http.Request, sess session) {
+	on, err := postedOn(r)
+	if err != nil || s.modelSettings == nil {
+		s.errorPage(w, r, http.StatusBadRequest, "The form is malformed.")
+		return
+	}
+	_, err = s.modelSettings.SetOpinionsEnabled(r.Context(), connect.NewRequest(&modelsv1.SetOpinionsEnabledRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, Enabled: on,
+	}))
+	saved := "opinions-off"
+	if on {
+		saved = "opinions-on"
+	}
+	s.afterModelsForm(w, r, sess, "SetOpinionsEnabled", saved, err)
 }
 
 // postedOn reads the posted state of a switch: "1" for on, "0" for off.

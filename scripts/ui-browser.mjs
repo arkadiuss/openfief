@@ -18,6 +18,10 @@
 // changes' entries wait to enter the log, shows the audit-log-behind item's words in a banner (D-211).
 // The Ask box's conversation (D-224): at 360 and 390 px the Ask button sits on the field's row, answers form a thread, a follow-up sends
 // the earlier turns in a POST body, New conversation clears them, and nothing is written to storage or cookies.
+// Opinions and draft theses (D-225, D-229): at 360 and 390 px the Models page offers opinions off, and turning them on says which data tiers
+// they need; with them on the Ask box's thesis answer is a card with a "Save as draft thesis" button that saves in place, so the conversation
+// stays; the Theses page lists the drafts, a draft's page shows its versions, and an edit adds one and keeps the others; no page scrolls sideways;
+// a viewer's pages have no Theses link and the page is refused them.
 // The Ask box's progress and layout (D-194, D-203): a question in flight shows itself under the field with a quiet indicator (still under
 // reduced motion), the Ask button off and "Thinking…" or "Looking it up…"; the answer sits directly under the field and in view with one
 // attribution line, the help is folded behind "How this works", and the suggestions are one row that scrolls on its own at 360 px.
@@ -78,7 +82,7 @@ const pages = {
   'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
   instrument: '/instruments/XX0000000001?account=acc-synthetic-1', 'instrument-isin-pending': '/instruments/PLCOI1130004', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
-  settings: '/settings', models: '/settings/models', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
+  settings: '/settings', models: '/settings/models', theses: '/settings/theses', thesis: '/settings/theses/0000000000000001', access: '/access', audit: '/settings/audit', 'audit-filtered': '/settings/audit?outcome=refused&from=2026-03-01&to=2026-03-03', setup: '/setup', model: '/model',
 };
 // The check pages D-192 removed; each redirects to the Inbox.
 const removedPages = ['/attention', '/tickers', '/assertions', '/price-checks', '/transfers'];
@@ -391,6 +395,89 @@ async function askConversation(browser) {
     check(after.local === before.local && after.session === before.session && after.cookie === before.cookie && after.writes === 0,
       `conversation ${width}px: the conversation wrote to storage: ${JSON.stringify({ before, after })}`);
     check((await sideways(page)) <= 0, `conversation ${width}px: the page scrolls sideways`);
+    await ctx.close();
+  }
+}
+
+// opinionsAndTheses checks D-225 and D-229 at 360 and 390 px, over the fakes: the owner turns opinions on, asks the Ask box for a thesis,
+// saves the card's draft in place, and finds it on the Theses page with a version history that an edit extends.
+async function opinionsAndTheses(browser) {
+  for (const width of [360, 390]) {
+    const ctx = await context(browser, { viewport: { width, height: 800 }, isMobile: true, hasTouch: true }, true);
+    const page = await ctx.newPage();
+    const label = `opinions ${width}px`;
+    // Settings: opinions are off, and turning them on names the tiers they use.
+    await page.goto(base + '/settings/models', { waitUntil: 'networkidle' });
+    let body = await page.textContent('body');
+    check(body.includes('Opinions in the Ask box') && body.includes('Turn opinions on') && !body.includes('Turn opinions off'), `${label}: the Models page does not offer opinions off`);
+    check(await sideways(page) <= 0, `${label}: the Models page scrolls sideways`);
+    await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/settings/models/opinions"] button[type="submit"]')]);
+    body = await page.textContent('body');
+    check(body.includes('Opinions are on. The Ask box sends your question and the cards it reads (T0), prices (T2) and a suggested thesis (T1) to its model')
+      && body.includes('Turn opinions off'), `${label}: turning opinions on does not name the tiers`);
+    check(await sideways(page) <= 0, `${label}: the Models page scrolls sideways with opinions on`);
+    await page.screenshot({ path: path.join(out, `phone${width}-light-opinions-on.png`), fullPage: true });
+    await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/settings/models/opinions"] button[type="submit"]')]);
+    check((await page.textContent('body')).includes('Opinions are off.'), `${label}: opinions did not turn off again`);
+
+    // The Ask box: a thesis answer is a card with its save button, and saving keeps the conversation.
+    await page.goto(base + '/test/ask-model?tiers=T0,T1,T2&opinions=1', { waitUntil: 'networkidle' });
+    await page.fill('#ask-q', 'suggest a thesis on the fund');
+    await page.click('.ask-form button[type="submit"]');
+    await page.waitForSelector('#answer .thesis-card', { timeout: 5000 });
+    const card = await page.textContent('#answer .thesis-card');
+    check(card.includes('Synthetic Fund keeps compounding') && card.includes('Wrong if') && card.includes('not investment advice') && card.includes('no lease size'), `${label}: the thesis card lacks its parts: ${card}`);
+    check((await page.textContent('#answer .ask-note')).includes("AI model's opinion") && (await page.textContent('#answer .ask-note')).includes('Not investment advice. This is'), `${label}: the answer's note does not say it is an opinion and not advice`);
+    check((await page.locator('#answer .thesis-card form button[type="submit"]').textContent()).trim() === 'Save as draft thesis', `${label}: no Save as draft thesis button`);
+    check((await page.locator('#answer .thesis-card button').count()) === 1 && !(await page.textContent('#answer')).match(/Start an agent|Spawn|lease it/i), `${label}: the card has a button beyond saving, or offers an agent`);
+    const box = await page.locator('#answer .thesis-card form button[type="submit"]').boundingBox();
+    check(box && box.height >= 44, `${label}: the save button is under 44 px: ${box && box.height}`);
+    check(await sideways(page) <= 0, `${label}: the thesis card scrolls the page sideways`);
+    await page.screenshot({ path: path.join(out, `phone${width}-light-thesis-card.png`), fullPage: true });
+    const url = page.url();
+    await page.click('#answer .thesis-card form button[type="submit"]');
+    await page.waitForSelector('#answer .thesis-saved', { timeout: 5000 });
+    const saved = await page.textContent('#answer .thesis-saved');
+    check(saved.includes('Saved as a draft thesis.') && saved.includes('Open it on the Theses page'), `${label}: saving did not say it saved: ${saved}`);
+    check(page.url() === url && (await page.locator('#answer .conversation').count()) === 1 && (await page.locator('#answer .bubble').count()) === 1, `${label}: saving left the conversation`);
+    const href = await page.getAttribute('#answer .thesis-saved a', 'href');
+    check(/^\/settings\/theses\/[0-9a-f]{16}$/.test(href || ''), `${label}: the saved draft's link is ${href}`);
+
+    // The Theses page lists the drafts, and a draft's page shows its versions.
+    await page.goto(base + '/settings/theses', { waitUntil: 'networkidle' });
+    const rows = await page.locator('.theses > li').count();
+    check(rows >= 2 && (await page.textContent('.theses')).includes('Synthetic Fund keeps compounding'), `${label}: the Theses page lists ${rows} drafts without the saved one`);
+    check(await page.locator('nav[aria-label="Settings"] a[href="/settings/theses"][aria-current="page"]').count() === 1, `${label}: the settings navigation does not mark Theses`);
+    check(await sideways(page) <= 0, `${label}: the Theses page scrolls sideways`);
+    await page.screenshot({ path: path.join(out, `phone${width}-light-theses-list.png`), fullPage: true });
+    await page.goto(base + '/settings/theses/0000000000000001', { waitUntil: 'networkidle' });
+    body = await page.textContent('body');
+    check(body.includes('Version 2 (current)') && body.includes('Version 1 ·') && body.includes('Start an agent: arrives with the control plane.'), `${label}: the draft's page lacks its versions or the hint`);
+    check(await page.locator('.versions details').count() === 2 && await page.locator('.versions details[open]').count() === 1, `${label}: the history is not two folds with the current one open`);
+    check(await sideways(page) <= 0, `${label}: a draft's page scrolls sideways`);
+    await page.screenshot({ path: path.join(out, `phone${width}-light-thesis-page.png`), fullPage: true });
+    // The draft the card saved takes an edit: a second version, and the first stays.
+    await page.goto(base + href, { waitUntil: 'networkidle' });
+    check((await page.textContent('body')).includes('Version 1 (current)'), `${label}: the saved draft is not at version 1`);
+    await page.fill('#thesis-statement', `An edit at ${width} px: the fund keeps compounding.`);
+    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle' }), page.click('form.thesis-form button[type="submit"]')]);
+    body = await page.textContent('body');
+    check(body.includes('Saved as version 2.') && body.includes(`An edit at ${width} px`) && body.includes('Version 2 (current)') && body.includes('Version 1 ·')
+      && body.includes('Synthetic Fund keeps compounding at the pace'), `${label}: an edit did not add version 2 and keep the first: ${body.slice(0, 200)}`);
+    check(await sideways(page) <= 0, `${label}: the edited draft's page scrolls sideways`);
+    await ctx.close();
+  }
+  // A viewer has no Theses link, and the page is refused them (D-229: the owner's alone).
+  for (const width of [360, 390]) {
+    const ctx = await browser.newContext({ viewport: { width, height: 800 }, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    await page.goto(base + '/test/sign-in-viewer');
+    await page.goto(base + '/sleeves', { waitUntil: 'networkidle' });
+    check(await page.locator('a[href="/settings/theses"]').count() === 0, `opinions ${width}px: a viewer's pages link to the Theses page`);
+    for (const target of ['/settings/theses', '/settings/theses/0000000000000001']) {
+      const response = await page.goto(base + target, { waitUntil: 'networkidle' });
+      check(response && response.status() === 403 && !(await page.textContent('body')).includes('compounding'), `opinions ${width}px: a viewer got ${response && response.status()} on ${target}`);
+    }
     await ctx.close();
   }
 }
@@ -1197,6 +1284,7 @@ try {
   await askBox(browser);
   await askModelBox(browser);
   await askConversation(browser);
+  await opinionsAndTheses(browser);
   await withoutTurnstile(browser);
   await clientEventsSetting(browser);
   await turnstileBox(browser);

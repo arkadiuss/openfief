@@ -83,6 +83,19 @@ func TestParseStructuredAnswer(t *testing.T) {
 	}
 }
 
+// jsonFieldsOf returns the JSON names of the fields of a struct type but the one
+// named but: the thesis is a member of the answer with opinions on only (D-225),
+// whose schema has it.
+func jsonFieldsOf(typ reflect.Type, but string) []string {
+	var out []string
+	for field := range typ.Fields() {
+		if name, _, _ := strings.Cut(field.Tag.Get("json"), ","); name != but {
+			out = append(out, name)
+		}
+	}
+	return out
+}
+
 // TestTheAnswerSchemaIsTheStructsFields keeps the one definition one: the JSON
 // Schema names exactly the fields of the answer's struct, all required, nothing
 // else allowed, with the kinds the page knows.
@@ -97,10 +110,7 @@ func TestTheAnswerSchemaIsTheStructsFields(t *testing.T) {
 	if err := json.Unmarshal([]byte(AskAnswerSchema()), &schema); err != nil {
 		t.Fatalf("the schema is not JSON: %v", err)
 	}
-	var fields []string
-	for field := range reflect.TypeFor[structuredAnswer]().Fields() {
-		fields = append(fields, strings.Split(field.Tag.Get("json"), ",")[0])
-	}
+	fields := jsonFieldsOf(reflect.TypeFor[structuredAnswer](), answerThesisMember)
 	named := make([]string, 0, len(schema.Properties))
 	for name := range schema.Properties {
 		named = append(named, name)

@@ -790,3 +790,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aaf865a81230
+  - type: implements
+    from: SYM-d225-internal-thesis-connectapi-thesis-service-editthesis
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T16:00:33.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff843d6bb1e6
+  - type: covered_by
+    from: SYM-d225-internal-thesis-connectapi-thesis-service-editthesis
+    to: TEST-thesis-core
+    created_at: 2026-11-21T16:00:33.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b78e0fa0e93
+  - type: implements
+    from: SYM-d225-internal-modelrouter-app-settings-settings-setopinions
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T16:01:51.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eac9323f23a
+  - type: covered_by
+    from: SYM-d225-internal-modelrouter-app-settings-settings-setopinions
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T16:01:51.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3128cf22b0f6
+  - type: covered_by
+    from: SYM-d225-internal-modelrouter-app-settings-settings-setopinions
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T16:01:51.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92026d12810a

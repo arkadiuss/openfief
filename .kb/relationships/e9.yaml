@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae8b6dc6412b
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testathesissuggestionischeckedagainstthecardsthemodelread
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:24:38.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76f309ee0f34
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:52:32.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ef7b1c2259
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:52:32.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b12bf231bb91

@@ -1329,3 +1329,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fab94375239
+  - type: executable_for
+    from: SYM-d225-cmd-core-thesis-test-testdraftthesesaretheownersalone
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:09:52.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81330704f30d
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testathesisanswerisnoanswerwithopinionsoff
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:24:08.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f0dda5f1f44

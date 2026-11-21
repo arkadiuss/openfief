@@ -1315,3 +1315,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a86fc010a3f5
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askmodel-fakes-test-browserreply
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:22:43.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed70eac9f48f

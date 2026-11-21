@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b62901b588a
+  - type: implements
+    from: SYM-d225-internal-views-ui-askprompt-asksystempromptfor
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T16:02:39.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbd3dfd1f2bb
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askprompt-asksystempromptfor
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T16:02:39.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d5c8ed22c17

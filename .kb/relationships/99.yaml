@@ -1182,3 +1182,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6d47bb5cb81
+  - type: executable_for
+    from: SYM-d225-internal-thesis-thesis-test-testnewrefusesanincompleteoroversizedraftoronewithaleasesize
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T17:22:06.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-436523ddf19d
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest-descriptor
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:39:44.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7843d6ca1acc
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest-descriptor
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:39:44.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb02f782e790

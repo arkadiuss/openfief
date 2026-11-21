@@ -14,6 +14,9 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 )
 
+// errDemoOpinions is the core's reason for refusing to turn opinions on in a demo.
+var errDemoOpinions = errors.New("a public demo never gives opinions")
+
 var (
 	errBadRef = errors.New("a model is named provider/model")
 	errDupRef = errors.New("a model may be on a route once")
@@ -33,6 +36,9 @@ type fakeModelSettings struct {
 	tiers    map[string][]string
 	broken   []*modelsv1.BrokenEntry
 	provider []*modelsv1.ModelProvider
+	// opinions is the owner's opinions setting, and demo makes the core a public
+	// demo, which refuses to turn them on.
+	opinions, demo bool
 	// refuse, when set, is the reason every change fails with FAILED_PRECONDITION.
 	refuse error
 	// calls lists the changes made, as "switch on", "toggle ask off", "route ask p/m,q/n" and "tier T0 p/m".
@@ -73,7 +79,7 @@ func (f *fakeModelSettings) GetModelSettings(_ context.Context, r *connect.Reque
 	}
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	out := &modelsv1.GetModelSettingsResponse{AgentsEnabled: f.enabled, Broken: f.broken}
+	out := &modelsv1.GetModelSettingsResponse{AgentsEnabled: f.enabled, Broken: f.broken, OpinionsEnabled: f.opinions, Demo: f.demo}
 	for _, feature := range []string{"ask", "maintainer", "mcp"} {
 		out.Features = append(out.Features, &modelsv1.FeatureToggle{Feature: feature, Enabled: f.toggles[feature]})
 	}
@@ -113,6 +119,19 @@ func (f *fakeModelSettings) SetFeatureEnabled(_ context.Context, r *connect.Requ
 	defer f.mu.Unlock()
 	f.toggles[r.Msg.GetFeature()] = r.Msg.GetEnabled()
 	return connect.NewResponse(&modelsv1.SetFeatureEnabledResponse{}), nil
+}
+
+func (f *fakeModelSettings) SetOpinionsEnabled(_ context.Context, r *connect.Request[modelsv1.SetOpinionsEnabledRequest]) (*connect.Response[modelsv1.SetOpinionsEnabledResponse], error) {
+	if err := f.change(r.Header(), r.Msg.GetSessionToken(), "opinions "+onWord(r.Msg.GetEnabled())); err != nil {
+		return nil, err
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if r.Msg.GetEnabled() && f.demo {
+		return nil, connect.NewError(connect.CodeFailedPrecondition, errDemoOpinions) //nolint:wrapcheck // a fake core: the client sees the error as the core sends it
+	}
+	f.opinions = r.Msg.GetEnabled()
+	return connect.NewResponse(&modelsv1.SetOpinionsEnabledResponse{}), nil
 }
 
 func (f *fakeModelSettings) SetRoute(_ context.Context, r *connect.Request[modelsv1.SetRouteRequest]) (*connect.Response[modelsv1.SetRouteResponse], error) {

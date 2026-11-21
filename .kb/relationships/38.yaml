@@ -1280,3 +1280,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-012418402771
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:33:36.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff2116f6733d
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisresponse-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:43:48.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb7172174a0d
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisresponse-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:43:48.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efadccb1787c

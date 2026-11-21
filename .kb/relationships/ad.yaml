@@ -1616,3 +1616,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24de9c82edf9
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-testgetandlist
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:35.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d26f9da4d8ab

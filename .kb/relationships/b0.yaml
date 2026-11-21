@@ -1238,3 +1238,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ffd3da7630b
+  - type: specified_by
+    from: REQ-thesis-audited
+    to: SCEN-thesis-audited
+    created_at: 2026-11-21T15:39:42.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6d579f3593c
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesismentionssize
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T16:03:51.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-365f2b577f64
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesismentionssize
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T16:03:52.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-320c0a295f48
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-thesismentionssize
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T16:03:52.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3915bbc3f92
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:29.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a41692a37db4
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:30.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3effbb447311
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:30.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a7dac0bdd41

@@ -71,6 +71,12 @@ type AskerConfig struct {
 	// router refuses it, and a tool whose card is of one is not offered.
 	// The box's own fixed text carries no tier, as in the core.
 	DeniedTiers []string
+	// Opinions gives the harness's model the Ask box's opinions (D-225, D-229): it
+	// may say whether it would buy, sell or hold and suggest a thesis, as the
+	// owner's own install with opinions on and an eligible route does. Off, the
+	// harness is the box as a public demo has it, which declines to recommend
+	// (R-7).
+	Opinions bool
 }
 
 // Asker runs the Ask box's model loop for a harness: the loop and the tools
@@ -96,11 +102,17 @@ func NewAsker(cfg *AskerConfig) (*Asker, error) {
 	commands := commandAnswerer{s: s}
 	return &Asker{
 		answerer: &modelAnswerer{
-			model: askModelFunc{m: cfg.Model, denied: cfg.DeniedTiers}, tools: answer.Tools(), run: commands.run, today: s.today,
+			model: askModelFunc{m: cfg.Model, denied: cfg.DeniedTiers, opinionsOn: cfg.Opinions}, tools: answer.Tools(), run: commands.run, today: s.today,
 			log: slog.New(slog.DiscardHandler), limits: cfg.Limits.withDefaults(),
 		},
 		format: separators(cfg.Group, cfg.Decimal), quotes: cfg.MarketQuotes,
 	}, nil
+}
+
+// Opinions reports whether the harness gives its model opinions.
+func (a *Asker) Opinions() bool {
+	f, ok := a.answerer.model.(askModelFunc)
+	return ok && f.opinionsOn
 }
 
 // askModelFunc is askModelPort over an AskModel: a harness's route allows
@@ -109,11 +121,25 @@ func NewAsker(cfg *AskerConfig) (*Asker, error) {
 type askModelFunc struct {
 	m      AskModel
 	denied []string
+	// opinionsOn is whether the harness's model may give opinions.
+	opinionsOn bool
 }
 
 var _ askModelPort = askModelFunc{}
 
 func (askModelFunc) available(context.Context, session) (bool, error) { return true, nil }
+
+// opinions is the harness's setting: on when the harness gives opinions and its
+// route allows T0, T1 and T2, which a harness that denies one of them does not.
+func (f askModelFunc) opinions(context.Context, session) (opinionsState, error) {
+	switch {
+	case !f.opinionsOn:
+		return opinionsOff, nil
+	case slices.ContainsFunc([]string{tierT0, tierT1, tierT2}, func(t string) bool { return slices.Contains(f.denied, t) }):
+		return opinionsIneligible, nil
+	}
+	return opinionsOn, nil
+}
 
 func (f askModelFunc) permits(_ context.Context, _ session, tiers []string) (bool, error) {
 	return !slices.ContainsFunc(tiers, func(t string) bool { return slices.Contains(f.denied, t) }), nil
@@ -124,16 +150,12 @@ func (askModelFunc) admit(context.Context, session, string) (askAdmission, error
 	return askAdmission{Kind: admitAllowed}, nil
 }
 
-func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
+func (f askModelFunc) generate(ctx context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, schema string) (askReply, error) {
 	for i := range msgs {
 		if slices.Contains(f.denied, msgs[i].Tier) {
 			// As the router refuses a request with data no model on the route may receive (D-206).
 			return askReply{}, fmt.Errorf("the harness's route: %w", connect.NewError(connect.CodePermissionDenied, errTierDenied))
 		}
-	}
-	schema := ""
-	if structured {
-		schema = askAnswerSchemaJSON
 	}
 	reply, err := f.m.Generate(ctx, msgs, tools, maxTokens, schema)
 	if err != nil {
@@ -156,6 +178,13 @@ type AskRun struct {
 	Kind        string
 	Candidates  []string
 	Suggestions []string
+	// Opinions is whether the model could give opinions in this question, and
+	// Thesis the thesis a "thesis" answer suggested, as the page shows it; nil
+	// for any other answer. OpinionsNote is what the page says when opinions
+	// were on in Settings and the route kept them off.
+	Opinions     bool
+	Thesis       *AskThesis
+	OpinionsNote string
 	// SchemaError says why the model's reply was not a structured answer, when
 	// the box gave up for it; Invalid counts the replies that were not one, a
 	// retried one included.
@@ -172,6 +201,16 @@ type AskRun struct {
 	Calls []AskRunCall
 	// Rounds is how many times the model was called.
 	Rounds int
+}
+
+// AskThesis is a thesis suggestion as the page shows it, with the horizon as
+// the contract spells it: "long_term" or "short_term".
+type AskThesis struct {
+	Statement    string
+	Instruments  []string
+	Horizon      string
+	Invalidation []string
+	Sources      []string
 }
 
 // AskRunCard is a card the answer shows, as the model read it.
@@ -219,7 +258,9 @@ func (a *Asker) AskAfter(ctx context.Context, question string, earlier []AskTurn
 		Answered: card.Source == "" && len(card.Help) == 0, Title: card.Title, Text: card.Text, Kind: card.Kind,
 		Candidates: card.Candidates, Suggestions: card.Suggestions, Invalid: conv.invalid,
 		Withheld: len(conv.withheld), Rounds: conv.rounds, Read: make([]AskRunCard, len(conv.used)),
+		Opinions: conv.opinions == opinionsOn, OpinionsNote: card.OpinionsNote,
 	}
+	run.Thesis = card.Thesis.forRun()
 	if !run.Answered && conv.schemaErr != nil {
 		run.SchemaError = conv.schemaErr.Error()
 	}
@@ -287,8 +328,73 @@ func AskAnswersItself(question string, today kernel.Date) bool {
 	return boxAnswersItself(question, today)
 }
 
-// AskSystemPrompt returns the system message of a question asked on today.
+// AskSystemPrompt returns the system message of a question asked on today, with
+// opinions off.
 func AskSystemPrompt(today kernel.Date) string { return askSystemPrompt(today) }
+
+// AskSystemPromptFor returns the system message of a question asked on today,
+// with opinions on or off (D-225).
+func AskSystemPromptFor(today kernel.Date, opinions bool) string {
+	return askSystemPromptFor(today, opinions)
+}
+
+// AskAnswerSchemaFor returns the JSON Schema the Ask box's final answer follows,
+// with opinions on or off.
+func AskAnswerSchemaFor(opinions bool) string {
+	if opinions {
+		return askOpinionsSchemaJSON
+	}
+	return askAnswerSchemaJSON
+}
+
+// AskNote returns the sentence the page says under a model's answer about
+// advice, with opinions on or off (D-225): every model answer carries it.
+func AskNote(opinions bool) string { return (&modelNote{Opinions: opinions}).Advice() }
+
+// AskOpinionsIneligibleNote is what the box says when the owner turned opinions
+// on and the route is all that keeps them off.
+func AskOpinionsIneligibleNote() string { return opinionsIneligibleNote }
+
+// AskThesisMentionsSize reports whether text names an amount, a lease size or a
+// share of the portfolio, which a thesis suggestion never holds (D-229): the
+// rule the box applies to what a model suggests.
+func AskThesisMentionsSize(text string) bool { return thesisMentionsSize(text) }
+
+// AskThesisLimits are the most a thesis suggestion may hold: the statement's
+// characters, and the items and each item's characters of its instruments,
+// invalidation conditions and sources.
+type AskThesisLimits struct {
+	StatementRunes                  int
+	Instruments, InstrumentRunes    int
+	Invalidation, InvalidationRunes int
+	Sources, SourceRunes            int
+}
+
+// AskThesisLimitsOf returns the limits the box holds a thesis suggestion to.
+func AskThesisLimitsOf() AskThesisLimits {
+	return AskThesisLimits{
+		StatementRunes: maxThesisStatementRunes, Instruments: maxThesisInstruments, InstrumentRunes: maxThesisInstrumentRunes,
+		Invalidation: maxThesisInvalidation, InvalidationRunes: maxThesisInvalidationRunes, Sources: maxThesisSources, SourceRunes: maxThesisSourceRunes,
+	}
+}
+
+// AskCheckThesis returns why a thesis suggestion is not one the box shows, or
+// nil, given the text of the cards the model read: the same checks the page's
+// loop makes (a harness grades by them).
+func AskCheckThesis(t *AskThesis, cards []AskRunCard) error {
+	st := &structuredThesis{
+		Statement: t.Statement, Instruments: t.Instruments, Horizon: t.Horizon, Invalidation: t.Invalidation, Sources: t.Sources,
+	}
+	st.tidy()
+	read := make([]answerCard, len(cards))
+	for i := range cards {
+		read[i] = answerCard{Title: cards[i].Title, Text: cards[i].Text}
+		for _, r := range cards[i].Rows {
+			read[i].Rows = append(read[i].Rows, answerRow{Label: r.Label, Detail: r.Detail, Figure: r.Figure})
+		}
+	}
+	return st.check(cardsHaystack(read))
+}
 
 // AskPromptCanary returns the token the system prompt tells the model never to
 // write: an answer that holds any trace of it has repeated the prompt.
@@ -298,6 +404,11 @@ func AskPromptCanary() string { return askPromptCanary }
 // asked on today that the box does not say of itself, which an answer must not
 // repeat.
 func AskPromptNonPublic(today kernel.Date) []string { return askPromptNonPublic(today) }
+
+// AskPromptNonPublicFor is AskPromptNonPublic with opinions on or off.
+func AskPromptNonPublicFor(today kernel.Date, opinions bool) []string {
+	return askPromptNonPublicFor(today, opinions)
+}
 
 // AskCommand is one of the commands the Ask box understands, with an
 // example, as it suggests them to a question it can't answer (D-194).

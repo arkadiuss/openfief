@@ -1210,3 +1210,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1142eb2d447
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testthethesisschemahasnofieldforaleasesizeandfitsthecoreslimit
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:25:30.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7ce6fbbd7d6
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-sayswhyopinionsareoff
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:54.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f8cf6ae28df
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-sayswhyopinionsareoff
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:54.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ad7dfe821e4

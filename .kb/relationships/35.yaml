@@ -1203,3 +1203,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10ff2b7e6524
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-owners-ownersession
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:15:55.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2ca61c7a16d
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:51.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66bea80083fe
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:51.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e27ba31220e4
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-thesiscard
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:51.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d015f429f64
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-check
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:33:22.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-117999c0b7a8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-protoreflect
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:42:39.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ead51b8cf29
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-protoreflect
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:42:39.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1daaf66a24e1
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-descriptor
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:48:49.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86560b3fce79
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-descriptor
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:48:50.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-603373b1c314
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-testacaseoftheopinionssetthatdoesnotsayitispendingisrefused
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:00:26.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-035ddbabd282

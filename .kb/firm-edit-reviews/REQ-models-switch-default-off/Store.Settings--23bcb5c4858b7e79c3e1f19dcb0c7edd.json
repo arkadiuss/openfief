@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-models-switch-default-off",
+  "sourceFile": "internal/modelrouter/postgres/store.go",
+  "symbol": "Store.Settings",
+  "verdict": "keeps",
+  "note": "Opinions are a separate setting, off by default and working only while the switch and the Ask box's toggle are on; the switch and the toggles are unchanged. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:156cb511a8b54be30f050c918dc3de7f9fc0c184a44572232fb0c192652e0143",
+  "codeHash": "sha256:1c7a3efa14968afa81bdf269292f46173133184ab6490c264a9403f4bc98a8d7",
+  "startLine": 50,
+  "endLine": 70,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

@@ -46,7 +46,7 @@ func (s *settingsService) GetModelSettings(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	out := &modelsv1.GetModelSettingsResponse{AgentsEnabled: got.Switch.Enabled}
+	out := &modelsv1.GetModelSettingsResponse{AgentsEnabled: got.Switch.Enabled, OpinionsEnabled: got.Opinions, Demo: s.settings.Demo()}
 	for _, f := range modelrouter.Features() {
 		out.Features = append(out.Features, &modelsv1.FeatureToggle{Feature: string(f), Enabled: got.Switch.Toggles[f]})
 	}
@@ -122,6 +122,14 @@ func (s *settingsService) SetFeatureEnabled(ctx context.Context, req *connect.Re
 	return connect.NewResponse(&modelsv1.SetFeatureEnabledResponse{}), nil
 }
 
+// SetOpinionsEnabled turns the Ask box's opinions on or off.
+func (s *settingsService) SetOpinionsEnabled(ctx context.Context, req *connect.Request[modelsv1.SetOpinionsEnabledRequest]) (*connect.Response[modelsv1.SetOpinionsEnabledResponse], error) {
+	if err := s.settings.SetOpinions(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetEnabled()); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&modelsv1.SetOpinionsEnabledResponse{}), nil
+}
+
 // SetRoute sets a role's primary model and fallbacks.
 func (s *settingsService) SetRoute(ctx context.Context, req *connect.Request[modelsv1.SetRouteRequest]) (*connect.Response[modelsv1.SetRouteResponse], error) {
 	err := s.settings.SetRoute(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetRole(), req.Msg.GetModels())
@@ -151,6 +159,8 @@ func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnavailable, kernel.ErrAuditUnavailable)
 	case errors.Is(err, app.ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
+	case errors.Is(err, app.ErrOpinionsOnDemo):
+		return connect.NewError(connect.CodeFailedPrecondition, app.ErrOpinionsOnDemo)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "models settings call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)

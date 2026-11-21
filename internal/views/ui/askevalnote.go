@@ -33,6 +33,19 @@ type modelNote struct {
 	Evaluated bool
 	// EvalURL is the page that reports the eval's results.
 	EvalURL string
+	// Opinions is true for an answer given with opinions on (D-225): the note
+	// then says what an opinion is.
+	Opinions bool
+}
+
+// Advice is the sentence the note says about advice: every model answer says it
+// is not investment advice, and with opinions on, that it is an AI's opinion
+// from the cards and public prices, and that it never acts (D-225).
+func (n *modelNote) Advice() string {
+	if n.Opinions {
+		return opinionsNotAdviceNote
+	}
+	return notAdviceNote
 }
 
 // evalResultRow is the part of a result file the note reads.
@@ -86,7 +99,7 @@ func (n noteAnswerer) answer(r *http.Request, sess session, question string) (an
 	}
 	if card.Model != "" {
 		name := modelName(card.Model)
-		card.Note = &modelNote{Name: name, Evaluated: n.evaluated[name], EvalURL: n.evalURL}
+		card.Note = &modelNote{Name: name, Evaluated: n.evaluated[name], EvalURL: n.evalURL, Opinions: card.Opinions}
 	}
 	return card, nil
 }

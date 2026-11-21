@@ -64,6 +64,8 @@ type fakeAskModel struct {
 	// them: a tool above what the route allows, as a fief's own data (TF)
 	// would be for a route that may receive T0.
 	denyChecks map[string]bool
+	// opinions is what GetAskModel says of opinions (D-225): off unless set.
+	opinions modelsv1.AskOpinions
 	// admission is the decision AskAdmission answers for every question (the
 	// zero value allows), resetsAt the time it names, admitErr the error
 	// AdmitAskQuestion returns instead, and admitted the client addresses of the
@@ -104,7 +106,12 @@ func (f *fakeAskModel) GetAskModel(_ context.Context, r *connect.Request[modelsv
 	if f.availableErr != nil {
 		return nil, f.availableErr
 	}
-	return connect.NewResponse(&modelsv1.GetAskModelResponse{Available: f.on}), nil
+	// As the core decides: opinions are the owner's own session's alone (D-225).
+	opinions := f.opinions
+	if r.Msg.GetSessionToken() != ownerSession {
+		opinions = modelsv1.AskOpinions_ASK_OPINIONS_UNSPECIFIED
+	}
+	return connect.NewResponse(&modelsv1.GetAskModelResponse{Available: f.on, Opinions: opinions}), nil
 }
 
 func (f *fakeAskModel) CheckAskTiers(_ context.Context, r *connect.Request[modelsv1.CheckAskTiersRequest]) (*connect.Response[modelsv1.CheckAskTiersResponse], error) {
@@ -218,11 +225,16 @@ func (f *fakeAskModel) mayReceive(tiers []string) bool {
 // gone for "off" or none. A conversation with no tool result gets a call of
 // the allocation tool; one with a result, or a refusal, gets the text a model
 // would write from it.
-func browserSetUpAskModel(f *fakeAskModel, tiers string) {
+func browserSetUpAskModel(f *fakeAskModel, tiers string, opinions bool) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.on, f.allowed = false, map[string]bool{}
 	f.reply = nil
+	f.opinions = modelsv1.AskOpinions_ASK_OPINIONS_UNSPECIFIED
+	if opinions {
+		// With opinions on (D-225), the owner's own session gets them; a question about a thesis is answered with one.
+		f.opinions = modelsv1.AskOpinions_ASK_OPINIONS_ON
+	}
 	if tiers == "" || tiers == "off" {
 		return
 	}
@@ -230,27 +242,32 @@ func browserSetUpAskModel(f *fakeAskModel, tiers string) {
 	for t := range strings.SplitSeq(tiers, ",") {
 		f.allowed[t] = true
 	}
-	f.reply = func(msgs []*modelsv1.AskMessage) scriptedReply {
-		// The fake model answers by the question: one that asks for a change is
-		// refused, with commands to ask instead; one that names the fund is
-		// asked about, with the choices; any other reads the allocation.
-		switch question := firstUser(msgs); {
-		case strings.Contains(question, "sell"):
-			return scriptedReply{text: answerJSON(answerKindRefuse, "I can only read, so I can't sell anything.", nil, nil, nil)}
-		case strings.Contains(question, "fund"):
-			return fundReply(msgs)
-		}
-		for _, m := range msgs {
-			if m.GetMessage().GetRole() != modelsv1.MessageRole_MESSAGE_ROLE_TOOL {
-				continue
-			}
-			if strings.Contains(m.GetMessage().GetContent(), "withheld") {
-				return scriptedReply{text: answerText("I may not read your allocation, so I can't say.")}
-			}
-			return scriptedReply{text: answerText("Most of it is listed.\nThe rest is cash.", "c1")}
-		}
-		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"asset_class"}`)}}
+	f.reply = browserReply
+}
+
+// browserReply is the fake model's answer to a conversation of the browser checks:
+// one that asks for a change is refused, with commands to ask instead; one that
+// asks for a thesis gets one; one that names the fund is asked about, with the
+// choices; any other reads the allocation.
+func browserReply(msgs []*modelsv1.AskMessage) scriptedReply {
+	switch question := firstUser(msgs); {
+	case strings.Contains(question, "sell"):
+		return scriptedReply{text: answerJSON(answerKindRefuse, "I can only read, so I can't sell anything.", nil, nil, nil)}
+	case strings.Contains(question, "thesis"):
+		return thesisFundReply(msgs)
+	case strings.Contains(question, "fund"):
+		return fundReply(msgs)
 	}
+	for _, m := range msgs {
+		if m.GetMessage().GetRole() != modelsv1.MessageRole_MESSAGE_ROLE_TOOL {
+			continue
+		}
+		if strings.Contains(m.GetMessage().GetContent(), "withheld") {
+			return scriptedReply{text: answerText("I may not read your allocation, so I can't say.")}
+		}
+		return scriptedReply{text: answerText("Most of it is listed.\nThe rest is cash.", "c1")}
+	}
+	return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"asset_class"}`)}}
 }
 
 // fundReply is the fake model's answer to a question that names the fund: it
@@ -260,6 +277,19 @@ func fundReply(msgs []*modelsv1.AskMessage) scriptedReply {
 		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("show", `{"name":"Synthetic"}`)}}
 	}
 	return scriptedReply{text: answerJSON(answerKindClarify, "Which one do you mean?", nil, nil, []string{"Synthetic brokerage", "Synthetic Fund"})}
+}
+
+// thesisFundReply is the fake model's answer to a question that asks for a thesis
+// (D-229): it reads the show card of the fund, then suggests a thesis on it.
+func thesisFundReply(msgs []*modelsv1.AskMessage) scriptedReply {
+	if !hasToolResult(msgs) {
+		return scriptedReply{calls: []*modelsv1.ToolCall{toolCall("show", `{"name":"Synthetic Fund","kind":"instrument"}`)}}
+	}
+	th := &structuredThesis{
+		Statement: "Synthetic Fund keeps compounding at the pace its holders have seen.", Instruments: []string{"Synthetic Fund"}, Horizon: horizonLongTerm,
+		Invalidation: []string{"Its fees double.", "It stops being listed."}, Sources: []string{"The show card for Synthetic Fund."},
+	}
+	return scriptedReply{text: opinionsJSON(answerKindThesis, "Here is a thesis on the fund, from its card.", []string{"c1"}, th)}
 }
 
 // hasToolResult reports whether the conversation holds a tool's result.

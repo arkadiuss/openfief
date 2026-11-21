@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d222-1-model-answer-shows-name-line-and-link",
+  "sourceFile": "internal/views/ui/askevalnote.go",
+  "symbol": "noteAnswerer.answer",
+  "verdict": "keeps",
+  "note": "The note still shows the name, the line AI can be wrong; check the cards. Not investment advice. kept whole, and the link; with opinions on one more sentence follows it. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:557f2fab83d0ddfe009df04004204599fe65908bed11b27d9eb72e3f697851fc",
+  "codeHash": "sha256:99081ae9fd9299905854f7ea06588f4b095675d3521ab1f23e9bf976275bee00",
+  "startLine": 95,
+  "endLine": 105,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

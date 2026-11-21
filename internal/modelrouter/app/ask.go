@@ -39,6 +39,9 @@ type Ask struct {
 	// address (D-208); nil questions or no limit lets every question through.
 	questions QuestionStore
 	limits    modelrouter.QuestionLimits
+	// demo is whether the core is a public demo (D-68), which never gives
+	// opinions (D-225, R-7).
+	demo bool
 }
 
 // NewAsk returns the Ask box's door over router, with sessions checked by
@@ -53,6 +56,14 @@ func NewAsk(askers Askers, settings SettingsStore, router *Router) *Ask {
 func (a *Ask) WithQuestionLimits(store QuestionStore, limits modelrouter.QuestionLimits) *Ask {
 	out := *a
 	out.questions, out.limits = store, limits
+	return &out
+}
+
+// WithDemo returns a that knows whether the core is a public demo, where the
+// Ask box never gives an opinion or suggests a thesis (D-225, R-7).
+func (a *Ask) WithDemo(demo bool) *Ask {
+	out := *a
+	out.demo = demo
 	return &out
 }
 
@@ -153,6 +164,39 @@ func (a *Ask) Available(ctx context.Context, origin, sessionToken string) (bool,
 		return false, fmt.Errorf("loading the models settings: %w", err)
 	}
 	return stored.HasModel(modelrouter.RoleAsk), nil
+}
+
+// Opinions says whether the Ask box may give opinions and suggest a thesis to
+// the person with the session (D-225, D-229): only the owner's own session, on
+// an install that is no demo, with the owner's setting on under the one switch
+// and the Ask box's toggle (D-212), and a route with a model allowed for the
+// question and cards (T0), a thesis's text (T1) and prices (T2) together.
+// When the setting is on and only the route keeps opinions off, the status
+// says so, and the box tells the owner why. It calls no model and writes no
+// audit entry.
+func (a *Ask) Opinions(ctx context.Context, origin, sessionToken string) (modelrouter.OpinionsStatus, error) {
+	who, err := a.asker(ctx, origin, sessionToken)
+	if err != nil {
+		return modelrouter.OpinionsOff, err
+	}
+	stored, err := a.settings.Settings(ctx)
+	if err != nil {
+		return modelrouter.OpinionsOff, fmt.Errorf("loading the models settings: %w", err)
+	}
+	status, err := modelrouter.Opinions(&modelrouter.OpinionsInput{
+		Settings: stored, Owner: who.Kind == ActorOwner, Demo: a.demo,
+		RouteEligible: func() (bool, error) {
+			permitErr := a.router.Permits(ctx, modelrouter.RoleAsk, modelrouter.OpinionsTiers(), modelrouter.Needs{Tools: true})
+			if refusal(permitErr) {
+				return false, nil
+			}
+			return permitErr == nil, permitErr
+		},
+	})
+	if err != nil {
+		return modelrouter.OpinionsOff, fmt.Errorf("deciding whether the Ask box gives opinions: %w", err)
+	}
+	return status, nil
 }
 
 // Permits reports whether a model of the Ask box's route may receive data of

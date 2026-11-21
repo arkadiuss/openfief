@@ -1245,3 +1245,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7619c771ccac
+  - type: implements
+    from: SYM-d225-internal-views-ui-askrun-askthesislimits
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:28:11.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-462eac7e05d4
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askrun-askthesislimits
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:28:11.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dda5941969db
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-opinionkindchecks
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:09.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e87f9d37a2ca
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-opinionkindchecks
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:09.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7df9f69bf54

@@ -40,7 +40,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 
 ## Model checks
 
-- The Ask box bench (`task ask:bench`, [Models](../concepts/models.md)) calls a real model, so it is no test and no part of `task check`: it runs by hand and weekly in CI ([ask-bench.yml](../../.github/workflows/ask-bench.yml)). Its own code is tested like any other: scorers by table tests, the runner, the report, the budget and the exit codes against an `httptest` server that plays the model, and no test calls a model.
+- The Ask box bench (`task ask:bench`, [Models](../concepts/models.md)) calls a real model, so it is no test and no part of `task check`: it runs by hand and weekly in CI ([ask-bench.yml](../../.github/workflows/ask-bench.yml)). Its own code is tested like any other: scorers by table tests, the runner, the report, the budget and the exit codes against an `httptest` server that plays the model, and no test calls a model. The opinions set (`task ask:bench -- -opinions`, D-225, D-229) is the same harness over its own pending cases and is tested the same way, with the box's copy of the thesis rules held against the thesis context's.
 
 ## Browser checks
 

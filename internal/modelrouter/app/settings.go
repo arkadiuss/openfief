@@ -22,6 +22,7 @@ type Settings struct {
 	instances ProviderInstances
 	audit     SettingsAuditor
 	now       func() time.Time
+	demo      bool
 }
 
 // NewSettings returns the settings use cases over store, with the owner's
@@ -37,6 +38,16 @@ func (s *Settings) WithProviders(directory ProviderDirectory, instances Provider
 	s.directory, s.instances = directory, instances
 	return s
 }
+
+// WithDemo says the core is a public demo (D-68), which never gives opinions:
+// turning them on is refused (D-225, R-7).
+func (s *Settings) WithDemo(demo bool) *Settings {
+	s.demo = demo
+	return s
+}
+
+// Demo reports whether the core is a public demo.
+func (s *Settings) Demo() bool { return s.demo }
 
 // WithAudit makes every change write its entry to auditor, stamped by now,
 // inside the transaction that stores it.
@@ -94,6 +105,26 @@ func (s *Settings) SetFeature(ctx context.Context, origin, sessionToken, feature
 	}
 	if err := s.store.SaveToggle(ctx, f, on, s.recording(session, "feature:"+string(f)+":"+onOff(on))); err != nil {
 		return fmt.Errorf("setting a feature toggle: %w", err)
+	}
+	return nil
+}
+
+// SetOpinions turns the Ask box's opinions on or off, for the owner (D-225).
+// They are off by default, and turning them on in a public demo, which never
+// gives one, is an error wrapping ErrOpinionsOnDemo and changes nothing. The
+// change is entered in the audit log as "opinions:on" or "opinions:off"; the
+// setting takes effect only while the switch and the Ask box's toggle are on
+// and a model of the route may receive T0, T1 and T2 (modelrouter.Opinions).
+func (s *Settings) SetOpinions(ctx context.Context, origin, sessionToken string, on bool) error {
+	session, err := s.checkOwner(ctx, origin, sessionToken)
+	if err != nil {
+		return err
+	}
+	if on && s.demo {
+		return ErrOpinionsOnDemo
+	}
+	if err := s.store.SaveOpinions(ctx, on, s.recording(session, "opinions:"+onOff(on))); err != nil {
+		return fmt.Errorf("setting the opinions setting: %w", err)
 	}
 	return nil
 }

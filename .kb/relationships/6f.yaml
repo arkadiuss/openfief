@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac230d649447
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-testtheopinionssetnevertouchesahistoryorademoroute
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T17:58:53.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c9bf3e91705

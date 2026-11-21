@@ -1091,3 +1091,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4de080f57b7
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses-seed
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:34:26.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5feca339cd03
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:51:14.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22631f1a15ee
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:51:14.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd3fa9781b09
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisversion-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:53:41.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8b5c9289dd7
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisversion-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:53:41.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59eaf57e4856

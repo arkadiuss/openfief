@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d203-1-ask-box-model",
+  "sourceFile": "internal/views/ui/askmodelclient.go",
+  "symbol": "askModelClient.generate",
+  "verdict": "keeps",
+  "note": "The model still gets only the same read-only answerers as tools and the box still shows the cards it used; opinions add a prompt, a schema and a thesis card whose saving is the owner's own click, so the box changes and logs nothing. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
+  "codeHash": "sha256:daab7f863dbe90f26eb517723394c1c731855bfb5ae3f2a41898cfc9e575a826",
+  "startLine": 90,
+  "endLine": 111,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

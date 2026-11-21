@@ -1042,3 +1042,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6ff5760b5e5
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askstructured-test-jsonfieldsof
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:28:47.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e3ee6c5e03e
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-descriptor
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:51:22.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5f3db14725
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-descriptor
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:51:22.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79d226e4d366

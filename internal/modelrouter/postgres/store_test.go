@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"os"
 	"strconv"
 	"testing"
@@ -135,6 +136,35 @@ func TestSettingsRoundTrip(t *testing.T) {
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("settings (-want +got):\n%s", diff)
+	}
+}
+
+// errAuditDown is the error of an audit entry that could not be written.
+var errAuditDown = errors.New("the audit entry could not be written")
+
+func TestOpinionsAreOffUntilTurnedOnAndRollBackWithTheirEntry(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	ctx := t.Context()
+	read := func() bool {
+		got, err := store.Settings(ctx)
+		if err != nil {
+			t.Fatalf("Settings: %v", err)
+		}
+		return got.Opinions
+	}
+	if read() {
+		t.Fatal("opinions are on before anyone turned them on")
+	}
+	if err := store.SaveOpinions(ctx, true, nil); err != nil || !read() {
+		t.Fatalf("SaveOpinions(on) = %v, read %v", err, read())
+	}
+	if err := store.SaveOpinions(ctx, false, nil); err != nil || read() {
+		t.Fatalf("SaveOpinions(off) = %v, read %v", err, read())
+	}
+	boom := errAuditDown
+	if err := store.SaveOpinions(ctx, true, func(context.Context) error { return boom }); !errors.Is(err, boom) || read() {
+		t.Errorf("SaveOpinions with a failing hook = %v, read %v; want the hook's error and nothing stored", err, read())
 	}
 }
 

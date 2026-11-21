@@ -88,8 +88,9 @@ type AskModelServiceClient interface {
 	// counted. It writes no audit entry: nothing is called.
 	AdmitAskQuestion(context.Context, *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error)
 	// GetAskModel says whether the Ask box has a model: the one switch is on,
-	// the Ask box's toggle is on and its route has a model (D-212). It writes
-	// no audit entry: nothing is asked.
+	// the Ask box's toggle is on and its route has a model (D-212), and whether
+	// that model may give this person opinions (D-225). It writes no audit
+	// entry: nothing is asked.
 	GetAskModel(context.Context, *connect.Request[v1.GetAskModelRequest]) (*connect.Response[v1.GetAskModelResponse], error)
 	// CheckAskTiers says whether a model of the Ask box's route may receive
 	// data of every one of the given tiers together, and serves tools
@@ -194,8 +195,9 @@ type AskModelServiceHandler interface {
 	// counted. It writes no audit entry: nothing is called.
 	AdmitAskQuestion(context.Context, *connect.Request[v1.AdmitAskQuestionRequest]) (*connect.Response[v1.AdmitAskQuestionResponse], error)
 	// GetAskModel says whether the Ask box has a model: the one switch is on,
-	// the Ask box's toggle is on and its route has a model (D-212). It writes
-	// no audit entry: nothing is asked.
+	// the Ask box's toggle is on and its route has a model (D-212), and whether
+	// that model may give this person opinions (D-225). It writes no audit
+	// entry: nothing is asked.
 	GetAskModel(context.Context, *connect.Request[v1.GetAskModelRequest]) (*connect.Response[v1.GetAskModelResponse], error)
 	// CheckAskTiers says whether a model of the Ask box's route may receive
 	// data of every one of the given tiers together, and serves tools

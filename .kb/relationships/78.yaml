@@ -1329,3 +1329,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ef687ff2eb5
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesissizepatterns
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:30:13.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d87fb64cbb9e
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-thesissizepatterns
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:30:13.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce6917a6c037
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-thesissizepatterns
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:30:13.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46e65babb982
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses-listtheses
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:33:57.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e4d3f56968c
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-number
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:36:46.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1863344dfa8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-number
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:36:46.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c96277e07e69
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-number
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:36:46.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebf545fb1a0

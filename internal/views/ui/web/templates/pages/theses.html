@@ -1,0 +1,26 @@
+{{define "content"}}
+{{template "settings-nav" .}}
+{{with .Data}}
+<p class="lede">The theses you saved as drafts from the Ask box. A draft is only text: no agent, no fief and no lease, and no lease size. Only you can read it. An agent starts from one later, as a proposal that always needs your approval.</p>
+{{if .Notice}}<p class="alert alert-info" role="status">{{.Notice}}</p>{{end}}
+<section class="card" aria-labelledby="theses-title">
+  <h2 id="theses-title" class="eyebrow">Draft theses</h2>
+  {{if .Theses}}
+  <ul class="plain theses">
+    {{range .Theses}}
+    <li>
+      <p class="thesis-statement"><a href="{{.Href}}">{{.Statement}}</a></p>
+      <p class="pills">
+        <span class="pill {{if .ShortTerm}}pill-warn{{else}}pill-neutral{{end}}">{{.Horizon}}</span>
+        {{range .Instruments}}<span class="pill pill-neutral mono">{{.}}</span>{{end}}
+      </p>
+      <p class="muted">Version {{.Version}}, saved <span class="mono">{{.Updated}}</span></p>
+    </li>
+    {{end}}
+  </ul>
+  {{else}}
+  <p class="muted">No drafts yet. With opinions on (<a href="/settings/models">Models</a>), ask the Ask box for a thesis on an instrument it showed you, and save it here.</p>
+  {{end}}
+</section>
+{{end}}
+{{end}}

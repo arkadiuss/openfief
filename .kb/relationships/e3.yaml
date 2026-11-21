@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f65fa7da7d92
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-postedlines
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:06.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6057c4075bd2
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-postedlines
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:06.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94b327645f55
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-horizon-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:44:34.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491a22e2f62d
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-horizon-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:44:34.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0595ce6a7a31

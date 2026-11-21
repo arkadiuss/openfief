@@ -1154,3 +1154,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6c4fab9dfae
+  - type: implements
+    from: SYM-d225-internal-identity-auditchange-validsettingorcount
+    to: REQ-thesis-audited
+    created_at: 2026-11-21T17:10:07.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c5ef318394d
+  - type: covered_by
+    from: SYM-d225-internal-identity-auditchange-validsettingorcount
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T17:10:07.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24a1febd1ec5
+  - type: executable_for
+    from: SYM-d225-internal-thesis-postgres-store-test-adminexec
+    to: TEST-thesis-store
+    created_at: 2026-11-21T17:19:25.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c8581b431ca
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:47:50.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3f0bbf67bdf
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisresponse
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:47:50.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8582b8af333e

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-1-ask-eval-cases",
+  "sourceFile": "tools/askbench/cases.go",
+  "symbol": "defaultChecks",
+  "verdict": "keeps",
+  "note": "The eval's cases and their checks are unchanged; Case gains fields and checks only for the separate pending opinions set. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:1a2705a6b490ef371dbcbfc8539e699518f7f45d248fcbdce37a3fb04ea51bc3",
+  "codeHash": "sha256:8d408dcb86575c635a6047aa60e063f8e7926b31b60114189e2b4ef9dfafddd9",
+  "startLine": 308,
+  "endLine": 326,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

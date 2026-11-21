@@ -38,15 +38,38 @@
     {{if or .Title (not .Model)}}<div class="answer-head">{{with .Title}}<p class="answer-title">{{.}}</p>{{end}}{{if not .Model}}<span class="muted">{{if .Source}}{{.Source}}{{else}}Answered from your data · no AI model{{end}}</span>{{end}}</div>{{end}}
     {{if .Model}}{{with .Text}}<p class="model-text">{{.}}</p>{{end}}{{else}}{{with .Text}}<p>{{.}}</p>{{end}}{{end}}
     {{template "ask-card-body" .}}
+    {{with .Thesis}}{{template "ask-thesis" .}}{{end}}
     {{with .Candidates}}<div class="chips ask-choices" role="group" aria-label="Which one do you mean">{{range .}}<a class="chip" href="{{askLink (printf "Show %s" .)}}" hx-post="/ask" hx-vals="{{askVals (printf "Show %s" .)}}">{{.}}</a>{{end}}</div>{{end}}
     {{with .Suggestions}}<div class="chips ask-suggestions" role="group" aria-label="Commands you can ask instead">{{range .}}<a class="chip" href="{{askLink .}}" hx-post="/ask" hx-vals="{{askVals .}}">{{.}}</a>{{end}}</div>{{end}}
     {{with .Used}}<div class="used-cards" role="group" aria-label="Cards the model read">{{range .}}
       <section class="used-card"><p class="answer-title">{{.Title}}</p>{{with .Text}}<p>{{.}}</p>{{end}}{{template "ask-card-body" .}}</section>{{end}}
     </div>{{end}}
-    {{with .Note}}<p class="muted ask-note" role="note">{{if eq $.Kind "answer"}}Answered by{{else}}From{{end}} {{.Name}}{{if not .Evaluated}} (not evaluated by OpenFief){{end}}{{if eq $.Kind "answer"}} · {{if $.Used}}used {{len $.Used}} {{if eq (len $.Used) 1}}card{{else}}cards{{end}}{{else}}used none of your data{{end}}{{end}}. AI can be wrong; check the cards. Not investment advice. <a class="ask-eval-link" href="{{.EvalURL}}" rel="noopener noreferrer">How models did in our evaluation &rarr;</a></p>{{end}}
+    {{with .Note}}<p class="muted ask-note" role="note">{{if eq $.Kind "answer"}}Answered by{{else}}From{{end}} {{.Name}}{{if not .Evaluated}} (not evaluated by OpenFief){{end}}{{if eq $.Kind "answer"}} · {{if $.Used}}used {{len $.Used}} {{if eq (len $.Used) 1}}card{{else}}cards{{end}}{{else}}used none of your data{{end}}{{end}}. AI can be wrong; check the cards. {{.Advice}} <a class="ask-eval-link" href="{{.EvalURL}}" rel="noopener noreferrer">How models did in our evaluation &rarr;</a></p>{{end}}
+    {{with .OpinionsNote}}<p class="muted ask-opinions-note" role="note">{{.}}</p>{{end}}
     {{range .Withheld}}<p class="withheld" role="note">Withheld from the model: the {{.Label}} card. It holds {{.Data}} ({{.Tier}}), which no model on the route is allowed to receive.</p>{{end}}
   </div>
 </div>
+{{end}}
+
+{{/* The thesis the model suggested (D-229): its statement, instruments, horizon, what would show it wrong and its sources, and, for the owner,
+     the button that saves it as a draft on the Theses page. It posts with htmx to its own place, so the conversation stays; without htmx it
+     is a plain form that opens the draft. A suggestion is no order: it holds no lease size, and no agent or fief starts from here. */}}
+{{define "ask-thesis"}}
+<section class="thesis-card" aria-label="Suggested thesis">
+  <p class="answer-title">Suggested thesis</p>
+  {{template "thesis-fields" .}}
+  <p class="help">{{thesisCardNote}}</p>
+  {{if .CanSave}}
+  <form method="post" action="/settings/theses" hx-post="/settings/theses" hx-target="this" hx-swap="outerHTML" class="thesis-save">
+    <input type="hidden" name="statement" value="{{.Statement}}">
+    <input type="hidden" name="horizon" value="{{.HorizonKey}}">
+    {{range .Instruments}}<input type="hidden" name="instruments" value="{{.}}">{{end}}
+    {{range .Invalidation}}<input type="hidden" name="invalidation" value="{{.}}">{{end}}
+    {{range .Sources}}<input type="hidden" name="sources" value="{{.}}">{{end}}
+    <div class="actions"><button type="submit" class="primary">Save as draft thesis</button></div>
+  </form>
+  {{end}}
+</section>
 {{end}}
 
 {{/* What a card shows under its title and text: its table, the commands it suggests and its Open link. */}}

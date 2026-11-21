@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-audit-no-amount-secret-text",
+  "sourceFile": "internal/identity/audit.go",
+  "symbol": "Ref.Validate",
+  "verdict": "keeps",
+  "note": "A thesis ref accepts only a 16-digit hex ID or a version number, so no amount, secret, question or thesis text can enter an entry. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:39c118a32c41e7232a23f8070b847ccf1c5cdfa4dbaa78796663a1efa79c133e",
+  "codeHash": "sha256:b6b23f725c198870419f1aa3e6a6d11fda48446b36694c84b270a447901230cc",
+  "startLine": 347,
+  "endLine": 370,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/ui/askcards.go",
   "symbol": "answerCard",
   "verdict": "keeps",
-  "note": "answerCard only gained an unexported field that carries the pass cookie of a model question to the response; the commands, their cards and links, the unlogged question and the no-model wording are unchanged.",
+  "note": "answerCard only gains fields a model answer sets (opinions, a thesis); a command is still answered from the read API alone, changes nothing and logs nothing. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
   "statementHash": "sha256:e18a941dbb20b5afe20fe339a2dffcbe28c940ae7dcf1bdaf1199780aeb428dc",
-  "codeHash": "sha256:57808e44bb24a16a59e9f0fee581c6b2ebddc0e32947e2732680ea5bf7ec2dcf",
+  "codeHash": "sha256:52d792e5212d834d1702e43890066c0a605727ade3ec987466a83c9a24d530d8",
   "startLine": 36,
-  "endLine": 84,
-  "recordedAt": "2026-11-21T12:50:07.626Z"
+  "endLine": 93,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
 }

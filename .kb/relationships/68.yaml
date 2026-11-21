@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76a0b57882e9
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-tidyitems
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:30:20.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aee98fc5b858
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-tidyitems
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:30:20.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac61c31ad6b
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-tidyitems
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:30:20.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50c9c10d1add

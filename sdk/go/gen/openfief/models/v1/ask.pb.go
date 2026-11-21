@@ -109,6 +109,64 @@ func (AskAdmission) EnumDescriptor() ([]byte, []int) {
 	return file_openfief_models_v1_ask_proto_rawDescGZIP(), []int{0}
 }
 
+// AskOpinions is whether the Ask box may give opinions and suggest a thesis to
+// the person asking (D-225, D-229).
+type AskOpinions int32
+
+const (
+	// Off: the owner left them off, the switch or the Ask box's toggle is off,
+	// the person is not the owner, or the core is a public demo. The box
+	// declines to recommend (R-7) and says nothing more.
+	AskOpinions_ASK_OPINIONS_UNSPECIFIED AskOpinions = 0
+	// On: the model may say whether it would buy, sell or hold, and suggest a
+	// thesis, from the cards it reads and the public data it fetches.
+	AskOpinions_ASK_OPINIONS_ON AskOpinions = 1
+	// The owner turned them on, but no model of the Ask box's route is allowed
+	// for T0, T1 and T2 together: they stay off in effect, and the box says why.
+	AskOpinions_ASK_OPINIONS_ROUTE_INELIGIBLE AskOpinions = 2
+)
+
+// Enum value maps for AskOpinions.
+var (
+	AskOpinions_name = map[int32]string{
+		0: "ASK_OPINIONS_UNSPECIFIED",
+		1: "ASK_OPINIONS_ON",
+		2: "ASK_OPINIONS_ROUTE_INELIGIBLE",
+	}
+	AskOpinions_value = map[string]int32{
+		"ASK_OPINIONS_UNSPECIFIED":      0,
+		"ASK_OPINIONS_ON":               1,
+		"ASK_OPINIONS_ROUTE_INELIGIBLE": 2,
+	}
+)
+
+func (x AskOpinions) Enum() *AskOpinions {
+	p := new(AskOpinions)
+	*p = x
+	return p
+}
+
+func (x AskOpinions) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AskOpinions) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_models_v1_ask_proto_enumTypes[1].Descriptor()
+}
+
+func (AskOpinions) Type() protoreflect.EnumType {
+	return &file_openfief_models_v1_ask_proto_enumTypes[1]
+}
+
+func (x AskOpinions) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AskOpinions.Descriptor instead.
+func (AskOpinions) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_models_v1_ask_proto_rawDescGZIP(), []int{1}
+}
+
 type AdmitAskQuestionRequest struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -282,7 +340,9 @@ func (x *GetAskModelRequest) GetSessionToken() string {
 type GetAskModelResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Whether the Ask box sends questions beyond its commands to a model.
-	Available     bool `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
+	Available bool `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
+	// Whether the model may give opinions to this person (D-225).
+	Opinions      AskOpinions `protobuf:"varint,2,opt,name=opinions,proto3,enum=openfief.models.v1.AskOpinions" json:"opinions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -322,6 +382,13 @@ func (x *GetAskModelResponse) GetAvailable() bool {
 		return x.Available
 	}
 	return false
+}
+
+func (x *GetAskModelResponse) GetOpinions() AskOpinions {
+	if x != nil {
+		return x.Opinions
+	}
+	return AskOpinions_ASK_OPINIONS_UNSPECIFIED
 }
 
 type CheckAskTiersRequest struct {
@@ -671,9 +738,10 @@ const file_openfief_models_v1_ask_proto_rawDesc = "" +
 	"\tresets_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\bresetsAt\"Q\n" +
 	"\x12GetAskModelRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
-	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"3\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"p\n" +
 	"\x13GetAskModelResponse\x12\x1c\n" +
-	"\tavailable\x18\x01 \x01(\bR\tavailable\"i\n" +
+	"\tavailable\x18\x01 \x01(\bR\tavailable\x12;\n" +
+	"\bopinions\x18\x02 \x01(\x0e2\x1f.openfief.models.v1.AskOpinionsR\bopinions\"i\n" +
 	"\x14CheckAskTiersRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x14\n" +
@@ -703,7 +771,11 @@ const file_openfief_models_v1_ask_proto_rawDesc = "" +
 	"\x15ASK_ADMISSION_ALLOWED\x10\x01\x12\x1e\n" +
 	"\x1aASK_ADMISSION_BUDGET_SPENT\x10\x02\x12\x1f\n" +
 	"\x1bASK_ADMISSION_SESSION_LIMIT\x10\x03\x12\x1f\n" +
-	"\x1bASK_ADMISSION_ADDRESS_LIMIT\x10\x042\xb0\x03\n" +
+	"\x1bASK_ADMISSION_ADDRESS_LIMIT\x10\x04*c\n" +
+	"\vAskOpinions\x12\x1c\n" +
+	"\x18ASK_OPINIONS_UNSPECIFIED\x10\x00\x12\x13\n" +
+	"\x0fASK_OPINIONS_ON\x10\x01\x12!\n" +
+	"\x1dASK_OPINIONS_ROUTE_INELIGIBLE\x10\x022\xb0\x03\n" +
 	"\x0fAskModelService\x12m\n" +
 	"\x10AdmitAskQuestion\x12+.openfief.models.v1.AdmitAskQuestionRequest\x1a,.openfief.models.v1.AdmitAskQuestionResponse\x12c\n" +
 	"\vGetAskModel\x12&.openfief.models.v1.GetAskModelRequest\x1a'.openfief.models.v1.GetAskModelResponse\"\x03\x90\x02\x01\x12i\n" +
@@ -723,46 +795,48 @@ func file_openfief_models_v1_ask_proto_rawDescGZIP() []byte {
 	return file_openfief_models_v1_ask_proto_rawDescData
 }
 
-var file_openfief_models_v1_ask_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_openfief_models_v1_ask_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_openfief_models_v1_ask_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_openfief_models_v1_ask_proto_goTypes = []any{
 	(AskAdmission)(0),                // 0: openfief.models.v1.AskAdmission
-	(*AdmitAskQuestionRequest)(nil),  // 1: openfief.models.v1.AdmitAskQuestionRequest
-	(*AdmitAskQuestionResponse)(nil), // 2: openfief.models.v1.AdmitAskQuestionResponse
-	(*GetAskModelRequest)(nil),       // 3: openfief.models.v1.GetAskModelRequest
-	(*GetAskModelResponse)(nil),      // 4: openfief.models.v1.GetAskModelResponse
-	(*CheckAskTiersRequest)(nil),     // 5: openfief.models.v1.CheckAskTiersRequest
-	(*CheckAskTiersResponse)(nil),    // 6: openfief.models.v1.CheckAskTiersResponse
-	(*AskMessage)(nil),               // 7: openfief.models.v1.AskMessage
-	(*GenerateAskRequest)(nil),       // 8: openfief.models.v1.GenerateAskRequest
-	(*GenerateAskResponse)(nil),      // 9: openfief.models.v1.GenerateAskResponse
-	(*timestamppb.Timestamp)(nil),    // 10: google.protobuf.Timestamp
-	(*Message)(nil),                  // 11: openfief.models.v1.Message
-	(*Tool)(nil),                     // 12: openfief.models.v1.Tool
-	(*ToolCall)(nil),                 // 13: openfief.models.v1.ToolCall
-	(FinishReason)(0),                // 14: openfief.models.v1.FinishReason
+	(AskOpinions)(0),                 // 1: openfief.models.v1.AskOpinions
+	(*AdmitAskQuestionRequest)(nil),  // 2: openfief.models.v1.AdmitAskQuestionRequest
+	(*AdmitAskQuestionResponse)(nil), // 3: openfief.models.v1.AdmitAskQuestionResponse
+	(*GetAskModelRequest)(nil),       // 4: openfief.models.v1.GetAskModelRequest
+	(*GetAskModelResponse)(nil),      // 5: openfief.models.v1.GetAskModelResponse
+	(*CheckAskTiersRequest)(nil),     // 6: openfief.models.v1.CheckAskTiersRequest
+	(*CheckAskTiersResponse)(nil),    // 7: openfief.models.v1.CheckAskTiersResponse
+	(*AskMessage)(nil),               // 8: openfief.models.v1.AskMessage
+	(*GenerateAskRequest)(nil),       // 9: openfief.models.v1.GenerateAskRequest
+	(*GenerateAskResponse)(nil),      // 10: openfief.models.v1.GenerateAskResponse
+	(*timestamppb.Timestamp)(nil),    // 11: google.protobuf.Timestamp
+	(*Message)(nil),                  // 12: openfief.models.v1.Message
+	(*Tool)(nil),                     // 13: openfief.models.v1.Tool
+	(*ToolCall)(nil),                 // 14: openfief.models.v1.ToolCall
+	(FinishReason)(0),                // 15: openfief.models.v1.FinishReason
 }
 var file_openfief_models_v1_ask_proto_depIdxs = []int32{
 	0,  // 0: openfief.models.v1.AdmitAskQuestionResponse.admission:type_name -> openfief.models.v1.AskAdmission
-	10, // 1: openfief.models.v1.AdmitAskQuestionResponse.resets_at:type_name -> google.protobuf.Timestamp
-	11, // 2: openfief.models.v1.AskMessage.message:type_name -> openfief.models.v1.Message
-	7,  // 3: openfief.models.v1.GenerateAskRequest.messages:type_name -> openfief.models.v1.AskMessage
-	12, // 4: openfief.models.v1.GenerateAskRequest.tools:type_name -> openfief.models.v1.Tool
-	13, // 5: openfief.models.v1.GenerateAskResponse.tool_calls:type_name -> openfief.models.v1.ToolCall
-	14, // 6: openfief.models.v1.GenerateAskResponse.finish_reason:type_name -> openfief.models.v1.FinishReason
-	1,  // 7: openfief.models.v1.AskModelService.AdmitAskQuestion:input_type -> openfief.models.v1.AdmitAskQuestionRequest
-	3,  // 8: openfief.models.v1.AskModelService.GetAskModel:input_type -> openfief.models.v1.GetAskModelRequest
-	5,  // 9: openfief.models.v1.AskModelService.CheckAskTiers:input_type -> openfief.models.v1.CheckAskTiersRequest
-	8,  // 10: openfief.models.v1.AskModelService.GenerateAsk:input_type -> openfief.models.v1.GenerateAskRequest
-	2,  // 11: openfief.models.v1.AskModelService.AdmitAskQuestion:output_type -> openfief.models.v1.AdmitAskQuestionResponse
-	4,  // 12: openfief.models.v1.AskModelService.GetAskModel:output_type -> openfief.models.v1.GetAskModelResponse
-	6,  // 13: openfief.models.v1.AskModelService.CheckAskTiers:output_type -> openfief.models.v1.CheckAskTiersResponse
-	9,  // 14: openfief.models.v1.AskModelService.GenerateAsk:output_type -> openfief.models.v1.GenerateAskResponse
-	11, // [11:15] is the sub-list for method output_type
-	7,  // [7:11] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	11, // 1: openfief.models.v1.AdmitAskQuestionResponse.resets_at:type_name -> google.protobuf.Timestamp
+	1,  // 2: openfief.models.v1.GetAskModelResponse.opinions:type_name -> openfief.models.v1.AskOpinions
+	12, // 3: openfief.models.v1.AskMessage.message:type_name -> openfief.models.v1.Message
+	8,  // 4: openfief.models.v1.GenerateAskRequest.messages:type_name -> openfief.models.v1.AskMessage
+	13, // 5: openfief.models.v1.GenerateAskRequest.tools:type_name -> openfief.models.v1.Tool
+	14, // 6: openfief.models.v1.GenerateAskResponse.tool_calls:type_name -> openfief.models.v1.ToolCall
+	15, // 7: openfief.models.v1.GenerateAskResponse.finish_reason:type_name -> openfief.models.v1.FinishReason
+	2,  // 8: openfief.models.v1.AskModelService.AdmitAskQuestion:input_type -> openfief.models.v1.AdmitAskQuestionRequest
+	4,  // 9: openfief.models.v1.AskModelService.GetAskModel:input_type -> openfief.models.v1.GetAskModelRequest
+	6,  // 10: openfief.models.v1.AskModelService.CheckAskTiers:input_type -> openfief.models.v1.CheckAskTiersRequest
+	9,  // 11: openfief.models.v1.AskModelService.GenerateAsk:input_type -> openfief.models.v1.GenerateAskRequest
+	3,  // 12: openfief.models.v1.AskModelService.AdmitAskQuestion:output_type -> openfief.models.v1.AdmitAskQuestionResponse
+	5,  // 13: openfief.models.v1.AskModelService.GetAskModel:output_type -> openfief.models.v1.GetAskModelResponse
+	7,  // 14: openfief.models.v1.AskModelService.CheckAskTiers:output_type -> openfief.models.v1.CheckAskTiersResponse
+	10, // 15: openfief.models.v1.AskModelService.GenerateAsk:output_type -> openfief.models.v1.GenerateAskResponse
+	12, // [12:16] is the sub-list for method output_type
+	8,  // [8:12] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_openfief_models_v1_ask_proto_init() }
@@ -776,7 +850,7 @@ func file_openfief_models_v1_ask_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_models_v1_ask_proto_rawDesc), len(file_openfief_models_v1_ask_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,

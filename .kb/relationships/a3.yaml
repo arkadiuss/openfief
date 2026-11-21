@@ -1434,3 +1434,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b5043c0b7c3
+  - type: implements
+    from: SYM-d225-internal-identity-auditchange-validthesisref
+    to: REQ-thesis-audited
+    created_at: 2026-11-21T17:10:15.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aebc58d43839
+  - type: covered_by
+    from: SYM-d225-internal-identity-auditchange-validthesisref
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T17:10:15.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9f591cdb67

@@ -159,6 +159,9 @@ func turnOf(card *answerCard) (askTurn, bool) {
 	t := askTurn{Question: card.Question}
 	if card.Model != "" {
 		t.Answer = card.Text
+		if card.Thesis != nil {
+			t.Answer = strings.TrimSpace(card.Text + " " + card.Thesis.summary())
+		}
 		for i := range card.Used {
 			t.Cards = append(t.Cards, cardSummary(&card.Used[i]))
 		}

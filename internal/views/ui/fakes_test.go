@@ -27,6 +27,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1/thesisv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
@@ -1020,8 +1021,10 @@ type harness struct {
 	// modelSettings is the core's agents-and-models settings (D-212), with
 	// two providers and a broken route entry.
 	modelSettings *fakeModelSettings
-	handler       http.Handler
-	tokenFile     string
+	// theses is the core's draft theses (D-229).
+	theses    *fakeTheses
+	handler   http.Handler
+	tokenFile string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -1058,7 +1061,9 @@ func newHarnessWith(t *testing.T, log *slog.Logger, mod func(*Config)) *harness 
 	h.askModel = &fakeAskModel{}
 	h.maintainer = newFakeMaintainer()
 	h.modelSettings = newFakeModelSettings()
+	h.theses = newFakeTheses()
 	mux := http.NewServeMux()
+	mux.Handle(thesisv1connect.NewThesisServiceHandler(h.theses))
 	mux.Handle(modelsv1connect.NewModelSettingsServiceHandler(h.modelSettings))
 	mux.Handle(portfoliov1connect.NewMaintainerServiceHandler(h.maintainer))
 	mux.Handle(modelsv1connect.NewAskModelServiceHandler(h.askModel))
@@ -1094,6 +1099,7 @@ func newHarnessWith(t *testing.T, log *slog.Logger, mod func(*Config)) *harness 
 		AskModel:        modelsv1connect.NewAskModelServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Maintainer:      portfoliov1connect.NewMaintainerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		ModelSettings:   modelsv1connect.NewModelSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Theses:          thesisv1connect.NewThesisServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
 		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),

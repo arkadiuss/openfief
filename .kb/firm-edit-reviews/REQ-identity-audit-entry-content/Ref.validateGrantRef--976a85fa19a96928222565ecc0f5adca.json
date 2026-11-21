@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-audit-entry-content",
+  "sourceFile": "internal/identity/audit.go",
+  "symbol": "Ref.validateGrantRef",
+  "verdict": "keeps",
+  "note": "The two new refs, a draft thesis by its ID and its version number, and the two new actions still name who, what, which records by ID, when and the outcome. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:2f2541d7cfaaa3b7b632cd3ba8b382db0b48d1851923c5cceda3f8d23db30b35",
+  "codeHash": "sha256:9a6303d612f77930047ec35c839bd9a4c3305691296641849c0c0ebb402d78e4",
+  "startLine": 388,
+  "endLine": 407,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

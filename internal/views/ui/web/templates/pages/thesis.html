@@ -1,0 +1,55 @@
+{{define "content"}}
+{{template "settings-nav" .}}
+{{with .Data}}
+<p class="lede"><a href="/settings/theses">Theses</a> &rsaquo; version {{.Version}} of this draft. {{.Note}}</p>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Notice}}<p class="alert alert-info" role="status">{{.Notice}}</p>{{end}}
+
+<section class="card" aria-labelledby="thesis-title">
+  <h2 id="thesis-title" class="eyebrow">Version {{.Version}}</h2>
+  {{with .Latest}}{{template "thesis-fields" .}}{{end}}
+  <p class="help">T1 data: a thesis's text and the instruments it names. {{.Hint}}</p>
+</section>
+
+<section class="card" aria-labelledby="edit-title">
+  <h2 id="edit-title" class="eyebrow">Edit</h2>
+  <p class="muted">Saving adds a new version and keeps the earlier ones. The change is entered in the audit log, naming the draft and its version, never the text.</p>
+  <form method="post" action="{{.Action}}" class="thesis-form">
+    <input type="hidden" name="base_version" value="{{.Form.Base}}">
+    <div class="field"><label for="thesis-statement">Statement</label>
+      <textarea id="thesis-statement" name="statement" rows="4" maxlength="1000" required>{{.Form.Statement}}</textarea></div>
+    <div class="fields">
+      <div class="field"><label for="thesis-horizon">Horizon</label>
+        <select id="thesis-horizon" name="horizon">
+          <option value="long_term"{{if eq .Form.Horizon "long_term"}} selected{{end}}>Long-term</option>
+          <option value="short_term"{{if eq .Form.Horizon "short_term"}} selected{{end}}>Short-term</option>
+        </select></div>
+    </div>
+    <div class="field"><label for="thesis-instruments">Instruments</label>
+      <textarea id="thesis-instruments" name="instruments" rows="3" required aria-describedby="thesis-instruments-help">{{.Form.Instruments}}</textarea>
+      <p class="help" id="thesis-instruments-help">One to a line, at most 10.</p></div>
+    <div class="field"><label for="thesis-invalidation">What would show it wrong</label>
+      <textarea id="thesis-invalidation" name="invalidation" rows="3" required aria-describedby="thesis-invalidation-help">{{.Form.Invalidation}}</textarea>
+      <p class="help" id="thesis-invalidation-help">The invalidation conditions, one to a line, at most 8.</p></div>
+    <div class="field"><label for="thesis-sources">Sources</label>
+      <textarea id="thesis-sources" name="sources" rows="3" required aria-describedby="thesis-sources-help">{{.Form.Sources}}</textarea>
+      <p class="help" id="thesis-sources-help">What it rests on, one to a line, at most 10. A thesis holds no lease size and no amount: how much an agent may hold is the lease's, which you approve.</p></div>
+    <div class="actions"><button type="submit" class="primary">Save as a new version</button></div>
+  </form>
+</section>
+
+<section class="card" aria-labelledby="history-title">
+  <h2 id="history-title" class="eyebrow">Version history</h2>
+  <ol class="plain versions">
+    {{range .Versions}}
+    <li>
+      <details{{if .Current}} open{{end}}>
+        <summary>Version {{.Number}}{{if .Current}} (current){{end}} · saved <span class="mono">{{.Saved}}</span></summary>
+        {{template "thesis-fields" .}}
+      </details>
+    </li>
+    {{end}}
+  </ol>
+</section>
+{{end}}
+{{end}}

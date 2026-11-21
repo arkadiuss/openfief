@@ -1119,3 +1119,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91be7e294e8a
+  - type: implements
+    from: SYM-d225-internal-thesis-connectapi-thesis-service-getthesis
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T16:00:47.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a94e4077b45e
+  - type: covered_by
+    from: SYM-d225-internal-thesis-connectapi-thesis-service-getthesis
+    to: TEST-thesis-core
+    created_at: 2026-11-21T16:00:47.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a4baba6f5a2
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-descriptor
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:37:53.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5a20ac5fd69
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-descriptor
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:37:53.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6607e2f0ceca
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-descriptor
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:37:53.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10d5c528aaab

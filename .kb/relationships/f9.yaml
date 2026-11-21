@@ -1406,3 +1406,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d59f597b2f25
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-exampledraft
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:36:04.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6a6838a5572

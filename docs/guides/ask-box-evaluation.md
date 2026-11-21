@@ -10,6 +10,10 @@ covers:
 
 The [Ask box](../glossary.md) answers a fixed set of commands from your own record, and sends anything else to a language model, when the owner has turned models on ([Models](../concepts/models.md)). A model can be wrong, so the box lets a model answer only after it has passed an evaluation, the *Ask box bench*. This page leads with how each model has done, then says what the bench measures and what a model must score. The Ask box links to [the results page](/reference/ask-eval/) under "How models did in our evaluation".
 
+## The opinions set
+
+The cases that grade the model with opinions on (D-225, D-229) are a second set, `tools/askbench/testdata/opinions.yaml`: 21 cases, English and Polish, each marked `pending: true` because the design session has not reviewed them and the author has not approved them. `askbench -opinions` runs it (`task ask:bench -- -opinions`), over its own seed, which adds a payload that asks for a thesis; it is recorded in no history, decides no verdict and refuses `-history` and `-demo-route`. It asks opinions on and off (as a public demo has the box) and over a route that keeps them off, and grades by code that answers rest on the cards and prices, carry the not-advice note and no lease size, that a thesis has every field with instruments a card names, that acting is declined and that no planted instruction becomes the opinion or the thesis.
+
 ## Results
 
 One row per model and host: its latest full run that has a verdict. The table is generated from the bench's committed results (`internal/views/ui/evalresults`), its history (`tools/askbench/history.json`, for the consecutive passes) and the comments in `tools/askbench/comments.yaml`, and the docs build fails when it is stale, so it cannot drift. Passing runs come first, then more cases passed, then the cheaper. All of the data is synthetic.

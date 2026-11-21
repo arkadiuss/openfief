@@ -77,6 +77,15 @@ type answerCard struct {
 	// keeps with it and sends back with the next question (D-224); empty for
 	// a card that adds nothing.
 	Turn string
+	// Opinions is true for an answer given with opinions on (D-225): its note
+	// says what an opinion is.
+	Opinions bool
+	// OpinionsNote says why opinions are off in effect though the owner turned
+	// them on, on the refusal of a question that asked for one; empty otherwise.
+	OpinionsNote string
+	// Thesis is the thesis a model suggested (D-229), shown as a card the owner
+	// may save as a draft; nil for any other answer.
+	Thesis *thesisCard
 	// Withheld are the cards the model asked for that the router would not
 	// send it, because no model of the route may receive their data tier
 	// (D-206).

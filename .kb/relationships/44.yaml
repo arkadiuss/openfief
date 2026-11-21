@@ -1592,5 +1592,50 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-2d6f917e12ca
+      },
+    {
+        type: implements,
+        from: SYM-d225-internal-thesis-connectapi-thesis-service-fail,
+        to: REQ-thesis-owner-only,
+        created_at: 2026-11-21T16:01:10.287Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-752b5f77780d
+      },
+    {
+        type: covered_by,
+        from: SYM-d225-internal-thesis-connectapi-thesis-service-fail,
+        to: TEST-thesis-core,
+        created_at: 2026-11-21T16:01:10.360Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-33ffb193eadc
+      },
+    {
+        type: executable_for,
+        from: SYM-d225-internal-thesis-thesis-test-testnewerrorsneverquotethetext,
+        to: TEST-thesis-domain,
+        created_at: 2026-11-21T17:21:59.103Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-bff0269fb998
+      },
+    {
+        type: implements,
+        from: SYM-d225-internal-views-ui-thesis-server-renderthesis,
+        to: REQ-ui-theses-page,
+        created_at: 2026-11-21T17:32:20.461Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-56a1fb1b92f1
+      },
+    {
+        type: covered_by,
+        from: SYM-d225-internal-views-ui-thesis-server-renderthesis,
+        to: TEST-ui-theses,
+        created_at: 2026-11-21T17:32:20.525Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-61cc927584ea
       }
   ]

@@ -77,6 +77,7 @@ const (
 	ctxAttention    = "attention"
 	ctxPortfolio    = "portfolio"
 	ctxModelRouter  = "modelrouter"
+	ctxThesis       = "thesis"
 	ctxJurisdiction = "jurisdiction"
 )
 
@@ -138,6 +139,7 @@ func contextMap() map[string][]string {
 		ctxIdentity:     nil,
 		ctxJurisdiction: nil,
 		ctxModelRouter:  nil,
+		ctxThesis:       nil,
 		ctxValuation:    {ctxLedger, ctxJurisdiction},
 		ctxIngest:       {ctxLedger, ctxValuation, ctxPlugins, ctxJurisdiction},
 		ctxPortfolio:    {ctxLedger, ctxValuation},

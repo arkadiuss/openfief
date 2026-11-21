@@ -28,7 +28,8 @@ import (
 // AttentionService client the owner's actions on attention items (D-130),
 // and the AskModelService client the Ask box's door to the model router
 // (D-203): the model sees only what the answerers read through the public
-// read API, with the asking person's own session.
+// read API, with the asking person's own session, and the ThesisService
+// client the owner's draft theses (D-229), which are on no read path.
 func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 	t.Parallel()
 	files, err := filepath.Glob("*.go")
@@ -47,6 +48,7 @@ func TestReadsOnlyThroughPublicAPI(t *testing.T) {
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1",
 		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1",
+		"github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1",
 		"github.com/arkadiuss/openfief/sdk/go/openfief",
 	}
 	fset := token.NewFileSet()

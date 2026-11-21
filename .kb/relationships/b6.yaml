@@ -993,3 +993,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75e900d28d5c
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-page-test-testtheownersaskboxshowsathesiscardwithasavebuttonandsavesitinplace
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T17:23:37.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fa587999d55
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-testtheaskboxcardsavesadraftwithhtmxorwithout
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:35:22.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e38289eb512d

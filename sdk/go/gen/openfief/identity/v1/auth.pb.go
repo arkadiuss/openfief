@@ -489,6 +489,12 @@ const (
 	// is the token, and the entry names the tool and how the call ended, never
 	// an argument or a result.
 	AuditAction_AUDIT_ACTION_MCP_CALL AuditAction = 65
+	// The owner saving a draft thesis the Ask box suggested (D-229): names the
+	// thesis and its first version, never its text.
+	AuditAction_AUDIT_ACTION_THESIS_SAVED AuditAction = 66
+	// The owner editing a draft thesis, which keeps the earlier versions
+	// (D-229): names the thesis and the new version, never its text.
+	AuditAction_AUDIT_ACTION_THESIS_EDITED AuditAction = 67
 )
 
 // Enum value maps for AuditAction.
@@ -547,6 +553,8 @@ var (
 		63: "AUDIT_ACTION_PLUGIN_REMOVED",
 		64: "AUDIT_ACTION_CONNECTOR_SYNCED",
 		65: "AUDIT_ACTION_MCP_CALL",
+		66: "AUDIT_ACTION_THESIS_SAVED",
+		67: "AUDIT_ACTION_THESIS_EDITED",
 	}
 	AuditAction_value = map[string]int32{
 		"AUDIT_ACTION_UNSPECIFIED":                   0,
@@ -602,6 +610,8 @@ var (
 		"AUDIT_ACTION_PLUGIN_REMOVED":                63,
 		"AUDIT_ACTION_CONNECTOR_SYNCED":              64,
 		"AUDIT_ACTION_MCP_CALL":                      65,
+		"AUDIT_ACTION_THESIS_SAVED":                  66,
+		"AUDIT_ACTION_THESIS_EDITED":                 67,
 	}
 )
 
@@ -726,7 +736,7 @@ const (
 	// run's 16-digit hex id.
 	AuditRefKind_AUDIT_REF_KIND_MAINTAINER_RUN AuditRefKind = 30
 	// A models setting the owner changed: "switch:on", "feature:ask:off",
-	// "route:ask" or "tier:T0".
+	// "opinions:on", "route:ask" or "tier:T0".
 	AuditRefKind_AUDIT_REF_KIND_MODEL_SETTING AuditRefKind = 31
 	// An instrument, by its ISIN.
 	AuditRefKind_AUDIT_REF_KIND_INSTRUMENT AuditRefKind = 32
@@ -750,6 +760,10 @@ const (
 	AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT AuditRefKind = 40
 	// An MCP tool, by its name, such as "allocation".
 	AuditRefKind_AUDIT_REF_KIND_MCP_TOOL AuditRefKind = 41
+	// A draft thesis (D-229), by its 16-digit hex id.
+	AuditRefKind_AUDIT_REF_KIND_THESIS AuditRefKind = 42
+	// The version of a draft thesis, a decimal number from 1.
+	AuditRefKind_AUDIT_REF_KIND_THESIS_VERSION AuditRefKind = 43
 )
 
 // Enum value maps for AuditRefKind.
@@ -781,6 +795,8 @@ var (
 		39: "AUDIT_REF_KIND_IMPORT_BATCH",
 		40: "AUDIT_REF_KIND_SYNC_COUNT",
 		41: "AUDIT_REF_KIND_MCP_TOOL",
+		42: "AUDIT_REF_KIND_THESIS",
+		43: "AUDIT_REF_KIND_THESIS_VERSION",
 	}
 	AuditRefKind_value = map[string]int32{
 		"AUDIT_REF_KIND_UNSPECIFIED":       0,
@@ -809,6 +825,8 @@ var (
 		"AUDIT_REF_KIND_IMPORT_BATCH":      39,
 		"AUDIT_REF_KIND_SYNC_COUNT":        40,
 		"AUDIT_REF_KIND_MCP_TOOL":          41,
+		"AUDIT_REF_KIND_THESIS":            42,
+		"AUDIT_REF_KIND_THESIS_VERSION":    43,
 	}
 )
 
@@ -5689,7 +5707,7 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x17AUDIT_ACTOR_KIND_VIEWER\x10\x05\x12\x1d\n" +
 	"\x19AUDIT_ACTOR_KIND_OPERATOR\x10\x06\x12\x1a\n" +
 	"\x16AUDIT_ACTOR_KIND_ADMIN\x10\a\x12!\n" +
-	"\x1dAUDIT_ACTOR_KIND_SCRIPT_TOKEN\x10\b*\xfc\x0e\n" +
+	"\x1dAUDIT_ACTOR_KIND_SCRIPT_TOKEN\x10\b*\xbb\x0f\n" +
 	"\vAuditAction\x12\x1c\n" +
 	"\x18AUDIT_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14AUDIT_ACTION_SIGN_IN\x10\x01\x12\x19\n" +
@@ -5744,13 +5762,15 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x1cAUDIT_ACTION_PLUGIN_UPGRADED\x10>\x12\x1f\n" +
 	"\x1bAUDIT_ACTION_PLUGIN_REMOVED\x10?\x12!\n" +
 	"\x1dAUDIT_ACTION_CONNECTOR_SYNCED\x10@\x12\x19\n" +
-	"\x15AUDIT_ACTION_MCP_CALL\x10A*\x90\x01\n" +
+	"\x15AUDIT_ACTION_MCP_CALL\x10A\x12\x1d\n" +
+	"\x19AUDIT_ACTION_THESIS_SAVED\x10B\x12\x1e\n" +
+	"\x1aAUDIT_ACTION_THESIS_EDITED\x10C*\x90\x01\n" +
 	"\fAuditOutcome\x12\x1d\n" +
 	"\x19AUDIT_OUTCOME_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUDIT_OUTCOME_OK\x10\x01\x12\x19\n" +
 	"\x15AUDIT_OUTCOME_REFUSED\x10\x02\x12\x18\n" +
 	"\x14AUDIT_OUTCOME_FAILED\x10\x03\x12\x16\n" +
-	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xb1\x06\n" +
+	"\x12AUDIT_OUTCOME_SENT\x10\x04*\xef\x06\n" +
 	"\fAuditRefKind\x12\x1e\n" +
 	"\x1aAUDIT_REF_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16AUDIT_REF_KIND_SESSION\x10\x01\x12\x1a\n" +
@@ -5778,7 +5798,9 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"\x16AUDIT_REF_KIND_SETTING\x10&\x12\x1f\n" +
 	"\x1bAUDIT_REF_KIND_IMPORT_BATCH\x10'\x12\x1d\n" +
 	"\x19AUDIT_REF_KIND_SYNC_COUNT\x10(\x12\x1b\n" +
-	"\x17AUDIT_REF_KIND_MCP_TOOL\x10)*\x99\x01\n" +
+	"\x17AUDIT_REF_KIND_MCP_TOOL\x10)\x12\x19\n" +
+	"\x15AUDIT_REF_KIND_THESIS\x10*\x12!\n" +
+	"\x1dAUDIT_REF_KIND_THESIS_VERSION\x10+*\x99\x01\n" +
 	"\x0fGrantHolderKind\x12!\n" +
 	"\x1dGRANT_HOLDER_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18GRANT_HOLDER_KIND_PERSON\x10\x01\x12\"\n" +

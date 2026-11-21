@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-effe6ee02ff7
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisresponse-descriptor
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:41:07.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64422ba61f33
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisresponse-descriptor
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:41:07.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a209ee584b65

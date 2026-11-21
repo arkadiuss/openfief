@@ -1168,3 +1168,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25cb42304ca9
+  - type: specified_by
+    from: REQ-ui-ask-thesis-card
+    to: SCEN-ui-ask-thesis-card
+    created_at: 2026-11-21T15:41:46.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679274b8fe4b
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-followsnopayload
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T16:05:51.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-061f29c66e62
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-followsnopayload
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T16:05:51.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6587b07a03a2
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-plainopinionreply
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T18:00:11.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a33ce1561fa4
