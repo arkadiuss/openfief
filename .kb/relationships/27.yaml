@@ -1126,3 +1126,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59eaf57e4856
+  - type: executable_for
+    from: SYM-s9b-auditbehind-test-behind-watch-open-kinds
+    to: TEST-core-audit-log-behind
+    created_at: 2026-11-21T22:11:46.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caed36e0379c

@@ -67,12 +67,24 @@ func (w *behindWatch) items() behindItems {
 	return out
 }
 
+// openKinds names every open item the read API lists, by kind and subject, so
+// a failure that counts an item open says which one it was.
+func (w *behindWatch) openKinds() []string {
+	var out []string
+	for _, it := range w.list().GetItems() {
+		if it.GetState() == viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN {
+			out = append(out, it.GetKind()+"/"+it.GetSubject()+": "+it.GetDetail())
+		}
+	}
+	return out
+}
+
 // wantNone fails the test when the read API lists an audit-log-behind item or
 // counts an item open, and says why none was expected.
 func (w *behindWatch) wantNone(why string) {
 	w.t.Helper()
 	if got := w.items(); len(got.behind) != 0 || got.open != 0 {
-		w.t.Fatalf("items = %v, open %d %s; want none", got.behind, got.open, why)
+		w.t.Fatalf("items = %v, open %d %s; want none (open items: %v)", got.behind, got.open, why, w.openKinds())
 	}
 }
 
@@ -132,6 +144,6 @@ func TestAuditLogBehindItemClearsWhenTheStuckEntriesGetThrough(t *testing.T) {
 	finish(t, pool, stuck[1])
 	got = w.items()
 	if len(got.behind) != 1 || got.open != 0 || got.behind[0].GetState() != viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_RESOLVED {
-		t.Errorf("items = %v, open %d once the stuck jobs got through; want the item cleared", got.behind, got.open)
+		t.Errorf("items = %v, open %d once the stuck jobs got through; want the item cleared (open items: %v)", got.behind, got.open, w.openKinds())
 	}
 }

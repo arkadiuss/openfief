@@ -255000,3 +255000,15 @@ symbols:
         target: TEST-askbench-opinions
       - type: implements
         target: REQ-askbench-opinions-set
+  - id: SYM-s9b-auditbehind-test-behind-watch-open-kinds
+    title: behindWatch.openKinds
+    status: active
+    sourceFile: cmd/core/auditbehind_test.go
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      ref: the S9b brief, author decisions of 2026-11-14 on D-211, D-198, D-196 and D-18
+      recorded_at: 2026-11-21T22:11:42.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-audit-log-behind
