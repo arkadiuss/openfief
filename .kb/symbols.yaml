@@ -193603,11 +193603,15 @@ symbols:
       - type: covered_by
         target: TEST-ui-ask-model-loop
       - type: covered_by
+        target: TEST-ui-ask-model-question-needs-post
+      - type: covered_by
         target: TEST-ui-turnstile-pass
       - type: implements
         target: REQ-askbench-matcher-first
       - type: implements
         target: REQ-ui-ask-model-fixed-commands-first
+      - type: implements
+        target: REQ-ui-ask-model-question-needs-post
       - type: implements
         target: REQ-ui-turnstile-pass-skips-the-check
   - id: SYM-ask-model-askmodel-go-server-ask-has-model
@@ -248484,3 +248488,36 @@ symbols:
         target: TEST-ingest-market-quote-answer-is-data
       - type: implements
         target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-sec-internal-views-ui-askmodel-go-askfromtheboxanswer
+    title: askFromTheBoxAnswer
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T19:04:58.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-question-needs-post
+      - type: implements
+        target: REQ-ui-ask-model-question-needs-post
+  - id: SYM-sec-internal-views-ui-askmodel-page-test-go-testamodelquestionneedsapost
+    title: TestAModelQuestionNeedsAPost
+    status: active
+    sourceFile: internal/views/ui/askmodel_page_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T19:05:06.678Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-question-needs-post
+  - id: SYM-sec-internal-views-ui-askmodel-page-test-go-askpost
+    title: askPost
+    status: active
+    sourceFile: internal/views/ui/askmodel_page_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T19:05:14.512Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-question-needs-post

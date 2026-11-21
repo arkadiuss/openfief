@@ -2,7 +2,6 @@ package ui
 
 import (
 	"net/http"
-	"net/url"
 	"strings"
 	"testing"
 	"time"
@@ -143,7 +142,7 @@ func TestAskBoxAsksForAdmissionOncePerQuestionWithTheBrowsersAddress(t *testing.
 		scriptedReply{calls: []*modelsv1.ToolCall{toolCall("allocation", `{"by":"currency"}`)}},
 		scriptedReply{text: answerText("Two thirds of it is listed.", "c1")},
 	)
-	req := htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"how diversified am I?"}}.Encode(), ""), ownerSession))
+	req := askPost("how diversified am I?", ownerSession)
 	req.Header.Set(openfief.ClientIPHeader, "198.51.100.7")
 	rec := h.serve(t, req)
 	wantStatus(t, rec, http.StatusOK)

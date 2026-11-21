@@ -15,10 +15,15 @@ import (
 	modelsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1"
 )
 
-// asks sends question to the Ask box as an htmx request of session.
+// asks sends question to the Ask box as the box does: an htmx POST of session.
 func (h *harness) asks(t *testing.T, session, question string) *httptest.ResponseRecorder {
 	t.Helper()
-	return h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {question}}.Encode(), ""), session)))
+	return h.serve(t, askPost(question, session))
+}
+
+// askPost is the Ask box's htmx POST of question with session.
+func askPost(question, session string) *http.Request {
+	return htmx(withSession(form("/ask", url.Values{"q": {question}}.Encode()), session))
 }
 
 func toolNames(t *testing.T, msgs []*modelsv1.AskMessage) []string {
@@ -222,6 +227,35 @@ func TestAskBoxCardsForAModelThatCannotAnswer(t *testing.T) {
 
 // TestAskBoxSaysWhereAQuestionGoes checks that the overview's Ask box says a
 // question beyond the commands goes to a model only when it does.
+// TestAModelQuestionNeedsAPost checks that only the Ask box's own POST sends a
+// question to the model: a question that is no command, asked over GET, by
+// htmx or as the overview's link, gets the card that says to ask it from the
+// box, and nothing is admitted or generated, so a page elsewhere on the same
+// site can't spend the person's questions; a command still answers over GET,
+// and the same question posted goes to the model.
+func TestAModelQuestionNeedsAPost(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	h.askModel.turnOn("T0", "T2")
+	h.askModel.say(scriptedReply{text: answerText("Two thirds of it is listed.")})
+	for name, req := range map[string]*http.Request{
+		"GET /ask": htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"how diversified am I?"}}.Encode(), ""), ownerSession)),
+		"GET /?q=": withSession(request(http.MethodGet, "/?q=how+diversified+am+I%3F", ""), ownerSession),
+	} {
+		rec := h.serve(t, req)
+		wantStatus(t, rec, http.StatusOK)
+		wantBody(t, rec, "Ask this from the box")
+		wantNoBody(t, rec, "Two thirds of it is listed.")
+		if got := h.askModel.generated(); got != 0 || len(h.askModel.admitted) != 0 {
+			t.Fatalf("%s: the model was asked %d times and admission %d times, want none", name, got, len(h.askModel.admitted))
+		}
+	}
+	command := h.serve(t, htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {"allocation by currency"}}.Encode(), ""), ownerSession)))
+	wantBody(t, command, "By currency")
+	wantNoBody(t, command, "Ask this from the box")
+	wantBody(t, h.asks(t, ownerSession, "how diversified am I?"), "Two thirds of it is listed.")
+}
+
 func TestAskBoxSaysWhereAQuestionGoes(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -233,7 +267,9 @@ func TestAskBoxSaysWhereAQuestionGoes(t *testing.T) {
 	wantBody(t, on, "Any other question goes to the model the owner set up", "never logs the question or the answer", `maxlength="300"`)
 	wantNoBody(t, on, "holds no AI model")
 	page := h.serve(t, withSession(request(http.MethodGet, "/?q=anything+else", ""), ownerSession))
-	wantBody(t, page, `value="anything else"`, `class="bubble"`, "Answered by m")
+	// A link asks nothing of the model: the box's POST does (TestAModelQuestionNeedsAPost).
+	wantBody(t, page, `value="anything else"`, `class="bubble"`, "Ask this from the box")
+	wantNoBody(t, page, "Answered by m")
 }
 
 // TestAskBoxNeverLogsTheQuestionOrAnswerWithAModel checks that a question

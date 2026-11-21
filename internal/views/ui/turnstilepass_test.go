@@ -50,7 +50,7 @@ func passHarnessWith(t *testing.T, edit func(*TurnstileConfig)) (*harness, *fake
 // as the page's first request does.
 func (h *harness) asksWithPass(t *testing.T, session string, pass *http.Cookie) *httptest.ResponseRecorder {
 	t.Helper()
-	r := htmx(withSession(request(http.MethodGet, "/ask?"+url.Values{"q": {passQuestion}}.Encode(), ""), session))
+	r := htmx(withSession(form("/ask", url.Values{"q": {passQuestion}}.Encode()), session))
 	r.Header.Set(openfief.ClientIPHeader, "198.51.100.7")
 	if pass != nil {
 		r.AddCookie(pass)

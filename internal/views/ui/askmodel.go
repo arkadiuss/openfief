@@ -562,6 +562,16 @@ func (a *modelAnswerer) failure(r *http.Request, question string, err error) (an
 		"Something went wrong asking it. The commands answer from your own record."), nil
 }
 
+// askFromTheBoxAnswer is the answer to a question for the model that came by
+// GET, a link or a form without the page's script, rather than the Ask box's
+// POST: nothing is checked, counted or sent, and the person is told to ask it
+// in the box.
+func askFromTheBoxAnswer(question string) answerCard {
+	return modelCard(question, "Ask this from the box",
+		"A question for the model is sent only from the Ask box on this page, so that a link or another page can't ask it in your name. "+
+			"Type it in the box above and press Ask. The commands answer from a link too.")
+}
+
 // askSchemaFailure is the answer of a model whose reply, after the retry, is not
 // the structured answer the box draws from.
 func askSchemaFailure(question string) answerCard {
@@ -633,6 +643,13 @@ func (a routedAnswerer) answer(r *http.Request, sess session, question string) (
 	}
 	if !ok {
 		return a.commands.answer(r, sess, question)
+	}
+	if r.Method != http.MethodPost {
+		// Only the box's own POST, which the same-origin check covers, may
+		// spend a question to the model: a link or a GET from another page of
+		// the same site must not (the session cookie is SameSite=Strict, which
+		// a sibling host on the same site still gets).
+		return askFromTheBoxAnswer(question), nil
 	}
 	card, stopped, pass, err := a.guard(r, sess, question)
 	if stopped || err != nil {

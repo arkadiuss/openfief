@@ -1105,3 +1105,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b396413f674
+  - type: executable_for
+    from: SYM-sec-internal-views-ui-askmodel-page-test-go-testamodelquestionneedsapost
+    to: TEST-ui-ask-model-question-needs-post
+    created_at: 2026-11-21T19:05:10.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729dd64bc0d8
