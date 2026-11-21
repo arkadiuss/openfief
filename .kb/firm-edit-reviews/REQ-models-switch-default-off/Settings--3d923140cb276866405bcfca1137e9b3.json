@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-models-switch-default-off",
+  "sourceFile": "internal/modelrouter/settings.go",
+  "symbol": "Settings",
+  "verdict": "keeps",
+  "note": "Opinions are a separate setting, off by default and working only while the switch and the Ask box's toggle are on; the switch and the toggles are unchanged. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:156cb511a8b54be30f050c918dc3de7f9fc0c184a44572232fb0c192652e0143",
+  "codeHash": "sha256:d73ae9ad3ad1cfba24b8c2ec6db425221eda2f8329c00e6a6b1aa9925695881d",
+  "startLine": 8,
+  "endLine": 17,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

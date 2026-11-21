@@ -69,6 +69,16 @@ func (f *fakeStore) SaveToggle(ctx context.Context, ft modelrouter.Feature, on b
 	return f.err
 }
 
+func (f *fakeStore) SaveOpinions(ctx context.Context, on bool, within func(context.Context) error) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
+	f.settings.Opinions = on
+	return f.err
+}
+
 func (f *fakeStore) SaveRoute(ctx context.Context, role modelrouter.Role, route []modelrouter.Ref, within func(context.Context) error) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()

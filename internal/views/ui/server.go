@@ -22,6 +22,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1/thesisv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
@@ -126,6 +127,11 @@ type Config struct {
 	// the plugin's own token, the owner's session in each request. It is
 	// optional: without it the Models page answers 404.
 	ModelSettings modelsv1connect.ModelSettingsServiceClient
+	// Theses calls the core's ThesisService (D-229) like Auth: with the
+	// plugin's own token, the owner's session in each request. It is optional:
+	// without it the Theses page answers 404 and the Ask box's thesis card
+	// offers no save.
+	Theses thesisv1connect.ThesisServiceClient
 	// DisableClientEvents turns off the reports the pages make about themselves
 	// (D-227) for the install, whatever the owner chose in Settings: the page then
 	// loads no reporting script and the endpoint discards what it is sent. The
@@ -201,6 +207,8 @@ type server struct {
 	// modelSettings is the core's agents-and-models settings (D-212); nil
 	// without Config.ModelSettings.
 	modelSettings modelsv1connect.ModelSettingsServiceClient
+	// theses is the core's draft theses (D-229); nil without Config.Theses.
+	theses thesisv1connect.ThesisServiceClient
 	// clientEvents takes the pages' reports about themselves (D-227), and events
 	// is whether it keeps them: the owner's setting in the core.
 	clientEvents *clientEvents
@@ -232,6 +240,7 @@ func New(cfg *Config) (http.Handler, error) {
 		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention, syncs: cfg.Syncs,
 		instruments: cfg.Instruments, checkpoints: cfg.CashCheckpoints,
 		pages: p, pwa: app, today: cfg.Today, now: cfg.Now, log: cfg.Log, maintainer: cfg.Maintainer, modelSettings: cfg.ModelSettings,
+		theses: cfg.Theses,
 	}
 	s.fillDefaults()
 	err = s.setUpClientEvents(cfg)
@@ -351,6 +360,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
 	s.modelsRoutes(mux)
+	s.thesesRoutes(mux)
 	s.accessRoutes(mux)
 	s.auditRoutes(mux)
 	s.onboardingRoutes(mux)

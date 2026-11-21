@@ -958,3 +958,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4fcc91975b1
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-opinions-test-testopinionstiersarethequestionthethesisandtheprices
+    to: TEST-models-opinions-domain
+    created_at: 2026-11-21T17:13:06.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92c76f17086
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-reset
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:38:38.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4f1d7d5cfea
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-reset
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:38:38.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-424b926bcab5
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-reset
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:38:38.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69c2ee86e4c1

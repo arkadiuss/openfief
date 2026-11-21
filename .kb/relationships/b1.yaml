@@ -979,3 +979,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b302346fc5cd
+  - type: implements
+    from: SYM-d225-cmd-core-thesis-withthesisservice
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T16:01:26.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e24e9304b89
+  - type: covered_by
+    from: SYM-d225-cmd-core-thesis-withthesisservice
+    to: TEST-thesis-core
+    created_at: 2026-11-21T16:01:26.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42df3e5dd572
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesrequest-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:45:42.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6542804ec3c3
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesrequest-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:45:42.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94bc67ef271b

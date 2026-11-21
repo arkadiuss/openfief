@@ -62,41 +62,40 @@ func TestUngrantedViewPluginsCheck(t *testing.T) {
 	home := identity.Household()
 	tests := []struct {
 		name     string
-		spicedb  bool
 		records  []views.PluginRecord
 		grants   []identity.Grant
 		outside  bool
 		want     []attentiondomain.Condition
 		wantFail bool
 	}{
-		{name: "a view plugin with no grant", spicedb: true, records: []views.PluginRecord{readyView("ghostfolio")}, want: []attentiondomain.Condition{ungranted("ghostfolio")}},
+		{name: "a view plugin with no grant", records: []views.PluginRecord{readyView("ghostfolio")}, want: []attentiondomain.Condition{ungranted("ghostfolio")}},
 		{
-			name: "a grant of the household", spicedb: true, records: []views.PluginRecord{readyView("ghostfolio")},
+			name: "a grant of the household", records: []views.PluginRecord{readyView("ghostfolio")},
 			grants: []identity.Grant{pluginGrant("ghostfolio", home)},
 		},
 		{
-			name: "a grant of one account is a grant", spicedb: true, records: []views.PluginRecord{readyView("ghostfolio")},
+			name: "a grant of one account is a grant", records: []views.PluginRecord{readyView("ghostfolio")},
 			grants: []identity.Grant{pluginGrant("ghostfolio", identity.GrantTarget{Kind: identity.GrantTargetAccount, ID: "main"})},
 		},
 		{
-			name: "another plugin's grant is not its own", spicedb: true, records: []views.PluginRecord{readyView("ghostfolio"), readyView("second")},
+			name: "another plugin's grant is not its own", records: []views.PluginRecord{readyView("ghostfolio"), readyView("second")},
 			grants: []identity.Grant{pluginGrant("second", home)}, want: []attentiondomain.Condition{ungranted("ghostfolio")},
 		},
 		{
-			name: "a script token's grant is not a plugin's", spicedb: true, records: []views.PluginRecord{readyView("ghostfolio")},
+			name: "a script token's grant is not a plugin's", records: []views.PluginRecord{readyView("ghostfolio")},
 			grants: []identity.Grant{{Holder: identity.GrantHolder{Kind: identity.GrantHolderScriptToken, ID: "ghostfolio"}, Target: home}},
 			want:   []attentiondomain.Condition{ungranted("ghostfolio")},
 		},
 		{
-			name: "two ungranted plugins", spicedb: true, records: []views.PluginRecord{readyView("a"), readyView("b")},
+			name: "two ungranted plugins", records: []views.PluginRecord{readyView("a"), readyView("b")},
 			want: []attentiondomain.Condition{ungranted("a"), ungranted("b")},
 		},
 		{
-			name: "plugins that are not asked for", spicedb: true,
+			name:    "plugins that are not asked for",
 			records: []views.PluginRecord{notReady, removing, asksOnly, builtIn, connector},
 		},
-		{name: "the policy needs no grant", records: []views.PluginRecord{readyView("ghostfolio")}},
-		{name: "outside a cluster", spicedb: true, outside: true},
+		{name: "the policy needs a grant too", records: []views.PluginRecord{readyView("ghostfolio")}, want: []attentiondomain.Condition{ungranted("ghostfolio")}},
+		{name: "outside a cluster", outside: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -105,7 +104,7 @@ func TestUngrantedViewPluginsCheck(t *testing.T) {
 			if !tt.outside {
 				installed = &fakePlugins{records: tt.records}
 			}
-			check := ungrantedViewPlugins(tt.spicedb, installed, grantsHeld{grants: tt.grants})
+			check := ungrantedViewPlugins(installed, grantsHeld{grants: tt.grants})
 			if check.Kind != attentiondomain.KindViewPluginUngranted {
 				t.Errorf("Kind = %q, want %q", check.Kind, attentiondomain.KindViewPluginUngranted)
 			}
@@ -125,25 +124,22 @@ func TestUngrantedViewPluginsCheck(t *testing.T) {
 // cache not synced yet, or the grants not readable.
 func TestUngrantedViewPluginsCheckNeverGuesses(t *testing.T) {
 	t.Parallel()
-	unsynced := ungrantedViewPlugins(true, &fakePlugins{unsynced: true}, grantsHeld{})
+	unsynced := ungrantedViewPlugins(&fakePlugins{unsynced: true}, grantsHeld{})
 	if _, err := unsynced.Find(t.Context()); !errors.Is(err, viewsapp.ErrPluginsUnknown) {
 		t.Errorf("Find before the plugins are known: %v, want ErrPluginsUnknown", err)
 	}
-	down := ungrantedViewPlugins(true, &fakePlugins{records: []views.PluginRecord{readyView("ghostfolio")}}, grantsHeld{err: errGrantsDown})
+	down := ungrantedViewPlugins(&fakePlugins{records: []views.PluginRecord{readyView("ghostfolio")}}, grantsHeld{err: errGrantsDown})
 	if _, err := down.Find(t.Context()); !errors.Is(err, errGrantsDown) {
 		t.Errorf("Find with the grants down: %v, want the grants' error", err)
 	}
 }
 
 // TestUngrantedViewPluginsInOutsideACluster checks that a core with no cluster,
-// whose plugins are a nil pointer, finds nothing instead of calling it, with
-// SpiceDB or without.
+// whose plugins are a nil pointer, finds nothing instead of calling it.
 func TestUngrantedViewPluginsInOutsideACluster(t *testing.T) {
 	t.Parallel()
-	for _, mode := range []string{authzPolicy, authzSpiceDB} {
-		check := ungrantedViewPluginsIn(&serveConfig{Authz: authzConfig{Mode: mode}}, nil, grantsHeld{})
-		if got, err := check.Find(t.Context()); err != nil || len(got) != 0 {
-			t.Errorf("Find with --authz=%s and no cluster = %v, %v, want nothing", mode, got, err)
-		}
+	check := ungrantedViewPluginsIn(nil, grantsHeld{})
+	if got, err := check.Find(t.Context()); err != nil || len(got) != 0 {
+		t.Errorf("Find with no cluster = %v, %v, want nothing", got, err)
 	}
 }

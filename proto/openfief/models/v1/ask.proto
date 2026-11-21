@@ -46,8 +46,9 @@ service AskModelService {
   rpc AdmitAskQuestion(AdmitAskQuestionRequest) returns (AdmitAskQuestionResponse);
 
   // GetAskModel says whether the Ask box has a model: the one switch is on,
-  // the Ask box's toggle is on and its route has a model (D-212). It writes
-  // no audit entry: nothing is asked.
+  // the Ask box's toggle is on and its route has a model (D-212), and whether
+  // that model may give this person opinions (D-225). It writes no audit
+  // entry: nothing is asked.
   rpc GetAskModel(GetAskModelRequest) returns (GetAskModelResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
@@ -111,9 +112,26 @@ message GetAskModelRequest {
   string session_token = 2;
 }
 
+// AskOpinions is whether the Ask box may give opinions and suggest a thesis to
+// the person asking (D-225, D-229).
+enum AskOpinions {
+  // Off: the owner left them off, the switch or the Ask box's toggle is off,
+  // the person is not the owner, or the core is a public demo. The box
+  // declines to recommend (R-7) and says nothing more.
+  ASK_OPINIONS_UNSPECIFIED = 0;
+  // On: the model may say whether it would buy, sell or hold, and suggest a
+  // thesis, from the cards it reads and the public data it fetches.
+  ASK_OPINIONS_ON = 1;
+  // The owner turned them on, but no model of the Ask box's route is allowed
+  // for T0, T1 and T2 together: they stay off in effect, and the box says why.
+  ASK_OPINIONS_ROUTE_INELIGIBLE = 2;
+}
+
 message GetAskModelResponse {
   // Whether the Ask box sends questions beyond its commands to a model.
   bool available = 1;
+  // Whether the model may give opinions to this person (D-225).
+  AskOpinions opinions = 2;
 }
 
 message CheckAskTiersRequest {

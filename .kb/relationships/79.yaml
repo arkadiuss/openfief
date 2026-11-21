@@ -1448,3 +1448,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df2d239d0311
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-connectapi-opinions-test-testonlytheownerturnsopinionsonandneverademo
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:11:35.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a333baed0288
+  - type: implements
+    from: SYM-d225-internal-thesis-connectapi-thesis-draftto
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:16:39.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39dd1e26d456
+  - type: covered_by
+    from: SYM-d225-internal-thesis-connectapi-thesis-draftto
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:16:39.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94bb706b58b
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testnoneoftheopinionssentencesispublic
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:25:08.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27c0ff9c12f6
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-testthesesaretheownersalonenoothersessionseesthemortheirlink
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:35:29.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2566e912f7
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-testthesispageshowsthedraftitsformitshistoryandnoagentbutton
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:35:43.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb0e8830140

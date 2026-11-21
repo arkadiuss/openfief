@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-models-router-roles-fallbacks",
+  "sourceFile": "cmd/core/modelrouter.go",
+  "symbol": "agentModels",
+  "verdict": "keeps",
+  "note": "Roles, primaries and fallbacks are untouched; the wiring passes the demo flag and SettingsStore gains SaveOpinions. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:8f7c1fe0e1cab47ca3a90f9e88694ff7c361fcc59fb0422f5e2f4920f3bc052e",
+  "codeHash": "sha256:91ecbc0dfa7d028ff91320b8ea703d65edb3e083ef5c055e19a9f2b6dcd742a6",
+  "startLine": 304,
+  "endLine": 320,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

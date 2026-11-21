@@ -68,6 +68,9 @@ const (
 	// ModelSettingsServiceSetFeatureEnabledProcedure is the fully-qualified name of the
 	// ModelSettingsService's SetFeatureEnabled RPC.
 	ModelSettingsServiceSetFeatureEnabledProcedure = "/openfief.models.v1.ModelSettingsService/SetFeatureEnabled"
+	// ModelSettingsServiceSetOpinionsEnabledProcedure is the fully-qualified name of the
+	// ModelSettingsService's SetOpinionsEnabled RPC.
+	ModelSettingsServiceSetOpinionsEnabledProcedure = "/openfief.models.v1.ModelSettingsService/SetOpinionsEnabled"
 	// ModelSettingsServiceSetRouteProcedure is the fully-qualified name of the ModelSettingsService's
 	// SetRoute RPC.
 	ModelSettingsServiceSetRouteProcedure = "/openfief.models.v1.ModelSettingsService/SetRoute"
@@ -92,6 +95,15 @@ type ModelSettingsServiceClient interface {
 	SetAgentsEnabled(context.Context, *connect.Request[v1.SetAgentsEnabledRequest]) (*connect.Response[v1.SetAgentsEnabledResponse], error)
 	// SetFeatureEnabled turns one feature's toggle on or off.
 	SetFeatureEnabled(context.Context, *connect.Request[v1.SetFeatureEnabledRequest]) (*connect.Response[v1.SetFeatureEnabledResponse], error)
+	// SetOpinionsEnabled turns the Ask box's opinions on or off (D-225, D-229):
+	// with them on its model may say whether it would buy, sell or hold and why,
+	// and suggest a thesis the owner can save as a draft. They are off by
+	// default and work only while the one switch and the Ask box's toggle are on
+	// (D-212), for the owner's own session, with a model on the Ask box's route
+	// allowed for T0, T1 and T2 together. A public demo never gives one: turning
+	// them on there fails with FAILED_PRECONDITION and changes nothing (R-7).
+	// Each change enters the audit log as "opinions:on" or "opinions:off".
+	SetOpinionsEnabled(context.Context, *connect.Request[v1.SetOpinionsEnabledRequest]) (*connect.Response[v1.SetOpinionsEnabledResponse], error)
 	// SetRoute sets a role's primary model and ordered fallbacks (D-205); no
 	// references clear the route.
 	SetRoute(context.Context, *connect.Request[v1.SetRouteRequest]) (*connect.Response[v1.SetRouteResponse], error)
@@ -137,6 +149,12 @@ func NewModelSettingsServiceClient(httpClient connect.HTTPClient, baseURL string
 			connect.WithSchema(modelSettingsServiceMethods.ByName("SetFeatureEnabled")),
 			connect.WithClientOptions(opts...),
 		),
+		setOpinionsEnabled: connect.NewClient[v1.SetOpinionsEnabledRequest, v1.SetOpinionsEnabledResponse](
+			httpClient,
+			baseURL+ModelSettingsServiceSetOpinionsEnabledProcedure,
+			connect.WithSchema(modelSettingsServiceMethods.ByName("SetOpinionsEnabled")),
+			connect.WithClientOptions(opts...),
+		),
 		setRoute: connect.NewClient[v1.SetRouteRequest, v1.SetRouteResponse](
 			httpClient,
 			baseURL+ModelSettingsServiceSetRouteProcedure,
@@ -158,6 +176,7 @@ type modelSettingsServiceClient struct {
 	listModelProviders *connect.Client[v1.ListModelProvidersRequest, v1.ListModelProvidersResponse]
 	setAgentsEnabled   *connect.Client[v1.SetAgentsEnabledRequest, v1.SetAgentsEnabledResponse]
 	setFeatureEnabled  *connect.Client[v1.SetFeatureEnabledRequest, v1.SetFeatureEnabledResponse]
+	setOpinionsEnabled *connect.Client[v1.SetOpinionsEnabledRequest, v1.SetOpinionsEnabledResponse]
 	setRoute           *connect.Client[v1.SetRouteRequest, v1.SetRouteResponse]
 	setTierModels      *connect.Client[v1.SetTierModelsRequest, v1.SetTierModelsResponse]
 }
@@ -180,6 +199,11 @@ func (c *modelSettingsServiceClient) SetAgentsEnabled(ctx context.Context, req *
 // SetFeatureEnabled calls openfief.models.v1.ModelSettingsService.SetFeatureEnabled.
 func (c *modelSettingsServiceClient) SetFeatureEnabled(ctx context.Context, req *connect.Request[v1.SetFeatureEnabledRequest]) (*connect.Response[v1.SetFeatureEnabledResponse], error) {
 	return c.setFeatureEnabled.CallUnary(ctx, req)
+}
+
+// SetOpinionsEnabled calls openfief.models.v1.ModelSettingsService.SetOpinionsEnabled.
+func (c *modelSettingsServiceClient) SetOpinionsEnabled(ctx context.Context, req *connect.Request[v1.SetOpinionsEnabledRequest]) (*connect.Response[v1.SetOpinionsEnabledResponse], error) {
+	return c.setOpinionsEnabled.CallUnary(ctx, req)
 }
 
 // SetRoute calls openfief.models.v1.ModelSettingsService.SetRoute.
@@ -209,6 +233,15 @@ type ModelSettingsServiceHandler interface {
 	SetAgentsEnabled(context.Context, *connect.Request[v1.SetAgentsEnabledRequest]) (*connect.Response[v1.SetAgentsEnabledResponse], error)
 	// SetFeatureEnabled turns one feature's toggle on or off.
 	SetFeatureEnabled(context.Context, *connect.Request[v1.SetFeatureEnabledRequest]) (*connect.Response[v1.SetFeatureEnabledResponse], error)
+	// SetOpinionsEnabled turns the Ask box's opinions on or off (D-225, D-229):
+	// with them on its model may say whether it would buy, sell or hold and why,
+	// and suggest a thesis the owner can save as a draft. They are off by
+	// default and work only while the one switch and the Ask box's toggle are on
+	// (D-212), for the owner's own session, with a model on the Ask box's route
+	// allowed for T0, T1 and T2 together. A public demo never gives one: turning
+	// them on there fails with FAILED_PRECONDITION and changes nothing (R-7).
+	// Each change enters the audit log as "opinions:on" or "opinions:off".
+	SetOpinionsEnabled(context.Context, *connect.Request[v1.SetOpinionsEnabledRequest]) (*connect.Response[v1.SetOpinionsEnabledResponse], error)
 	// SetRoute sets a role's primary model and ordered fallbacks (D-205); no
 	// references clear the route.
 	SetRoute(context.Context, *connect.Request[v1.SetRouteRequest]) (*connect.Response[v1.SetRouteResponse], error)
@@ -250,6 +283,12 @@ func NewModelSettingsServiceHandler(svc ModelSettingsServiceHandler, opts ...con
 		connect.WithSchema(modelSettingsServiceMethods.ByName("SetFeatureEnabled")),
 		connect.WithHandlerOptions(opts...),
 	)
+	modelSettingsServiceSetOpinionsEnabledHandler := connect.NewUnaryHandler(
+		ModelSettingsServiceSetOpinionsEnabledProcedure,
+		svc.SetOpinionsEnabled,
+		connect.WithSchema(modelSettingsServiceMethods.ByName("SetOpinionsEnabled")),
+		connect.WithHandlerOptions(opts...),
+	)
 	modelSettingsServiceSetRouteHandler := connect.NewUnaryHandler(
 		ModelSettingsServiceSetRouteProcedure,
 		svc.SetRoute,
@@ -272,6 +311,8 @@ func NewModelSettingsServiceHandler(svc ModelSettingsServiceHandler, opts ...con
 			modelSettingsServiceSetAgentsEnabledHandler.ServeHTTP(w, r)
 		case ModelSettingsServiceSetFeatureEnabledProcedure:
 			modelSettingsServiceSetFeatureEnabledHandler.ServeHTTP(w, r)
+		case ModelSettingsServiceSetOpinionsEnabledProcedure:
+			modelSettingsServiceSetOpinionsEnabledHandler.ServeHTTP(w, r)
 		case ModelSettingsServiceSetRouteProcedure:
 			modelSettingsServiceSetRouteHandler.ServeHTTP(w, r)
 		case ModelSettingsServiceSetTierModelsProcedure:
@@ -299,6 +340,10 @@ func (UnimplementedModelSettingsServiceHandler) SetAgentsEnabled(context.Context
 
 func (UnimplementedModelSettingsServiceHandler) SetFeatureEnabled(context.Context, *connect.Request[v1.SetFeatureEnabledRequest]) (*connect.Response[v1.SetFeatureEnabledResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.ModelSettingsService.SetFeatureEnabled is not implemented"))
+}
+
+func (UnimplementedModelSettingsServiceHandler) SetOpinionsEnabled(context.Context, *connect.Request[v1.SetOpinionsEnabledRequest]) (*connect.Response[v1.SetOpinionsEnabledResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.models.v1.ModelSettingsService.SetOpinionsEnabled is not implemented"))
 }
 
 func (UnimplementedModelSettingsServiceHandler) SetRoute(context.Context, *connect.Request[v1.SetRouteRequest]) (*connect.Response[v1.SetRouteResponse], error) {

@@ -1420,3 +1420,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5567168e99b5
+  - type: executable_for
+    from: SYM-d225-cmd-core-ownerchanges-test-thesischanges
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T17:09:30.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a40833d5f89e

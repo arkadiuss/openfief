@@ -1441,3 +1441,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d162173dcc3
+  - type: executable_for
+    from: SYM-d225-cmd-core-thesis-test-checkownerkeepsdrafts
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:09:59.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0a2c896a2b3
+  - type: implements
+    from: SYM-d225-internal-views-ui-askrun-asksystempromptfor
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:27:57.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f284abf4cb96
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askrun-asksystempromptfor
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:27:57.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd8d2e58ce1

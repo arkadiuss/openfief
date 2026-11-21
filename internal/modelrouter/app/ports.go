@@ -24,6 +24,9 @@ var (
 	// ErrInvalidInput reports a feature, role, tier or reference the
 	// settings do not accept.
 	ErrInvalidInput = errors.New("invalid input")
+	// ErrOpinionsOnDemo reports an attempt to turn opinions on in a public
+	// demo, which never gives one (D-225, R-7).
+	ErrOpinionsOnDemo = errors.New("a public demo never gives opinions")
 	// ErrProviderUnavailable reports a provider instance that can't be
 	// reached, is down, is too slow or refused the plugin's key: the router
 	// tries the route's next model.
@@ -82,6 +85,8 @@ type SettingsStore interface {
 	//
 	// SaveEnabled turns the one switch on or off.
 	SaveEnabled(ctx context.Context, on bool, within func(context.Context) error) error
+	// SaveOpinions turns the Ask box's opinions on or off (D-225).
+	SaveOpinions(ctx context.Context, on bool, within func(context.Context) error) error
 	// SaveToggle turns one feature's toggle on or off.
 	SaveToggle(ctx context.Context, f modelrouter.Feature, on bool, within func(context.Context) error) error
 	// SaveRoute replaces role's route; no models clear it.
@@ -93,7 +98,7 @@ type SettingsStore interface {
 // SettingChange is what the audit log keeps of a change to the settings
 // (D-211, D-212): who made it, when, and which setting, as the identity
 // context spells it ("switch:on", "feature:ask:off", "route:ask",
-// "tier:T0"). It holds no model list.
+// "tier:T0", "opinions:on"). It holds no model list.
 type SettingChange struct {
 	At time.Time
 	// Session is the owner's session that made the change.

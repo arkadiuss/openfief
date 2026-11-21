@@ -1147,3 +1147,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ae8a6993497
+  - type: implements
+    from: SYM-d225-internal-modelrouter-app-ask-ask-opinions
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T16:01:59.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4ef69f75a4
+  - type: covered_by
+    from: SYM-d225-internal-modelrouter-app-ask-ask-opinions
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T16:01:59.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6d8be782828
+  - type: covered_by
+    from: SYM-d225-internal-modelrouter-app-ask-ask-opinions
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T16:01:59.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97b4fef0412e
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisresponse-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:41:45.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf11ed0da10
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisresponse-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:41:45.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48105bdd85b7
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-gethorizon
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:50:06.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ce9f588cc85
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-gethorizon
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:50:06.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dd7d54c116b

@@ -25,6 +25,7 @@ import (
 	modelspg "github.com/arkadiuss/openfief/internal/modelrouter/postgres"
 	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
+	thesispg "github.com/arkadiuss/openfief/internal/thesis/postgres"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 	viewsapp "github.com/arkadiuss/openfief/internal/views/app"
@@ -70,6 +71,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	if err := modelspg.Migrate(ctx, pool); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
+	if err := thesispg.Migrate(ctx, pool); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	return nil
@@ -222,7 +226,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	agents, attn, err := newAgentsAndAttention(pool, changes, auth, cfg.Auth.Origins, l, vstore, checks, now, log,
-		modelGuardSetup{cfg: &cfg.Guards, zone: cfg.EndOfDay.Location}, ungrantedViewPluginsIn(cfg, installed, acc.grants))
+		modelGuardSetup{cfg: &cfg.Guards, zone: cfg.EndOfDay.Location, demo: cfg.Auth.DemoSessions}, ungrantedViewPluginsIn(installed, acc.grants))
 	if err != nil {
 		return nil, err
 	}
@@ -250,15 +254,15 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		attention: attn.items, names: names, rekeyers: rekeyers(vstore, portfoliopg.New(joined(pool)), names, l),
 		providers: agents.providers,
 	}
-	plugin := withPortfolioServices(withAuthService(apis.plugin, auth, callers, log), models, newMaintainer(pool, rv, agents, attn, views, auth, cfg.Auth.Origins, l, authz, now), callers, log)
-	owners := ingestOwners(auth, cfg.Auth.Origins, authz)
+	plugin, owners := withPortfolioServices(withAuthService(apis.plugin, auth, callers, log), models, newMaintainer(pool, rv, agents, attn, views, auth, cfg.Auth.Origins, l, authz, now), callers, log), ingestOwners(auth, cfg.Auth.Origins, authz)
 	plugin = withIngestServices(plugin, deps, owners, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(acc.sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
 	plugin = withSettingsService(withAskModelService(withModelSettingsService(plugin, agents.settings, callers, log), agents.ask, callers, log),
 		newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
 		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
-	plugin = withPluginMetricsFromEnv(withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log), callers, log)
+	plugin = withPluginMetricsFromEnv(withThesisService(withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log),
+		newTheses(pool, changes, auth, cfg.Auth.Origins, now), callers, log), callers, log)
 	return &core{agents: agents, browserPort: apis.browser, pluginPort: plugin, river: rv.client, deps: deps, plugins: installed, attention: attn, authz: acc.closer, access: acc}, nil
 }
 

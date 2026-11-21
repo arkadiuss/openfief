@@ -367,6 +367,8 @@ func TestBundleReadAPI(t *testing.T) {
 	if r := bundleGet(t, base+"/v1/accounts", ""); r.status != http.StatusUnauthorized {
 		t.Fatalf("GET /v1/accounts without a token: status %d, body %q; want 401", r.status, r.body)
 	}
+	// A fresh install has agents and models off (D-212), whatever the token may read.
+	checkAgenticSwitchOff(t, k, issuedToken{secret: token})
 }
 
 // forwardCore forwards a free local port to the core's pod until t ends and

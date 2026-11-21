@@ -916,3 +916,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb8af1441295
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-when
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:33:15.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7522ad38326b
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-when
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:33:15.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70eb9d115dc2
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:42:47.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f232693f231
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:42:47.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295b197abf74

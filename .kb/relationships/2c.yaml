@@ -1329,3 +1329,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62389558caba
+  - type: specified_by
+    from: REQ-thesis-owner-only
+    to: SCEN-thesis-owner-only
+    created_at: 2026-11-21T15:38:02.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f0e95acb40
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:39:37.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-172651dc7c6a
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:39:37.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-238e5a592110
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesrequest-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:45:34.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fad2063e94af
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesrequest-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:45:34.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef5e446268c
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:49:43.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9d7bbc905bf
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:49:43.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d1e8084772b
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-namesnothingfrommemory
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:02.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e261e013e18
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-namesnothingfrommemory
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:02.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c66d4c21a51

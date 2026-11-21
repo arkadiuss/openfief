@@ -4,10 +4,10 @@
   "sourceFile": "cmd/core/core.go",
   "symbol": "newCore",
   "verdict": "keeps",
-  "note": "newCore builds the connector entry caller earlier and gives the views a market quote option; the River job queue and the revaluation wiring are unchanged (D-36).",
+  "note": "newCore adds the thesis service wiring and passes the demo flag to the model guards; revaluations still run through the River queue as before. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
   "statementHash": "sha256:b8e5ef0433c746260fb018057811e951fed3b6d2ccb5aa263052aba628c4e98f",
-  "codeHash": "sha256:b739334254315d6379cee860e2390217949db883e14406cfe355d0b8b1df3d61",
-  "startLine": 201,
-  "endLine": 263,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "codeHash": "sha256:94d7aa96df0eb1f20c9cd44ee9816be4772fe043b6265a170957a18075a794e8",
+  "startLine": 205,
+  "endLine": 267,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
 }

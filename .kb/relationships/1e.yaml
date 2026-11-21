@@ -1196,3 +1196,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5602382f73a5
+  - type: implements
+    from: SYM-d225-tools-askbench-main-refusewithopinions
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:56:16.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f769742daee
+  - type: covered_by
+    from: SYM-d225-tools-askbench-main-refusewithopinions
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:56:16.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa620f3269ab
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-payloadphrases
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:32.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3c5f4b1461b
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-payloadphrases
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:32.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f012e368280

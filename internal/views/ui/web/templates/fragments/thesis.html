@@ -1,0 +1,19 @@
+{{/* A version's text as the pages read it (D-229): statement, horizon, instruments, what would show it wrong and sources. A
+     thesis holds no lease size or amount, and no agent, fief or lease. */}}
+{{define "thesis-fields"}}
+<p class="thesis-statement">{{.Statement}}</p>
+<dl class="facts thesis-facts">
+  <dt>Horizon</dt><dd><span class="pill {{if .ShortTerm}}pill-warn{{else}}pill-neutral{{end}}">{{.Horizon}}</span></dd>
+  <dt>Instruments</dt><dd class="pills">{{range .Instruments}}<span class="pill pill-neutral mono">{{.}}</span>{{end}}</dd>
+  <dt>Wrong if</dt><dd><ul class="bullets">{{range .Invalidation}}<li>{{.}}</li>{{end}}</ul></dd>
+  <dt>Sources</dt><dd><ul class="bullets">{{range .Sources}}<li>{{.}}</li>{{end}}</ul></dd>
+</dl>
+{{end}}
+
+{{/* What replaces the Ask box's thesis card's save form once it was posted with htmx: the draft's link, or the core's reason. */}}
+{{define "thesis-saved"}}
+<div class="thesis-saved" role="status">
+  {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>
+  {{else}}<p class="alert alert-info">Saved as a draft thesis. <a href="{{.Href}}">Open it on the Theses page</a>. It has no agent, fief or lease.</p>{{end}}
+</div>
+{{end}}

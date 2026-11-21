@@ -358,6 +358,7 @@ The values above are synthetic, like every value in the tests.
 
 ## Decisions
 
+- **D-137** and **D-209** and a draft thesis (D-229): a draft thesis is on no read path. D-137 names the kinds of record the read API serves, a draft is none of them and belongs to no account, and a grant only ever lets its holder view accounts, sleeves or the household, so no script token, view plugin or demo session reaches one, grants or not; the owner's `ThesisService` ([Thesis](thesis.md)) is served to view plugins on the plugin port with the owner's session, and `ReadService` has no method that returns a thesis.
 - **D-6**: the read-only public API under `/v1` with an OpenAPI spec. Built in this context; the [built-in UI](ui.md) and the [Ghostfolio view](ghostfolio.md) read through it. MCP is served only as D-213 allows (REQ-views-mcp-only-as-d213-allows): the core serves it at `/mcp` on the browser port, with the Ask box's read-only tools reading this API in process as the calling script token ([MCP server](mcp.md)).
 - **D-50**: protobuf with HTTP annotations, Connect plus REST through Vanguard, OpenAPI generated from the same definitions. Built as described above.
 - **D-7**: data never enters through the public API. Enforced by the service definition and by REST answering 405 to anything but `GET`.

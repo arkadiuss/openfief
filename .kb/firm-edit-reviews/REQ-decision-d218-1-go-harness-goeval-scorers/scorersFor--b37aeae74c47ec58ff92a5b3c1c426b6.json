@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d218-1-go-harness-goeval-scorers",
+  "sourceFile": "tools/askbench/scorers.go",
+  "symbol": "scorersFor",
+  "verdict": "keeps",
+  "note": "scorersFor still builds OpenFief-specific scorers in the harness; the opinions checks are added to its table. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:40b0233c0e519e7fb69ed061c962dc0b71e96a75e22532ce825e114e799ed480",
+  "codeHash": "sha256:e63cc612cda79245fc6e8423b9bf95f6d8fe5d19a075318d361d6a2c71a35cf2",
+  "startLine": 249,
+  "endLine": 274,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

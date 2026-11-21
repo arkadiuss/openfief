@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-AUTO-902181B0129A6321",
+  "sourceFile": "plugins/ui/main.go",
+  "symbol": "newHandler",
+  "verdict": "keeps",
+  "note": "newHandler only gets a Theses client for the new Theses page; the built-in UI is still the default view plugin. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:ecf0d99e061995859065836be190afe9726a21751e10f52d98e2fb7702410965",
+  "codeHash": "sha256:4cd3a7a459c93b81fc311847682d0bf1393cf19c4d1968ccb4c7458d4cf5d1c1",
+  "startLine": 120,
+  "endLine": 172,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

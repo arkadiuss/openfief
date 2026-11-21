@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-audit-owner-view",
+  "sourceFile": "internal/views/ui/audit.go",
+  "symbol": "changeRef",
+  "verdict": "keeps",
+  "note": "The owner's audit view maps and words the new actions and refs, so its entries stay listed and filterable. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:30fa4044defc81449034bfbbfd0c5174601da18c85196f28e942a315aab40ab3",
+  "codeHash": "sha256:a78865f77a72158732b4af523782caf1e7fe225cb85a69955266460c4e6b5f12",
+  "startLine": 268,
+  "endLine": 287,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

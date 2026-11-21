@@ -1,0 +1,153 @@
+// OpenFief's draft thesis contract (docs/DESIGN.md D-229, D-206, D-211).
+//
+// With opinions on (D-225) the Ask box's model may suggest a thesis for an
+// agent on an offensive sleeve (D-71): a statement, its instruments, a
+// horizon, the conditions that would invalidate it and its sources, and no
+// lease size. The owner can save it as a draft thesis. Editing a draft adds a
+// version and keeps the earlier ones, and every save and edit enters the audit
+// log, naming the thesis and the version, never the text (GR-12). A draft has
+// no agent, no fief and no lease: the control plane starts a fief from it
+// later, as a proposal the owner approves.
+//
+// A draft thesis is the owner's alone and T1 data (D-206). It is not on the
+// read API (D-137): ReadService serves none of it, so no script token, view
+// plugin or demo session reads it, whatever it is granted (D-209), and a
+// viewer's session is refused here. Reading it is as owner-only as changing it.
+//
+// The core serves ThesisService to VIEW plugins only, on its plugin port
+// (D-115), as the owner's entry service for this kind of entry (D-79).
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails with
+//   PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A draft that breaks a rule (a missing field, a horizon that is not
+//   long-term or short-term, a text too long, a lease size or an amount in
+//   its text) fails with INVALID_ARGUMENT; a thesis that does not exist fails
+//   with NOT_FOUND; an edit of a version that is no longer the latest fails
+//   with FAILED_PRECONDITION. Nothing changes then, and when the audit log
+//   can't take the entry the call fails with UNAVAILABLE and changes nothing.
+syntax = "proto3";
+
+package openfief.thesis.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// ThesisService saves, edits and reads the owner's draft theses.
+service ThesisService {
+  // SaveThesis stores a draft as a new thesis, version 1.
+  rpc SaveThesis(SaveThesisRequest) returns (SaveThesisResponse);
+
+  // EditThesis stores a draft as the version after base_version of a thesis,
+  // keeping the earlier versions.
+  rpc EditThesis(EditThesisRequest) returns (EditThesisResponse);
+
+  // GetThesis returns a thesis with every version it has had.
+  rpc GetThesis(GetThesisRequest) returns (GetThesisResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ListTheses returns every thesis as its latest version, the most recently
+  // changed first.
+  rpc ListTheses(ListThesesRequest) returns (ListThesesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+// Horizon is how long a thesis is meant to run.
+enum Horizon {
+  HORIZON_UNSPECIFIED = 0;
+  HORIZON_LONG_TERM = 1;
+  HORIZON_SHORT_TERM = 2;
+}
+
+// ThesisDraft is what a thesis says. It has no field for a lease's size or an
+// amount: how much an agent may hold is the lease's, which the owner approves.
+message ThesisDraft {
+  // The claim, up to 1000 characters.
+  string statement = 1;
+  // The instruments it is about, by the names the owner's cards and prices
+  // used: 1 to 10, each up to 60 characters.
+  repeated string instruments = 2;
+  Horizon horizon = 3;
+  // What would show the thesis wrong: 1 to 8, each up to 300 characters.
+  repeated string invalidation = 4;
+  // What it rests on: 1 to 10, each up to 200 characters.
+  repeated string sources = 5;
+}
+
+// ThesisVersion is one saved text of a thesis.
+message ThesisVersion {
+  // From 1; an edit adds the next number.
+  int32 version = 1;
+  google.protobuf.Timestamp saved_at = 2;
+  ThesisDraft draft = 3;
+}
+
+// Thesis is a draft thesis with every version, oldest first.
+message Thesis {
+  // A 16-digit hex id.
+  string id = 1;
+  repeated ThesisVersion versions = 2;
+  // The data tier of the text (D-206): "T1".
+  string data_tier = 3;
+}
+
+// ThesisSummary is a draft thesis as the list shows it: its latest version.
+message ThesisSummary {
+  string id = 1;
+  // The latest version's number.
+  int32 version = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  ThesisDraft draft = 5;
+  // The data tier of the text (D-206): "T1".
+  string data_tier = 6;
+}
+
+message SaveThesisRequest {
+  string origin = 1;
+  string session_token = 2;
+  ThesisDraft draft = 3;
+}
+
+message SaveThesisResponse {
+  Thesis thesis = 1;
+}
+
+message EditThesisRequest {
+  string origin = 1;
+  string session_token = 2;
+  string thesis_id = 3;
+  // The version the owner edited.
+  int32 base_version = 4;
+  ThesisDraft draft = 5;
+}
+
+message EditThesisResponse {
+  Thesis thesis = 1;
+}
+
+message GetThesisRequest {
+  string origin = 1;
+  string session_token = 2;
+  string thesis_id = 3;
+}
+
+message GetThesisResponse {
+  Thesis thesis = 1;
+}
+
+message ListThesesRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message ListThesesResponse {
+  repeated ThesisSummary theses = 1;
+}

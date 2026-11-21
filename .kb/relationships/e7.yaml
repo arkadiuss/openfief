@@ -1469,3 +1469,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-085f262ef414
+  - type: implements
+    from: SYM-d225-internal-thesis-app-theses-theses-recording
+    to: REQ-thesis-audited
+    created_at: 2026-11-21T15:59:40.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f14bc2f00480
+  - type: covered_by
+    from: SYM-d225-internal-thesis-app-theses-theses-recording
+    to: TEST-thesis-app
+    created_at: 2026-11-21T15:59:40.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ed988a3b81
+  - type: covered_by
+    from: SYM-d225-internal-thesis-app-theses-theses-recording
+    to: TEST-thesis-audit-core
+    created_at: 2026-11-21T15:59:40.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88bb49b842d4
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-testanentrythelogcannottakekeepstheversionout
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:13.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daa2dfb5e7c1
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses-savethesis
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:34:05.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1dc9ee8b2abf
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-testtheopinionchecks
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:01:05.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e3db9c3ed2c

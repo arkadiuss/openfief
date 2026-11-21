@@ -1063,3 +1063,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe6a89e5ba4c
+  - type: implements
+    from: SYM-d225-internal-thesis-app-theses-theses-edit
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T15:59:02.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a00779011e3
+  - type: implements
+    from: SYM-d225-internal-thesis-app-theses-theses-edit
+    to: REQ-thesis-versions-kept
+    created_at: 2026-11-21T15:59:02.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99ba546e9754
+  - type: implements
+    from: SYM-d225-internal-thesis-app-theses-theses-edit
+    to: REQ-thesis-audited
+    created_at: 2026-11-21T15:59:02.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0485b8d1bbb5
+  - type: covered_by
+    from: SYM-d225-internal-thesis-app-theses-theses-edit
+    to: TEST-thesis-app
+    created_at: 2026-11-21T15:59:02.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dad7be6f2d8b
+  - type: covered_by
+    from: SYM-d225-internal-thesis-app-theses-theses-edit
+    to: TEST-thesis-core
+    created_at: 2026-11-21T15:59:02.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1d3ce76845e
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-audit-recordchange
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:57.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b9c37b3d894
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-page-test-testathesisanswerwithoutthecoresthesesservicehasnosavebutton
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T17:23:21.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333c063c6fb4
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest-reset
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:40:44.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2afeca6b5e76
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-editthesisrequest-reset
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:40:45.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb635ec5eb6e

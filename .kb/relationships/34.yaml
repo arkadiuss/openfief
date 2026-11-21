@@ -1119,3 +1119,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-201f356bc98a
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-holdsnoleasesize
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T16:05:34.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39819dae4b8b
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-holdsnoleasesize
+    to: REQ-thesis-no-lease-size
+    created_at: 2026-11-21T16:05:34.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd93bb5622e9
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-holdsnoleasesize
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T16:05:34.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4f0bcb3438f
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-preview
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:13.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5799d7c3b7e0
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-preview
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:13.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f1e7c8bd382

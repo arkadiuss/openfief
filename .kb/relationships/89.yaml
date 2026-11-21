@@ -1189,3 +1189,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7623d0f4d7a
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-failuresof
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T17:59:07.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3fdf13d04d

@@ -528,13 +528,26 @@ type Report struct {
 	// re-grading of an older one, with no model called.
 	ScorerVersion int            `json:"scorerVersion"`
 	Rescore       *RescoreReport `json:"rescore,omitempty"`
+	// Set names the set of cases the run asked when it is not the eval's: the
+	// opinions set, whose cases await the author's approval (D-225, D-229) and
+	// decide no verdict.
+	Set string `json:"set,omitempty"`
+}
+
+// setOf returns the name of the set a run asks: the opinions set, or "" for the
+// eval's own.
+func setOf(opinions bool) string {
+	if opinions {
+		return opinionsSet
+	}
+	return ""
 }
 
 // report assembles the report of a finished run.
 func (b *Bench) report(tasks []task, results []RunReport, aborted bool) (*Report, error) {
 	used := b.meter.snapshot()
 	r := &Report{
-		Schema: reportSchema, ScorerVersion: ScorerVersion, Day: b.seed.Today.String(), Seed: benchSeed, Subset: len(b.cases) != b.total, RunsPerCase: b.opts.Runs, Judged: b.opts.Judge != nil,
+		Schema: reportSchema, ScorerVersion: ScorerVersion, Day: b.seed.Today.String(), Seed: benchSeed, Subset: len(b.cases) != b.total, RunsPerCase: b.opts.Runs, Judged: b.opts.Judge != nil, Set: setOf(b.opts.Opinions),
 		Budget: BudgetReport{
 			MaxCost: b.opts.MaxCost.String(), MaxCalls: b.opts.MaxCalls, Calls: used.calls, InputTokens: used.in, OutputTokens: used.out,
 			Cost: used.amount.String(), Aborted: aborted,
@@ -942,8 +955,8 @@ func failureReasons(r *RunReport) []string {
 // config returns what the model's results depend on and its hash.
 func (b *Bench) config(m *Model) (ConfigReport, string, error) {
 	cfg := ConfigReport{
-		Model: m.ID, BaseURL: hostOf(b.opts.BaseURL), Routing: routingProbe(b.opts.BaseURL, m), SystemPrompt: ui.AskSystemPrompt(b.seed.Today),
-		StructuredOutput: m.Structured, Route: m.Route, Reasoning: m.Reasoning, AnswerSchema: ui.AskAnswerSchema(),
+		Model: m.ID, BaseURL: hostOf(b.opts.BaseURL), Routing: routingProbe(b.opts.BaseURL, m), SystemPrompt: ui.AskSystemPromptFor(b.seed.Today, b.opts.Opinions),
+		StructuredOutput: m.Structured, Route: m.Route, Reasoning: m.Reasoning, AnswerSchema: ui.AskAnswerSchemaFor(b.opts.Opinions),
 		Limits: LimitsReport{
 			ToolRounds: b.opts.Limits.ToolRounds, ToolCalls: b.opts.Limits.ToolCalls, OutputTokens: b.opts.Limits.OutputTokens,
 			Deadline: b.opts.Limits.Deadline.String(),
@@ -1012,6 +1025,9 @@ func (r *Report) Summary() string {
 	fmt.Fprintf(&b, "# Ask box bench\n\nDay %s, seed %d, %d runs a case. Scorer version %d: verdicts graded by different versions are not comparable.\n\n", r.Day, r.Seed, r.RunsPerCase, scorerOf(r))
 	if r.Rescore != nil {
 		writeRescore(&b, r.Rescore)
+	}
+	if r.Set == opinionsSet {
+		b.WriteString("**The opinions set (D-225, D-229).** Its cases await the design session's review and the author's approval, so this run is no part of the eval a model passes to serve the Ask box (D-217): it is recorded in no history and decides no verdict. Its cases that set opinions on grade the model on the box's prompt with them on; the others grade the box as a public demo has it.\n\n")
 	}
 	fmt.Fprintf(&b, "Budget: spent %s of %s USD and %d of %d model calls", r.Budget.Cost, r.Budget.MaxCost, r.Budget.Calls, r.Budget.MaxCalls)
 	if r.Budget.Aborted {

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d222-3-commands-show-no-model-note",
+  "sourceFile": "internal/views/ui/askevalnote.go",
+  "symbol": "noteAnswerer.answer",
+  "verdict": "keeps",
+  "note": "The note is still set only when the card has a model, so a command answer shows none. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:e15e0052a09b19cbcc29858525f7ad8c3280db6407775e95c4081f0eda8c35a7",
+  "codeHash": "sha256:99081ae9fd9299905854f7ea06588f4b095675d3521ab1f23e9bf976275bee00",
+  "startLine": 95,
+  "endLine": 105,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

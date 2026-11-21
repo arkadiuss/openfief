@@ -1,35 +1,33 @@
 ---
-title: The install of a view plugin ends its summary with a line telling the owner that, if OpenFief runs with SpiceDB authorization, they grant it accounts in Settings → Access, and the install of a plugin without the view capability prints none.
+title: The install of a view plugin ends its summary with a line telling the owner that it reads nothing until they grant it accounts in Settings → Access, whichever authorization OpenFief runs, and the install of a plugin without the view capability prints none.
 status: open
 firmness: default
-semantic_text: The install of a view plugin ends its summary with a line telling the owner that, if OpenFief runs with SpiceDB authorization, they grant it accounts in Settings → Access, and the install of a plugin without the view capability prints none.
+semantic_text: The install of a view plugin ends its summary with a line telling the owner that it reads nothing until they grant it accounts in Settings → Access, whichever authorization OpenFief runs, and the install of a plugin without the view capability prints none.
 origin:
   kind: agent
   ref: 'design-session answers for the permissions plan, 2026-11-13 (later): attention item view-plugin-ungranted (D-196, D-209)'
   recorded_at: '2026-11-13T17:06:25.781Z'
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: f944c932b057e92eb15dfd3042cd4a7d9664231db125e8cae3dabdb8ba6d0ec5
+semantic_source_hash: 7ddcacc7903297cb2a288faf5f6a3eea5293d93ee5103e3e2881465d3e1ff408
 semantic_inventory:
-  - claim_key: CLAIM-D059509CB531BE28
-    claim_text: The install of a view plugin ends its summary with a line telling the owner that, if OpenFief runs with SpiceDB authorization, they grant it accounts in Settings → Access, and the install of a plugin without the view capability prints none
-    role: normative
-    status: ontology_gap
+  - claim_key: CLAIM-A751090D7E937866
+    claim_text: The install of a view plugin ends its summary with a line telling the owner that it reads nothing until they grant it accounts in Settings → Access, whichever authorization OpenFief runs, and the install of a plugin without the view capability prints none
+    role: descriptive
+    status: missing
     span:
       start: 0
-      end: 241
-    subjects:
-      - plugin_cli.view_grant_hint
+      end: 257
 logic_claims:
-  - CLAIM-D059509CB531BE28
+  - CLAIM-A751090D7E937866
 id: REQ-plugins-cli-install-view-grant-hint
 type: req
 ---
-The install of a view plugin ends its summary with a line telling the owner that, if OpenFief runs with SpiceDB authorization, they grant it accounts in Settings → Access, and the install of a plugin without the view capability prints none.
+The install of a view plugin ends its summary with a line telling the owner that it reads nothing until they grant it accounts in Settings → Access, whichever authorization OpenFief runs, and the install of a plugin without the view capability prints none.
 
 ## Context
 
-A view plugin reads nothing under SpiceDB authorization until the owner grants it accounts. The command line can't tell which authorization the core runs with, so the design session asked for a line that is correct either way.
+A view plugin reads nothing until the owner grants it accounts, under the policy and under SpiceDB alike, so the line is unconditional. The first wording said "if OpenFief runs with SpiceDB authorization", because the command line can't tell which authorization the core runs with; since the policy enforces grants too, it no longer needs to. Changed on 2026-11-21 at the coordinator's request.
 
 ## Source
 

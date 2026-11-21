@@ -1252,3 +1252,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-069381a0d485
+  - type: verified_by
+    from: SCEN-ui-ask-thesis-card
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T15:43:12.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4423598edc
+  - type: verified_by
+    from: SCEN-ui-ask-thesis-card
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T15:43:12.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fe250db71b1
+  - type: verified_by
+    from: SCEN-ui-ask-thesis-card
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-21T15:43:12.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07154554f83d
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-protoreflect
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:38:31.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a8784b48f99
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-protoreflect
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:38:31.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6a8f4cf12c0
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-protoreflect
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:38:31.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceabaccbfa04
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-testamodelthatbreaksaruleoftheopinionssetfailsitscase
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T17:58:24.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07a539acaf11

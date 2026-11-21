@@ -360,7 +360,8 @@ func (r Ref) Validate() error {
 		if !validModelSetting(r.ID) {
 			return fmt.Errorf("%w: a model setting reference is of the shape of a setting", ErrInvalidAuditEntry)
 		}
-	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
+	case RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount,
+		RefThesis, RefThesisVersion:
 		return r.validateChangeRef()
 	default:
 		return fmt.Errorf("%w: unknown reference kind", ErrInvalidAuditEntry)
@@ -396,7 +397,8 @@ func (r Ref) validateGrantRef() error {
 	case RefHousehold:
 		ok = r.ID == HouseholdID
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefModelRole, RefModel, RefModelCall, RefModelError, RefMaintainerRun, RefModelSetting, RefMCPTool,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount,
+		RefThesis, RefThesisVersion:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is the ID of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -422,7 +424,8 @@ func (r Ref) validateModel() error {
 	case RefMCPTool:
 		ok = validMCPTool(r.ID)
 	case RefSession, RefPasskey, RefEnrollmentCode, RefScriptToken, RefPerson, RefViewPlugin, RefAccount, RefSleeve, RefHousehold, RefMaintainerRun, RefModelSetting,
-		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount:
+		RefInstrument, RefSleeveKind, RefAttentionItem, RefBondLot, RefPlugin, RefPluginGeneration, RefSetting, RefImportBatch, RefSyncCount,
+		RefThesis, RefThesisVersion:
 	}
 	if !ok {
 		return fmt.Errorf("%w: a %s reference is a role, a provider/model, a call ID or an error class of its shape", ErrInvalidAuditEntry, r.Kind)
@@ -834,11 +837,12 @@ const (
 
 // ModelSettings are the settings an ActionModelSettingsChanged entry may name,
 // a closed set: the switch turned "on" or "off", each feature's toggle turned
-// on or off, each role's route and each data tier's models.
+// on or off, the Ask box's opinions (D-225) on or off, each role's route and each
+// data tier's models.
 func ModelSettings() []string {
-	const count = 14 // two for the switch, six toggles, two routes and four tiers
+	const count = 16 // two for the switch, six toggles, two for opinions, two routes and four tiers
 	out := make([]string, 0, count)
-	out = append(out, "switch:on", "switch:off")
+	out = append(out, "switch:on", "switch:off", "opinions:on", "opinions:off")
 	for _, f := range []string{roleAsk, roleMaintainer, "mcp"} {
 		out = append(out, "feature:"+f+":on", "feature:"+f+":off")
 	}

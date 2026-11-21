@@ -634,15 +634,16 @@ func checkSpiceDBCredentials(t *testing.T, k *kube) {
 	}
 }
 
-// checkAgenticSwitchOff checks D-212: the upgrade leaves agents and models off: the switch has no row that turns it
-// on, no feature toggle is set, and the MCP endpoint doesn't answer even to a valid script token.
+// checkAgenticSwitchOff checks D-212: agents and models are off, on a fresh install and after an upgrade: the switch
+// has no row that turns it on, no feature toggle is set, and the MCP endpoint doesn't answer even to a valid script
+// token.
 func checkAgenticSwitchOff(t *testing.T, k *kube, token issuedToken) {
 	t.Helper()
 	if got := queryOne(t, k, `SELECT count(*) FROM modelrouter.switch WHERE enabled`); got != "0" {
-		t.Errorf("the agentic switch is on after the upgrade: %s rows", got)
+		t.Errorf("the agentic switch is on: %s rows, want none", got)
 	}
 	if got := queryOne(t, k, `SELECT count(*) FROM modelrouter.feature_toggles`); got != "0" {
-		t.Errorf("%s feature toggles are on after the upgrade, want none", got)
+		t.Errorf("%s feature toggles are on, want none", got)
 	}
 	f := forwardCoreUntilStopped(t, k)
 	defer f.stop()

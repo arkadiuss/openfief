@@ -57,6 +57,16 @@ func (m *memStore) SaveToggle(ctx context.Context, f modelrouter.Feature, on boo
 	return nil
 }
 
+func (m *memStore) SaveOpinions(ctx context.Context, on bool, within func(context.Context) error) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if err := runWithin(ctx, within); err != nil {
+		return err
+	}
+	m.s.Opinions = on
+	return nil
+}
+
 func (m *memStore) SaveRoute(ctx context.Context, role modelrouter.Role, refs []modelrouter.Ref, within func(context.Context) error) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()

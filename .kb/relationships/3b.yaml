@@ -1217,3 +1217,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5812dedc6096
+  - type: verified_by
+    from: SCEN-ui-ask-opinions-mode
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T15:43:11.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06f6f5fa05a2
+  - type: verified_by
+    from: SCEN-ui-ask-opinions-mode
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T15:43:11.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9ffc195acff
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-newfaketheses
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:34:54.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-860fa94620f3

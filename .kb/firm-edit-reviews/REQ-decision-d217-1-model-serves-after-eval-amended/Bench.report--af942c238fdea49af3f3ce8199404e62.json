@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d217-1-model-serves-after-eval-amended",
+  "sourceFile": "tools/askbench/report.go",
+  "symbol": "Bench.report",
+  "verdict": "keeps",
+  "note": "The bench report only names the opinions set and its prompt and schema; the verdict, history and weekly runs are untouched. Open point for the author: opinions mode is a prompt variant whose set awaits approval. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:011ef9727f7be3bd9b32f6c1957dacd97d1bb7421dec06001c4dde280e579ab1",
+  "codeHash": "sha256:3e299c9987d300396a20db159402d7949207295fcfc06ca3cc1820b18dd5f8c3",
+  "startLine": 547,
+  "endLine": 566,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-identity-audit-owner-view",
+  "sourceFile": "internal/identity/connectapi/service.go",
+  "symbol": "pbRefKinds",
+  "verdict": "keeps",
+  "note": "The owner's audit view maps and words the new actions and refs, so its entries stay listed and filterable. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:30fa4044defc81449034bfbbfd0c5174601da18c85196f28e942a315aab40ab3",
+  "codeHash": "sha256:2f565b4408c777e5382fc48a8cb13ac560d8ec05f2faa8541766cf4a5b72e8a4",
+  "startLine": 401,
+  "endLine": 431,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

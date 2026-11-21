@@ -1210,3 +1210,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8adaf84218c3
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-page-test-showfund
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T17:23:44.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b60e542abaf9
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-string
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:39:30.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05217e9c42c8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-string
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:39:30.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9dfe92f0562
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-string
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:39:30.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81a1a847e73b

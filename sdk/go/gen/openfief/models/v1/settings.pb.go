@@ -333,7 +333,13 @@ type GetModelSettingsResponse struct {
 	// The entries of every route, whether or not it is in use, that name a
 	// provider instance that is missing or is no model provider. Empty when
 	// the core can't tell yet.
-	Broken        []*BrokenEntry `protobuf:"bytes,5,rep,name=broken,proto3" json:"broken,omitempty"`
+	Broken []*BrokenEntry `protobuf:"bytes,5,rep,name=broken,proto3" json:"broken,omitempty"`
+	// Whether the owner turned the Ask box's opinions on (D-225). It says
+	// nothing of whether they work now: that needs the switch and the Ask box's
+	// toggle, and an eligible route.
+	OpinionsEnabled bool `protobuf:"varint,6,opt,name=opinions_enabled,json=opinionsEnabled,proto3" json:"opinions_enabled,omitempty"`
+	// True on a public demo, where opinions can't be turned on.
+	Demo          bool `protobuf:"varint,7,opt,name=demo,proto3" json:"demo,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -401,6 +407,20 @@ func (x *GetModelSettingsResponse) GetBroken() []*BrokenEntry {
 		return x.Broken
 	}
 	return nil
+}
+
+func (x *GetModelSettingsResponse) GetOpinionsEnabled() bool {
+	if x != nil {
+		return x.OpinionsEnabled
+	}
+	return false
+}
+
+func (x *GetModelSettingsResponse) GetDemo() bool {
+	if x != nil {
+		return x.Demo
+	}
+	return false
 }
 
 type ListModelProvidersRequest struct {
@@ -779,6 +799,102 @@ func (*SetFeatureEnabledResponse) Descriptor() ([]byte, []int) {
 	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{12}
 }
 
+type SetOpinionsEnabledRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	Enabled       bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetOpinionsEnabledRequest) Reset() {
+	*x = SetOpinionsEnabledRequest{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetOpinionsEnabledRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOpinionsEnabledRequest) ProtoMessage() {}
+
+func (x *SetOpinionsEnabledRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOpinionsEnabledRequest.ProtoReflect.Descriptor instead.
+func (*SetOpinionsEnabledRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SetOpinionsEnabledRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *SetOpinionsEnabledRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *SetOpinionsEnabledRequest) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+type SetOpinionsEnabledResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetOpinionsEnabledResponse) Reset() {
+	*x = SetOpinionsEnabledResponse{}
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetOpinionsEnabledResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOpinionsEnabledResponse) ProtoMessage() {}
+
+func (x *SetOpinionsEnabledResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOpinionsEnabledResponse.ProtoReflect.Descriptor instead.
+func (*SetOpinionsEnabledResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{14}
+}
+
 type SetRouteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -791,7 +907,7 @@ type SetRouteRequest struct {
 
 func (x *SetRouteRequest) Reset() {
 	*x = SetRouteRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -803,7 +919,7 @@ func (x *SetRouteRequest) String() string {
 func (*SetRouteRequest) ProtoMessage() {}
 
 func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[13]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -816,7 +932,7 @@ func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteRequest.ProtoReflect.Descriptor instead.
 func (*SetRouteRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{13}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SetRouteRequest) GetOrigin() string {
@@ -855,7 +971,7 @@ type SetRouteResponse struct {
 
 func (x *SetRouteResponse) Reset() {
 	*x = SetRouteResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -867,7 +983,7 @@ func (x *SetRouteResponse) String() string {
 func (*SetRouteResponse) ProtoMessage() {}
 
 func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[14]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -880,7 +996,7 @@ func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteResponse.ProtoReflect.Descriptor instead.
 func (*SetRouteResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{14}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{16}
 }
 
 type SetTierModelsRequest struct {
@@ -895,7 +1011,7 @@ type SetTierModelsRequest struct {
 
 func (x *SetTierModelsRequest) Reset() {
 	*x = SetTierModelsRequest{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -907,7 +1023,7 @@ func (x *SetTierModelsRequest) String() string {
 func (*SetTierModelsRequest) ProtoMessage() {}
 
 func (x *SetTierModelsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[15]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -920,7 +1036,7 @@ func (x *SetTierModelsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetTierModelsRequest.ProtoReflect.Descriptor instead.
 func (*SetTierModelsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{15}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *SetTierModelsRequest) GetOrigin() string {
@@ -959,7 +1075,7 @@ type SetTierModelsResponse struct {
 
 func (x *SetTierModelsResponse) Reset() {
 	*x = SetTierModelsResponse{}
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -971,7 +1087,7 @@ func (x *SetTierModelsResponse) String() string {
 func (*SetTierModelsResponse) ProtoMessage() {}
 
 func (x *SetTierModelsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_models_v1_settings_proto_msgTypes[16]
+	mi := &file_openfief_models_v1_settings_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -984,7 +1100,7 @@ func (x *SetTierModelsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetTierModelsResponse.ProtoReflect.Descriptor instead.
 func (*SetTierModelsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{16}
+	return file_openfief_models_v1_settings_proto_rawDescGZIP(), []int{18}
 }
 
 var File_openfief_models_v1_settings_proto protoreflect.FileDescriptor
@@ -1008,13 +1124,15 @@ const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\vBrokenEntry\x12\x12\n" +
 	"\x04role\x18\x01 \x01(\tR\x04role\x12\x14\n" +
 	"\x05model\x18\x02 \x01(\tR\x05model\x12\x16\n" +
-	"\x06reason\x18\x03 \x01(\tR\x06reason\"\xa2\x02\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\"\xe1\x02\n" +
 	"\x18GetModelSettingsResponse\x12%\n" +
 	"\x0eagents_enabled\x18\x01 \x01(\bR\ragentsEnabled\x12=\n" +
 	"\bfeatures\x18\x02 \x03(\v2!.openfief.models.v1.FeatureToggleR\bfeatures\x121\n" +
 	"\x06routes\x18\x03 \x03(\v2\x19.openfief.models.v1.RouteR\x06routes\x124\n" +
 	"\x05tiers\x18\x04 \x03(\v2\x1e.openfief.models.v1.TierModelsR\x05tiers\x127\n" +
-	"\x06broken\x18\x05 \x03(\v2\x1f.openfief.models.v1.BrokenEntryR\x06broken\"X\n" +
+	"\x06broken\x18\x05 \x03(\v2\x1f.openfief.models.v1.BrokenEntryR\x06broken\x12)\n" +
+	"\x10opinions_enabled\x18\x06 \x01(\bR\x0fopinionsEnabled\x12\x12\n" +
+	"\x04demo\x18\a \x01(\bR\x04demo\"X\n" +
 	"\x19ListModelProvidersRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"\xf8\x01\n" +
@@ -1036,7 +1154,12 @@ const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x18\n" +
 	"\afeature\x18\x03 \x01(\tR\afeature\x12\x18\n" +
 	"\aenabled\x18\x04 \x01(\bR\aenabled\"\x1b\n" +
-	"\x19SetFeatureEnabledResponse\"z\n" +
+	"\x19SetFeatureEnabledResponse\"r\n" +
+	"\x19SetOpinionsEnabledRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x18\n" +
+	"\aenabled\x18\x03 \x01(\bR\aenabled\"\x1c\n" +
+	"\x1aSetOpinionsEnabledResponse\"z\n" +
 	"\x0fSetRouteRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
@@ -1048,12 +1171,13 @@ const file_openfief_models_v1_settings_proto_rawDesc = "" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
 	"\x04tier\x18\x03 \x01(\tR\x04tier\x12\x16\n" +
 	"\x06models\x18\x04 \x03(\tR\x06models\"\x17\n" +
-	"\x15SetTierModelsResponse2\xa2\x05\n" +
+	"\x15SetTierModelsResponse2\x97\x06\n" +
 	"\x14ModelSettingsService\x12r\n" +
 	"\x10GetModelSettings\x12+.openfief.models.v1.GetModelSettingsRequest\x1a,.openfief.models.v1.GetModelSettingsResponse\"\x03\x90\x02\x01\x12x\n" +
 	"\x12ListModelProviders\x12-.openfief.models.v1.ListModelProvidersRequest\x1a..openfief.models.v1.ListModelProvidersResponse\"\x03\x90\x02\x01\x12m\n" +
 	"\x10SetAgentsEnabled\x12+.openfief.models.v1.SetAgentsEnabledRequest\x1a,.openfief.models.v1.SetAgentsEnabledResponse\x12p\n" +
-	"\x11SetFeatureEnabled\x12,.openfief.models.v1.SetFeatureEnabledRequest\x1a-.openfief.models.v1.SetFeatureEnabledResponse\x12U\n" +
+	"\x11SetFeatureEnabled\x12,.openfief.models.v1.SetFeatureEnabledRequest\x1a-.openfief.models.v1.SetFeatureEnabledResponse\x12s\n" +
+	"\x12SetOpinionsEnabled\x12-.openfief.models.v1.SetOpinionsEnabledRequest\x1a..openfief.models.v1.SetOpinionsEnabledResponse\x12U\n" +
 	"\bSetRoute\x12#.openfief.models.v1.SetRouteRequest\x1a$.openfief.models.v1.SetRouteResponse\x12d\n" +
 	"\rSetTierModels\x12(.openfief.models.v1.SetTierModelsRequest\x1a).openfief.models.v1.SetTierModelsResponseB\xd7\x01\n" +
 	"\x16com.openfief.models.v1B\rSettingsProtoP\x01ZDgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1;modelsv1\xa2\x02\x03OMX\xaa\x02\x12Openfief.Models.V1\xca\x02\x12Openfief\\Models\\V1\xe2\x02\x1eOpenfief\\Models\\V1\\GPBMetadata\xea\x02\x14Openfief::Models::V1b\x06proto3"
@@ -1070,7 +1194,7 @@ func file_openfief_models_v1_settings_proto_rawDescGZIP() []byte {
 	return file_openfief_models_v1_settings_proto_rawDescData
 }
 
-var file_openfief_models_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_openfief_models_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_openfief_models_v1_settings_proto_goTypes = []any{
 	(*GetModelSettingsRequest)(nil),    // 0: openfief.models.v1.GetModelSettingsRequest
 	(*FeatureToggle)(nil),              // 1: openfief.models.v1.FeatureToggle
@@ -1085,37 +1209,41 @@ var file_openfief_models_v1_settings_proto_goTypes = []any{
 	(*SetAgentsEnabledResponse)(nil),   // 10: openfief.models.v1.SetAgentsEnabledResponse
 	(*SetFeatureEnabledRequest)(nil),   // 11: openfief.models.v1.SetFeatureEnabledRequest
 	(*SetFeatureEnabledResponse)(nil),  // 12: openfief.models.v1.SetFeatureEnabledResponse
-	(*SetRouteRequest)(nil),            // 13: openfief.models.v1.SetRouteRequest
-	(*SetRouteResponse)(nil),           // 14: openfief.models.v1.SetRouteResponse
-	(*SetTierModelsRequest)(nil),       // 15: openfief.models.v1.SetTierModelsRequest
-	(*SetTierModelsResponse)(nil),      // 16: openfief.models.v1.SetTierModelsResponse
-	(Location)(0),                      // 17: openfief.models.v1.Location
-	(*Retention)(nil),                  // 18: openfief.models.v1.Retention
-	(*ModelEntry)(nil),                 // 19: openfief.models.v1.ModelEntry
+	(*SetOpinionsEnabledRequest)(nil),  // 13: openfief.models.v1.SetOpinionsEnabledRequest
+	(*SetOpinionsEnabledResponse)(nil), // 14: openfief.models.v1.SetOpinionsEnabledResponse
+	(*SetRouteRequest)(nil),            // 15: openfief.models.v1.SetRouteRequest
+	(*SetRouteResponse)(nil),           // 16: openfief.models.v1.SetRouteResponse
+	(*SetTierModelsRequest)(nil),       // 17: openfief.models.v1.SetTierModelsRequest
+	(*SetTierModelsResponse)(nil),      // 18: openfief.models.v1.SetTierModelsResponse
+	(Location)(0),                      // 19: openfief.models.v1.Location
+	(*Retention)(nil),                  // 20: openfief.models.v1.Retention
+	(*ModelEntry)(nil),                 // 21: openfief.models.v1.ModelEntry
 }
 var file_openfief_models_v1_settings_proto_depIdxs = []int32{
 	1,  // 0: openfief.models.v1.GetModelSettingsResponse.features:type_name -> openfief.models.v1.FeatureToggle
 	2,  // 1: openfief.models.v1.GetModelSettingsResponse.routes:type_name -> openfief.models.v1.Route
 	3,  // 2: openfief.models.v1.GetModelSettingsResponse.tiers:type_name -> openfief.models.v1.TierModels
 	4,  // 3: openfief.models.v1.GetModelSettingsResponse.broken:type_name -> openfief.models.v1.BrokenEntry
-	17, // 4: openfief.models.v1.ModelProvider.location:type_name -> openfief.models.v1.Location
-	18, // 5: openfief.models.v1.ModelProvider.retention:type_name -> openfief.models.v1.Retention
-	19, // 6: openfief.models.v1.ModelProvider.models:type_name -> openfief.models.v1.ModelEntry
+	19, // 4: openfief.models.v1.ModelProvider.location:type_name -> openfief.models.v1.Location
+	20, // 5: openfief.models.v1.ModelProvider.retention:type_name -> openfief.models.v1.Retention
+	21, // 6: openfief.models.v1.ModelProvider.models:type_name -> openfief.models.v1.ModelEntry
 	7,  // 7: openfief.models.v1.ListModelProvidersResponse.providers:type_name -> openfief.models.v1.ModelProvider
 	0,  // 8: openfief.models.v1.ModelSettingsService.GetModelSettings:input_type -> openfief.models.v1.GetModelSettingsRequest
 	6,  // 9: openfief.models.v1.ModelSettingsService.ListModelProviders:input_type -> openfief.models.v1.ListModelProvidersRequest
 	9,  // 10: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:input_type -> openfief.models.v1.SetAgentsEnabledRequest
 	11, // 11: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:input_type -> openfief.models.v1.SetFeatureEnabledRequest
-	13, // 12: openfief.models.v1.ModelSettingsService.SetRoute:input_type -> openfief.models.v1.SetRouteRequest
-	15, // 13: openfief.models.v1.ModelSettingsService.SetTierModels:input_type -> openfief.models.v1.SetTierModelsRequest
-	5,  // 14: openfief.models.v1.ModelSettingsService.GetModelSettings:output_type -> openfief.models.v1.GetModelSettingsResponse
-	8,  // 15: openfief.models.v1.ModelSettingsService.ListModelProviders:output_type -> openfief.models.v1.ListModelProvidersResponse
-	10, // 16: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:output_type -> openfief.models.v1.SetAgentsEnabledResponse
-	12, // 17: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:output_type -> openfief.models.v1.SetFeatureEnabledResponse
-	14, // 18: openfief.models.v1.ModelSettingsService.SetRoute:output_type -> openfief.models.v1.SetRouteResponse
-	16, // 19: openfief.models.v1.ModelSettingsService.SetTierModels:output_type -> openfief.models.v1.SetTierModelsResponse
-	14, // [14:20] is the sub-list for method output_type
-	8,  // [8:14] is the sub-list for method input_type
+	13, // 12: openfief.models.v1.ModelSettingsService.SetOpinionsEnabled:input_type -> openfief.models.v1.SetOpinionsEnabledRequest
+	15, // 13: openfief.models.v1.ModelSettingsService.SetRoute:input_type -> openfief.models.v1.SetRouteRequest
+	17, // 14: openfief.models.v1.ModelSettingsService.SetTierModels:input_type -> openfief.models.v1.SetTierModelsRequest
+	5,  // 15: openfief.models.v1.ModelSettingsService.GetModelSettings:output_type -> openfief.models.v1.GetModelSettingsResponse
+	8,  // 16: openfief.models.v1.ModelSettingsService.ListModelProviders:output_type -> openfief.models.v1.ListModelProvidersResponse
+	10, // 17: openfief.models.v1.ModelSettingsService.SetAgentsEnabled:output_type -> openfief.models.v1.SetAgentsEnabledResponse
+	12, // 18: openfief.models.v1.ModelSettingsService.SetFeatureEnabled:output_type -> openfief.models.v1.SetFeatureEnabledResponse
+	14, // 19: openfief.models.v1.ModelSettingsService.SetOpinionsEnabled:output_type -> openfief.models.v1.SetOpinionsEnabledResponse
+	16, // 20: openfief.models.v1.ModelSettingsService.SetRoute:output_type -> openfief.models.v1.SetRouteResponse
+	18, // 21: openfief.models.v1.ModelSettingsService.SetTierModels:output_type -> openfief.models.v1.SetTierModelsResponse
+	15, // [15:22] is the sub-list for method output_type
+	8,  // [8:15] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
 	8,  // [8:8] is the sub-list for extension extendee
 	0,  // [0:8] is the sub-list for field type_name
@@ -1133,7 +1261,7 @@ func file_openfief_models_v1_settings_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_models_v1_settings_proto_rawDesc), len(file_openfief_models_v1_settings_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

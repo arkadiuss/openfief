@@ -203,6 +203,10 @@ func (s *server) askCard(r *http.Request, sess session, question string) (answer
 	if err != nil {
 		return card, err
 	}
+	if card.Thesis != nil {
+		// Only the owner's own session is given a thesis, and saving needs the core's draft theses.
+		card.Thesis.CanSave = sess.Owner() && s.theses != nil
+	}
 	card.Turn = turnData(&card)
 	return card, nil
 }

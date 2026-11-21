@@ -1336,3 +1336,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dec4dc618dfa
+  - type: implements
+    from: SYM-d225-internal-thesis-connectapi-thesis-service
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:16:46.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5815b4bb984
+  - type: covered_by
+    from: SYM-d225-internal-thesis-connectapi-thesis-service
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:16:46.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a33cfa92df0a
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testwithopinionsonthemodelsuggestsathesistheboxshowsasacard
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:25:53.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a95be83add83
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-readtexts
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:47.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5905d9248ed
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-readtexts
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:47.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d78ff1549a

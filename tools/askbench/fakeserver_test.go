@@ -44,6 +44,9 @@ type fakeModel struct {
 	// provider the host it names as the one that served it, as OpenRouter does.
 	cost, provider string
 	costCalls      int
+	// override scripts the model's behavior for a question beyond the shared
+	// scripts, which it replaces for that question.
+	override map[string]script
 }
 
 // newFakeModel starts the fake.
@@ -296,7 +299,13 @@ func scripts() map[string]script {
 
 // reply scripts the model's behavior by the question it is asked.
 func (f *fakeModel) reply(question string, results []string, n int64) string {
+	if s, ok := f.override[question]; ok {
+		return s(results, n)
+	}
 	if s, ok := scripts()[question]; ok {
+		return s(results, n)
+	}
+	if s, ok := opinionScripts()[question]; ok {
 		return s(results, n)
 	}
 	return answerReply("refuse", "I can't help with that.")

@@ -1091,3 +1091,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddfffc97d59a
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-page-test-thesisreply
+    to: TEST-ui-opinions-ask-page
+    created_at: 2026-11-21T17:23:51.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558648cfa6c4
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-opinionsfixture
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:26:15.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0c2a835a22f
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-getdraft
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:51:45.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4abb0f4336c8
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-getdraft
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:51:45.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1d799778af9

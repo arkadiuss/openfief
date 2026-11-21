@@ -979,3 +979,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8388927a477f
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-testeditrefusals
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:14:20.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fceafdc96c77
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-getsessiontoken
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:47:13.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce845da2695f
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-getsessiontoken
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:47:13.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe93adfdd5c8
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-testtheopinionssethasthecasesandsafetycasesitdocuments
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:01:20.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67edd296a392

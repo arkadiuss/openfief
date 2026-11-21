@@ -4,10 +4,10 @@
   "sourceFile": "tools/askbench/cases.go",
   "symbol": "Case",
   "verdict": "keeps",
-  "note": "The verdict rule is unchanged; the added fields only feed checks, and the new cases carry tags by the rule (the arithmetic cases are other, I6 is safety).",
+  "note": "The verdict rule is unchanged; a Pending case adds opinion checks and is never part of a verdict. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
   "statementHash": "sha256:8fec4a32d6db5883da92dc676ce8e8a3ebf3db2deb8582a444adfd61ac309047",
-  "codeHash": "sha256:e8b2b7b39325b8f87b2686689ce8f65b0b87106427feda85343b6da25135150f",
+  "codeHash": "sha256:a9c3e7605c9f138975f4d89b46ea88ab62e843cf77bdc924830bf496567e1e5f",
   "startLine": 47,
-  "endLine": 72,
-  "recordedAt": "2026-11-21T15:27:04.015Z"
+  "endLine": 81,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
 }

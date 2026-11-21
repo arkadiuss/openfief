@@ -1217,3 +1217,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0f0c7eeb6b1
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-posteddraft
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:31:59.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd885e70c013
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-posteddraft
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:31:59.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d9f095b8c57
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-getid
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:51:53.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f16b261b5b1
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesissummary-getid
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:51:53.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33d6a310abe3

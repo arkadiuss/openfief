@@ -1056,3 +1056,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d5a0fc8f882
+  - type: executable_for
+    from: SYM-e2e-firstrun-check-client-events-on-and-local
+    to: TEST-e2e-bundle-first-run
+    created_at: 2026-11-21T20:21:11.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98d9258601cf
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-draftformofposted
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:31:45.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b44ef0a1602
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-draftformofposted
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:31:45.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dea88524eda
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-inapayload
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:01:59.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bc03f92a868

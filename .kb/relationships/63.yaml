@@ -937,3 +937,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1e63a6f83bb
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-getenabled
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:38:00.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0b2a385cd85
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-getenabled
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:38:00.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54d182d3f3a1
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-getenabled
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:38:00.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2e058c7da69
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:38:53.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d1dead9e265
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:38:53.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f5ea10e2375
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:38:53.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f447b97b27d

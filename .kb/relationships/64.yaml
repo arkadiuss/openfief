@@ -1266,3 +1266,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-247b60f042af
+  - type: implements
+    from: SYM-d225-internal-views-ui-askprompt-askopinionssentences
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T16:02:55.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b99dfd3b3d55
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askprompt-askopinionssentences
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T16:02:55.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e87f6473153b
+  - type: implements
+    from: SYM-d225-internal-modelrouter-app-settings-settings-withdemo
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:11:21.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e25c5b37dc
+  - type: covered_by
+    from: SYM-d225-internal-modelrouter-app-settings-settings-withdemo
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T17:11:21.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b67ac6fb113
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-protoreflect
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:39:15.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c8e6512cd08
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-protoreflect
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:39:15.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0d41d299f9d
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledresponse-protoreflect
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:39:15.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10b907113ebb

@@ -1140,3 +1140,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8c192f52705
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-memstore-get
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:15:26.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89bcd79f067
+  - type: executable_for
+    from: SYM-d225-internal-thesis-postgres-store-test-testthetablerefuseswhatthedomainrefuses
+    to: TEST-thesis-store
+    created_at: 2026-11-21T17:19:17.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1047953e35
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-protomessage
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:47:20.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ad6e40cc3a
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-savethesisrequest-protomessage
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:47:20.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c0787e7d6a

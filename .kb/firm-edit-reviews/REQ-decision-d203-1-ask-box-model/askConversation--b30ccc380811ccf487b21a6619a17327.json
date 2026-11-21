@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/ui/askmodel.go",
   "symbol": "askConversation",
   "verdict": "keeps",
-  "note": "The conversation keeps the tools its model was told, so a market tool can be left out; the model is still offered only the read-only answerers (D-203).",
+  "note": "The model still gets only the same read-only answerers as tools and the box still shows the cards it used; opinions add a prompt, a schema and a thesis card whose saving is the owner's own click, so the box changes and logs nothing. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
   "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
-  "codeHash": "sha256:ed6c774885eb95eb2da1abf505eab06b85f38ec734dc6983d8aa31f79a87ab08",
-  "startLine": 248,
-  "endLine": 272,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "codeHash": "sha256:7a7a367645c6861f857515715d61f43a2a4f6a5cd56945ce0bfc7216845d9e97",
+  "startLine": 264,
+  "endLine": 291,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
 }

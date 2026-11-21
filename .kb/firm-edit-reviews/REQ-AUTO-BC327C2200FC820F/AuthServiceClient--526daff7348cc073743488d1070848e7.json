@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-AUTO-BC327C2200FC820F",
+  "sourceFile": "sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go",
+  "symbol": "AuthServiceClient",
+  "verdict": "keeps",
+  "note": "Only the generated comment on CreateGrant changed, from the proto comment; no method, message or behavior of the plugin-facing contract changed, and buf breaking passes. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:2f2b0c8cde618cc68530c24b25a4c6187b030163f811b8c48b2c0d11db1f010e",
+  "codeHash": "sha256:46b9fadbbf8dee8091d7784a0c29907cc6e54cdeb55237715cf0fdd0cab6421c",
+  "startLine": 160,
+  "endLine": 294,
+  "recordedAt": "2026-11-21T21:09:59.743Z"
+}

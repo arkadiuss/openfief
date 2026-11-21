@@ -35,6 +35,25 @@
   {{if not .Enabled}}<p class="muted">The toggles are kept while the switch is off; they take effect when you turn it on.</p>{{end}}
 </section>
 
+<section class="card" aria-labelledby="opinions-title">
+  <h2 id="opinions-title" class="eyebrow">Opinions in the Ask box</h2>
+  <p class="muted">With opinions on, the Ask box's model may say whether it would buy, sell or hold something and why, using only the cards it shows and the public data it fetched, and may suggest a thesis for an agent that you can save as a draft. It is never investment advice, and it never buys, sells or starts anything. Off by default, and only you can turn it on, on your own install.</p>
+  {{with .Opinions}}
+  <p>
+    {{if .On}}<span class="pill pill-ok">On</span>{{else}}<span class="pill pill-neutral">Off</span>{{end}}
+    {{if .Demo}}<span class="muted">A public demo never gives opinions: it explains and shows data and declines to recommend. This can't be turned on here.</span>{{end}}
+  </p>
+  {{with .Warning}}<p class="alert alert-warn" role="note">{{.}}</p>{{end}}
+  {{if .On}}<p class="help">Opinions send three kinds of data to the Ask box's model: your question and the cards it reads (T0), prices from your market-data connector (T2) and a thesis it writes (T1). The Ask box's route needs a model allowed for all three below; without one, opinions stay off and the box says why.</p>{{end}}
+  {{if not .Demo}}
+  <form method="post" action="{{.Action}}" class="actions">
+    {{if .On}}<input type="hidden" name="enabled" value="0"><button type="submit">Turn opinions off</button>
+    {{else}}<input type="hidden" name="enabled" value="1"><button type="submit" class="primary">Turn opinions on</button>{{end}}
+  </form>
+  {{end}}
+  {{end}}
+</section>
+
 <section class="card" aria-labelledby="providers-title">
   <h2 id="providers-title" class="eyebrow">Model providers</h2>
   <p class="muted">A model provider is a plugin that holds one provider's key and reaches only that provider. Where its models run and what it keeps are what the plugin declares; OpenFief can't check them. Install one on the <a href="/plugins">Plugins</a> page.</p>

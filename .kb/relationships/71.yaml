@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72d767df9170
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-testtheboxsthesischecksagreewiththethesiscontexts
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:00:57.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74ab811d78f9

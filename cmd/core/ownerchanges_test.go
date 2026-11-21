@@ -36,6 +36,8 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/models/v1/modelsv1connect"
 	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
+	thesisv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1/thesisv1connect"
 	valuationv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -83,6 +85,11 @@ type changeEnv struct {
 	instruments ledgerv1connect.InstrumentServiceClient
 	items       attentionv1connect.AttentionServiceClient
 	agents      modelsv1connect.ModelSettingsServiceClient
+	theses      thesisv1connect.ThesisServiceClient
+	// thesisID and thesisVersion are the draft thesis the save made and its
+	// latest version, which the edit builds on.
+	thesisID      string
+	thesisVersion int32
 }
 
 // withClients sets the owner services' clients of e on srv.
@@ -99,6 +106,7 @@ func (e *changeEnv) withClients() {
 	e.instruments = ledgerv1connect.NewInstrumentServiceClient(h, u, bearer)
 	e.items = attentionv1connect.NewAttentionServiceClient(h, u, bearer)
 	e.agents = modelsv1connect.NewModelSettingsServiceClient(h, u, bearer)
+	e.theses = thesisv1connect.NewThesisServiceClient(h, u, bearer)
 }
 
 // outcome is the error of a call, wrapped, whatever it answered: the drivers
@@ -115,7 +123,7 @@ func outcome(_ any, err error) error {
 // sleeve. Each is of the Connect procedure it names; a procedure may appear
 // with more than one case.
 func ownerChanges() []ownerChange {
-	return slices.Concat(settingChanges(), marketDataChanges(), sleeveChanges(), accountChanges(), ledgerChanges(), attentionChanges(), agentChanges())
+	return slices.Concat(settingChanges(), marketDataChanges(), sleeveChanges(), accountChanges(), ledgerChanges(), attentionChanges(), agentChanges(), thesisChanges())
 }
 
 // settingChanges are the owner's settings of the valuation context and the
@@ -334,11 +342,44 @@ func agentChanges() []ownerChange {
 				Origin: origin, SessionToken: e.session, Feature: "ask", Enabled: true,
 			})))
 		}, true},
+		{modelsv1connect.ModelSettingsServiceSetOpinionsEnabledProcedure, identity.ActionModelSettingsChanged, func(e *changeEnv) error {
+			return outcome(e.agents.SetOpinionsEnabled(e.t.Context(), connect.NewRequest(&modelsv1.SetOpinionsEnabledRequest{
+				Origin: origin, SessionToken: e.session, Enabled: true,
+			})))
+		}, true},
 		{modelsv1connect.ModelSettingsServiceSetRouteProcedure, identity.ActionModelSettingsChanged, func(e *changeEnv) error {
 			return outcome(e.agents.SetRoute(e.t.Context(), connect.NewRequest(&modelsv1.SetRouteRequest{Origin: origin, SessionToken: e.session, Role: "ask"})))
 		}, true},
 		{modelsv1connect.ModelSettingsServiceSetTierModelsProcedure, identity.ActionModelSettingsChanged, func(e *changeEnv) error {
 			return outcome(e.agents.SetTierModels(e.t.Context(), connect.NewRequest(&modelsv1.SetTierModelsRequest{Origin: origin, SessionToken: e.session, Tier: "T0"})))
+		}, true},
+	}
+}
+
+// thesisChanges are the owner's saves and edits of draft theses (D-229): each
+// writes one entry that names the thesis and its version, never its text.
+func thesisChanges() []ownerChange {
+	const origin = localUI
+	draft := &thesisv1.ThesisDraft{
+		Statement: "Services revenue keeps growing.", Instruments: []string{"EXMP"}, Horizon: thesisv1.Horizon_HORIZON_LONG_TERM,
+		Invalidation: []string{"Growth stalls for two quarters."}, Sources: []string{"The holdings card."},
+	}
+	return []ownerChange{
+		{thesisv1connect.ThesisServiceSaveThesisProcedure, identity.ActionThesisSaved, func(e *changeEnv) error {
+			resp, err := e.theses.SaveThesis(e.t.Context(), connect.NewRequest(&thesisv1.SaveThesisRequest{Origin: origin, SessionToken: e.session, Draft: draft}))
+			if err == nil {
+				e.thesisID, e.thesisVersion = resp.Msg.GetThesis().GetId(), 1
+			}
+			return outcome(resp, err)
+		}, true},
+		{thesisv1connect.ThesisServiceEditThesisProcedure, identity.ActionThesisEdited, func(e *changeEnv) error {
+			resp, err := e.theses.EditThesis(e.t.Context(), connect.NewRequest(&thesisv1.EditThesisRequest{
+				Origin: origin, SessionToken: e.session, ThesisId: e.thesisID, BaseVersion: e.thesisVersion, Draft: draft,
+			}))
+			if err == nil {
+				e.thesisVersion++
+			}
+			return outcome(resp, err)
 		}, true},
 	}
 }
@@ -422,6 +463,7 @@ func readOnlyProcedures() []string {
 		ingestv1connect.TickerServiceListPendingTickersProcedure, ingestv1connect.TickerServiceListConfirmedTickersProcedure,
 		modelsv1connect.AskModelServiceGetAskModelProcedure, modelsv1connect.AskModelServiceCheckAskTiersProcedure,
 		modelsv1connect.ModelSettingsServiceGetModelSettingsProcedure, modelsv1connect.ModelSettingsServiceListModelProvidersProcedure,
+		thesisv1connect.ThesisServiceGetThesisProcedure, thesisv1connect.ThesisServiceListThesesProcedure,
 	}
 }
 
@@ -443,6 +485,7 @@ func ownerServices() []protoreflect.ServiceDescriptors {
 		ingestv1.File_openfief_ingest_v1_accounts_proto.Services(), ingestv1.File_openfief_ingest_v1_statements_proto.Services(),
 		ingestv1.File_openfief_ingest_v1_tickers_proto.Services(), ingestv1.File_openfief_ingest_v1_syncs_proto.Services(),
 		ingestv1.File_openfief_ingest_v1_bond_lots_proto.Services(),
+		thesisv1.File_openfief_thesis_v1_thesis_proto.Services(),
 	}
 }
 

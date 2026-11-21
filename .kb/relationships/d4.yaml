@@ -1147,3 +1147,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5743790b00d9
+  - type: executable_for
+    from: SYM-d225-internal-thesis-thesis-test-valid
+    to: TEST-thesis-domain
+    created_at: 2026-11-21T17:22:28.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22cdc1795d2a
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-testwithoutadraftthesesservicethepageisnotfound
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:35:50.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e9d26f4644b

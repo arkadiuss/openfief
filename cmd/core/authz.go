@@ -31,8 +31,9 @@ import (
 
 // The authorizers --authz chooses between (D-163, D-164).
 const (
-	// authzPolicy is identityapp.Policy: the owner acts on every account,
-	// every other holder of read access views every account. The default.
+	// authzPolicy is identityapp.GrantPolicy: the owner acts on every account,
+	// and a viewer, a script token and a view plugin view exactly the accounts
+	// their grants cover, as under SpiceDB. The default.
 	authzPolicy = "policy"
 	// authzSpiceDB is SpiceDB answering over authz/schema.zed.
 	authzSpiceDB = "spicedb"
@@ -111,7 +112,7 @@ type authzConfig struct {
 
 // authzFlags defines serve's authorization flags on fs, into a.
 func authzFlags(fs *flag.FlagSet, a *authzConfig) {
-	fs.StringVar(&a.Mode, "authz", authzPolicy, "who answers authorization (D-163, D-164): policy, the owner acts on every account and every other holder of read access views every account, or spicedb")
+	fs.StringVar(&a.Mode, "authz", authzPolicy, "who answers authorization (D-163, D-164): policy, the owner acts on every account and a viewer, a script token and a view plugin view exactly the accounts their grants cover, or spicedb, which answers the same from SpiceDB")
 	fs.StringVar(&a.Endpoint, "spicedb-endpoint", "", "SpiceDB's gRPC address, host:port, for --authz=spicedb; "+spicedbEndpointEnv+" by default")
 	fs.StringVar(&a.KeyFile, "spicedb-key-file", defaultSpiceDBKeyFile, "the file with SpiceDB's preshared key, for --authz=spicedb, which "+spicedbKeyEnv+" overrides. serve starts without the file and refuses every check, reporting not ready, until it has a key")
 	fs.BoolVar(&a.Insecure, "spicedb-insecure", false, "speak plaintext gRPC to SpiceDB, for the in-cluster Service behind its network policy; TLS otherwise")

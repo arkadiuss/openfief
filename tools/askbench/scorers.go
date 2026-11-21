@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"maps"
 	"slices"
 	"strings"
 	"time"
@@ -261,6 +262,7 @@ func scorersFor(d *RunData) ([]api.Scorer, error) {
 		out = append(out, s)
 	}
 	table := checks()
+	maps.Copy(table, opinionTable())
 	for _, name := range names {
 		f, ok := table[name]
 		if !ok {

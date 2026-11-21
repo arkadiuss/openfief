@@ -1336,3 +1336,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-514fe23bd8f0
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-askopinions-test-testopinionsschemaisthestructsfields
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:25:23.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-422a6108c22a
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-cardshaystack
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:28:54.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcd7d9d67346
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-cardshaystack
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:28:54.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fead9e1845c4
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-cardshaystack
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:28:54.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb43632f5a22
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-getsessiontoken
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:42:16.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d21003db90f
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-getsessiontoken
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:42:16.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1084b58b4c83

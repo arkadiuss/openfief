@@ -87,7 +87,7 @@ func LoadReport(path string) (*Report, error) {
 // The streaks and the demo route's section come from the history and are not
 // kept: they are not what the new grades say.
 func Rescore(ctx context.Context, rep *Report) error {
-	b, err := NewBench(&Options{})
+	b, err := NewBench(&Options{Opinions: rep.Set == opinionsSet})
 	if err != nil {
 		return err
 	}

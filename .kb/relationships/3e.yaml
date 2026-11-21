@@ -1028,3 +1028,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-327fc4084a53
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-app-opinions-test-testsetopinionsrefusesanonownerandstoresnothing
+    to: TEST-models-opinions-app
+    created_at: 2026-11-21T17:11:06.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6935ce9cd43

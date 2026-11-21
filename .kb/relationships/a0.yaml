@@ -1217,3 +1217,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-584a4cb95dd8
+  - type: executable_for
+    from: SYM-d225-internal-thesis-postgres-store-test-testsaveeditandgetkeepeveryversion
+    to: TEST-thesis-store
+    created_at: 2026-11-21T17:19:00.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb9ebf68a3ba
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-polishsize
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:57:39.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c9126cf0c98
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-polishsize
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:57:39.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ead46690ef1

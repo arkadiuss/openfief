@@ -1063,3 +1063,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1ad0cf93402
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-thesesdata
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:34.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a073473304c0
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-thesesdata
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:34.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79ad23c4835
+  - type: implements
+    from: SYM-d225-internal-views-ui-thesis-thesisdata
+    to: REQ-ui-theses-page
+    created_at: 2026-11-21T17:32:40.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1087a96c09e
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-thesis-thesisdata
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:32:41.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d12b080507e
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-fakes-test-faketheses-seededit
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:34:33.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-532074534fea
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-protoreflect
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:49:28.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31c95f684e25
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesis-protoreflect
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:49:28.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4fda2488d7b
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesisv1connect-thesis-connect-unimplementedthesisservicehandler-listtheses
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:55:15.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e7a1ccc64dc
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesisv1connect-thesis-connect-unimplementedthesisservicehandler-listtheses
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:55:15.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82a0d2bc8ad6

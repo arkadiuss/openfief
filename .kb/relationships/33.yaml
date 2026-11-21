@@ -1091,3 +1091,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e44f53919e65
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-loadopinioncases
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T16:04:49.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-516f93b06d7a
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-loadopinioncases
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T16:04:49.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74a047fac417
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-testthesespageliststhedraftsnewestfirstwithanemptystate
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:35:36.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf32438ecb6

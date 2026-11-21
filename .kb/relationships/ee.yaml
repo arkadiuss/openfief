@@ -1091,3 +1091,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce8ec4fd8f74
+  - type: executable_for
+    from: SYM-e2e-firstrun-check-no-otlp-export
+    to: TEST-e2e-bundle-first-run
+    created_at: 2026-11-21T20:21:04.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c3e2b70c70d

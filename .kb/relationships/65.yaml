@@ -1175,3 +1175,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-573ce028a063
+  - type: implements
+    from: SYM-d225-internal-views-ui-askevalnote-modelnote-advice
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:22:35.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5a36d264f5e
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askevalnote-modelnote-advice
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:22:35.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60079bbcd850
+  - type: implements
+    from: SYM-d225-internal-views-ui-askprompt-askopinionsdeclineclasses
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:26:53.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563a4ea336b6
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askprompt-askopinionsdeclineclasses
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:26:53.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ece49d871a05

@@ -1539,3 +1539,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52f1c2983efa
+  - type: implements
+    from: SYM-d225-cmd-core-thesis-thesisaudit
+    to: REQ-thesis-audited
+    created_at: 2026-11-21T17:09:44.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26844c199b37
+  - type: implements
+    from: SYM-d225-cmd-core-thesis-thesisaudit
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:09:45.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e998b706bf8b
+  - type: covered_by
+    from: SYM-d225-cmd-core-thesis-thesisaudit
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:09:45.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fd6f7e4f40d
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-string
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:38:46.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e9dafc98ae8
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-string
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:38:46.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70066e2dafd0
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-setopinionsenabledrequest-string
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:38:46.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d12540736ea

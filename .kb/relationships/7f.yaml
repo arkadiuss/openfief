@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0ac5ae990c2
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-thesis-test-harness-callsof
+    to: TEST-ui-theses
+    created_at: 2026-11-21T17:36:11.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7154f150e3b2

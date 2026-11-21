@@ -46,6 +46,11 @@ type scriptedPort struct {
 	used        int64
 	refused     int
 	permitted   [][]string
+	// opinionsAre and opinionsErr are what opinions answers; schemas are the
+	// response schema of each call ("" for none).
+	opinionsAre opinionsState
+	opinionsErr error
+	schemas     []string
 }
 
 func (p *scriptedPort) available(context.Context, session) (bool, error) {
@@ -75,12 +80,20 @@ func (p *scriptedPort) permits(_ context.Context, _ session, tiers []string) (bo
 	return true, nil
 }
 
-func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
+// opinions answers the state the test set: off, as a core with opinions off.
+func (p *scriptedPort) opinions(context.Context, session) (opinionsState, error) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	return p.opinionsAre, p.opinionsErr
+}
+
+func (p *scriptedPort) generate(_ context.Context, _ session, msgs []askMessage, tools []askTool, maxTokens int64, schema string) (askReply, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	p.requests = append(p.requests, slices.Clone(msgs))
 	p.offered = append(p.offered, len(tools))
-	p.answers = append(p.answers, structured)
+	p.answers = append(p.answers, schema != "")
+	p.schemas = append(p.schemas, schema)
 	p.maxTokens = append(p.maxTokens, maxTokens)
 	for i := range msgs {
 		// The router refuses a conversation with a tier no model of the

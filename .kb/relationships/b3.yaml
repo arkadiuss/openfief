@@ -1203,3 +1203,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2249a5159c55
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-connectapi-settings-test-memstore-saveopinions
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:12:32.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28ab777288d3

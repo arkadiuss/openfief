@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-models-router-roles-fallbacks",
+  "sourceFile": "internal/modelrouter/app/ports.go",
+  "symbol": "SettingsStore",
+  "verdict": "keeps",
+  "note": "Roles, primaries and fallbacks are untouched; the wiring passes the demo flag and SettingsStore gains SaveOpinions. Reviewed and approved by the author in chat with the orchestrator, 2026-11-21.",
+  "statementHash": "sha256:8f7c1fe0e1cab47ca3a90f9e88694ff7c361fcc59fb0422f5e2f4920f3bc052e",
+  "codeHash": "sha256:da04839c189c8abaa2bf8fea684eb25bfc05b0d570ed628308bf9a09117276ad",
+  "startLine": 77,
+  "endLine": 96,
+  "recordedAt": "2026-11-21T21:37:18.811Z"
+}

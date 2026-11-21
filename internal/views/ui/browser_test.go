@@ -11,6 +11,7 @@ import (
 	"time"
 
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
+	thesisv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/thesis/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -105,6 +106,20 @@ func browserInboxItems(h *harness) {
 	})
 }
 
+// browserTheses gives the served core a draft thesis of two versions (D-229), so
+// the Theses page and its version history show something at phone width.
+func browserTheses(h *harness) {
+	id := h.theses.seed(&thesisv1.ThesisDraft{
+		Statement: "A seeded draft: the world fund keeps compounding.", Instruments: []string{"Synthetic Fund"}, Horizon: thesisv1.Horizon_HORIZON_LONG_TERM,
+		Invalidation: []string{"Its fees double."}, Sources: []string{"The show card for Synthetic Fund."},
+	})
+	h.theses.seedEdit(id, &thesisv1.ThesisDraft{
+		Statement: "A seeded draft, edited: the world fund keeps compounding, and its fees stay low.", Instruments: []string{"Synthetic Fund"},
+		Horizon: thesisv1.Horizon_HORIZON_SHORT_TERM, Invalidation: []string{"Its fees double.", "It stops being listed."},
+		Sources: []string{"The show card for Synthetic Fund."},
+	})
+}
+
 // TestServeForBrowser serves the UI over the in-memory fakes on the
 // address in OPENFIEF_UI_SERVE (such as localhost:8099) until the test's
 // deadline, for the browser checks in scripts/ui-browser.mjs (task
@@ -134,6 +149,7 @@ func TestServeForBrowser(t *testing.T) {
 	// browser checks run with a virtual authenticator.
 	h.auth.locked(func() { h.auth.stale = true })
 	browserInboxItems(h)
+	browserTheses(h)
 	mux := http.NewServeMux()
 	mux.Handle("/", h.handler)
 	// The browser signs in here instead of with a passkey: the cookie comes
@@ -153,7 +169,7 @@ func TestServeForBrowser(t *testing.T) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	mux.HandleFunc("GET "+browserAskModel, func(w http.ResponseWriter, r *http.Request) {
-		browserSetUpAskModel(h.askModel, r.URL.Query().Get("tiers"))
+		browserSetUpAskModel(h.askModel, r.URL.Query().Get("tiers"), r.URL.Query().Get("opinions") == "1")
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	mux.HandleFunc("GET "+browserAdvanceClock, func(w http.ResponseWriter, r *http.Request) {

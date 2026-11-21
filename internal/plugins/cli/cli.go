@@ -225,15 +225,14 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 	return say(env.Out, "Installed "+p.Plugin.Name+". The operator verifies the image again and deploys it once its Secrets exist.\n"+grantText(&p.Plugin))
 }
 
-// grantText is what the summary of an installed view plugin adds: with SpiceDB
-// authorization a view plugin reads nothing until the owner grants it accounts
-// (D-209). The command can't tell which authorization the core runs with, so
-// the line says when it matters; it is empty for any other plugin.
+// grantText is what the summary of an installed view plugin adds: a view
+// plugin reads nothing until the owner grants it accounts (D-209), under either
+// authorizer; it is empty for any other plugin.
 func grantText(p *plugins.Plugin) string {
 	if !slices.Contains(p.Manifest.Capabilities, plugins.CapabilityView) {
 		return ""
 	}
-	return "If OpenFief runs with SpiceDB authorization, grant it accounts in Settings → Access.\n"
+	return "It reads nothing until you grant it accounts in Settings → Access.\n"
 }
 
 // prepare reads the config and the in-cluster service the owner named,

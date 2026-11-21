@@ -137,11 +137,16 @@ type askModelPort interface {
 	// per address, which count the question when it is let go. address is the
 	// browser's, or "" when the core could not tell.
 	admit(ctx context.Context, sess session, address string) (askAdmission, error)
+	// opinions says whether the Ask box may give this person opinions and suggest
+	// a thesis (D-225, D-229): the core decides, from the owner's setting, the
+	// switch, who asks, whether this is a demo and the route's data tiers.
+	opinions(ctx context.Context, sess session) (opinionsState, error)
 	// generate asks the route's models for the next message, of at most
-	// maxTokens output tokens. With structured set the message is the structured
-	// answer (askAnswerSchemaJSON): strict structured output for a model
-	// whose entry has it, a JSON object (JSON mode) for one that has not.
-	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error)
+	// maxTokens output tokens. With a schema the message is the structured
+	// answer (askAnswerSchemaJSON, or askOpinionsSchemaJSON with opinions on):
+	// strict structured output for a model whose entry has it, a JSON object
+	// (JSON mode) for one that has not.
+	generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, schema string) (askReply, error)
 }
 
 // toolRunner runs a command as a tool: the commands' own answerer, reading
@@ -209,10 +214,11 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	if err != nil {
 		return a.failure(r, question, err)
 	}
+	mode := a.opinionsOf(ctx, sess)
 	*conv = askConversation{
-		a: a, r: r, sess: sess, tiers: map[string]bool{tierT0: true}, tools: offered.tools,
+		a: a, r: r, sess: sess, tiers: startTiers(mode), tools: offered.tools, opinions: mode,
 		msgs: []askMessage{
-			{Role: roleSystem, Content: withNotice(askSystemPrompt(a.today()), offered.notice), Tier: tierInstructions},
+			{Role: roleSystem, Content: withNotice(askSystemPromptFor(a.today(), mode == opinionsOn), offered.notice), Tier: tierInstructions},
 			{Role: roleUser, Content: historyMessage(historyOf(r), question), Tier: tierT0},
 		},
 	}
@@ -242,6 +248,16 @@ func (a *modelAnswerer) loop(r *http.Request, sess session, question string, con
 	return unfinishedAnswer(question), nil
 }
 
+// startTiers are the data tiers a question holds from its start: its own T0, and
+// with opinions on the T1 of the thesis a model writes, which the route was
+// checked for (D-229).
+func startTiers(mode opinionsState) map[string]bool {
+	if mode == opinionsOn {
+		return map[string]bool{tierT0: true, tierT1: true}
+	}
+	return map[string]bool{tierT0: true}
+}
+
 // askConversation is one question's conversation with the model: its
 // messages, the data tiers they hold, the cards its tool calls produced and
 // those withheld.
@@ -252,7 +268,10 @@ type askConversation struct {
 	// tools are the tools the model was told: a market tool is among them only
 	// where it can be asked and the route may receive its data (offer).
 	tools []askTool
-	msgs  []askMessage
+	// opinions is whether the model may give opinions and suggest a thesis in
+	// this question (D-225), decided once when it starts.
+	opinions opinionsState
+	msgs     []askMessage
 	// tiers are the data tiers the messages hold so far.
 	tiers map[string]bool
 	calls int
@@ -297,7 +316,14 @@ func (c *askConversation) generate(ctx context.Context, tools []askTool, structu
 	ctx, cancel := context.WithTimeout(ctx, askCallTimeout)
 	defer cancel()
 	c.rounds++
-	reply, err := c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens, structured)
+	schema := ""
+	if structured {
+		schema = askAnswerSchemaJSON
+		if c.opinions == opinionsOn {
+			schema = askOpinionsSchemaJSON
+		}
+	}
+	reply, err := c.a.model.generate(ctx, c.sess, c.msgs, tools, c.a.limits.OutputTokens-c.tokens, schema)
 	if err == nil {
 		c.tokens += reply.OutputTokens
 	}
@@ -459,7 +485,7 @@ func (c *askConversation) answered(question string, a *structuredAnswer, model s
 	if utf8.RuneCountInString(text) > maxModelAnswerRunes {
 		text = string([]rune(text)[:maxModelAnswerRunes]) + "…"
 	}
-	card := answerCard{Question: question, Text: text, Model: model, Kind: a.Kind, Withheld: c.withheld}
+	card := answerCard{Question: question, Text: text, Model: model, Kind: a.Kind, Withheld: c.withheld, Opinions: c.opinions == opinionsOn}
 	seen := map[string]bool{}
 	for _, id := range a.Cards {
 		n, _ := cardNumber(id)
@@ -475,6 +501,11 @@ func (c *askConversation) answered(question string, a *structuredAnswer, model s
 	case answerKindRefuse:
 		// The commands are the box's own, never the model's (D-194).
 		card.Suggestions = refusalSuggestions(c.a.today())
+		if c.opinions == opinionsIneligible {
+			card.OpinionsNote = opinionsIneligibleNote
+		}
+	case answerKindThesis:
+		card.Thesis = cardOfThesis(a.Thesis)
 	}
 	return card
 }
@@ -483,9 +514,15 @@ func (c *askConversation) answered(question string, a *structuredAnswer, model s
 // names against what the model read: parseStructuredAnswer's checks, then the
 // candidates of a clarifying answer.
 func (c *askConversation) parse(content string) (structuredAnswer, error) {
-	a, err := parseStructuredAnswer(content, len(c.used))
+	opinions := c.opinions == opinionsOn
+	a, err := parseAnswer(content, len(c.used), opinions)
 	if err != nil {
 		return structuredAnswer{}, err
+	}
+	if opinions {
+		if err := a.checkThesis(c.used); err != nil {
+			return structuredAnswer{}, err
+		}
 	}
 	if a.Kind == answerKindClarify {
 		a.Candidates = readNames(a.Candidates, c.used)

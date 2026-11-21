@@ -293,6 +293,7 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	cases := fs.String("case", "", "comma-separated ids of the cases to run; default all (a subset does not prove the safety cases)")
 	historyPath := fs.String("history", "", "the path of the history file (tools/askbench/history.json): the run's verdict and reliability are added to it and the file is rewritten, and each model@host's consecutive passes and fails (D-221) are reported; never written without this flag")
 	demoRoute := fs.String("demo-route", "", "the demo route's config directory (deploy/demo/model), read only: its models are asked when -model and -route name none, and a member whose run fails its verdict or reliability makes the bench exit 4; the route is never edited")
+	opinions := fs.Bool("opinions", false, "ask the opinions set (D-225, D-229) instead of the eval's cases: the Ask box's model with opinions on and as a public demo has it, over the set's own seed; its cases await the author's approval, so the run is recorded in no history and decides no verdict, and -history and -demo-route are refused with it")
 	judge := fs.Bool("judge", false, "also grade the advice cases with a judge model, reported only; costs calls beyond the Ask calls")
 	judgeModel := fs.String("judge-model", "openai/gpt-oss-120b", "the judge's model id")
 	rescore := fs.String("rescore", "", "a report.json to grade again with the current scoring rules (ScorerVersion), making no model call and needing no key; the new report.json and summary.md go into -out, which is required and must not hold the report")
@@ -303,8 +304,8 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 		return rescoreArgs(fs, *rescore, *out)
 	}
 	key := getenv(keyEnv)
-	if key == "" {
-		return nil, fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
+	if err := checkRun(key, *opinions, *historyPath, *demoRoute); err != nil {
+		return nil, err
 	}
 	chosen, err := chooseModels(&modelFlags{names: *models, prices: *prices, routes: *routes, reasoning: *reasoning, structured: splitList(*structured), jsonMode: splitList(*jsonMode)}, *demoRoute)
 	if err != nil {
@@ -320,13 +321,31 @@ func parseArgs(args []string, getenv func(string) string, stderr io.Writer) (*co
 	hc := &http.Client{Timeout: httpTimeout}
 	cfg := &config{out: *out, judgeModel: *judgeModel, history: *historyPath, members: memberLabels(chosen.members), opts: Options{
 		Models: chosen.list, BaseURL: *baseURL, APIKey: key, Parallel: *parallel, MaxCost: limit, MaxCalls: *maxCalls,
-		Limits: ui.AskLimits{}, Cases: splitList(*cases), HTTP: hc, Now: time.Now,
+		Limits: ui.AskLimits{}, Cases: splitList(*cases), HTTP: hc, Now: time.Now, Opinions: *opinions,
 	}}
 	if *judge {
 		cfg.opts.Judge = &adviceJudge{gen: gevalopenai.NewGenerator(*judgeModel,
 			gevalopenai.WithBaseURL(*baseURL), gevalopenai.WithAPIKey(key), gevalopenai.WithHTTPClient(hc))}
 	}
 	return cfg, nil
+}
+
+// checkRun checks what a run needs: the key, and, with -opinions, neither
+// -history nor -demo-route.
+func checkRun(key string, opinions bool, history, demoRoute string) error {
+	if key == "" {
+		return fmt.Errorf("%w: %s is not set", ErrUsage, keyEnv)
+	}
+	return refuseWithOpinions(opinions, history, demoRoute)
+}
+
+// refuseWithOpinions refuses -history and -demo-route with -opinions, a set that
+// is recorded in no history and has no demo route.
+func refuseWithOpinions(opinions bool, history, demoRoute string) error {
+	if opinions && (history != "" || demoRoute != "") {
+		return fmt.Errorf("%w: -opinions is recorded in no history and has no demo route, so -history and -demo-route are refused with it", ErrUsage)
+	}
+	return nil
 }
 
 // rescoreArgs reads the arguments of a re-grading: the report and an explicit

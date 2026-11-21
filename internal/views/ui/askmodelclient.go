@@ -34,6 +34,22 @@ func (m askModelClient) available(ctx context.Context, sess session) (bool, erro
 	return resp.Msg.GetAvailable(), nil
 }
 
+// opinions asks whether the Ask box may give opinions to the person of sess.
+func (m askModelClient) opinions(ctx context.Context, sess session) (opinionsState, error) {
+	resp, err := m.c.GetAskModel(ctx, connect.NewRequest(&modelsv1.GetAskModelRequest{Origin: sess.Origin, SessionToken: sess.Token}))
+	if err != nil {
+		return opinionsOff, fmt.Errorf("GetAskModel: %w", err)
+	}
+	switch resp.Msg.GetOpinions() {
+	case modelsv1.AskOpinions_ASK_OPINIONS_ON:
+		return opinionsOn, nil
+	case modelsv1.AskOpinions_ASK_OPINIONS_ROUTE_INELIGIBLE:
+		return opinionsIneligible, nil
+	case modelsv1.AskOpinions_ASK_OPINIONS_UNSPECIFIED:
+	}
+	return opinionsOff, nil
+}
+
 // permits asks whether a model of the route may receive every one of tiers.
 func (m askModelClient) permits(ctx context.Context, sess session, tiers []string) (bool, error) {
 	resp, err := m.c.CheckAskTiers(ctx, connect.NewRequest(&modelsv1.CheckAskTiersRequest{Origin: sess.Origin, SessionToken: sess.Token, Tiers: tiers}))
@@ -71,11 +87,8 @@ func (m askModelClient) admit(ctx context.Context, sess session, address string)
 }
 
 // generate asks the route's models for the next message of the conversation.
-func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, structured bool) (askReply, error) {
-	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens}
-	if structured {
-		req.ResponseSchemaJson = askAnswerSchemaJSON
-	}
+func (m askModelClient) generate(ctx context.Context, sess session, msgs []askMessage, tools []askTool, maxTokens int64, schema string) (askReply, error) {
+	req := &modelsv1.GenerateAskRequest{Origin: sess.Origin, SessionToken: sess.Token, MaxOutputTokens: maxTokens, ResponseSchemaJson: schema}
 	for i := range msgs {
 		am, err := askMessageTo(&msgs[i])
 		if err != nil {

@@ -111,6 +111,8 @@ func actionWords(a identityv1.AuditAction) string {
 		identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED:                "Plugin removed",
 		identityv1.AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED:              "Connector synced",
 		identityv1.AuditAction_AUDIT_ACTION_MCP_CALL:                      "MCP tool called",
+		identityv1.AuditAction_AUDIT_ACTION_THESIS_SAVED:                  "Draft thesis saved",
+		identityv1.AuditAction_AUDIT_ACTION_THESIS_EDITED:                 "Draft thesis edited",
 	}
 	if w, ok := words[a]; ok {
 		return w
@@ -251,7 +253,8 @@ func (n *auditNames) ref(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS, identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS_VERSION:
 		return changeRef(r)
 	case identityv1.AuditRefKind_AUDIT_REF_KIND_UNSPECIFIED:
 	}
@@ -274,6 +277,11 @@ func changeRef(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH:      "Batch ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT:        "Wrote ",
 		identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:          "Tool ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS:            "Draft thesis ",
+		identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS_VERSION:    "Version ",
+	}
+	if r.GetKind() == identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS {
+		return prefixes[r.GetKind()] + short(r.GetId())
 	}
 	return prefixes[r.GetKind()] + r.GetId()
 }
@@ -325,7 +333,8 @@ func (n *auditNames) holderOrTarget(r *identityv1.AuditRef) string {
 		identityv1.AuditRefKind_AUDIT_REF_KIND_ATTENTION_ITEM, identityv1.AuditRefKind_AUDIT_REF_KIND_BOND_LOT,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN, identityv1.AuditRefKind_AUDIT_REF_KIND_PLUGIN_GENERATION,
 		identityv1.AuditRefKind_AUDIT_REF_KIND_SETTING, identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
-		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL:
+		identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT, identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL,
+		identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS, identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS_VERSION:
 	}
 	return "Record " + short(id)
 }

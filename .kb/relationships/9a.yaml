@@ -1189,3 +1189,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-480c4946c3d2
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisversion-protoreflect
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:53:33.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-feb0d678161c
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisversion-protoreflect
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:53:33.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54b51de6b097
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesisv1connect-thesis-connect-newthesisservicehandler
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:54:31.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e5654df828b
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesisv1connect-thesis-connect-newthesisservicehandler
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:54:31.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6802e4ca15fc
+  - type: implements
+    from: SYM-d225-tools-askbench-opinions-clip
+    to: REQ-askbench-opinions-set
+    created_at: 2026-11-21T17:56:31.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f1bd2c9a13a
+  - type: covered_by
+    from: SYM-d225-tools-askbench-opinions-clip
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T17:56:31.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a51f8fd1696

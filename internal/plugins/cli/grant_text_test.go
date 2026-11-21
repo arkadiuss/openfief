@@ -6,12 +6,12 @@ import (
 )
 
 // grantLine is what the summary of an installed view plugin says about
-// grants (D-209): true whether or not the core runs with SpiceDB.
-const grantLine = "If OpenFief runs with SpiceDB authorization, grant it accounts in Settings → Access.\n"
+// grants (D-209): true whichever authorization the core runs with.
+const grantLine = "It reads nothing until you grant it accounts in Settings → Access.\n"
 
 // TestInstallOfAViewPluginSaysToGrantItAccounts checks that the install of a
-// view plugin ends by telling the owner where to grant it accounts, since with
-// SpiceDB authorization it reads nothing until then, and that the install of a
+// view plugin ends by telling the owner where to grant it accounts, since it
+// reads nothing until then, and that the install of a
 // connector, which reads nothing of the owner's accounts, does not.
 func TestInstallOfAViewPluginSaysToGrantItAccounts(t *testing.T) {
 	t.Parallel()

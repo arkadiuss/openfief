@@ -56,6 +56,10 @@ func (s *Store) Settings(ctx context.Context) (modelrouter.Settings, error) {
 	if out.Switch.Toggles, err = s.toggles(ctx); err != nil {
 		return modelrouter.Settings{}, err
 	}
+	err = s.pool.QueryRow(ctx, "SELECT enabled FROM modelrouter.opinions").Scan(&out.Opinions)
+	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
+		return modelrouter.Settings{}, fmt.Errorf("loading the opinions setting: %w", err)
+	}
 	if out.Routes, err = s.routes(ctx); err != nil {
 		return modelrouter.Settings{}, err
 	}
@@ -79,6 +83,24 @@ func (s *Store) SaveEnabled(ctx context.Context, on bool, within func(context.Co
 	})
 	if err != nil {
 		return fmt.Errorf("saving the models switch: %w", err)
+	}
+	return nil
+}
+
+// SaveOpinions turns the Ask box's opinions on or off, running within before
+// the commit.
+func (s *Store) SaveOpinions(ctx context.Context, on bool, within func(context.Context) error) error {
+	err := s.inTx(ctx, within, func(tx pgx.Tx) error {
+		_, err := tx.Exec(ctx, `
+			INSERT INTO modelrouter.opinions (enabled) VALUES ($1)
+			ON CONFLICT (singleton) DO UPDATE SET enabled = EXCLUDED.enabled, updated_at = now()`, on)
+		if err != nil {
+			return fmt.Errorf("writing the opinions setting: %w", err)
+		}
+		return nil
+	})
+	if err != nil {
+		return fmt.Errorf("saving the opinions setting: %w", err)
 	}
 	return nil
 }

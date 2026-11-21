@@ -382,6 +382,8 @@ func pbActions() map[identity.AuditAction]identityv1.AuditAction {
 		identity.ActionPluginRemoved:          identityv1.AuditAction_AUDIT_ACTION_PLUGIN_REMOVED,
 		identity.ActionConnectorSynced:        identityv1.AuditAction_AUDIT_ACTION_CONNECTOR_SYNCED,
 		identity.ActionMCPCall:                identityv1.AuditAction_AUDIT_ACTION_MCP_CALL,
+		identity.ActionThesisSaved:            identityv1.AuditAction_AUDIT_ACTION_THESIS_SAVED,
+		identity.ActionThesisEdited:           identityv1.AuditAction_AUDIT_ACTION_THESIS_EDITED,
 	}
 }
 
@@ -423,6 +425,8 @@ func pbRefKinds() map[identity.RefKind]identityv1.AuditRefKind {
 		identity.RefImportBatch:      identityv1.AuditRefKind_AUDIT_REF_KIND_IMPORT_BATCH,
 		identity.RefSyncCount:        identityv1.AuditRefKind_AUDIT_REF_KIND_SYNC_COUNT,
 		identity.RefMCPTool:          identityv1.AuditRefKind_AUDIT_REF_KIND_MCP_TOOL,
+		identity.RefThesis:           identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS,
+		identity.RefThesisVersion:    identityv1.AuditRefKind_AUDIT_REF_KIND_THESIS_VERSION,
 	}
 }
 

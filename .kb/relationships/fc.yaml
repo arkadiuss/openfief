@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-289f64b69f68
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis-tidy
+    to: REQ-ui-ask-thesis-card
+    created_at: 2026-11-21T17:29:44.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c82ae27fbb
+  - type: implements
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis-tidy
+    to: REQ-ui-ask-opinions-mode
+    created_at: 2026-11-21T17:29:44.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-507975c8c71b
+  - type: covered_by
+    from: SYM-d225-internal-views-ui-askthesis-structuredthesis-tidy
+    to: TEST-ui-opinions-ask
+    created_at: 2026-11-21T17:29:44.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76be24422125

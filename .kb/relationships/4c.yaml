@@ -1224,3 +1224,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec3f19ae3b31
+  - type: specified_by
+    from: REQ-thesis-versions-kept
+    to: SCEN-thesis-versions-kept
+    created_at: 2026-11-21T15:38:30.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9355c0cb524b
+  - type: executable_for
+    from: SYM-d225-internal-thesis-app-theses-test-setup
+    to: TEST-thesis-app
+    created_at: 2026-11-21T17:16:03.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a21e8b33388
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-getmodelsettingsresponse-getdemo
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:37:31.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2a8f0be5f9
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-getmodelsettingsresponse-getdemo
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:37:31.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c48e88b4118
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-settings-pb-getmodelsettingsresponse-getdemo
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:37:31.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae2a10d5bb7
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-getsources
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:50:28.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead0cb1e5dfb
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-thesisdraft-getsources
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:50:29.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fd4e624a46a

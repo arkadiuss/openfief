@@ -86,7 +86,19 @@ func (s *askService) GetAskModel(ctx context.Context, req *connect.Request[model
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	return connect.NewResponse(&modelsv1.GetAskModelResponse{Available: ok}), nil
+	opinions, err := s.ask.Opinions(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &modelsv1.GetAskModelResponse{Available: ok}
+	switch opinions {
+	case modelrouter.OpinionsOn:
+		out.Opinions = modelsv1.AskOpinions_ASK_OPINIONS_ON
+	case modelrouter.OpinionsRouteIneligible:
+		out.Opinions = modelsv1.AskOpinions_ASK_OPINIONS_ROUTE_INELIGIBLE
+	case modelrouter.OpinionsOff:
+	}
+	return connect.NewResponse(out), nil
 }
 
 // CheckAskTiers says whether a model of the Ask box's route may receive

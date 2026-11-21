@@ -1035,3 +1035,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-178b5060e5df
+  - type: executable_for
+    from: SYM-d225-internal-modelrouter-connectapi-opinions-test-opinionsfixture
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:11:57.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9f08f83f9f3
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-string
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:42:55.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4cd8685dcdb
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-getthesisrequest-string
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:42:55.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af3b9a9cb168
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesresponse-descriptor
+    to: REQ-thesis-owner-only
+    created_at: 2026-11-21T17:45:57.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd01998b1d02
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-thesis-v1-thesis-pb-listthesesresponse-descriptor
+    to: TEST-thesis-core
+    created_at: 2026-11-21T17:45:57.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be83ed698ff8
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-run-test-testathesistheboxwouldnotshowisnotananswer
+    to: TEST-askbench-opinions-run
+    created_at: 2026-11-21T17:58:31.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69dc9a1743f8

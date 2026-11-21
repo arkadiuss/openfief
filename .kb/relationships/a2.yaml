@@ -1147,3 +1147,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63e39ff07213
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enumdescriptor
+    to: REQ-models-opinions-setting
+    created_at: 2026-11-21T17:36:39.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6186a692bd04
+  - type: implements
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enumdescriptor
+    to: REQ-models-opinions-effect
+    created_at: 2026-11-21T17:36:39.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac9061ddf19
+  - type: covered_by
+    from: SYM-d225-sdk-go-gen-openfief-models-v1-ask-pb-askopinions-enumdescriptor
+    to: TEST-models-opinions-api
+    created_at: 2026-11-21T17:36:39.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f14022890e77
+  - type: executable_for
+    from: SYM-d225-tools-askbench-opinions-test-goodthesisrun
+    to: TEST-askbench-opinions
+    created_at: 2026-11-21T18:01:43.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ddecd7c90eb

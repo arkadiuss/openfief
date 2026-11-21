@@ -1385,3 +1385,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea981bef8e62
+  - type: executable_for
+    from: SYM-d225-internal-views-ui-modelsopinions-test-testmodelspagesayswhyopinionshavenoeffectwhiletheyareon
+    to: TEST-ui-opinions-models
+    created_at: 2026-11-21T17:31:09.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9161747d2ed6
