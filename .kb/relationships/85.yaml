@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eeb854adef39
+  - type: implements
+    from: SYM-sec-internal-ingest-quote-go-parsequotetext
+    to: REQ-quote-query-strict-charset
+    created_at: 2026-11-21T18:47:39.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-319d61c281ce
+  - type: covered_by
+    from: SYM-sec-internal-ingest-quote-go-parsequotetext
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:47:39.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d1f832759df

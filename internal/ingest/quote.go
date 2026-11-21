@@ -39,8 +39,15 @@ const (
 	MaxQuoteCandidates = 10
 )
 
-// quoteQuery is what a ticker or an ISIN looks like.
-func quoteQuery() *regexp.Regexp { return regexp.MustCompile(`^[A-Za-z0-9._-]+$`) }
+// quoteQuery is what a ticker or an ISIN asked for looks like: letters and
+// digits, with single dots or dashes between them, so that no query is a path
+// segment such as "." or "..", or holds a slash, when a connector puts it in a
+// provider's URL.
+func quoteQuery() *regexp.Regexp { return regexp.MustCompile(`^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$`) }
+
+// quoteSymbol is what a listing's symbol a connector answers with looks like:
+// letters, digits, dots, dashes and underscores.
+func quoteSymbol() *regexp.Regexp { return regexp.MustCompile(`^[A-Za-z0-9._-]+$`) }
 
 // QuoteRequest asks a market-data connector for one instrument's latest price
 // and history (D-226): a ticker or an ISIN, and the days of the history, both
@@ -52,10 +59,26 @@ type QuoteRequest struct {
 
 // ParseQuoteQuery returns query without its surrounding space, or an error
 // wrapping ErrInvalidQuoteQuery when what is left is not 1 to MaxQuoteQuery
-// letters, digits, dots, dashes and underscores. It never quotes the query.
+// letters and digits with single dots or dashes between them: no leading or
+// trailing dot or dash, no "..", no slash and no underscore. It never quotes
+// the query.
 func ParseQuoteQuery(query string) (string, error) {
-	q := strings.TrimSpace(query)
-	if q == "" || len(q) > MaxQuoteQuery || !quoteQuery().MatchString(q) {
+	return parseQuoteText(query, quoteQuery())
+}
+
+// ParseQuoteSymbol returns the symbol of a listing a connector answered with,
+// without its surrounding space, or an error wrapping ErrInvalidQuoteQuery when
+// what is left is not 1 to MaxQuoteQuery letters, digits, dots, dashes and
+// underscores. A symbol is the provider's own and the core sends it nowhere, so
+// it keeps the wider set. It never quotes the symbol.
+func ParseQuoteSymbol(symbol string) (string, error) {
+	return parseQuoteText(symbol, quoteSymbol())
+}
+
+// parseQuoteText trims text and checks it against pattern and MaxQuoteQuery.
+func parseQuoteText(text string, pattern *regexp.Regexp) (string, error) {
+	q := strings.TrimSpace(text)
+	if q == "" || len(q) > MaxQuoteQuery || !pattern.MatchString(q) {
 		return "", ErrInvalidQuoteQuery
 	}
 	return q, nil

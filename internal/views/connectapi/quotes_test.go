@@ -171,6 +171,8 @@ func TestRESTGetMarketQuote(t *testing.T) {
 		{name: "a period in the future", src: &quoteSource{t: t}, target: "/v1/market-quotes/SYNQ?to=2026-03-03", token: goodToken, want: http.StatusBadRequest},
 		{name: "a period over a year", src: &quoteSource{t: t}, target: "/v1/market-quotes/SYNQ?from=2025-01-01", token: goodToken, want: http.StatusBadRequest},
 		{name: "a query that is no ticker", src: &quoteSource{t: t}, target: "/v1/market-quotes/SYNQ%3Fx", token: goodToken, want: http.StatusBadRequest},
+		{name: "a query of dots alone", src: &quoteSource{t: t}, target: "/v1/market-quotes/..%2E", token: goodToken, want: http.StatusBadRequest},
+		{name: "a query with two dots inside", src: &quoteSource{t: t}, target: "/v1/market-quotes/SYNQ..X", token: goodToken, want: http.StatusBadRequest},
 		{name: "no such instrument", src: &quoteSource{t: t}, target: "/v1/market-quotes/NOPE", token: goodToken, want: http.StatusNotFound},
 		{name: "the source is down", src: &quoteSource{t: t, err: fmt.Errorf("x: %w", ingestapp.ErrConnectorUnavailable)}, target: "/v1/market-quotes/SYNQ", token: goodToken, want: http.StatusServiceUnavailable},
 		{name: "no market-data connector", src: &quoteSource{t: t, err: fmt.Errorf("x: %w", ingestapp.ErrNoQuoteSource)}, target: "/v1/market-quotes/SYNQ", token: goodToken, want: http.StatusBadRequest},

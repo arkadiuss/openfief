@@ -1399,3 +1399,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f61d26ca0ae8
+  - type: executable_for
+    from: SYM-d226-internal-views-connectapi-quotes-test-go-testrestgetmarketquote
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:48:03.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da673487b0e9

@@ -23,7 +23,7 @@ var (
 	errQuoteSourceDown   = errors.New("the market-data source can't answer now")
 	errQuotesForbidden   = errors.New("this caller may not read market quotes")
 	errQuoteRateLimited  = errors.New("too many market quotes were asked in a minute")
-	errBadQuoteQuery     = errors.New("the query is not a ticker or an ISIN of at most 32 letters, digits, dots, dashes and underscores")
+	errBadQuoteQuery     = errors.New("the query is not a ticker or an ISIN: at most 32 letters and digits, with single dots or dashes between them")
 	errBadQuotePeriod    = errors.New("the period ends before it starts, ends after today or is longer than 366 days")
 )
 

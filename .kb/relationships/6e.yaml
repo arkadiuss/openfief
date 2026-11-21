@@ -1245,3 +1245,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3115af737c9
+  - type: executable_for
+    from: SYM-d226-internal-ingest-quote-test-go-testparsequotequery
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:47:47.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-069381a0d485

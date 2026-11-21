@@ -242413,8 +242413,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-market-quote-answer-is-data
+      - type: covered_by
+        target: TEST-quote-query-strict-charset
       - type: implements
         target: REQ-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-quote-query-strict-charset
   - id: SYM-d226-internal-ingest-quote-go-quoteperiod
     title: QuotePeriod
     status: active
@@ -242650,7 +242654,11 @@ symbols:
       recorded_at: 2026-11-21T12:00:00.000Z
     relationships:
       - type: covered_by
+        target: TEST-quote-query-strict-charset
+      - type: covered_by
         target: TEST-valuation-eodhd-quote-lookup
+      - type: implements
+        target: REQ-quote-query-strict-charset
       - type: implements
         target: REQ-valuation-eodhd-quote-lookup
   - id: SYM-d226-plugins-eodhd-quote-go-quotelisting
@@ -242763,8 +242771,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ask-market-price-card
+      - type: covered_by
+        target: TEST-quote-query-strict-charset
       - type: implements
         target: REQ-ask-market-price-card
+      - type: implements
+        target: REQ-quote-query-strict-charset
   - id: SYM-d226-internal-views-app-answer-quote-go-quotespan
     title: quoteSpan
     status: active
@@ -243409,6 +243421,8 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-market-quote-answer-is-data
+      - type: executable_for
+        target: TEST-quote-query-strict-charset
   - id: SYM-d226-internal-ingest-quote-test-go-testquoteperiod
     title: TestQuotePeriod
     status: active
@@ -243773,6 +243787,8 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ask-market-price-card
+      - type: executable_for
+        target: TEST-quote-query-strict-charset
   - id: SYM-d226-internal-views-app-answer-quote-test-go-testmarketpricecard
     title: TestMarketPriceCard
     status: active
@@ -244230,6 +244246,8 @@ symbols:
       recorded_at: 2026-11-21T14:00:00.000Z
     relationships:
       - type: executable_for
+        target: TEST-quote-query-strict-charset
+      - type: executable_for
         target: TEST-views-market-quote
   - id: SYM-d226-internal-views-connectapi-quotes-test-go-checkquotebody
     title: checkQuoteBody
@@ -244568,6 +244586,8 @@ symbols:
       ref: D-226, the author's decision of 2026-11-21 (docs/DESIGN.md)
       recorded_at: 2026-11-21T14:00:00.000Z
     relationships:
+      - type: executable_for
+        target: TEST-quote-query-strict-charset
       - type: executable_for
         target: TEST-valuation-eodhd-quote-lookup
   - id: SYM-d226-sdk-go-gen-openfief-connector-v1-connector-pb-go-lookupquoterequest
@@ -246069,8 +246089,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-market-quote-answer-is-data
+      - type: covered_by
+        target: TEST-quote-query-strict-charset
       - type: implements
         target: REQ-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-quote-query-strict-charset
   - id: SYM-d226-internal-ingest-quote-go-period
     title: Period
     status: active
@@ -248421,3 +248445,42 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-enrollment-code-expiry-at-use
+  - id: SYM-sec-internal-ingest-quote-go-parsequotesymbol
+    title: ParseQuoteSymbol
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:47:26.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data
+  - id: SYM-sec-internal-ingest-quote-go-parsequotetext
+    title: parseQuoteText
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:47:35.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-quote-query-strict-charset
+      - type: implements
+        target: REQ-quote-query-strict-charset
+  - id: SYM-sec-internal-ingest-quote-go-quotesymbol
+    title: quoteSymbol
+    status: active
+    sourceFile: internal/ingest/quote.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:54:10.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-market-quote-answer-is-data
+      - type: implements
+        target: REQ-ingest-market-quote-answer-is-data

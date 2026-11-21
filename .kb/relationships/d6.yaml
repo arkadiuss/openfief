@@ -1574,3 +1574,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-770099891dcf
+  - type: specified_by
+    from: REQ-quote-query-strict-charset
+    to: SCEN-quote-query-strict-charset
+    created_at: 2026-11-21T18:46:42.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61624605df3c

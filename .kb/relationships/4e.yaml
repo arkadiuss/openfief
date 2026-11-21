@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-143013c42429
+  - type: executable_for
+    from: SYM-d226-plugins-eodhd-quote-test-go-testlookupquoterefuses
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:48:12.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a426b14e71b

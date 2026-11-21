@@ -119,7 +119,7 @@ func candidatesFrom(m *connectorv1.LookupQuoteResponse) (ingest.QuoteAnswer, err
 // characters, an ISIN with a valid check digit or none, a name and an
 // exchange cleaned as text of the source's, and a currency.
 func quoteListingFrom(field string, l *connectorv1.QuoteListing) (ingest.QuoteListing, error) {
-	symbol, err := ingest.ParseQuoteQuery(l.GetSymbol())
+	symbol, err := ingest.ParseQuoteSymbol(l.GetSymbol())
 	if err != nil {
 		return ingest.QuoteListing{}, invalid(field+".symbol", err)
 	}

@@ -1231,3 +1231,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-318e422fd9f6
+  - type: verified_by
+    from: SCEN-quote-query-strict-charset
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:46:40.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e45b47af169

@@ -26,7 +26,13 @@ type QuoteSpan struct {
 }
 
 // quoteQuery is what a ticker or an ISIN looks like, as the read API takes it.
-var quoteQuery = regexp.MustCompile(`^[A-Za-z0-9._-]{1,32}$`)
+// Letters and digits with single dots or dashes between them, at most
+// maxQuoteQueryLen: no leading or trailing dot or dash, no "..", no slash and
+// no underscore.
+var quoteQuery = regexp.MustCompile(`^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$`)
+
+// maxQuoteQueryLen is the longest query the read API takes.
+const maxQuoteQueryLen = 32
 
 // The names of the market price tool's periods, by how many days up to today
 // each covers, and the one it has when the model gives none.
@@ -48,7 +54,7 @@ func quotePeriodDays() map[string]int {
 }
 
 // errQuoteQuery refuses a query that is no ticker or ISIN.
-var errQuoteQuery = errors.New("the query is a ticker or an ISIN: letters, digits, dots, dashes and underscores, at most 32")
+var errQuoteQuery = errors.New("the query is a ticker or an ISIN: at most 32 letters and digits, with single dots or dashes between them")
 
 // quoteTool is the market price tool (D-226): the latest end-of-day price of
 // any instrument, held or not, with its closes over a period, fetched through
@@ -93,7 +99,7 @@ func quoteArgs(args string, today kernel.Date) (Query, error) {
 	if term == "" {
 		return Query{}, errNoName
 	}
-	if !quoteQuery.MatchString(term) {
+	if len(term) > maxQuoteQueryLen || !quoteQuery.MatchString(term) {
 		return Query{}, errQuoteQuery
 	}
 	span, err := quoteSpan(a.Period, a.From, a.To, today)

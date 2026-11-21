@@ -1098,3 +1098,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97eed82089a5
+  - type: implements
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteargs
+    to: REQ-quote-query-strict-charset
+    created_at: 2026-11-21T18:47:22.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23038f5c894d
+  - type: covered_by
+    from: SYM-d226-internal-views-app-answer-quote-go-quoteargs
+    to: TEST-quote-query-strict-charset
+    created_at: 2026-11-21T18:47:22.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7614f62d0f84

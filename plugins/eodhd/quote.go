@@ -25,9 +25,11 @@ const (
 	maxQuoteName      = 200
 )
 
-// quoteQuery is what a ticker or an ISIN looks like: letters, digits, dots,
-// dashes and underscores.
-var quoteQuery = regexp.MustCompile(`^[A-Za-z0-9._-]{1,32}$`)
+// quoteQuery is what a ticker or an ISIN looks like: letters and digits with
+// single dots or dashes between them, as the core checks it too, so that no
+// query is a path segment such as "." or "..", or holds a slash, in EODHD's
+// URL, which also escapes it (url.PathEscape).
+var quoteQuery = regexp.MustCompile(`^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$`)
 
 // errNoCloses reports a listing the source has no close of.
 var errNoCloses = errors.New("no closes")
@@ -121,7 +123,7 @@ type quotePeriod struct {
 // characters and a period of at most maxQuoteDays days that ends today or
 // earlier.
 func parseQuote(r *connectorv1.LookupQuoteRequest, today kernel.Date) (quoteAsked, error) {
-	if !quoteQuery.MatchString(r.GetQuery()) {
+	if len(r.GetQuery()) > maxQuoteQuery || !quoteQuery.MatchString(r.GetQuery()) {
 		return quoteAsked{}, fmt.Errorf("%w: the query is not a ticker or an ISIN", errBadQuote)
 	}
 	from, fromErr := kernel.ParseDate(r.GetFrom())

@@ -117,6 +117,8 @@ func TestMarketPriceArguments(t *testing.T) {
 		{name: "a query with a space", args: `{"query":"NV DA"}`, wantErr: errQuoteQuery},
 		{name: "a query that smuggles a parameter", args: `{"query":"NVDA?api_token=x"}`, wantErr: errQuoteQuery},
 		{name: "a query that smuggles a path", args: `{"query":"../v1/accounts"}`, wantErr: errQuoteQuery},
+		{name: "a query of two dots", args: `{"query":".."}`, wantErr: errQuoteQuery},
+		{name: "a query that starts with a dot", args: `{"query":".SYNQ"}`, wantErr: errQuoteQuery},
 		{name: "a query of 33 characters", args: `{"query":"` + strings.Repeat("A", 33) + `"}`, wantErr: errQuoteQuery},
 		{name: "a period that is none", args: `{"query":"X","period":"fortnight"}`, wantErr: errBadEnum},
 		{name: "a day that is none", args: `{"query":"X","from":"soon"}`, wantErr: errToolDate},
