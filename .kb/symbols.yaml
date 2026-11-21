@@ -246170,3 +246170,762 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-data-path
+  - id: SYM-d228-views-app-answer-calc-calc
+    title: Calc
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-divide
+    title: calcParser.divide
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-expression
+    title: calcParser.expression
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-term
+    title: calcParser.term
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-postfix
+    title: calcParser.postfix
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-factor
+    title: calcParser.factor
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-primary
+    title: calcParser.primary
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-parser-number
+    title: calcParser.number
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-parser-parsed
+    title: calcParser.parsed
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-parser-unexpected
+    title: calcParser.unexpected
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-check-digits
+    title: checkDigits
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-refused
+    title: refused
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-parser-peek
+    title: calcParser.peek
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-parser-skip-space
+    title: calcParser.skipSpace
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-error-error
+    title: CalcError.Error
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-error-is
+    title: CalcError.Is
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-card
+    title: calcCard
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-card-figures-given
+  - id: SYM-d228-views-app-answer-tools-calc-tool
+    title: calcTool
+    status: active
+    sourceFile: internal/views/app/answer/tools.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: covered_by
+        target: TEST-views-answer-calc-toolbox
+      - type: implements
+        target: REQ-ui-ask-calc-card-figures-given
+  - id: SYM-d228-tools-askbench-arithmetic-rebalance-amounts
+    title: rebalanceAmounts
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-rebalance-holdings
+    title: Rebalance.holdings
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-rebalance-moves
+    title: Rebalance.moves
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-all-present
+    title: allPresent
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-join-decimals
+    title: joinDecimals
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-answer-has-exact
+    title: answerHasExact
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-has-exact-number
+    title: hasExactNumber
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-grouped
+    title: grouped
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-contains-whole
+    title: containsWhole
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-is-digit
+    title: isDigit
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-answer-has-only
+    title: answerHasOnly
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-arithmetic-says-before-fees
+    title: saysBeforeFees
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-tools-askbench-readservice-class-totals
+    title: classTotals
+    status: active
+    sourceFile: tools/askbench/readservice.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T14:20:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-views-app-answer-calc-calc-parser-apply
+    title: calcParser.apply
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-is-digit-rune
+    title: isDigitRune
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-is-separator
+    title: isSeparator
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-tools-askbench-seed-seed-plant-names
+    title: Seed.plantNames
+    status: active
+    sourceFile: tools/askbench/seed.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:00:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-portfolio
+      - type: implements
+        target: REQ-decision-d219-2-injections-in-eval-only-seed
+  - id: SYM-d228-views-app-answer-calc-test-test-calc-exact
+    title: TestCalcExact
+    status: active
+    sourceFile: internal/views/app/answer/calc_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-answer-calc
+  - id: SYM-d228-views-app-answer-calc-test-test-calc-refusals
+    title: TestCalcRefusals
+    status: active
+    sourceFile: internal/views/app/answer/calc_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-answer-calc
+  - id: SYM-d228-views-app-answer-calc-test-test-calc-card
+    title: TestCalcCard
+    status: active
+    sourceFile: internal/views/app/answer/calc_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-answer-calc
+  - id: SYM-d228-views-app-answer-toolbox-test-test-toolbox-calc-computes-without-reading-data
+    title: TestToolboxCalcComputesWithoutReadingData
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-answer-calc-toolbox
+  - id: SYM-d228-views-app-answer-toolbox-test-test-toolbox-calc-refuses-what-cannot-be-computed
+    title: TestToolboxCalcRefusesWhatCannotBeComputed
+    status: active
+    sourceFile: internal/views/app/answer/toolbox_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-answer-calc-toolbox
+  - id: SYM-d228-tools-askbench-arithmetic-test-classes-of
+    title: classesOf
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-thirty-seventy
+    title: thirtySeventy
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-the-rebalance-check-grades-the-amounts-by-code
+    title: TestTheRebalanceCheckGradesTheAmountsByCode
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-the-rebalance-check-refuses-acase-it-cannot-grade
+    title: TestTheRebalanceCheckRefusesACaseItCannotGrade
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-the-exact-check-wants-every-digit
+    title: TestTheExactCheckWantsEveryDigit
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-the-only-numbers-check-lets-no-amount-through
+    title: TestTheOnlyNumbersCheckLetsNoAmountThrough
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-the-fees-check-wants-before-taxes-and-fees-said-plainly
+    title: TestTheFeesCheckWantsBeforeTaxesAndFeesSaidPlainly
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-arithmetic-test-test-calc-results-count-as-shown-figures
+    title: TestCalcResultsCountAsShownFigures
+    status: active
+    sourceFile: tools/askbench/arithmetic_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-arithmetic
+  - id: SYM-d228-tools-askbench-portfolio-test-changed-sleeve-names
+    title: changedSleeveNames
+    status: active
+    sourceFile: tools/askbench/portfolio_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-askbench-portfolio
+  - id: SYM-d228-tools-docgen-askevaltable-test-test-safety-total-follows-the-cases-the-run-had
+    title: TestSafetyTotalFollowsTheCasesTheRunHad
+    status: active
+    sourceFile: tools/docgen/askevaltable_test.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-docgen-askeval-table
+  - id: SYM-d228-views-app-answer-calc-calc-result
+    title: CalcResult
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    symbol_role: type-shape
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-exact
+  - id: SYM-d228-views-app-answer-calc-calc-error
+    title: CalcError
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-views-app-answer-calc-calc-parser
+    title: calcParser
+    status: active
+    sourceFile: internal/views/app/answer/calc.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-answer-calc
+      - type: implements
+        target: REQ-ui-ask-calc-parser-bounded
+  - id: SYM-d228-tools-askbench-arithmetic-rebalance
+    title: Rebalance
+    status: active
+    sourceFile: tools/askbench/arithmetic.go
+    origin:
+      kind: agent
+      ref: 'D-228 as amended (the Ask box and the MCP server offer a tool for exact decimal arithmetic): the design session''s brief, 2026-11-21'
+      recorded_at: 2026-11-21T15:30:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-askbench-arithmetic
+      - type: implements
+        target: REQ-askbench-arithmetic-graded-by-code
+  - id: SYM-d228-views-ui-askmodel-ask-conversation-admit
+    title: askConversation.admit
+    status: active
+    sourceFile: internal/views/ui/askmodel.go
+    origin:
+      kind: agent
+      ref: D-228 as amended (calc adds no data tier), the coordinator's correction, 2026-11-21
+      recorded_at: 2026-11-21T16:30:00.000Z
+    symbol_role: behavioral
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask-model-loop
+      - type: implements
+        target: REQ-models-ask-box-tool-results-tiered
+      - type: implements
+        target: REQ-ui-ask-calc-card-figures-given
+  - id: SYM-d228-views-ui-askmarket-test-test-a-route-allowed-t0-only-is-offered-calc
+    title: TestARouteAllowedT0OnlyIsOfferedCalcAndItsResultPasses
+    status: active
+    sourceFile: internal/views/ui/askmarket_test.go
+    origin:
+      kind: agent
+      ref: D-228 as amended (calc adds no data tier), the coordinator's correction, 2026-11-21
+      recorded_at: 2026-11-21T16:50:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask-model-loop

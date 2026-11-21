@@ -58,7 +58,7 @@ func TestAskBoxAnswersBeyondItsCommandsWithAModel(t *testing.T) {
 			if got := h.askModel.generated(); got != 2 {
 				t.Fatalf("the model was asked %d times, want 2", got)
 			}
-			if diff := cmp.Diff([]string{"allocation", "performance", "show", "sync_status", "value", "what_needs_me"}, sortedCopy(h.askModel.toolsSeen[0])); diff != "" {
+			if diff := cmp.Diff([]string{"allocation", "calc", "performance", "show", "sync_status", "value", "what_needs_me"}, sortedCopy(h.askModel.toolsSeen[0])); diff != "" {
 				t.Errorf("tools offered (-want +got):\n%s", diff)
 			}
 			second := h.askModel.requests[1]

@@ -337,6 +337,19 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		c.addResult(&call, callReadFailed, answer.ToolFailure("the data could not be read"), tierInstructions)
 		return nil
 	}
+	return c.admit(ctx, call, &tool, &card)
+}
+
+// admit sends the model the card tool made, unless the route's models may not
+// receive its data tier together with the tiers already in the conversation, in
+// which case it records the withheld card. A card that adds no data, the tier
+// calc has (D-228), is never withheld and adds no tier.
+func (c *askConversation) admit(ctx context.Context, call askCall, tool *askTool, card *answerCard) error {
+	if tool.Tier == tierInstructions { // adds no data, so no tier to permit (D-228)
+		c.used = append(c.used, *card)
+		c.addResult(&call, callRan, cardResult(card, cardID(len(c.used))), tool.Tier)
+		return nil
+	}
 	tiers := c.tiers
 	next := map[string]bool{tool.Tier: true}
 	for t := range tiers {
@@ -352,8 +365,8 @@ func (c *askConversation) callTool(ctx context.Context, call askCall) error {
 		return nil
 	}
 	c.tiers = next
-	c.used = append(c.used, card)
-	c.addResult(&call, callRan, cardResult(&card, cardID(len(c.used))), tool.Tier)
+	c.used = append(c.used, *card)
+	c.addResult(&call, callRan, cardResult(card, cardID(len(c.used))), tool.Tier)
 	return nil
 }
 

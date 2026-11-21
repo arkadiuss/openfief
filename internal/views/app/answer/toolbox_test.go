@@ -181,3 +181,48 @@ func TestToolboxNeedsARead(t *testing.T) {
 		t.Error("NewToolbox without a read client succeeded")
 	}
 }
+
+// TestToolboxCalcComputesWithoutReadingData checks that the calc tool answers
+// from its arguments alone: the call asks the read API only for the owner's
+// number format, with the caller's token, shows the expression with its exact
+// result, says the figures are the ones given, and a token the read API does
+// not accept is refused like any tool's.
+func TestToolboxCalcComputesWithoutReadingData(t *testing.T) {
+	t.Parallel()
+	box, read := newToolbox(t)
+	got := box.Call(t.Context(), callerToken, "calc", `{"expression":"0.1 + 0.2"}`)
+	if got.Outcome != ToolRan {
+		t.Fatalf("Call() outcome = %q (%s), want %q", got.Outcome, got.Text, ToolRan)
+	}
+	var card toolResult
+	if err := json.Unmarshal([]byte(got.Text), &card); err != nil {
+		t.Fatalf("the result is not a card: %v", err)
+	}
+	if card.Title != "0.1 + 0.2 = 0.3" || !strings.Contains(card.Text, "Computed from the figures given") {
+		t.Errorf("card = %+v, want the expression with its exact result and the figures-given wording", card)
+	}
+	if len(card.Rows) != 2 || card.Rows[1].Figure != "0,3" {
+		t.Errorf("rows = %+v, want the result in the owner's decimal comma", card.Rows)
+	}
+	read.mu.Lock()
+	n := len(read.bearers)
+	read.mu.Unlock()
+	if n != 1 {
+		t.Errorf("the call made %d reads, want only the settings' number format", n)
+	}
+}
+
+// TestToolboxCalcRefusesWhatCannotBeComputed checks that an expression that
+// divides by zero is a card with the reason, and that a token the read API does
+// not accept is refused like any tool's.
+func TestToolboxCalcRefusesWhatCannotBeComputed(t *testing.T) {
+	t.Parallel()
+	box, _ := newToolbox(t)
+	refused := box.Call(t.Context(), callerToken, "calc", `{"expression":"1/0"}`)
+	if refused.Outcome != ToolRan || !strings.Contains(refused.Text, "divides by zero") {
+		t.Errorf("1/0 = %q (%s), want a card that refuses with its reason", refused.Outcome, refused.Text)
+	}
+	if bad := box.Call(t.Context(), "not-a-token", "calc", `{"expression":"1+1"}`); bad.Outcome != ToolUnauthenticated {
+		t.Errorf("calc with a bad token = %q, want %q", bad.Outcome, ToolUnauthenticated)
+	}
+}

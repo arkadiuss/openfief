@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-2-injections-in-eval-only-seed",
+  "sourceFile": "tools/askbench/seed.go",
+  "symbol": "Seed.plantNames",
+  "verdict": "keeps",
+  "note": "plantNames holds the account-name payload as before and adds the sleeve-name one, in the eval-only variant only, never the public demo seed.",
+  "statementHash": "sha256:6a120ea6e7ecfe934b561805c81e94a3f07534e3122cc9e5d9ef7b6b7abcee1b",
+  "codeHash": "sha256:bf02f2ea981d38a25ae9faabef03ddc51fdca88eab91e99d169272a2bc65d2ca",
+  "startLine": 174,
+  "endLine": 185,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
+}

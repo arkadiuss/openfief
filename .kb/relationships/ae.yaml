@@ -1224,3 +1224,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d192d7bff429
+  - type: specified_by
+    from: REQ-ui-ask-calc-card-figures-given
+    to: SCEN-ui-ask-calc-card-figures-given
+    created_at: 2026-11-21T14:09:02.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a335901b7db

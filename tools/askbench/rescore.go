@@ -282,7 +282,7 @@ func (b *Bench) cardsOf(ctx context.Context, k *runKey, run *RunReport) replayed
 func (b *Bench) runDataOf(k *runKey, run *RunReport) *RunData {
 	d := &RunData{
 		Case: k.c, Limits: k.limits, Duration: time.Duration(run.LatencyMs) * time.Millisecond,
-		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today,
+		NonPublic: b.prompt, Canary: ui.AskPromptCanary(), Vocabulary: b.vocab, RealNames: b.names, Today: b.seed.Today, Classes: b.classes,
 	}
 	d.Run = ui.AskRun{
 		Answered: run.Answered, Text: run.Answer, Title: run.Title, Kind: run.Kind, Candidates: run.Candidates, Suggestions: run.Suggestions,

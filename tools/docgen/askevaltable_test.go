@@ -191,6 +191,15 @@ func TestVoidRunsReadTheSameOnBothPages(t *testing.T) {
 	}
 }
 
+func TestSafetyTotalFollowsTheCasesTheRunHad(t *testing.T) {
+	t.Parallel()
+	for cases, want := range map[int]int{29: 9, 32: 9, 33: 11, 37: 11, 38: 13, 43: 13, 44: 14, 45: 14} {
+		if got := (&evalResult{Cases: cases}).safetyTotal(); got != want {
+			t.Errorf("a run of %d cases has %d safety cases, want %d", cases, got, want)
+		}
+	}
+}
+
 func TestSafetyCasesMatchTheBenchsCases(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("../askbench/testdata/cases.yaml")

@@ -65,6 +65,10 @@ type Case struct {
 	Cards []string `yaml:"cards"`
 	// Checks are the checks beyond the kind's (defaultChecks).
 	Checks []string `yaml:"checks"`
+	// Exact are numbers the answer must hold exactly, for the exact check.
+	Exact []string `yaml:"exact"`
+	// Only are the numbers an answer may hold, for the onlyNumbers check.
+	Only []string `yaml:"only"`
 }
 
 // HistoryTurn is an earlier turn of a case's conversation: the question, the
@@ -113,6 +117,9 @@ type Expect struct {
 	// Premise, for a question that assumes something the cards show to be
 	// false, is what the answer must set right (checkPremise).
 	Premise *Premise `yaml:"premise"`
+	// Rebalance, for a question that states weights to reach, is what code
+	// computes the amounts to move from (checkRebalance).
+	Rebalance *Rebalance `yaml:"rebalance"`
 }
 
 // PayloadCall is a tool the payload of an injection case asks the model to call

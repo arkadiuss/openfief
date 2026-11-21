@@ -19,6 +19,11 @@ const (
 	TierTF = "TF"
 	TierT1 = "T1"
 	TierT2 = "T2"
+	// TierInstructions is no data tier: it tags what adds no data to a request,
+	// as the router's DataTierInstructions does for a role's own fixed text
+	// (D-206, D-226). A calc card is such a result (D-228): it holds only
+	// figures already in the conversation and the arithmetic on them.
+	TierInstructions = "instructions"
 )
 
 // Tool is one tool the Ask box's model may call (D-203): one of the fixed
@@ -70,11 +75,15 @@ const (
 )
 
 // Tools returns the tools, in the order the model is told them. Every
-// tool's card is T0 but the last: it holds whole-portfolio holdings, amounts or
+// tool's card is T0 but the last two: it holds whole-portfolio holdings, amounts or
 // tax data, or names the owner's accounts and instruments (D-206). The market
-// price tool's card holds only public data, so it takes T2 (D-226).
+// price tool's card holds only public data, so it takes T2 (D-226). Calc's card
+// holds only figures already in the conversation, cards the person may see or
+// text they wrote, and the arithmetic on them, so it adds no data and no tier
+// (TierInstructions, D-228): a route cleared for T0 only is offered calc and
+// its result passes.
 func Tools() []Tool {
-	return []Tool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool(), quoteTool()}
+	return []Tool{needsTool(), showTool(), syncTool(), allocationTool(), performanceTool(), valueTool(), quoteTool(), calcTool()}
 }
 
 func needsTool() Tool {
@@ -183,14 +192,41 @@ func valueTool() Tool {
 	}
 }
 
+func calcTool() Tool {
+	return Tool{
+		Name: "calc",
+		Description: "Exact decimal arithmetic on figures already shown, for a sum, a difference, a product, a quotient, a percentage or the amounts to move to reach " +
+			"weights the person states: never do such arithmetic yourself. Give one expression with numbers written with a point and no thousands separators, " +
+			"+ - * / and parentheses, and % after a number to divide it by 100 (5% is 0.05, so 200 * 5% is 10). It reads no data: the card says the result is " +
+			"computed from the figures given, so give figures that a card showed or the person wrote, and say where each came from.",
+		Schema: `{"type":"object","properties":{"expression":{"type":"string","description":"The expression, such as (1234.56 + 78.9) * 3%; at most 200 characters."}},` +
+			`"required":["expression"],"additionalProperties":false}`,
+		Label: "Calculation", Tier: TierInstructions,
+		query: func(args string, _ kernel.Date) (Query, error) {
+			var a struct {
+				Expression string `json:"expression"`
+			}
+			if err := decodeArgs(args, &a); err != nil {
+				return Query{}, err
+			}
+			if strings.TrimSpace(a.Expression) == "" {
+				return Query{}, errNoExpression
+			}
+			return Query{Command: CommandCalc, Expression: a.Expression}, nil
+		},
+	}
+}
+
 // Why a model's arguments to a tool were not accepted. The text of an
 // argument is never in the error: it is the person's data (GR-12), and the
 // model gets the error back as the tool's result.
 var (
-	errBadArgs  = errors.New("the arguments are not a JSON object of the tool's schema")
-	errNoName   = errors.New("a name is needed")
-	errBadEnum  = errors.New("the argument is none of the values the schema lists")
-	errToolDate = errors.New("the date is not a valid day, YYYY-MM-DD")
+	errBadArgs = errors.New("the arguments are not a JSON object of the tool's schema")
+	errNoName  = errors.New("a name is needed")
+	// errNoExpression refuses a calc call without an expression.
+	errNoExpression = errors.New("an expression is needed")
+	errBadEnum      = errors.New("the argument is none of the values the schema lists")
+	errToolDate     = errors.New("the date is not a valid day, YYYY-MM-DD")
 	// errPeriodBounds and errDateAndPeriod refuse a period without both of
 	// its days, and a value asked on a day and over a period at once.
 	errPeriodBounds  = errors.New("a period needs both a first day, from, and a last day, to")

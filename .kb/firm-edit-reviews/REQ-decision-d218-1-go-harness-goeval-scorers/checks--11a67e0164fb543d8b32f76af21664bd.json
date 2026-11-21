@@ -4,10 +4,10 @@
   "sourceFile": "tools/askbench/scorers.go",
   "symbol": "checks",
   "verdict": "keeps",
-  "note": "The table gains the check of D-226's refused route; no existing check changes (D-218).",
+  "note": "The new checks (rebalance, exact, onlyNumbers, beforeFees) know the bench data and stay in OpenFief with the other scorers; no scorer moved and the interface is unchanged.",
   "statementHash": "sha256:40b0233c0e519e7fb69ed061c962dc0b71e96a75e22532ce825e114e799ed480",
-  "codeHash": "sha256:f6b599411df7e042f5720550794f501ffcfd585554e5320f04442856b427ef51",
-  "startLine": 216,
-  "endLine": 237,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "codeHash": "sha256:1faad0b1f6bd59fc10875482aeb3d5b6c0ac632b202ff512f21ee1d6bdc8a0b6",
+  "startLine": 219,
+  "endLine": 244,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
 }

@@ -81,6 +81,7 @@ func TestAskArgDefaultsAreTheDocumentedOnes(t *testing.T) {
 		{tool: "show", latest: today},
 		{tool: "sync_status", latest: today},
 		{tool: "what_needs_me", latest: today},
+		{tool: "calc", latest: today},
 		{tool: "no_such_tool", latest: today},
 	}
 	for _, tt := range tests {

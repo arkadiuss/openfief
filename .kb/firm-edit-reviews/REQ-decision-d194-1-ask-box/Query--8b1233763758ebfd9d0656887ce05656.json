@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/app/answer/command.go",
   "symbol": "Query",
   "verdict": "keeps",
-  "note": "Query gains the Quote field the market price tool's command reads; the fixed commands (D-194) are parsed and answered as before, since Parse never produces the quote command.",
+  "note": "The typed commands are unchanged: Query gained an Expression field and a CommandCalc that only the calc tool produces (D-228), which reads nothing, changes nothing and logs nothing; Parse never returns it.",
   "statementHash": "sha256:e18a941dbb20b5afe20fe339a2dffcbe28c940ae7dcf1bdaf1199780aeb428dc",
-  "codeHash": "sha256:64eed96b43842ad8c5588e5c33a523407145dedc428d924f5f9dac63fc538cda",
-  "startLine": 55,
-  "endLine": 73,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "codeHash": "sha256:3c77cf76c74289a7182a9b416893aa15ceb477f680b2b5d3b9107ed3b5b1c99a",
+  "startLine": 58,
+  "endLine": 78,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
 }

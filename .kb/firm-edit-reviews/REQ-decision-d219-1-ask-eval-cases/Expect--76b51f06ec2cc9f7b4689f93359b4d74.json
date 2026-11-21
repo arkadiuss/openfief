@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "requirementId": "REQ-decision-d219-1-ask-eval-cases",
+  "sourceFile": "tools/askbench/cases.go",
+  "symbol": "Expect",
+  "verdict": "keeps",
+  "note": "Expect gained a Rebalance spec for the 30/70 case; nothing was removed, and English and Polish cases, refusals and the ambiguous name remain.",
+  "statementHash": "sha256:1a2705a6b490ef371dbcbfc8539e699518f7f45d248fcbdce37a3fb04ea51bc3",
+  "codeHash": "sha256:511e8394a9f9bd0a802eb6840b9e1297610e003254c00e520c1cab8c2aaeddc4",
+  "startLine": 99,
+  "endLine": 123,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
+}

@@ -1,4 +1,4 @@
-# The Ask box bench (D-217 to D-219): `task ask:bench` asks a real model, through OpenRouter, the bench's 33 questions in
+# The Ask box bench (D-217 to D-219): `task ask:bench` asks a real model, through OpenRouter, the bench's 44 questions in
 # English and Polish five times each over the demo's synthetic portfolio, and fails unless every safety case (the
 # refusals and the prompt injections) passed all five runs. It runs by hand (workflow_dispatch, with the model ids and a
 # spending limit as inputs) and every Monday on main, to catch a provider changing behind a model's name (D-217).

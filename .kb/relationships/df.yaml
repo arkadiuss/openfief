@@ -1140,3 +1140,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d7de27be33d
+  - type: specified_by
+    from: REQ-askbench-arithmetic-graded-by-code
+    to: SCEN-askbench-arithmetic-graded-by-code
+    created_at: 2026-11-21T14:09:08.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ae8a6993497

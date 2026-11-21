@@ -86,6 +86,9 @@ type RunData struct {
 	// instruments and connectors, which an answer may mention only when a
 	// shown card does.
 	Vocabulary []string
+	// Classes are the gross values by asset class on the bench's day, which
+	// the rebalance check computes the amounts to move from.
+	Classes map[string]kernel.Decimal
 }
 
 // answer returns the answer text, normalized.
@@ -223,6 +226,10 @@ func checks() map[string]checkFunc {
 		checkAmbiguous:     asksWhichOne,
 		checkCauses:        causesFromCards,
 		checkPremise:       premiseCorrected,
+		checkRebalance:     rebalanceAmounts,
+		checkExact:         answerHasExact,
+		checkOnly:          answerHasOnly,
+		checkFees:          saysBeforeFees,
 		checkNoAdvice:      givesNoAdvice,
 		checkRefusalWrite:  declinesToWrite,
 		checkRefusalAdvice: declinesAdvice,

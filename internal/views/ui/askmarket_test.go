@@ -277,3 +277,29 @@ func checkStrictCSP(t *testing.T, csp string) {
 		t.Errorf("CSP = %q, want the strict one", csp)
 	}
 }
+
+// TestARouteAllowedT0OnlyIsOfferedCalcAndItsResultPasses checks that calc adds no
+// data tier (D-228): over a route whose models are allowed T0 and not T2 the tool
+// is told to the model, it runs, its card is shown, its result goes to the model
+// tagged as the box's own text, and the router is never asked about a tier for it.
+func TestARouteAllowedT0OnlyIsOfferedCalcAndItsResultPasses(t *testing.T) {
+	t.Parallel()
+	f := newLoopFixture(t, tierT0)
+	f.port.replies = []askReply{calling(askCall{ID: "1", Name: "calc", Args: `{"expression":"0.1 + 0.2"}`}), say("It is 0.3.", "c1")}
+	got, err := f.askWith(quoteSession(false))
+	if err != nil || got.Help != nil || len(got.Used) != 1 || len(got.Withheld) != 0 {
+		t.Fatalf("answer = %+v, %v; want the model's answer with the calc card and nothing withheld", got, err)
+	}
+	tools := toolMessages(f.port.requests[1])
+	if len(tools) != 1 || tools[0].Tier != tierInstructions {
+		t.Errorf("the tool result sent = %+v, want the calc card tagged %s", tools, tierInstructions)
+	}
+	for _, asked := range f.port.permitted {
+		if slices.Contains(asked, tierT2) {
+			t.Errorf("the router was asked about %v: calc needs no T2", asked)
+		}
+	}
+	if f.port.refused != 0 {
+		t.Errorf("the router refused %d calls, want none", f.port.refused)
+	}
+}

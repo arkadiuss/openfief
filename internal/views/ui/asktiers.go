@@ -14,7 +14,7 @@ const (
 	// system prompt, the retry and final-round instructions and the failure and
 	// withheld results of tools (D-206, D-226). It adds nothing to the tiers a
 	// request holds, so a route allowed T0 only is never refused for it.
-	tierInstructions = "instructions"
+	tierInstructions = answer.TierInstructions
 )
 
 // tierWords describes a data tier in words, for the notice of a card the

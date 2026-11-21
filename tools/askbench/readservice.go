@@ -542,3 +542,15 @@ func (r *readService) addListing(detail *viewsv1.InstrumentDetail, isin string, 
 	})
 	return nil
 }
+
+// classTotals returns the gross value by asset class on the bench's last day, as
+// the allocation by asset class gives it: what a case that asks for amounts to
+// move is graded against.
+func classTotals(s *Seed, p *Portfolio) (map[string]kernel.Decimal, error) {
+	r := &readService{seed: s, pf: p}
+	sums, err := r.groupSums(&p.Days[len(p.Days)-1], viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS)
+	if err != nil {
+		return nil, fmt.Errorf("%w: its allocation: %w", errSeed, err)
+	}
+	return sums, nil
+}

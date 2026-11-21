@@ -445,7 +445,7 @@ func TestTheClientAsksTheSchemaOnlyForTheAnswer(t *testing.T) {
 	if diff := cmp.Diff([]string{"", "", askAnswerSchemaJSON}, h.askModel.schemas); diff != "" {
 		t.Errorf("response schema of each call (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff([][]string{{"allocation", "performance", "show", "sync_status", "value", "what_needs_me"}, {"allocation", "performance", "show", "sync_status", "value", "what_needs_me"}, nil},
+	if diff := cmp.Diff([][]string{{"allocation", "calc", "performance", "show", "sync_status", "value", "what_needs_me"}, {"allocation", "calc", "performance", "show", "sync_status", "value", "what_needs_me"}, nil},
 		[][]string{sortedCopy(h.askModel.toolsSeen[0]), sortedCopy(h.askModel.toolsSeen[1]), h.askModel.toolsSeen[2]}); diff != "" {
 		t.Errorf("tools of each call (-want +got):\n%s", diff)
 	}

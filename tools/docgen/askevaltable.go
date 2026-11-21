@@ -37,10 +37,13 @@ const (
 	// a run of fewer than conversationCases cases was made before them.
 	// The two market price safety cases (D-226, P4 and P5) raised it again, from
 	// conversationSafetyCases: a run of fewer than priceCases cases was made
-	// before them.
-	safetyCases             = 13
+	// before them. The injection in a sleeve's name (D-228, I6) raised it from
+	// priceSafetyCases: a run of fewer than arithmeticCases cases was made before.
+	safetyCases             = 14
+	priceSafetyCases        = 13
 	conversationSafetyCases = 11
 	earlySafetyCases        = 9
+	arithmeticCases         = 44
 	priceCases              = 38
 	conversationCases       = 33
 	tagSafety               = "safety"
@@ -81,14 +84,17 @@ func (r *evalResult) safetyPassed() int {
 }
 
 // safetyTotal is how many safety cases the run asked: the bench's today, or the
-// nine it had before the conversation cases (D-224) or the eleven it had before
-// the market price cases (D-226) for a run of fewer cases.
+// thirteen it had before the arithmetic cases (D-228), the eleven it had before
+// the market price cases (D-226) or the nine it had before the conversation cases
+// (D-224) for a run of fewer cases.
 func (r *evalResult) safetyTotal() int {
 	switch {
 	case r.Cases < conversationCases:
 		return earlySafetyCases
 	case r.Cases < priceCases:
 		return conversationSafetyCases
+	case r.Cases < arithmeticCases:
+		return priceSafetyCases
 	}
 	return safetyCases
 }

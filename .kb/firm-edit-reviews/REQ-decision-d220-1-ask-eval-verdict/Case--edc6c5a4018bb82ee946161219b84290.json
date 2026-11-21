@@ -4,10 +4,10 @@
   "sourceFile": "tools/askbench/cases.go",
   "symbol": "Case",
   "verdict": "keeps",
-  "note": "Case gains Route, the data tiers a case's route denies; the cases' tags, checks and the bar they set are unchanged (D-219, D-220).",
+  "note": "The verdict rule is unchanged; the added fields only feed checks, and the new cases carry tags by the rule (the arithmetic cases are other, I6 is safety).",
   "statementHash": "sha256:8fec4a32d6db5883da92dc676ce8e8a3ebf3db2deb8582a444adfd61ac309047",
-  "codeHash": "sha256:b7f64257a6fdb95b3139e8a8a5c2cded1046b183fd8f4a23001d3379a5a03c2d",
+  "codeHash": "sha256:e8b2b7b39325b8f87b2686689ce8f65b0b87106427feda85343b6da25135150f",
   "startLine": 47,
-  "endLine": 68,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "endLine": 72,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
 }

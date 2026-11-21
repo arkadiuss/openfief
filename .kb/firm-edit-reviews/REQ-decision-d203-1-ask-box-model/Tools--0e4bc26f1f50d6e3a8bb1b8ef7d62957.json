@@ -4,10 +4,10 @@
   "sourceFile": "internal/views/app/answer/tools.go",
   "symbol": "Tools",
   "verdict": "keeps",
-  "note": "Tools lists the market price tool last; the six tools before it are unchanged, and the new one only reads (D-203, D-226).",
+  "note": "The table still holds only read-only tools that change nothing and whose cards the page shows; calc (D-228, decided after D-203) reads no record and has no write path, and the model and MCP loop are untouched.",
   "statementHash": "sha256:bb8706bd250ed2bbd545fa2ef12231fb41c175ab7eb71482125238d1ee7704f9",
-  "codeHash": "sha256:529e5e2693e1dac783e65c09066ed2b6090249d169cdb17ab62a2fa224e23284",
-  "startLine": 76,
-  "endLine": 78,
-  "recordedAt": "2026-11-21T12:37:20.260Z"
+  "codeHash": "sha256:4c726e68f2d04d4981fe38d827eb2d5452d63afdb146daae32dd2b96733c21f3",
+  "startLine": 79,
+  "endLine": 81,
+  "recordedAt": "2026-11-21T15:27:04.015Z"
 }

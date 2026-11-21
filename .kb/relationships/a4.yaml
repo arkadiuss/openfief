@@ -1273,3 +1273,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4edb73ed8003
+  - type: verified_by
+    from: SCEN-ui-ask-calc-card-figures-given
+    to: TEST-views-answer-calc
+    created_at: 2026-11-21T14:07:42.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a89c886ade2
+  - type: verified_by
+    from: SCEN-ui-ask-calc-card-figures-given
+    to: TEST-views-answer-calc-toolbox
+    created_at: 2026-11-21T14:07:42.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0440e44f9192

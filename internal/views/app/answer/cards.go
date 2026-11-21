@@ -151,6 +151,8 @@ func (cm *Commands) Run(ctx context.Context, c Caller, q *Query) (Card, error) {
 		return UnknownAnswer(), nil
 	case CommandQuote:
 		return cm.quote(ctx, c, q)
+	case CommandCalc: // the figures are the arguments: nothing is read
+		return calcCard(q.Expression, c.Format), nil
 	case CommandNeeds, CommandShow, CommandSync, CommandAllocation, CommandPerformance, CommandValue:
 	}
 	date, err := cm.latestDate(ctx, c)
@@ -176,7 +178,7 @@ func (cm *Commands) dispatch(ctx context.Context, c Caller, q *Query, date kerne
 		return cm.performance(ctx, c, q.Period, date)
 	case CommandValue:
 		return cm.valueAnswer(ctx, c, q, date)
-	case CommandUnknown, CommandQuote:
+	case CommandUnknown, CommandQuote, CommandCalc:
 	}
 	return UnknownAnswer(), nil
 }
