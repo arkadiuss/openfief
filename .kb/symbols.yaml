@@ -240740,3 +240740,701 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-grafana-apply
+  - id: SYM-e2e-upgrade-test-test-upgrade-from-published
+    title: TestUpgradeFromPublished
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-release-fetch-fail
+    title: fail
+    status: active
+    sourceFile: scripts/release-fetch.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-fetch
+      - type: implements
+        target: REQ-tooling-release-fetch
+  - id: SYM-release-fetch-say
+    title: say
+    status: active
+    sourceFile: scripts/release-fetch.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-fetch
+      - type: implements
+        target: REQ-tooling-release-fetch
+  - id: SYM-release-fetch-test-release
+    title: release
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-cnpg-sum
+    title: cnpg_sum
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-signed
+    title: signed
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-run
+    title: run
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-yes-if
+    title: yes_if
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-passes
+    title: passes
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-release-fetch-test-fails-with
+    title: fails_with
+    status: active
+    sourceFile: scripts/tests/release-fetch.test.sh
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-fetch
+  - id: SYM-e2e-bundle-deployments-in
+    title: deploymentsIn
+    status: active
+    sourceFile: test/e2e/bundle_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-core-forward
+    title: coreForward
+    status: active
+    sourceFile: test/e2e/bundle_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-forward-core-until-stopped
+    title: forwardCoreUntilStopped
+    status: active
+    sourceFile: test/e2e/bundle_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-test-helper-wait-database
+    title: waitDatabase
+    status: active
+    sourceFile: test/e2e/main_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-snapshot-schemas
+    title: snapshotSchemas
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-ephemeral-tables
+    title: ephemeralTables
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-derived-columns
+    title: derivedColumns
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-derived-rows
+    title: derivedRows
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-growing-tables
+    title: growingTables
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-table-spec
+    title: tableSpec
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-table-spec-query
+    title: tableSpec.query
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-snapshot
+    title: snapshot
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-snapshot-count
+    title: snapshot.count
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-surplus
+    title: surplus
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-snapshot-compare
+    title: snapshot.compare
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-snapshot-same
+    title: snapshot.same
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-attention-counts
+    title: attentionCounts
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-attention
+    title: attention
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-settler
+    title: settler
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-settler-observe
+    title: settler.observe
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-settler-check
+    title: settler.check
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-settled-snapshot
+    title: settledSnapshot
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-list-tables
+    title: listTables
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-list-tables-query
+    title: listTablesQuery
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-tables-from
+    title: tablesFrom
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-take-snapshot
+    title: takeSnapshot
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-kube-psql
+    title: kube.psql
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-query-lines-ctx
+    title: queryLinesCtx
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-query-lines
+    title: queryLines
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-snapshot-query-one
+    title: queryOne
+    status: active
+    sourceFile: test/e2e/snapshot_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-published-release
+    title: publishedRelease
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-read-release
+    title: readRelease
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-run-upgrade
+    title: runUpgrade
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-install-published
+    title: installPublished
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-wait-deployments
+    title: waitDeployments
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-kubectl-apply
+    title: kubectlApply
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-cli-run
+    title: cliRun
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-seeded-install
+    title: seededInstall
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-seed-published
+    title: seedPublished
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-seeded
+    title: checkSeeded
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-upgrade-as-guided
+    title: upgradeAsGuided
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-stored-data
+    title: checkStoredData
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-grant-cutover
+    title: checkGrantCutover
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-spice-d-b-credentials
+    title: checkSpiceDBCredentials
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-agentic-switch-off
+    title: checkAgenticSwitchOff
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-serving
+    title: checkServing
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-accounts-listed
+    title: checkAccountsListed
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-fetch
+    title: fetch
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-cutover-ran-once
+    title: checkCutoverRanOnce
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-load-dataset
+    title: loadDataset
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data
+  - id: SYM-e2e-upgrade-test-check-ticker-confirmations
+    title: checkTickerConfirmations
+    status: active
+    sourceFile: test/e2e/upgrade_test.go
+    origin:
+      kind: agent
+      ref: the design session's exit criterion (a) of 2026.11.0-alpha.2, relayed by the coordinator, 2026-11-21
+      recorded_at: 2026-11-21T12:00:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-upgrade-keeps-stored-data

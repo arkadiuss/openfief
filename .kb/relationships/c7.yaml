@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-86a0ae0025de
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-check-seeded
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:56:27.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1371cb99c16b

@@ -1070,3 +1070,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-faafc22b4793
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-wait-deployments
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:55:45.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98988ef7b4b5

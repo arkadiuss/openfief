@@ -986,3 +986,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbbc6543f4f9
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-snapshot-compare
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:53:01.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2e5b6fa7f77
+  - type: executable_for
+    from: SYM-e2e-upgrade-test-published-release
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:55:13.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-042b5d4bdca5

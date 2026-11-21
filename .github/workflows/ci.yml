@@ -180,10 +180,14 @@ jobs:
     # is the demo machine's k3s: the same K3S_VERSION (task e2e:k3s-image), flannel with k3s's built-in
     # kube-router NetworkPolicy controller, the bundled Traefik and servicelb, and secrets encryption, as
     # deploy/demo/cloud-init.yaml configures it. kind's default CNI, kindnet, enforces NetworkPolicy too.
-    # The suite (test/e2e) runs twice: first it installs the release bundle (task release:bundle) of this checkout's
+    # The suite (test/e2e) runs three times: first it installs the release bundle (task release:bundle) of this checkout's
     # images, pinned by digest, with the CloudNativePG manifest and openfief-db cluster it ships, checks it, runs the
     # owner's first run with the openfief CLI built from this checkout (plugin install ui, enroll and a passkey), and
-    # removes it; then it installs the demo's stack. Either logs pods, events,
+    # removes it; then the upgrade run downloads the published release 2026.11.0-alpha.1 and verifies it with cosign
+    # (scripts/release-fetch.sh), installs it as the install guide says, seeds it with the synthetic demo dataset,
+    # upgrades it in place to that same bundle as the guide's "Upgrade" section says and checks that nothing stored is
+    # lost, the grant cutover ran once, SpiceDB's credentials exist, the agentic switch is off and the UI serves; then
+    # it installs the demo's stack. Each logs pods, events,
     # specs, policies, endpoints, plugins and logs on any failure: read the "diagnostics:" lines of the failing test.
     # task e2e:images also starts a registry container on the cluster's Docker network for the plugin images, which
     # the suite signs with a key made for the run, so the operator deploys them as it would an owner's (D-57), and
@@ -194,8 +198,10 @@ jobs:
     needs: plan
     if: needs.plan.outputs.code == 'true'
     runs-on: ubuntu-24.04
-    # The bundle run, with its database and first run, adds about ten minutes to the demo run's.
-    timeout-minutes: 45
+    # The bundle run, with its database and first run, adds about ten minutes to the demo run's, and the upgrade run,
+    # which installs the published release, seeds it, upgrades it and restarts the core, about twelve more (an
+    # estimate: read the first runs' "--- PASS: TestUpgradeFromPublished" time and settle this number).
+    timeout-minutes: 60
     permissions:
       contents: read
     strategy:
@@ -243,10 +249,15 @@ jobs:
         run: task e2e:gateway CLUSTER="$CLUSTER"
         env:
           CLUSTER: ${{ matrix.cluster }}
+      # The upgrade run verifies the published release's signatures with cosign, as the install guide tells an owner to.
+      - uses: ./.github/actions/install-cosign
       # kibi prove runs task e2e and records a receipt on each end-to-end test (docs/dev/kibi.md); the run's
-      # kibi.proof-run.v1 artifact goes to the docs-build job, which ingests it for the published report.
+      # kibi.proof-run.v1 artifact goes to the docs-build job, which ingests it for the published report. The
+      # run's token only reads the public release's assets (gh release download).
       - name: task e2e:prove
         run: task e2e:prove
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Upload the proof run
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

@@ -1287,3 +1287,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d64f7f33d5b
+  - type: verified_by
+    from: SCEN-e2e-upgrade-keeps-stored-data
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:40:31.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad51bc8c8db1
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-settled-snapshot
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:54:00.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74bb6ed52b40

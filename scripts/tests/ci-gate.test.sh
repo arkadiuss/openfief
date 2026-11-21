@@ -52,7 +52,7 @@ check "the install-cosign action tries the installer three times, tolerating the
 check "the install-cosign action's three installers are the same pinned commit" \
   "$(yes_if '[.runs.steps[] | select((.uses // "") | startswith("sigstore/cosign-installer@")) | .uses] | (unique | length) == 1 and (.[0] | test("@[0-9a-f]{40}$"))' "$composite")"
 users="$(grep -c 'uses: ./.github/actions/install-cosign' "$root/.github/workflows"/*.yml | awk -F: '{ n += $2 } END { print n }')"
-check "eight workflow steps install cosign through the action (images 3, release 3, release-smoke, deploy-demo)" "$([ "$users" -eq 8 ] && echo yes || echo no)"
+check "nine workflow steps install cosign through the action (images 3, release 3, release-smoke, deploy-demo, e2e)" "$([ "$users" -eq 9 ] && echo yes || echo no)"
 
 # Every download of ours goes through retry.sh: the Taskfile's tool installs, the scripts, the setup action.
 check "the Taskfile downloads only through retry.sh" "$([ -z "$(bare_downloads "$root/Taskfile.yml")" ] && echo yes || echo no)"

@@ -21,7 +21,11 @@
 //
 // With OPENFIEF_E2E_BUNDLE set, TestMain installs the release bundle in that
 // directory instead, as an owner installs a release, and only the TestBundle
-// tests run (bundle_test.go); task e2e runs that first, then the demo run.
+// tests run (bundle_test.go); task e2e runs that first, then the upgrade run, then the demo run.
+//
+// With OPENFIEF_E2E_UPGRADE set too, TestMain installs the published release that scripts/release-fetch.sh downloaded
+// and verified into .bin/e2e/published instead, and only TestUpgrade runs: it seeds that install and upgrades it in
+// place to the bundle in OPENFIEF_E2E_BUNDLE (upgrade_test.go).
 package e2e
 
 import (
@@ -87,6 +91,9 @@ func cnpgCluster() schema.GroupVersionResource {
 }
 
 func TestMain(m *testing.M) {
+	if os.Getenv(upgradeEnv) != "" {
+		os.Exit(runUpgrade(m))
+	}
 	if dir := os.Getenv(bundleEnv); dir != "" {
 		os.Exit(runBundle(m, dir))
 	}
@@ -241,6 +248,11 @@ func applyDatabase(ctx context.Context, k *kube, logf func(string, ...any), sour
 	if err := retry(ctx, webhookTimeout, func() error { return k.apply(ctx, database) }); err != nil {
 		return fmt.Errorf("applying the database: %w", err)
 	}
+	return waitDatabase(ctx, k, logf)
+}
+
+// waitDatabase waits until the openfief-db cluster is ready.
+func waitDatabase(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	logf("e2e: waiting for the openfief-db cluster")
 	err := waitFor(ctx, databaseTimeout, func(ctx context.Context) (string, bool, error) {
 		ready, condErr := k.conditionTrue(ctx, cnpgCluster(), namespace, "openfief-db", "Ready")

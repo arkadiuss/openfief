@@ -1350,3 +1350,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-923af687ad1a
+  - type: executable_for
+    from: SYM-e2e-upgrade-snapshot-attention-counts
+    to: TEST-e2e-upgrade-keeps-stored-data
+    created_at: 2026-11-21T09:53:17.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10a913a3d79f

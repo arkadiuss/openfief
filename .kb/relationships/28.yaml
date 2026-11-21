@@ -1336,3 +1336,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92237d777c94
+  - type: executable_for
+    from: SYM-e2e-bundle-forward-core-until-stopped
+    to: TEST-e2e-bundle-install
+    created_at: 2026-11-21T09:51:16.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e7465af451d

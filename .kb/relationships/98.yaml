@@ -1042,3 +1042,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91d0114a38b2
+  - type: executable_for
+    from: SYM-release-fetch-test-check
+    to: TEST-tooling-release-fetch
+    created_at: 2026-11-21T09:50:26.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0888194b689
