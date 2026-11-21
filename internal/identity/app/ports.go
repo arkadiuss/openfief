@@ -114,8 +114,10 @@ type EnrollmentStore interface {
 	// wrapping ErrUnknownEnrollmentCode.
 	EnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID) (identity.EnrollmentCode, []byte, error)
 	// UseEnrollmentCode marks the code id used at at, failing with an error
-	// wrapping identity.ErrEnrollmentCodeUsed when it already was,
-	// atomically, so a code is used once even under concurrent calls.
+	// wrapping identity.ErrEnrollmentCodeUsed when it already was or was
+	// cancelled, and identity.ErrEnrollmentCodeExpired when it expired by at,
+	// atomically, so a code is used once even under concurrent calls and
+	// never after its expiry, even by a ceremony begun before it.
 	UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error
 	// PendingInvites returns the codes that invite a viewer and can still be
 	// used at now (EnrollmentCode.Pending), oldest first. It never returns

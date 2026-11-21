@@ -1175,3 +1175,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7427358759a
+  - type: implements
+    from: SYM-identity-postgres-auth-store-use-enrollment-code
+    to: REQ-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:08.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4091f75746
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-use-enrollment-code
+    to: TEST-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:08.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a10d9038fede

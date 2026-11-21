@@ -507,11 +507,18 @@ func (a *Auth) storeRegistration(ctx context.Context, c *identity.Ceremony, owne
 	return out, nil
 }
 
+// codeRefused reports whether err is the store refusing to use up an
+// enrollment code: used, cancelled or expired by the time the registration
+// finished.
+func codeRefused(err error) bool {
+	return errors.Is(err, identity.ErrEnrollmentCodeUsed) || errors.Is(err, identity.ErrEnrollmentCodeExpired)
+}
+
 // useCode uses up the enrollment code of c for creating p and records it,
 // naming the code and the passkey, as actor's.
 func (a *Auth) useCode(ctx context.Context, c *identity.Ceremony, p *identity.Passkey, actor identity.Actor) error {
 	err := a.store.UseEnrollmentCode(ctx, c.EnrollmentCode, p.CreatedAt)
-	if errors.Is(err, identity.ErrEnrollmentCodeUsed) {
+	if codeRefused(err) {
 		return fmt.Errorf("%w: %w", ErrForbidden, err)
 	}
 	if err != nil {

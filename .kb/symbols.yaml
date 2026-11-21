@@ -50914,8 +50914,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-auth-postgres
+      - type: covered_by
+        target: TEST-identity-enrollment-code-expiry-at-use
       - type: implements
         target: REQ-identity-enrollment-code
+      - type: implements
+        target: REQ-identity-enrollment-code-expiry-at-use
   - id: SYM-identity-postgres-auth-store-save-session
     title: Store.SaveSession
     sourceFile: internal/identity/postgres/auth.go
@@ -248384,3 +248388,36 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-client-events-limit-network-and-cap
+  - id: SYM-identity-app-passkeys-coderefused
+    title: codeRefused
+    status: active
+    sourceFile: internal/identity/app/passkeys.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:39:12.637Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-enrollment-code-expiry-at-use
+      - type: implements
+        target: REQ-identity-enrollment-code-expiry-at-use
+  - id: SYM-identity-postgres-invites-test-testuseenrollmentcoderefusesanexpiredcode
+    title: TestUseEnrollmentCodeRefusesAnExpiredCode
+    status: active
+    sourceFile: internal/identity/postgres/invites_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:39:20.135Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-enrollment-code-expiry-at-use
+  - id: SYM-identity-app-invites-test-testexpiredinvitecannotbeusedmidceremony
+    title: TestExpiredInviteCannotBeUsedMidCeremony
+    status: active
+    sourceFile: internal/identity/app/invites_test.go
+    origin:
+      kind: agent
+      recorded_at: 2026-11-21T18:39:27.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-enrollment-code-expiry-at-use

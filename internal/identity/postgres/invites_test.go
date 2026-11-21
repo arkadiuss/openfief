@@ -72,6 +72,32 @@ func TestPendingInvites(t *testing.T) {
 	}
 }
 
+// TestUseEnrollmentCodeRefusesAnExpiredCode checks that a code can't be used
+// at or after its expiry, in the same statement that uses it up once, so a
+// ceremony begun before the expiry can't spend it after; the code stays unused.
+func TestUseEnrollmentCodeRefusesAnExpiredCode(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	ctx := t.Context()
+	s := seedInvites(t, store)
+	if err := store.UseEnrollmentCode(ctx, s.expired.ID, s.expired.ExpiresAt); !errors.Is(err, identity.ErrEnrollmentCodeExpired) {
+		t.Errorf("UseEnrollmentCode at the expiry = %v, want %v", err, identity.ErrEnrollmentCodeExpired)
+	}
+	if err := store.UseEnrollmentCode(ctx, s.expired.ID, s.now); !errors.Is(err, identity.ErrEnrollmentCodeExpired) {
+		t.Errorf("UseEnrollmentCode after the expiry = %v, want %v", err, identity.ErrEnrollmentCodeExpired)
+	}
+	code, _, err := store.EnrollmentCode(ctx, s.expired.ID)
+	if err != nil || !code.UsedAt.IsZero() {
+		t.Errorf("EnrollmentCode after refused uses = %+v, %v, want it unused", code, err)
+	}
+	if err := store.UseEnrollmentCode(ctx, s.used.ID, s.now); !errors.Is(err, identity.ErrEnrollmentCodeUsed) {
+		t.Errorf("UseEnrollmentCode of a used code = %v, want %v", err, identity.ErrEnrollmentCodeUsed)
+	}
+	if err := store.UseEnrollmentCode(ctx, s.alice.ID, s.alice.ExpiresAt.Add(-time.Second)); err != nil {
+		t.Errorf("UseEnrollmentCode a second before the expiry = %v, want nil", err)
+	}
+}
+
 // wantCancelRefused checks that cancelling a code already cancelled, expired,
 // an owner's link, used or unknown fails as an unknown enrollment code.
 func (s *seededInvites) wantCancelRefused(t *testing.T, store *postgres.Store) {

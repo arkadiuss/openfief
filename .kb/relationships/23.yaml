@@ -1084,3 +1084,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b07bebf312a2
+  - type: verified_by
+    from: SCEN-identity-enrollment-code-expiry-at-use
+    to: TEST-identity-enrollment-code-expiry-at-use
+    created_at: 2026-11-21T18:39:00.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddfffc97d59a

@@ -355,19 +355,30 @@ func (s *Store) CancelEnrollmentCode(ctx context.Context, id identity.Enrollment
 	return nil
 }
 
-// UseEnrollmentCode marks the code id used at at, failing with an error
-// wrapping identity.ErrEnrollmentCodeUsed when it already was, or was
-// cancelled meanwhile.
+// UseEnrollmentCode marks the code id used at at, in one statement that also
+// checks it has not expired by at, failing with an error wrapping
+// identity.ErrEnrollmentCodeExpired when it expired before it was used, and
+// identity.ErrEnrollmentCodeUsed when it already was, or was cancelled
+// meanwhile.
 func (s *Store) UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCodeID, at time.Time) error {
 	tag, err := s.db(ctx).Exec(ctx, `UPDATE identity.enrollment_codes SET used_at = GREATEST($2, created_at)
-		WHERE id = $1 AND used_at IS NULL AND cancelled_at IS NULL`, string(id), at)
+		WHERE id = $1 AND used_at IS NULL AND cancelled_at IS NULL AND expires_at > $2`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("using enrollment code %s: %w", id, err)
 	}
-	if tag.RowsAffected() == 0 {
-		return fmt.Errorf("%w: %s", identity.ErrEnrollmentCodeUsed, id)
+	if tag.RowsAffected() > 0 {
+		return nil
 	}
-	return nil
+	var expired bool
+	err = s.db(ctx).QueryRow(ctx, `SELECT used_at IS NULL AND cancelled_at IS NULL AND expires_at <= $2
+		FROM identity.enrollment_codes WHERE id = $1`, string(id), at).Scan(&expired)
+	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
+		return fmt.Errorf("using enrollment code %s: %w", id, err)
+	}
+	if expired {
+		return fmt.Errorf("%w: %s", identity.ErrEnrollmentCodeExpired, id)
+	}
+	return fmt.Errorf("%w: %s", identity.ErrEnrollmentCodeUsed, id)
 }
 
 // sessionColumns are the columns scanSession reads, in its order.
